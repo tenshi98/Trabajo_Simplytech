@@ -1,0 +1,282 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "cross_shipping_consolidacion_rechazadas.php";
+$location = $original;
+//Se agregan ubicaciones
+$location .='?pagina='.$_GET['pagina'];
+/********************************************************************/
+//Variables para filtro y paginacion
+$search = '';
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){         $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];          $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){               $location .= "&idCategoria=".$_GET['idCategoria'];                $search .= "&idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){                 $location .= "&idProducto=".$_GET['idProducto'];                  $search .= "&idProducto=".$_GET['idProducto'];}
+if(isset($_GET['CTNNombreCompañia']) && $_GET['CTNNombreCompañia'] != ''){   $location .= "&CTNNombreCompañia=".$_GET['CTNNombreCompañia'];    $search .= "&CTNNombreCompañia=".$_GET['CTNNombreCompañia'];}
+/********************************************************************/
+if(isset($_GET['soli']) && $_GET['soli'] != ''){          $location .= "&soli=".$_GET['soli'] ; 	}
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Documento Creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Documento Editado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Documento borrado correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};?>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['compra_rechazo']) ) { ?>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+/**********************************************************/
+//Se inicializa el paginador de resultados
+//tomo el numero de la pagina si es que este existe
+if(isset($_GET["pagina"])){
+	$num_pag = $_GET["pagina"];	
+} else {
+	$num_pag = 1;	
+}
+//Defino la cantidad total de elementos por pagina
+$cant_reg = 30;
+//resto de variables
+if (!$num_pag){
+	$comienzo = 0 ;
+	$num_pag = 1 ;
+} else {
+	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
+}
+/**********************************************************/
+//ordenamiento
+if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
+	switch ($_GET['order_by']) {
+		case 'fecha_asc':      $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha ASC ';                          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha del informe Ascendente';break;
+		case 'fecha_desc':     $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha DESC ';                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';break;
+		case 'producto_asc':   $order_by = 'ORDER BY sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_producto_nombre_sing.' Ascendente';break;
+		case 'producto_desc':  $order_by = 'ORDER BY sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_producto_nombre_sing.' Descendente';break;
+		case 'creador_asc':    $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
+		case 'creador_desc':   $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+		case 'ctn_asc':        $order_by = 'ORDER BY cross_shipping_consolidacion.CTNNombreCompañia ASC ';                       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Contenedor Ascendente';break;
+		case 'ctn_desc':       $order_by = 'ORDER BY cross_shipping_consolidacion.CTNNombreCompañia DESC ';                      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Contenedor Descendente';break;
+
+				
+		default: $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
+	}
+}else{
+	$order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
+}
+/**********************************************************/
+//Variable con la ubicacion
+$z="WHERE cross_shipping_consolidacion.idConsolidacion!=0";
+//Solo las que esten en espera de aprobacion
+$z.=" AND cross_shipping_consolidacion.idEstado=3";
+//Verifico el tipo de usuario que esta ingresando
+$z.=" AND cross_shipping_consolidacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+/**********************************************************/
+//Se aplican los filtros
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){        $z .= " AND cross_shipping_consolidacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){              $z .= " AND cross_shipping_consolidacion.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){                $z .= " AND cross_shipping_consolidacion.idProducto=".$_GET['idProducto'];}
+if(isset($_GET['CTNNombreCompañia']) && $_GET['CTNNombreCompañia'] != ''){  $z .= " AND cross_shipping_consolidacion.CTNNombreCompañia LIKE '%".$_GET['CTNNombreCompañia']."%'";}
+/**********************************************************/
+//Realizo una consulta para saber el total de elementos existentes
+$query = "SELECT idConsolidacion FROM `cross_shipping_consolidacion` ".$z;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$cuenta_registros = mysqli_num_rows($resultado);
+//Realizo la operacion para saber la cantidad de paginas que hay
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los usuarios
+$arrTipo = array();
+$query = "SELECT 
+cross_shipping_consolidacion.idConsolidacion,
+cross_shipping_consolidacion.Creacion_fecha,
+cross_shipping_consolidacion.CTNNombreCompañia,
+usuarios_listado.Nombre AS Usuario,
+core_sistemas.Nombre AS Sistema,
+sistema_variedades_categorias.Nombre AS ProductoCategoria,
+variedades_listado.Nombre AS ProductoNombre
+
+
+FROM `cross_shipping_consolidacion`
+LEFT JOIN `usuarios_listado`                      ON usuarios_listado.idUsuario                   = cross_shipping_consolidacion.idUsuario
+LEFT JOIN `core_sistemas`                         ON core_sistemas.idSistema                      = cross_shipping_consolidacion.idSistema
+LEFT JOIN `sistema_variedades_categorias`          ON sistema_variedades_categorias.idCategoria     = cross_shipping_consolidacion.idCategoria
+LEFT JOIN `variedades_listado`                     ON variedades_listado.idProducto                 = cross_shipping_consolidacion.idProducto
+
+						
+".$z."
+".$order_by."
+LIMIT $comienzo, $cant_reg ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrTipo,$row );
+}?>
+
+
+
+<div class="col-sm-12 breadcrumb-bar">
+
+	<ul class="btn-group btn-breadcrumb pull-left">
+		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
+		<?php } ?>		
+	</ul>
+
+</div>
+<div class="clearfix"></div> 
+<div class="collapse col-sm-12" id="collapseExample">
+	<div class="well">
+		<div class="col-sm-8 fcenter">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Creacion_fecha)) {      $x1  = $Creacion_fecha;    }else{$x1  = '';}
+				if(isset($idCategoria)) {         $x2  = $idCategoria;       }else{$x2  = '';}
+				if(isset($idProducto)) {          $x3  = $idProducto;        }else{$x3  = '';}
+				if(isset($CTNNombreCompañia)) {   $x4  = $CTNNombreCompañia; }else{$x4  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_date('Fecha del informe','Creacion_fecha', $x1, 1);
+				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x2, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 $dbConn, 'form1');
+				$Form_Imputs->form_input_text( 'Contenedor Nro.', 'CTNNombreCompañia', $x4, 1);
+				
+				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+        </div>
+	</div>
+</div>
+<div class="clearfix"></div>                     
+                                      
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Consolidaciones Rechazadas</h5>
+			<div class="toolbar">
+				<?php 
+				//se llama al paginador
+				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+			</div>
+		</header>
+		<div class="table-responsive">   
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>
+							<div class="pull-left">Fecha del informe</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Contenedor Nro.</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=ctn_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=ctn_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left"><?php echo $x_column_producto_cat_sing.' - '.$x_column_producto_nombre_sing; ?></div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=producto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=producto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Creador</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=creador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=creador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>			  
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<?php foreach ($arrTipo as $tipo) { ?>
+					<tr class="odd">
+						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
+						<td><?php echo $tipo['CTNNombreCompañia']; ?></td>
+						<td><?php echo $tipo['ProductoCategoria'].' - '.$tipo['ProductoNombre']; ?></td>
+						<td><?php echo $tipo['Usuario']; ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
+						<td>
+							<div class="btn-group" style="width: 70px;" >
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.$tipo['idConsolidacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a target="new" href="<?php echo 'cross_shipping_consolidacion_edit.php?edit='.$tipo['idConsolidacion']; ?>" title="Editar Consolidacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+							</div>
+						</td>
+					</tr>
+					<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+		<div class="pagrow">	
+			<?php 
+			//se llama al paginador
+			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+		</div>
+	</div>
+</div>
+
+<?php require_once '../LIBS_js/modal/modal.php';?>	
+<?php } ?>           
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

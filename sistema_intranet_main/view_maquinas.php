@@ -1,0 +1,720 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Views.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Maqueta</title>
+		<!-- Bootstrap Core CSS -->
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
+		<style>
+			body {background-color: #FFF !important;}
+		</style>
+	</head>
+
+	<body>
+<?php
+
+
+
+             
+  
+//se traen los datos basicos de la licitacion
+$query = "SELECT 
+maquinas_listado.Codigo, 
+maquinas_listado.Nombre, 
+maquinas_listado.Modelo, 
+maquinas_listado.Serie, 
+maquinas_listado.Fabricante,
+maquinas_listado.fincorporacion,
+maquinas_listado.Direccion_img,
+maquinas_listado.Descripcion, 
+maquinas_listado.FichaTecnica, 
+maquinas_listado.HDS,
+maquinas_listado.idConfig_3,
+core_estados.Nombre AS Estado,
+ops1.Nombre AS Componentes,
+ops2.Nombre AS Matriz,
+ops3.Nombre AS DependenciaCliente,
+
+ubicacion_listado.Nombre AS Ubicacion,
+ubicacion_listado_level_1.Nombre AS Ubicacion_lvl_1,
+ubicacion_listado_level_2.Nombre AS Ubicacion_lvl_2,
+ubicacion_listado_level_3.Nombre AS Ubicacion_lvl_3,
+ubicacion_listado_level_4.Nombre AS Ubicacion_lvl_4,
+ubicacion_listado_level_5.Nombre AS Ubicacion_lvl_5,
+
+clientes_listado.Nombre AS Cliente
+
+FROM `maquinas_listado`
+LEFT JOIN `core_estados`                  ON core_estados.idEstado                 = maquinas_listado.idEstado
+LEFT JOIN `core_sistemas_opciones` ops1   ON ops1.idOpciones                       = maquinas_listado.idConfig_1
+LEFT JOIN `core_sistemas_opciones` ops2   ON ops2.idOpciones                       = maquinas_listado.idConfig_2
+LEFT JOIN `core_sistemas_opciones` ops3   ON ops3.idOpciones                       = maquinas_listado.idConfig_3
+LEFT JOIN `ubicacion_listado`             ON ubicacion_listado.idUbicacion         = maquinas_listado.idUbicacion
+LEFT JOIN `ubicacion_listado_level_1`     ON ubicacion_listado_level_1.idLevel_1   = maquinas_listado.idUbicacion_lvl_1
+LEFT JOIN `ubicacion_listado_level_2`     ON ubicacion_listado_level_2.idLevel_2   = maquinas_listado.idUbicacion_lvl_2
+LEFT JOIN `ubicacion_listado_level_3`     ON ubicacion_listado_level_3.idLevel_3   = maquinas_listado.idUbicacion_lvl_3
+LEFT JOIN `ubicacion_listado_level_4`     ON ubicacion_listado_level_4.idLevel_4   = maquinas_listado.idUbicacion_lvl_4
+LEFT JOIN `ubicacion_listado_level_5`     ON ubicacion_listado_level_5.idLevel_5   = maquinas_listado.idUbicacion_lvl_5
+LEFT JOIN `clientes_listado`              ON clientes_listado.idCliente            = maquinas_listado.idCliente
+
+WHERE maquinas_listado.idMaquina={$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);
+
+if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
+	//Se crean las variables
+	$nmax = 15;
+	$z = '';
+	$leftjoin = '';
+	$orderby = '';
+	for ($i = 1; $i <= $nmax; $i++) {
+		//consulta
+		$z .= ',maquinas_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
+		$z .= ',maquinas_listado_level_'.$i.'.Codigo AS LVL_'.$i.'_Codigo';
+		$z .= ',maquinas_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
+		$z .= ',maquinas_listado_level_'.$i.'.idUtilizable AS LVL_'.$i.'_idUtilizable';
+		$z .= ',maquinas_listado_level_'.$i.'.idLicitacion AS LVL_'.$i.'_idLicitacion';
+		$z .= ',maquinas_listado_level_'.$i.'.tabla AS LVL_'.$i.'_table';
+		$z .= ',maquinas_listado_level_'.$i.'.table_value AS LVL_'.$i.'_table_value';
+		$z .= ',maquinas_listado_level_'.$i.'.Direccion_img AS LVL_'.$i.'_imagen ';
+		//Joins
+		$xx = $i + 1;
+		if($xx<=$nmax){
+			$leftjoin .= ' LEFT JOIN `maquinas_listado_level_'.$xx.'`   ON maquinas_listado_level_'.$xx.'.idLevel_'.$i.'    = maquinas_listado_level_'.$i.'.idLevel_'.$i;
+		}
+		//ORDER BY
+		$orderby .= ', maquinas_listado_level_'.$i.'.Codigo ASC';
+	}
+
+	//se hace la consulta
+	$arrItemizado = array();
+	$query = "SELECT
+	maquinas_listado_level_1.idLevel_1 AS bla
+	".$z."
+	FROM `maquinas_listado_level_1`
+	".$leftjoin."
+	WHERE maquinas_listado_level_1.idMaquina={$_GET['view']}
+	ORDER BY maquinas_listado_level_1.Codigo ASC ".$orderby."
+
+	";
+	//Consulta
+	$resultado = mysqli_query ($dbConn, $query);
+	//Si ejecuto correctamente la consulta
+	if(!$resultado){
+		
+		//variables
+		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+		//generar log
+		error_log("========================================================================================================================================", 0);
+		error_log("Usuario: ". $NombreUsr, 0);
+		error_log("Transaccion: ". $Transaccion, 0);
+		error_log("-------------------------------------------------------------------", 0);
+		error_log("Error code: ". mysqli_errno($dbConn), 0);
+		error_log("Error description: ". mysqli_error($dbConn), 0);
+		error_log("Error query: ". $query, 0);
+		error_log("-------------------------------------------------------------------", 0);
+						
+	}
+	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	array_push( $arrItemizado,$row );
+	}
+
+	/*********************************************************************/
+	// Se trae un listado con todos los tipos de componentes
+	$arrTipos = array();
+	$query = "SELECT idUtilizable, Nombre
+	FROM `core_maquinas_tipo_componente`
+	ORDER BY idUtilizable ASC";
+	//Consulta
+	$resultado = mysqli_query ($dbConn, $query);
+	//Si ejecuto correctamente la consulta
+	if(!$resultado){
+		
+		//variables
+		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+		//generar log
+		error_log("========================================================================================================================================", 0);
+		error_log("Usuario: ". $NombreUsr, 0);
+		error_log("Transaccion: ". $Transaccion, 0);
+		error_log("-------------------------------------------------------------------", 0);
+		error_log("Error code: ". mysqli_errno($dbConn), 0);
+		error_log("Error description: ". mysqli_error($dbConn), 0);
+		error_log("Error query: ". $query, 0);
+		error_log("-------------------------------------------------------------------", 0);
+						
+	}
+	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	array_push( $arrTipos,$row );
+	}
+	//Se crea el arreglo
+	$TipoMaq = array();
+	foreach($arrTipos as $tipo) {
+		$TipoMaq[$tipo['idUtilizable']]['idUtilizable']  = $tipo['idUtilizable'];
+		$TipoMaq[$tipo['idUtilizable']]['Nombre']        = $tipo['Nombre'];
+	}
+	/*********************************************************************/
+	//Verifico el tipo de usuario que esta ingresando
+	$z="WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+	//Se crea el arreglo
+	$Trabajo = array();
+	//Creo el arreglo para saber los datos de las licitaciones
+	for ($i = 1; $i <= $nmax; $i++) {
+		// Se trae un listado con todos los datos
+		$arrTrabajo = array();
+		$query = "SELECT idLevel_".$i." AS lvl, idLicitacion, Nombre, Codigo
+		FROM `licitacion_listado_level_".$i."` ".$z."
+		ORDER BY Codigo ASC, Nombre ASC";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			
+			//variables
+			$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+			//generar log
+			error_log("========================================================================================================================================", 0);
+			error_log("Usuario: ". $NombreUsr, 0);
+			error_log("Transaccion: ". $Transaccion, 0);
+			error_log("-------------------------------------------------------------------", 0);
+			error_log("Error code: ". mysqli_errno($dbConn), 0);
+			error_log("Error description: ". mysqli_error($dbConn), 0);
+			error_log("Error query: ". $query, 0);
+			error_log("-------------------------------------------------------------------", 0);
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrTrabajo,$row );
+		}
+		//se guardan los datos
+		foreach($arrTrabajo as $trab) {
+			$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Nombre']  = $trab['Nombre'];
+			$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Codigo']  = $trab['Codigo'];
+		}
+		
+	}
+
+
+	/*********************************************************************/
+	$array3d = array();
+	foreach($arrItemizado as $key) {
+		
+		//Creo Variables para la rejilla
+		for ($i = 1; $i <= $nmax; $i++) {
+			
+			//creo la variable vacia
+			$d[$i]  = '';   
+			$n[$i]  = '';   
+			$c[$i]  = '';   
+			$u[$i]  = '';   
+			$x[$i]  = '';   
+			$y[$i]  = '';   
+			$m[$i]  = '';   
+			$t[$i]  = '';   
+				
+			//si el dato solicitado tiene valores sobreescribe la variable
+			if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){                      $d[$i]  = $key['LVL_'.$i.'_id']; }  
+			if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){              $n[$i]  = $key['LVL_'.$i.'_Nombre'];}   
+			if(isset($key['LVL_'.$i.'_Codigo'])&&$key['LVL_'.$i.'_Codigo']!=''){              $c[$i]  = $key['LVL_'.$i.'_Codigo'];}
+			if(isset($key['LVL_'.$i.'_idUtilizable'])&&$key['LVL_'.$i.'_idUtilizable']!=''){  $u[$i]  = $key['LVL_'.$i.'_idUtilizable'];}
+			if(isset($key['LVL_'.$i.'_idLicitacion'])&&$key['LVL_'.$i.'_idLicitacion']!=''){  $x[$i]  = $key['LVL_'.$i.'_idLicitacion'];}
+			if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){                $y[$i]  = $key['LVL_'.$i.'_table'];}
+			if(isset($key['LVL_'.$i.'_table_value'])&&$key['LVL_'.$i.'_table_value']!=''){    $m[$i]  = $key['LVL_'.$i.'_table_value'];}
+			if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){              $t[$i]  = $key['LVL_'.$i.'_imagen'];}
+			
+		}
+		
+
+		if( $d['1']!=''){
+			$array3d[$d['1']]['id']         = $d['1'];
+			$array3d[$d['1']]['Nombre']     = $n['1'];
+			$array3d[$d['1']]['Codigo']     = $c['1'];
+			$array3d[$d['1']]['Tipo']       = $u['1'];
+			$array3d[$d['1']]['Licitacion'] = $x['1'];
+			$array3d[$d['1']]['Tabla']      = $y['1'];
+			$array3d[$d['1']]['Valor']      = $m['1'];
+			$array3d[$d['1']]['Imagen']     = $t['1'];
+		}
+		if( $d['2']!=''){
+			$array3d[$d['1']][$d['2']]['id']         = $d['2'];
+			$array3d[$d['1']][$d['2']]['Nombre']     = $n['2'];
+			$array3d[$d['1']][$d['2']]['Codigo']     = $c['2'];
+			$array3d[$d['1']][$d['2']]['Tipo']       = $u['2'];
+			$array3d[$d['1']][$d['2']]['Licitacion'] = $x['2'];
+			$array3d[$d['1']][$d['2']]['Tabla']      = $y['2'];
+			$array3d[$d['1']][$d['2']]['Valor']      = $m['2'];
+			$array3d[$d['1']][$d['2']]['Imagen']     = $t['2'];
+		}
+		if( $d['3']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']]['id']         = $d['3'];
+			$array3d[$d['1']][$d['2']][$d['3']]['Nombre']     = $n['3'];
+			$array3d[$d['1']][$d['2']][$d['3']]['Codigo']     = $c['3'];
+			$array3d[$d['1']][$d['2']][$d['3']]['Tipo']       = $u['3'];
+			$array3d[$d['1']][$d['2']][$d['3']]['Licitacion'] = $x['3'];
+			$array3d[$d['1']][$d['2']][$d['3']]['Tabla']      = $y['3'];
+			$array3d[$d['1']][$d['2']][$d['3']]['Valor']      = $m['3'];
+			$array3d[$d['1']][$d['2']][$d['3']]['Imagen']     = $t['3'];
+		}
+		if( $d['4']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']]['id']         = $d['4'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']]['Nombre']     = $n['4'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']]['Codigo']     = $c['4'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']]['Tipo']       = $u['4'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']]['Licitacion'] = $x['4'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']]['Tabla']      = $y['4'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']]['Valor']      = $m['4'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']]['Imagen']     = $t['4'];
+		}
+		if( $d['5']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['id']         = $d['5'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Nombre']     = $n['5'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Codigo']     = $c['5'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Tipo']       = $u['5'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Licitacion'] = $x['5'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Tabla']      = $y['5'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Valor']      = $m['5'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Imagen']     = $t['5'];
+		}
+		if( $d['6']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']]['id']         = $d['6'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']]['Nombre']     = $n['6'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']]['Codigo']     = $c['6'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']]['Tipo']       = $u['6'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']]['Licitacion'] = $x['6'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']]['Tabla']      = $y['6'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']]['Valor']      = $m['6'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']]['Imagen']     = $t['6'];
+		}
+		if( $d['7']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']]['id']         = $d['7'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']]['Nombre']     = $n['7'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']]['Codigo']     = $c['7'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']]['Tipo']       = $u['7'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']]['Licitacion'] = $x['7'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']]['Tabla']      = $y['7'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']]['Valor']      = $m['7'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']]['Imagen']     = $t['7'];
+		}
+		if( $d['8']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']]['id']         = $d['8'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']]['Nombre']     = $n['8'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']]['Codigo']     = $c['8'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']]['Tipo']       = $u['8'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']]['Licitacion'] = $x['8'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']]['Tabla']      = $y['8'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']]['Valor']      = $m['8'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']]['Imagen']     = $t['8'];
+		}
+		if( $d['9']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']]['id']         = $d['9'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']]['Nombre']     = $n['9'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']]['Codigo']     = $c['9'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']]['Tipo']       = $u['9'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']]['Licitacion'] = $x['9'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']]['Tabla']      = $y['9'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']]['Valor']      = $m['9'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']]['Imagen']     = $t['9'];
+		}
+		if( $d['10']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']]['id']         = $d['10'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']]['Nombre']     = $n['10'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']]['Codigo']     = $c['10'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']]['Tipo']       = $u['10'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']]['Licitacion'] = $x['10'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']]['Tabla']      = $y['10'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']]['Valor']      = $m['10'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']]['Imagen']     = $t['10'];
+		}
+		if( $d['11']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']]['id']         = $d['11'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']]['Nombre']     = $n['11'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']]['Codigo']     = $c['11'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']]['Tipo']       = $u['11'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']]['Licitacion'] = $x['11'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']]['Tabla']      = $y['11'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']]['Valor']      = $m['11'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']]['Imagen']     = $t['11'];
+		}
+		if( $d['12']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']]['id']         = $d['12'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']]['Nombre']     = $n['12'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']]['Codigo']     = $c['12'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']]['Tipo']       = $u['12'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']]['Licitacion'] = $x['12'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']]['Tabla']      = $y['12'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']]['Valor']      = $m['12'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']]['Imagen']     = $t['12'];
+		}
+		if( $d['13']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']]['id']         = $d['13'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']]['Nombre']     = $n['13'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']]['Codigo']     = $c['13'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']]['Tipo']       = $u['13'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']]['Licitacion'] = $x['13'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']]['Tabla']      = $y['13'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']]['Valor']      = $m['13'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']]['Imagen']     = $t['13'];
+		}
+		if( $d['14']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']]['id']         = $d['14'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']]['Nombre']     = $n['14'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']]['Codigo']     = $c['14'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']]['Tipo']       = $u['14'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']]['Licitacion'] = $x['14'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']]['Tabla']      = $y['14'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']]['Valor']      = $m['14'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']]['Imagen']     = $t['14'];
+		}
+		if( $d['15']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']]['id']         = $d['15'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']]['Nombre']     = $n['15'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']]['Codigo']     = $c['15'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']]['Tipo']       = $u['15'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']]['Licitacion'] = $x['15'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']]['Tabla']      = $y['15'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']]['Valor']      = $m['15'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']]['Imagen']     = $t['15'];
+		}
+		/*if( $d['16']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']]['id']         = $d['16'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']]['Nombre']     = $n['16'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']]['Codigo']     = $c['16'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']]['Tipo']       = $u['16'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']]['Licitacion'] = $x['16'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']]['Tabla']      = $y['16'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']]['Valor']      = $m['16'];
+		}
+		if( $d['17']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']]['id']         = $d['17'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']]['Nombre']     = $n['17'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']]['Codigo']     = $c['17'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']]['Tipo']       = $u['17'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']]['Licitacion'] = $x['17'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']]['Tabla']      = $y['17'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']]['Valor']      = $m['17'];
+		}
+		if( $d['18']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']]['id']         = $d['18'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']]['Nombre']     = $n['18'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']]['Codigo']     = $c['18'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']]['Tipo']       = $u['18'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']]['Licitacion'] = $x['18'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']]['Tabla']      = $y['18'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']]['Valor']      = $m['18'];
+		}
+		if( $d['19']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']]['id']         = $d['19'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']]['Nombre']     = $n['19'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']]['Codigo']     = $c['19'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']]['Tipo']       = $u['19'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']]['Licitacion'] = $x['19'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']]['Tabla']      = $y['19'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']]['Valor']      = $m['19'];
+		}
+		if( $d['20']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']]['id']         = $d['20'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']]['Nombre']     = $n['20'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']]['Codigo']     = $c['20'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']]['Tipo']       = $u['20'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']]['Licitacion'] = $x['20'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']]['Tabla']      = $y['20'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']]['Valor']      = $m['20'];
+		}
+		if( $d['21']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']]['id']         = $d['21'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']]['Nombre']     = $n['21'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']]['Codigo']     = $c['21'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']]['Tipo']       = $u['21'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']]['Licitacion'] = $x['21'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']]['Tabla']      = $y['21'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']]['Valor']      = $m['21'];
+		}
+		if( $d['22']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']]['id']         = $d['22'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']]['Nombre']     = $n['22'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']]['Codigo']     = $c['22'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']]['Tipo']       = $u['22'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']]['Licitacion'] = $x['22'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']]['Tabla']      = $y['22'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']]['Valor']      = $m['22'];
+		}
+		if( $d['23']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']]['id']         = $d['23'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']]['Nombre']     = $n['23'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']]['Codigo']     = $c['23'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']]['Tipo']       = $u['23'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']]['Licitacion'] = $x['23'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']]['Tabla']      = $y['23'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']]['Valor']      = $m['23'];
+		}
+		if( $d['24']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']]['id']         = $d['24'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']]['Nombre']     = $n['24'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']]['Codigo']     = $c['24'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']]['Tipo']       = $u['24'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']]['Licitacion'] = $x['24'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']]['Tabla']      = $y['24'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']]['Valor']      = $m['24'];
+		}
+		if( $d['25']!=''){
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['id']         = $d['25'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Nombre']     = $n['25'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Codigo']     = $c['25'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Tipo']       = $u['25'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Licitacion'] = $x['25'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Tabla']      = $y['25'];
+			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Valor']      = $m['25'];
+		}*/
+		
+		
+		
+	}
+
+
+
+
+
+
+
+	function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,$location, $nmax)
+	{
+		$lv++;
+		if($lv==1){
+			echo '<ul class="tree">';
+		}else{
+			echo '<ul style="padding-left: 20px;">';
+		}
+		
+		foreach ($array as $key => $value){
+			//Rearmo la ubicacion de acuerdo a la profundidad
+			if (isset($value['id'])) {
+				$loc = $location.'&lv_'.$lv.'='.$value['id'];
+			}else{
+				$loc = $location;
+			}
+			
+			if (isset($value['Nombre'])) {
+				echo '<li><div class="blum">';
+					echo '<div class="pull-left">';
+						if(isset($value['Imagen'])&&$value['Imagen']!=''){echo '<div class="btn-group" style="width: 35px;" ><a href="#" title="Click Preview Imagen" class="btn btn-primary btn-sm tooltip pop" src="upload/'.$value['Imagen'].'"><i class="fa fa-picture-o"></i></a></div>';}
+						echo '<strong>'.$TipoMaq[$value['Tipo']]['Nombre'].':</strong> ';
+						if(isset($value['Codigo'])&&$value['Codigo']!=''){echo ' '.$value['Codigo'].' - ';}
+						echo $value['Nombre'];
+						if ($value['Tipo']==2&&isset($Trabajo[$value['Licitacion']][$value['Tabla']][$value['Valor']]['Nombre'])){
+							echo '<strong> (F. Trabajo: ';
+							if(isset($Trabajo[$value['Licitacion']][$value['Tabla']][$value['Valor']]['Codigo'])&&$Trabajo[$value['Licitacion']][$value['Tabla']][$value['Valor']]['Codigo']!=''){
+								echo $Trabajo[$value['Licitacion']][$value['Tabla']][$value['Valor']]['Codigo'].' - ';
+							}
+							echo $Trabajo[$value['Licitacion']][$value['Tabla']][$value['Valor']]['Nombre'];
+							echo ')</strong>';
+						}	
+					echo '</div>';			
+
+								
+					echo '<div class="clearfix"></div>';
+				echo '</div>';
+			}
+			if (!empty($value) && is_array($value)){
+				
+				echo arrayToUL($value, $TipoMaq, $Trabajo, $lv, $rowlevel,$loc, $nmax);
+			}
+			echo '</li>';
+		}
+		echo '</ul>';
+	}
+//fin de la condicion
+}
+?>
+
+
+
+
+
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div>
+			<h5>Ver Datos de la <?php echo $x_column_maquina_sing; ?></h5>	
+		</header>
+		<div id="div-3" class="tab-content">
+			
+			<div class="tab-pane fade active in" id="basicos">
+				<div class="wmd-panel">
+					<div class="col-sm-4">
+						<?php if ($rowdata['Direccion_img']=='') { ?>
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/maquina.jpg">
+						<?php }else{  ?>
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+						<?php }?>
+					</div>
+					<div class="col-sm-8">
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+						<p class="text-muted">
+							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+								<strong>Cliente : </strong><?php echo $rowdata['Cliente']; ?><br/>
+							<?php }?>
+							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
+							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
+							<strong>Modelo : </strong><?php echo $rowdata['Modelo']; ?><br/>
+							<strong>Serie : </strong><?php echo $rowdata['Serie']; ?><br/>
+							<strong>Fabricante : </strong><?php echo $rowdata['Fabricante']; ?><br/>
+							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
+							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
+							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){ echo '<strong>'.$x_column_ubicacion.' : </strong>'.$rowdata['Ubicacion'];}?>
+								<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_1'];}?>
+								<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_2'];}?>
+								<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_3'];}?>
+								<?php if(isset($rowdata['Ubicacion_lvl_4'])&&$rowdata['Ubicacion_lvl_4']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_4'];}?>
+								<?php if(isset($rowdata['Ubicacion_lvl_5'])&&$rowdata['Ubicacion_lvl_5']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_5'];}?>
+							<?php }?>	
+						</p>
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
+						<p class="text-muted">
+							<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
+							<strong>Matriz de Analisis: </strong><?php echo $rowdata['Matriz']; ?><br/>
+							<strong>Dependencia Cliente: </strong><?php echo $rowdata['DependenciaCliente']; ?>
+						</p>
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
+						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
+						<p class="text-muted">
+							<?php 
+							//Ficha Tecnica
+							if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+								echo '<a href="1download.php?dir=upload&file='.$rowdata['FichaTecnica'].'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download"></i> Descargar Ficha Tecnica</a>';
+							}
+							//Hoja de seguridad
+							if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+								echo '<a href="1download.php?dir=upload&file='.$rowdata['HDS'].'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download"></i> Descargar Hoja de Seguridad</a>';
+							}
+							?>
+						
+						</p>
+						
+
+						
+					</div>	
+					<div class="clearfix"></div>
+					
+					<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						<table id="dataTable" class="table table-bordered table-condensed dataTable">
+							<tbody role="alert" aria-live="polite" aria-relevant="all">
+								<tr>
+									<td colspan="2" style="background-color: #ccc;">Componentes</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div class="clearfix"></div>  	
+										<?php //Se imprime el arbol
+										echo arrayToUL($array3d, $TipoMaq, $Trabajo, 0, '','', $nmax);
+										?>
+										
+										<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">              
+													<div class="modal-body">
+														<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+														<img src="" class="imagepreview" style="width: 100%;padding: 15px;" >
+													</div>
+												</div>
+											</div>
+										</div>
+										<script>
+											$(function() {
+													$('.pop').on('click', function() {
+														$('.imagepreview').attr('src',$(this).attr('src'));
+														$('#imagemodal').modal('show');   
+													});		
+											});
+										</script>
+										
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					<?php } ?>
+					
+					
+				</div>
+			</div>
+		
+			
+		</div>
+	</div>
+</div>	
+
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
+	<div class="clearfix"></div>
+		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="clearfix"></div>
+	</div>
+<?php } ?>
+
+
+<script src="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo DB_SITE ?>/LIB_assets/lib/screenfull/screenfull.js"></script> 
+<script src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
+<script src="<?php echo DB_SITE ?>/LIB_assets/js/main.min.js"></script>
+		
+	</body>
+</html>

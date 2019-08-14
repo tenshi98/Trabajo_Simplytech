@@ -1,0 +1,531 @@
+<?php
+/*******************************************************************************************************************/
+/*                                              Bloque de seguridad                                                */
+/*******************************************************************************************************************/
+if( ! defined('XMBCXRXSKGC')) {
+    die('No tienes acceso a esta carpeta o archivo.');
+}
+/*******************************************************************************************************************/
+/*                                        Se traspasan los datos a variables                                       */
+/*******************************************************************************************************************/
+
+	//Traspaso de valores input a variables
+	if ( !empty($_POST['idHijos']) )         $idHijos       = $_POST['idHijos'];
+	if ( !empty($_POST['idApoderado']) )     $idApoderado   = $_POST['idApoderado'];
+	if ( !empty($_POST['Nombre']) )          $Nombre        = $_POST['Nombre'];
+	if ( !empty($_POST['ApellidoPat']) )     $ApellidoPat   = $_POST['ApellidoPat'];
+	if ( !empty($_POST['ApellidoMat']) )     $ApellidoMat   = $_POST['ApellidoMat'];
+	if ( !empty($_POST['idSexo']) )          $idSexo        = $_POST['idSexo'];
+	if ( !empty($_POST['FNacimiento']) )     $FNacimiento   = $_POST['FNacimiento'];
+	if ( !empty($_POST['idPlan']) )          $idPlan        = $_POST['idPlan'];
+	if ( !empty($_POST['idVehiculo']) )      $idVehiculo    = $_POST['idVehiculo'];
+	
+/*******************************************************************************************************************/
+/*                                      Verificacion de los datos obligatorios                                     */
+/*******************************************************************************************************************/
+
+	//limpio y separo los datos de la cadena de comprobacion
+	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
+	$piezas = explode(",", $form_obligatorios);
+	//recorro los elementos
+	foreach ($piezas as $valor) {
+		//veo si existe el dato solicitado y genero el error
+		switch ($valor) {
+			case 'idHijos':        if(empty($idHijos)){       $error['idHijos']        = 'error/No ha ingresado el id';}break;
+			case 'idApoderado':    if(empty($idApoderado)){   $error['idApoderado']    = 'error/No ha seleccionado el apoderado';}break;
+			case 'Nombre':         if(empty($Nombre)){        $error['Nombre']         = 'error/No ha ingresado el nombre';}break;
+			case 'ApellidoPat':    if(empty($ApellidoPat)){   $error['ApellidoPat']    = 'error/No ha ingresado el apellido paterno';}break;
+			case 'ApellidoMat':    if(empty($ApellidoMat)){   $error['ApellidoMat']    = 'error/No ha ingresado el apellido materno';}break;
+			case 'idSexo':         if(empty($idSexo)){        $error['idSexo']         = 'error/No ha seleccionado el sexo';}break;
+			case 'FNacimiento':    if(empty($FNacimiento)){   $error['FNacimiento']    = 'error/No ha ingresado la fecha de nacimiento';}break;
+			case 'idPlan':         if(empty($idPlan)){        $error['idPlan']         = 'error/No ha seleccionado el plan';}break;
+			case 'idVehiculo':     if(empty($idVehiculo)){    $error['idVehiculo']     = 'error/No ha seleccionado el vehiculo';}break;
+			
+		}
+	}
+
+/*******************************************************************************************************************/
+/*                                            Se ejecutan las instrucciones                                        */
+/*******************************************************************************************************************/
+	//ejecuto segun la funcion
+	switch ($form_trabajo) {
+/*******************************************************************************************************************/		
+		case 'insert':
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			//Se verifica si el dato existe
+			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idApoderado)){
+				$ndata_1 = db_select_nrows ('Nombre', 'apoderados_listado_hijos', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idApoderado='".$idApoderado."'", $dbConn);
+			}
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
+			/*******************************************************************/
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				//se verifica si la imagen existe
+				if (!empty($_FILES['Direccion_img']['name'])){
+						
+					if ($_FILES["Direccion_img"]["error"] > 0){ 
+						$error['Direccion_img']     = 'error/Ha ocurrido un error'; 
+					} else {
+						//Se verifican las extensiones de los archivos
+						$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
+						//Se verifica que el archivo subido no exceda los 100 kb
+						$limite_kb = 1000;
+						//Sufijo
+						$sufijo = 'hijo_img_'.$idApoderado.'_';
+									  
+						if (in_array($_FILES['Direccion_img']['type'], $permitidos) && $_FILES['Direccion_img']['size'] <= $limite_kb * 1024){
+							//Se especifica carpeta de destino
+							$ruta = "upload/".$sufijo.$_FILES['Direccion_img']['name'];
+							//Se verifica que el archivo un archivo con el mismo nombre no existe
+							if (!file_exists($ruta)){
+								//Se mueve el archivo a la carpeta previamente configurada
+								//$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], $ruta);
+								$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], "upload/xxxsxx_".$_FILES['Direccion_img']['name']);
+								if ($move_result){
+									
+									//se selecciona la imagen
+									switch ($_FILES['Direccion_img']['type']) {
+										case 'image/jpg':
+											$imgBase = imagecreatefromjpeg('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+											break;
+										case 'image/jpeg':
+											$imgBase = imagecreatefromjpeg('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+											break;
+										case 'image/gif':
+											$imgBase = imagecreatefromgif('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+											break;
+										case 'image/png':
+											$imgBase = imagecreatefrompng('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+											break;
+									}
+										
+									//se reescala la imagen en caso de ser necesario
+									$imgBase_width = imagesx( $imgBase );
+									$imgBase_height = imagesy( $imgBase );
+										
+									//Se establece el tamaño maximo
+									$max_width  = 640;
+									$max_height = 640;
+
+									if ($imgBase_width > $imgBase_height) {
+										if($imgBase_width < $max_width){
+											$newwidth = $imgBase_width;
+										}else{
+											$newwidth = $max_width;	
+										}
+										$divisor = $imgBase_width / $newwidth;
+										$newheight = floor( $imgBase_height / $divisor);
+									}else {
+										if($imgBase_height < $max_height){
+											$newheight = $imgBase_height;
+										}else{
+											$newheight =  $max_height;
+										} 
+										$divisor = $imgBase_height / $newheight;
+										$newwidth = floor( $imgBase_width / $divisor );
+									}
+
+									$imgBase = imagescale($imgBase, $newwidth, $newheight);
+
+									//se establece la calidad del archivo
+									$quality = 75;
+										
+									//se crea la imagen
+									imagejpeg($imgBase, $ruta, $quality);
+										
+									//se elimina la imagen base
+									try {
+										if(!is_writable('upload/xxxsxx_'.$_FILES['Direccion_img']['name'])){
+											//throw new Exception('File not writable');
+										}else{
+											unlink('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+										}
+									}catch(Exception $e) { 
+										//guardar el dato en un archivo log
+									}
+									//se eliminan las imagenes de la memoria
+									imagedestroy($imgBase);
+							
+									//filtros
+									if(isset($idApoderado) && $idApoderado != ''){    $a  = "'".$idApoderado."'" ;    }else{$a  ="''";}
+									if(isset($Nombre) && $Nombre != ''){              $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
+									if(isset($ApellidoPat) && $ApellidoPat != ''){    $a .= ",'".$ApellidoPat."'" ;   }else{$a .=",''";}
+									if(isset($ApellidoMat) && $ApellidoMat != ''){    $a .= ",'".$ApellidoMat."'" ;   }else{$a .=",''";}
+									if(isset($idSexo) && $idSexo != ''){              $a .= ",'".$idSexo."'" ;        }else{$a .=",''";}
+									if(isset($FNacimiento) && $FNacimiento != ''){    $a .= ",'".$FNacimiento."'" ;   }else{$a .=",''";}
+									if(isset($idPlan) && $idPlan != ''){              $a .= ",'".$idPlan."'" ;        }else{$a .=",''";}
+									if(isset($idVehiculo) && $idVehiculo != ''){      $a .= ",'".$idVehiculo."'" ;        }else{$a .=",''";}
+									$a .= ",'".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+											
+									// inserto los datos de registro en la db
+									$query  = "INSERT INTO `apoderados_listado_hijos` (idApoderado, Nombre, ApellidoPat, ApellidoMat,
+									idSexo, FNacimiento, idPlan, idVehiculo, Direccion_img ) 
+									VALUES ({$a} )";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if($resultado){
+										
+										header( 'Location: '.$location.'&created=true' );
+										die;	
+										
+									//si da error, guardar en el log de errores una copia
+									}else{
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									}
+													
+								} else {
+									$error['Direccion_img']     = 'error/Ocurrio un error al mover el archivo'; 
+								}
+							} else {
+								$error['Direccion_img']     = 'error/El archivo '.$_FILES['Direccion_img']['name'].' ya existe'; 
+							}
+						} else {
+							$error['Direccion_img']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+						}
+					}
+				}else{
+					
+					//filtros
+					if(isset($idApoderado) && $idApoderado != ''){    $a  = "'".$idApoderado."'" ;    }else{$a  ="''";}
+					if(isset($Nombre) && $Nombre != ''){              $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
+					if(isset($ApellidoPat) && $ApellidoPat != ''){    $a .= ",'".$ApellidoPat."'" ;   }else{$a .=",''";}
+					if(isset($ApellidoMat) && $ApellidoMat != ''){    $a .= ",'".$ApellidoMat."'" ;   }else{$a .=",''";}
+					if(isset($idSexo) && $idSexo != ''){              $a .= ",'".$idSexo."'" ;        }else{$a .=",''";}
+					if(isset($FNacimiento) && $FNacimiento != ''){    $a .= ",'".$FNacimiento."'" ;   }else{$a .=",''";}
+					if(isset($idPlan) && $idPlan != ''){              $a .= ",'".$idPlan."'" ;        }else{$a .=",''";}
+					if(isset($idVehiculo) && $idVehiculo != ''){      $a .= ",'".$idVehiculo."'" ;        }else{$a .=",''";}
+							
+					// inserto los datos de registro en la db
+					$query  = "INSERT INTO `apoderados_listado_hijos` (idApoderado, Nombre, ApellidoPat, ApellidoMat,
+					idSexo, FNacimiento, idPlan, idVehiculo ) 
+					VALUES ({$a} )";
+					//Consulta
+					$resultado = mysqli_query ($dbConn, $query);
+					//Si ejecuto correctamente la consulta
+					if($resultado){
+						
+						header( 'Location: '.$location.'&created=true' );
+						die;
+						
+					//si da error, guardar en el log de errores una copia
+					}else{
+						//Genero numero aleatorio
+						$vardata = genera_password(8,'alfanumerico');
+						
+						//Guardo el error en una variable temporal
+						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+					}
+					
+				}					
+				
+			}
+	
+		break;
+/*******************************************************************************************************************/		
+		case 'update':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			//Se verifica si el dato existe
+			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idApoderado)&&isset($idHijos)){
+				$ndata_1 = db_select_nrows ('Nombre', 'apoderados_listado_hijos', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idApoderado='".$idApoderado."' AND idHijos!='".$idHijos."'", $dbConn);
+			}
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
+			/*******************************************************************/
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				
+				//se verifica si la imagen existe
+				if (!empty($_FILES['Direccion_img']['name'])){
+						
+					if ($_FILES["Direccion_img"]["error"] > 0){ 
+						$error['Direccion_img']     = 'error/Ha ocurrido un error'; 
+					} else {
+						//Se verifican las extensiones de los archivos
+						$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
+						//Se verifica que el archivo subido no exceda los 100 kb
+						$limite_kb = 1000;
+						//Sufijo
+						$sufijo = 'hijo_img_'.$idApoderado.'_';
+									  
+						if (in_array($_FILES['Direccion_img']['type'], $permitidos) && $_FILES['Direccion_img']['size'] <= $limite_kb * 1024){
+							//Se especifica carpeta de destino
+							$ruta = "upload/".$sufijo.$_FILES['Direccion_img']['name'];
+							//Se verifica que el archivo un archivo con el mismo nombre no existe
+							if (!file_exists($ruta)){
+								//Se mueve el archivo a la carpeta previamente configurada
+								//$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], $ruta);
+								$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], "upload/xxxsxx_".$_FILES['Direccion_img']['name']);
+								if ($move_result){
+									
+									//se selecciona la imagen
+									switch ($_FILES['Direccion_img']['type']) {
+										case 'image/jpg':
+											$imgBase = imagecreatefromjpeg('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+											break;
+										case 'image/jpeg':
+											$imgBase = imagecreatefromjpeg('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+											break;
+										case 'image/gif':
+											$imgBase = imagecreatefromgif('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+											break;
+										case 'image/png':
+											$imgBase = imagecreatefrompng('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+											break;
+									}
+										
+									//se reescala la imagen en caso de ser necesario
+									$imgBase_width = imagesx( $imgBase );
+									$imgBase_height = imagesy( $imgBase );
+										
+									//Se establece el tamaño maximo
+									$max_width  = 640;
+									$max_height = 640;
+
+									if ($imgBase_width > $imgBase_height) {
+										if($imgBase_width < $max_width){
+											$newwidth = $imgBase_width;
+										}else{
+											$newwidth = $max_width;	
+										}
+										$divisor = $imgBase_width / $newwidth;
+										$newheight = floor( $imgBase_height / $divisor);
+									}else {
+										if($imgBase_height < $max_height){
+											$newheight = $imgBase_height;
+										}else{
+											$newheight =  $max_height;
+										} 
+										$divisor = $imgBase_height / $newheight;
+										$newwidth = floor( $imgBase_width / $divisor );
+									}
+
+									$imgBase = imagescale($imgBase, $newwidth, $newheight);
+
+									//se establece la calidad del archivo
+									$quality = 75;
+										
+									//se crea la imagen
+									imagejpeg($imgBase, $ruta, $quality);
+										
+									//se elimina la imagen base
+									try {
+										if(!is_writable('upload/xxxsxx_'.$_FILES['Direccion_img']['name'])){
+											//throw new Exception('File not writable');
+										}else{
+											unlink('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+										}
+									}catch(Exception $e) { 
+										//guardar el dato en un archivo log
+									}
+									//se eliminan las imagenes de la memoria
+									imagedestroy($imgBase);
+							
+									//Filtros
+									$a = "idHijos='".$idHijos."'" ;
+									if(isset($idApoderado) && $idApoderado != ''){      $a .= ",idApoderado='".$idApoderado."'" ;}
+									if(isset($Nombre) && $Nombre != ''){                $a .= ",Nombre='".$Nombre."'" ;}
+									if(isset($ApellidoPat) && $ApellidoPat != ''){      $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
+									if(isset($ApellidoMat) && $ApellidoMat != ''){      $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
+									if(isset($idSexo) && $idSexo != ''){                $a .= ",idSexo='".$idSexo."'" ;}
+									if(isset($FNacimiento) && $FNacimiento != ''){      $a .= ",FNacimiento='".$FNacimiento."'" ;}	
+									if(isset($idPlan) && $idPlan != ''){                $a .= ",idPlan='".$idPlan."'" ;}						
+									if(isset($idVehiculo) && $idVehiculo != ''){        $a .= ",idVehiculo='".$idVehiculo."'" ;}						
+									$a .= ",Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+										
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `apoderados_listado_hijos` SET ".$a." WHERE idHijos = '$idHijos'";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if($resultado){
+										
+										header( 'Location: '.$location.'&edited=true' );
+										die;
+										
+									//si da error, guardar en el log de errores una copia
+									}else{
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+								} else {
+									$error['Direccion_img']     = 'error/Ocurrio un error al mover el archivo'; 
+								}
+							} else {
+								$error['Direccion_img']     = 'error/El archivo '.$_FILES['Direccion_img']['name'].' ya existe'; 
+							}
+						} else {
+							$error['Direccion_img']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+						}
+					}
+				}else{
+					
+					//Filtros
+					$a = "idHijos='".$idHijos."'" ;
+					if(isset($idApoderado) && $idApoderado != ''){      $a .= ",idApoderado='".$idApoderado."'" ;}
+					if(isset($Nombre) && $Nombre != ''){                $a .= ",Nombre='".$Nombre."'" ;}
+					if(isset($ApellidoPat) && $ApellidoPat != ''){      $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
+					if(isset($ApellidoMat) && $ApellidoMat != ''){      $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
+					if(isset($idSexo) && $idSexo != ''){                $a .= ",idSexo='".$idSexo."'" ;}
+					if(isset($FNacimiento) && $FNacimiento != ''){      $a .= ",FNacimiento='".$FNacimiento."'" ;}	
+					if(isset($idPlan) && $idPlan != ''){                $a .= ",idPlan='".$idPlan."'" ;}								
+					if(isset($idVehiculo) && $idVehiculo != ''){        $a .= ",idVehiculo='".$idVehiculo."'" ;}						
+										
+					// inserto los datos de registro en la db
+					$query  = "UPDATE `apoderados_listado_hijos` SET ".$a." WHERE idHijos = '$idHijos'";
+					//Consulta
+					$resultado = mysqli_query ($dbConn, $query);
+					//Si ejecuto correctamente la consulta
+					if($resultado){
+						
+						header( 'Location: '.$location.'&edited=true' );
+						die;
+						
+					//si da error, guardar en el log de errores una copia
+					}else{
+						//Genero numero aleatorio
+						$vardata = genera_password(8,'alfanumerico');
+						
+						//Guardo el error en una variable temporal
+						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+					}
+					
+				}
+			}
+
+		break;	
+/*******************************************************************************************************************/
+		case 'del':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			// Se obtiene el nombre del logo
+			$rowdata = db_select_data ('Direccion_img', 'apoderados_listado_hijos', '', "idHijos = ".$_GET['del'], $dbConn);
+			
+			//se borra el dato de la base de datos
+			$query  = "DELETE FROM `apoderados_listado_hijos` WHERE idHijos = {$_GET['del']}";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina la foto
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['Direccion_img']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				header( 'Location: '.$location.'&deleted=true' );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}
+			
+		
+
+		break;	
+/*******************************************************************************************************************/
+		case 'del_img':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Usuario
+			$idHijos = $_GET['del_img'];
+			// Se obtiene el nombre del logo
+			$rowdata = db_select_data ('Direccion_img', 'apoderados_listado_hijos', '', "idHijos = ".$idHijos, $dbConn);
+			
+			//se borra el dato de la base de datos
+			$query  = "UPDATE `apoderados_listado_hijos` SET Direccion_img='' WHERE idHijos = '{$idHijos}'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina el archivo
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['Direccion_img']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&id_img=true' );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}
+			
+
+		break;			
+/*******************************************************************************************************************/
+	}
+?>

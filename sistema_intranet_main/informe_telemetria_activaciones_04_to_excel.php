@@ -1,0 +1,307 @@
+<?php session_start();
+date_default_timezone_set('Europe/London');
+
+if (PHP_SAPI == 'cli')
+	die('This example should only be run from a Web Browser');
+
+/** Include PHPExcel */
+require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Excel.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+/**********************************************************************************************************************************/
+/*                                                          Consultas                                                             */
+/**********************************************************************************************************************************/
+//Se traen todos los grupos
+$arrGruposRev = array();
+$query = "SELECT idGrupo, Valor, idSupervisado
+FROM `telemetria_listado_grupos_uso`
+WHERE idSupervisado=1
+ORDER BY idGrupo ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrGruposRev,$row );
+}
+/*******************************************************/
+//Se arma la query con los datos justos recibidos
+$subquery = '';
+$arrNombres = array(); 
+for ($i = 1; $i <= 50; $i++) {
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+	$subquery .= ',SensoresRevision_'.$i;
+	$subquery .= ',SensoresRevisionGrupo_'.$i;
+}
+
+//Se traen todos los datos de la maquina
+$query = "SELECT Nombre, cantSensores ".$subquery."
+FROM `telemetria_listado`
+WHERE idTelemetria=".$_GET['idTelemetria']."";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+$rowMaquina = mysqli_fetch_assoc ($resultado);
+//Armo la consulta
+$subquery = '';
+for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
+	//recorro los grupos de los sensores que estan siendo supervisados
+	foreach ($arrGruposRev as $sen) {
+		//verifico que esten activos
+		if(isset($rowMaquina['SensoresActivo_'.$i])&&$rowMaquina['SensoresActivo_'.$i]==1){
+			//Reviso si el sensor esta siendo supervisado
+			if(isset($rowMaquina['SensoresRevision_'.$i])&&$rowMaquina['SensoresRevision_'.$i]==1){
+				//verifico que pertenezca al grupo actual
+				if($rowMaquina['SensoresRevisionGrupo_'.$i]==$sen['idGrupo']){
+					//guardo el nombre
+					$arrNombres[$i]['SensorNombre'] = $rowMaquina['SensoresNombre_'.$i];
+								
+					//verifico que el valor sea igual o superior al establecido
+					if(isset($_GET['Amp'])&&$_GET['Amp']!=''&&$_GET['Amp']!=0){$valor_amp=$_GET['Amp'];}else{$valor_amp=$sen['Valor'];}
+					//Consulto el nombre del sensor
+					
+					//Consulto el valor minimo
+					$subquery .= ',(SELECT Sensor_'.$i.'
+					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					ORDER BY HoraSistema ASC
+					LIMIT 1) AS ValorMinimo_'.$i.'';
+					$subquery .= ',(SELECT HoraSistema
+					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					ORDER BY HoraSistema ASC
+					LIMIT 1) AS HoraMinimo_'.$i.'';
+					
+					//Consulto el valor maximo
+					$subquery .= ',(SELECT Sensor_'.$i.'
+					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					ORDER BY HoraSistema DESC
+					LIMIT 1) AS ValorMaximo_'.$i.'';
+					$subquery .= ',(SELECT HoraSistema
+					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					ORDER BY HoraSistema DESC
+					LIMIT 1) AS HoraMaximo_'.$i.'';
+
+				
+				}
+			}
+		}
+	}
+}
+/**********************************************************/
+//Se traen todos los registros entre las fechas
+$arrMediciones = array();
+$query = "SELECT Fecha AS FechaConsultada
+".$subquery."
+FROM `telemetria_listado_historial_activaciones`
+WHERE idTelemetria=".$_GET['idTelemetria']."
+AND Fecha BETWEEN '{$_GET['F_inicio']}' AND '{$_GET['F_termino']}'
+GROUP BY Fecha
+ORDER BY Fecha ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrMediciones,$row );
+}
+
+
+ 
+
+// Create new PHPExcel object
+$objPHPExcel = new PHPExcel();
+
+// Set document properties
+$objPHPExcel->getProperties()->setCreator("Office 2007")
+							 ->setLastModifiedBy("Office 2007")
+							 ->setTitle("Office 2007")
+							 ->setSubject("Office 2007")
+							 ->setDescription("Document for Office 2007")
+							 ->setKeywords("office 2007")
+							 ->setCategory("office 2007 result file");
+
+$arrData = array();
+$arrData[1] = "B";
+$arrData[2] = "C";
+$arrData[3] = "D";
+$arrData[4] = "E";
+$arrData[5] = "F";
+$arrData[6] = "G";
+$arrData[7] = "H";
+$arrData[8] = "I";
+$arrData[9] = "J";
+$arrData[10] = "K";
+$arrData[11] = "L";
+$arrData[12] = "M";
+$arrData[13] = "N";
+$arrData[14] = "O";
+$arrData[15] = "P";
+$arrData[16] = "Q";
+$arrData[17] = "R";
+$arrData[18] = "S";
+$arrData[19] = "T";
+$arrData[20] = "U";
+$arrData[21] = "V";
+$arrData[22] = "W";
+$arrData[23] = "X";
+$arrData[24] = "Y";
+$arrData[25] = "Z";
+$arrData[26] = "AA";
+$arrData[27] = "AB";
+$arrData[28] = "AC";
+$arrData[29] = "AD";
+$arrData[30] = "AE";
+$arrData[31] = "AF";
+$arrData[32] = "AG";
+$arrData[33] = "AH";
+$arrData[34] = "AI";
+$arrData[35] = "AJ";
+$arrData[36] = "AK";
+$arrData[37] = "AL";
+$arrData[38] = "AM";
+$arrData[39] = "AN";
+$arrData[40] = "AO";
+$arrData[41] = "AP";
+$arrData[42] = "AQ";
+$arrData[43] = "AR";
+$arrData[44] = "AS";
+$arrData[45] = "AT";
+$arrData[46] = "AU";
+$arrData[47] = "AV";
+$arrData[48] = "AW";
+$arrData[49] = "AX";
+$arrData[50] = "AY";			
+         
+            
+//Titulo columnas
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Fecha');
+$x = 1;
+//Titulos de los sensores
+for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
+	if(isset($arrNombres[$i]['SensorNombre'])&&$arrNombres[$i]['SensorNombre']!=''){
+		$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue($arrData[$x].'1', '');
+					$x++;
+	}
+}
+ 					                                     
+$nn=2;
+foreach ($arrMediciones as $med) {
+	//verifico si existen datos
+	$exd = 0;
+	for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
+		if(isset($med['ValorMinimo_'.$i])){
+			$exd++;
+		}
+	}
+	if($exd>0){
+		
+		$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('A'.$nn, fecha_estandar($med['FechaConsultada']));
+        
+        for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
+			if(isset($med['ValorMinimo_'.$i])){
+				$x = $i-1;
+				$objPHPExcel->setActiveSheetIndex(0)
+							->setCellValue($arrData[$x].$nn, $arrNombres[$i]['SensorNombre'].' '.
+							Cantidades_decimales_justos($med['ValorMinimo_'.$i]).' a las '.$med['HoraMinimo_'.$i].' '.
+							Cantidades_decimales_justos($med['ValorMaximo_'.$i]).' a las '.$med['HoraMaximo_'.$i]
+							);						
+			}
+		}
+        
+            
+		$nn++;
+	}
+}					
+							
+
+// Rename worksheet
+$objPHPExcel->getActiveSheet()->setTitle('Resumen');
+
+
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+$objPHPExcel->setActiveSheetIndex(0);
+
+
+// Redirect output to a client’s web browser (Excel5)
+header('Content-Type: application/vnd.ms-excel');
+header('Content-Disposition: attachment;filename="Resumen Activaciones Sensores.xls"');
+header('Cache-Control: max-age=0');
+// If you're serving to IE 9, then the following may be needed
+header('Cache-Control: max-age=1');
+
+// If you're serving to IE over SSL, then the following may be needed
+header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header ('Pragma: public'); // HTTP/1.0
+
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter->save('php://output');
+exit;
+?>

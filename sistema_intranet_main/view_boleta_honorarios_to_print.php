@@ -1,0 +1,413 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Print.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+/**********************************************************************************************************************************/
+/*                                                          Consultas                                                             */
+/**********************************************************************************************************************************/
+// Se traen todos los datos de mi usuario
+$query = "SELECT 
+boleta_honorarios_facturacion.idTipo,
+boleta_honorarios_facturacion.Creacion_fecha,
+boleta_honorarios_facturacion.N_Doc,
+boleta_honorarios_facturacion_tipo.Nombre AS BoletaTipo,
+usuarios_listado.Nombre AS BoletaUsuario,
+core_estado_facturacion.Nombre AS BoletaEstado,
+boleta_honorarios_facturacion.MontoPagado,
+sistema_documentos_pago.Nombre AS DocPago,
+boleta_honorarios_facturacion.N_DocPago, 
+boleta_honorarios_facturacion.F_Pago,
+boleta_honorarios_facturacion.ValorNeto,
+boleta_honorarios_facturacion.Impuesto,
+boleta_honorarios_facturacion.ValorTotal,
+boleta_honorarios_facturacion.Observaciones,
+
+sistema_origen.Nombre AS SistemaOrigen,
+sis_or_ciudad.Nombre AS SistemaOrigenCiudad,
+sis_or_comuna.Nombre AS SistemaOrigenComuna,
+sistema_origen.Direccion AS SistemaOrigenDireccion,
+sistema_origen.Contacto_Fono1 AS SistemaOrigenFono,
+sistema_origen.email_principal AS SistemaOrigenEmail,
+sistema_origen.Rut AS SistemaOrigenRut,
+
+trabajadores_listado.Nombre AS Trab_Nombre,
+trabajadores_listado.ApellidoPat AS Trab_ApellidoPat,
+trabajadores_listado.ApellidoMat AS Trab_ApellidoMat,
+trabajadores_listado.Cargo AS Trab_Cargo,
+trabajadores_listado.Fono AS Trab_Fono,
+trabajadores_listado.Rut AS Trab_Rut,
+trabajadores_listado_tipos.Nombre AS Trab_Tipo,
+
+clientes_listado.Nombre AS Cliente_Nombre,
+clientes_listado.email AS Cliente_Email,
+clientes_listado.Rut AS Cliente_Rut,
+clienciudad.Nombre AS Cliente_Ciudad,
+cliencomuna.Nombre AS Cliente_Comuna,
+clientes_listado.Direccion AS Cliente_Direccion,
+clientes_listado.Fono1 AS Cliente_Fono1,
+clientes_listado.Fono2 AS Cliente_Fono2,
+clientes_listado.Fax AS Cliente_Fax,
+clientes_listado.PersonaContacto AS Cliente_PersonaContacto,
+clientes_listado.Giro AS Cliente_Giro,
+
+proveedor_listado.Nombre AS Proveedor_Nombre,
+proveedor_listado.email AS Proveedor_Email,
+proveedor_listado.Rut AS Proveedor_Rut,
+provciudad.Nombre AS Proveedor_Ciudad,
+provcomuna.Nombre AS Proveedor_Comuna,
+proveedor_listado.Direccion AS Proveedor_Direccion,
+proveedor_listado.Fono1 AS Proveedor_Fono1,
+proveedor_listado.Fono2 AS Proveedor_Fono2,
+proveedor_listado.Fax AS Proveedor_Fax,
+proveedor_listado.PersonaContacto AS Proveedor_PersonaContacto,
+proveedor_listado.Giro AS Proveedor_Giro
+
+
+
+FROM `boleta_honorarios_facturacion`
+LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador            = boleta_honorarios_facturacion.idTrabajador
+LEFT JOIN `trabajadores_listado_tipos`              ON trabajadores_listado_tipos.idTipo            = trabajadores_listado.idTipo
+LEFT JOIN `clientes_listado`                        ON clientes_listado.idCliente                   = boleta_honorarios_facturacion.idCliente
+LEFT JOIN `core_ubicacion_ciudad`    clienciudad    ON clienciudad.idCiudad                         = clientes_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`   cliencomuna    ON cliencomuna.idComuna                         = clientes_listado.idComuna
+LEFT JOIN `boleta_honorarios_facturacion_tipo`      ON boleta_honorarios_facturacion_tipo.idTipo    = boleta_honorarios_facturacion.idTipo
+LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                   = boleta_honorarios_facturacion.idUsuario
+LEFT JOIN `core_estado_facturacion`                 ON core_estado_facturacion.idEstado             = boleta_honorarios_facturacion.idEstado
+LEFT JOIN `core_sistemas`   sistema_origen          ON sistema_origen.idSistema                     = boleta_honorarios_facturacion.idSistema
+LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                       = sistema_origen.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = sistema_origen.idComuna
+LEFT JOIN `sistema_documentos_pago`                 ON sistema_documentos_pago.idDocPago            = boleta_honorarios_facturacion.idDocPago
+LEFT JOIN `proveedor_listado`                       ON proveedor_listado.idProveedor                = boleta_honorarios_facturacion.idProveedor
+LEFT JOIN `core_ubicacion_ciudad`    provciudad     ON provciudad.idCiudad                          = proveedor_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`   provcomuna     ON provcomuna.idComuna                          = proveedor_listado.idComuna
+
+WHERE boleta_honorarios_facturacion.idFacturacion = {$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+$row_data = mysqli_fetch_assoc ($resultado);
+
+
+/*****************************************/		
+// Se trae un listado con todos los otros
+$arrOtros = array();
+$query = "SELECT Nombre, vTotal
+FROM `boleta_honorarios_facturacion_servicios` 
+WHERE idFacturacion = {$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrOtros,$row );
+}
+
+
+
+$html ='<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>Imprimir</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<!-- Bootstrap -->
+    <link rel="stylesheet" href="'.DB_SITE.'/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="'.DB_SITE.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="'.DB_SITE.'/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
+    <!-- Metis core stylesheet -->
+    <link rel="stylesheet" href="'.DB_SITE.'/Legacy/gestion_modular/css/main.min.css">
+    <!-- Metis Theme stylesheet -->
+    <link rel="stylesheet" href="'.DB_SITE.'/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
+    <!-- Estilo definido por mi -->
+    <link href="'.DB_SITE.'/Legacy/gestion_modular/css/my_style.css" rel="stylesheet" type="text/css">
+    <link href="'.DB_SITE.'/LIB_assets/css/my_colors.css" rel="stylesheet" type="text/css">
+    <link href="'.DB_SITE.'/Legacy/gestion_modular/css/my_corrections.css" rel="stylesheet" type="text/css">
+    <style>
+    body{background-color:#fff;}
+    </style>
+</head>
+
+<body onload="window.print();">
+<section class="invoice">';
+ 
+$html .= '<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<i class="fa fa-globe"></i> '.$row_data['BoletaTipo'].'
+				<small class="pull-right">Boleta N°: '.n_doc($row_data['N_Doc'], 8).'</small>
+			</h2>
+		</div>   
+	</div>
+	
+	<div class="row invoice-info">';
+		
+		
+		//se verifica el tipo de movimiento
+		switch ($row_data['idTipo']) {
+			//Boleta Trabajadores
+			case 1:
+				$html .= '
+				<div class="col-sm-4 invoice-col">
+					Emisor
+					<address>
+						<strong>'.$row_data['Trab_Nombre'].' '.$row_data['Trab_ApellidoPat'].' '.$row_data['Trab_ApellidoMat'].'</strong><br>
+						Rut: '.$row_data['Trab_Rut'].'<br>
+						Fono: '.$row_data['Trab_Fono'].'<br>
+						Cargo: '.$row_data['Trab_Cargo'].'<br>
+						Tipo Cargo: '.$row_data['Trab_Tipo'].'
+					</address>
+				</div>
+				
+				<div class="col-sm-4 invoice-col">
+					Receptor
+					<address>
+						<strong>'.$row_data['SistemaOrigen'].'</strong><br>
+						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
+						'.$row_data['SistemaOrigenDireccion'].'<br>
+						Fono: '.$row_data['SistemaOrigenFono'].'<br>
+						Rut: '.$row_data['SistemaOrigenRut'].'<br>
+						Email: '.$row_data['SistemaOrigenEmail'].'
+					</address>
+				</div>
+			   
+				<div class="col-sm-4 invoice-col">
+					<b>Fecha Creacion : </b>'.Fecha_estandar($row_data['Creacion_fecha']).'<br>
+					<b>Usuario Ingreso : </b>'.$row_data['BoletaUsuario'].'<br>';
+					
+					if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){ 
+						$html .= '<b>Estado: </b>'.$row_data['BoletaEstado'].'<br>';
+					}
+					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+						$html .= '<b>Dto de Pago : </b>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br>';
+					}
+					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
+						$html .= '<b>Fecha Pagado: </b>'.Fecha_estandar($row_data['F_Pago']).'<br>';
+					}
+					
+					
+				$html .= '</div>';
+
+				break;
+			//Boleta Clientes
+			case 2:
+				$html .= '
+				<div class="col-sm-4 invoice-col">
+					Emisor
+					<address>
+						<strong>'.$row_data['SistemaOrigen'].'</strong><br>
+						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
+						'.$row_data['SistemaOrigenDireccion'].'<br>
+						Fono: '.$row_data['SistemaOrigenFono'].'<br>
+						Rut: '.$row_data['SistemaOrigenRut'].'<br>
+						Email: '.$row_data['SistemaOrigenEmail'].'
+					</address>
+				</div>
+				
+				<div class="col-sm-4 invoice-col">
+					Receptor
+					<address>
+						<strong>'.$row_data['Cliente_Nombre'].'</strong><br>
+						'.$row_data['Cliente_Ciudad'].', '.$row_data['Cliente_Comuna'].'<br>
+						'.$row_data['Cliente_Direccion'].'<br>
+						Fono Fijo: '.$row_data['Cliente_Fono1'].'<br>
+						Celular: '.$row_data['Cliente_Fono2'].'<br>
+						Fax: '.$row_data['Cliente_Fax'].'<br>
+						Rut: '.$row_data['Cliente_Rut'].'<br>
+						Email: '.$row_data['Cliente_Email'].'<br>
+						Contacto: '.$row_data['Cliente_PersonaContacto'].'<br>
+						Giro de la Empresa: '.$row_data['Cliente_Giro'].'
+					</address>
+				</div>
+				
+				<div class="col-sm-4 invoice-col">
+					<b>Fecha Creacion : </b>'.Fecha_estandar($row_data['Creacion_fecha']).'<br>
+					<b>Usuario Ingreso : </b>'.$row_data['BoletaUsuario'].'<br>';
+					
+					if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){ 
+						$html .= '<b>Estado: </b>'.$row_data['BoletaEstado'].'<br>';
+					}
+					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+						$html .= '<b>Dto de Pago : </b>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br>';
+					}
+					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
+						$html .= '<b>Fecha Pagado: </b>'.Fecha_estandar($row_data['F_Pago']).'<br>';
+					}		
+					
+				$html .= '
+				</div>';
+				
+		
+				break;
+			//Boleta Empresas
+			case 3:
+				$html .= '
+				<div class="col-sm-4 invoice-col">
+					Emisor
+					<address>
+						<strong>'.$row_data['Proveedor_Nombre'].'</strong><br>
+						'.$row_data['Proveedor_Ciudad'].', '.$row_data['Proveedor_Comuna'].'<br>
+						'.$row_data['Proveedor_Direccion'].'<br>
+						Fono Fijo: '.$row_data['Proveedor_Fono1'].'<br>
+						Celular: '.$row_data['Proveedor_Fono2'].'<br>
+						Fax: '.$row_data['Proveedor_Fax'].'<br>
+						Rut: '.$row_data['Proveedor_Rut'].'<br>
+						Email: '.$row_data['Proveedor_Email'].'<br>
+						Contacto: '.$row_data['Proveedor_PersonaContacto'].'<br>
+						Giro de la Empresa: '.$row_data['Proveedor_Giro'].'
+					</address>
+				</div>
+				
+				<div class="col-sm-4 invoice-col">
+					Receptor
+					<address>
+						<strong>'.$row_data['SistemaOrigen'].'</strong><br>
+						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
+						'.$row_data['SistemaOrigenDireccion'].'<br>
+						Fono: '.$row_data['SistemaOrigenFono'].'<br>
+						Rut: '.$row_data['SistemaOrigenRut'].'<br>
+						Email: '.$row_data['SistemaOrigenEmail'].'
+					</address>
+				</div>
+			   
+				<div class="col-sm-4 invoice-col">
+					<b>Fecha Creacion : </b>'.Fecha_estandar($row_data['Creacion_fecha']).'<br>
+					<b>Usuario Ingreso : </b>'.$row_data['BoletaUsuario'].'<br>';
+					
+					if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){ 
+						$html .= '<b>Estado: </b>'.$row_data['BoletaEstado'].'<br>';
+					}
+					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+						$html .= '<b>Dto de Pago : </b>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br>';
+					}
+					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
+						$html .= '<b>Fecha Pagado: </b>'.Fecha_estandar($row_data['F_Pago']).'<br>';
+					}
+					
+					
+				$html .= '</div>';
+
+				break;
+		}
+		
+		
+		
+    
+	$html .= '</div>
+	
+	
+	<div class="">
+		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Detalle</th>
+						<th width="120" align="right">Valor Total</th>
+					</tr>
+				</thead>
+				<tbody>';
+					//si existen guias
+					if ($arrOtros) {
+						foreach ($arrOtros as $otro) {
+							$html .= '<tr>
+								<td style="vertical-align: top;">'.$otro['Nombre'].'</td>
+								<td align="right">'.Valores($otro['vTotal'], 0).'</td>
+							</tr>';
+						} 
+					}
+					
+					
+				$html .= '</tbody>
+			</table>
+			
+			<table class="table">
+				<tbody>';	
+					if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td align="right"><strong>Total Honorarios</strong></td> 
+							<td width="160" align="right">'.Valores($row_data['ValorNeto'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td align="right"><strong>10% Impuesto Retenido</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td align="right"><strong>Total</strong></td> 
+							<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
+						</tr>';
+					}
+
+				$html .= '</tbody>
+			</table>
+		</div>
+	</div>
+	
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
+			<p class="text-muted well well-sm no-shadow" >'.$row_data['Observaciones'].'</p>
+		</div>
+	</div>';
+	
+	
+
+
+
+$html .= '</section>
+
+
+</body>
+</html>';
+
+echo $html;
+
+?>

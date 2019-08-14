@@ -1,0 +1,482 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "informe_analisis_maquina_03.php";
+$location = $original;
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['submit_filter']) ) { 
+
+             
+  
+
+//filtros
+$x = "WHERE maquinas_listado_matriz.idMatriz>=0";	
+$y = "WHERE maquinas_listado.idMaquina>=0";
+$z = "WHERE analisis_listado.idAnalisis>=0";
+if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     
+	$z .= " AND analisis_listado.idSistema = '".$_GET['idSistema']."'" ;
+}
+if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {     
+	$y .= " AND maquinas_listado.idMaquina = '".$_GET['idMaquina']."'" ;
+	$z .= " AND analisis_listado.idMaquina = '".$_GET['idMaquina']."'" ;
+}
+if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {       
+	$x .= " AND idMatriz = '".$_GET['idMatriz']."'" ;
+	$y .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'" ;
+	$z .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'" ;
+}
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
+	$z .= " AND analisis_listado.f_muestreo BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'" ;
+}
+/*********************************************************************/
+//Preconsulta
+$query = "SELECT cantPuntos
+FROM `maquinas_listado_matriz`
+".$x;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowpre = mysqli_fetch_assoc ($resultado);
+
+
+/*********************************************/
+//Consulta Maquina
+$query = "SELECT 
+maquinas_listado.Nombre AS MaquinaNombre,
+maquinas_listado.Codigo AS MaquinaCodigo,
+maquinas_listado.Modelo AS MaquinaModelo,
+maquinas_listado.Serie AS MaquinaSerie,
+maquinas_listado.Fabricante AS MaquinaFabricante,
+ubicacion_listado.Nombre  AS MaquinaUbicacion,
+ubicacion_listado_level_1.Nombre  AS MaquinaUbicacion_lvl_1,
+ubicacion_listado_level_2.Nombre  AS MaquinaUbicacion_lvl_2,
+ubicacion_listado_level_3.Nombre  AS MaquinaUbicacion_lvl_3,
+ubicacion_listado_level_4.Nombre  AS MaquinaUbicacion_lvl_4,
+ubicacion_listado_level_5.Nombre  AS MaquinaUbicacion_lvl_5,
+
+core_sistemas.Nombre AS SistemaOrigen,
+sis_or_ciudad.Nombre AS SistemaOrigenCiudad,
+sis_or_comuna.Nombre AS SistemaOrigenComuna,
+core_sistemas.Direccion AS SistemaOrigenDireccion,
+core_sistemas.Contacto_Fono1 AS SistemaOrigenFono,
+core_sistemas.email_principal AS SistemaOrigenEmail,
+core_sistemas.Rut AS SistemaOrigenRut,
+
+maquinas_listado_matriz.Nombre AS Analisis_Nombre
+
+FROM `maquinas_listado`
+LEFT JOIN `ubicacion_listado`                       ON ubicacion_listado.idUbicacion           = maquinas_listado.idUbicacion
+LEFT JOIN `ubicacion_listado_level_1`               ON ubicacion_listado_level_1.idLevel_1     = maquinas_listado.idUbicacion_lvl_1
+LEFT JOIN `ubicacion_listado_level_2`               ON ubicacion_listado_level_2.idLevel_2     = maquinas_listado.idUbicacion_lvl_2
+LEFT JOIN `ubicacion_listado_level_3`               ON ubicacion_listado_level_3.idLevel_3     = maquinas_listado.idUbicacion_lvl_3
+LEFT JOIN `ubicacion_listado_level_4`               ON ubicacion_listado_level_4.idLevel_4     = maquinas_listado.idUbicacion_lvl_4
+LEFT JOIN `ubicacion_listado_level_5`               ON ubicacion_listado_level_5.idLevel_5     = maquinas_listado.idUbicacion_lvl_5
+LEFT JOIN `maquinas_listado_matriz`                 ON maquinas_listado_matriz.idMaquina       = maquinas_listado.idMaquina
+LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                 = maquinas_listado.idSistema
+LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                  = core_sistemas.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                  = core_sistemas.idComuna
+".$y."
+LIMIT 1";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowMaquina = mysqli_fetch_assoc ($resultado);
+
+
+
+/**********************************************************************/
+//Se traen todas las unidades de medida
+$consql = '';
+for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
+	$consql .= ',analisis_listado.Medida_'.$i.' AS Analisis_Medida_'.$i;
+	$consql .= ',maquinas_listado_matriz.PuntoidTipo_'.$i.' AS Analisis_PuntoidTipo_'.$i;
+	$consql .= ',maquinas_listado_matriz.PuntoNombre_'.$i.' AS Analisis_PuntoNombre_'.$i;
+	$consql .= ',maquinas_listado_matriz.PuntoidGrupo_'.$i.' AS Analisis_PuntoidGrupo_'.$i;
+	$consql .= ',maquinas_listado_matriz.PuntoMedAceptable_'.$i.' AS Analisis_PuntoMedAceptable_'.$i;
+	$consql .= ',maquinas_listado_matriz.PuntoMedCondenatorio_'.$i.' AS Analisis_PuntoMedCondenatorio_'.$i;
+	$consql .= ',maquinas_listado_matriz.PuntoMedAlerta_'.$i.' AS Analisis_PuntoMedAlerta_'.$i;
+	
+}
+
+// Se trae un listado con todos los productos
+$arrResultados = array();
+$query = "SELECT 
+core_analisis_estado.Nombre AS AnalisisEstado,
+analisis_listado.f_muestreo,
+analisis_listado.f_recibida,
+analisis_listado.f_reporte,
+analisis_listado.n_muestra,
+analisis_listado.obs_Diagnostico,
+analisis_listado.obs_Accion
+".$consql."
+FROM `analisis_listado`
+LEFT JOIN `core_analisis_estado`      ON core_analisis_estado.idEstado      = analisis_listado.idEstado
+LEFT JOIN `maquinas_listado_matriz`   ON maquinas_listado_matriz.idMatriz   = analisis_listado.idMatriz
+".$z."
+ORDER BY analisis_listado.f_muestreo ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrResultados,$row );
+} 
+
+
+/**********************************************************************/
+//Se traen todos los grupos
+$arrGrupo = array();
+$query = "SELECT idGrupo, Nombre
+FROM `maquinas_listado_matriz_grupos`
+ORDER BY idGrupo ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrGrupo,$row );
+}
+
+?>
+	
+<section class="invoice">
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<i class="fa fa-globe"></i> <?php echo 'Analisis '.$rowMaquina['Analisis_Nombre']; ?>.
+				<small class="pull-right"><?php echo 'Desde '.Fecha_estandar($_GET['f_inicio']).' hasta '.Fecha_estandar($_GET['f_termino']); ?></small>
+			</h2>
+		</div>   
+	</div>
+
+	<div class="row invoice-info">
+		
+		<?php
+
+			echo '
+				<div class="col-sm-4 invoice-col">
+					'.$x_column_maquina_sing.'
+					<address>
+						<strong>'.$rowMaquina['MaquinaNombre'].'</strong><br>
+						Codigo: '.$rowMaquina['MaquinaCodigo'].'<br>
+						Modelo: '.$rowMaquina['MaquinaModelo'].'<br>
+						Serie: '.$rowMaquina['MaquinaSerie'].'<br>
+						Fabricante: '.$rowMaquina['MaquinaFabricante'].'<br>
+						Ubicacion: '.$rowMaquina['MaquinaUbicacion'];
+						if(isset($rowMaquina['MaquinaUbicacion_lvl_1'])&&$rowMaquina['MaquinaUbicacion_lvl_1']!=''){ 
+							echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_1'];
+						}
+						if(isset($rowMaquina['MaquinaUbicacion_lvl_2'])&&$rowMaquina['MaquinaUbicacion_lvl_2']!=''){ 
+							echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_2'];
+						}
+						if(isset($rowMaquina['MaquinaUbicacion_lvl_3'])&&$rowMaquina['MaquinaUbicacion_lvl_3']!=''){ 
+							echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_3'];
+						}
+						if(isset($rowMaquina['MaquinaUbicacion_lvl_4'])&&$rowMaquina['MaquinaUbicacion_lvl_4']!=''){ 
+							echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_4'];
+						}
+						if(isset($rowMaquina['MaquinaUbicacion_lvl_5'])&&$rowMaquina['MaquinaUbicacion_lvl_5']!=''){ 
+							echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_5'];
+						}
+					echo '
+					</address>
+				</div>';
+				
+				echo '
+				<div class="col-sm-4 invoice-col">
+					Empresa
+					<address>
+						<strong>'.$rowMaquina['SistemaOrigen'].'</strong><br>
+						'.$rowMaquina['SistemaOrigenCiudad'].', '.$rowMaquina['SistemaOrigenComuna'].'<br>
+						'.$rowMaquina['SistemaOrigenDireccion'].'<br>
+						Fono : '.$rowMaquina['SistemaOrigenFono'].'<br>
+						Rut: '.$rowMaquina['SistemaOrigenRut'].'<br>
+						Email: '.$rowMaquina['SistemaOrigenEmail'].'<br>
+					</address>
+				</div>';
+			?>
+	</div>
+	
+	
+	<div class="row">
+		<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
+			<?php 
+			
+			echo '<table class="table table_noborder" >';
+			echo '<tbody>';
+			echo '
+				<tr class="active">
+					<td><strong>Control</strong></td>
+					<td><strong>Fecha Muestreo</strong></td>
+					<td><strong>Fecha Recibida</strong></td>
+					<td><strong>Fecha del reporte</strong></td>
+					<td><strong>Estado</strong></td>
+					<td><strong>Otros</strong></td>
+				</tr>';	
+
+			foreach ($arrResultados as $res) {
+				
+				echo '<tr  style="background-color: #f5f5f5;">';
+					echo '<td>'.$res['n_muestra'].'</td>';
+					echo '<td>'.fecha_estandar($res['f_muestreo']).'</td>';
+					echo '<td>'.fecha_estandar($res['f_recibida']).'</td>';
+					echo '<td>'.fecha_estandar($res['f_reporte']).'</td>';
+					echo '<td>'.$res['AnalisisEstado'].'</td>';
+					echo '<td></td>';
+				echo '</tr>';
+				echo '<tr>';
+					echo '<td></td>';
+					echo '<td colspan="5">Obs:'.$res['obs_Diagnostico'].'</td>';
+				echo '</tr>';
+				echo '<tr>';
+					echo '<td></td>';
+					echo '<td colspan="5">Accion:'.$res['obs_Accion'].'</td>';
+				echo '</tr>';
+			}
+						
+			echo '</tbody>';
+			echo '</table>';				
+			?>	
+		</div>
+	</div>
+	<br/>
+	
+	
+		
+	<?php
+	foreach ($arrGrupo as $grupo) {
+		//si hay items se muestra todo
+		if($grupo['idGrupo']==4 or $grupo['idGrupo']==5){
+					
+			echo '<div class="row">';
+				echo '<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">';
+					echo '<table class="table" >';
+						echo '<tbody>';
+									
+						$tittle = 0;
+						foreach ($arrResultados as $res) {
+									
+							if(isset($tittle)&&$tittle==0){
+								echo '<tr class="active">';
+									echo '<td><strong>'.$grupo['Nombre'].'</strong></td>';
+										//recorro los puntos
+										for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
+											if($grupo['idGrupo']==$res['Analisis_PuntoidGrupo_'.$i]){
+												//reviso el tipo de resultado
+												switch ($res['Analisis_PuntoidTipo_'.$i]) {
+													//Medidas
+													case 1:
+														echo '<td>'.$res['Analisis_PuntoNombre_'.$i].'</td>';
+													break;
+												}
+											}
+										}
+								echo '</tr>';
+								$tittle++;
+							}
+							echo '<tr>';
+								echo '<td><strong>'.$res['n_muestra'].'</strong></td>';
+									//recorro los puntos
+									for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
+										if($grupo['idGrupo']==$res['Analisis_PuntoidGrupo_'.$i]){
+											//reviso el tipo de resultado
+											switch ($res['Analisis_PuntoidTipo_'.$i]) {
+												//Medidas
+												case 1:
+													/***************************************************************/
+													//variable vacia
+													$alert_lvl = '';
+													//verifico cual es mayor para proceder a la verificacion
+													/***************************************************************/
+													if($res['Analisis_PuntoMedAceptable_'.$i]>$res['Analisis_PuntoMedCondenatorio_'.$i]){
+														//alerta amarilla
+														/*if(isset($res['Analisis_Medida_'.$i])&&$res['Analisis_Medida_'.$i]!=''&&$res['Analisis_Medida_'.$i]>$res['Analisis_PuntoMedAlerta_'.$i]&&$res['Analisis_Medida_'.$i]<=$res['Analisis_PuntoMedAceptable_'.$i]){
+															//variables alerta amarilla
+															$alert_lvl = 'color-green-dark'; //amarilla
+														}*/
+														//alerta naranja
+														if(isset($res['Analisis_Medida_'.$i])&&$res['Analisis_Medida_'.$i]!=''&&$res['Analisis_Medida_'.$i]>$res['Analisis_PuntoMedCondenatorio_'.$i]&&$res['Analisis_Medida_'.$i]<=$res['Analisis_PuntoMedAlerta_'.$i]){
+															//variables alerta naranja
+															$alert_lvl = 'color-yellow'; //naranja	
+														}
+														//alerta roja
+														if(isset($res['Analisis_Medida_'.$i])&&$res['Analisis_Medida_'.$i]!=''&&$res['Analisis_Medida_'.$i]<=$res['Analisis_PuntoMedCondenatorio_'.$i]){
+															//variables alerta roja
+															$alert_lvl = 'color-red-dark'; //roja
+														}
+													
+													/***************************************************************/
+													}elseif($res['Analisis_PuntoMedAceptable_'.$i]<$res['Analisis_PuntoMedCondenatorio_'.$i]){
+														//alerta amarilla
+														/*if(isset($res['Analisis_Medida_'.$i])&&$res['Analisis_Medida_'.$i]!=''&&$res['Analisis_Medida_'.$i]<$res['Analisis_PuntoMedAlerta_'.$i]&&$res['Analisis_Medida_'.$i]>=$res['Analisis_PuntoMedAceptable_'.$i]){
+															//variables alerta amarilla
+															$alert_lvl = 'color-green-dark'; //amarilla
+														}*/
+														//alerta naranja
+														if(isset($res['Analisis_Medida_'.$i])&&$res['Analisis_Medida_'.$i]!=''&&$res['Analisis_Medida_'.$i]<$res['Analisis_PuntoMedCondenatorio_'.$i]&&$res['Analisis_Medida_'.$i]>=$res['Analisis_PuntoMedAlerta_'.$i]){
+															//variables alerta naranja
+															$alert_lvl = 'color-yellow'; //naranja
+														}
+														//alerta roja
+														if(isset($res['Analisis_Medida_'.$i])&&$res['Analisis_Medida_'.$i]!=''&&$res['Analisis_Medida_'.$i]>=$res['Analisis_PuntoMedCondenatorio_'.$i]){
+															//variables alerta roja
+															$alert_lvl = 'color-red-dark'; //roja
+														}
+														
+													}
+													echo '<td><span class="'.$alert_lvl.'">'.Cantidades_decimales_justos($res['Analisis_Medida_'.$i]).'</span></td>';
+												break;
+											}
+										}
+									}
+							echo '</tr>';
+						}
+					echo '</tbody>';
+				echo '</table>';
+			echo '</div>';
+		echo '</div>';
+		echo '<br/>';
+					
+		}
+	}
+					
+					
+					
+					
+					
+			
+			
+			
+			
+					
+			 ?>	
+			
+
+
+			
+			
+	
+	
+	  
+</section>
+
+
+
+
+
+
+<div class="clearfix"></div>
+<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="clearfix"></div>
+</div>
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+//Verifico el tipo de usuario que esta ingresando
+$z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+ 
+ ?>
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Filtro de Busqueda</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idMaquina)) {     $x1  = $idMaquina;   }else{$x1  = '';}
+				if(isset($idMatriz)) {      $x2  = $idMatriz;    }else{$x2  = '';}
+				if(isset($f_inicio)) {      $x3  = $f_inicio;    }else{$x3  = '';}
+				if(isset($f_termino)) {     $x4  = $f_termino;   }else{$x4  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
+										 'Matriz de Analisis','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
+										 $dbConn, 'form1');
+				$Form_Imputs->form_date('Fecha Muestreo Inicio','f_inicio', $x3, 2);
+				$Form_Imputs->form_date('Fecha Muestreo Termino','f_termino', $x4, 2);
+				
+				
+				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				?>        
+	   
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+		</div>
+	</div>
+</div> 
+<?php } ?>           
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

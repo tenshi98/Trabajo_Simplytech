@@ -1,0 +1,676 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Views.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Maqueta</title>
+		<!-- Bootstrap Core CSS -->
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
+		<style>
+			body {background-color: #FFF !important;}
+		</style>
+	</head>
+
+	<body>
+<?php 
+// Se traen todos los datos del trabajador
+$query = "SELECT 
+trabajadores_listado.Direccion_img,
+
+trabajadores_listado.Nombre,
+trabajadores_listado.ApellidoPat,
+trabajadores_listado.ApellidoMat, 
+trabajadores_listado.Rut,
+core_sexo.Nombre AS Sexo,
+trabajadores_listado.FNacimiento,
+trabajadores_listado.Fono,
+trabajadores_listado.email,
+core_ubicacion_ciudad.Nombre AS nombre_region,
+core_ubicacion_comunas.Nombre AS nombre_comuna,
+trabajadores_listado.Direccion,
+core_estado_civil.Nombre AS EstadoCivil,
+core_estados.Nombre AS Estado,
+core_sistemas.Nombre AS Sistema,				
+
+trabajadores_listado.ContactoPersona,
+trabajadores_listado.ContactoFono,
+
+trabajadores_listado_tipos.Nombre AS TipoTrabajador,
+trabajadores_listado.Cargo, 
+sistema_afp.Nombre AS nombre_afp,
+sistema_salud.Nombre AS nombre_salud,
+core_tipos_contrato.Nombre AS TipoContrato,
+core_tipos_contrato_trabajador.Nombre AS TipoContratoTrab,
+core_tipos_trabajadores.Nombre AS TipoConTrabajador,
+trabajadores_listado.horas_pactadas,
+trabajadores_listado.Gratificacion,
+trabajadores_listado.F_Inicio_Contrato,
+trabajadores_listado.F_Termino_Contrato,
+trabajadores_listado.Observaciones,
+trabajadores_listado.SueldoLiquido,
+trabajadores_listado.SueldoDia,
+trabajadores_listado.SueldoHora,
+
+core_tipos_licencia_conducir.Nombre AS LicenciaTipo,
+trabajadores_listado.CA_Licencia AS LicenciaCA, 
+trabajadores_listado.LicenciaFechaControlUltimo AS LicenciaControlUlt,
+trabajadores_listado.LicenciaFechaControl AS LicenciaControl,
+
+trabajadores_listado.File_Curriculum,
+trabajadores_listado.File_Antecedentes,
+trabajadores_listado.File_Carnet,
+trabajadores_listado.File_Contrato,
+trabajadores_listado.File_Licencia,
+
+trabajadores_listado.idTipoContratoTrab,
+
+contratista_listado.Nombre AS Contratista
+
+FROM `trabajadores_listado`
+LEFT JOIN `core_estados`                     ON core_estados.idEstado                               = trabajadores_listado.idEstado
+LEFT JOIN `trabajadores_listado_tipos`       ON trabajadores_listado_tipos.idTipo                   = trabajadores_listado.idTipo
+LEFT JOIN `core_sistemas`                    ON core_sistemas.idSistema                             = trabajadores_listado.idSistema
+LEFT JOIN `core_ubicacion_ciudad`            ON core_ubicacion_ciudad.idCiudad                      = trabajadores_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`           ON core_ubicacion_comunas.idComuna                     = trabajadores_listado.idComuna
+LEFT JOIN `sistema_afp`                      ON sistema_afp.idAFP                                   = trabajadores_listado.idAFP
+LEFT JOIN `sistema_salud`                    ON sistema_salud.idSalud                               = trabajadores_listado.idSalud
+LEFT JOIN `core_tipos_contrato`              ON core_tipos_contrato.idTipoContrato                  = trabajadores_listado.idTipoContrato
+LEFT JOIN `core_tipos_licencia_conducir`     ON core_tipos_licencia_conducir.idTipoLicencia         = trabajadores_listado.idTipoLicencia
+LEFT JOIN `core_sexo`                        ON core_sexo.idSexo                                    = trabajadores_listado.idSexo
+LEFT JOIN `core_estado_civil`                ON core_estado_civil.idEstadoCivil                     = trabajadores_listado.idEstadoCivil
+LEFT JOIN `core_tipos_contrato_trabajador`   ON core_tipos_contrato_trabajador.idTipoContratoTrab   = trabajadores_listado.idTipoContratoTrab
+LEFT JOIN `core_tipos_trabajadores`          ON core_tipos_trabajadores.idTipoTrabajador            = trabajadores_listado.idTipoTrabajador
+LEFT JOIN `contratista_listado`              ON contratista_listado.idContratista                   = trabajadores_listado.idContratista
+
+WHERE trabajadores_listado.idTrabajador = {$_GET['view']}";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);
+
+// Se trae un listado con todas las cargas familiares
+$arrCargas = array();
+$query = "SELECT  Nombre, ApellidoPat, ApellidoMat
+FROM `trabajadores_listado_cargas`
+WHERE idTrabajador = {$_GET['view']}
+ORDER BY idCarga ASC ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrCargas,$row );
+}
+
+// Se trae un listado con todas las observaciones el cliente
+$arrBonos = array();
+$query = "SELECT 
+trabajadores_listado_bonos_fijos.idBono,
+sistema_bonos_fijos.Nombre AS Bono,
+trabajadores_listado_bonos_fijos.Monto
+FROM `trabajadores_listado_bonos_fijos`
+LEFT JOIN `sistema_bonos_fijos`   ON sistema_bonos_fijos.idBonoFijo     = trabajadores_listado_bonos_fijos.idBonoFijo
+WHERE trabajadores_listado_bonos_fijos.idTrabajador = {$_GET['view']}
+ORDER BY sistema_bonos_fijos.Nombre  ASC ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrBonos,$row );
+}
+
+// Se trae un listado con todas las observaciones el cliente
+$arrAnexos = array();
+$query = "SELECT  idAnexo,Documento, Fecha_ingreso
+FROM `trabajadores_listado_anexos`
+WHERE idTrabajador = {$_GET['view']}
+ORDER BY Fecha_ingreso DESC ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrAnexos,$row );
+}
+
+
+// Se trae un listado con todas las ot
+$arrActivos = array();
+$query = "SELECT 
+sistema_productos_categorias.Nombre AS Categoria,
+insumos_listado.Nombre AS Producto,
+sistema_productos_uml.Nombre AS Uml,
+bodegas_insumos_facturacion_existencias.Cantidad_eg AS Cantidad,
+bodegas_insumos_facturacion_existencias.Creacion_fecha AS Fecha,
+bodegas_insumos_facturacion_existencias.idFacturacion AS idFacturacion
+
+FROM `bodegas_insumos_facturacion_existencias`
+
+LEFT JOIN `insumos_listado`                 ON insumos_listado.idProducto                 = bodegas_insumos_facturacion_existencias.idProducto
+LEFT JOIN `sistema_productos_categorias`    ON sistema_productos_categorias.idCategoria   = insumos_listado.idCategoria
+LEFT JOIN `sistema_productos_uml`           ON sistema_productos_uml.idUml                = insumos_listado.idUml
+
+WHERE bodegas_insumos_facturacion_existencias.idTrabajador = {$_GET['view']}
+ORDER BY bodegas_insumos_facturacion_existencias.Creacion_fecha DESC
+LIMIT 20";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrActivos,$row );
+}
+/************************************************************/
+// Se trae un listado con todos los descuentos del trabajador
+$arrDescuentos = array();
+$query = "SELECT 
+trabajadores_listado_descuentos_fijos.idDescuento,
+sistema_descuentos_fijos.Nombre AS Descuento,
+trabajadores_listado_descuentos_fijos.Monto,
+sistema_afp.Nombre AS AFP
+FROM `trabajadores_listado_descuentos_fijos`
+LEFT JOIN `sistema_descuentos_fijos`   ON sistema_descuentos_fijos.idDescuentoFijo     = trabajadores_listado_descuentos_fijos.idDescuentoFijo
+LEFT JOIN `sistema_afp`                ON sistema_afp.idAFP                            = trabajadores_listado_descuentos_fijos.idAFP
+WHERE trabajadores_listado_descuentos_fijos.idTrabajador = {$_GET['view']}
+ORDER BY sistema_descuentos_fijos.Nombre  ASC ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrDescuentos,$row );
+}
+?>
+
+
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div>
+			<h5>Ver Datos del Trabajador</h5>
+			<ul class="nav nav-tabs pull-right">
+				<li class="active"><a href="#basicos" data-toggle="tab">Datos Basicos</a></li>
+				<li class=""><a href="#ot" data-toggle="tab">Ordenes de Trabajo</a></li>
+			</ul>	
+		</header>
+        <div id="div-3" class="tab-content">
+			
+			<div class="tab-pane fade active in" id="basicos">
+				
+				<div class="wmd-panel">
+					
+					<div class="col-sm-4">
+						<?php if ($rowdata['Direccion_img']=='') { ?>
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/usr.png">
+						<?php }else{  ?>
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+						<?php }?>
+					</div>
+					<div class="col-sm-8">
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+						<p class="text-muted">
+							<strong>Nombre : </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
+							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
+							<strong>Sexo : </strong><?php echo $rowdata['Sexo']; ?><br/>
+							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
+							<strong>Fono : </strong><?php echo $rowdata['Fono']; ?><br/>
+							<strong>Email : </strong><?php echo $rowdata['email']; ?><br/>
+							<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
+							<strong>Estado Civil: </strong><?php echo $rowdata['EstadoCivil']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
+							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?>
+						</p>
+					
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Cargas Familiares</h2>
+						<p class="text-muted">
+							<?php
+							//Verifico el total de cargas
+							$nn = 0;
+							$n_carga = 1;
+							foreach ($arrCargas as $carga) {
+								$nn++;
+							}
+							//Se existen cargas estas se despliegan
+							if($nn!=0){
+								foreach ($arrCargas as $carga) {
+									echo '<strong>Carga #'.$n_carga.' : </strong>'.$carga['Nombre'].' '.$carga['ApellidoPat'].' '.$carga['ApellidoMat'].'<br/>';
+									$n_carga++;
+								}
+							//si no existen cargas se muestra mensaje	
+							}else{
+								echo 'Trabajador sin cargas familiares';
+							}
+							?>
+						</p>
+						
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
+						<p class="text-muted">
+							<strong>Persona de Contacto : </strong><?php echo $rowdata['ContactoPersona']; ?><br/>
+							<strong>Fono de Persona de Contacto : </strong><?php echo $rowdata['ContactoFono']; ?><br/>
+						</p>	
+
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Laborales</h2>
+						<p class="text-muted">
+							<span class="text-danger"><strong>Datos Trabajador</strong></span><br/>
+							<strong>Tipo Trabajador : </strong><?php echo $rowdata['TipoTrabajador']; ?><br/>
+							<strong>Cargo : </strong><?php echo $rowdata['Cargo']; ?><br/>
+							
+							<br/><span class="text-danger"><strong>Datos Contrato</strong></span><br/>
+							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){ ?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
+							<strong>Tipo de Trabajador : </strong><?php echo $rowdata['TipoConTrabajador']; ?><br/>
+							<strong>Tipo de Contrato : </strong><?php echo $rowdata['TipoContrato']; ?><br/>
+							<strong>Tipo de Sueldo : </strong><?php echo $rowdata['TipoContratoTrab']; ?><br/>
+							<strong>Horas Pactadas : </strong><?php echo $rowdata['horas_pactadas']; ?> Horas<br/>
+							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
+							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowdata['F_Termino_Contrato'])&&$rowdata['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
+							
+							<br/><span class="text-danger"><strong>Remuneraciones</strong></span><br/>
+							<?php if(isset($rowdata['idTipoContratoTrab'])){ 
+								switch ($rowdata['idTipoContratoTrab']) {
+									case 1:
+									case 2:
+										echo '<strong>Sueldo Liquido a Pago : </strong>'.valores($rowdata['SueldoLiquido'], 0).'<br/>';
+										break;
+									case 3:
+									case 4:
+										echo '<strong>Sueldo Liquido a Pago por dia : </strong>'.valores($rowdata['SueldoDia'], 0).'<br/>';
+										break;
+									case 5:
+										echo '<strong>Sueldo Liquido a Pago por hora : </strong>'.valores($rowdata['SueldoHora'], 0).'<br/>';
+										break;
+								}
+							}?>
+							<strong>Gratificacion : </strong><?php echo valores($rowdata['Gratificacion'], 0); ?><br/>
+							
+							<br/><span class="text-danger"><strong>Descuentos Previsionales</strong></span><br/>
+							<strong>AFP : </strong><?php echo $rowdata['nombre_afp']; ?><br/>
+							<?php foreach ($arrDescuentos as $bon) { ?>
+								<strong><?php echo $bon['Descuento'].' ('.$bon['AFP'].')'; ?> : </strong><?php echo valores($bon['Monto'], 0); ?><br/>
+							<?php } ?> 	
+							<strong>Salud : </strong><?php echo $rowdata['nombre_salud']; ?><br/>
+							
+							<br/><span class="text-danger"><strong>Bonos Fijos Asignados</strong></span><br/>
+							<?php
+							//Verifico el total de cargas
+							$nn = 0;
+							$n_carga = 1;
+							foreach ($arrBonos as $bon) {
+								$nn++;
+							}
+							//Se existen cargas estas se despliegan
+							if($nn!=0){
+								foreach ($arrBonos as $bon) {
+									echo '<strong>Bono '.$bon['Bono'].' : </strong> '.valores($bon['Monto'], 0).'<br/>';
+									$n_carga++;
+								}
+							//si no existen cargas se muestra mensaje	
+							}else{
+								echo 'Trabajador sin Bonos Fijos Asignados';
+							}
+							?>
+						
+							
+							<br/><span class="text-danger"><strong>Observaciones</strong></span><br/>
+							<?php echo $rowdata['Observaciones']; ?>
+						</p>
+						
+							
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Licencia de Conducir</h2>
+						<p class="text-muted">
+							<strong>Tipo de Licencia : </strong><?php echo $rowdata['LicenciaTipo']; ?><br/>
+							<strong>Numero CA : </strong><?php echo $rowdata['LicenciaCA']; ?><br/>
+							<strong>Fecha Ultimo Control : </strong><?php if(isset($rowdata['LicenciaControlUlt'])&&$rowdata['LicenciaControlUlt']!='0000-00-00'){echo Fecha_estandar($rowdata['LicenciaControlUlt']);}else{echo 'Sin fecha de ultimo control';} ?><br/>
+							<strong>Fecha Control : </strong><?php if(isset($rowdata['LicenciaControl'])&&$rowdata['LicenciaControl']!='0000-00-00'){echo Fecha_estandar($rowdata['LicenciaControl']);}else{echo 'Sin fecha de control';} ?>
+						</p>
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
+						<table id="items" style="margin-bottom: 20px;">
+							<tbody>
+								<?php 
+								//Contrato
+								if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
+									echo '
+										<tr class="item-row">
+											<td>Contrato de Trabajo</td>
+											<td width="10">
+												<div class="btn-group" style="width: 70px;">
+													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Contrato'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+													<a href="1download.php?dir=upload&file='.$rowdata['File_Contrato'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+												</div>
+											</td>
+										</tr>
+									';
+								}
+								//Anexos al contrato
+								foreach ($arrAnexos as $tipo) {
+									echo '
+										<tr class="item-row">
+											<td>Anexo del '.fecha_estandar($tipo['Fecha_ingreso']).' :'.$tipo['Documento'].'</td>
+											<td width="10">
+												<div class="btn-group" style="width: 70px;">
+													<a href="view_doc_preview.php?path=upload&file='.$tipo['Documento'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+													<a href="1download.php?dir=upload&file='.$tipo['Documento'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+												</div>
+											</td>
+										</tr>
+									';
+								}
+								//Curriculum
+								if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
+									echo '
+										<tr class="item-row">
+											<td>Curriculum</td>
+											<td width="10">
+												<div class="btn-group" style="width: 70px;">
+													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Curriculum'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+													<a href="1download.php?dir=upload&file='.$rowdata['File_Curriculum'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+												</div>
+											</td>
+										</tr>
+									';
+								}
+								//Antecedentes
+								if(isset($rowdata['File_Antecedentes'])&&$rowdata['File_Antecedentes']!=''){
+									echo '
+										<tr class="item-row">
+											<td>Papel de Antecedentes Penales</td>
+											<td width="10">
+												<div class="btn-group" style="width: 70px;">
+													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Antecedentes'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+													<a href="1download.php?dir=upload&file='.$rowdata['File_Antecedentes'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+												</div>
+											</td>
+										</tr>
+									';
+								}
+								//Carnet
+								if(isset($rowdata['File_Carnet'])&&$rowdata['File_Carnet']!=''){
+									echo '
+										<tr class="item-row">
+											<td>Carnet de Identidad</td>
+											<td width="10">
+												<div class="btn-group" style="width: 70px;">
+													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Carnet'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+													<a href="1download.php?dir=upload&file='.$rowdata['File_Carnet'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+												</div>
+											</td>
+										</tr>
+									';
+								}
+								//Licencia Conducir
+								if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
+									echo '
+										<tr class="item-row">
+											<td>Licencia de Conducir</td>
+											<td width="10">
+												<div class="btn-group" style="width: 70px;">
+													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Licencia'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+													<a href="1download.php?dir=upload&file='.$rowdata['File_Licencia'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+												</div>
+											</td>
+										</tr>
+									';
+								}
+								
+								?>
+							</tbody>
+						</table>
+					
+						
+
+										
+					</div>	
+					<div class="clearfix"></div>
+			
+				</div>
+				
+				
+			</div>
+			
+			
+			<div class="tab-pane fade" id="ot">
+				<div class="wmd-panel">
+					<div class="table-responsive">
+						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+							<thead>
+								<tr role="row">
+									<th colspan="5">Ordenes de Trabajo realizadas</th>
+								</tr>
+								<tr role="row">
+									<th># OT</th>
+									<th>Fecha</th>
+									<th>Estado</th>
+									<th>Ubicacion</th>
+								</tr>
+							</thead>
+							<tbody role="alert" aria-live="polite" aria-relevant="all">
+								                   
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			
+        </div>	
+	</div>
+</div>
+
+
+
+
+
+<?php if(isset($arrActivos)&&$arrActivos!=''){?>   
+	<?php 
+	filtrar($arrActivos, 'Categoria');?>
+	<div class="col-sm-12">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-table"></i></div>
+				<h5>Insumos entregados</h5>
+				<ul class="nav nav-tabs pull-right">
+					<?php 
+					$xx=1;
+					$var='';
+					foreach($arrActivos as $menu=>$productos) {
+						if($xx==1){$var='active';}else{$var='';}
+						echo '<li class="'.$var.'"><a href="#'.espacio_guion($menu).'" data-toggle="tab">'.$menu.'</a></li>';
+						$xx=2;
+					}
+					?>
+				</ul>
+			</header>
+			<div id="div-3" class="body tab-content">
+				
+				<?php 
+				$xx=1;
+				$var='';
+				foreach($arrActivos as $menu=>$productos) {	
+					if($xx==1){$var='active in';}else{$var='';}?>
+					<div class="tab-pane fade <?php echo $var; ?>" id="<?php echo espacio_guion($menu); ?>">
+						<div class="wmd-panel">
+							<div class="table-responsive">
+								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+									<thead>
+									<tr role="row">
+										<th width="120">Fecha</th>
+										<th>Articulo</th>
+									</tr>
+									</thead>
+													  
+									<tbody role="alert" aria-live="polite" aria-relevant="all">
+									<?php foreach ($productos as $producto) { ?>
+										<tr class="odd">
+											<td><?php echo $producto['Fecha']; ?></td>
+											<td>
+												<div class="btn-group" style="width: 35px;" >
+													<a href="<?php echo 'view_mov_insumos.php?view='.$producto['idFacturacion'].'&return=true'; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+												</div>
+												<?php echo cantidades($producto['Cantidad'], 0).' '.$producto['Uml'].' de '.$producto['Producto']; ?>
+												
+											</td>
+											
+										
+										</tr>
+									<?php } ?>                    
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				<?php 
+				$xx=2;
+				} ?>
+
+
+			</div>
+		</div>
+	</div>
+<?php } ?>             
+
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
+	<div class="clearfix"></div>
+		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="clearfix"></div>
+	</div>
+<?php } ?>
+
+<script src="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo DB_SITE ?>/LIB_assets/lib/screenfull/screenfull.js"></script> 
+<script src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
+<script src="<?php echo DB_SITE ?>/LIB_assets/js/main.min.js"></script>
+
+		
+	</body>
+</html>

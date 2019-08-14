@@ -1,0 +1,630 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Views.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Maqueta</title>
+		<!-- Bootstrap Core CSS -->
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
+		<style>
+			body {background-color: #FFF !important;}
+		</style>
+	</head>
+
+	<body>
+<?php 
+// Se traen todos los datos de mi usuario
+$query = "SELECT 
+productos_listado.Nombre,
+productos_listado.Descripcion,
+productos_listado.Marca,
+productos_listado.Codigo,
+productos_listado.StockLimite,
+productos_listado.ValorIngreso,
+productos_listado.ValorEgreso,
+productos_listado.Direccion_img,
+productos_listado.idTipoImagen,
+productos_listado.idOpciones_1,
+productos_listado.idOpciones_2,
+productos_listado.IngredienteActivo, 
+productos_listado.Carencia, 
+productos_listado.DosisRecomendada, 
+productos_listado.EfectoResidual, 
+productos_listado.EfectoRetroactivo,
+productos_listado.CarenciaExportador,
+sistema_productos_categorias.Nombre AS Categoria,
+sistema_productos_tipo.Nombre AS Tipo,
+core_tipo_producto.Nombre AS TipoProd,
+sistema_productos_uml.Nombre AS Unidad,
+productos_listado.FichaTecnica,
+productos_listado.HDS,
+productos_listado.idTipoProducto,
+core_estados.Nombre AS Estado,
+core_maquinas_tipo.Nombre AS Tarea,
+proveedor_listado.Nombre AS ProveedorFijo,
+cross_quality_calidad_matriz.Nombre AS MatrizCalidad,
+ops1.Nombre AS SistemaMantenlubric,
+ops2.Nombre AS SistemaCROSS
+
+FROM `productos_listado`
+LEFT JOIN `sistema_productos_tipo`           ON sistema_productos_tipo.idTipo                    = productos_listado.idTipo
+LEFT JOIN `sistema_productos_categorias`     ON sistema_productos_categorias.idCategoria         = productos_listado.idCategoria
+LEFT JOIN `sistema_productos_uml`            ON sistema_productos_uml.idUml                      = productos_listado.idUml
+LEFT JOIN `core_tipo_producto`               ON core_tipo_producto.idTipoProducto                = productos_listado.idTipoProducto
+LEFT JOIN `core_estados`                     ON core_estados.idEstado                            = productos_listado.idEstado
+LEFT JOIN `core_maquinas_tipo`               ON core_maquinas_tipo.idSubTipo                     = productos_listado.idSubTipo
+LEFT JOIN `proveedor_listado`                ON proveedor_listado.idProveedor                    = productos_listado.idProveedorFijo
+LEFT JOIN `cross_quality_calidad_matriz`     ON cross_quality_calidad_matriz.idMatriz            = productos_listado.idCalidad
+LEFT JOIN `core_sistemas_opciones` ops1      ON ops1.idOpciones                                  = productos_listado.idOpciones_1
+LEFT JOIN `core_sistemas_opciones` ops2      ON ops2.idOpciones                                  = productos_listado.idOpciones_2
+
+WHERE productos_listado.idProducto = {$_GET['view']}";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);
+
+//Se verifica el tipo de producto para traer su receta
+if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
+	// Se trae un listado con productos de la receta
+	$arrRecetas = array();
+	$query = "SELECT 
+	productos_listado.Nombre AS NombreProd,
+	productos_recetas.Cantidad,
+	sistema_productos_uml.Nombre AS UnidadMedida
+	FROM `productos_recetas`
+	LEFT JOIN `productos_listado`        ON productos_listado.idProducto     = productos_recetas.idProductoRel
+	LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml
+	WHERE productos_recetas.idProducto = {$_GET['view']}";
+	//Consulta
+	$resultado = mysqli_query ($dbConn, $query);
+	//Si ejecuto correctamente la consulta
+	if(!$resultado){
+		
+		//variables
+		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+		//generar log
+		error_log("========================================================================================================================================", 0);
+		error_log("Usuario: ". $NombreUsr, 0);
+		error_log("Transaccion: ". $Transaccion, 0);
+		error_log("-------------------------------------------------------------------", 0);
+		error_log("Error code: ". mysqli_errno($dbConn), 0);
+		error_log("Error description: ". mysqli_error($dbConn), 0);
+		error_log("Error query: ". $query, 0);
+		error_log("-------------------------------------------------------------------", 0);
+						
+	}
+	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	array_push( $arrRecetas,$row );
+	}
+}
+
+//verifico que sea un administrador
+$z=" AND bodegas_productos_facturacion_existencias.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+
+
+// Se trae un listado con los ultimos 50 movimientos en bodegas
+$arrProductos = array();
+$query = "SELECT 
+bodegas_productos_facturacion_existencias.Creacion_fecha,
+bodegas_productos_facturacion_existencias.Cantidad_ing,
+bodegas_productos_facturacion_existencias.Cantidad_eg,
+bodegas_productos_facturacion_existencias.idFacturacion,
+bodegas_productos_facturacion_tipo.Nombre AS TipoMovimiento,
+productos_listado.Nombre AS NombreProducto,
+sistema_productos_uml.Nombre AS UnidadMedida,
+bodegas_productos_listado.Nombre AS NombreBodega
+
+FROM `bodegas_productos_facturacion_existencias`
+LEFT JOIN `bodegas_productos_facturacion_tipo`    ON bodegas_productos_facturacion_tipo.idTipo   = bodegas_productos_facturacion_existencias.idTipo
+LEFT JOIN `productos_listado`                     ON productos_listado.idProducto                = bodegas_productos_facturacion_existencias.idProducto
+LEFT JOIN `sistema_productos_uml`                 ON sistema_productos_uml.idUml                 = productos_listado.idUml
+LEFT JOIN `bodegas_productos_listado`             ON bodegas_productos_listado.idBodega          = bodegas_productos_facturacion_existencias.idBodega
+
+WHERE bodegas_productos_facturacion_existencias.idProducto={$_GET['view']}
+".$z."
+ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha DESC 
+LIMIT 50";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrProductos,$row );
+} 
+
+//Agrego filtro limitador de fecha
+$z.=" AND bodegas_productos_facturacion_existencias.Creacion_fecha>'".restarDias(fecha_actual(),360)."'";	
+$z.=" AND bodegas_productos_facturacion.idTipo = 1"; //Filtrar compras	
+$z.=" OR bodegas_productos_facturacion.idTipo = 2";	//Filtrar ventas	
+
+// Se trae un listado de los valores
+$arrPromedioProd = array();
+$query = "SELECT
+bodegas_productos_facturacion.idTipo,
+AVG(bodegas_productos_facturacion_existencias.Valor) AS Precio,
+bodegas_productos_facturacion_existencias.Creacion_mes
+
+FROM `bodegas_productos_facturacion_existencias`
+LEFT JOIN bodegas_productos_facturacion on bodegas_productos_facturacion.idFacturacion = bodegas_productos_facturacion_existencias.idFacturacion
+WHERE bodegas_productos_facturacion_existencias.idProducto={$_GET['view']}
+".$z."
+GROUP BY bodegas_productos_facturacion.idTipo, bodegas_productos_facturacion_existencias.Creacion_mes
+ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha ASC ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrPromedioProd,$row );
+} 
+
+//Se crea el arreglo
+$arreglo = array();
+for ($i = 1; $i <= 12; $i++) {
+	$arreglo[$i]['compra'] = 0;
+	$arreglo[$i]['venta'] = 0;
+}
+foreach ($arrPromedioProd as $productos) {
+	//Se verifican las compras
+	if(isset($productos['idTipo'])&&$productos['idTipo']==1){
+		$arreglo[$productos['Creacion_mes']]['compra'] = $productos['Precio'];
+	}
+	//Se verifican las ventas
+	if(isset($productos['idTipo'])&&$productos['idTipo']==2){
+		$arreglo[$productos['Creacion_mes']]['venta']  = $productos['Precio'];
+	}
+}
+
+
+?>
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div>
+			<h5>Datos del <?php echo $x_column_producto_nombre_sing; ?> <?php echo $rowdata['Nombre']; ?></h5>
+			<div class="toolbar"> </div>
+			<ul class="nav nav-tabs pull-right">
+				<li class="active"><a href="#basicos" data-toggle="tab">Datos</a></li>
+				<li class=""><a href="#movimientos" data-toggle="tab">Movimientos</a></li>
+			</ul>	
+		</header>
+        <div id="div-3" class="tab-content">
+			
+			<div class="tab-pane fade active in" id="basicos">
+				<div class="wmd-panel">
+
+					<div class="col-sm-4">
+						<?php if ($rowdata['Direccion_img']=='') { ?>
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/productos.jpg">
+						<?php }else{
+							//se selecciona el tipo de imagen
+							switch ($rowdata['idTipoImagen']) {
+								//Si no esta configurada
+								case 0:
+									echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture"  >';
+									break;
+								//Normal
+								case 1:
+									echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture"  >';
+									break;
+								//Tambor
+								case 2:
+								case 3:
+								case 4:
+								case 5:
+								case 6:
+								case 7:
+								case 8:
+								case 9:
+								case 10:
+									echo '<div class="fcenter" id="cover_prod"></div>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/prefixfree/prefixfree.min.js"></script>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/drum.js"></script>';
+									echo '<script>
+										var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";	
+										document.getElementById("cover_prod").appendChild(createBarrel(textura));
+									</script>';
+									break;
+								//Cubo Carton 1x1x1
+								case 11:
+									echo '<div class="fcenter" id="cover_prod"></div>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
+									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
+									echo '<script>var med_alto  = 10;</script>';
+									echo '<script>var med_largo = 10;</script>';
+									echo '<script>var med_ancho = 10;</script>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
+									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
+									break;
+									
+								//Cubo Carton 2x1x1
+								case 12:
+									echo '<div class="fcenter" id="cover_prod"></div>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
+									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
+									echo '<script>var med_alto  = 30;</script>';
+									echo '<script>var med_largo = 5;</script>';
+									echo '<script>var med_ancho = 5;</script>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
+									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
+									break;
+								//Cubo Carton 1x2x1
+								case 13:
+									echo '<div class="fcenter" id="cover_prod"></div>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
+									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
+									echo '<script>var med_alto  = 5;</script>';
+									echo '<script>var med_largo = 10;</script>';
+									echo '<script>var med_ancho = 5;</script>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
+									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
+									break;
+								//Cubo Carton 2x2x1
+								case 14:
+									echo '<div class="fcenter" id="cover_prod"></div>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
+									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
+									echo '<script>var med_alto  = 10;</script>';
+									echo '<script>var med_largo = 10;</script>';
+									echo '<script>var med_ancho = 5;</script>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
+									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
+									break;
+								//Cubo Madera 1x1x1
+								case 15:
+									echo '<div class="fcenter" id="cover_prod"></div>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
+									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
+									echo '<script>var med_alto  = 10;</script>';
+									echo '<script>var med_largo = 10;</script>';
+									echo '<script>var med_ancho = 10;</script>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
+									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
+									break;
+									
+								//Cubo Madera 2x1x1
+								case 16:
+									echo '<div class="fcenter" id="cover_prod"></div>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
+									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
+									echo '<script>var med_alto  = 30;</script>';
+									echo '<script>var med_largo = 5;</script>';
+									echo '<script>var med_ancho = 5;</script>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
+									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
+									break;
+								//Cubo Madera 1x2x1
+								case 17:
+									echo '<div class="fcenter" id="cover_prod"></div>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
+									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
+									echo '<script>var med_alto  = 5;</script>';
+									echo '<script>var med_largo = 10;</script>';
+									echo '<script>var med_ancho = 5;</script>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
+									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
+									break;
+								//Cubo Madera 2x2x1
+								case 18:
+									echo '<div class="fcenter" id="cover_prod"></div>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
+									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
+									echo '<script>var med_alto  = 10;</script>';
+									echo '<script>var med_largo = 10;</script>';
+									echo '<script>var med_ancho = 5;</script>';
+									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
+									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
+									break;
+									
+									
+							}
+						
+						}?>
+					</div>
+					<div class="col-sm-8">
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del <?php echo $x_column_producto_nombre_sing; ?></h2>
+						<p class="text-muted">
+							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
+							<strong>Marca : </strong><?php echo $rowdata['Marca']; ?><br/>
+							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
+							<strong><?php echo $x_column_producto_cat_sing; ?> : </strong><?php echo $rowdata['Categoria']; ?><br/>
+							<strong><?php echo $x_column_producto_tipo_sing; ?> : </strong><?php echo $rowdata['Tipo']; ?><br/>
+							<strong>Tipo de Producto : </strong><?php echo $rowdata['TipoProd']; ?><br/>
+							<strong>Unidad de medida : </strong><?php echo $rowdata['Unidad']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
+							
+							<strong>Ingredientes Activos : </strong><br/><?php echo $rowdata['IngredienteActivo']; ?><br/>
+							<strong>Carencia : </strong><?php echo $rowdata['Carencia']; ?><br/>
+							<strong>Dosis Recomendada : </strong><?php echo Cantidades_decimales_justos($rowdata['DosisRecomendada']); ?><br/>
+							<strong>Efecto Residual : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoResidual']); ?><br/>
+							<strong>Efecto Retroactivo : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoRetroactivo']); ?><br/>
+							<strong>Carencia Exportador : </strong><?php echo Cantidades_decimales_justos($rowdata['CarenciaExportador']); ?><br/>
+
+						</p>
+						
+
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
+						<p class="text-muted">
+							<strong>Sistema Mantenlubric : </strong><?php echo $rowdata['SistemaMantenlubric']; ?><br/>
+							<strong>Sistema CROSS: </strong><?php echo $rowdata['SistemaCROSS']; ?><br/>
+						</p>
+						
+						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistema Mantenlubric</h2>
+							<p class="text-muted">
+								<strong>Tareas Relacionadas : </strong><?php echo $rowdata['Tarea']; ?>
+							</p>
+						<?php } ?>
+						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Sistema Cross</h2>
+							<p class="text-muted">
+								<strong>Tipo Planilla de Calidad : </strong><?php echo $rowdata['MatrizCalidad']; ?><br/>
+							</p>
+						<?php } ?>
+						
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
+						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
+						<p class="text-muted">
+							<strong>Proveedor predefinido : </strong><?php echo $rowdata['ProveedorFijo']; ?><br/>
+							<strong>Stock Minimo : </strong><?php echo Cantidades_decimales_justos($rowdata['StockLimite']).' '.$rowdata['Unidad']; ?><br/>
+							<strong>Valor promedio Ingreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorIngreso']), 0); ?><br/>
+							<strong>Valor promedio Egreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorEgreso']), 0); ?><br/>
+						</p>
+						
+						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){ ?>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Receta</h2>
+							<table  class="table table-bordered">
+								<?php 
+								$total = 0;
+								foreach ($arrRecetas as $receta) {
+									$total = $total + $receta['Cantidad']; ?>
+									<tr class="item-row">
+										<td><?php echo $receta['NombreProd']; ?></td>
+										<td width="90"><?php echo Cantidades_decimales_justos_alt($receta['Cantidad']).' '.$receta['UnidadMedida'];?></td>
+									</tr>
+								<?php }?>
+							</table>
+						<?php } ?>
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
+						<p class="text-muted">
+							<?php 
+							//Ficha Tecnica
+							if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+								echo '<a href="1download.php?dir=upload&file='.$rowdata['FichaTecnica'].'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download"></i> Descargar Ficha Tecnica</a>';
+							}
+							//Hoja de seguridad
+							if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+								echo '<a href="1download.php?dir=upload&file='.$rowdata['HDS'].'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download"></i> Descargar Hoja de Seguridad</a>';
+							}
+							?>
+						
+						</p>
+						
+						
+					</div>	
+					<div class="clearfix"></div>
+			
+				</div>
+			</div>
+			
+
+			
+			<div class="tab-pane fade" id="movimientos">
+				<div class="wmd-panel">
+					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+					
+					<div class="table-responsive">			
+						<script>
+							google.charts.load('current', {'packages':['corechart']});
+							google.charts.setOnLoadCallback(drawChart);
+
+							function drawChart() {
+								var data = new google.visualization.DataTable();
+								data.addColumn('string', 'Fecha'); 
+								data.addColumn('number', 'Compra');
+								data.addColumn({type: 'string', role: 'annotation'});
+								data.addColumn('number', 'Venta'); 
+								data.addColumn({type: 'string', role: 'annotation'});
+										
+								data.addRows([
+								<?php 
+									//obtengo el mes actual
+									$xmes = mes_actual();
+									//lop de 12 vueltas
+									for ($xcontador = 1; $xcontador < 12; $xcontador++) {
+										$chain  = "'".numero_a_mes_corto($xmes)."'";
+										$chain .= ", ".$arreglo[$xmes]['compra'];
+										$chain .= ",'".Cantidades_decimales_justos($arreglo[$xmes]['compra'])."'";
+										$chain .= ", ".$arreglo[$xmes]['venta'];
+										$chain .= ",'".Cantidades_decimales_justos($arreglo[$xmes]['venta'])."'";
+												
+										echo '['.$chain.'],';
+												
+										$xmes++;
+										if($xmes==13){$xmes=1;}
+									} 
+								?>
+								]);
+
+								var options = {
+									title: 'Promedio variacion de precios',
+									width: 900,
+									height: 500,
+											
+									hAxis: { 
+										title: 'Meses',
+									},
+									vAxis: { title: 'Valor' },
+									curveType: 'function',
+									//puntos dentro de las curvas
+									series: {
+										0: {
+											pointsVisible: true
+										},
+												 
+									},
+							
+									annotations: {
+												  alwaysOutside: true,
+												  textStyle: {
+													fontSize: 14,
+													color: '#000',
+													auraColor: 'none'
+												  }
+												},
+									colors: ['#FFB347','#C23B22']
+								};
+
+								var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+
+								chart.draw(data, options);
+							}
+
+						</script> 
+						<div id="curve_chart1" style="height: 500px"></div>
+											
+					</div>
+					
+					<div class="table-responsive">
+						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+							<thead>
+								<tr role="row">
+									<th>Movimiento</th>
+									<th>Bodega</th>
+									<th>Fecha</th>
+									<th>Cant Ing</th>
+									<th>Cant eg</th>
+								</tr>
+							</thead>
+		  
+							<tbody role="alert" aria-live="polite" aria-relevant="all">
+							<?php foreach ($arrProductos as $productos) { ?>
+								
+								<tr class="odd">
+									<td>
+										<div class="btn-group" style="width: 35px;" >
+											<a href="<?php echo 'view_mov_productos.php?view='.$productos['idFacturacion'].'&return=true'; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+										</div>
+										<?php echo $productos['TipoMovimiento']; ?>
+									</td>
+									<td><?php echo $productos['NombreBodega']; ?></td>
+									<td><?php echo Fecha_estandar($productos['Creacion_fecha']); ?></td>
+									<td><?php echo Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'];?></td>
+									<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'];?></td>
+						
+								</tr>
+							<?php } ?>                     
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			
+        </div>	
+	</div>
+</div>
+
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
+	<div class="clearfix"></div>
+		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="clearfix"></div>
+	</div>
+<?php } ?>
+
+<script src="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo DB_SITE ?>/LIB_assets/lib/screenfull/screenfull.js"></script> 
+<script src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
+<script src="<?php echo DB_SITE ?>/LIB_assets/js/main.min.js"></script>
+
+		
+	</body>
+</html>

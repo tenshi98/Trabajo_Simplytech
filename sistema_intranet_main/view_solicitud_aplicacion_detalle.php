@@ -1,0 +1,393 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Views.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Maqueta</title>
+		<!-- Bootstrap Core CSS -->
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
+		<style>
+			body {background-color: #FFF !important;}
+		</style>
+	</head>
+
+	<body>
+<?php 
+// Se traen todos los datos de mi usuario
+$query = "SELECT
+cross_solicitud_aplicacion_listado.idSolicitud, 
+cross_solicitud_aplicacion_listado.idEstado,
+cross_solicitud_aplicacion_listado.f_creacion,
+cross_solicitud_aplicacion_listado.f_programacion,
+cross_solicitud_aplicacion_listado.f_ejecucion,
+cross_solicitud_aplicacion_listado.f_termino,
+cross_solicitud_aplicacion_listado.f_programacion_fin,
+cross_solicitud_aplicacion_listado.f_ejecucion_fin,
+cross_solicitud_aplicacion_listado.f_termino_fin,
+cross_solicitud_aplicacion_listado.horaProg,
+cross_solicitud_aplicacion_listado.horaEjecucion,
+cross_solicitud_aplicacion_listado.horaTermino,
+cross_solicitud_aplicacion_listado.horaProg_fin,
+cross_solicitud_aplicacion_listado.horaEjecucion_fin,
+cross_solicitud_aplicacion_listado.horaTermino_fin,
+cross_solicitud_aplicacion_listado.Mojamiento, 
+cross_solicitud_aplicacion_listado.VelTractor, 
+cross_solicitud_aplicacion_listado.VelViento, 
+cross_solicitud_aplicacion_listado.TempMin, 
+cross_solicitud_aplicacion_listado.TempMax,
+
+usuarios_listado.Nombre AS NombreUsuario,
+
+sistema_origen.Nombre AS SistemaOrigen,
+sis_or_ciudad.Nombre AS SistemaOrigenCiudad,
+sis_or_comuna.Nombre AS SistemaOrigenComuna,
+sistema_origen.Direccion AS SistemaOrigenDireccion,
+sistema_origen.Contacto_Fono1 AS SistemaOrigenFono,
+sistema_origen.email_principal AS SistemaOrigenEmail,
+sistema_origen.Rut AS SistemaOrigenRut,
+
+cross_predios_listado.Nombre AS NombrePredio,
+core_estado_solicitud.Nombre AS Estado,
+cross_checking_temporada.Codigo AS TemporadaCodigo,
+cross_checking_temporada.Nombre AS TemporadaNombre,
+cross_checking_estado_fenologico.Codigo AS EstadoFenCodigo,
+cross_checking_estado_fenologico.Nombre AS EstadoFenNombre,
+sistema_variedades_categorias.Nombre AS VariedadCat,
+variedades_listado.Nombre AS VariedadNombre,
+
+core_cross_prioridad.Nombre AS NombrePrioridad,
+cross_solicitud_aplicacion_listado.idDosificador,
+trabajadores_listado.Rut AS TrabajadorRut,
+trabajadores_listado.Nombre AS TrabajadorNombre,
+trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat,
+
+COUNT(cross_solicitud_aplicacion_listado_cuarteles.idEstado) AS N_Cuarteles,
+SUM(if(cross_solicitud_aplicacion_listado_cuarteles.idEstado = 2, 1, 0)) AS N_Cuarteles_Cerrados
+
+FROM `cross_solicitud_aplicacion_listado`
+LEFT JOIN `usuarios_listado`                               ON usuarios_listado.idUsuario                                 = cross_solicitud_aplicacion_listado.idUsuario
+LEFT JOIN `core_sistemas`   sistema_origen                 ON sistema_origen.idSistema                                   = cross_solicitud_aplicacion_listado.idSistema
+LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad          ON sis_or_ciudad.idCiudad                                     = sistema_origen.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna          ON sis_or_comuna.idComuna                                     = sistema_origen.idComuna
+LEFT JOIN `cross_predios_listado`                          ON cross_predios_listado.idPredio                             = cross_solicitud_aplicacion_listado.idPredio
+LEFT JOIN `core_estado_solicitud`                          ON core_estado_solicitud.idEstado                             = cross_solicitud_aplicacion_listado.idEstado
+LEFT JOIN `cross_checking_temporada`                       ON cross_checking_temporada.idTemporada                       = cross_solicitud_aplicacion_listado.idTemporada
+LEFT JOIN `cross_checking_estado_fenologico`               ON cross_checking_estado_fenologico.idEstadoFen               = cross_solicitud_aplicacion_listado.idEstadoFen
+LEFT JOIN `sistema_variedades_categorias`                  ON sistema_variedades_categorias.idCategoria                  = cross_solicitud_aplicacion_listado.idCategoria
+LEFT JOIN `variedades_listado`                             ON variedades_listado.idProducto                              = cross_solicitud_aplicacion_listado.idProducto
+LEFT JOIN `core_cross_prioridad`                           ON core_cross_prioridad.idPrioridad                           = cross_solicitud_aplicacion_listado.idPrioridad
+LEFT JOIN `trabajadores_listado`                           ON trabajadores_listado.idTrabajador                          = cross_solicitud_aplicacion_listado.idDosificador
+LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
+
+WHERE cross_solicitud_aplicacion_listado.idSolicitud = {$_GET['view']} 
+GROUP BY cross_solicitud_aplicacion_listado.idSolicitud";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+$row_data = mysqli_fetch_assoc ($resultado);
+
+/*****************************************/				
+//Insumos
+$arrCuarteles = array();
+$query = "SELECT 
+cross_solicitud_aplicacion_listado_cuarteles.idEstado,
+cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
+cross_predios_listado_zonas.Nombre AS CuartelNombre,
+cross_predios_listado_zonas.AnoPlantacion AS CuartelAnoPlantacion,
+cross_predios_listado_zonas.Hectareas AS CuartelHectareas,
+cross_predios_listado_zonas.Hileras AS CuartelHileras,
+cross_predios_listado_zonas.Plantas AS NPlantas,
+cross_predios_listado_zonas.DistanciaPlant AS CuartelDistanciaPlant,
+cross_predios_listado_zonas.DistanciaHileras AS CuartelDistanciaHileras,
+cross_solicitud_aplicacion_listado_cuarteles.idZona,
+SUM(cross_solicitud_aplicacion_listado_tractores.Diferencia) AS Litros,
+
+
+AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm!=0,cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm,0),0)) AS GeoVelocidadProm,
+SUM(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.GeoDistance!=0,cross_solicitud_aplicacion_listado_tractores.GeoDistance,0),0)) AS GeoDistance,
+AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.Sensor_1_Prom!=0,cross_solicitud_aplicacion_listado_tractores.Sensor_1_Prom,0),0)) AS Sensor_1_Prom,
+AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom!=0,cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom,0),0)) AS Sensor_2_Prom
+
+
+
+FROM `cross_solicitud_aplicacion_listado_cuarteles` 
+LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
+LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
+
+WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud = {$_GET['view']} 
+GROUP BY cross_solicitud_aplicacion_listado_cuarteles.idZona";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrCuarteles,$row );
+}
+
+?>
+
+<section class="invoice">
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<i class="fa fa-globe"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['idSolicitud'], 7); ?>.
+				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino'])?></small>
+			</h2>
+		</div>   
+	</div>
+	
+	
+
+
+
+
+
+
+	<div class="row invoice-info">
+		
+		<?php echo '
+				<div class="col-sm-4 invoice-col">
+					<strong>Datos Empresa</strong>
+					<address>
+						Rut: '.$row_data['SistemaOrigenRut'].'<br>
+						Empresa: '.$row_data['SistemaOrigen'].'<br>
+						Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
+						Direccion: '.$row_data['SistemaOrigenDireccion'].'<br>
+						Fono: '.$row_data['SistemaOrigenFono'].'<br>
+						Email: '.$row_data['SistemaOrigenEmail'].'
+					</address>
+				</div>
+				<div class="col-sm-4 invoice-col">
+					<strong>Identificacion</strong>
+					<address>
+						Predio: '.$row_data['NombrePredio'].'<br>
+						Estado: '.$row_data['Estado'].'<br>
+						Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br>
+						Estado Fenologico: '.$row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre'].'<br>
+						Especie: '.$row_data['VariedadCat'].'<br>
+						Variedad: '.$row_data['VariedadNombre'].'<br>
+					</address>
+				</div>
+				<div class="col-sm-4 invoice-col">
+					<strong>Datos de Solicitud</strong>
+					<address>
+						Prioridad: '.$row_data['NombrePrioridad'].'<br>
+						N° Solicitud: '.n_doc($row_data['idSolicitud'], 5).'<br>
+						Fecha inicio requerido: '.fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg'].'<br>
+						Fecha termino requerido: '.fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin'].'<br>';
+						if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br>';}
+						if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br>';}
+						if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br>';}
+						if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){ echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br>';}
+						echo 'Agrónomo: '.$row_data['NombreUsuario'];
+						if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br>';}
+						
+						echo '
+					</address>
+				</div>
+				
+				<div class="clearfix"></div>
+				
+				<div class="col-sm-4 invoice-col">
+					<strong>Parámetros de Aplicación</strong>
+					<address>
+						Mojamiento: '.Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha<br>
+						Vel. Tractor: '.Cantidades_decimales_justos($row_data['VelTractor']).' Km/hr<br>
+						Vel. Viento: '.Cantidades_decimales_justos($row_data['VelViento']).' Km/hr<br>
+						Temp Min: '.Cantidades_decimales_justos($row_data['TempMin']).' °<br>
+						Temp Max: '.Cantidades_decimales_justos($row_data['TempMax']).' °<br>
+						
+					</address>
+				</div>
+				<div class="col-sm-4 invoice-col">
+					<strong>Cumplimiento</strong>
+					<address>
+						N° Cuarteles Programados: '.$row_data['N_Cuarteles'].'<br>
+						N° Cuarteles Cerrados: '.$row_data['N_Cuarteles_Cerrados'].'<br>
+						Avance %: '.porcentaje($row_data['N_Cuarteles_Cerrados']/$row_data['N_Cuarteles']).'<br>
+						
+					</address>
+				</div>';
+		?>
+
+
+							
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="table-responsive">
+				<table class="table">
+					<tbody>
+						<tr role="row">
+							<th colspan="7" style="text-align: center;">Identificacion</th>
+							<th colspan="1" style="text-align: center;">Velocidad Tractor (Km/hr)</th>
+							<th colspan="1" style="text-align: center;">Distancia Recorrida(Metros)</th>
+							<th colspan="2" style="text-align: center;">Promedio Caudales</th>
+							<th colspan="2" style="text-align: center;">Uso</th>
+							<th colspan="1" style="text-align: center;">Plantas</th>
+							<th width="10">Acciones</th>
+						</tr>
+						<tr class="active">
+							<td><strong>Cuarteles</strong></td>
+							<td><strong>N° Plantas</strong></td>
+							<td><strong>Hectareas</strong></td>
+							<td><strong>Año Plantacion</strong></td>
+							<td><strong>Hileras</strong></td>
+							<td><strong>Distancia Plant</strong></td>
+							<td><strong>Distancia Hileras</strong></td>
+							
+							<th><strong>Promedio</strong></th>
+							<th><strong>Faltante</strong></th>
+							<th><strong>Derecho</strong></th>
+							<th><strong>Izquierdo</strong></th>
+							<th><strong>Litros Aplicados</strong></th>
+							<th><strong>Litros x Hectarea</strong></th>
+							<th><strong>Pendientes</strong></th>
+							
+							<th></th>
+									
+						</tr>
+						
+						<?php 
+						//recorro el lsiatdo entregado por la base de datos
+						if ($arrCuarteles) {
+							foreach ($arrCuarteles as $cuartel) { ?>
+								
+								<tr class="item-row linea_punteada">
+									<td class="item-name"><?php echo $cuartel['CuartelNombre'];if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ echo '(Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';} ?></td>
+									<td class="item-name"><?php echo $cuartel['NPlantas']; ?></td>
+									<td class="item-name"><?php echo $cuartel['CuartelHectareas']; ?></td>
+									<td class="item-name"><?php echo $cuartel['CuartelAnoPlantacion']; ?></td>
+									<td class="item-name"><?php echo $cuartel['CuartelHileras']; ?></td>
+									<td class="item-name"><?php echo $cuartel['CuartelDistanciaPlant']; ?></td>
+									<td class="item-name"><?php echo $cuartel['CuartelDistanciaHileras']; ?></td>
+									
+									<td class="item-name"><?php echo Cantidades($cuartel['GeoVelocidadProm'], 1); ?></td>
+									<td class="item-name">
+										<?php  
+										$faltante = ($cuartel['CuartelDistanciaPlant']*$cuartel['NPlantas']) - ($cuartel['GeoDistance']*1000);
+										if($faltante<0){
+											$faltante = 0;
+										}
+										echo Cantidades($faltante, 0); 
+										?>
+									</td>
+									<td class="item-name"><?php echo Cantidades($cuartel['Sensor_1_Prom'], 2); ?></td>
+									<td class="item-name"><?php echo Cantidades($cuartel['Sensor_2_Prom'], 2); ?></td>
+									<td class="item-name"><?php echo cantidades($cuartel['Litros'], 0); ?></td>
+									<td class="item-name"><?php if(isset($cuartel['CuartelHectareas'])&&$cuartel['CuartelHectareas']!=0){echo cantidades(($cuartel['Litros']/$cuartel['CuartelHectareas']), 0);}else{echo '0';} ?></td>
+									<td class="item-name">
+										<?php 
+										$faltante = ((($cuartel['CuartelDistanciaPlant']*$cuartel['NPlantas']) - ($cuartel['GeoDistance']*1000))/$cuartel['CuartelDistanciaPlant']);
+										if($faltante<0){
+											$faltante = 0;
+										}
+										echo Cantidades($faltante, 0); 
+										?>
+									</td>
+									<td>
+										<div class="btn-group" style="width: 35px;" >
+											<a href="<?php echo 'view_solicitud_aplicacion_detalle_tractores.php?idSolicitud='.$_GET['view'].'&idZona='.$cuartel['idZona'].'&return=true'; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+										</div>
+									</td>
+									
+										
+								</tr> 
+								<?php 
+							}
+						}else{
+							echo '<tr class="item-row linea_punteada"><td>No hay cuarteles asignados</td></tr>';
+						} ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+				
+
+ 
+</section>
+
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
+	<div class="clearfix"></div>
+		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="clearfix"></div>
+	</div>
+<?php } ?>
+ 
+<script src="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo DB_SITE ?>/LIB_assets/lib/screenfull/screenfull.js"></script> 
+<script src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
+<script src="<?php echo DB_SITE ?>/LIB_assets/js/main.min.js"></script>
+
+	</body>
+</html>

@@ -1,0 +1,171 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "sistema_rrhh_tabla_iusc.php";
+$location = $original;
+/********************************************************************/
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para editar
+if ( !empty($_POST['submit_edit']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'update';
+	require_once 'A1XRXS_sys/xrxs_form/z_sistema_rrhh_tabla_iusc.php';
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Tipo de Amonestacion Creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Tipo de Amonestacion Modificado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tipo de Amonestacion borrado correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+?>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ if ( ! empty($_GET['id']) ) { 
+// Se traen todos los datos de mi usuario
+$query = "SELECT Tramo,UTM_Desde,UTM_Hasta,Tasa, Rebaja
+FROM `sistema_rrhh_tabla_iusc`
+WHERE idTablaImpuesto = {$_GET['id']}";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);	?>
+ 
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Modificacion del Tipo de Amonestacion</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Tramo)) {      $x1  = $Tramo;         }else{$x1  = $rowdata['Tramo'];}
+				if(isset($UTM_Desde)) {  $x2  = $UTM_Desde;     }else{$x2  = Cantidades_decimales_justos($rowdata['UTM_Desde']);}
+				if(isset($UTM_Hasta)) {  $x3  = $UTM_Hasta;     }else{$x3  = Cantidades_decimales_justos($rowdata['UTM_Hasta']);}
+				if(isset($Tasa)) {       $x4  = $Tasa;          }else{$x4  = Cantidades_decimales_justos($rowdata['Tasa']);}
+				if(isset($Rebaja)) {     $x5  = $Rebaja;        }else{$x5  = Cantidades_decimales_justos($rowdata['Rebaja']);}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_input_text( 'Tramo', 'Tramo', $x1, 2);
+				$Form_Imputs->form_input_number('Desde', 'UTM_Desde', $x2, 1);
+				$Form_Imputs->form_input_number('Hasta', 'UTM_Hasta', $x3, 2);
+				$Form_Imputs->form_input_number('Tasa', 'Tasa', $x4, 1);
+				$Form_Imputs->form_input_number('Rebaja', 'Rebaja', $x5, 1);
+					
+				$Form_Imputs->form_input_hidden('idTablaImpuesto', $_GET['id'], 2);
+				?>
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+		</div>
+	</div>
+</div>
+
+
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+/**********************************************************/
+$arrAmonestacion = array();
+$query = "SELECT idTablaImpuesto,Tramo, UTM_Desde, UTM_Hasta, Tasa, Rebaja
+FROM `sistema_rrhh_tabla_iusc`";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrAmonestacion,$row );
+}?>
+                   
+                                 
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Tramos Cargas Familiares</h5>
+		</header>
+		<div class="table-responsive">
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>Tramo</th>
+						<th>Desde</th>
+						<th>Hasta</th>
+						<th>Tasa</th>
+						<th>Rebaja</th>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>				  
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				<?php foreach ($arrAmonestacion as $amon) { ?>
+					<tr class="odd">
+						<td><?php echo $amon['Tramo']; ?></td>
+						<td><?php echo Cantidades_decimales_justos($amon['UTM_Desde']); ?></td>
+						<td><?php echo Cantidades_decimales_justos($amon['UTM_Hasta']); ?></td>
+						<td><?php echo Cantidades_decimales_justos($amon['Tasa']); ?></td>
+						<td><?php echo Cantidades_decimales_justos($amon['Rebaja']); ?></td>
+						<td>
+							<div class="btn-group" style="width: 35px;" >
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'?id='.$amon['idTablaImpuesto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+							</div>
+						</td>
+					</tr>
+				<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<?php } ?>           
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

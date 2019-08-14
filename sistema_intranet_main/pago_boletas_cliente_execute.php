@@ -1,0 +1,62 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Excel.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Si existe se elimina
+if(isset($_SESSION['pagos_boletas_clientes'][$_GET['idFacturacion']]['idFacturacion'])&&$_SESSION['pagos_boletas_clientes'][$_GET['idFacturacion']]['idFacturacion']!=''&&$_SESSION['pagos_boletas_clientes'][$_GET['idFacturacion']]['idFacturacion']==$_GET['idFacturacion']){
+	unset($_SESSION['pagos_boletas_clientes'][$_GET['idFacturacion']]);
+//Si no existe se crea	
+}else{
+	//consulto todos los documentos relacionados al Cliente
+	$query = "SELECT 
+	boleta_honorarios_facturacion.idFacturacion,
+	boleta_honorarios_facturacion.N_Doc,
+	boleta_honorarios_facturacion.ValorTotal,
+	boleta_honorarios_facturacion.idSistema,
+	boleta_honorarios_facturacion.idCliente,
+	clientes_listado.Nombre AS ClienteNombre,
+	(SELECT SUM(MontoPagado) FROM `pagos_boletas_clientes` WHERE idFacturacion= boleta_honorarios_facturacion.idFacturacion LIMIT 1) AS MontoPagado
+
+	FROM `boleta_honorarios_facturacion`
+	LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = boleta_honorarios_facturacion.idCliente
+		
+	WHERE boleta_honorarios_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+	//Consulta
+	$resultado = mysqli_query ($dbConn, $query);
+	//Si ejecuto correctamente la consulta
+	if(!$resultado){
+		//Genero numero aleatorio
+		$vardata = genera_password(8,'alfanumerico');
+
+		//Guardo el error en una variable temporal
+		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+
+	}
+	$row_data = mysqli_fetch_assoc ($resultado);
+	
+	/******************************************************************/
+	//Se traspasan los valores a variables de sesion
+	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
+	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['N_Doc']              = $row_data['N_Doc'];
+	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['Cliente']            = $row_data['ClienteNombre'];
+	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['ValorTotal']         = $row_data['ValorTotal'];
+	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['MontoPagado']        = $row_data['MontoPagado'];
+	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['idSistema']          = $row_data['idSistema'];
+	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['idCliente']          = $row_data['idCliente'];
+	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['ValorReal']          = '';
+
+	
+}
+		
+
+?>

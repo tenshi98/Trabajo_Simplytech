@@ -1,0 +1,658 @@
+<?php
+/*******************************************************************************************************************/
+/*                                              Bloque de seguridad                                                */
+/*******************************************************************************************************************/
+if( ! defined('XMBCXRXSKGC')) {
+    die('No tienes acceso a esta carpeta o archivo.');
+}
+/*******************************************************************************************************************/
+/*                                        Se traspasan los datos a variables                                       */
+/*******************************************************************************************************************/
+
+	//Traspaso de valores input a variables
+	if ( !empty($_POST['idApoderado']) )                 $idApoderado                  = $_POST['idApoderado'];
+	if ( !empty($_POST['idSistema']) )                   $idSistema                    = $_POST['idSistema'];
+	if ( !empty($_POST['idEstado']) )                    $idEstado                     = $_POST['idEstado'];
+	if ( !empty($_POST['Nombre']) )                      $Nombre                       = $_POST['Nombre'];
+	if ( !empty($_POST['ApellidoPat']) )                 $ApellidoPat                  = $_POST['ApellidoPat'];
+	if ( !empty($_POST['ApellidoMat']) )                 $ApellidoMat                  = $_POST['ApellidoMat'];
+	if ( !empty($_POST['Fono1']) )                       $Fono1                        = $_POST['Fono1'];
+	if ( !empty($_POST['Fono2']) )                       $Fono2                        = $_POST['Fono2'];
+	if ( !empty($_POST['FNacimiento']) )                 $FNacimiento                  = $_POST['FNacimiento'];
+	if ( !empty($_POST['Rut']) )                         $Rut                          = $_POST['Rut'];
+	if ( !empty($_POST['idCiudad']) )                    $idCiudad                     = $_POST['idCiudad'];
+	if ( !empty($_POST['idComuna']) )                    $idComuna                     = $_POST['idComuna'];
+	if ( !empty($_POST['Direccion']) )                   $Direccion                    = $_POST['Direccion'];
+	if ( !empty($_POST['F_Inicio_Contrato']) )           $F_Inicio_Contrato            = $_POST['F_Inicio_Contrato'];
+	if ( !empty($_POST['F_Termino_Contrato']) )          $F_Termino_Contrato           = $_POST['F_Termino_Contrato'];
+	if ( !empty($_POST['Password']) )                    $Password                     = $_POST['Password'];
+	if ( !empty($_POST['dispositivo']) )                 $dispositivo                  = $_POST['dispositivo'];
+	if ( !empty($_POST['IMEI']) )                        $IMEI                         = $_POST['IMEI'];
+	if ( !empty($_POST['GSM']) )                         $GSM                          = $_POST['GSM'];
+	if ( !empty($_POST['GeoLatitud']) )                  $GeoLatitud                   = $_POST['GeoLatitud'];
+	if ( !empty($_POST['GeoLongitud']) )                 $GeoLongitud                  = $_POST['GeoLongitud'];
+	if ( !empty($_POST['idOpciones_1']) )                $idOpciones_1                 = $_POST['idOpciones_1'];
+	if ( !empty($_POST['idOpciones_2']) )                $idOpciones_2                 = $_POST['idOpciones_2'];
+	if ( !empty($_POST['idOpciones_3']) )                $idOpciones_3                 = $_POST['idOpciones_3'];
+	if ( !empty($_POST['idOpciones_4']) )                $idOpciones_4                 = $_POST['idOpciones_4'];
+	if ( !empty($_POST['idOpciones_5']) )                $idOpciones_5                 = $_POST['idOpciones_5'];
+	
+	
+/*******************************************************************************************************************/
+/*                                      Verificacion de los datos obligatorios                                     */
+/*******************************************************************************************************************/
+
+	//limpio y separo los datos de la cadena de comprobacion
+	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
+	$piezas = explode(",", $form_obligatorios);
+	//recorro los elementos
+	foreach ($piezas as $valor) {
+		//veo si existe el dato solicitado y genero el error
+		switch ($valor) {
+			case 'idApoderado':                 if(empty($idApoderado)){                  $error['idApoderado']                  = 'error/No ha ingresado el id';}break;
+			case 'idSistema':                   if(empty($idSistema)){                    $error['idSistema']                    = 'error/No ha seleccionado el sistema al cual pertenece';}break;
+			case 'idEstado':                    if(empty($idEstado)){                     $error['idEstado']                     = 'error/No ha seleccionado el estado';}break;
+			case 'Nombre':                      if(empty($Nombre)){                       $error['Nombre']                       = 'error/No ha ingresado el nombre de la persona';}break;
+			case 'ApellidoPat':                 if(empty($ApellidoPat)){                  $error['ApellidoPat']                  = 'error/No ha ingresado el apellido paterno de la persona';}break;
+			case 'ApellidoMat':                 if(empty($ApellidoMat)){                  $error['ApellidoMat']                  = 'error/No ha ingresado el apellido materno de la persona';}break;
+			case 'Fono1':                       if(empty($Fono1)){                        $error['Fono1']                        = 'error/No ha ingresado el Fono1 a desempeñar';}break;
+			case 'Fono2':                       if(empty($Fono2)){                        $error['Fono2']                        = 'error/No ha ingresado el Fono2';}break;
+			case 'FNacimiento':                 if(empty($FNacimiento)){                  $error['FNacimiento']                  = 'error/No ha ingresado la fecha de nacimiento';}break;
+			case 'Rut':                         if(empty($Rut)){                          $error['Rut']                          = 'error/No ha ingresado el rut';}break;
+			case 'idCiudad':                    if(empty($idCiudad)){                     $error['idCiudad']                     = 'error/No ha seleccionado la ciudad';}break;
+			case 'idComuna':                    if(empty($idComuna)){                     $error['idComuna']                     = 'error/No ha seleccionado la comuna';}break;
+			case 'Direccion':                   if(empty($Direccion)){                    $error['Direccion']                    = 'error/No ha ingresado la direccion';}break;
+			case 'F_Inicio_Contrato':           if(empty($F_Inicio_Contrato)){            $error['F_Inicio_Contrato']            = 'error/No ha ingresado la fecha de inicio';}break;
+			case 'F_Termino_Contrato':          if(empty($F_Termino_Contrato)){           $error['F_Termino_Contrato']           = 'error/No ha ingresado la fecha de termino';}break;
+			case 'Password':                    if(empty($Password)){                     $error['Password']                     = 'error/No ha ingresado la password';}break;
+			case 'dispositivo':                 if(empty($dispositivo)){                  $error['dispositivo']                  = 'error/No ha ingresado el dispositivo utilizado';}break;
+			case 'IMEI':                        if(empty($IMEI)){                         $error['IMEI']                         = 'error/No ha ingresado el imei del equipo';}break;
+			case 'GSM':                         if(empty($GSM)){                          $error['GSM']                          = 'error/No ha ingresado el gsm del equipo';}break;
+			case 'GeoLatitud':                  if(empty($GeoLatitud)){                   $error['GeoLatitud']                   = 'error/No ha ingresado la latitud del equipo';}break;
+			case 'GeoLongitud':                 if(empty($GeoLongitud)){                  $error['GeoLongitud']                  = 'error/No ha ingresado la longitud del equipo';}break;
+			case 'idOpciones_1':                if(empty($idOpciones_1)){                 $error['idOpciones_1']                 = 'error/No ha ingresado la opcion 1';}break;
+			case 'idOpciones_2':                if(empty($idOpciones_2)){                 $error['idOpciones_2']                 = 'error/No ha ingresado la opcion 2';}break;
+			case 'idOpciones_3':                if(empty($idOpciones_3)){                 $error['idOpciones_3']                 = 'error/No ha ingresado la opcion 3';}break;
+			case 'idOpciones_4':                if(empty($idOpciones_4)){                 $error['idOpciones_4']                 = 'error/No ha ingresado la opcion 4';}break;
+			case 'idOpciones_5':                if(empty($idOpciones_5)){                 $error['idOpciones_5']                 = 'error/No ha ingresado la opcion 5';}break;
+			
+		}
+	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	//Verifica si el mail corresponde
+	if(isset($Fono1)){if(validarnumero($Fono1)) {     $error['Fono1']   = 'error/Ingrese un numero telefonico valido'; }}
+	if(isset($Fono2)){if(validarnumero($Fono2)) {     $error['Fono2']   = 'error/Ingrese un numero telefonico valido'; }}
+	//if(isset($Rut)){if(RutValidate($Rut)==0){       $error['Rut']    = 'error/El Rut ingresado no es valido'; }}
+
+/*******************************************************************************************************************/
+/*                                            Se ejecutan las instrucciones                                        */
+/*******************************************************************************************************************/
+	//ejecuto segun la funcion
+	switch ($form_trabajo) {
+/*******************************************************************************************************************/		
+		case 'insert':
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			$ndata_2 = 0;
+			//Se verifica si el dato existe
+			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idSistema)){
+				$ndata_1 = db_select_nrows ('Nombre', 'apoderados_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."'", $dbConn);
+			}
+			if(isset($Rut)&&isset($idSistema)){
+				$ndata_2 = db_select_nrows ('Rut', 'apoderados_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn);
+			}
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El apoderado que intenta ingresar ya existe en el sistema';}
+			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El Rut ya existe en el sistema';}
+			/*******************************************************************/
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				//Se genera una password aleatoria
+				$Password = genera_password(6,'alfanumerico');
+				
+				//filtros
+				if(isset($idSistema) && $idSistema != ''){                       $a  = "'".$idSistema."'" ;               }else{$a  = "''";}
+				if(isset($idEstado) && $idEstado != ''){                         $a .= ",'".$idEstado."'" ;               }else{$a .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                             $a .= ",'".$Nombre."'" ;                 }else{$a .= ",''";}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){                   $a .= ",'".$ApellidoPat."'" ;            }else{$a .= ",''";}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){                   $a .= ",'".$ApellidoMat."'" ;            }else{$a .= ",''";}
+				if(isset($Fono1) && $Fono1 != ''){                               $a .= ",'".$Fono1."'" ;                  }else{$a .= ",''";}
+				if(isset($Fono2) && $Fono2 != ''){                               $a .= ",'".$Fono2."'" ;                  }else{$a .= ",''";}
+				if(isset($FNacimiento) && $FNacimiento != ''){                   $a .= ",'".$FNacimiento."'" ;            }else{$a .= ",''";}
+				if(isset($Rut) && $Rut != ''){                                   $a .= ",'".$Rut."'" ;                    }else{$a .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){                         $a .= ",'".$idCiudad."'" ;               }else{$a .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){                         $a .= ",'".$idComuna."'" ;               }else{$a .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){                       $a .= ",'".$Direccion."'" ;              }else{$a .= ",''";}
+				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){       $a .= ",'".$F_Inicio_Contrato."'" ;      }else{$a .= ",''";}
+				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){     $a .= ",'".$F_Termino_Contrato."'" ;     }else{$a .= ",''";}
+				if(isset($Password) && $Password != ''){                         $a .= ",'".md5($Password)."'" ;          }else{$a .= ",''";}
+				if(isset($dispositivo) && $dispositivo != ''){                   $a .= ",'".$dispositivo."'" ;            }else{$a .= ",''";}
+				if(isset($IMEI) && $IMEI != ''){                                 $a .= ",'".$IMEI."'" ;                   }else{$a .= ",''";}
+				if(isset($GSM) && $GSM != ''){                                   $a .= ",'".$GSM."'" ;                    }else{$a .= ",''";}
+				if(isset($GeoLatitud) && $GeoLatitud != ''){                     $a .= ",'".$GeoLatitud."'" ;             }else{$a .= ",''";}
+				if(isset($GeoLongitud) && $GeoLongitud != ''){                   $a .= ",'".$GeoLongitud."'" ;            }else{$a .= ",''";}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){                 $a .= ",'".$idOpciones_1."'" ;           }else{$a .= ",''";}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){                 $a .= ",'".$idOpciones_2."'" ;           }else{$a .= ",''";}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){                 $a .= ",'".$idOpciones_3."'" ;           }else{$a .= ",''";}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){                 $a .= ",'".$idOpciones_4."'" ;           }else{$a .= ",''";}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){                 $a .= ",'".$idOpciones_5."'" ;           }else{$a .= ",''";}
+				
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `apoderados_listado` (idSistema, idEstado, Nombre, ApellidoPat, 
+				ApellidoMat, Fono1, Fono2, FNacimiento, Rut, idCiudad, idComuna, Direccion, 
+				F_Inicio_Contrato, F_Termino_Contrato, Password, dispositivo, IMEI, GSM, GeoLatitud, GeoLongitud,
+				idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5) 
+				VALUES ({$a} )";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					//recibo el último id generado por mi sesion
+					$ultimo_id = mysqli_insert_id($dbConn);
+						
+					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				}
+			}
+	
+		break;
+/*******************************************************************************************************************/		
+		case 'update':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			$ndata_2 = 0;
+			//Se verifica si el dato existe
+			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idSistema)&&isset($idApoderado)){
+				$ndata_1 = db_select_nrows ('Nombre', 'apoderados_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."' AND idApoderado!='".$idApoderado."'", $dbConn);
+			}
+			if(isset($Rut)&&isset($idSistema)&&isset($idApoderado)){
+				$ndata_2 = db_select_nrows ('Rut', 'apoderados_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idApoderado!='".$idApoderado."'", $dbConn);
+			}
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El apoderado que intenta ingresar ya existe en el sistema';}
+			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El Rut ya existe en el sistema';}
+			/*******************************************************************/
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				//Filtros
+				$a = "idApoderado='".$idApoderado."'" ;
+				if(isset($idSistema) && $idSistema != ''){                     $a .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                       $a .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                           $a .= ",Nombre='".$Nombre."'" ;}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){                 $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){                 $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
+				if(isset($Fono1) && $Fono1 != ''){                             $a .= ",Fono1='".$Fono1."'" ;}
+				if(isset($Fono2) && $Fono2 != ''){                             $a .= ",Fono2='".$Fono2."'" ;}
+				if(isset($FNacimiento) && $FNacimiento != ''){                 $a .= ",FNacimiento='".$FNacimiento."'" ;}
+				if(isset($Rut) && $Rut != ''){                                 $a .= ",Rut='".$Rut."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){                       $a .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){                       $a .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){                     $a .= ",Direccion='".$Direccion."'" ;}
+				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){     $a .= ",F_Inicio_Contrato='".$F_Inicio_Contrato."'" ;}
+				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){   $a .= ",F_Termino_Contrato='".$F_Termino_Contrato."'" ;}
+				if(isset($Password) && $Password != ''){                       $a .= ",Password='".md5($Password)."'" ;}
+				if(isset($dispositivo) && $dispositivo != ''){                 $a .= ",dispositivo='".$dispositivo."'" ;}
+				if(isset($IMEI) && $IMEI != ''){                               $a .= ",IMEI='".$IMEI."'" ;}
+				if(isset($GSM) && $GSM != ''){                                 $a .= ",GSM='".$GSM."'" ;}
+				if(isset($GeoLatitud) && $GeoLatitud != ''){                   $a .= ",GeoLatitud='".$GeoLatitud."'" ;}
+				if(isset($GeoLongitud) && $GeoLongitud != ''){                 $a .= ",GeoLongitud='".$GeoLongitud."'" ;}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){               $a .= ",idOpciones_1='".$idOpciones_1."'" ;}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){               $a .= ",idOpciones_2='".$idOpciones_2."'" ;}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){               $a .= ",idOpciones_3='".$idOpciones_3."'" ;}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){               $a .= ",idOpciones_4='".$idOpciones_4."'" ;}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){               $a .= ",idOpciones_5='".$idOpciones_5."'" ;}
+				
+				
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `apoderados_listado` SET ".$a." WHERE idApoderado = '$idApoderado'";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				}
+				
+			}
+		
+	
+		break;	
+						
+/*******************************************************************************************************************/
+		case 'del':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			// Se obtiene el nombre del archivo
+			$rowdata = db_select_data ('Direccion_img, File_Contrato', 'apoderados_listado', '', "idApoderado = ".$_GET['del'], $dbConn);
+			
+			//se borra el dato de la base de datos
+			$query  = "DELETE FROM `apoderados_listado` WHERE idApoderado = {$_GET['del']}";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina la foto
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['Direccion_img']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//se elimina el contrato
+				if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['File_Contrato'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['File_Contrato']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				header( 'Location: '.$location.'&deleted=true' );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			}
+				
+			
+
+		break;	
+/*******************************************************************************************************************/
+		//Cambio el estado de activo a inactivo
+		case 'estado':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			$idApoderado  = $_GET['id'];
+			$idEstado      = $_GET['estado'];
+			$query  = "UPDATE apoderados_listado SET idEstado = '$idEstado'	
+			WHERE idApoderado    = '$idApoderado'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				header( 'Location: '.$location.'&edited=true' );
+				die; 
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			}
+	
+
+		break;				
+/*******************************************************************************************************************/
+		//Cambia el nivel del permiso
+		case 'submit_img':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			if ($_FILES["Direccion_img"]["error"] > 0){ 
+				$error['Direccion_img']     = 'error/Ha ocurrido un error'; 
+			} else {
+				//Se verifican las extensiones de los archivos
+				$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
+				//Se verifica que el archivo subido no exceda los 100 kb
+				$limite_kb = 1000;
+				//Sufijo
+				$sufijo = 'apod_img_'.$idApoderado.'_';
+							  
+				if (in_array($_FILES['Direccion_img']['type'], $permitidos) && $_FILES['Direccion_img']['size'] <= $limite_kb * 1024){
+					//Se especifica carpeta de destino
+					$ruta = "upload/".$sufijo.$_FILES['Direccion_img']['name'];
+					//Se verifica que el archivo un archivo con el mismo nombre no existe
+					if (!file_exists($ruta)){
+						//Se mueve el archivo a la carpeta previamente configurada
+						//$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], $ruta);
+						//Muevo el archivo
+						$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], "upload/xxxsxx_".$_FILES['Direccion_img']['name']);
+						if ($move_result){
+							
+							//se selecciona la imagen
+							switch ($_FILES['Direccion_img']['type']) {
+								case 'image/jpg':
+									$imgBase = imagecreatefromjpeg('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+									break;
+								case 'image/jpeg':
+									$imgBase = imagecreatefromjpeg('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+									break;
+								case 'image/gif':
+									$imgBase = imagecreatefromgif('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+									break;
+								case 'image/png':
+									$imgBase = imagecreatefrompng('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+									break;
+							}
+								
+							//se reescala la imagen en caso de ser necesario
+							$imgBase_width = imagesx( $imgBase );
+							$imgBase_height = imagesy( $imgBase );
+								
+							//Se establece el tamaño maximo
+							$max_width  = 640;
+							$max_height = 640;
+
+							if ($imgBase_width > $imgBase_height) {
+								if($imgBase_width < $max_width){
+									$newwidth = $imgBase_width;
+								}else{
+									$newwidth = $max_width;	
+								}
+								$divisor = $imgBase_width / $newwidth;
+								$newheight = floor( $imgBase_height / $divisor);
+							}else {
+								if($imgBase_height < $max_height){
+									$newheight = $imgBase_height;
+								}else{
+									$newheight =  $max_height;
+								} 
+								$divisor = $imgBase_height / $newheight;
+								$newwidth = floor( $imgBase_width / $divisor );
+							}
+
+							$imgBase = imagescale($imgBase, $newwidth, $newheight);
+
+							//se establece la calidad del archivo
+							$quality = 75;
+								
+							//se crea la imagen
+							imagejpeg($imgBase, $ruta, $quality);
+								
+							//se elimina la imagen base
+							try {
+								if(!is_writable('upload/xxxsxx_'.$_FILES['Direccion_img']['name'])){
+									//throw new Exception('File not writable');
+								}else{
+									unlink('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+								}
+							}catch(Exception $e) { 
+								//guardar el dato en un archivo log
+							}
+							//se eliminan las imagenes de la memoria
+							imagedestroy($imgBase);
+						
+								
+							//Filtro para idSistema
+							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+
+							// inserto los datos de registro en la db
+							$query  = "UPDATE `apoderados_listado` SET ".$a." WHERE idApoderado = '$idApoderado'";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if($resultado){
+								
+								header( 'Location: '.$location );
+								die;
+								
+							//si da error, guardar en el log de errores una copia
+							}else{
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							}
+											
+						} else {
+							$error['Direccion_img']     = 'error/Ocurrio un error al mover el archivo'; 
+						}
+					} else {
+						$error['Direccion_img']     = 'error/El archivo '.$_FILES['Direccion_img']['name'].' ya existe'; 
+					}
+				} else {
+					$error['Direccion_img']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+				}
+			}
+
+
+		break;	
+/*******************************************************************************************************************/
+		case 'del_img':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Usuario
+			$idApoderado = $_GET['del_img'];
+			// Se obtiene el nombre del logo
+			$rowdata = db_select_data ('Direccion_img', 'apoderados_listado', '', "idApoderado = ".$idApoderado, $dbConn);
+
+			//se borra el dato de la base de datos
+			$query  = "UPDATE `apoderados_listado` SET Direccion_img='' WHERE idApoderado = '{$idApoderado}'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina el archivo
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['Direccion_img']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&id_img=true' );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			}
+			
+
+		break;	
+/*******************************************************************************************************************/
+		//Cambia el nivel del permiso
+		case 'submit_contrato':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			if ($_FILES["File_Contrato"]["error"] > 0){ 
+				$error['File_Contrato']     = 'error/Ha ocurrido un error'; 
+			} else {
+				//Se verifican las extensiones de los archivos
+				$permitidos = array("application/msword",
+									"application/vnd.ms-word",
+									"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+											
+									"application/pdf",
+									"application/octet-stream",
+									"application/x-real",
+									"application/vnd.adobe.xfdf",
+									"application/vnd.fdf",
+									"binary/octet-stream",
+									
+									"image/jpg", 
+									"image/jpeg", 
+									"image/gif", 
+									"image/png"
+
+											);
+											
+				//Se verifica que el archivo subido no exceda los 100 kb
+				$limite_kb = 10000;
+				//Sufijo
+				$sufijo = 'apod_contrato_'.$idApoderado.'_';
+				  
+				if (in_array($_FILES['File_Contrato']['type'], $permitidos) && $_FILES['File_Contrato']['size'] <= $limite_kb * 1024){
+					//Se especifica carpeta de destino
+					$ruta = "upload/".$sufijo.$_FILES['File_Contrato']['name'];
+					//Se verifica que el archivo un archivo con el mismo nombre no existe
+					if (!file_exists($ruta)){
+						//Se mueve el archivo a la carpeta previamente configurada
+						$move_result = @move_uploaded_file($_FILES["File_Contrato"]["tmp_name"], $ruta);
+						if ($move_result){
+								
+							//Filtro para idSistema
+							$a = "File_Contrato='".$sufijo.$_FILES['File_Contrato']['name']."'" ;
+
+							// inserto los datos de registro en la db
+							$query  = "UPDATE `apoderados_listado` SET ".$a." WHERE idApoderado = '$idApoderado'";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if($resultado){
+								
+								header( 'Location: '.$location );
+								die;
+								
+							//si da error, guardar en el log de errores una copia
+							}else{
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							}	
+									
+						} else {
+							$error['File_Contrato']     = 'error/Ocurrio un error al mover el archivo'; 
+						}
+					} else {
+						$error['File_Contrato']     = 'error/El archivo '.$_FILES['File_Contrato']['name'].' ya existe'; 
+					}
+				} else {
+					$error['File_Contrato']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+				}
+			}
+
+
+		break;	
+/*******************************************************************************************************************/
+		case 'del_File_Contrato':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Usuario
+			$idApoderado = $_GET['del_File_Contrato'];
+			// Se obtiene el nombre del logo
+			$rowdata = db_select_data ('File_Contrato', 'apoderados_listado', '', "idApoderado = ".$idApoderado, $dbConn);
+
+			//se borra el dato de la base de datos
+			$query  = "UPDATE `apoderados_listado` SET File_Contrato='' WHERE idApoderado = '{$idApoderado}'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina el archivo
+				if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['File_Contrato'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['File_Contrato']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&id_img=true' );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			}
+			
+			
+
+		break;	
+			
+/*******************************************************************************************************************/
+	}
+?>

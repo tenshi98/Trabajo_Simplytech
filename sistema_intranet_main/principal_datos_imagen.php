@@ -1,0 +1,255 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "principal_datos_imagen.php";
+$location = $original;
+$location .= '?d=d';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para editar
+if ( !empty($_POST['submit_img']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'submit_img';
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
+}
+//se borra un dato
+if ( !empty($_GET['del_img']) )     {
+	//datos extra
+	$location.='&id_usuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+	//Llamamos al formulario
+	$form_trabajo= 'del_img';
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Perfil creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Perfil editado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Perfil borrado correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+// Se traen todos los datos de mi usuario
+$query = "SELECT Direccion_img, Nombre
+FROM `usuarios_listado`
+WHERE idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);
+/*************************************************/
+//permisos a las transacciones
+$trans[1] = "pago_masivo_cliente.php";           //Pagos clientes
+$trans[2] = "pago_masivo_proveedor.php";         //Pagos Proveedores
+$trans[3] = "pago_masivo_cliente_reversa.php";   //Reversa Pagos clientes
+$trans[4] = "pago_masivo_proveedor_reversa.php"; //Reversa Pagos Proveedores
+
+//Genero los permisos
+for ($i = 1; $i <= 4; $i++) {
+	//Seteo la variable a 0
+	$prm_x[$i] = 0;
+	//recorro los permisos
+	if(isset($_SESSION['usuario']['menu'])){
+		foreach($_SESSION['usuario']['menu'] as $menu=>$productos) {
+			foreach($productos as $producto) {
+				//elimino los datos extras
+				$str = str_replace("?pagina=1", "", $producto['TransaccionURL']);
+				//le asigno el valor 1 en caso de que exista
+				if($trans[$i]==$str){
+					$prm_x[$i] = 1;
+				}
+			}
+		}
+	}
+}
+//verifico permisos
+$Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
+?>
+<div class="col-sm-12">
+	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
+		<div class="info-box bg-aqua">
+			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
+
+			<div class="info-box-content">
+				<span class="info-box-text">Perfil</span>
+				<span class="info-box-number"><?php echo $_SESSION['usuario']['basic_data']['Nombre']; ?></span>
+
+				<div class="progress">
+					<div class="progress-bar" style="width: 100%"></div>
+				</div>
+				<span class="progress-description">Editar Imagen Perfil</span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clearfix"></div>
+
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<ul class="nav nav-tabs pull-right">
+				<li class=""><a href="<?php echo 'principal_datos.php';?>" >Resumen</a></li>
+				<li class=""><a href="<?php echo 'principal_datos_datos.php';?>" >Datos Personales</a></li>
+				<li class="active"><a href="<?php echo 'principal_datos_imagen.php';?>" >Cambiar Imagen</a></li>
+				<li class="dropdown">
+					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li class=""><a href="<?php echo 'principal_datos_password.php';?>" >Cambiar Contraseña</a></li>
+						<?php if($Count_pagos!=0){ ?>
+							<li class=""><a href="<?php echo 'principal_datos_documentos_pago.php'?>" >Documentos Pago</a></li>
+						<?php } ?>
+					</ul>
+                </li>           
+			</ul>	
+		</header>
+        <div class="table-responsive">
+			<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
+			
+				<div class="col-sm-10 fcenter">
+					<img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" class="img-thumbnail" > 
+				</div><br/>
+				<a href="<?php echo $location.'&id_usuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&del_img=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
+				<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+				<div class="clearfix"></div>
+			
+			<?php }else{?>
+
+				<div class="col-sm-8 fcenter">
+					
+					<link rel="stylesheet" href="<?php echo DB_SITE ?>/LIBS_js/upload_and_crop_image/croppie.css">
+					<script src="<?php echo DB_SITE ?>/LIBS_js/upload_and_crop_image/croppie.js"></script>
+					
+					
+					<div class="fileUpload btn btn-primary">
+						<span><i class="fa fa-search" aria-hidden="true"></i> Seleccionar Imagen</span>
+						<input name="upload_image" id="upload_image" type="file" class="upload" />
+					</div>
+					
+					 
+				</div>
+				
+				
+				
+                    
+				
+				
+				
+		
+				
+				
+				
+				<div id="uploadimageModal" class="modal" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Seleccionar Zona</h4>
+							</div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-md-8 text-center">
+										  <div id="image_demo" style="width:350px; margin-top:30px"></div>
+									</div>
+									<div class="col-md-4" style="padding-top:30px;">
+										<br/>
+										<br/>
+										<br/>
+										  <button class="btn btn-success crop_image">Cortar y Subir Imagen</button>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<script>  
+					$(document).ready(function(){
+
+						$image_crop = $('#image_demo').croppie({
+							enableExif: true,
+							viewport: {
+								width:200,
+								height:200,
+								type:'square' //circle
+							},
+							boundary:{
+								width:300,
+								height:300
+							}
+						});
+
+						$('#upload_image').on('change', function(){
+							var reader = new FileReader();
+							reader.onload = function (event) {
+								$image_crop.croppie('bind', {
+									url: event.target.result
+								}).then(function(){
+									console.log('jQuery bind complete');
+								});
+							}
+							reader.readAsDataURL(this.files[0]);
+							$('#uploadimageModal').modal('show');
+						});
+
+						$('.crop_image').click(function(event){
+							$image_crop.croppie('result', {
+								type: 'canvas',
+								size: 'viewport'
+							}).then(function(response){
+								$.ajax({
+									url:"principal_datos_imagen_upload.php",
+									type: "POST",
+									data:{"image": response},
+									success:function(data){
+										$('#uploadimageModal').modal('hide');
+										location.reload(); 
+										//alert('listo');
+									}
+								});
+							})
+						});
+
+					});  
+				</script>
+				
+			<?php }?>
+		</div>	
+	</div>
+</div>
+
+
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

@@ -1,0 +1,687 @@
+<?php
+/*******************************************************************************************************************/
+/*                                              Bloque de seguridad                                                */
+/*******************************************************************************************************************/
+if( ! defined('XMBCXRXSKGC')) {
+    die('No tienes acceso a esta carpeta o archivo.');
+}
+/*******************************************************************************************************************/
+/*                                        Se traspasan los datos a variables                                       */
+/*******************************************************************************************************************/
+
+	//Traspaso de valores input a variables
+	if ( !empty($_POST['idEquipo']) )        $idEquipo        = $_POST['idEquipo'];
+	if ( !empty($_POST['Nombre']) )          $Nombre          = $_POST['Nombre'];
+	if ( !empty($_POST['Marca']) )           $Marca           = $_POST['Marca'];
+	if ( !empty($_POST['Descripcion']) )     $Descripcion     = $_POST['Descripcion'];
+	if ( !empty($_POST['Codigo']) )          $Codigo          = $_POST['Codigo'];
+	if ( !empty($_POST['idProveedor']) )     $idProveedor     = $_POST['idProveedor'];
+	if ( !empty($_POST['Direccion_img']) )   $Direccion_img   = $_POST['Direccion_img'];
+	if ( !empty($_POST['FichaTecnica']) )    $FichaTecnica    = $_POST['FichaTecnica'];
+	if ( !empty($_POST['HDS']) )             $HDS             = $_POST['HDS'];
+	if ( !empty($_POST['idEstado']) )        $idEstado        = $_POST['idEstado'];
+	
+
+/*******************************************************************************************************************/
+/*                                      Verificacion de los datos obligatorios                                     */
+/*******************************************************************************************************************/
+
+	//limpio y separo los datos de la cadena de comprobacion
+	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
+	$piezas = explode(",", $form_obligatorios);
+	//recorro los elementos
+	foreach ($piezas as $valor) {
+		//veo si existe el dato solicitado y genero el error
+		switch ($valor) {
+			case 'idEquipo':        if(empty($idEquipo)){         $error['idEquipo']        = 'error/No ha ingresado el id';}break;
+			case 'Nombre':          if(empty($Nombre)){           $error['Nombre']          = 'error/No ha ingresado el nombre del producto';}break;
+			case 'Marca':           if(empty($Marca)){            $error['Marca']           = 'error/No ha ingresado la marca del producto';}break;
+			case 'Descripcion':     if(empty($Descripcion)){      $error['Descripcion']     = 'error/No ha ingresado una Descripcion';}break;
+			case 'Codigo':          if(empty($Codigo)){           $error['Codigo']          = 'error/No ha ingresado un Codigo';}break;
+			case 'idProveedor':     if(empty($idProveedor)){      $error['idProveedor']     = 'error/No ha seleccionado un proveedor';}break;
+			case 'Direccion_img':   if(empty($Direccion_img)){    $error['Direccion_img']   = 'error/No ha adjuntado una imagen';}break;
+			case 'FichaTecnica':    if(empty($FichaTecnica)){     $error['FichaTecnica']    = 'error/No ha adjuntado una ficha tecnica';}break;
+			case 'HDS':             if(empty($HDS)){              $error['HDS']             = 'error/No ha adjuntado un archivo de seguridad';}break;
+			case 'idEstado':        if(empty($idEstado)){         $error['idEstado']        = 'error/No ha ingresado el estado del producto';}break;
+			
+		}
+	}
+
+/*******************************************************************************************************************/
+/*                                            Se ejecutan las instrucciones                                        */
+/*******************************************************************************************************************/
+	//ejecuto segun la funcion
+	switch ($form_trabajo) {
+/*******************************************************************************************************************/		
+		case 'insert':
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			//Se verifica si el dato existe
+			if(isset($Nombre)){
+				$ndata_1 = db_select_nrows ('Nombre', 'equipos_arriendo_listado', '', "Nombre='".$Nombre."'", $dbConn);
+			}
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
+			/*******************************************************************/
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				//filtros
+				if(isset($Nombre) && $Nombre != ''){                   $a  = "'".$Nombre."'" ;           }else{$a  ="''";}
+				if(isset($Marca) && $Marca != ''){                     $a .= ",'".$Marca."'" ;           }else{$a .=",''";}
+				if(isset($Descripcion) && $Descripcion != ''){         $a .= ",'".$Descripcion."'" ;     }else{$a .=",''";}
+				if(isset($Codigo) && $Codigo != ''){                   $a .= ",'".$Codigo."'" ;          }else{$a .=",''";}
+				if(isset($idProveedor) && $idProveedor != ''){         $a .= ",'".$idProveedor."'" ;     }else{$a .=",''";}
+				if(isset($Direccion_img) && $Direccion_img != ''){     $a .= ",'".$Direccion_img."'" ;   }else{$a .=",''";}
+				if(isset($FichaTecnica) && $FichaTecnica != ''){       $a .= ",'".$FichaTecnica."'" ;    }else{$a .=",''";}
+				if(isset($HDS) && $HDS != ''){                         $a .= ",'".$HDS."'" ;             }else{$a .=",''";}
+				if(isset($idEstado) && $idEstado != ''){               $a .= ",'".$idEstado."'" ;        }else{$a .=",''";}
+						
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `equipos_arriendo_listado` (Nombre,Marca,Descripcion,Codigo,
+				idProveedor,Direccion_img,FichaTecnica,HDS, idEstado ) 
+				VALUES ({$a} )";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					//recibo el último id generado por mi sesion
+					$ultimo_id = mysqli_insert_id($dbConn);
+								
+					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+				}
+			}
+	
+		break;
+/*******************************************************************************************************************/		
+		case 'update':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			//Se verifica si el dato existe
+			if(isset($Nombre)&&isset($idEquipo)){
+				$ndata_1 = db_select_nrows ('Nombre', 'equipos_arriendo_listado', '', "Nombre='".$Nombre."' AND idEquipo!='".$idEquipo."'", $dbConn);
+			}
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
+			/*******************************************************************/
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				//Filtros
+				$a = "idEquipo='".$idEquipo."'" ;
+				if(isset($Nombre) && $Nombre != ''){                   $a .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Marca) && $Marca != ''){                     $a .= ",Marca='".$Marca."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){         $a .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                   $a .= ",Codigo='".$Codigo."'" ;}
+				if(isset($idProveedor) && $idProveedor != ''){         $a .= ",idProveedor='".$idProveedor."'" ;}
+				if(isset($Direccion_img) && $Direccion_img != ''){     $a .= ",Direccion_img='".$Direccion_img."'" ;}
+				if(isset($FichaTecnica) && $FichaTecnica != ''){       $a .= ",FichaTecnica='".$FichaTecnica."'" ;}
+				if(isset($HDS) && $HDS != ''){                         $a .= ",HDS='".$HDS."'" ;}
+				if(isset($idEstado) && $idEstado != ''){               $a .= ",idEstado='".$idEstado."'" ;}
+											
+					
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `equipos_arriendo_listado` SET ".$a." WHERE idEquipo = '$idEquipo'";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+				}
+				
+
+			}
+
+		break;	
+/*******************************************************************************************************************/
+		case 'submit_img':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			if ($_FILES["Direccion_img"]["error"] > 0){
+				$error['Direccion_img']       = 'error/Ha ocurrido un error';
+			} else {
+				//Se verifican las extensiones de los archivos
+				$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
+				//Se verifica que el archivo subido no exceda los 100 kb
+				$limite_kb = 1000;
+				//Sufijo
+				$sufijo = 'equ_arriendo_img_'.$idEquipo.'_';
+				  
+				if (in_array($_FILES['Direccion_img']['type'], $permitidos) && $_FILES['Direccion_img']['size'] <= $limite_kb * 1024){
+					//Se especifica carpeta de destino
+					$ruta = "upload/".$sufijo.$_FILES['Direccion_img']['name'];
+					//Se verifica que el archivo un archivo con el mismo nombre no existe
+					if (!file_exists($ruta)){
+						//Se mueve el archivo a la carpeta previamente configurada
+						//$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], $ruta);
+						//Muevo el archivo
+						$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], "upload/xxxsxx_".$_FILES['Direccion_img']['name']);
+						if ($move_result){
+							
+							//se selecciona la imagen
+							switch ($_FILES['Direccion_img']['type']) {
+								case 'image/jpg':
+									$imgBase = imagecreatefromjpeg('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+									break;
+								case 'image/jpeg':
+									$imgBase = imagecreatefromjpeg('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+									break;
+								case 'image/gif':
+									$imgBase = imagecreatefromgif('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+									break;
+								case 'image/png':
+									$imgBase = imagecreatefrompng('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+									break;
+							}
+								
+							//se reescala la imagen en caso de ser necesario
+							$imgBase_width = imagesx( $imgBase );
+							$imgBase_height = imagesy( $imgBase );
+								
+							//Se establece el tamaño maximo
+							$max_width  = 640;
+							$max_height = 640;
+
+							if ($imgBase_width > $imgBase_height) {
+								if($imgBase_width < $max_width){
+									$newwidth = $imgBase_width;
+								}else{
+									$newwidth = $max_width;	
+								}
+								$divisor = $imgBase_width / $newwidth;
+								$newheight = floor( $imgBase_height / $divisor);
+							}else {
+								if($imgBase_height < $max_height){
+									$newheight = $imgBase_height;
+								}else{
+									$newheight =  $max_height;
+								} 
+								$divisor = $imgBase_height / $newheight;
+								$newwidth = floor( $imgBase_width / $divisor );
+							}
+
+							$imgBase = imagescale($imgBase, $newwidth, $newheight);
+
+							//se establece la calidad del archivo
+							$quality = 75;
+								
+							//se crea la imagen
+							imagejpeg($imgBase, $ruta, $quality);
+								
+							//se elimina la imagen base
+							try {
+								if(!is_writable('upload/xxxsxx_'.$_FILES['Direccion_img']['name'])){
+									//throw new Exception('File not writable');
+								}else{
+									unlink('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
+								}
+							}catch(Exception $e) { 
+								//guardar el dato en un archivo log
+							}
+							//se eliminan las imagenes de la memoria
+							imagedestroy($imgBase);
+						
+							//Filtro para idSistema		
+							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+
+							// inserto los datos de registro en la db
+							$query  = "UPDATE `equipos_arriendo_listado` SET ".$a." WHERE idEquipo = '$idEquipo'";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if($resultado){
+								
+								header( 'Location: '.$location.'&img_id='.$idEquipo );
+								die;
+								
+							//si da error, guardar en el log de errores una copia
+							}else{
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+									
+						} else {
+							$error['Direccion_img']       = 'error/Ocurrio un error al mover el archivo';
+						}
+					} else {
+						$error['Direccion_img']       = 'error/El archivo '.$_FILES['Direccion_img']['name'].' ya existe';
+					}
+				} else {
+					$error['Direccion_img']       = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
+				}
+			}
+
+		break;
+/*******************************************************************************************************************/
+		case 'submit_file':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			if ($_FILES["FichaTecnica"]["error"] > 0){
+				$error['FichaTecnica']       = 'error/Ha ocurrido un error';
+			} else {
+				//Se verifican las extensiones de los archivos
+				$permitidos = array("application/pdf", "application/octet-stream", "application/x-real", "application/vnd.adobe.xfdf", "application/vnd.fdf", "binary/octet-stream");
+				//Se verifica que el archivo subido no exceda los 100 kb
+				$limite_kb = 10000;
+				//Sufijo
+				$sufijo = 'equ_arriendo_file_'.$idEquipo.'_';
+				  
+				if (in_array($_FILES['FichaTecnica']['type'], $permitidos) && $_FILES['FichaTecnica']['size'] <= $limite_kb * 1024){
+					//Se especifica carpeta de destino
+					$ruta = "upload/".$sufijo.$_FILES['FichaTecnica']['name'];
+					//Se verifica que el archivo un archivo con el mismo nombre no existe
+					if (!file_exists($ruta)){
+						//Se mueve el archivo a la carpeta previamente configurada
+						$move_result = @move_uploaded_file($_FILES["FichaTecnica"]["tmp_name"], $ruta);
+						if ($move_result){
+								
+							//Filtro para idSistema		
+							$a = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
+
+							// inserto los datos de registro en la db
+							$query  = "UPDATE `equipos_arriendo_listado` SET ".$a." WHERE idEquipo = '$idEquipo'";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if($resultado){
+								
+								header( 'Location: '.$location );
+								die;
+								
+							//si da error, guardar en el log de errores una copia
+							}else{
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+								
+						} else {
+							$error['FichaTecnica']       = 'error/Ocurrio un error al mover el archivo';
+						}
+					} else {
+						$error['FichaTecnica']       = 'error/El archivo '.$_FILES['FichaTecnica']['name'].' ya existe';
+					}
+				} else {
+					$error['FichaTecnica']       = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
+				}
+			}
+
+		break;
+/*******************************************************************************************************************/
+		case 'submit_hds':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			if ($_FILES["HDS"]["error"] > 0){
+				$error['HDS']       = 'error/Ha ocurrido un error';
+			} else {
+				//Se verifican las extensiones de los archivos
+				$permitidos = array("application/pdf", "application/octet-stream", "application/x-real", "application/vnd.adobe.xfdf", "application/vnd.fdf", "binary/octet-stream");
+				//Se verifica que el archivo subido no exceda los 100 kb
+				$limite_kb = 10000;
+				//Sufijo
+				$sufijo = 'equ_arriendo_hds_'.$idEquipo.'_';
+				  
+				if (in_array($_FILES['HDS']['type'], $permitidos) && $_FILES['HDS']['size'] <= $limite_kb * 1024){
+					//Se especifica carpeta de destino
+					$ruta = "upload/".$sufijo.$_FILES['HDS']['name'];
+					//Se verifica que el archivo un archivo con el mismo nombre no existe
+					if (!file_exists($ruta)){
+						//Se mueve el archivo a la carpeta previamente configurada
+						$move_result = @move_uploaded_file($_FILES["HDS"]["tmp_name"], $ruta);
+						if ($move_result){
+								
+							//Filtro para idSistema		
+							$a = "HDS='".$sufijo.$_FILES['HDS']['name']."'" ;
+
+							// inserto los datos de registro en la db
+							$query  = "UPDATE `equipos_arriendo_listado` SET ".$a." WHERE idEquipo = '$idEquipo'";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if($resultado){
+								
+								header( 'Location: '.$location );
+								die;
+								
+							//si da error, guardar en el log de errores una copia
+							}else{
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+									
+						} else {
+							$error['HDS']       = 'error/Ocurrio un error al mover el archivo';
+						}
+					} else {
+						$error['HDS']       = 'error/El archivo '.$_FILES['HDS']['name'].' ya existe';
+					}
+				} else {
+					$error['HDS']       = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
+				}
+			}
+
+		break;
+/*******************************************************************************************************************/
+		case 'del_img':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			// Se obtiene el nombre del logo
+			$query = "SELECT Direccion_img
+			FROM `equipos_arriendo_listado`
+			WHERE idEquipo = {$_GET['del_img']}";
+			$resultado = mysqli_query($dbConn, $query);
+			$rowdata = mysqli_fetch_assoc ($resultado);
+			
+			//se borra el dato de la base de datos
+			$query  = "UPDATE `equipos_arriendo_listado` SET Direccion_img='' WHERE idEquipo = '{$_GET['del_img']}'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina el archivo
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['Direccion_img']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&id='.$_GET['del_img'] );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}
+			
+
+		break;	
+/*******************************************************************************************************************/
+		case 'del_file':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			// Se obtiene el nombre del logo
+			$query = "SELECT FichaTecnica
+			FROM `equipos_arriendo_listado`
+			WHERE idEquipo = {$_GET['del_file']}";
+			$resultado = mysqli_query($dbConn, $query);
+			$rowdata = mysqli_fetch_assoc ($resultado);
+			
+			//se borra el dato de la base de datos
+			$query  = "UPDATE `equipos_arriendo_listado` SET FichaTecnica='' WHERE idEquipo = '{$_GET['del_file']}'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina el archivo
+				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['FichaTecnica']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&id='.$_GET['del_file'] );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}
+				
+
+		break;	
+/*******************************************************************************************************************/
+		case 'del_hds':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			// Se obtiene el nombre del logo
+			$query = "SELECT HDS
+			FROM `equipos_arriendo_listado`
+			WHERE idEquipo = {$_GET['del_hds']}";
+			$resultado = mysqli_query($dbConn, $query);
+			$rowdata = mysqli_fetch_assoc ($resultado);
+			
+			//se borra el dato de la base de datos
+			$query  = "UPDATE `equipos_arriendo_listado` SET HDS='' WHERE idEquipo = '{$_GET['del_hds']}'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina el archivo
+				if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['HDS'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['HDS']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&id='.$_GET['del_hds'] );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}		
+
+		break;							
+/*******************************************************************************************************************/
+		case 'del':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			// Se obtiene el nombre del logo
+			$query = "SELECT Direccion_img, FichaTecnica, HDS
+			FROM `equipos_arriendo_listado`
+			WHERE idEquipo = {$_GET['del']}";
+			$resultado = mysqli_query($dbConn, $query);
+			$rowdata = mysqli_fetch_assoc ($resultado);
+			
+			//se borra el dato de la base de datos
+			$query  = "DELETE FROM `equipos_arriendo_listado` WHERE idEquipo = {$_GET['del']}";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//Se elimina la imagen
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['Direccion_img']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				//Se elimina el archivo adjunto
+				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['FichaTecnica']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Se elimina el archivo adjunto
+				if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['HDS'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['HDS']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&deleted=true' );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}
+			
+
+		break;							
+/*******************************************************************************************************************/
+		case 'estado':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			$idEquipo  = $_GET['id'];
+			$estado      = $_GET['estado'];
+			$query  = "UPDATE equipos_arriendo_listado SET idEstado = '$estado'	
+			WHERE idEquipo    = '$idEquipo'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				header( 'Location: '.$location.'&edited=true' );
+				die; 
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}
+			
+
+		break;			
+/*******************************************************************************************************************/
+	}
+?>

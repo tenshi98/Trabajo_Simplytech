@@ -1,0 +1,306 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "seguridad_camaras_listado.php";
+$location = $original;
+$new_location = "seguridad_camaras_listado_datos.php";
+$new_location .='?pagina='.$_GET['pagina'];
+//Se agregan ubicaciones
+$location .='?pagina='.$_GET['pagina'];
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para editar
+if ( !empty($_POST['submit_edit']) )  { 
+	//se agregan ubicaciones
+	$location.='&id='.$_GET['id'];
+	//Llamamos al formulario
+	$form_trabajo= 'grupo_update';
+	require_once 'A1XRXS_sys/xrxs_form/z_seguridad_camaras_listado.php';
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Ruta creada correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Ruta editada correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Ruta borrada correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+// tomo los datos del usuario
+$query = "SELECT Nombre, idSistema, idPais, idCiudad, idComuna, Direccion,
+N_Camaras, idSubconfiguracion, idTipoCamara, Config_usuario, Config_Password, 
+Config_IP, Config_Puerto, Config_Web
+FROM `seguridad_camaras_listado`
+WHERE idCamara = {$_GET['id']}";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);?>
+
+<div class="col-sm-12">
+	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
+		<div class="info-box bg-aqua">
+			<span class="info-box-icon"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
+
+			<div class="info-box-content">
+				<span class="info-box-text">Grupo Camaras</span>
+				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
+
+				<div class="progress">
+					<div class="progress-bar" style="width: 100%"></div>
+				</div>
+				<span class="progress-description">Editar Datos Basicos</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<ul class="nav nav-tabs pull-right">
+				<li class=""><a href="<?php echo 'seguridad_camaras_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
+				<li class="active"><a href="<?php echo 'seguridad_camaras_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'seguridad_camaras_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
+				<li class=""><a href="<?php echo 'seguridad_camaras_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Camaras</a></li>
+			</ul>	
+		</header>
+        <div class="table-responsive">
+			<div class="col-sm-8 fcenter" style="padding-top:40px;min-height:500px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			
+					<?php  
+					//Se verifican si existen los datos
+					if(isset($Nombre)) {              $x1  = $Nombre;               }else{$x1  = $rowdata['Nombre'];}
+					if(isset($N_Camaras)) {           $x2  = $N_Camaras;            }else{$x2  = $rowdata['N_Camaras'];}
+					if(isset($idPais)) {              $x3  = $idPais;               }else{$x3  = $rowdata['idPais'];}
+					if(isset($idCiudad)) {            $x4  = $idCiudad;             }else{$x4  = $rowdata['idCiudad'];}
+					if(isset($idComuna)) {            $x5  = $idComuna;             }else{$x5  = $rowdata['idComuna'];}
+					if(isset($Direccion)) {           $x6  = $Direccion;            }else{$x6  = $rowdata['Direccion'];}
+					if(isset($idSubconfiguracion)) {  $x7  = $idSubconfiguracion;   }else{$x7  = $rowdata['idSubconfiguracion'];}
+					if(isset($idTipoCamara)) {        $x8  = $idTipoCamara;         }else{$x8  = $rowdata['idTipoCamara'];}
+					if(isset($Config_usuario)) {      $x9  = $Config_usuario;       }else{$x9  = $rowdata['Config_usuario'];}
+					if(isset($Config_Password)) {     $x10 = $Config_Password;      }else{$x10 = $rowdata['Config_Password'];}
+					if(isset($Config_IP)) {           $x11 = $Config_IP;            }else{$x11 = $rowdata['Config_IP'];}
+					if(isset($Config_Puerto)) {       $x12 = $Config_Puerto;        }else{$x12 = $rowdata['Config_Puerto'];}
+					if(isset($Config_Web)) {          $x13 = $Config_Web;           }else{$x13 = $rowdata['Config_Web'];}
+					
+					//se dibujan los inputs
+					$Form_Imputs = new Form_Inputs();
+					$Form_Imputs->form_input_text( 'Nombre del Grupo Camaras', 'Nombre', $x1, 1);
+					$Form_Imputs->form_input_number_spinner('N° Camaras','N_Camaras', $x2, 0, 500, 1, 0, 1);
+					$Form_Imputs->form_select_country('Pais','idPais', $x3, 1, $dbConn);
+					$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+											'Comuna','idComuna', $x5, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+											 $dbConn, 'form1');
+					$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x6, 1,'fa fa-map'); 
+					$Form_Imputs->form_select('Subconfiguracion','idSubconfiguracion', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Imputs->form_select('Tipo de Camara','idTipoCamara', $x8, 1, 'idTipoCamara', 'Nombre', 'core_tipos_camara', 0, '', $dbConn);
+					$Form_Imputs->form_input_text( 'Usuario', 'Config_usuario', $x9, 1);
+					$Form_Imputs->form_input_text( 'Password', 'Config_Password', $x10, 1);
+					$Form_Imputs->form_input_text( 'Web o IP', 'Config_IP', $x11, 1);
+					$Form_Imputs->form_input_number_spinner('N° Puerto','Config_Puerto', $x12, 0, 10000, 1, 0, 1);
+					$Form_Imputs->form_input_text( 'Web configuracion', 'Config_Web', $x13, 1);
+					
+					
+					$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+					$Form_Imputs->form_input_hidden('idCamara', $_GET['id'], 2);
+					
+					
+					?>
+					
+					<script>
+						//oculto los div
+						document.getElementById('div_idTipoCamara').style.display = 'none';
+						document.getElementById('div_Config_usuario').style.display = 'none';
+						document.getElementById('div_Config_Password').style.display = 'none';
+						document.getElementById('div_Config_IP').style.display = 'none';
+						document.getElementById('div_Config_Puerto').style.display = 'none';
+						document.getElementById('div_Config_Web').style.display = 'none';
+						
+						var idSubconfiguracion;
+						var idSubconfiguracion_sel;
+						var idPais;
+						var idPais_sel;
+						
+						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+									
+							idSubconfiguracion= $("#idSubconfiguracion").val();
+							idPais= $("#idPais").val();
+							
+							//Si el pais es distinto de chile
+							if(idPais!=1){
+								document.getElementById("idCiudad").disabled = true;
+								document.getElementById("idComuna").disabled = true;
+								document.getElementById('idCiudad').selectedIndex = 0;
+								document.getElementById('idComuna').selectedIndex = 0;
+							}else{
+								document.getElementById("idCiudad").disabled = false;
+								document.getElementById("idComuna").disabled = false;
+							}
+							
+							//Si tiene subconfiguracion
+							if(idSubconfiguracion == 1){ 
+								document.getElementById('div_idTipoCamara').style.display = 'none';
+								document.getElementById('div_Config_usuario').style.display = 'none';
+								document.getElementById('div_Config_Password').style.display = 'none';
+								document.getElementById('div_Config_IP').style.display = 'none';
+								document.getElementById('div_Config_Puerto').style.display = 'none';			
+								document.getElementById('div_Config_Web').style.display = 'none';			
+								//se vacian los datos
+								document.getElementById('idTipoCamara').selectedIndex = 0;
+								document.getElementById('Config_usuario').value = "0";
+								document.getElementById('Config_Password').value = "0";
+								document.getElementById('Config_IP').value = "0";
+								document.getElementById('Config_Puerto').value = "0";
+								document.getElementById('Config_Web').value = "0";
+								
+							//No tiene subconfiguracion
+							}else if(idSubconfiguracion == 2){ 
+								document.getElementById('div_idTipoCamara').style.display = 'block';
+								document.getElementById('div_Config_usuario').style.display = 'block';
+								document.getElementById('div_Config_Password').style.display = 'block';
+								document.getElementById('div_Config_IP').style.display = 'block';
+								document.getElementById('div_Config_Puerto').style.display = 'block';
+								document.getElementById('div_Config_Web').style.display = 'block';			
+								
+							//si no en ninguno
+							}else{ 
+								document.getElementById('div_idTipoCamara').style.display = 'none';
+								document.getElementById('div_Config_usuario').style.display = 'none';
+								document.getElementById('div_Config_Password').style.display = 'none';
+								document.getElementById('div_Config_IP').style.display = 'none';
+								document.getElementById('div_Config_Puerto').style.display = 'none';
+								document.getElementById('div_Config_Web').style.display = 'none';			
+								//se vacian los datos
+								document.getElementById('idTipoCamara').selectedIndex = 0;
+								document.getElementById('Config_usuario').value = "0";
+								document.getElementById('Config_Password').value = "0";
+								document.getElementById('Config_IP').value = "0";
+								document.getElementById('Config_Puerto').value = "0";
+								document.getElementById('Config_Web').value = "0";
+								
+							}		
+						}); 
+						
+						$("#idPais").on("change", function(){
+							
+							idPais_sel= $("#idPais").val();
+							
+							//Si el pais es distinto de chile
+							if(idPais_sel!=1){
+								document.getElementById("idCiudad").disabled = true;
+								document.getElementById("idComuna").disabled = true;
+								document.getElementById('idCiudad').selectedIndex = 0;
+								document.getElementById('idComuna').selectedIndex = 0;
+							}else{
+								document.getElementById("idCiudad").disabled = false;
+								document.getElementById("idComuna").disabled = false;
+							}
+						});
+									
+						$("#idSubconfiguracion").on("change", function(){ //se ejecuta al cambiar valor del select
+							
+							idSubconfiguracion_sel= $("#idSubconfiguracion").val();
+							
+							//Si tiene subconfiguracion
+							if(idSubconfiguracion_sel == 1){ 
+								document.getElementById('div_idTipoCamara').style.display = 'none';
+								document.getElementById('div_Config_usuario').style.display = 'none';
+								document.getElementById('div_Config_Password').style.display = 'none';
+								document.getElementById('div_Config_IP').style.display = 'none';
+								document.getElementById('div_Config_Puerto').style.display = 'none';			
+								document.getElementById('div_Config_Web').style.display = 'none';			
+								//se vacian los datos
+								document.getElementById('idTipoCamara').selectedIndex = 0;
+								document.getElementById('Config_usuario').value = "0";
+								document.getElementById('Config_Password').value = "0";
+								document.getElementById('Config_IP').value = "0";
+								document.getElementById('Config_Puerto').value = "0";
+								document.getElementById('Config_Web').value = "0";
+								
+							//No tiene subconfiguracion
+							}else if(idSubconfiguracion_sel == 2){ 
+								document.getElementById('div_idTipoCamara').style.display = 'block';
+								document.getElementById('div_Config_usuario').style.display = 'block';
+								document.getElementById('div_Config_Password').style.display = 'block';
+								document.getElementById('div_Config_IP').style.display = 'block';
+								document.getElementById('div_Config_Puerto').style.display = 'block';
+								document.getElementById('div_Config_Web').style.display = 'block';			
+								
+							//si no en ninguno
+							}else{ 
+								document.getElementById('div_idTipoCamara').style.display = 'none';
+								document.getElementById('div_Config_usuario').style.display = 'none';
+								document.getElementById('div_Config_Password').style.display = 'none';
+								document.getElementById('div_Config_IP').style.display = 'none';
+								document.getElementById('div_Config_Puerto').style.display = 'none';
+								document.getElementById('div_Config_Web').style.display = 'none';			
+								//se vacian los datos
+								document.getElementById('idTipoCamara').selectedIndex = 0;
+								document.getElementById('Config_usuario').value = "0";
+								document.getElementById('Config_Password').value = "0";
+								document.getElementById('Config_IP').value = "0";
+								document.getElementById('Config_Puerto').value = "0";
+								document.getElementById('Config_Web').value = "0";
+								
+							}
+							
+						});
+					
+					</script>
+					
+					
+
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					</div>
+				</form>
+				<?php require_once '../LIBS_js/validator/form_validator.php';?>
+			</div>
+		</div>	
+	</div>
+</div>
+
+<div class="clearfix"></div>
+<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="clearfix"></div>
+</div>
+
+
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

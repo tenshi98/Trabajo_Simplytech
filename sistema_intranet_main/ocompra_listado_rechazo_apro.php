@@ -1,0 +1,441 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "ocompra_listado_rechazo_apro.php";
+$location = $original;
+//Se agregan ubicaciones
+$location .='?pagina='.$_GET['pagina'];
+/********************************************************************/
+//Variables para filtro y paginacion
+$search = '';
+if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){        $location .= "&idProveedor=".$_GET['idProveedor'];        $search .= "&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];  $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+/********************************************************************/
+if(isset($_GET['soli']) && $_GET['soli'] != ''){          $location .= "&soli=".$_GET['soli'] ; 	}
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para crear
+if ( !empty($_POST['submit_rechazo']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'rechazo_ocompra';
+	require_once 'A1XRXS_sys/xrxs_form/z_ocompra_listado.php';
+}
+//formulario para crear
+if ( !empty($_POST['submit_nula']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'nula_ocompra';
+	require_once 'A1XRXS_sys/xrxs_form/z_ocompra_listado.php';
+}
+/**********************************************/
+//se realiza el ingreso de la Orden de Compra
+if ( !empty($_GET['compra_aprobar']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'aprob_ocompra';
+	require_once 'A1XRXS_sys/xrxs_form/z_ocompra_listado.php';	
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Documento Creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Documento Editado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Documento borrado correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};?>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['compra_rechazo']) ) { ?>
+<div class="col-sm-8 fcenter">
+	<div class="box dark">	
+		<header>		
+			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<h5>Rechazar Orden de Compra</h5>	
+		</header>	
+		<div id="div-1" class="body">	
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Observacion)) {     $x1  = $Observacion;    }else{$x1  = '';}
+
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				
+				$Form_Imputs->form_input_hidden('idOcompra', $_GET['compra_rechazo'], 2);
+				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Imputs->form_input_hidden('idTipo', 4, 2);
+				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				?>
+				
+				<div class="form-group">		
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_rechazo">
+					<a href="<?php echo $location.'&view='.$_GET['compra_rechazo']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				</div>
+			</form>
+			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+		</div>
+	</div>
+</div> 
+	
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['compra_nula']) ) { ?>
+<div class="col-sm-8 fcenter">
+	<div class="box dark">	
+		<header>		
+			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<h5>Anular Orden de Compra</h5>	
+		</header>	
+		<div id="div-1" class="body">	
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Observacion)) {     $x1  = $Observacion;    }else{$x1  = '';}
+
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				
+				$Form_Imputs->form_input_hidden('idOcompra', $_GET['compra_nula'], 2);
+				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Imputs->form_input_hidden('idTipo', 4, 2);
+				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				?>
+				
+				<div class="form-group">		
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_nula">
+					<a href="<?php echo $location.'&view='.$_GET['compra_nula']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				</div>
+			</form>
+			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+		</div>
+	</div>
+</div>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['view']) ) {	 
+// Se trae el listado de quienes aprueban la OC
+$arrAprobado = array();
+$query = "SELECT 
+usuarios_listado.Nombre,
+sistema_aprobador_oc.idUsuario,
+ocompra_listado.idOcompra,
+(SELECT COUNT(idAprobaciones) FROM `ocompra_listado_aprobaciones` WHERE idOcompra=ocompra_listado.idOcompra AND idUsuario=sistema_aprobador_oc.idUsuario  LIMIT 1) AS C_apro,
+(SELECT Creacion_fecha FROM `ocompra_listado_aprobaciones` WHERE idOcompra=ocompra_listado.idOcompra AND idUsuario=sistema_aprobador_oc.idUsuario LIMIT 1) AS FechaApro
+
+FROM `ocompra_listado` 
+LEFT JOIN `sistema_aprobador_oc`  ON sistema_aprobador_oc.idSistema   = ocompra_listado.idSistema
+LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario       = sistema_aprobador_oc.idUsuario
+
+WHERE ocompra_listado.idOcompra = {$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrAprobado,$row );
+}
+	 
+?>
+
+<div class="col-sm-6">
+	<div class="box">	
+		<header>		
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Usuarios aprobadores</h5>	
+		</header>
+		<div class="table-responsive">    
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>Usuario</th>
+						<th>Opciones</th>
+					</tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<tr class="odd">		
+						<td>Acciones</td>		
+						<td>
+							<div class="btn-group" style="width: 105px;" >
+								<a href="<?php echo $location.'&compra_rechazo='.$_GET['view']; ?>" title="Rechazar Orden" class="btn btn-danger btn-sm tooltip"><i class="fa fa fa-times"></i></a>
+								<a href="<?php echo $location.'&compra_nula='.$_GET['view']; ?>" title="Anular Orden" class="btn btn-danger btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+							</div>		
+						</td>
+					</tr>
+
+					<?php foreach ($arrAprobado as $apro) { ?>
+						<tr class="odd">		
+							<td><?php echo $apro['Nombre']; ?></td>		
+							<td>
+								<?php
+								if(isset($apro['C_apro'])&&$apro['C_apro']==1){
+									echo 'Aprobada el '.fecha_estandar($apro['FechaApro']);
+								} ?>		
+							</td>
+						</tr>
+					<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="clearfix"></div>
+
+ 
+	<?php include '1include_ocompra.php'; ?>
+	  
+<div class="clearfix"></div>
+<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="clearfix"></div>
+</div>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+/**********************************************************/
+//paginador de resultados
+if(isset($_GET["pagina"])){
+	$num_pag = $_GET["pagina"];	
+} else {
+	$num_pag = 1;	
+}
+//Defino la cantidad total de elementos por pagina
+$cant_reg = 30;
+//resto de variables
+if (!$num_pag){
+	$comienzo = 0 ;
+	$num_pag = 1 ;
+} else {
+	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
+}
+/**********************************************************/
+//ordenamiento
+if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
+	switch ($_GET['order_by']) {
+		case 'ndoc_asc':          $order_by = 'ORDER BY ocompra_listado.idOcompra ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Doc Ascendente';break;
+		case 'ndoc_desc':         $order_by = 'ORDER BY ocompra_listado.idOcompra DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc Descendente';break;
+		case 'proveedor_asc':     $order_by = 'ORDER BY proveedor_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Proveedor Ascendente';break;
+		case 'proveedor_desc':    $order_by = 'ORDER BY proveedor_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Proveedor Descendente';break;
+		case 'estado_asc':        $order_by = 'ORDER BY core_oc_estado.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':       $order_by = 'ORDER BY core_oc_estado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'fecha_asc':         $order_by = 'ORDER BY ocompra_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':        $order_by = 'ORDER BY ocompra_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		
+		default: $order_by = 'ORDER BY core_oc_estado.idEstado DESC,ocompra_listado.idOcompra DESC, ocompra_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado, N° Doc, Fecha Descendente';
+	}
+}else{
+	$order_by = 'ORDER BY core_oc_estado.idEstado DESC,ocompra_listado.idOcompra DESC, ocompra_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado, N° Doc, Fecha Descendente';
+}
+/**********************************************************/
+//Verifico el tipo de usuario que esta ingresando
+$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+/**********************************************************/
+//Variable de busqueda
+$z = "WHERE ocompra_listado.idEstado=2 AND ocompra_listado.idFacturacion=0";
+//verifico que sea un administrador
+$z.=" AND ocompra_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";	
+/**********************************************************/
+//Se aplican los filtros
+if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){        $z .= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND ocompra_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+/**********************************************************/
+//Realizo una consulta para saber el total de elementos existentes
+$query = "SELECT idOcompra FROM `ocompra_listado` ".$z;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$cuenta_registros = mysqli_num_rows($resultado);
+//Realizo la operacion para saber la cantidad de paginas que hay
+$total_paginas = ceil($cuenta_registros / $cant_reg);
+
+//consulta
+$arrSolicitudes = array();
+$query = "SELECT 
+ocompra_listado.idOcompra,
+ocompra_listado.idEstado,
+ocompra_listado.Solicitud,
+ocompra_listado.Creacion_fecha,
+core_oc_estado.Nombre AS Estado,
+proveedor_listado.Nombre AS Proveedor
+
+FROM `ocompra_listado`
+LEFT JOIN `core_oc_estado`      ON core_oc_estado.idEstado         = ocompra_listado.idEstado 
+LEFT JOIN `proveedor_listado`   ON proveedor_listado.idProveedor   = ocompra_listado.idProveedor 
+
+".$z." 
+".$order_by."
+LIMIT $comienzo, $cant_reg ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrSolicitudes,$row );
+}
+
+
+?>
+<div class="col-sm-12 breadcrumb-bar">
+
+	<ul class="btn-group btn-breadcrumb pull-left">
+		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
+		<?php } ?>		
+	</ul>
+</div>
+<div class="clearfix"></div> 
+<div class="collapse col-sm-12" id="collapseExample">
+	<div class="well">
+		<div class="col-sm-8 fcenter">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idProveedor)) {      $x1  = $idProveedor;    }else{$x1  = '';}
+				if(isset($Creacion_fecha)) {   $x2  = $Creacion_fecha; }else{$x2  = '';}
+				
+				//se dibujan los inputs	
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
+				$Form_Imputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 1);
+				
+				
+				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+        </div>
+	</div>
+</div>
+<div class="clearfix"></div> 
+                      
+                                 
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Ordenes de Compra</h5>
+			<div class="toolbar">
+				<?php 
+				//se llama al paginador
+				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+			</div>
+		</header>
+		<div class="table-responsive">   
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th width="120">
+							<div class="pull-left">N° Doc</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=ndoc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=ndoc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Proveedor</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=proveedor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=proveedor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th width="120">
+							<div class="pull-left">Estado</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th width="120">
+							<div class="pull-left">Fecha</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>
+				
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<?php foreach ($arrSolicitudes as $sol) { ?>
+					<tr class="odd <?php if(isset($sol['idEstado'])&&$sol['idEstado']==3){echo 'danger';} ?>">
+						<td><?php echo 'OC N°'.n_doc($sol['idOcompra'], 5); ?></td>
+						<td><?php echo $sol['Proveedor']; ?></td>
+						<td><?php echo $sol['Estado']; ?></td>
+						<td><?php echo Fecha_estandar($sol['Creacion_fecha']); ?></td>
+						<td>
+							<div class="btn-group" style="width: 35px;" >
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&view='.$sol['idOcompra']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+							</div>
+						</td>
+					</tr>
+					<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+		<div class="pagrow">	
+			<?php 
+			//se llama al paginador
+			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+		</div>
+	</div>
+</div>
+
+<?php require_once '../LIBS_js/modal/modal.php';?>	
+<?php } ?>           
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

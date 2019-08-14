@@ -1,0 +1,566 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "telemetria_mantencion_ejecucion.php";
+$location = $original;
+//Se agregan ubicaciones
+$location .='?pagina='.$_GET['pagina'];
+/********************************************************************/
+//Variables para filtro y paginacion
+$search = '';
+if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){  $location .= "&Identificador=".$_GET['Identificador'];  $search .= "&Identificador=".$_GET['Identificador'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $location .= "&Nombre=".$_GET['Nombre'];                $search .= "&Nombre=".$_GET['Nombre'];}
+/********************************************************************/
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para crear
+if ( !empty($_POST['submit']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'mant_create';
+	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_listado.php';
+}
+//se resetean los valores de prueba
+if ( !empty($_GET['reset']) )     {
+	//Se agregan Ubicaciones
+	$location .='&verify='.$_GET['verify'];
+	//Llamamos al formulario
+	$form_trabajo= 'mant_reset';
+	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_listado.php';	
+}
+//se finaliza la mantencion
+if ( !empty($_GET['end']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'mant_end';
+	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_listado.php';	
+}
+//se cancela la mantencion
+if ( !empty($_POST['submit_cancel']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'mant_cancel';
+	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_listado.php';	
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['create']))  {$error['create'] 	  = 'sucess/Mantencion Creada correctamente';}
+if (isset($_GET['reseted'])) {$error['reset'] 	  = 'sucess/Datos Reseteados correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['edit']) ) { ?>
+
+<div class="col-sm-8 fcenter">
+	<div class="box dark">	
+		<header>		
+			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<h5>Cancelar Mantencion</h5>	
+		</header>	
+		<div id="div-1" class="body">	
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Observacion)) {     $x1  = $Observacion;    }else{$x1  = '';}
+
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				
+				$Form_Imputs->form_input_hidden('idTelemetria', $_GET['edit'], 2);
+				?>
+				
+				<div class="form-group">		
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_cancel">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				</div>
+			</form>
+			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+		</div>
+	</div>
+</div>
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+}elseif ( ! empty($_GET['verify']) ) { 
+//Traigo todos los valores	
+$subquery = '';
+for ($i = 1; $i <= 50; $i++) {
+	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Tel_Sensor_Nombre_'.$i;
+	$subquery .= ',telemetria_listado.SensoresMant_'.$i.' AS Tel_Sensor_Valor_'.$i;
+	$subquery .= ',telemetria_listado.SensoresTipo_'.$i.' AS Tel_Sensor_Tipo_'.$i;
+	
+	$subquery .= ',telemetria_mantencion_matriz.PuntoNombre_'.$i.' AS Matriz_Punto_'.$i;
+	$subquery .= ',telemetria_mantencion_matriz.SensoresTipo_'.$i.' AS Matriz_Sensor_Tipo_'.$i;
+	$subquery .= ',telemetria_mantencion_matriz.SensoresValor_'.$i.' AS Matriz_Sensor_Valor_'.$i;
+	$subquery .= ',telemetria_mantencion_matriz.SensoresNumero_'.$i.' AS Matriz_Sensor_Numero_'.$i;
+
+}
+
+// Se traen todos los datos de mi usuario
+$query = "SELECT  
+telemetria_listado.Nombre AS Tel_Equipo,
+telemetria_listado.Identificador AS Tel_Identificador,
+telemetria_listado.FechaMantencionIni AS Tel_Fecha,
+telemetria_listado.HoraMantencionIni AS Tel_Hora,
+
+telemetria_mantencion_matriz.Nombre AS Matriz_Nombre,
+telemetria_mantencion_matriz.cantPuntos AS Matriz_Puntos
+
+".$subquery."
+
+FROM `telemetria_listado`
+LEFT JOIN `telemetria_mantencion_matriz` ON telemetria_mantencion_matriz.idMatriz = telemetria_listado.idMatriz
+
+WHERE idTelemetria = {$_GET['verify']}";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);
+
+//Se traen todos los tipos
+$arrTipos = array();
+$query = "SELECT 
+telemetria_listado_sensores.idSensores,
+telemetria_listado_sensores.Nombre,
+core_sensores_funciones.Nombre AS SensorFuncion
+
+FROM `telemetria_listado_sensores`
+LEFT JOIN `core_sensores_funciones` ON core_sensores_funciones.idSensorFuncion = telemetria_listado_sensores.idSensorFuncion
+ORDER BY idSensores ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrTipos,$row );
+}
+
+$Url  = 'telemetria_mantencion_ejecucion_load.php';
+$Url .= '?bla=bla';
+$Url .= '&pagina='.$_GET['pagina'];
+$Url .= '&verify='.$_GET['verify'];
+$Url .= $search;	
+	
+			
+echo '
+	<script type="text/javascript">
+		function actualiza_contenido() {
+			var url = "'.$Url.'";
+			$("#ContenedorX").load(url);
+		}
+		setInterval("actualiza_contenido()", 5000);
+
+	</script>';
+		
+?>
+
+
+<div id="ContenedorX">
+
+	<section class="invoice">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<h2 class="page-header">
+					<i class="fa fa-globe"></i> <?php echo $rowdata['Tel_Equipo'].' ('.$rowdata['Tel_Identificador'].')'; ?>.
+					<small class="pull-right"> <?php echo $rowdata['Matriz_Nombre'] ?></small>
+				</h2>
+			</div>   
+		</div>
+		
+		<div class="row invoice-info">
+			<div class="col-sm-6 invoice-col">
+				<strong>Datos Mantencion</strong>
+				<address>
+					Fecha Inicio: <?php echo fecha_estandar($rowdata['Tel_Fecha']); ?><br/>
+					Hora Inicio: <?php echo $rowdata['Tel_Hora'].' horas'; ?>
+					<strong></strong>
+				</address>
+			</div>
+					
+			<div class="col-sm-6 invoice-col">
+						
+			</div>
+		</div>
+		
+		
+		<div class="">
+			<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Sensor</th>
+							<th>Dato a Revisar</th>
+							<th>Tipo Sensor <br/>Instalado</th>
+							<th>Tipo Sensor <br/>Revisado</th>
+							<th>Funcion</th>
+							<th style="text-align: center;" width="120">Valor Pruebas</th>
+							<th style="text-align: center;" width="120">Valor Actual</th>
+							<th style="text-align: center;" width="120">Estado</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php 
+						$pass_points = 0;
+						for ($i = 1; $i <= $rowdata['Matriz_Puntos']; $i++) { ?>
+							<tr class="odd">		
+								<td><?php echo $rowdata['Tel_Sensor_Nombre_'.$rowdata['Matriz_Sensor_Numero_'.$i]]; ?></td>
+								<td><?php echo $rowdata['Matriz_Punto_'.$i]; ?></td>
+								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$rowdata['Tel_Sensor_Tipo_'.$i]]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>	
+								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>	
+								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['SensorFuncion'];}} ?></td>	
+								<td align="center"><?php echo $rowdata['Matriz_Sensor_Valor_'.$i]; ?></td>	
+								<td align="center"><?php echo Cantidades_decimales_justos($rowdata['Tel_Sensor_Valor_'.$i]); ?></td>
+								<td align="center">
+									<?php
+									if($rowdata['Matriz_Sensor_Valor_'.$i]<$rowdata['Tel_Sensor_Valor_'.$i]){
+										echo '<span style="color:#55BD55">Pasa</span>';
+										$pass_points++;
+									}else{		
+										echo '<span style="color:#FF3A00">No Pasa</span>';
+									}
+									?>
+								</td>
+							</tr>
+						<?php } ?>
+						
+
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+		
+		
+		
+
+		<div class="clearfix"></div>
+		
+		<div class="row" style="margin-top:15px;">
+			<div class="col-xs-12">
+				
+				<?php if($pass_points>=$rowdata['Matriz_Puntos']){ ?>
+					<a href="<?php echo $location.'&verify='.$_GET['verify'].'&end=true'; ?>" class="btn btn-primary pull-right"  style="margin-left: 5px;" >
+						<i class="fa fa-check-circle" aria-hidden="true"></i> Finalizar Mantencion
+					</a>
+				<?php } ?>
+				
+				<a href="<?php echo $location.'&verify='.$_GET['verify'].'&reset=true'; ?>" class="btn btn-default pull-right">
+					<i class="fa fa-window-close-o" aria-hidden="true"></i> Resetear Valores
+				</a>
+
+
+			</div>
+		</div>
+		  
+	</section>
+
+
+</div>
+
+
+
+<div class="clearfix"></div>
+<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="clearfix"></div>
+</div>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['new']) ) { 
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+	$w = "telemetria_listado.idSistema>=0 AND telemetria_listado.idEstado=1";
+	$z = "idSistema>=0";
+}else{
+	$w = "telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_equipos_telemetria.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']} AND telemetria_listado.idEstado=1 ";	
+	$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}  ";			
+}	 
+?>
+ <div class="col-sm-8 fcenter">
+	<div class="box dark">	
+		<header>		
+			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<h5>Crear Mantencion</h5>	
+		</header>	
+		<div id="div-1" class="body">	
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idTelemetria)) {  $x1  = $idTelemetria;  }else{$x1  = '';}
+				if(isset($idMatriz)) {      $x2  = $idMatriz;      }else{$x2  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				//Verifico el tipo de usuario que esta ingresando
+				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+					$Form_Imputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+				}else{
+					$Form_Imputs->form_select_join_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+				}
+				$Form_Imputs->form_select_filter('Matriz de Mantenciones','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'telemetria_mantencion_matriz', $z, '', $dbConn);	
+				
+				
+				$Form_Imputs->form_input_hidden('idMantencion', 1, 2);
+				$Form_Imputs->form_input_hidden('idEstado', 2, 2);
+				$Form_Imputs->form_input_hidden('idUsuarioMan', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Imputs->form_input_hidden('FechaMantencionIni', fecha_actual(), 2);
+				$Form_Imputs->form_input_hidden('HoraMantencionIni', hora_actual(), 2);
+				
+				?>
+
+							
+				<div class="form-group">	
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				</div>
+			</form> 
+			<?php require_once '../LIBS_js/validator/form_validator.php';?>
+		</div>
+	</div>
+</div>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+/**********************************************************/
+//paginador de resultados
+if(isset($_GET["pagina"])){
+	$num_pag = $_GET["pagina"];	
+} else {
+	$num_pag = 1;	
+}
+//Defino la cantidad total de elementos por pagina
+$cant_reg = 30;
+//resto de variables
+if (!$num_pag){
+	$comienzo = 0 ;$num_pag = 1 ;
+} else {
+	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
+}
+/**********************************************************/
+//ordenamiento
+if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
+	switch ($_GET['order_by']) {
+		case 'nombre_asc':           $order_by = 'ORDER BY telemetria_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':          $order_by = 'ORDER BY telemetria_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'identificador_asc':    $order_by = 'ORDER BY telemetria_listado.Identificador ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Identificador Ascendente';break;
+		case 'identificador_desc':   $order_by = 'ORDER BY telemetria_listado.Identificador DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Identificador Descendente';break;
+		
+		default: $order_by = 'ORDER BY telemetria_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	}
+}else{
+	$order_by = 'ORDER BY telemetria_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+}
+/**********************************************************/
+//Variable de busqueda
+$z = "WHERE telemetria_listado.idEstado=2 AND telemetria_listado.idMantencion=1";//Solo los que estan en mantencion
+//Verifico el tipo de usuario que esta ingresando
+$z.=" AND telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+/**********************************************************/
+//Se aplican los filtros
+if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){  $z .= " AND telemetria_listado.Identificador LIKE '%".$_GET['Identificador']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $z .= " AND telemetria_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+/**********************************************************/
+//Realizo una consulta para saber el total de elementos existentes
+$query = "SELECT idTelemetria FROM `telemetria_listado` ".$z;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$cuenta_registros = mysqli_num_rows($resultado);
+//Realizo la operacion para saber la cantidad de paginas que hay
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los usuarios
+$arrUsers = array();
+$query = "SELECT 
+telemetria_listado.idTelemetria,
+telemetria_listado.Identificador,
+telemetria_listado.Nombre,
+core_sistemas.Nombre AS sistema
+
+FROM `telemetria_listado`
+LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema    = telemetria_listado.idSistema
+
+".$z."
+".$order_by."
+LIMIT $comienzo, $cant_reg ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrUsers,$row );
+}
+?>
+<div class="col-sm-12 breadcrumb-bar">
+
+	<ul class="btn-group btn-breadcrumb pull-left">
+		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
+		<?php } ?>		
+	</ul>
+	
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantencion</a><?php } ?>
+
+</div>
+<div class="clearfix"></div> 
+<div class="collapse col-sm-12" id="collapseExample">
+	<div class="well">
+		<div class="col-sm-8 fcenter">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Identificador)) {   $x1  = $Identificador;    }else{$x1  = '';}
+				if(isset($Nombre)) {          $x2  = $Nombre;           }else{$x2  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_input_icon( 'Identificador', 'Identificador', $x1, 1,'fa fa-flag');
+				$Form_Imputs->form_input_text( 'Nombre del Equipo', 'Nombre', $x2, 1);	
+				
+				
+				
+				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+        </div>
+	</div>
+</div>
+<div class="clearfix"></div> 
+                     
+
+
+
+                                
+<div class="col-sm-12">
+	<div class="box">	
+		<header>		
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Equipos</h5>
+			<div class="toolbar">
+				<?php 
+				//se llama al paginador
+				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+			</div>	
+		</header>
+		<div class="table-responsive">    
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>
+							<div class="pull-left">Nombre</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Identificador</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=identificador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=identificador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<?php foreach ($arrUsers as $usuarios) { ?>
+					<tr class="odd">		
+						<td><?php echo $usuarios['Nombre']; ?></td>	
+						<td><?php echo $usuarios['Identificador']; ?></td>	
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>			
+						<td>
+							<div class="btn-group" style="width: 105px;" >
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria.php?view='.$usuarios['idTelemetria']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&verify='.$usuarios['idTelemetria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=4){?><a href="<?php echo $location.'&edit='.$usuarios['idTelemetria']; ?>" title="Cerrar Mantencion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+							</div>
+						</td>
+					</tr>
+					<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+		<div class="pagrow">	
+			<?php 
+			//se llama al paginador
+			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+		</div>
+	</div>
+</div>
+
+<?php require_once '../LIBS_js/modal/modal.php';?>
+	
+	
+<?php } ?>
+
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

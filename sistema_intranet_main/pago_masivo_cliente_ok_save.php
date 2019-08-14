@@ -1,0 +1,32 @@
+<?php session_start();
+if(isset($_GET['type'])&&$_GET['type']!=''){
+	switch ($_GET['type']) {
+		/*******************************************************************/
+		//Insumos
+		case 1:
+			$_SESSION['pago_clientes_insumos'][$_GET['idFacturacion']]['ValorPagado']    = $_GET['pago'];
+					
+			break;
+		/*******************************************************************/
+		//Productos
+		case 2:
+			$_SESSION['pago_clientes_productos'][$_GET['idFacturacion']]['ValorPagado']    = $_GET['pago'];
+				
+			break;
+		/*******************************************************************/
+		//Arriendos
+		case 3:
+			$_SESSION['pago_clientes_arriendo'][$_GET['idFacturacion']]['ValorPagado']    = $_GET['pago'];
+				
+			break;
+		/*******************************************************************/
+		//Servicios
+		case 4:
+			$_SESSION['pago_clientes_servicio'][$_GET['idFacturacion']]['ValorPagado']    = $_GET['pago'];
+				
+			break;
+	}
+}
+
+
+?>

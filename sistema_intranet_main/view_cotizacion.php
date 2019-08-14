@@ -1,0 +1,602 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Views.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Maqueta</title>
+		<!-- Bootstrap Core CSS -->
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
+		<style>
+			body {background-color: #FFF !important;}
+		</style>
+	</head>
+
+	<body>
+
+
+<?php
+// Se traen todos los datos de mi usuario
+$query = "SELECT 
+cotizacion_listado.Creacion_fecha,
+cotizacion_listado.Observaciones,
+cotizacion_listado.ValorNetoImp,
+cotizacion_listado.Impuesto_01,
+cotizacion_listado.Impuesto_02,
+cotizacion_listado.Impuesto_03,
+cotizacion_listado.Impuesto_04,
+cotizacion_listado.Impuesto_05,
+cotizacion_listado.Impuesto_06,
+cotizacion_listado.Impuesto_07,
+cotizacion_listado.Impuesto_08,
+cotizacion_listado.Impuesto_09,
+cotizacion_listado.Impuesto_10,
+cotizacion_listado.ValorTotal,
+
+usuarios_listado.Nombre AS NombreUsuario,
+
+sistema_origen.Nombre AS SistemaOrigen,
+sis_or_ciudad.Nombre AS SistemaOrigenCiudad,
+sis_or_comuna.Nombre AS SistemaOrigenComuna,
+sistema_origen.Direccion AS SistemaOrigenDireccion,
+sistema_origen.Contacto_Fono1 AS SistemaOrigenFono,
+sistema_origen.email_principal AS SistemaOrigenEmail,
+sistema_origen.Rut AS SistemaOrigenRut,
+
+clientes_listado.Nombre AS NombreProveedor,
+clientes_listado.email AS EmailProveedor,
+clientes_listado.Rut AS RutProveedor,
+clientciudad.Nombre AS CiudadProveedor,
+clientcomuna.Nombre AS ComunaProveedor,
+clientes_listado.Direccion AS DireccionProveedor,
+clientes_listado.Fono1 AS Fono1Proveedor,
+clientes_listado.Fono2 AS Fono2Proveedor,
+clientes_listado.Fax AS FaxProveedor,
+clientes_listado.PersonaContacto AS PersonaContactoProveedor,
+clientes_listado.Giro AS GiroProveedor,
+
+cotizacion_listado.idSistema
+
+FROM `cotizacion_listado`
+LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario       = cotizacion_listado.idUsuario
+LEFT JOIN `core_sistemas`   sistema_origen          ON sistema_origen.idSistema         = cotizacion_listado.idSistema
+LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad           = sistema_origen.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna           = sistema_origen.idComuna
+LEFT JOIN `clientes_listado`                        ON clientes_listado.idCliente       = cotizacion_listado.idCliente
+LEFT JOIN `core_ubicacion_ciudad`    clientciudad   ON clientciudad.idCiudad            = clientes_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`   clientcomuna   ON clientcomuna.idComuna            = clientes_listado.idComuna
+
+WHERE cotizacion_listado.idCotizacion = {$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+$row_data = mysqli_fetch_assoc ($resultado);
+
+/*****************************************/				
+//Insumos
+$arrInsumos = array();
+$query = "SELECT 
+insumos_listado.Nombre,
+cotizacion_listado_existencias_insumos.Cantidad,
+cotizacion_listado_existencias_insumos.vUnitario,
+cotizacion_listado_existencias_insumos.vTotal,
+sistema_productos_uml.Nombre AS Unidad
+
+FROM `cotizacion_listado_existencias_insumos` 
+LEFT JOIN `insumos_listado`          ON insumos_listado.idProducto    = cotizacion_listado_existencias_insumos.idProducto
+LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml   = insumos_listado.idUml
+WHERE cotizacion_listado_existencias_insumos.idCotizacion = {$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrInsumos,$row );
+}
+/*****************************************/				
+//Productos
+$arrProductos = array();
+$query = "SELECT 
+productos_listado.Nombre,
+cotizacion_listado_existencias_productos.Cantidad,
+cotizacion_listado_existencias_productos.vUnitario,
+cotizacion_listado_existencias_productos.vTotal,
+sistema_productos_uml.Nombre AS Unidad
+
+FROM `cotizacion_listado_existencias_productos` 
+LEFT JOIN `productos_listado`          ON productos_listado.idProducto    = cotizacion_listado_existencias_productos.idProducto
+LEFT JOIN `sistema_productos_uml`      ON sistema_productos_uml.idUml     = productos_listado.idUml
+WHERE cotizacion_listado_existencias_productos.idCotizacion = {$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrProductos,$row );
+}
+/*****************************************/				
+//Arriendos
+$arrArriendos = array();
+$query = "SELECT 
+equipos_arriendo_listado.Nombre,
+cotizacion_listado_existencias_arriendos.Cantidad,
+cotizacion_listado_existencias_arriendos.vUnitario,
+cotizacion_listado_existencias_arriendos.vTotal,
+core_tiempo_frecuencia.Nombre AS Frecuencia
+
+FROM `cotizacion_listado_existencias_arriendos` 
+LEFT JOIN `equipos_arriendo_listado`    ON equipos_arriendo_listado.idEquipo     = cotizacion_listado_existencias_arriendos.idEquipo
+LEFT JOIN `core_tiempo_frecuencia`      ON core_tiempo_frecuencia.idFrecuencia   = cotizacion_listado_existencias_arriendos.idFrecuencia
+WHERE cotizacion_listado_existencias_arriendos.idCotizacion = {$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrArriendos,$row );
+}
+/*****************************************/				
+//Servicios
+$arrServicios = array();
+$query = "SELECT 
+servicios_listado.Nombre,
+cotizacion_listado_existencias_servicios.Cantidad,
+cotizacion_listado_existencias_servicios.vUnitario,
+cotizacion_listado_existencias_servicios.vTotal,
+core_tiempo_frecuencia.Nombre AS Frecuencia
+
+FROM `cotizacion_listado_existencias_servicios` 
+LEFT JOIN `servicios_listado`       ON servicios_listado.idServicio          = cotizacion_listado_existencias_servicios.idServicio
+LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia   = cotizacion_listado_existencias_servicios.idFrecuencia
+WHERE cotizacion_listado_existencias_servicios.idCotizacion = {$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrServicios,$row );
+}
+/*****************************************/		
+// Se trae un listado con todos los archivos adjuntos
+$arrArchivo = array();
+$query = "SELECT Nombre
+FROM `cotizacion_listado_archivos` 
+WHERE idCotizacion = {$_GET['view']} ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrArchivo,$row );
+}
+/*****************************************/		
+// Se trae un listado con todos los impuestos existentes
+$arrImpuestos = array();
+$query = "SELECT Nombre, Porcentaje
+FROM `sistema_impuestos`
+ORDER BY idImpuesto ASC ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	error_log("========================================================================================================================================", 0);
+	error_log("Usuario: ". $NombreUsr, 0);
+	error_log("Transaccion: ". $Transaccion, 0);
+	error_log("-------------------------------------------------------------------", 0);
+	error_log("Error code: ". mysqli_errno($dbConn), 0);
+	error_log("Error description: ". mysqli_error($dbConn), 0);
+	error_log("Error query: ". $query, 0);
+	error_log("-------------------------------------------------------------------", 0);
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrImpuestos,$row );
+}
+
+
+?>
+<?php if(isset($alert_obs)&&$alert_obs!=''){ ?>
+	<div class="col-xs-12" style="margin-top:15px;">
+		<div class="alert alert-<?php echo $alert_borde; ?> alert-white rounded"> 
+			<div class="icon"><i class="<?php echo $alert_icon; ?>"></i></div> 
+			<?php echo $alert_obs; ?>
+		</div>
+	</div>
+	<div class="clearfix" style="margin-bottom:15px;"></div>
+<?php } ?>
+		
+<section class="invoice">
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<i class="fa fa-globe"></i> Cotizacion <?php echo n_doc($_GET['view'], 5); ?>.
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
+			</h2>
+		</div>   
+	</div>
+	
+	<div class="row invoice-info">
+		
+		<?php 
+		echo '
+				<div class="col-sm-4 invoice-col">
+					Empresa Emisora
+					<address>
+						<strong>'.$row_data['SistemaOrigen'].'</strong><br>
+						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
+						'.$row_data['SistemaOrigenDireccion'].'<br>
+						Fono: '.$row_data['SistemaOrigenFono'].'<br>
+						Rut: '.$row_data['SistemaOrigenRut'].'<br>
+						Email: '.$row_data['SistemaOrigenEmail'].'
+					</address>
+				</div>
+				
+				
+				<div class="col-sm-4 invoice-col">
+					Empresa Receptora
+					<address>
+						<strong>'.$row_data['NombreProveedor'].'</strong><br>
+						'.$row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor'].'<br>
+						'.$row_data['DireccionProveedor'].'<br>
+						Fono Fijo: '.$row_data['Fono1Proveedor'].'<br>
+						Celular: '.$row_data['Fono2Proveedor'].'<br>
+						Fax: '.$row_data['FaxProveedor'].'<br>
+						Rut: '.$row_data['RutProveedor'].'<br>
+						Email: '.$row_data['EmailProveedor'].'<br>
+						Contacto: '.$row_data['PersonaContactoProveedor'].'<br>
+						Giro de la Empresa: '.$row_data['GiroProveedor'].'
+					</address>
+				</div>
+			   
+				<div class="col-sm-4 invoice-col">
+					Vendedor: '.$row_data['NombreUsuario'].'<br>
+				</div>';
+		?>
+
+	</div>
+	
+	
+	<div class="row">
+		<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Detalle</th>
+						<th align="right" width="160">Cantidad</th>
+						<th align="right" width="160">Valor Unitario</th>
+						<th align="right" width="160">Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if ($arrInsumos) { ?>
+						<tr class="active"><td colspan="4"><strong>Insumos</strong></td></tr>
+						<?php foreach ($arrInsumos as $prod) { ?>
+							<tr>
+								<td><?php echo $prod['Nombre']; ?></td>
+								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
+								<td align="right"><?php echo valores($prod['vUnitario'], 0).' x '.$prod['Unidad']; ?></td>
+								<td align="right"><?php echo valores($prod['vTotal'], 0); ?></td>
+							</tr>
+						<?php } ?>
+					<?php } ?>
+					<?php if ($arrProductos) { ?>
+						<tr class="active"><td colspan="4"><strong>Productos</strong></td></tr>
+						<?php foreach ($arrProductos as $prod) { ?>
+							<tr>
+								<td><?php echo $prod['Nombre']; ?></td>
+								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
+								<td align="right"><?php echo valores($prod['vUnitario'], 0).' x '.$prod['Unidad']; ?></td>
+								<td align="right"><?php echo valores($prod['vTotal'], 0); ?></td>
+							</tr>
+						<?php } ?>
+					<?php } ?>
+					<?php if ($arrArriendos) { ?>
+						<tr class="active"><td colspan="4"><strong>Arriendos</strong></td></tr>
+						<?php foreach ($arrArriendos as $prod) { ?>
+							<tr>
+								<td><?php echo $prod['Nombre']; ?></td>
+								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
+								<td align="right"><?php echo valores($prod['vUnitario'], 0).' x '.$prod['Frecuencia']; ?></td>
+								<td align="right"><?php echo valores($prod['vTotal'], 0); ?></td>
+							</tr>
+						<?php } ?>
+					<?php } ?>
+					<?php if ($arrServicios) { ?>
+						<tr class="active"><td colspan="4"><strong>Servicios</strong></td></tr>
+						<?php foreach ($arrServicios as $prod) { ?>
+							<tr>
+								<td><?php echo $prod['Nombre']; ?></td>
+								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
+								<td align="right"><?php echo valores($prod['vUnitario'], 0).' x '.$prod['Frecuencia']; ?></td>
+								<td align="right"><?php echo valores($prod['vTotal'], 0); ?></td>
+							</tr>
+						<?php } ?>
+					<?php } ?>
+				</tbody>
+			</table>
+			<table class="table">
+				<tbody>	
+					<?php
+					//Recorro y guard el nombre de los impuestos 
+					$nn = 0;
+					$impuestos = array();
+					foreach ($arrImpuestos as $impto) { 
+						$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
+						$nn++;
+					}?>
+					<?php if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong>Neto Imponible</strong></td> 
+							<td width="160" align="right"><?php echo Valores($row_data['ValorNetoImp'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					
+					<?php if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[0]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_01'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					
+					<?php if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[1]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_02'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					
+					<?php if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[2]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_03'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					<?php if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[3]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_04'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					<?php if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[4]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_05'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					<?php if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[5]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_06'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					<?php if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[6]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_07'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					<?php if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[7]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_08'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					<?php if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[8]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_09'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					<?php if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong><?php echo $impuestos[9]['nimp']; ?></strong></td> 
+							<td align="right"><?php echo Valores($row_data['Impuesto_10'], 0); ?></td>
+						</tr>
+					<?php } ?>
+					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){ ?>
+						<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong>Total</strong></td> 
+							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
+						</tr>
+					<?php } ?>
+				
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<p class="lead"><a name="Ancla_obs"></a>Condiciones Comerciales:</p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+		</div>
+	</div>
+	
+	
+      
+</section>
+
+<div class="col-xs-12" style="margin-bottom:15px;">
+	
+	
+    <table id="items">
+        <tbody>
+			<tr><th colspan="6">Archivos Adjuntos</th></tr>		  
+			<?php 
+			if (isset($arrArchivo)){
+				//recorro el lsiatdo entregado por la base de datos
+				foreach ($arrArchivo as $producto){?>
+					<tr class="item-row">
+						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
+						<td>
+							<div class="btn-group" style="width: 70px;" >
+								<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$producto['Nombre'].'&return=true'; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+								<a href="1download.php?dir=upload&file=<?php echo $producto['Nombre']; ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
+							</div>
+						</td>
+					</tr>
+					 
+				 <?php 	
+				}
+			}?>
+		</tbody>
+    </table>
+</div>
+
+
+
+
+		
+	<div class="col-xs-12" style="margin-bottom:30px">
+		<a target="new" href="view_cotizacion_to_print.php?view=<?php echo $_GET['view'] ?>" class="btn btn-default pull-right" style="margin-right: 5px;">
+			<i class="fa fa-print"></i> Imprimir
+		</a>
+	</div>
+	
+
+
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
+	<div class="clearfix"></div>
+		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="clearfix"></div>
+	</div>
+<?php } ?>
+ 
+
+	</body>
+</html>

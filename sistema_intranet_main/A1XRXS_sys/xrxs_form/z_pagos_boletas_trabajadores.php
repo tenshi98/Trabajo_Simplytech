@@ -1,0 +1,235 @@
+<?php
+/*******************************************************************************************************************/
+/*                                              Bloque de seguridad                                                */
+/*******************************************************************************************************************/
+if( ! defined('XMBCXRXSKGC')) {
+    die('No tienes acceso a esta carpeta o archivo.');
+}
+/*******************************************************************************************************************/
+/*                                        Se traspasan los datos a variables                                       */
+/*******************************************************************************************************************/
+
+	//Traspaso de valores input a variables
+	if ( !empty($_POST['idTrabajador']) )    $idTrabajador    = $_POST['idTrabajador'];
+	if ( !empty($_POST['idDocPago']) )       $idDocPago       = $_POST['idDocPago'];
+	if ( !empty($_POST['N_DocPago']) )       $N_DocPago       = $_POST['N_DocPago'];
+	if ( !empty($_POST['F_Pago']) )          $F_Pago          = $_POST['F_Pago'];
+	if ( !empty($_POST['MontoPagado']) )     $MontoPagado     = $_POST['MontoPagado'];
+	if ( !empty($_POST['idSistema']) )       $idSistema       = $_POST['idSistema'];
+	if ( !empty($_POST['idUsuario']) )       $idUsuario       = $_POST['idUsuario'];
+	if ( !empty($_POST['total_pagar']) )     $total_pagar     = $_POST['total_pagar'];
+	if ( !empty($_POST['idFacturacion']) )   $idFacturacion   = $_POST['idFacturacion'];
+	if ( !empty($_POST['montoPactado']) )    $montoPactado    = $_POST['montoPactado'];
+
+/*******************************************************************************************************************/
+/*                                      Verificacion de los datos obligatorios                                     */
+/*******************************************************************************************************************/
+
+	//limpio y separo los datos de la cadena de comprobacion
+	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
+	$piezas = explode(",", $form_obligatorios);
+	//recorro los elementos
+	foreach ($piezas as $valor) {
+		//veo si existe el dato solicitado y genero el error
+		switch ($valor) {
+			case 'idTrabajador':   if(empty($idTrabajador)){    $error['idTrabajador']   = 'error/No ha ingresado el id';}break;
+			case 'idDocPago':      if(empty($idDocPago)){       $error['idDocPago']      = 'error/No ha seleccionado el documento de pago';}break;
+			case 'N_DocPago':      if(empty($N_DocPago)){       $error['N_DocPago']      = 'error/No ha ingresado numero de documento de pago';}break;
+			case 'F_Pago':         if(empty($F_Pago)){          $error['F_Pago']         = 'error/No ha ingresado la fecha de pago';}break;
+			case 'MontoPagado':    if(empty($MontoPagado)){     $error['MontoPagado']    = 'error/No ha ingresado el monto pagado';}break;
+			case 'idSistema':      if(empty($idSistema)){       $error['idSistema']      = 'error/No ha seleccionado el sistema';}break;
+			case 'idUsuario':      if(empty($idUsuario)){       $error['idUsuario']      = 'error/No ha seleccionado el usuario';}break;
+			case 'total_pagar':    if(empty($total_pagar)){     $error['total_pagar']    = 'error/No ha ingresado el total a pagar';}break;
+			case 'idFacturacion':  if(empty($idFacturacion)){   $error['idFacturacion']  = 'error/No ha seleccionado la facturacion';}break;
+			case 'montoPactado':   if(empty($montoPactado)){    $error['montoPactado']   = 'error/No ha ingresado el monto pactado';}break;
+			
+		}
+	}
+					
+/*******************************************************************************************************************/
+/*                                            Se ejecutan las instrucciones                                        */
+/*******************************************************************************************************************/
+	//ejecuto segun la funcion
+	switch ($form_trabajo) {
+/*******************************************************************************************************************/
+/*                                                                                                                 */
+/*                                                  Pago Masivo                                                    */
+/*                                                                                                                 */
+/*******************************************************************************************************************/
+/*******************************************************************************************************************/		
+		case 'del_boleta':
+		
+			//Borro todas las sesiones
+			unset($_SESSION['pagos_boletas_trabajadores'][$_GET['del_boleta']]);
+			
+			header( 'Location: '.$location.'&next=true' );
+			die;
+		
+		break;
+/*******************************************************************************************************************/		
+		case 'pago_general':	
+			
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				if(!isset($N_DocPago) OR $N_DocPago == ''){
+					$N_DocPago = time();//clave unica
+				}
+				
+				//Verifico el documento de pago
+				$query = "SELECT Nombre
+				FROM `sistema_documentos_pago`
+				WHERE idDocPago=".$idDocPago."";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+									
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+				}
+				$rowDoc = mysqli_fetch_assoc ($resultado);
+				
+				////////////////////////////////////////////////////////////////////////////////////////////////
+				//recorro todos los existentes y les doy pago
+				if(isset($_SESSION['pagos_boletas_trabajadores'])){
+					foreach ($_SESSION['pagos_boletas_trabajadores'] as $key => $tipo){
+						
+						$idFacturacion  = $tipo['idFacturacion'];
+						$ValorTotal     = $tipo['ValorReal'];
+						$MontoPagado    = $tipo['ValorReal']+$tipo['MontoPagado'];
+						$MontoCancelado = $tipo['ValorTotal']-$tipo['MontoPagado'];
+						$idSistema      = $tipo['idSistema'];
+						$idTrabajador   = $tipo['idTrabajador'];
+								
+						//Filtros
+						$a = "idFacturacion='".$idFacturacion."'" ;
+						if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuarioPago='".$idUsuario."'" ;}
+						if(isset($idDocPago) && $idDocPago != ''){       $a .= ",idDocPago='".$idDocPago."'" ;}
+						if(isset($N_DocPago) && $N_DocPago != ''){       $a .= ",N_DocPago='".$N_DocPago."'" ;}
+						if(isset($F_Pago) && $F_Pago != ''){  
+							$a .= ",F_Pago='".$F_Pago."'" ;
+							$a .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
+							$a .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
+							$a .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+						}else{
+							$a .= ",''";
+							$a .= ",''";
+							$a .= ",''";
+							$a .= ",''";
+						}
+						if(isset($ValorTotal) &&$ValorTotal!= ''){   $a .= ",MontoPagado='".$MontoPagado."'" ;}
+						if($ValorTotal==$MontoCancelado){
+							$a .= ",idEstado='2'" ;
+						}else{
+							$a .= ",idEstado='1'" ;
+						}
+								
+						// inserto los datos de registro en la db
+						$query  = "UPDATE `boleta_honorarios_facturacion` SET ".$a." WHERE idFacturacion = '$idFacturacion'";
+						//Consulta
+						$resultado = mysqli_query($dbConn, $query);
+						//Si ejecuto correctamente la consulta
+						if(!$resultado){
+							//Genero numero aleatorio
+							$vardata = genera_password(8,'alfanumerico');
+									
+							//Guardo el error en una variable temporal
+							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+						}
+								
+						/*********************************************************************/		
+						//Se guarda en historial la accion
+						if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
+						if(isset($F_Pago) && $F_Pago != ''){                                  $a .= ",'".$F_Pago."'" ;                }else{$a .= ",''";}
+						$a .= ",'1'";                                                                             //Creacion Satisfactoria
+						$a .= ",'Pago del documento con el documento ".$rowDoc['Nombre']." N° ".$N_DocPago."'";   //Observacion
+						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                           //idUsuario
+								
+											
+						// inserto los datos de registro en la db
+						$query  = "INSERT INTO `boleta_honorarios_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
+						VALUES ({$a} )";
+						//Consulta
+						$resultado = mysqli_query ($dbConn, $query);
+						//Si ejecuto correctamente la consulta
+						if(!$resultado){
+							//Genero numero aleatorio
+							$vardata = genera_password(8,'alfanumerico');
+									
+							//Guardo el error en una variable temporal
+							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+						}
+								
+						/**************************************************************************************/
+						//Agrego el pago al historial de pagos
+						if(isset($idFacturacion) && $idFacturacion != ''){  $a  = "'".$idFacturacion."'" ;   }else{ $a  = "''"; }
+						if(isset($idDocPago) && $idDocPago != ''){          $a .= ",'".$idDocPago."'" ;      }else{ $a .= ",''"; }
+						if(isset($N_DocPago) && $N_DocPago != ''){          $a .= ",'".$N_DocPago."'" ;      }else{ $a .= ",''"; }
+						if(isset($F_Pago) && $F_Pago != ''){  
+							$a .= ",'".$F_Pago."'" ;
+							$a .= ",'".fecha2NdiaMes($F_Pago)."'" ;
+							$a .= ",'".fecha2NSemana($F_Pago)."'" ;
+							$a .= ",'".fecha2NMes($F_Pago)."'" ;
+							$a .= ",'".fecha2Ano($F_Pago)."'" ;
+						}else{
+							$a .= ",''";
+							$a .= ",''";
+							$a .= ",''";
+							$a .= ",''";
+							$a .= ",''";
+						}
+						if(isset($ValorTotal) && $ValorTotal != ''){           $a .= ",'".$ValorTotal."'" ;      }else{ $a .= ",''"; }
+						if(isset($MontoCancelado) && $MontoCancelado != ''){   $a .= ",'".$MontoCancelado."'" ;  }else{ $a .= ",''"; }
+						if(isset($idUsuario) && $idUsuario != ''){             $a .= ",'".$idUsuario."'" ;       }else{ $a .= ",''"; }
+						if(isset($idSistema) && $idSistema != ''){             $a .= ",'".$idSistema."'" ;       }else{ $a .= ",''"; }
+						if(isset($idTrabajador) && $idTrabajador != ''){       $a .= ",'".$idTrabajador."'" ;    }else{ $a .= ",''"; }
+								
+						// inserto los datos de registro en la db
+						$query  = "INSERT INTO `pagos_boletas_trabajadores` (idFacturacion, idDocPago, N_DocPago, F_Pago,
+						F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idTrabajador) 
+						VALUES ({$a} )";
+						//Consulta
+						$resultado = mysqli_query ($dbConn, $query);
+						//Si ejecuto correctamente la consulta
+						if(!$resultado){
+							//Genero numero aleatorio
+							$vardata = genera_password(8,'alfanumerico');
+									
+							//Guardo el error en una variable temporal
+							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+						}
+					}
+				}
+				
+				
+				
+				////////////////////////////////////////////////////////////////////////////////////////////
+				//elimino los datos
+				unset($_SESSION['pagos_boletas_trabajadores']);
+				
+				//redirijo
+				header( 'Location: '.$location.'?pay=true' );
+				die;
+			}
+
+		break;
+	
+	
+	}
+?>

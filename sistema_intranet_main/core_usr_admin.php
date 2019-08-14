@@ -1,0 +1,456 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+//Verifico si es superusuario
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "core_usr_admin.php";
+$location = $original;
+//Se agregan ubicaciones
+$location .='?pagina='.$_GET['pagina'];
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para crear
+if ( !empty($_POST['submit']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'insert';
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
+}
+//formulario para editar
+if ( !empty($_POST['submit_edit']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'update';
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
+}
+//se borra un dato
+if ( !empty($_GET['del']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'del';
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Usuario creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Usuario editado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Usuario borrado correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};?>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ if ( ! empty($_GET['id']) ) { 
+// Se traen todos los datos de mi usuario
+$query = "SELECT usuario,  email, Nombre, Rut, fNacimiento, Direccion, Fono, idCiudad, idComuna
+FROM `usuarios_listado`
+WHERE idUsuario = {$_GET['id']}";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);	?>
+ 
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Modificacion datos del Usuario <?php echo $rowdata['Nombre']; ?></h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+		
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Nombre)) {          $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Fono)) {            $x2  = $Fono;          }else{$x2  = $rowdata['Fono'];}
+				if(isset($email)) {           $x3  = $email;         }else{$x3  = $rowdata['email'];}
+				if(isset($Rut)) {             $x4  = $Rut;           }else{$x4  = $rowdata['Rut'];}
+				if(isset($fNacimiento)) {     $x5  = $fNacimiento;   }else{$x5  = $rowdata['fNacimiento'];}
+				if(isset($idCiudad)) {        $x6  = $idCiudad;      }else{$x6  = $rowdata['idCiudad'];}
+				if(isset($idComuna)) {        $x7  = $idComuna;      }else{$x7  = $rowdata['idComuna'];}
+				if(isset($Direccion)) {       $x8  = $Direccion;     }else{$x8  = $rowdata['Direccion'];}
+			
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
+				$Form_Imputs->form_input_phone('Fono', 'Fono', $x2, 1);
+				$Form_Imputs->form_input_icon( 'Email', 'email', $x3, 1,'fa fa-envelope-o');
+				$Form_Imputs->form_input_rut('Rut', 'Rut', $x4, 1);
+				$Form_Imputs->form_date('Fecha de Nacimiento','fNacimiento', $x5, 1);
+				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+										 'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+										 $dbConn, 'form1');	
+				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x8, 1,'fa fa-map');
+				
+				$Form_Imputs->form_input_hidden('idUsuario', $_GET['id'], 2);
+				?>
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+		</div>
+	</div>
+</div>
+
+
+
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['new']) ) { ?>
+ <div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Crear Usuario</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+        	
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($usuario)) {         $x1  = $usuario;       }else{$x1  = '';}
+				if(isset($password)) {        $x2  = $password;      }else{$x2  = '';}
+				if(isset($repassword)) {      $x3  = $repassword;    }else{$x3  = '';}
+				if(isset($Nombre)) {          $x4  = $Nombre;        }else{$x4  = '';}
+				if(isset($Fono)) {            $x5  = $Fono;          }else{$x5  = '';}
+				if(isset($email)) {           $x6  = $email;         }else{$x6  = '';}
+				if(isset($Rut)) {             $x7  = $Rut;           }else{$x7  = '';}
+				if(isset($fNacimiento)) {     $x8  = $fNacimiento;   }else{$x8  = '';}
+				if(isset($idCiudad)) {        $x9  = $idCiudad;      }else{$x9  = '';}
+				if(isset($idComuna)) {        $x10 = $idComuna;      }else{$x10 = '';}
+				if(isset($Direccion)) {       $x11 = $Direccion;     }else{$x11 = '';}
+			
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_input_icon( 'Usuario', 'usuario', $x1, 2,'fa fa-user');
+				$Form_Imputs->form_input_password('Password', 'password', $x2, 2);
+				$Form_Imputs->form_input_password('Repetir Password', 'repassword', $x3, 2);
+				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x4, 2);
+				$Form_Imputs->form_input_phone('Fono', 'Fono', $x5, 1);
+				$Form_Imputs->form_input_icon( 'Email', 'email', $x6, 1,'fa fa-envelope-o');
+				$Form_Imputs->form_input_rut('Rut', 'Rut', $x7, 1);
+				$Form_Imputs->form_date('Fecha de Nacimiento','fNacimiento', $x8, 1);
+				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+										 'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+										 $dbConn, 'form1');	
+				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x8, 1,'fa fa-map');
+				
+				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Imputs->form_input_hidden('idTipoUsuario', 1, 2);
+				?>
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+		</div>
+	</div>
+</div>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['view']) ) { 
+ // Se traen todos los datos de mi usuario
+$query = "SELECT 
+usuarios_listado.usuario, 
+usuarios_listado.email, 
+usuarios_listado.Nombre, 
+usuarios_listado.Rut, 
+usuarios_listado.fNacimiento, 
+usuarios_listado.Direccion, 
+usuarios_listado.Fono, 
+core_ubicacion_ciudad.Nombre AS Ciudad, 
+core_ubicacion_comunas.Nombre AS Comuna,
+usuarios_listado.Ultimo_acceso,
+usuarios_listado.Direccion_img,
+usuarios_estado.Nombre AS estado
+FROM `usuarios_listado`
+LEFT JOIN `usuarios_estado`          ON usuarios_estado.idEstado          = usuarios_listado.idEstado
+LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = usuarios_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usuarios_listado.idComuna
+WHERE idUsuario = {$_GET['view']}";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);
+//Traigo un listado con todos sus accesos de sistema	
+$arrAccess = array();
+$query = "SELECT  Fecha, Hora
+FROM `usuarios_accesos`
+WHERE idUsuario = {$_GET['view']}
+ORDER BY idAcceso DESC
+LIMIT 13 ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrAccess,$row );
+}
+?>
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div>
+			<h5>Datos</h5>
+			<ul class="nav nav-tabs pull-right">
+				<li class="active"><a href="#basicos" data-toggle="tab">Datos</a></li>
+				<li class=""><a href="#ingresos" data-toggle="tab">Ingresos</a></li>
+			</ul>	
+		</header>
+        <div id="div-3" class="tab-content">
+			
+			<div class="tab-pane fade active in" id="basicos">
+				<div class="wmd-panel">
+					
+					<div class="col-sm-4">
+						<?php if ($rowdata['Direccion_img']=='') { ?>
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/usr.png">
+						<?php }else{  ?>
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+						<?php }?>
+					</div>
+					<div class="col-sm-8">
+						<h2 class="text-primary">Datos del Perfil</h2>
+						<p class="text-muted">
+							<strong>Usuario : </strong><?php echo $rowdata['usuario']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowdata['estado']; ?><br/>
+							<strong>Ultimo Acceso : </strong><?php echo $rowdata['Ultimo_acceso']; ?>
+						</p>
+						
+						<h2 class="text-primary">Datos Personales</h2>
+						<p class="text-muted">
+							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
+							<strong>Fono : </strong><?php echo $rowdata['Fono']; ?><br/>
+							<strong>Email : </strong><?php echo $rowdata['email']; ?><br/>
+							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
+							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
+							<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
+							<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
+							<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?>
+						</p>
+					</div>	
+					<div class="clearfix"></div>
+			
+				</div>
+			</div>
+			
+			<div class="tab-pane fade" id="ingresos">
+				<div class="wmd-panel">
+					
+					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+						<thead>
+							<tr role="row">
+								<th width="209">Fecha</th>
+								<th width="472">Hora</th>
+							</tr>
+						</thead>
+						<tbody role="alert" aria-live="polite" aria-relevant="all">
+							<?php foreach ($arrAccess as $accesos) { ?>
+								<tr class="odd">		
+									<td><?php echo $accesos['Fecha']; ?></td>		
+									<td><?php echo $accesos['Hora']; ?></td>	
+								</tr>
+							<?php } ?>                    
+						</tbody>
+					</table>
+			
+				</div>
+			</div>
+			
+			
+			
+			
+        </div>	
+	</div>
+</div>
+
+
+
+            
+<div class="clearfix"></div>
+<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="clearfix"></div>
+</div>
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+//Se inicializa el paginador de resultados
+//tomo el numero de la pagina si es que este existe
+if(isset($_GET["pagina"])){
+	$num_pag = $_GET["pagina"];	
+} else {
+	$num_pag = 1;	
+}
+//Defino la cantidad total de elementos por pagina
+$cant_reg = 30;
+//resto de variables
+if (!$num_pag){
+	$comienzo = 0 ;
+	$num_pag = 1 ;
+} else {
+	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
+}
+//Filtro solo a los super usuarios
+$z = "WHERE usuarios_listado.idTipoUsuario=1";
+//Realizo una consulta para saber el total de elementos existentes
+$query = "SELECT idUsuario FROM `usuarios_listado` ".$z;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$cuenta_registros = mysqli_num_rows($resultado);
+//Realizo la operacion para saber la cantidad de paginas que hay
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los usuarios
+$arrUsers = array();
+$query = "SELECT 
+usuarios_listado.idUsuario,
+usuarios_listado.usuario, 
+usuarios_listado.Nombre,
+usuarios_listado.Ultimo_acceso,
+core_estados.Nombre AS estado,
+usuarios_listado.idEstado
+FROM `usuarios_listado`
+LEFT JOIN `core_estados`  ON core_estados.idEstado   = usuarios_listado.idEstado
+".$z."
+ORDER BY usuarios_listado.usuario ASC
+LIMIT $comienzo, $cant_reg ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrUsers,$row );
+}
+//paginacion
+$search='';
+?>
+<div class="col-sm-12">
+	<a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Usuario</a>
+</div>
+<div class="clearfix"></div>                       
+                                 
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Usuarios</h5>
+			<div class="toolbar">
+				<?php 
+				//paginacion
+				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+			</div>
+		</header>
+		<div class="table-responsive"> 
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>Usuario</th>
+						<th>Nombre del usuario</th>
+						<th>Ultimo acceso</th>
+						<th>Estado</th>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>    
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				<?php foreach ($arrUsers as $usuarios) { ?>
+					<tr class="odd">
+						<td><?php echo $usuarios['usuario']; ?></td>
+						<td><?php echo $usuarios['Nombre']; ?></td>
+						<td><?php echo $usuarios['Ultimo_acceso']; ?></td>
+						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>
+						<td>
+							<div class="btn-group" style="width: 105px;" >
+								<a href="<?php echo $location.'&view='.$usuarios['idUsuario']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+								<a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<?php 
+								$ubicacion = $location.'&del='.$usuarios['idUsuario'];
+								$dialogo   = '¿Realmente deseas eliminar el registro '.$usuarios['Nombre'].'?';?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+							</div>
+						</td>
+					</tr>
+				<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+		<div class="pagrow">	
+			<?php 
+			//paginacion
+			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+		</div>
+	</div>
+</div>
+<?php } ?>
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

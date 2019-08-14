@@ -1,0 +1,318 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "informe_busqueda_ot_01.php";
+$location = $original;
+//Se agregan ubicaciones
+$search ='&submit_filter=Filtrar';
+if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){         $search .="&idMaquina={$_GET['idMaquina']}";}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){           $search .="&idEstado={$_GET['idEstado']}";}
+if(isset($_GET['idPrioridad'])&&$_GET['idPrioridad']!=''){     $search .="&idPrioridad={$_GET['idPrioridad']}";}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo={$_GET['idTipo']}";}
+if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){   $search .="&idLicitacion={$_GET['idLicitacion']}";}
+if(isset($_GET['idOT'])&&$_GET['idOT']!=''){                   $search .="&idOT={$_GET['idOT']}";}
+if(isset($_GET['f_programacion_inicio'])&&$_GET['f_programacion_inicio']!=''&&isset($_GET['f_programacion_termino'])&&$_GET['f_programacion_termino']!=''){
+	$search .="&f_programacion_inicio={$_GET['f_programacion_inicio']}";
+	$search .="&f_programacion_termino={$_GET['f_programacion_termino']}";
+}
+if(isset($_GET['f_termino_inicio'])&&$_GET['f_termino_inicio']!=''&&isset($_GET['f_termino_termino'])&&$_GET['f_termino_termino']!=''){
+	$search .="&f_termino_inicio={$_GET['f_termino_inicio']}";
+	$search .="&f_termino_termino={$_GET['f_termino_termino']}";
+}	
+						
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['submit_filter']) ) { 
+/**********************************************************/
+//paginador de resultados
+if(isset($_GET["pagina"])){
+	$num_pag = $_GET["pagina"];	
+} else {
+	$num_pag = 1;	
+}
+//Defino la cantidad total de elementos por pagina
+$cant_reg = 30;
+//resto de variables
+if (!$num_pag){
+	$comienzo = 0 ;
+	$num_pag = 1 ;
+} else {
+	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
+}
+/**********************************************************/
+//ordenamiento
+if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
+	switch ($_GET['order_by']) {
+		case 'id_asc':         $order_by = 'ORDER BY orden_trabajo_listado.idOT ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> ID Ascendente'; break;
+		case 'id_desc':        $order_by = 'ORDER BY orden_trabajo_listado.idOT DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';break;
+		case 'fprog_asc':      $order_by = 'ORDER BY orden_trabajo_listado.f_programacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> F Prog Ascendente';break;
+		case 'fprog_desc':     $order_by = 'ORDER BY orden_trabajo_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> F Prog Descendente';break;
+		case 'maquina_asc':    $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Ascendente';break;
+		case 'maquina_desc':   $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Descendente';break;
+		case 'prioridad_asc':  $order_by = 'ORDER BY core_ot_prioridad.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente';break;
+		case 'prioridad_desc': $order_by = 'ORDER BY core_ot_prioridad.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
+		case 'tipotrab_asc':   $order_by = 'ORDER BY core_ot_tipos.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente';break;
+		case 'tipotrab_desc':  $order_by = 'ORDER BY core_ot_tipos.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Trabajo Descendente';break;
+		case 'obs_asc':        $order_by = 'ORDER BY orden_trabajo_listado.Observaciones ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Observaciones Ascendente';break;
+		case 'obs_desc':       $order_by = 'ORDER BY orden_trabajo_listado.Observaciones DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Observaciones Descendente';break;
+		
+		default: $order_by = 'ORDER BY orden_trabajo_listado.idOT DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
+	}
+}else{
+	$order_by = 'ORDER BY orden_trabajo_listado.idOT DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
+}
+/**********************************************************/
+//Variable de busqueda
+$z = "WHERE orden_trabajo_listado.idOT>=0";
+//Verifico el tipo de usuario que esta ingresando
+$z .= " AND orden_trabajo_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){        $z.=" AND orden_trabajo_listado.idMaquina={$_GET['idMaquina']}";}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){          $z.=" AND orden_trabajo_listado.idEstado={$_GET['idEstado']}";}
+if(isset($_GET['idPrioridad'])&&$_GET['idPrioridad']!=''){    $z.=" AND orden_trabajo_listado.idPrioridad={$_GET['idPrioridad']}";}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){              $z.=" AND orden_trabajo_listado.idTipo={$_GET['idTipo']}";}
+if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){  $z.=" AND orden_trabajo_listado.idLicitacion={$_GET['idLicitacion']}";}
+if(isset($_GET['idOT'])&&$_GET['idOT']!=''){                  $z.=" AND orden_trabajo_listado.idOT={$_GET['idOT']}";}
+if(isset($_GET['f_programacion_inicio'])&&$_GET['f_programacion_inicio']!=''&&isset($_GET['f_programacion_termino'])&&$_GET['f_programacion_termino']!=''){
+	$z.=" AND orden_trabajo_listado.f_programacion BETWEEN '{$_GET['f_programacion_inicio']}' AND '{$_GET['f_programacion_termino']}'";
+}
+if(isset($_GET['f_termino_inicio'])&&$_GET['f_termino_inicio']!=''&&isset($_GET['f_termino_termino'])&&$_GET['f_termino_termino']!=''){
+	$z.=" AND orden_trabajo_listado.f_termino BETWEEN '{$_GET['f_termino_inicio']}' AND '{$_GET['f_termino_termino']}'";
+}
+
+/**********************************************************/
+//Realizo una consulta para saber el total de elementos existentes
+$query = "SELECT idOT FROM `orden_trabajo_listado`  ".$z;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$cuenta_registros = mysqli_num_rows($resultado);
+//Realizo la operacion para saber la cantidad de paginas que hay
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los usuarios
+$arrOTS = array();
+$query = "SELECT 
+orden_trabajo_listado.idOT,
+orden_trabajo_listado.f_programacion,
+orden_trabajo_listado.Observaciones,
+maquinas_listado.Nombre AS NombreMaquina,
+core_ot_prioridad.Nombre AS NombrePrioridad,
+core_ot_tipos.Nombre AS NombreTipo
+
+FROM `orden_trabajo_listado`
+LEFT JOIN `maquinas_listado`     ON maquinas_listado.idMaquina      = orden_trabajo_listado.idMaquina
+LEFT JOIN `core_ot_prioridad`    ON core_ot_prioridad.idPrioridad   = orden_trabajo_listado.idPrioridad
+LEFT JOIN `core_ot_tipos`        ON core_ot_tipos.idTipo            = orden_trabajo_listado.idTipo
+".$z."
+".$order_by."
+LIMIT $comienzo, $cant_reg ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrOTS,$row );
+}
+
+?>
+<div class="col-sm-12 breadcrumb-bar">
+
+	<ul class="btn-group btn-breadcrumb pull-left">
+		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>	
+	</ul>
+	
+</div>
+<div class="clearfix"></div> 
+
+	
+<div class="col-sm-12">
+	<div class="box">	
+		<header>		
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Ordenes de Trabajo</h5>
+			<div class="toolbar">
+				<?php 
+				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+			</div>	
+		</header>
+		<div class="table-responsive">
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>
+							<div class="pull-left">#</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=id_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=id_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">F Prog</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fprog_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fprog_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left"><?php echo $x_column_maquina_sing; ?></div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Prioridad</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=prioridad_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=prioridad_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Tipo Trabajo</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipotrab_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipotrab_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Observaciones</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=obs_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=obs_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<?php foreach ($arrOTS as $ot) { ?>
+					<tr class="odd">		
+						<td><?php echo $ot['idOT']; ?></td>	
+						<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>	
+						<td><?php echo $ot['NombreMaquina']; ?></td>		
+						<td><?php echo $ot['NombrePrioridad']; ?></td>
+						<td><?php echo $ot['NombreTipo']; ?></td>
+						<td><?php echo $ot['Observaciones']; ?></td>		
+						<td>
+							<div class="btn-group" style="width: 140px;" >
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_orden_trabajo.php?view='.$ot['idOT']; ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'orden_trabajo_editar.php?view='.$ot['idOT']; ?>" title="Editar Orden de Trabajo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&clone='.$ot['idOT']; ?>" title="Duplicar Orden de Trabajo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=4){
+									$ubicacion = $location.'&del_ot='.$ot['idOT'];
+									$dialogo   = '¿Realmente deseas eliminar el registro de la OT  '.n_doc($ot['idOT'], 5).'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+								<?php } ?>								
+							</div>
+						</td>	
+					</tr>
+					<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+		<div class="pagrow">	
+			<?php echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+		</div>
+	</div>
+</div>
+<?php require_once '../LIBS_js/modal/modal.php';?>
+  
+<div class="clearfix"></div>
+<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="clearfix"></div>
+</div>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+//Verifico el tipo de usuario que esta ingresando
+$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+ 
+ ?>
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Filtro de Busqueda</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($f_programacion_inicio)) {   $x1  = $f_programacion_inicio;      }else{$x1  = '';}
+				if(isset($f_programacion_termino)) {  $x2  = $f_programacion_termino;     }else{$x2  = '';}
+				if(isset($f_termino_inicio)) {        $x3  = $f_termino_inicio;           }else{$x3  = '';}
+				if(isset($f_termino_termino)) {       $x4  = $f_termino_termino;          }else{$x4  = '';}
+				if(isset($idMaquina)) {               $x5  = $idMaquina;                  }else{$x5  = '';}
+				if(isset($idEstado)) {                $x6  = $idEstado;                   }else{$x6  = '';}
+				if(isset($idPrioridad)) {             $x7  = $idPrioridad;                }else{$x7  = '';}
+				if(isset($idTipo)) {                  $x8  = $idTipo;                     }else{$x8  = '';}
+				if(isset($idLicitacion)) {            $x9  = $idLicitacion;               }else{$x9  = '';}
+				if(isset($idOT)) {                    $x10 = $idOT;                       }else{$x10 = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_date('Fecha Programacion Desde','f_programacion_inicio', $x1, 1);
+				$Form_Imputs->form_date('Fecha Programacion Hasta','f_programacion_termino', $x2, 1);
+				$Form_Imputs->form_date('Fecha Termino Desde','f_termino_inicio', $x3, 1);
+				$Form_Imputs->form_date('Fecha Termino Hasta','f_termino_termino', $x4, 1);
+				$Form_Imputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x5, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
+				$Form_Imputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_ot', 0, '', $dbConn);
+				$Form_Imputs->form_select('Prioridad','idPrioridad', $x7, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
+				$Form_Imputs->form_select('Tipo','idTipo', $x8, 1, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
+				$Form_Imputs->form_select_filter('Contrato','idLicitacion', $x9, 1, 'idLicitacion', 'Nombre', 'licitacion_listado', $z, '', $dbConn);	
+				$Form_Imputs->form_input_number('N° OT', 'idOT', $x10, 1);
+				?> 
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+		</div>
+	</div>
+</div> 
+<?php } ?>
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

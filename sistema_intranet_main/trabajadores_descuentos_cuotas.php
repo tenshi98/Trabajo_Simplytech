@@ -1,0 +1,751 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "trabajadores_descuentos_cuotas.php";
+$location = $original;
+//Se agregan ubicaciones
+$location .='?pagina='.$_GET['pagina'];
+/********************************************************************/
+//Variables para filtro y paginacion
+$search = '';
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){      $location .= "&idTrabajador=".$_GET['idTrabajador'];       $search .= "&idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];   $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                  $location .= "&idTipo=".$_GET['idTipo'];                   $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Monto']) && $_GET['Monto'] != ''){                    $location .= "&Monto=".$_GET['Monto'];                     $search .= "&Monto=".$_GET['Monto'];}
+if(isset($_GET['N_Cuotas']) && $_GET['N_Cuotas'] != ''){              $location .= "&N_Cuotas=".$_GET['N_Cuotas'];               $search .= "&N_Cuotas=".$_GET['N_Cuotas'];}
+/********************************************************************/
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para crear
+if ( !empty($_POST['submit']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'new_ingreso';
+	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_descuentos_cuotas.php';
+}
+//formulario para editar
+if ( !empty($_POST['submit_modBase']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'modBase_ing';
+	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_descuentos_cuotas.php';
+}
+//formulario para editar
+if ( !empty($_GET['clear_all']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'clear_all_ing';
+	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_descuentos_cuotas.php';
+}
+/**********************************************/
+//formulario para crear
+if ( !empty($_POST['submit_edit_cuotas']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'edit_cuota_ing';
+	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_descuentos_cuotas.php';
+}
+/**********************************************/
+//se borra un dato
+if ( !empty($_GET['add_obs']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'add_obs_ing';
+	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_descuentos_cuotas.php';	
+}
+//se borra un dato
+if ( !empty($_GET['del_obs']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'del_obs_ing';
+	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_descuentos_cuotas.php';	
+}
+/**********************************************/
+//formulario para crear
+if ( !empty($_POST['submit_file']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'new_file_ing';
+	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_descuentos_cuotas.php';
+}
+//se borra un dato
+if ( !empty($_GET['del_file']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'del_file_ing';
+	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_descuentos_cuotas.php';	
+}
+/**********************************************/
+if ( !empty($_GET['ing_bodega']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'ing_bodega';
+	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_descuentos_cuotas.php';	
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Documento Realizado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Documento Modificado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Documento borrado correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};?>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['addFile']) ) { ?>
+ 
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Subir Archivo</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
+			
+				<?php           
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
+					
+				?> 
+
+				<div class="form-group">
+					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>              
+		</div>
+	</div>
+</div>	
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+}elseif ( ! empty($_GET['editCuotas']) ) {  ?>
+
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Editar Servicios</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($FechaCuota)) {  $x1  = $FechaCuota;  }else{$x1  = $_SESSION['desc_cuotas_listado'][$_GET['editCuotas']]['fecha'];}
+				if(isset($MontoCuota)) {  $x2  = $MontoCuota;  }else{$x2  = Cantidades_decimales_justos($_SESSION['desc_cuotas_listado'][$_GET['editCuotas']]['monto']);}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_date('Fecha Cuota','FechaCuota', $x1, 2);
+				$Form_Imputs->form_input_number('Monto Cuota', 'MontoCuota', $x2, 2);
+				
+				$Form_Imputs->form_input_hidden('oldidProducto', $_GET['editCuotas'], 2);
+				
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_cuotas"> 
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+		</div>
+	</div>
+</div>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['modBase']) ) { 
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+	$z = "bodegas_insumos_listado.idSistema>=0";
+	$w = "idSistema>=0 AND idEstado=1";
+}else{
+	$z = "bodegas_insumos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_insumos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";		
+	$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+}
+?>
+
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Modificar datos basicos del Ingreso</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+        	
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idTrabajador)) {       $x1  = $idTrabajador;     }else{$x1  = $_SESSION['desc_cuotas_basicos']['idTrabajador'];}
+				if(isset($Creacion_fecha)) {     $x2  = $Creacion_fecha;   }else{$x2  = $_SESSION['desc_cuotas_basicos']['Creacion_fecha'];}
+				if(isset($idTipo)) {             $x3  = $idTipo;           }else{$x3  = $_SESSION['desc_cuotas_basicos']['idTipo'];}
+				if(isset($Monto)) {              $x4  = $Monto;            }else{$x4  = $_SESSION['desc_cuotas_basicos']['Monto'];}
+				if(isset($N_Cuotas)) {           $x5  = $N_Cuotas;         }else{$x5  = $_SESSION['desc_cuotas_basicos']['N_Cuotas'];}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x2, 2);
+				$Form_Imputs->form_select_filter('Tipo','idTipo', $x3, 2, 'idTipo', 'Nombre', 'trabajadores_descuentos_cuotas_tipos', 0, '', $dbConn);
+				$Form_Imputs->form_input_number('Monto', 'Monto', $x4, 2);
+				$Form_Imputs->form_select_n_auto('N° Cuotas','N_Cuotas', $x5, 2, 1, 72);	
+				
+				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+	
+	
+				?> 
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+		</div>
+	</div>
+</div>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['view']) ) {
+$Form_Imputs = new Inputs(); 
+/**************************************/
+//totales
+$vtotal_neto = 0;
+$xval_inc = 0;
+//listado de servicios
+if (isset($_SESSION['desc_cuotas_listado'])){
+	//recorro el lsiatdo entregado por la base de datos
+	foreach ($_SESSION['desc_cuotas_listado'] as $key => $producto){ 
+		$vtotal_neto = $vtotal_neto + $producto['monto']; 
+		if(isset($producto['fecha'])&&$producto['fecha']=='0000-00-00'){
+			$xval_inc++;
+		}	
+	}
+}				
+?>
+
+ 
+<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+
+	<?php if($vtotal_neto==$_SESSION['desc_cuotas_basicos']['Monto']&&$xval_inc==0){
+		$ubicacion = $location.'&view=true&ing_bodega=true';
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
+	<?php } ?>
+		
+	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+
+	<?php 
+	$ubicacion = $location.'&clear_all=true';
+	$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width dialogBox"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
+
+	<div class="clearfix"></div>
+</div> 
+
+<div class="col-sm-12 fcenter">
+
+	<div id="page-wrap">
+		<div id="header"> <?php echo $_SESSION['desc_cuotas_basicos']['TipoDocumento']; ?></div>
+
+		
+		<div id="customer">
+			
+			<table id="meta" class="fleft otdata">
+				<tbody>
+					<tr>
+						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+					</tr>
+					<tr>
+						<td class="meta-head">Trabajador</td>
+						<td><?php echo $_SESSION['desc_cuotas_basicos']['Trabajador']; ?></td>
+					</tr>
+					<tr>
+						<td class="meta-head">Monto</td>
+						<td><?php echo valores($_SESSION['desc_cuotas_basicos']['Monto'], 0)?></td>
+					</tr>
+					<tr>
+						<td class="meta-head">N° Cuotas</td>
+						<td><?php echo $_SESSION['desc_cuotas_basicos']['N_Cuotas'].' cuotas'; ?></td>
+					</tr>
+					<tr>
+						<td class="meta-head">Usuario creador</td>
+						<td><?php echo $_SESSION['desc_cuotas_basicos']['Usuario']; ?></td>
+					</tr>
+				</tbody>
+			</table>
+			<table id="meta" class="otdata2">
+				<tbody>
+					<tr>
+						<td class="meta-head">Fecha Creacion</td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])?></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<table id="items">
+			<tbody>
+				
+				<tr>
+					<th colspan="5">Detalle</th>
+					<th width="10">Acciones</th>
+				</tr>		  
+				
+				<tr class="item-row fact_tittle">
+					<td>Fecha Cobro</td>
+					<td colspan="3">Numero Cuota</td>
+					<td>Valor</td>
+					<td></td>
+				</tr>
+				<?php
+				//listado de servicios
+				if (isset($_SESSION['desc_cuotas_listado'])){
+					//recorro el lsiatdo entregado por la base de datos
+					foreach ($_SESSION['desc_cuotas_listado'] as $key => $producto){ ?>
+						<tr class="item-row linea_punteada">
+							<td class="item-name"><span <?php if(isset($producto['fecha'])&&$producto['fecha']=='0000-00-00'){echo 'style="color:red;"';} ?>><?php echo fecha_estandar($producto['fecha']);?></span></td>
+							<td class="item-name" colspan="3"><?php echo 'Cuota '.$producto['cuota'].' de '.$_SESSION['desc_cuotas_basicos']['N_Cuotas'];?></td>
+							<td class="item-name" align="right">
+								<?php echo valores($producto['monto'], 0); ?>
+							</td>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<a href="<?php echo $location.'&editCuotas='.$producto['cuota']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								</div>
+							</td>
+						</tr> 
+					 <?php 	
+					}
+				}
+				echo '<tr id="hiderow"><td colspan="6"><a name="Ancla_obs"></a></td></tr>';?>
+				
+					<tr class="invoice-total" bgcolor="#f1f1f1">
+						<td colspan="4" align="right"><strong>Total Cuotas</strong></td> 
+						<td align="right"><span <?php if($vtotal_neto!=$_SESSION['desc_cuotas_basicos']['Monto']){echo 'style="color:red;"';} ?>><?php echo Valores($vtotal_neto, 0);?></span></td>
+						<td></td>
+					</tr>
+					
+				
+				<tr>
+					<?php if(isset($_SESSION['desc_cuotas_basicos']['Observaciones'])&&$_SESSION['desc_cuotas_basicos']['Observaciones']!=''){ ?>
+					
+						<td colspan="5" class="blank word_break"> 
+							<?php echo $_SESSION['desc_cuotas_basicos']['Observaciones'];?>
+						</td>
+						<td class="blank">
+							<div class="btn-group" style="width: 35px;" >
+								<?php 
+								$ubicacion = $location.'&view=true&del_obs=true';
+								$dialogo   = '¿Realmente deseas eliminar la observacion?';?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+							</div>
+						</td>
+					
+					<?php }else{?>
+						<td colspan="5" class="blank"> 
+							<?php 
+							$non = '';
+							if(isset($_SESSION['desc_cuotas_temporal'])&&$_SESSION['desc_cuotas_temporal']!=''){
+								$non = $_SESSION['desc_cuotas_temporal'];
+							}	
+								
+							$Form_Imputs->input_textarea_obs('Observaciones','Observaciones', 1,'width:100%; height: 200px;', $non);?>
+						</td>
+						<td class="blank">
+							<div class="btn-group" style="width: 35px;" >
+								<?php $ubicacion=$location.'&view=true&add_obs=true';?>			
+								<a onclick="add_obs('<?php echo $ubicacion ?>')" title="Agregar Observacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+							</div>
+						</td>
+						
+					<?php }?>	
+					
+					
+				</tr>
+				<tr>
+					<td colspan="6" class="blank"><p>Observaciones</p></td> 
+				</tr>
+				
+				
+							
+							
+				
+			</tbody>
+		</table>
+    </div>
+    
+    <table id="items" style="margin-bottom: 20px;">
+        <tbody>
+            
+			<tr class="invoice-total" bgcolor="#f1f1f1">
+                <td colspan="5">Archivos Adjuntos</td>
+                <td width="160"><a href="<?php echo $location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
+            </tr>		  
+            
+			<?php 
+			if (isset($_SESSION['desc_cuotas_archivos'])){
+				//recorro el lsiatdo entregado por la base de datos
+				$numeral = 1;
+				foreach ($_SESSION['desc_cuotas_archivos'] as $key => $producto){?>
+					<tr class="item-row">
+						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
+						<td>
+							<div class="btn-group" style="width: 70px;" >
+								<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+								<?php 
+								$ubicacion = $location.'&del_file='.$producto['idFile'];
+								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+							</div>
+						</td>
+					</tr>
+					 
+				 <?php 
+				$numeral++;	
+				}
+			}?>
+
+		</tbody>
+    </table>
+
+
+</div>
+
+<?php require_once '../LIBS_js/modal/modal.php';?>
+<div class="clearfix"></div>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['new']) ) { 
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+	$z = "bodegas_insumos_listado.idSistema>=0";
+	$w = "idSistema>=0 AND idEstado=1";
+}else{
+	$z = "bodegas_insumos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_insumos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";		
+	$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+} ?>
+ <div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Ingresar Descuentos</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+        	
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idTrabajador)) {       $x1  = $idTrabajador;     }else{$x1  = '';}
+				if(isset($Creacion_fecha)) {     $x2  = $Creacion_fecha;   }else{$x2  = '';}
+				if(isset($idTipo)) {             $x3  = $idTipo;           }else{$x3  = '';}
+				if(isset($Monto)) {              $x4  = $Monto;            }else{$x4  = '';}
+				if(isset($N_Cuotas)) {           $x5  = $N_Cuotas;         }else{$x5  = '';}
+				if(isset($Observaciones)) {      $x6  = $Observaciones;    }else{$x6  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x2, 2);
+				$Form_Imputs->form_select_filter('Tipo','idTipo', $x3, 2, 'idTipo', 'Nombre', 'trabajadores_descuentos_cuotas_tipos', 0, '', $dbConn);
+				$Form_Imputs->form_input_number('Monto', 'Monto', $x4, 2);
+				$Form_Imputs->form_select_n_auto('N° Cuotas','N_Cuotas', $x5, 2, 1, 72);	
+				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x6, 1, 160);
+				
+				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+	
+						
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+		</div>
+	</div>
+</div>
+
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+//Se inicializa el paginador de resultados
+//tomo el numero de la pagina si es que este existe
+if(isset($_GET["pagina"])){
+	$num_pag = $_GET["pagina"];	
+} else {
+	$num_pag = 1;	
+}
+//Defino la cantidad total de elementos por pagina
+$cant_reg = 30;
+//resto de variables
+if (!$num_pag){
+	$comienzo = 0 ;
+	$num_pag = 1 ;
+} else {
+	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
+}
+/**********************************************************/
+//ordenamiento
+if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
+	switch ($_GET['order_by']) {
+		case 'fecha_asc':       $order_by = 'ORDER BY trabajadores_descuentos_cuotas.Creacion_fecha ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';break;
+		case 'fecha_desc':      $order_by = 'ORDER BY trabajadores_descuentos_cuotas.Creacion_fecha DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'Trabajador_asc':  $order_by = 'ORDER BY trabajadores_listado.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Trabajador Ascendente'; break;
+		case 'Trabajador_desc': $order_by = 'ORDER BY trabajadores_listado.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Trabajador Descendente';break;
+		case 'tipo_asc':        $order_by = 'ORDER BY trabajadores_descuentos_cuotas_tipos.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
+		case 'tipo_desc':       $order_by = 'ORDER BY trabajadores_descuentos_cuotas_tipos.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+		case 'monto_asc':       $order_by = 'ORDER BY trabajadores_descuentos_cuotas.Monto ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente';break;
+		case 'monto_desc':      $order_by = 'ORDER BY trabajadores_descuentos_cuotas.Monto DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
+		case 'cuotas_asc':      $order_by = 'ORDER BY trabajadores_descuentos_cuotas.N_Cuotas ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Cuotas Ascendente';break;
+		case 'cuotas_desc':     $order_by = 'ORDER BY trabajadores_descuentos_cuotas.N_Cuotas DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Cuotas Descendente';break;
+		
+		default: $order_by = 'ORDER BY trabajadores_descuentos_cuotas.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+	}
+}else{
+	$order_by = 'ORDER BY trabajadores_descuentos_cuotas.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+}
+/**********************************************************/
+//Variable con la ubicacion
+$z="WHERE trabajadores_descuentos_cuotas.idFacturacion>=0";//Solo ingresos
+//Verifico el tipo de usuario que esta ingresando
+$z.=" AND trabajadores_descuentos_cuotas.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+/**********************************************************/
+//Se aplican los filtros
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){      $z .= " AND trabajadores_descuentos_cuotas.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND trabajadores_descuentos_cuotas.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                  $z .= " AND trabajadores_descuentos_cuotas.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['Monto']) && $_GET['Monto'] != ''){                    $z .= " AND trabajadores_descuentos_cuotas.N_Doc LIKE '%".$_GET['Monto']."%'";}
+if(isset($_GET['N_Cuotas']) && $_GET['N_Cuotas'] != ''){              $z .= " AND trabajadores_descuentos_cuotas.N_Cuotas='".$_GET['N_Cuotas']."'";}
+/**********************************************************/
+//Realizo una consulta para saber el total de elementos existentes
+$query = "SELECT idFacturacion FROM `trabajadores_descuentos_cuotas` 
+LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                       = trabajadores_descuentos_cuotas.idSistema
+LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador             = trabajadores_descuentos_cuotas.idTrabajador
+LEFT JOIN `trabajadores_descuentos_cuotas_tipos`    ON trabajadores_descuentos_cuotas_tipos.idTipo   = trabajadores_descuentos_cuotas.idTipo
+".$z."";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$cuenta_registros = mysqli_num_rows($resultado);
+//Realizo la operacion para saber la cantidad de paginas que hay
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los usuarios
+$arrTipo = array();
+$query = "SELECT 
+trabajadores_descuentos_cuotas.idFacturacion,
+trabajadores_descuentos_cuotas.Creacion_fecha,
+trabajadores_descuentos_cuotas.Monto,
+trabajadores_descuentos_cuotas.N_Cuotas,
+trabajadores_listado.Nombre AS TrabajadorNombre,
+trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat,
+trabajadores_listado.ApellidoMat AS TrabajadorApellidoMat,
+trabajadores_descuentos_cuotas_tipos.Nombre AS Tipo,
+core_sistemas.Nombre AS Sistema
+
+
+FROM `trabajadores_descuentos_cuotas`
+LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                       = trabajadores_descuentos_cuotas.idSistema
+LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador             = trabajadores_descuentos_cuotas.idTrabajador
+LEFT JOIN `trabajadores_descuentos_cuotas_tipos`    ON trabajadores_descuentos_cuotas_tipos.idTipo   = trabajadores_descuentos_cuotas.idTipo
+".$z."
+".$order_by."
+LIMIT $comienzo, $cant_reg ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrTipo,$row );
+}?>
+
+<div class="col-sm-12 breadcrumb-bar">
+
+	<ul class="btn-group btn-breadcrumb pull-left">
+		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
+		<?php } ?>		
+	</ul>
+	
+	<?php if ($rowlevel['level']>=3){ ?>
+		<?php if (isset($_SESSION['desc_cuotas_basicos']['idTrabajador'])&&$_SESSION['desc_cuotas_basicos']['idTrabajador']!=''){?>
+			
+			<?php 
+			$ubicacion = $location.'&clear_all=true';
+			$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
+			
+			<a href="<?php echo $location; ?>&view=true" class="btn btn-default fright margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Descuentos</a>
+		<?php }else{ ?>
+			<a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Descuentos</a>
+		<?php } ?>
+	<?php } ?>
+</div>  
+<div class="clearfix"></div>                    
+<div class="collapse col-sm-12" id="collapseExample">
+	<div class="well">
+		<div class="col-sm-8 fcenter">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idTrabajador)) {       $x1  = $idTrabajador;     }else{$x1  = '';}
+				if(isset($Creacion_fecha)) {     $x2  = $Creacion_fecha;   }else{$x2  = '';}
+				if(isset($idTipo)) {             $x3  = $idTipo;           }else{$x3  = '';}
+				if(isset($Monto)) {              $x4  = $Monto;            }else{$x4  = '';}
+				if(isset($N_Cuotas)) {           $x5  = $N_Cuotas;         }else{$x5  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x2, 1);
+				$Form_Imputs->form_select_filter('Tipo','idTipo', $x3, 1, 'idTipo', 'Nombre', 'trabajadores_descuentos_cuotas_tipos', 0, '', $dbConn);
+				$Form_Imputs->form_input_number('Monto', 'Monto', $x4, 1);
+				$Form_Imputs->form_select_n_auto('N° Cuotas','N_Cuotas', $x5, 1, 1, 72);	
+				
+				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+        </div>
+	</div>
+</div>
+<div class="clearfix"></div> 
+                                 
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Descuentos</h5>
+			<div class="toolbar">
+				<?php 
+				//se llama al paginador
+				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+			</div>
+		</header>
+		<div class="table-responsive"> 
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>
+							<div class="pull-left">Fecha</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Trabajador</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=Trabajador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=Trabajador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Tipo</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Monto</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=monto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=monto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">N° Cuotas</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=cuotas_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=cuotas_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>
+								  
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<?php foreach ($arrTipo as $tipo) { ?>
+					<tr class="odd">
+						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
+						<td><?php echo $tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat'].' '.$tipo['TrabajadorApellidoMat']; ?></td>
+						<td><?php echo $tipo['Tipo']; ?></td>
+						<td><?php echo valores($tipo['Monto'], 0); ?></td>
+						<td><?php echo $tipo['N_Cuotas']; ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
+						<td>
+							<div class="btn-group" style="width: 35px;" >
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_descuentos_cuotas.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+							</div>
+						</td>
+					</tr>
+					<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+		<div class="pagrow">	
+			<?php 
+			//se llama al paginador
+			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+		</div>
+	</div>
+</div>
+
+<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php } ?>           
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

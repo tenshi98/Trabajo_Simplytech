@@ -1,0 +1,366 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "comunicaciones_notificaciones_listado.php";
+$location = $original;
+//Se agregan ubicaciones
+$location .='?pagina='.$_GET['pagina'];
+/********************************************************************/
+//Variables para filtro y paginacion
+$search = '';
+if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){              $location .= "&Titulo=".$_GET['Titulo'];               $search .= "&Titulo=".$_GET['Titulo'];}
+if(isset($_GET['Notificacion']) && $_GET['Notificacion'] != ''){  $location .= "&Notificacion=".$_GET['Notificacion'];   $search .= "&Notificacion=".$_GET['Notificacion'];}
+/********************************************************************/
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para crear
+if ( !empty($_POST['submit']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'enviar_masivo';
+	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';
+}
+//se borra un dato
+if ( !empty($_GET['del']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'del';
+	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';	
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Notificacion Creada correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Notificacion Modificada correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Notificacion borrada correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};?>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ if ( ! empty($_GET['detalle']) ) { 
+// Se traen todos los datos de mi usuario
+$arrNotificaciones = array();
+$query = "SELECT 
+principal_notificaciones_ver.Fecha,
+principal_notificaciones_ver.FechaVisto,
+usuarios_listado.Nombre AS usuario,
+core_estado_notificaciones.Nombre AS estado,
+principal_notificaciones_ver.idEstado,
+principal_notificaciones_listado.Titulo
+
+FROM `principal_notificaciones_ver`
+LEFT JOIN `usuarios_listado`                   ON usuarios_listado.idUsuario                          = principal_notificaciones_ver.idUsuario
+LEFT JOIN `core_estado_notificaciones`         ON core_estado_notificaciones.idEstado                 = principal_notificaciones_ver.idEstado
+LEFT JOIN `principal_notificaciones_listado`   ON principal_notificaciones_listado.idNotificaciones   = principal_notificaciones_ver.idNotificaciones
+
+WHERE principal_notificaciones_ver.idNotificaciones = {$_GET['detalle']}";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrNotificaciones,$row );
+}
+
+?>
+ 
+ 
+
+
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div><h5><?php echo $arrNotificaciones[0]['Titulo'];?></h5>
+		</header>
+		<div class="table-responsive">
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>Usuario</th>
+						<th width="120">Estado</th>
+						<th width="120">Fecha envio</th>
+						<th width="120">Fecha leida</th>
+					</tr>
+				</thead>			  
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				<?php foreach ($arrNotificaciones as $noti) { ?>
+					<tr class="odd">
+						<td><?php echo $noti['usuario']; ?></td>
+						<td><?php echo $noti['estado']; ?></td>
+						<td><?php echo fecha_estandar($noti['Fecha']); ?></td>
+						<td><?php if($noti['idEstado']==2){echo fecha_estandar($noti['FechaVisto']);}?></td>
+					</tr>
+				<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="clearfix"></div>
+<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="clearfix"></div>
+</div>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['new']) ) { ?>
+ <div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Crear Notificacion</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+        	
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Titulo)) {        $x1  = $Titulo;       }else{$x1  = '';}
+				if(isset($Notificacion)) {  $x2  = $Notificacion; }else{$x2  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_input_text( 'Titulo', 'Titulo', $x1, 2);
+				$Form_Imputs->form_textarea('Notificacion','Notificacion', $x2, 2, 160);
+				
+				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Imputs->form_input_hidden('Fecha', fecha_actual(), 2);
+				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf003; Enviar" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+		</div>
+	</div>
+</div>
+
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+/**********************************************************/
+//paginador de resultados
+if(isset($_GET["pagina"])){
+	$num_pag = $_GET["pagina"];	
+} else {
+	$num_pag = 1;	
+}
+//Defino la cantidad total de elementos por pagina
+$cant_reg = 30;
+//resto de variables
+if (!$num_pag){
+	$comienzo = 0 ;
+	$num_pag = 1 ;
+} else {
+	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
+}
+/**********************************************************/
+//ordenamiento
+if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
+	switch ($_GET['order_by']) {
+		case 'fecha_asc':     $order_by = 'ORDER BY Fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':    $order_by = 'ORDER BY Fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'titulo_asc':    $order_by = 'ORDER BY Titulo ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Titulo Ascendente';break;
+		case 'titulo_desc':   $order_by = 'ORDER BY Titulo DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Titulo Descendente';break;
+		
+		default: $order_by = 'ORDER BY Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+	}
+}else{
+	$order_by = 'ORDER BY Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+}
+/**********************************************************/
+//Variable de busqueda
+$z="WHERE principal_notificaciones_listado.idNotificaciones!=0";
+//Verifico el tipo de usuario que esta ingresando
+$z.=" AND principal_notificaciones_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+
+/**********************************************************/
+//Se aplican los filtros
+if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){               $z .= " AND principal_notificaciones_listado.Titulo LIKE '%".$_GET['Titulo']."%'";}
+if(isset($_GET['Notificacion']) && $_GET['Notificacion'] != ''){   $z .= " AND principal_notificaciones_listado.Notificacion LIKE '%".$_GET['Notificacion']."%'";}
+/**********************************************************/
+//Realizo una consulta para saber el total de elementos existentes
+$query = "SELECT idNotificaciones FROM `principal_notificaciones_listado` ".$z;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$cuenta_registros = mysqli_num_rows($resultado);
+//Realizo la operacion para saber la cantidad de paginas que hay
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los usuarios
+$arrNotificaciones = array();
+$query = "SELECT idNotificaciones,Titulo, Fecha
+FROM `principal_notificaciones_listado`
+".$z."
+".$order_by."
+LIMIT $comienzo, $cant_reg ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrNotificaciones,$row );
+}?>
+
+<div class="col-sm-12 breadcrumb-bar">
+
+	<ul class="btn-group btn-breadcrumb pull-left">
+		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
+		<?php } ?>		
+	</ul>
+	
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Notificacion</a><?php } ?>
+
+</div>
+<div class="clearfix"></div> 
+<div class="collapse col-sm-12" id="collapseExample">
+	<div class="well">
+		<div class="col-sm-8 fcenter">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Titulo)) {        $x1  = $Titulo;       }else{$x1  = '';}
+				if(isset($Notificacion)) {  $x2  = $Notificacion; }else{$x2  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_input_text( 'Titulo', 'Titulo', $x1, 1);
+				$Form_Imputs->form_textarea('Notificacion','Notificacion', $x2, 1, 160);
+				
+				
+				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+        </div>
+	</div>
+</div>
+<div class="clearfix"></div> 
+                    
+                                 
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Notificaciones</h5>
+			<div class="toolbar">
+				<?php 
+				//se llama al paginador
+				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+			</div>
+		</header>
+		<div class="table-responsive">
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>
+							<div class="pull-left">Fecha</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Titulo</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=titulo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=titulo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>			  
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				<?php foreach ($arrNotificaciones as $noti) { ?>
+					<tr class="odd">
+						<td><?php echo fecha_estandar($noti['Fecha']); ?></td>
+						<td><?php echo $noti['Titulo']; ?></td>
+						<td>
+							<div class="btn-group" style="width: 105px;" >
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_notificacion.php?view='.$noti['idNotificaciones']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&detalle='.$noti['idNotificaciones']; ?>" title="Ver detalle leidos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=4){
+									$ubicacion = $location.'&del='.$noti['idNotificaciones'];
+									$dialogo   = '¿Realmente deseas eliminar la notificacion '.$noti['Titulo'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+								<?php } ?>								
+							</div>
+						</td>
+					</tr>
+				<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+		<div class="pagrow">	
+			<?php 
+			//se llama al paginador
+			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+		</div>
+	</div>
+</div>
+
+<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php } ?>           
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

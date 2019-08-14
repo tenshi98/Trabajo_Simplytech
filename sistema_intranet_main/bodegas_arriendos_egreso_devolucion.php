@@ -1,0 +1,332 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "bodegas_arriendos_egreso_devolucion.php";
+$location = $original;
+//Se agregan ubicaciones
+$location .='?pagina='.$_GET['pagina'];
+/********************************************************************/
+//Variables para filtro y paginacion
+$search = '';
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                $location .= "&idCliente=".$_GET['idCliente'];                  $search .= "&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idDocumentos']) && $_GET['idDocumentos'] != ''){          $location .= "&idDocumentos=".$_GET['idDocumentos'];            $search .= "&idDocumentos=".$_GET['idDocumentos'];}
+if(isset($_GET['N_Doc']) && $_GET['N_Doc'] != ''){                        $location .= "&N_Doc=".$_GET['N_Doc'];                          $search .= "&N_Doc=".$_GET['N_Doc'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){      $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];        $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+if(isset($_GET['Devolucion_fecha']) && $_GET['Devolucion_fecha'] != ''){  $location .= "&Devolucion_fecha=".$_GET['Devolucion_fecha'];    $search .= "&Devolucion_fecha=".$_GET['Devolucion_fecha'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){          $location .= "&idTrabajador=".$_GET['idTrabajador'];            $search .= "&idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['idBodega']) && $_GET['idBodega'] != ''){                  $location .= "&idBodega=".$_GET['idBodega'];                    $search .= "&idBodega=".$_GET['idBodega'];}
+if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){        $location .= "&Observaciones=".$_GET['Observaciones'];          $search .= "&Observaciones=".$_GET['Observaciones'];}
+/********************************************************************/
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para crear
+if ( !empty($_POST['submit_devolucion']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'actualizar_devolucion';
+	require_once 'A1XRXS_sys/xrxs_form/z_bodega_arriendos.php';
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/ 
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Venta Realizada correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Venta Modificada correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Venta borrada correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};?>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['id']) ) { ?>
+ <div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Ingresar Devolucion</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+        	
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($FechaDevolucionReal)) {  $x1  = $FechaDevolucionReal;  }else{$x1  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_date('Fecha Devolucion','FechaDevolucionReal', $x1, 2);
+				
+				$Form_Imputs->form_input_hidden('idFacturacion', $_GET['id'], 2);
+				$Form_Imputs->form_input_hidden('idEstadoDevolucion', 2, 2);
+				$Form_Imputs->form_input_hidden('idUsuarioDevolucion', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Ingresar Devolucion" name="submit_devolucion">
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+		</div>
+	</div>
+</div>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+//Se inicializa el paginador de resultados
+//tomo el numero de la pagina si es que este existe
+if(isset($_GET["pagina"])){
+	$num_pag = $_GET["pagina"];	
+} else {
+	$num_pag = 1;	
+}
+//Defino la cantidad total de elementos por pagina
+$cant_reg = 30;
+//resto de variables
+if (!$num_pag){
+	$comienzo = 0 ;
+	$num_pag = 1 ;
+} else {
+	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
+}
+/**********************************************************/
+//ordenamiento
+if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
+	switch ($_GET['order_by']) {
+		case 'cliente_asc':  $order_by = 'ORDER BY clientes_listado.Nombre ASC ';                       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente'; break;
+		case 'cliente_desc': $order_by = 'ORDER BY clientes_listado.Nombre DESC ';                      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
+		case 'fecha_asc':    $order_by = 'ORDER BY bodegas_arriendos_facturacion.Creacion_fecha ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';break;
+		case 'fecha_desc':   $order_by = 'ORDER BY bodegas_arriendos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'doc_asc':      $order_by = 'ORDER BY core_documentos_mercantiles.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Documento Ascendente';break;
+		case 'doc_desc':     $order_by = 'ORDER BY core_documentos_mercantiles.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Documento Descendente';break;
+		
+		default: $order_by = 'ORDER BY bodegas_arriendos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+	}
+}else{
+	$order_by = 'ORDER BY bodegas_arriendos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+}
+/**********************************************************/
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+	$y = "idTipo=3 AND idSistema>=0 AND idEstado=1";
+	$w = "idSistema>=0 AND idEstado=1";
+	$v = "bodegas_arriendos_listado.idSistema>=0";
+}else{
+	$y = "idTipo=3 AND idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+	$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+	$v = "bodegas_arriendos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_arriendos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";		
+}
+/**********************************************************/
+//Variable con la ubicacion
+$z ="WHERE bodegas_arriendos_facturacion.idTipo=2";//Solo egresos
+$z.=" AND bodegas_arriendos_facturacion.idEstadoDevolucion=1";//solo los que no tengan devolucion
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+	$z.=" AND bodegas_arriendos_facturacion.idSistema>=0";	
+}else{
+	$z.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+}
+/**********************************************************/
+//Se aplican los filtros
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                $z .= " AND bodegas_arriendos_facturacion.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idDocumentos']) && $_GET['idDocumentos'] != ''){          $z .= " AND bodegas_arriendos_facturacion.idDocumentos=".$_GET['idDocumentos'];}
+if(isset($_GET['N_Doc']) && $_GET['N_Doc'] != ''){                        $z .= " AND bodegas_arriendos_facturacion.N_Doc LIKE '%".$_GET['N_Doc']."%'";}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){      $z .= " AND bodegas_arriendos_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['Devolucion_fecha']) && $_GET['Devolucion_fecha'] != ''){  $z .= " AND bodegas_arriendos_facturacion.Devolucion_fecha='".$_GET['Devolucion_fecha']."'";}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){          $z .= " AND bodegas_arriendos_facturacion.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['idBodega']) && $_GET['idBodega'] != ''){                  $z .= " AND bodegas_arriendos_facturacion.idBodega=".$_GET['idBodega'];}
+if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){        $z .= " AND bodegas_arriendos_facturacion.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+/**********************************************************/
+//Realizo una consulta para saber el total de elementos existentes
+$query = "SELECT idFacturacion FROM `bodegas_arriendos_facturacion` ".$z;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$cuenta_registros = mysqli_num_rows($resultado);
+//Realizo la operacion para saber la cantidad de paginas que hay
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los usuarios
+$arrTipo = array();
+$query = "SELECT 
+bodegas_arriendos_facturacion.idFacturacion,
+bodegas_arriendos_facturacion.Creacion_fecha,
+bodegas_arriendos_facturacion.N_Doc,
+core_sistemas.Nombre AS Sistema,
+core_documentos_mercantiles.Nombre AS Documento,
+clientes_listado.Nombre AS Cliente
+
+FROM `bodegas_arriendos_facturacion`
+LEFT JOIN `core_sistemas`                   ON core_sistemas.idSistema                      = bodegas_arriendos_facturacion.idSistema
+LEFT JOIN `core_documentos_mercantiles`     ON core_documentos_mercantiles.idDocumentos     = bodegas_arriendos_facturacion.idDocumentos
+LEFT JOIN `clientes_listado`                ON clientes_listado.idCliente                   = bodegas_arriendos_facturacion.idCliente
+".$z."
+".$order_by."
+LIMIT $comienzo, $cant_reg ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrTipo,$row );
+}?>
+
+<div class="col-sm-12 breadcrumb-bar">
+
+	<ul class="btn-group btn-breadcrumb pull-left">
+		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
+		<?php } ?>		
+	</ul>
+	
+</div>  
+<div class="clearfix"></div>                    
+<div class="collapse col-sm-12" id="collapseExample">
+	<div class="well">
+		<div class="col-sm-8 fcenter">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idCliente)) {          $x1  = $idCliente;        }else{$x1  = '';}
+				if(isset($idDocumentos)) {       $x2  = $idDocumentos;     }else{$x2  = '';}
+				if(isset($N_Doc)) {              $x3  = $N_Doc;            }else{$x3  = '';}
+				if(isset($Creacion_fecha)) {     $x4  = $Creacion_fecha;   }else{$x4  = '';}
+				if(isset($Devolucion_fecha)) {   $x5  = $Devolucion_fecha; }else{$x5  = '';}
+				if(isset($idTrabajador)) {       $x6  = $idTrabajador;     }else{$x6  = '';}
+				if(isset($idBodega)) {           $x7  = $idBodega;         }else{$x7  = '';}
+				if(isset($Observaciones)) {      $x8  = $Observaciones;    }else{$x8  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Imputs->form_select('Tipo Documento','idDocumentos', $x2, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos!=3 AND idDocumentos!=4', '', $dbConn);
+				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x3, 1);
+				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x4, 1);
+				$Form_Imputs->form_date('F Devolucion Estimada','Devolucion_fecha', $x5, 1);
+				$Form_Imputs->form_select('Vendedor','idTrabajador', $x6, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
+				$Form_Imputs->form_select_join_filter('Bodega origen','idBodega', $x7, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $v, $dbConn);
+				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x8, 1, 160);
+				
+				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+				</div>
+                      
+			</form> 
+            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+        </div>
+	</div>
+</div>
+<div class="clearfix"></div> 
+
+                                 
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Ventas</h5>
+			<div class="toolbar">
+				<?php 
+				//se llama al paginador
+				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+			</div>
+		</header>
+		<div class="table-responsive"> 
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>
+							<div class="pull-left">Cliente</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=cliente_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=cliente_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Fecha de Venta</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Documento</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=doc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
+								<a href="<?php echo $location.'&order_by=doc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+							</div>
+						</th>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>
+								  
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<?php foreach ($arrTipo as $tipo) { ?>
+					<tr class="odd">
+						<td><?php echo $tipo['Cliente']; ?></td>
+						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
+						<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
+						<td>
+							<div class="btn-group" style="width: 35px;" >
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+							</div>
+						</td>
+					</tr>
+					<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+		<div class="pagrow">	
+			<?php 
+			//se llama al paginador
+			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+		</div>
+	</div>
+</div>
+
+<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php } ?>           
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>
