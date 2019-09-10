@@ -41,204 +41,185 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Views.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<title>Maqueta</title>
-		<!-- Bootstrap Core CSS -->
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
-		<style>
-			body {
-				background-color: #FFF;
-			}
-		</style>
-	</head>
-	<body>
 
-		<div class="col-sm-12">
-			<div class="box">
-				<header>
-					<div class="icons"><i class="fa fa-table"></i></div>
-					<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div>
+			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
 						
-				</header>
-				<div class="table-responsive">
-					<?php 
-					$explanation1  = '<strong>Desconexion: </strong>'.fecha_estandar($rowdata['Fecha_inicio']).' - '.$rowdata['Hora_inicio'].'<br/>';
-					$explanation2  = '<strong>Conexion: </strong>'.fecha_estandar($rowdata['Fecha_termino']).' - '.$rowdata['Hora_termino'].'<br/>';
-					$explanation2 .= '<strong>Tiempo: </strong>'.$rowdata['Tiempo'].' hrs<br/>';
-							
-					//Si no existe una ID se utiliza una por defecto
-					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
-					}else{
-						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-						<script type="text/javascript">
-							function initialize() {
-								var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
-								var mapOptions = {
-									zoom: 15,
-									scrollwheel: false,
-									center: myLatlng,
-									mapTypeId: google.maps.MapTypeId.ROADMAP
-								}
-								var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+		</header>
+		<div class="table-responsive">
+			<?php 
+			//Si no existe una ID se utiliza una por defecto
+			if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
+				echo '<p>No ha ingresado Una API de Google Maps</p>';
+			}else{
+				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
+				<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+				<script type="text/javascript">
+					function initialize() {
+						var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
+						var mapOptions = {
+							zoom: 15,
+							scrollwheel: false,
+							center: myLatlng,
+							mapTypeId: google.maps.MapTypeId.ROADMAP
+						}
+						var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 								
-								// marker position
-								var factory_1 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud_Last'] ?>, <?php echo $rowdata['GeoLongitud_Last'] ?>);
-								var factory_2 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
+						// marker position
+						var factory_1 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud_Last'] ?>, <?php echo $rowdata['GeoLongitud_Last'] ?>);
+						var factory_2 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
 								
-								// InfoWindow content
-								var content_1 = '<div id="iw-container">' +
-												'<div class="iw-title">Desconexion</div>' +
-												'<div class="iw-content">' +
-												'<div class="iw-subTitle">Fecha - Hora</div>' +
-												'<p><?php echo fecha_estandar($rowdata['Fecha_inicio']).' - '.$rowdata['Hora_inicio']; ?></p>' +
-												'</div>' +
-												'<div class="iw-bottom-gradient"></div>' +
-												'</div>';
+						// InfoWindow content
+						var content_1 = '<div id="iw-container">' +
+										'<div class="iw-title">Desconexion</div>' +
+										'<div class="iw-content">' +
+										'<div class="iw-subTitle">Fecha - Hora</div>' +
+										'<p><?php echo fecha_estandar($rowdata['Fecha_inicio']).' - '.$rowdata['Hora_inicio']; ?></p>' +
+										'</div>' +
+										'<div class="iw-bottom-gradient"></div>' +
+										'</div>';
 								
-								var content_2 = '<div id="iw-container">' +
-												'<div class="iw-title">Conexion</div>' +
-												'<div class="iw-content">' +
-												'<div class="iw-subTitle">Fecha - Hora</div>' +
-												'<p><?php echo fecha_estandar($rowdata['Fecha_termino']).' - '.$rowdata['Hora_termino']; ?></p>' +
-												'<div class="iw-subTitle">Tiempo</div>' +
-												'<p><?php echo $rowdata['Tiempo']; ?></p>' +
-												'</div>' +
-												'<div class="iw-bottom-gradient"></div>' +
-												'</div>';
+						var content_2 = '<div id="iw-container">' +
+										'<div class="iw-title">Conexion</div>' +
+										'<div class="iw-content">' +
+										'<div class="iw-subTitle">Fecha - Hora</div>' +
+										'<p><?php echo fecha_estandar($rowdata['Fecha_termino']).' - '.$rowdata['Hora_termino']; ?></p>' +
+										'<div class="iw-subTitle">Tiempo</div>' +
+										'<p><?php echo $rowdata['Tiempo']; ?></p>' +
+										'</div>' +
+										'<div class="iw-bottom-gradient"></div>' +
+										'</div>';
 												
 
-								// A new Info Window is created and set content
-								var infowindow_1 = new google.maps.InfoWindow({
-									content: content_1,
-									maxWidth: 350
-								});
-								var infowindow_2 = new google.maps.InfoWindow({
-									content: content_2,
-									maxWidth: 350
-								});		   
+						// A new Info Window is created and set content
+						var infowindow_1 = new google.maps.InfoWindow({
+							content: content_1,
+							maxWidth: 350
+						});
+						var infowindow_2 = new google.maps.InfoWindow({
+							content: content_2,
+							maxWidth: 350
+						});		   
 										
-								// marker options
-								var marker_1 = new google.maps.Marker({
-									position	: factory_1,
-									map			: map,
-									title		: "Direccion",
-									animation 	: google.maps.Animation.DROP,
-									icon      	: "<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_red.png"
-								});
-								var marker_2 = new google.maps.Marker({
-									position	: factory_2,
-									map			: map,
-									title		: "Direccion",
-									animation 	: google.maps.Animation.DROP,
-									icon      	: "<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_green.png"
-								});
+						// marker options
+						var marker_1 = new google.maps.Marker({
+							position	: factory_1,
+							map			: map,
+							title		: "Direccion",
+							animation 	: google.maps.Animation.DROP,
+							icon      	: "<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_red.png"
+						});
+						var marker_2 = new google.maps.Marker({
+							position	: factory_2,
+							map			: map,
+							title		: "Direccion",
+							animation 	: google.maps.Animation.DROP,
+							icon      	: "<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_green.png"
+						});
 								
 
-								// This event expects a click on a marker
-								// When this event is fired the Info Window is opened.
-								google.maps.event.addListener(marker_1, 'click', function() {
-									infowindow_1.open(map,marker_1);
-								});
-								google.maps.event.addListener(marker_2, 'click', function() {
-									infowindow_2.open(map,marker_2);
-								});
+						// This event expects a click on a marker
+						// When this event is fired the Info Window is opened.
+						google.maps.event.addListener(marker_1, 'click', function() {
+							infowindow_1.open(map,marker_1);
+						});
+						google.maps.event.addListener(marker_2, 'click', function() {
+							infowindow_2.open(map,marker_2);
+						});
 
-								// Event that closes the Info Window with a click on the map
-								google.maps.event.addListener(map, 'click', function() {
-									infowindow_1.close();
-									infowindow_2.close();
-								});
+						// Event that closes the Info Window with a click on the map
+						google.maps.event.addListener(map, 'click', function() {
+							infowindow_1.close();
+							infowindow_2.close();
+						});
 
-								// *
-								// START INFOWINDOW CUSTOMIZE.
-								// The google.maps.event.addListener() event expects
-								// the creation of the infowindow HTML structure 'domready'
-								// and before the opening of the infowindow, defined styles are applied.
-								// *
-								google.maps.event.addListener(infowindow, 'domready', function() {
+						// *
+						// START INFOWINDOW CUSTOMIZE.
+						// The google.maps.event.addListener() event expects
+						// the creation of the infowindow HTML structure 'domready'
+						// and before the opening of the infowindow, defined styles are applied.
+						// *
+						google.maps.event.addListener(infowindow, 'domready', function() {
 
-									// Reference to the DIV that wraps the bottom of infowindow
-									var iwOuter = $('.gm-style-iw');
+							// Reference to the DIV that wraps the bottom of infowindow
+							var iwOuter = $('.gm-style-iw');
 
-									/* Since this div is in a position prior to .gm-div style-iw.
-									* We use jQuery and create a iwBackground variable,
-									* and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
-									*/
-									var iwBackground = iwOuter.prev();
+							/* Since this div is in a position prior to .gm-div style-iw.
+							* We use jQuery and create a iwBackground variable,
+							* and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+							*/
+							var iwBackground = iwOuter.prev();
 
-									// Removes background shadow DIV
-									iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+							// Removes background shadow DIV
+							iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
-									// Removes white background DIV
-									iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+							// Removes white background DIV
+							iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
-									// Moves the infowindow 25px to the right.
-									//iwOuter.parent().parent().css({left: '5px'});
+							// Moves the infowindow 25px to the right.
+							//iwOuter.parent().parent().css({left: '5px'});
 
-									// Moves the shadow of the arrow 76px to the left margin.
-									iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 6px !important;'});
+							// Moves the shadow of the arrow 76px to the left margin.
+							iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 6px !important;'});
 
-									// Moves the arrow 76px to the left margin.
-									iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 6px !important;'});
+							// Moves the arrow 76px to the left margin.
+							iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 6px !important;'});
 
-									// Changes the desired tail shadow color.
-									iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
+							// Changes the desired tail shadow color.
+							iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
 
-									// Reference to the div that groups the close button elements.
-									var iwCloseBtn = iwOuter.next();
+							// Reference to the div that groups the close button elements.
+							var iwCloseBtn = iwOuter.next();
 
-									// Apply the desired effect to the close button
-									iwCloseBtn.css({width: '28px',height: '28px', opacity: '1', right: '38px', top: '3px', border: '7px solid #48b5e9', 'border-radius': '13px', 'box-shadow': '0 0 5px #3990B9'});
+							// Apply the desired effect to the close button
+							iwCloseBtn.css({width: '28px',height: '28px', opacity: '1', right: '38px', top: '3px', border: '7px solid #48b5e9', 'border-radius': '13px', 'box-shadow': '0 0 5px #3990B9'});
 
-									// If the content of infowindow not exceed the set maximum height, then the gradient is removed.
-									if($('.iw-content').height() < 140){
-										$('.iw-bottom-gradient').css({display: 'none'});
-									}
+							// If the content of infowindow not exceed the set maximum height, then the gradient is removed.
+							if($('.iw-content').height() < 140){
+								$('.iw-bottom-gradient').css({display: 'none'});
+							}
 
-									// The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-									iwCloseBtn.mouseout(function(){
-										$(this).css({opacity: '1'});
-									});
-								});
+							// The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+							iwCloseBtn.mouseout(function(){
+								$(this).css({opacity: '1'});
+							});
+						});
 										
-								//muestro la infowindow al inicio
-								infowindow_1.open(map,marker_1);
-								infowindow_2.open(map,marker_2);
+						//muestro la infowindow al inicio
+						infowindow_1.open(map,marker_1);
+						infowindow_2.open(map,marker_2);
 								
-								//centralizo el mapa en base al ultimo dato obtenido
-								map.panTo(marker_1.getPosition());
+						//centralizo el mapa en base al ultimo dato obtenido
+						map.panTo(marker_1.getPosition());
 								
 										
-							}  
-						</script>
-						<div id="map_canvas" style="width:100%; height:500px">
-							<script type="text/javascript">initialize();</script>
-						</div>
+					}  
+				</script>
+				<div id="map_canvas" style="width:100%; height:500px">
+					<script type="text/javascript">initialize();</script>
+				</div>
 				  
-					<?php } ?>
-				</div>	
-			</div>
-		</div>
+			<?php } ?>
+		</div>	
+	</div>
+</div>
 
-	</body>
-</html>
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Views.php';
+?>

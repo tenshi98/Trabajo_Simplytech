@@ -120,7 +120,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs('upload', $rowdata['File_Curriculum']); ?>
+						<?php echo preview_docs('upload', $rowdata['File_Curriculum'], ''); ?>
 					</div>
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_File_Curriculum='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>
@@ -142,7 +142,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						</div>
 							  
 					</form> 
-					<?php require_once '../LIBS_js/validator/form_validator.php';?>
+					<?php widget_validator(); ?>
 				<?php }?> 
 				
 				

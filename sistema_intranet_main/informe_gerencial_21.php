@@ -212,97 +212,53 @@ array_push( $arrTemporal_4,$row );
 ?>
 
 <div class="col-sm-12">
-	<div class="table-responsive" style="height: 800px;"> 
-		<link href="<?php echo DB_SITE ?>/LIBS_js/webdatarocks/webdatarocks.min.css" rel="stylesheet" />
-		<script src="<?php echo DB_SITE ?>/LIBS_js/webdatarocks/webdatarocks.toolbar.min.js"></script>
-		<script src="<?php echo DB_SITE ?>/LIBS_js/webdatarocks/webdatarocks.js"></script>
+	<div class="table-responsive" style="height: 800px;">
 		
-		<div id="wdr-component"></div>
-		<?php
-		echo '<script>';
-			echo 'var tipsData = [';
-				foreach ($arrTemporal_1 as $temp) {
-					echo '{"Tipo": "Arriendos","Proveedor": "'.$temp['ProveedorNombre'].'","Fecha": "'.$temp['Creacion_fecha'].'","Semana": '.$temp['Creacion_Semana'].',"Mes": '.$temp['Creacion_mes'].',"Ano": '.$temp['Creacion_ano'].',"Valor_Neto": '.$temp['ValorNeto'].',"Valor_Total": '.$temp['ValorTotal'].'},';
-				}
-				foreach ($arrTemporal_2 as $temp) {
-					echo '{"Tipo": "Insumos","Proveedor": "'.$temp['ProveedorNombre'].'","Fecha": "'.$temp['Creacion_fecha'].'","Semana": '.$temp['Creacion_Semana'].',"Mes": '.$temp['Creacion_mes'].',"Ano": '.$temp['Creacion_ano'].',"Valor_Neto": '.$temp['ValorNeto'].',"Valor_Total": '.$temp['ValorTotal'].'},';
-				}
-				foreach ($arrTemporal_3 as $temp) {
-					echo '{"Tipo": "Productos","Proveedor": "'.$temp['ProveedorNombre'].'","Fecha": "'.$temp['Creacion_fecha'].'","Semana": '.$temp['Creacion_Semana'].',"Mes": '.$temp['Creacion_mes'].',"Ano": '.$temp['Creacion_ano'].',"Valor_Neto": '.$temp['ValorNeto'].',"Valor_Total": '.$temp['ValorTotal'].'},';
-				}
-				foreach ($arrTemporal_4 as $temp) {
-					echo '{"Tipo": "Servicios","Proveedor": "'.$temp['ProveedorNombre'].'","Fecha": "'.$temp['Creacion_fecha'].'","Semana": '.$temp['Creacion_Semana'].',"Mes": '.$temp['Creacion_mes'].',"Ano": '.$temp['Creacion_ano'].',"Valor_Neto": '.$temp['ValorNeto'].',"Valor_Total": '.$temp['ValorTotal'].'},';
-				}
-			echo '];';
-		echo '</script>';
-		?>
+		<?php 
+		//Datos
+		$tabla = '';
+		foreach ($arrTemporal_1 as $temp) {
+			$tabla .= '{"Tipo": "Arriendos","Proveedor": "'.$temp['ProveedorNombre'].'","Fecha": "'.$temp['Creacion_fecha'].'","Semana": '.$temp['Creacion_Semana'].',"Mes": '.$temp['Creacion_mes'].',"Ano": '.$temp['Creacion_ano'].',"Valor_Neto": '.$temp['ValorNeto'].',"Valor_Total": '.$temp['ValorTotal'].'},';
+		}
+		foreach ($arrTemporal_2 as $temp) {
+			$tabla .= '{"Tipo": "Insumos","Proveedor": "'.$temp['ProveedorNombre'].'","Fecha": "'.$temp['Creacion_fecha'].'","Semana": '.$temp['Creacion_Semana'].',"Mes": '.$temp['Creacion_mes'].',"Ano": '.$temp['Creacion_ano'].',"Valor_Neto": '.$temp['ValorNeto'].',"Valor_Total": '.$temp['ValorTotal'].'},';
+		}
+		foreach ($arrTemporal_3 as $temp) {
+			$tabla .= '{"Tipo": "Productos","Proveedor": "'.$temp['ProveedorNombre'].'","Fecha": "'.$temp['Creacion_fecha'].'","Semana": '.$temp['Creacion_Semana'].',"Mes": '.$temp['Creacion_mes'].',"Ano": '.$temp['Creacion_ano'].',"Valor_Neto": '.$temp['ValorNeto'].',"Valor_Total": '.$temp['ValorTotal'].'},';
+		}
+		foreach ($arrTemporal_4 as $temp) {
+			$tabla .= '{"Tipo": "Servicios","Proveedor": "'.$temp['ProveedorNombre'].'","Fecha": "'.$temp['Creacion_fecha'].'","Semana": '.$temp['Creacion_Semana'].',"Mes": '.$temp['Creacion_mes'].',"Ano": '.$temp['Creacion_ano'].',"Valor_Neto": '.$temp['ValorNeto'].',"Valor_Total": '.$temp['ValorTotal'].'},';
+		}
 		
-		<script>
-		var pivot = new WebDataRocks({
-			container: "#wdr-component",
-			toolbar: true,
-			report: {
-				dataSource: {
-					data: tipsData
-				},
-				slice: {
+		//
+		$extraconfig = '
+		slice: {
 					rows: [
-						{
-							"uniqueName": "Proveedor"
-						}
+						{"uniqueName": "Proveedor"}
 					],
 					columns: [
-						{
-							"uniqueName": "Measures"
-						},
-						{
-							"uniqueName": "Ano"
-						},
-						{
-							"uniqueName": "Mes"
-						},
-						{
-							"uniqueName": "Tipo"
-						}
+						{"uniqueName": "Measures"},
+						{"uniqueName": "Ano"},
+						{"uniqueName": "Mes"},
+						{"uniqueName": "Tipo"}
 					],
 					measures: [
-						{
-							"uniqueName": "Valor_Total",
-							"aggregation": "sum"
-						}
+						{"uniqueName": "Valor_Total","aggregation": "sum"}
 					],
 					sorting: {
-						"column": {
-							"type": "desc",
-							"tuple": null,
-							"measure": "Valor_Total"
-						}
+						"column": {"type": "desc","tuple": null,"measure": "Valor_Total"}
 					},
 					expands: {
 						"columns": [
-							{
-								"tuple": [
-									"Ano.2017"
-								]
-							},
-							{
-								"tuple": [
-									"Ano.2017",
-									"Mes.12"
-								]
-							}
+							{"tuple": ["Ano.2017"]},
+							{"tuple": ["Ano.2017","Mes.12"]}
 						]
 					}
-				}
-			},
-			global: {
-				// replace this path with the path to your own translated file
-				localization: "https://cdn.webdatarocks.com/loc/es.json"
-			}
-	
-	
-		});
-		</script>
+				}';
+		
+		echo widget_excel('wdr-component', $tabla, $extraconfig); ?>
+		 
+		
     
 	</div>
 </div>
@@ -350,7 +306,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div> 

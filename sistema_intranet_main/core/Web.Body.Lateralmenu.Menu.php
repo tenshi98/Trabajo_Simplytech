@@ -11,7 +11,7 @@
     </li>
     <li class="">
         <a href="principal_datos.php" <?php if(isset($original)&&$original=='principal_datos.php'){echo 'class="active"';} ?>>
-        	<i class="fa fa-address-card-o"></i><span class="link-title"> Mis Datos</span> 
+        	<i class="fa fa-address-card-o" aria-hidden="true"></i><span class="link-title"> Mis Datos</span> 
         </a> 
     </li>
     

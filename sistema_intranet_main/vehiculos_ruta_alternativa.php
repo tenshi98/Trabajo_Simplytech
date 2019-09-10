@@ -391,7 +391,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	?>
 				$Form_Imputs->form_select('Ruta','idRuta', $x1, 2, 'idRuta', 'Nombre', 'vehiculos_rutas', $z, '', $dbConn);
 				$Form_Imputs->form_select('Tipo de Ruta','idTipo', $x2, 2, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
 				$Form_Imputs->form_date('Fecha','Fecha', $x3, 1);
-				$Form_Imputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'idDia ASC', '', $dbConn);
+				$Form_Imputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
 				$Form_Imputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
 				$Form_Imputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
 				$Form_Imputs->form_input_text( 'Nombre de la Ruta', 'Nombre', $x7, 2);
@@ -429,7 +429,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	?>
 					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
-			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+			<?php widget_validator(); ?> 
 		</div>
 	</div>
 </div>
@@ -581,7 +581,7 @@ array_push( $arrUsers,$row );
 				$Form_Imputs->form_select('Ruta','idRuta', $x1, 1, 'idRuta', 'Nombre', 'vehiculos_rutas', $w, '', $dbConn);
 				$Form_Imputs->form_select('Tipo de Ruta','idTipo', $x2, 1, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
 				$Form_Imputs->form_date('Fecha','Fecha', $x3, 1);
-				$Form_Imputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'idDia ASC', '', $dbConn);
+				$Form_Imputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
 				$Form_Imputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
 				$Form_Imputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
 				$Form_Imputs->form_input_text( 'Nombre de la Ruta', 'Nombre', $x7, 1);
@@ -596,7 +596,7 @@ array_push( $arrUsers,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -709,7 +709,7 @@ array_push( $arrUsers,$row );
 </div>
 
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 	
 <?php } ?>
 

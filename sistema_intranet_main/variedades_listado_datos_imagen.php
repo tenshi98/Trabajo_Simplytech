@@ -119,34 +119,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
         
 					<div class="col-sm-10 fcenter">
-						<?php
-						//se selecciona el tipo de imagen
-						switch ($rowdata['idTipoImagen']) {
-							//Si no esta configurada
-							case 0:
-								echo '<img src="upload/'.$rowdata['Direccion_img'].'" width="100%" >';
-								break;
-							//Normal
-							case 1:
-								echo '<img src="upload/'.$rowdata['Direccion_img'].'" width="100%" >';
-								break;
-							//Tambor
-							case 2:
-								echo '<div class="fcenter" id="cover_prod"></div>';
-								echo '<script src="'.DB_SITE.'/LIBS_js/prefixfree/prefixfree.min.js"></script>';
-								echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/drum.js"></script>';
-								echo '<script>
-									var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";	
-									document.getElementById("cover_prod").appendChild(createBarrel(textura));
-								</script>';
-								break;
-							//Cubo
-							case 2:
-								
-								break;
-						}
-						
-						?>
+						<?php echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE, DB_EMPRESA_PATH, 'upload', $rowdata['Direccion_img']); ?>
 					</div> 
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_img='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					<div class="clearfix"></div>
@@ -172,7 +145,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						</div>
 							  
 					</form> 
-					<?php require_once '../LIBS_js/validator/form_validator.php';?>
+					<?php widget_validator(); ?>
 				<?php }?> 
 				
 				

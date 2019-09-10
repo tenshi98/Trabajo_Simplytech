@@ -267,9 +267,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<th>Nombre</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<tr role="row">
-						<th colspan="2"><input class="form-control" id="InputTableFilter" type="text" placeholder="Filtrar.."></th>
-					</tr>
+					<?php echo widget_sherlock(1, 2);?>
 				</thead>
 								  
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
@@ -293,21 +291,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
                  
 				</tbody>
 			</table>
-			
-			
-			
-			<script>
-				$(document).ready(function(){
-				  $("#InputTableFilter").on("keyup", function() {
-					var value = $(this).val().toLowerCase();
-					$("#TableFiltered tr").filter(function() {
-					  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-					});
-				  });
-				});
-			</script>
-			
-			
+
 		</div>	
 	</div>
 </div>

@@ -306,7 +306,7 @@ array_push( $arrArchivos,$row );
 
 </div>
  
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 
 
 <div class="clearfix"></div>
@@ -341,7 +341,7 @@ array_push( $arrArchivos,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>              
+            <?php widget_validator(); ?>              
 		</div>
 	</div>
 </div>	
@@ -406,7 +406,7 @@ array_push( $arrArchivos,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -590,7 +590,7 @@ $Form_Imputs = new Inputs();
 
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <div class="clearfix"></div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -662,7 +662,7 @@ $Form_Imputs = new Inputs();
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -802,7 +802,7 @@ array_push( $arrTipo,$row );
 				//se dibujan los inputs
 				$Form_Imputs = new Form_Inputs();
 				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x1, 1);
-				$Form_Imputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', '', $dbConn);
+				$Form_Imputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
 				$Form_Imputs->form_select_n_auto('Año','Creacion_ano', $x3, 1, 2016, ano_actual());
 						
 			
@@ -815,7 +815,7 @@ array_push( $arrTipo,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -878,7 +878,7 @@ array_push( $arrTipo,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

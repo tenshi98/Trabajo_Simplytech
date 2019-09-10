@@ -160,7 +160,7 @@ array_push( $arrHijos,$row );
 <div class="col-sm-11 fcenter table-responsive">
 
 <div id="page-wrap">
-    <div id="header"> Facturacion Mes de <?php echo Fecha_mes_año($rowFacturacion['Fecha']); ?> </div>
+    <div id="header"> Facturacion Mes de <?php echo Fecha_mes_ano($rowFacturacion['Fecha']); ?> </div>
    
 
     <div id="customer">

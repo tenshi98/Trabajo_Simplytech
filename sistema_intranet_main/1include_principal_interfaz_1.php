@@ -36,7 +36,7 @@ echo '
 		</div>
 	</div>';
 
-	require_once '../LIBS_js/modal/modal.php';
+	widget_modal(80, 95);
 
 
 ?>

@@ -157,7 +157,7 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -229,7 +229,7 @@ array_push( $arrCuarteles,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -267,7 +267,7 @@ array_push( $arrCuarteles,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -362,7 +362,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -487,7 +487,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -592,7 +592,7 @@ $x="idEstado=1 ";
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -670,7 +670,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -728,7 +728,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -898,7 +898,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -1034,7 +1034,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>					

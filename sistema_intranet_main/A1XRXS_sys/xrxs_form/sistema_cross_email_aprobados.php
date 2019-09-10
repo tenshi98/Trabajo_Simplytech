@@ -36,7 +36,7 @@ if( ! defined('XMBCXRXSKGC')) {
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	//Verifica si el mail corresponde
-	if(isset($email)){if(validaremail($email)){ }else{   $error['email']   = 'error/El Email ingresado no es valido'; }}	
+	if(isset($email)&&!validarEmail($email)){  $error['email']   = 'error/El Email ingresado no es valido'; }
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/

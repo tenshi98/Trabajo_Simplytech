@@ -261,7 +261,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						</div>
 							  
 					</form> 
-					<?php require_once '../LIBS_js/validator/form_validator.php';?>
+					<?php widget_validator(); ?>
 				<?php }?> 
 				
 				

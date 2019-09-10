@@ -332,4 +332,4 @@ array_push( $arrFacturas_4,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>

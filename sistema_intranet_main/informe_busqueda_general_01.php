@@ -185,7 +185,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 }
 
 ?>
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 
   
 <div class="clearfix"></div>
@@ -255,7 +255,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 						</form>		
 					</div>
 				</div>
-				<?php require_once '../LIBS_js/validator/form_validator.php';?>  
+				<?php widget_validator(); ?>  
 				
 				
 				

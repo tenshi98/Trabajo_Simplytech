@@ -118,7 +118,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Imputs->form_select('Ruta','idRuta', $x1, 2, 'idRuta', 'Nombre', 'vehiculos_rutas', $z, '', $dbConn);
 					$Form_Imputs->form_select('Tipo de Ruta','idTipo', $x2, 2, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
 					$Form_Imputs->form_date('Fecha','Fecha', $x3, 1);
-					$Form_Imputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'idDia ASC', '', $dbConn);
+					$Form_Imputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
 					$Form_Imputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
 					$Form_Imputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
 					$Form_Imputs->form_input_text( 'Nombre de la Ruta', 'Nombre', $x7, 2);
@@ -170,7 +170,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
 					</div>
 				</form>
-				<?php require_once '../LIBS_js/validator/form_validator.php';?>
+				<?php widget_validator(); ?>
 			</div>
 		</div>	
 	</div>

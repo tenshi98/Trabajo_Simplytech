@@ -211,128 +211,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 						<?php if ($rowdata['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/productos.jpg">
 						<?php }else{
-							//se selecciona el tipo de imagen
-							switch ($rowdata['idTipoImagen']) {
-								//Si no esta configurada
-								case 0:
-									echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture"  >';
-									break;
-								//Normal
-								case 1:
-									echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture"  >';
-									break;
-								//Tambor
-								case 2:
-								case 3:
-								case 4:
-								case 5:
-								case 6:
-								case 7:
-								case 8:
-								case 9:
-								case 10:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/prefixfree/prefixfree.min.js"></script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/drum.js"></script>';
-									echo '<script>
-										var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";	
-										document.getElementById("cover_prod").appendChild(createBarrel(textura));
-									</script>';
-									break;
-								//Cubo Carton 1x1x1
-								case 11:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 10;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 10;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
-									break;
-									
-								//Cubo Carton 2x1x1
-								case 12:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 30;</script>';
-									echo '<script>var med_largo = 5;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
-									break;
-								//Cubo Carton 1x2x1
-								case 13:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 5;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
-									break;
-								//Cubo Carton 2x2x1
-								case 14:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 10;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
-									break;
-								//Cubo Madera 1x1x1
-								case 15:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 10;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 10;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
-									break;
-									
-								//Cubo Madera 2x1x1
-								case 16:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 30;</script>';
-									echo '<script>var med_largo = 5;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
-									break;
-								//Cubo Madera 1x2x1
-								case 17:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 5;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
-									break;
-								//Cubo Madera 2x2x1
-								case 18:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 10;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
-									break;
-									
-									
-							}
-						
+							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE, DB_EMPRESA_PATH, 'upload', $rowdata['Direccion_img']);
 						}?>
 					</div>
 					<div class="col-sm-8">
@@ -437,7 +316,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 								?>
 							</tbody>
 						</table>
-						<?php require_once '../LIBS_js/modal/modal.php';?>
+						<?php widget_modal(80, 95); ?>
 						
 
 						
@@ -557,7 +436,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -728,7 +607,7 @@ array_push( $arrProductos,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -867,7 +746,7 @@ array_push( $arrProductos,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

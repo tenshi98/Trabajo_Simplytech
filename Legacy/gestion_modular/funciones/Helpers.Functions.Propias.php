@@ -22,7 +22,7 @@ function prod_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $
 	FROM `".$tabla1."`
 	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = ".$tabla1.".idUml
 	LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = ".$tabla1.".idProveedor
-	ORDER BY sistema_productos_uml.Nombre";
+	ORDER BY sistema_productos_uml.Nombre ASC";
 	$resultado = mysqli_query($dbConn, $query);
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrProductos,$row );

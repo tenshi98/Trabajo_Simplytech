@@ -187,7 +187,7 @@ array_push( $arrArchivos,$row );
 								?>
 							</tbody>
 						</table>
-						<?php require_once '../LIBS_js/modal/modal.php';?>
+						<?php widget_modal(80, 95); ?>
 
 						
 					</div>	
@@ -257,7 +257,7 @@ $m = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idConfig_1
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -441,7 +441,7 @@ array_push( $arrTipo,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -533,7 +533,7 @@ array_push( $arrTipo,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>	
+<?php widget_modal(80, 95); ?>	
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

@@ -158,7 +158,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>       
+            <?php widget_validator(); ?>       
 		</div>
 	</div>
 </div>
@@ -204,7 +204,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -521,7 +521,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
-			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+			<?php widget_validator(); ?> 
 		</div>
 	</div>
 </div>
@@ -562,7 +562,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
-			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+			<?php widget_validator(); ?> 
 		</div>
 	</div>
 </div>
@@ -710,7 +710,7 @@ array_push( $arrArea,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
 <div class="col-sm-12 fcenter" style="margin-bottom:30px">

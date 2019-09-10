@@ -55,7 +55,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Iniciar Sesion" name="submit">	
 				</div>
 			</form> 
-			<?php require_once '../LIBS_js/validator/form_validator.php';?>
+			<?php widget_validator(); ?>
 			
 			
 		</div>

@@ -291,7 +291,7 @@ array_push( $arrVehiculos,$row );
 				$Form_Imputs = new Form_Inputs();
 				echo '<h3>Generar Informe por Mes</h3>';
 				$Form_Imputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
-				$Form_Imputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', '', $dbConn);
+				$Form_Imputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
 				echo '<h3>Generar informe entre fechas</h3>';
 				$Form_Imputs->form_date('F Inicio','fInicio', $x3, 1);
 				$Form_Imputs->form_date('F Termino','fTermino', $x4, 1);
@@ -307,7 +307,7 @@ array_push( $arrVehiculos,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>

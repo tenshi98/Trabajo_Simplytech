@@ -26,14 +26,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-
-             
-  
-
+if ( ! empty($_GET['submit_filter']) ) { 
 //Se definen las variables
 if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
 $Mes  = mes_actual();
 
+/**********************************************************/
 //Solo compras pagadas totalmente
 $z1 = "WHERE pagos_facturas_proveedores.idPago!=0";
 $z2 = "WHERE pagos_facturas_clientes.idPago!=0";
@@ -42,6 +40,12 @@ if(isset($Ano)&&$Ano!=''){
 	$z1.=" AND pagos_facturas_proveedores.F_Pago_ano={$Ano}";
 	$z2.=" AND pagos_facturas_clientes.F_Pago_ano={$Ano}";
 }
+//Si se elije sistema
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){
+	$z1.=" AND pagos_facturas_proveedores.idSistema=".$_GET['idSistema'];
+	$z2.=" AND pagos_facturas_clientes.idSistema=".$_GET['idSistema'];
+}
+
 //arreglo con los meses
 $meses=array(1=>"Enero", 
 				"Febrero", 
@@ -188,9 +192,9 @@ foreach ($arrTemporal_2 as $temp) {
 								$Ano_b  = ano_actual() + 1;
 							}
 							?>
-							<td class="fc-header-left"><a href="<?php echo '?Ano='.$Ano_a ?>" class="btn btn-default">‹</a></td>
+							<td class="fc-header-left"><a href="<?php echo '?Ano='.$Ano_a.'&idSistema='.$_GET['idSistema'] ?>" class="btn btn-default">‹</a></td>
 							<td class="fc-header-center"><span class="fc-header-title"><h2>Flujo de Caja <?php echo $Ano?></h2></span></td>
-							<td class="fc-header-right"><a href="<?php echo '?Ano='.$Ano_b ?>" class="btn btn-default">›</a></td>
+							<td class="fc-header-right"><a href="<?php echo '?Ano='.$Ano_b.'&idSistema='.$_GET['idSistema'] ?>" class="btn btn-default">›</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -284,7 +288,7 @@ foreach ($arrTemporal_2 as $temp) {
 
 								  data.addRows([
 									<?php for ($i = 1; $i <= 12; $i++) { ?>
-										['<?php echo numero_a_mes_c($i); ?>'
+										['<?php echo numero_a_mes_corto($i); ?>'
 										<?php foreach ($arrDocumentos as $doc) { ?>
 											, <?php echo $arrEgreso[$i][$doc['idDocPago']]['Pagado']; ?>
 										<?php } ?>
@@ -336,7 +340,7 @@ foreach ($arrTemporal_2 as $temp) {
 
 								  data.addRows([
 									<?php for ($i = 1; $i <= 12; $i++) { ?>
-										['<?php echo numero_a_mes_c($i); ?>'
+										['<?php echo numero_a_mes_corto($i); ?>'
 										<?php foreach ($arrDocumentos as $doc) { ?>
 											, <?php echo $arrIngreso[$i][$doc['idDocPago']]['Pagado']; ?>
 										<?php } ?>
@@ -375,7 +379,41 @@ foreach ($arrTemporal_2 as $temp) {
         </div>	
 	</div>
 </div>
+<div class="clearfix"></div>
+<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="clearfix"></div>
+</div>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { ?>
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit"></i></div>
+			<h5>Filtro de Busqueda</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idSistema)) {   $x1  = $idSistema;      }else{$x1  = '';}
+				
+				//se dibujan los inputs
+				$Form_Imputs = new Form_Inputs();
+				$Form_Imputs->form_select_filter('Sistemas','idSistema', $x1, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				?> 
 
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+				</div>
+                      
+			</form> 
+            <?php widget_validator(); ?>        
+		</div>
+	</div>
+</div> 
+<?php } ?>
 
 <?php
 /**********************************************************************************************************************************/

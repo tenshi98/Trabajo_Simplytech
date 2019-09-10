@@ -236,7 +236,7 @@ array_push( $arrUnimed,$row );
 </div>
 
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 	
 
 
@@ -291,7 +291,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
 				</div>
 			</form> 
-			<?php require_once '../LIBS_js/validator/form_validator.php';?>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>

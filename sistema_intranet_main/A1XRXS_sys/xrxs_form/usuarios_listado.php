@@ -66,19 +66,19 @@ if( ! defined('XMBCXRXSKGC')) {
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	//Verifica si el mail corresponde
-	if(isset($email)){if(validaremail($email)){ }else{   $error['email']   = 'error/El Email ingresado no es valido'; }}	
-	if(isset($Fono)){if (validarnumero($Fono)) {         $error['Fono']	   = 'error/Ingrese un numero telefonico valido'; }}
-	if(isset($Rut)){if(RutValidate($Rut)==0){            $error['Rut']     = 'error/El Rut ingresado no es valido'; }}
+	if(isset($email)&&!validarEmail($email)){     $error['email']    = 'error/El Email ingresado no es valido'; }	
+	if(isset($Fono)&&!validarNumero($Fono)) {     $error['Fono']	 = 'error/Ingrese un numero telefonico valido'; }
+	if(isset($Rut)&&!validarRut($Rut)){           $error['Rut']      = 'error/El Rut ingresado no es valido'; }
 	if(isset($password)&&isset($repassword)){
-		if ( $password <> $repassword )                  $error['password']     = 'error/Las contraseñas ingresadas no coinciden'; 
+		if ( $password <> $repassword )           $error['password'] = 'error/Las contraseñas ingresadas no coinciden'; 
 	}
 	if(isset($usuario)){
-		if (strpos($usuario, " ")){                      $error['usuario1'] = 'error/El nombre de usuario contiene espacios vacios';}
-		if (strtolower($usuario) != $usuario){           $error['usuario2'] = 'error/El nombre de usuario contiene mayusculas';}
+		if (strpos($usuario, " ")){               $error['usuario1']  = 'error/El nombre de usuario contiene espacios vacios';}
+		if (strtolower($usuario) != $usuario){    $error['usuario2']  = 'error/El nombre de usuario contiene mayusculas';}
 	}
 	if(isset($password)){
-		if (strpos($password, " ")){                      $error['Password1'] = 'error/La contraseña de usuario contiene espacios vacios';}
-		//if (strtolower($password) != $password){          $error['Password2'] = 'error/La contraseña de usuario contiene mayusculas';}
+		if (strpos($password, " ")){              $error['Password1'] = 'error/La contraseña de usuario contiene espacios vacios';}
+		//if (strtolower($password) != $password){  $error['Password2'] = 'error/La contraseña de usuario contiene mayusculas';}
 	}	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -1032,7 +1032,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$fecha          = fecha_actual();
 			$hora           = hora_actual();
 			$Time           = time();
-			$IP_Client      = get_client_ip();
+			$IP_Client      = obtenerIpCliente();
 			$Agent_Transp   = $_SERVER['HTTP_USER_AGENT'];
 			$email          = '';
 				
@@ -1087,6 +1087,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				WHERE usuarios_listado.usuario = '".$usuario."' AND usuarios_listado.password = '".md5($password)."' ";
 				$resultado = mysqli_query($dbConn, $query);
 				$rowUser = mysqli_fetch_array($resultado);
+				
+				//Busco al usuario en el sistema
+				$query = "SELECT Fecha, Hora
+				FROM `usuarios_accesos` 
+				WHERE idUsuario = '".$rowUser['idUsuario']."'
+				ORDER BY idAcceso DESC
+				LIMIT 1";
+				$resultado = mysqli_query($dbConn, $query);
+				$rowAcceso = mysqli_fetch_array($resultado);
 
 				//Se verifca si los datos ingresados son de un usuario
 				if (isset($rowUser['idUsuario'])&&$rowUser['idUsuario']!='') {
@@ -1110,9 +1119,9 @@ if( ! defined('XMBCXRXSKGC')) {
 						$_SESSION['usuario']['basic_data']['Direccion_img']      = $rowUser['Direccion_img'];
 						$_SESSION['usuario']['basic_data']['idTipoUsuario']      = $rowUser['idTipoUsuario'];
 						$_SESSION['usuario']['basic_data']['Usuario_Tipo']       = $rowUser['Usuario_Tipo'];
-						$_SESSION['usuario']['basic_data']['FechaLogin']         = $fecha;
+						$_SESSION['usuario']['basic_data']['FechaLogin']         = $rowAcceso['Fecha'];
+						$_SESSION['usuario']['basic_data']['HoraLogin']          = $rowAcceso['Hora'];
 						$_SESSION['usuario']['basic_data']['COunt']              = $rowUser['COunt'];
-
 
 						//Se buscan los datos para crear el menu
 						$arrMenu = array();
@@ -1299,7 +1308,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$fecha          = fecha_actual();
 			$hora           = hora_actual();
 			$Time           = time();
-			$IP_Client      = get_client_ip();
+			$IP_Client      = obtenerIpCliente();
 			$Agent_Transp   = $_SERVER['HTTP_USER_AGENT'];
 			$usuario        = '';
 			$password       = '';
@@ -1651,12 +1660,10 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($Direccion) && $Direccion != ''){          $a .= ",'".$Direccion."'" ;      }else{$a .= ",''";}
 				if(isset($Direccion_img) && $Direccion_img != ''){  $a .= ",'".$Direccion_img."'" ;  }else{$a .= ",''";}
 				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $a .= ",'".$Ultimo_acceso."'" ;  }else{$a .= ",''";}
-				if(isset($idSistema) && $idSistema != ''){          $a .= ",'".$idSistema."'" ;      }else{$a .= ",''";}
-				
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `usuarios_listado` (usuario, password, idTipoUsuario, idEstado, email, 
-				Nombre, Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso, idSistema) 
+				Nombre, Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso) 
 				VALUES ({$a} )";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -2528,6 +2535,15 @@ if( ! defined('XMBCXRXSKGC')) {
 					$resultado = mysqli_query($dbConn, $query);
 					$rowUser = mysqli_fetch_array($resultado);
 					
+					//Busco al usuario en el sistema
+					$query = "SELECT Fecha, Hora
+					FROM `usuarios_accesos` 
+					WHERE idUsuario = '".$rowUser['idUsuario']."'
+					ORDER BY idAcceso DESC
+					LIMIT 1";
+					$resultado = mysqli_query($dbConn, $query);
+					$rowAcceso = mysqli_fetch_array($resultado);
+					
 					//Se verifca si los datos ingresados son de un usuario
 					if (isset($rowUser['idUsuario'])&&$rowUser['idUsuario']!='') {
 						
@@ -2542,7 +2558,8 @@ if( ! defined('XMBCXRXSKGC')) {
 							$_SESSION['usuario']['basic_data']['Direccion_img']      = $rowUser['Direccion_img'];
 							$_SESSION['usuario']['basic_data']['idTipoUsuario']      = $rowUser['idTipoUsuario'];
 							$_SESSION['usuario']['basic_data']['Usuario_Tipo']       = $rowUser['Usuario_Tipo'];
-							$_SESSION['usuario']['basic_data']['FechaLogin']         = $fecha;
+							$_SESSION['usuario']['basic_data']['FechaLogin']         = $rowAcceso['Fecha'];
+							$_SESSION['usuario']['basic_data']['HoraLogin']          = $rowAcceso['Hora'];
 							$_SESSION['usuario']['basic_data']['COunt']              = $rowUser['COunt'];
 							
 							//Se buscan los datos para crear el menu

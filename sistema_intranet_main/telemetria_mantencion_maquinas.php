@@ -100,7 +100,7 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>	
@@ -162,7 +162,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div> 
@@ -363,7 +363,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -403,7 +403,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				</div>
                       
 			</form> 
-			<?php require_once '../LIBS_js/validator/form_validator.php';?>
+			<?php widget_validator(); ?>
                     
 		</div>
 	</div>
@@ -543,7 +543,7 @@ array_push( $arrMatriz,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>

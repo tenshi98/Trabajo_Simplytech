@@ -14,35 +14,13 @@ require_once 'core/Load.Utils.Views.php';
 if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
 //Memora RAM Maxima del servidor, 4GB por defecto
 if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<title>Maqueta</title>
-		<!-- Bootstrap Core CSS -->
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
-		<style>
-			body {background-color: #FFF !important;}
-		</style>
-	</head>
-
-	<body>
-<?php 
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Views.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 vehiculos_listado.Direccion_img,
@@ -61,7 +39,8 @@ vehiculos_listado.idOpciones_5,
 vehiculos_listado.idOpciones_7,
 vehiculos_listado.idOpciones_8,
 vehiculos_listado.Capacidad, 
-vehiculos_listado.MCubicos, 
+vehiculos_listado.MCubicos,
+vehiculos_listado.CapacidadPersonas, 
 
 vehiculos_listado.doc_mantencion,
 vehiculos_listado.doc_padron,
@@ -70,6 +49,7 @@ vehiculos_listado.doc_resolucion_sanitaria,
 vehiculos_listado.doc_revision_tecnica,
 vehiculos_listado.doc_seguro_carga,
 vehiculos_listado.doc_soap,
+vehiculos_listado.doc_cert_trans_personas,
 vehiculos_listado.doc_fecha_mantencion,
 vehiculos_listado.doc_fecha_padron,
 vehiculos_listado.doc_fecha_permiso_circulacion,
@@ -77,6 +57,7 @@ vehiculos_listado.doc_fecha_resolucion_sanitaria,
 vehiculos_listado.doc_fecha_revision_tecnica,
 vehiculos_listado.doc_fecha_seguro_carga,
 vehiculos_listado.doc_fecha_soap,
+vehiculos_listado.doc_fecha_cert_trans_personas,
 
 
 core_sistemas.Nombre AS Sistema,
@@ -299,6 +280,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Caracteristicos</h2>
 						<p class="text-muted">
 							<strong>Zona de Trabajo : </strong><?php echo $rowdata['Zona']; ?><br/>
+							<strong>Capacidad Pasajeros : </strong><?php echo $rowdata['CapacidadPersonas']; ?><br/>
 							<strong>Capacidad (Kilos) : </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/>
 							<strong>Metros Cubicos (M3) : </strong><?php echo Cantidades_decimales_justos($rowdata['MCubicos']); ?><br/>
 							<strong>Tipo de Carga : </strong><?php echo $rowdata['VehiculoTipoCarga']; ?><br/>
@@ -493,6 +475,20 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 										</tr>
 									';
 								}
+								//Certificado Transporte Personas 
+								if(isset($rowdata['doc_cert_trans_personas'])&&$rowdata['doc_cert_trans_personas']!=''){
+									echo '
+										<tr class="item-row">
+											<td>Certificado Transporte Personas (vence el '.fecha_estandar($rowdata['doc_fecha_cert_trans_personas']).')</td>
+											<td width="10">
+												<div class="btn-group" style="width: 70px;">
+													<a href="view_doc_preview.php?path=upload&file='.$rowdata['doc_cert_trans_personas'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+													<a href="1download.php?dir=upload&file='.$rowdata['doc_cert_trans_personas'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+												</div>
+											</td>
+										</tr>
+									';
+								}
 								?>
 							</tbody>
 						</table>
@@ -520,11 +516,9 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 	</div>
 <?php } ?>
 
-<script src="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="<?php echo DB_SITE ?>/LIB_assets/lib/screenfull/screenfull.js"></script> 
-<script src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
-<script src="<?php echo DB_SITE ?>/LIB_assets/js/main.min.js"></script>
-
-		
-	</body>
-</html>
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Views.php';
+?>

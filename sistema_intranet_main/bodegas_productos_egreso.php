@@ -209,7 +209,7 @@ if ( ! empty($_GET['editDescuentos']) ) {  ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -243,7 +243,7 @@ if ( ! empty($_GET['editDescuentos']) ) {  ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -272,7 +272,7 @@ if ( ! empty($_GET['editDescuentos']) ) {  ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>              
+            <?php widget_validator(); ?>              
 		</div>
 	</div>
 </div>	
@@ -385,7 +385,7 @@ foreach ($arrPermisos as $prod) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -441,7 +441,7 @@ $Form_Imputs = new Inputs();
 				</div>
 				
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -607,7 +607,7 @@ $z=" idDocumentos = 1 AND idEstado = 1 AND idCliente = {$_SESSION['productos_egr
 				
 				//se dibujan los inputs
 				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Guias disponibles','idGuia', $x1, 2, 'idFacturacion', 'N_Doc', 'bodegas_productos_facturacion', $z, 'N_Doc ASC', '', $dbConn);
+				$Form_Imputs->form_select_filter('Guias disponibles','idGuia', $x1, 2, 'idFacturacion', 'N_Doc', 'bodegas_productos_facturacion', $z, 'ORDER BY N_Doc ASC', $dbConn);
 
 				?>
 
@@ -617,7 +617,7 @@ $z=" idDocumentos = 1 AND idEstado = 1 AND idCliente = {$_SESSION['productos_egr
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -649,7 +649,7 @@ $z=" idDocumentos = 1 AND idEstado = 1 AND idCliente = {$_SESSION['productos_egr
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -698,7 +698,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -759,7 +759,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -872,7 +872,7 @@ $Form_Imputs = new Inputs();
 				
 				<tr>
 					<th colspan="5">Detalle</th>
-					<th width="10">Acciones</th>
+					<th width="160">Acciones</th>
 				</tr>		  
 				
 
@@ -1127,7 +1127,7 @@ $Form_Imputs = new Inputs();
 
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <div class="clearfix"></div>
 
 
@@ -1188,7 +1188,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -1366,7 +1366,7 @@ array_push( $arrTipo,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>   
@@ -1437,7 +1437,7 @@ array_push( $arrTipo,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

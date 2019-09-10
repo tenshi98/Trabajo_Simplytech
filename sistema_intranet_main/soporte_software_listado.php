@@ -127,7 +127,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -173,7 +173,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -321,7 +321,7 @@ array_push( $arrImpuestos,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -390,7 +390,7 @@ array_push( $arrImpuestos,$row );
 		
 	</div>
 </div>
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

@@ -33,7 +33,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 
 <?php 
 	//Se dibuja el explorador de archivos
-	$Form_Imputs->file_explorer(2, 'connector_procedimientos', DB_EMPRESA_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 3); ?>
+	echo file_explorer(2, 'connector_procedimientos', DB_EMPRESA_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 3); ?>
 
 
 

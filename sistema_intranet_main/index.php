@@ -33,7 +33,6 @@ require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Functions.DataBase.php';   
 require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Functions.Location.php';          //Funciones relacionadas a la geolozalizacion
 require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Functions.ServerData.php';        //Funciones para entregar informacion del servidor o cliente
 
-
 //Carga de los componentes de los formularios
 require_once '../A2XRXS_gears/xrxs_funciones/Components.UI.FormInputs.php';
 require_once '../A2XRXS_gears/xrxs_funciones/Components.UI.Inputs.php';
@@ -45,10 +44,8 @@ require_once '../Legacy/gestion_modular/funciones/Components.UI.FormInputs.Exten
 require_once '../Legacy/gestion_modular/funciones/Components.UI.Inputs.Extended.php';
 require_once '../Legacy/gestion_modular/funciones/Components.UI.Widgets.Extended.php';
 
-
 // obtengo puntero de conexion con la db
 $dbConn = conectar();
-
 /**********************************************************************************************************************************/
 /*                                               Se cargan los formularios                                                        */
 /**********************************************************************************************************************************/
@@ -69,40 +66,38 @@ unset($_SESSION['form_require']);
 $_SESSION['form_require'] = 'required';
 ?>
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?php echo DB_SITE ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
-    <!-- Metis core stylesheet -->
-    <link rel="stylesheet" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
-    <!-- Metis Theme stylesheet -->
-    <link rel="stylesheet" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_1.css">
-    <link rel="stylesheet" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
-    <!-- Estilo definido por mi -->
-    <link href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo DB_SITE ?>/LIB_assets/js/personel.js"></script>
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="<?php echo DB_SITE ?>/LIB_assets/lib/html5shiv/html5shiv.js"></script>
-        <script src="<?php echo DB_SITE ?>/LIB_assets/lib/respond/respond.min.js"></script>
-        <![endif]-->
-    <!--Modulos de javascript-->
-    <script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
-    <script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
-	<!-- Icono de la pagina -->
-	<link rel="icon" type="image/png" href="img/mifavicon.png" />
-  </head>
+<html lang="es-ES">
+	<head>
+		<meta charset="UTF-8">
+		<title>Login</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--Hoja de Estilos-->
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_1.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/bs3.form.input.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/bs3.form.border.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="<?php echo DB_SITE ?>/LIB_assets/lib/html5shiv/html5shiv.js"></script>
+			<script src="<?php echo DB_SITE ?>/LIB_assets/lib/respond/respond.min.js"></script>
+		<![endif]-->
+		<!--Modulos de javascript-->
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/Legacy/gestion_modular/js/personel.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
+		<!-- Icono de la pagina -->
+		<link rel="icon" type="image/png" href="img/mifavicon.png" />
+	</head>
   <body class="login">
 <?php 
 //Despliegue de errores
@@ -151,7 +146,7 @@ if($bloqueo!=3){
 		require_once '1include_login_ani.php';         
 	echo '</div>';	
 } 
-require_once '../LIBS_js/validator/form_validator.php';?>
+widget_validator(); ?>
 	
   </body>
 </html>

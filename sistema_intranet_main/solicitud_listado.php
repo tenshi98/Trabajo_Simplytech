@@ -209,7 +209,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -248,7 +248,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -289,7 +289,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -327,7 +327,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -366,7 +366,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -404,7 +404,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -468,7 +468,7 @@ foreach ($arrPermisos as $prod) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -530,7 +530,7 @@ foreach ($arrPermisos as $prod) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -593,7 +593,7 @@ foreach ($arrPermisos as $prod) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -654,7 +654,7 @@ foreach ($arrPermisos as $prod) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -689,7 +689,7 @@ foreach ($arrPermisos as $prod) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -997,7 +997,7 @@ $total = 0;
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>          
+            <?php widget_validator(); ?>          
 		</div>
 	</div>
 </div> 
@@ -1150,7 +1150,7 @@ array_push( $arrSolicitudes,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -1231,7 +1231,7 @@ array_push( $arrSolicitudes,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>	
+<?php widget_modal(80, 95); ?>	
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

@@ -34,24 +34,6 @@ function notifications_list($errores){
 	return $despliegue;
 }
 /*******************************************************************************************************************/
-//Muestra un explorador de archivos personalizado
-function file_explorer($type, $conector, $emp_path, $id_emp, $prm){
-
-	//generacion del input
-	$input = '
-		<style>
-			.iframe_elfinder{height: 700px;}
-			iframe{float:right;width: 100%;height: 100%;padding: 0;margin: 0;border:none;}
-		</style>
-			
-		<div class="iframe_elfinder">
-			<iframe class="embed-responsive-item" src="'.DB_SITE.'/LIBS_js/elFinder/index.php?type='.$type.'&conector='.$conector.'&emp_path='.$emp_path.'&id_emp='.$id_emp.'&prm='.$prm.'" allowfullscreen></iframe>
-		</div>';
-		
-	//Imprimir dato	
-	return $input;
-}
-/*******************************************************************************************************************/
 //paginador
 function paginador_1($total_paginas, $original, $search, $num_pag){
 	$paginador='';
@@ -4239,7 +4221,7 @@ function widget_Doc_relacionados($idOcompra,
 		</div>
 	</div>
 	';
-	return $html;	
+	return $html;
 }
 
 

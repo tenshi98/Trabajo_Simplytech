@@ -123,7 +123,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
         
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs('upload', $rowdata['File_Licencia']); ?>
+						<?php echo preview_docs('upload', $rowdata['File_Licencia'], ''); ?>
 					</div>
 					<a href="<?php echo $location.'&id='.$_GET['id'].'&del_file='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>
@@ -147,7 +147,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -197,7 +197,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -356,7 +356,7 @@ array_push( $arrInasHoras,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -444,7 +444,7 @@ array_push( $arrInasHoras,$row );
 		</div>
 	</div>
 </div>
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

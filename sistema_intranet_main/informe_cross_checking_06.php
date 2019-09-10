@@ -26,14 +26,20 @@ if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $location 
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $location .= "&idUsuario=".$_GET['idUsuario'];            $search .= "&idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $location .= "&idEstado=".$_GET['idEstado'];              $search .= "&idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
+	$location .="&f_programacion_desde={$_GET['f_programacion_desde']}";
+	$location .="&f_programacion_hasta={$_GET['f_programacion_hasta']}";
 	$search .="&f_programacion_desde={$_GET['f_programacion_desde']}";
 	$search .="&f_programacion_hasta={$_GET['f_programacion_hasta']}";
 }
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
+	$location .="&f_ejecucion_desde={$_GET['f_ejecucion_desde']}";
+	$location .="&f_ejecucion_hasta={$_GET['f_ejecucion_hasta']}";
 	$search .="&f_ejecucion_desde={$_GET['f_ejecucion_desde']}";
 	$search .="&f_ejecucion_hasta={$_GET['f_ejecucion_hasta']}";
 }
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
+	$location .="&f_termino_desde={$_GET['f_termino_desde']}";
+	$location .="&f_termino_hasta={$_GET['f_termino_hasta']}";
 	$search .="&f_termino_desde={$_GET['f_termino_desde']}";
 	$search .="&f_termino_hasta={$_GET['f_termino_hasta']}";
 }			     
@@ -76,53 +82,28 @@ if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f
 // Se trae un listado con todos los usuarios
 $arrOTS = array();
 $query = "SELECT 
-cross_predios_listado.Nombre AS NombrePredio,
-sistema_variedades_categorias.Nombre AS VariedadCat,
+sistema_variedades_categorias.Nombre AS EspecieNombre,
 variedades_listado.Nombre AS VariedadNombre,
-cross_predios_listado_zonas.Nombre AS CuartelNombre,
-cross_predios_listado_zonas.Plantas AS CuartelPlantas,
-cross_predios_listado_zonas.Hectareas AS CuartelHectareas,
-cross_predios_listado_zonas.AnoPlantacion AS CuartelAnoPlantacion,
-core_cross_estados_productivos.Nombre AS CuartelEstadoProd,
-cross_checking_estado_fenologico.Nombre AS EstadoFenNombre,
 cross_solicitud_aplicacion_listado.idSolicitud,
-cross_solicitud_aplicacion_listado.f_creacion,
-cross_solicitud_aplicacion_listado.f_programacion,
-cross_solicitud_aplicacion_listado.f_programacion_fin,
-cross_solicitud_aplicacion_listado.f_ejecucion,
-cross_solicitud_aplicacion_listado.f_ejecucion_fin,
+cross_predios_listado.Nombre AS PredioNombre,
+cross_predios_listado_zonas.Nombre AS CuartelNombre,
+cross_predios_listado_zonas.Hectareas AS CuartelHectareas,
 cross_solicitud_aplicacion_listado.f_termino,
 cross_solicitud_aplicacion_listado.f_termino_fin,
-usuarios_listado.Nombre AS NombreUsuario,
-cross_solicitud_aplicacion_listado_productos.Objetivo AS ProductoObjetivo,
-core_estado_solicitud.Nombre AS Estado,
-dosificador.Nombre AS DosificadorNombre,
-dosificador.ApellidoPat AS DosificadorApellidoPat,
-conductor.Nombre AS ConductorNombre,
-conductor.ApellidoPat AS ConductorApellidoPat,
-vehiculos_listado.Nombre AS Vehiculo_Nombre,
-telemetria_listado.Identificador AS Telem_Identificador,
-telemetria_listado.Capacidad AS Telem_Capacidad,
-cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm AS Telem_GeoVelocidadProm,
-telemetria_listado.Capacidad AS Telem_Capacidad,
-cross_solicitud_aplicacion_listado_tractores.Diferencia AS Telem_Diferencia,
-cross_solicitud_aplicacion_listado_tractores.Sensor_1_Prom AS Telem_Sensor_1_Prom,
-cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom AS Telem_Sensor_2_Prom,
-productos_listado.Nombre AS ProductoNombre,
-sistema_productos_categorias.Nombre AS ProductoCategoria,
-cross_solicitud_aplicacion_listado_productos.DosisRecomendada AS ProductoDosisRecomendada,
-cross_solicitud_aplicacion_listado_productos.DosisAplicar AS ProductoDosisAplicar,
-productos_listado.CarenciaExportador AS ProductoCarenciaExportador,
-productos_listado.EfectoResidual AS ProductoEfectoResidual,
-productos_listado.EfectoRetroactivo AS ProductoEfectoRetroactivo,
+cross_predios_listado_zonas.Plantas AS CuartelPlantas,
+cross_checking_estado_fenologico.Nombre AS EstadoFenologico,
+core_estado_solicitud.Nombre AS EstadoSolicitud,
+core_estado_ejecucion.Nombre AS EstadoEjecucion,
 
-cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
 cross_predios_listado_zonas.DistanciaPlant AS CuartelDistanciaPlant,
-cross_solicitud_aplicacion_listado_tractores.GeoDistance AS GeoDistance,
+cross_solicitud_aplicacion_listado_cuarteles.idCuarteles AS ID_1,
 cross_solicitud_aplicacion_listado_cuarteles.VelTractor,
-cross_solicitud_aplicacion_listado_tractores.Sensor_4_Prom AS Telem_Sensor_4_Prom,
-cross_solicitud_aplicacion_listado_tractores.Sensor_6_Prom AS Telem_Sensor_6_Prom,
-productos_listado.IngredienteActivo AS ProductoIngredienteActivo
+(SELECT SUM(GeoDistance)                                          FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idCuarteles=ID_1 LIMIT 1 ) AS GeoDistance,
+(SELECT AVG(NULLIF(IF(GeoVelocidadProm!=0,GeoVelocidadProm,0),0)) FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idCuarteles=ID_1 LIMIT 1 ) AS VelPromedio,
+(SELECT AVG(NULLIF(IF(Sensor_1_Prom!=0,Sensor_1_Prom,0),0))       FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idCuarteles=ID_1 LIMIT 1 ) AS CaudalDerecho,
+(SELECT AVG(NULLIF(IF(Sensor_2_Prom!=0,Sensor_2_Prom,0),0))       FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idCuarteles=ID_1 LIMIT 1 ) AS CaudalIzquierdo,
+(SELECT SUM(Diferencia)                                           FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idCuarteles=ID_1 LIMIT 1 ) AS LitrosAplicados,
+(SELECT AVG(NULLIF(IF(Sensor_4_Prom!=0,Sensor_4_Prom,0),0))       FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idCuarteles=ID_1 LIMIT 1 ) AS PH
 
 FROM `cross_solicitud_aplicacion_listado`
 
@@ -135,14 +116,7 @@ LEFT JOIN `variedades_listado`                             ON variedades_listado
 LEFT JOIN `trabajadores_listado`     dosificador           ON dosificador.idTrabajador                                   = cross_solicitud_aplicacion_listado.idDosificador
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
 LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
-LEFT JOIN `core_cross_estados_productivos`                 ON core_cross_estados_productivos.idEstadoProd                = cross_predios_listado_zonas.idEstadoProd
-LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
-LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
-LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
-LEFT JOIN `trabajadores_listado`       conductor           ON conductor.idTrabajador                                     = cross_solicitud_aplicacion_listado_tractores.idTrabajador
-LEFT JOIN `cross_solicitud_aplicacion_listado_productos`   ON cross_solicitud_aplicacion_listado_productos.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
-LEFT JOIN `productos_listado`                              ON productos_listado.idProducto                               = cross_solicitud_aplicacion_listado_productos.idProducto
-LEFT JOIN `sistema_productos_categorias`                   ON sistema_productos_categorias.idCategoria                   = productos_listado.idCategoria
+LEFT JOIN `core_estado_ejecucion`                          ON core_estado_ejecucion.idEjecucion                          = cross_solicitud_aplicacion_listado_cuarteles.idEjecucion
 
 ".$z;
 //Consulta
@@ -164,197 +138,114 @@ array_push( $arrOTS,$row );
 ?>
 
 <div class="col-sm-12">
-	<div class="table-responsive" style="height: 800px;"> 
-		<link href="<?php echo DB_SITE ?>/LIBS_js/webdatarocks/webdatarocks.min.css" rel="stylesheet" />
-		<script src="<?php echo DB_SITE ?>/LIBS_js/webdatarocks/webdatarocks.toolbar.min.js"></script>
-		<script src="<?php echo DB_SITE ?>/LIBS_js/webdatarocks/webdatarocks.js"></script>
-		
-		<div id="wdr-component"></div>
-		<?php
-		echo '<script>';
-			echo 'var tipsData = [';
-				foreach ($arrOTS as $temp) {
-					//Calculo de las maquinadas
-					if(isset($temp['Telem_Capacidad'])&&$temp['Telem_Capacidad']!=''&&$temp['Telem_Capacidad']!=0){
-						$maquinada = $temp['Telem_Diferencia'] / $temp['Telem_Capacidad'];
-					}else{
-						$maquinada = 0;
-					}
-					//calculo de los litros por hectarea
-					if(isset($temp['CuartelHectareas'])&&$temp['CuartelHectareas']!=''&&$temp['CuartelHectareas']!=0){
-						$litrosxhectarea = $temp['Telem_Diferencia'] / $temp['CuartelHectareas'];
-					}else{
-						$litrosxhectarea = 0;
-					}
-					//se verifica cumplimiento de fechas
-					if(isset($temp['f_cierre'])&&$temp['f_cierre']>=$temp['f_termino']&&$temp['f_cierre']<=$temp['f_termino_fin']){
-						$cumplimiento = 'Si';
-					}else{
-						$cumplimiento = 'No';
-					}
-					//se verifica plantas faltantes
-					if(isset($temp['GeoDistance'])&&$temp['GeoDistance']!=0){
-						$faltante = ((($temp['CuartelDistanciaPlant']*$temp['CuartelPlantas']) - ($temp['GeoDistance']*1000))/$temp['CuartelDistanciaPlant']);
-						if($faltante<0){
-							$faltante = 0;
-						}
-					}else{
-						$faltante = 0;
-					}
-					//Desviacion
-					if(isset($temp['Telem_Sensor_1_Prom'])&&$temp['Telem_Sensor_1_Prom']>0){
-						$desviacion = (($temp['Telem_Sensor_1_Prom']-$temp['Telem_Sensor_2_Prom'])/$temp['Telem_Sensor_1_Prom'])*100;
-					}else{
-						$desviacion = 0;
-					}
-					
-								
-										
-	
-					echo '{
-						"Predio": "'.$temp['NombrePredio'].'",
-						"Especie": "'.$temp['VariedadCat'].'",
-						"Variedad": "'.$temp['VariedadNombre'].'",
-						"Cuartel": "'.$temp['CuartelNombre'].'",
-						"Nro.Plantas": "'.$temp['CuartelPlantas'].'",
-						"Hectáreas": "'.$temp['CuartelHectareas'].'",
-						"Año Plantación": "'.$temp['CuartelAnoPlantacion'].'",
-						"Estado Productivo": "'.$temp['CuartelEstadoProd'].'",
-						"Estado fenológico": "'.$temp['EstadoFenNombre'].'",
-						"# Solicitud": "'.$temp['idSolicitud'].'",
-						"Fecha creacion": "'.$temp['f_creacion'].'",
-						"Fecha Solicitud Inicio": "'.$temp['f_programacion'].'",
-						"Fecha Solicitud termino": "'.$temp['f_programacion_fin'].'",
-						"Fecha Programacion Inicio": "'.$temp['f_ejecucion'].'",
-						"Fecha Programacion termino": "'.$temp['f_ejecucion_fin'].'",
-						"Inicio Aplicación": "'.$temp['f_termino'].'",
-						"Fin Aplicación": "'.$temp['f_termino_fin'].'",
-						"Cumple Programacion (si/no)": "'.$cumplimiento.'",
-						"Solicitado Por": "'.$temp['NombreUsuario'].'",
-						"Objetivo": "'.$temp['ProductoObjetivo'].'",
-						"Estado de la aplicación": "'.$temp['Estado'].'",
-						"Dosificador": "'.$temp['DosificadorNombre'].' '.$temp['DosificadorApellidoPat'].'",
-						"Aplicador": "'.$temp['ConductorNombre'].' '.$temp['ConductorApellidoPat'].'",
-						"Tractor": "'.$temp['Vehiculo_Nombre'].'",
-						"Equipo": "'.$temp['Telem_Identificador'].'",
-						"Capacidad Estanque": "'.$temp['Telem_Capacidad'].'",
-						"Plantas Faltantes": "'.$faltante.'",
-						"Veloc. Recomendada": "'.$temp['VelTractor'].'",
-						"Veloc. Promedio": "'.$temp['Telem_GeoVelocidadProm'].'",
-						"Maquinadas": "'.$maquinada.'",
-						"Caudal Izquierdo": "'.$temp['Telem_Sensor_1_Prom'].'",
-						"Caudal derecho": "'.$temp['Telem_Sensor_2_Prom'].'",
-						"% Desviacion": "'.$desviacion.'",
-						"pH": "'.$temp['Telem_Sensor_4_Prom'].'",
-						"lts. Aplicados": "'.$temp['Telem_Diferencia'].'",
-						"Lts. Hectarias": "'.$litrosxhectarea.'",
-						"Nombre Producto": "'.$temp['ProductoNombre'].'",
-						"Tipo de Producto": "'.$temp['ProductoCategoria'].'",
-						"Ingrediente Activo": "'.$temp['ProductoIngredienteActivo'].'",
-						"Dosis recomendada": "'.$temp['ProductoDosisRecomendada'].'",
-						"Dosis Solicitada": "'.$temp['ProductoDosisAplicar'].'",
-						"Objetivo Producto": "",
-						"Fin Carencia": "'.$temp['ProductoCarenciaExportador'].'",
-						"Fin efecto Residual": "'.$temp['ProductoEfectoResidual'].'",
-						"Efecto Retroactivo": "'.$temp['ProductoEfectoRetroactivo'].'",
-					},';
-				}
+	<a target="new" href="<?php echo 'informe_cross_checking_06_to_excel.php?bla=bla'.$search.'&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-2 fright margin_width"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
+</div>
 
-			echo '];';
-		echo '</script>';
-		?>
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div>
+			<h5>Datos</h5>
+			<ul class="nav nav-tabs pull-right">
+				<li class="active"><a href="#datos" data-toggle="tab">Datos</a></li>
+	
+			</ul>	
+		</header>
+        <div id="div-3" class="tab-content">
+			
+			<div class="tab-pane fade active in" id="datos">
+				<div class="wmd-panel">
+					<div class="table-responsive">
+					
+						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+							<thead>
+								<tr role="row">
+									<th>Predio</th>
+									<th>Especie</th>
+									<th>Variedad</th>
+									<th># Solicitud</th>
+									<th>Cuartel</th>
+									<th>Hectáreas</th>
+									<th>Plantas cuartel</th>
+									<th>Estado Fenologico</th>
+									<th>Estado Solicitud</th>
+									<th>Estado Ejecucion</th>
+									<th>Fecha Programacion Inicio</th>
+									<th>Fin Aplicación</th>
+									<th>Plantas aplicadas</th>
+									<th>Veloc. Recomendada</th>
+									<th>Veloc. Promedio</th>
+									<th>Caudal Izquierdo</th>
+									<th>Caudal derecho</th>
+									<th>lts. Aplicados</th>
+									<th>Lts. Hectarias</th>
+									<th>PH</th>	
+								</tr>
+							</thead>
+											  
+							<tbody role="alert" aria-live="polite" aria-relevant="all">
+								<?php
+									foreach ($arrOTS as $temp) {
+										//se verifica plantas faltantes
+										if(isset($temp['GeoDistance'])&&$temp['GeoDistance']!=0){
+											$aplicadas = (($temp['GeoDistance']*1000)/$temp['CuartelDistanciaPlant']);
+											if($aplicadas<0){
+												$aplicadas = 0;
+											}
+										}else{
+											$aplicadas = 0;
+										}
+										//calculo de los litros por hectarea
+										if(isset($temp['CuartelHectareas'])&&$temp['CuartelHectareas']!=''&&$temp['CuartelHectareas']!=0){
+											$litrosxhectarea = $temp['LitrosAplicados'] / $temp['CuartelHectareas'];
+										}else{
+											$litrosxhectarea = 0;
+										}
+										
+									?>	
+									<tr class="odd">
+										<td><?php echo $temp['PredioNombre']; ?></td>
+										<td><?php echo $temp['EspecieNombre']; ?></td>
+										<td><?php echo $temp['VariedadNombre']; ?></td>
+										<td><?php echo $temp['idSolicitud']; ?></td>
+										<td><?php echo $temp['CuartelNombre']; ?></td>
+										<td><?php echo $temp['CuartelHectareas']; ?></td>
+										<td><?php echo $temp['CuartelPlantas']; ?></td>
+										<td><?php echo $temp['EstadoFenologico']; ?></td>
+										<td><?php echo $temp['EstadoSolicitud']; ?></td>
+										<td><?php echo $temp['EstadoEjecucion']; ?></td>
+										<td><?php echo $temp['f_termino']; ?></td>
+										<td><?php echo $temp['f_termino_fin']; ?></td>
+										<td><?php echo $aplicadas; ?></td>
+										<td><?php echo $temp['VelTractor']; ?></td>
+										<td><?php echo $temp['VelPromedio']; ?></td>
+										<td><?php echo $temp['CaudalDerecho']; ?></td>
+										<td><?php echo $temp['CaudalIzquierdo']; ?></td>
+										<td><?php echo $temp['LitrosAplicados']; ?></td>
+										<td><?php echo $litrosxhectarea; ?></td>
+										<td><?php echo $temp['PH']; ?></td>
+									</tr> 	
+								<?php } ?>                
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
 		
-		<script>
-		var pivot = new WebDataRocks({
-			container: "#wdr-component",
-			toolbar: true,
-			report: {
-				dataSource: {
-					data: tipsData
-				},
-				slice: {
-					rows: [
-						{
-							"uniqueName": "Especie"
-						},
-						{
-							"uniqueName": "Variedad"
-						},
-						{
-							"uniqueName": "# Solicitud"
-						},
-						{
-							"uniqueName": "Cuartel"
-						},
-						{
-							"uniqueName": "Hectáreas"
-						},
-						{
-							"uniqueName": "Fecha Programacion Inicio"
-						},
-						{
-							"uniqueName": "Fin Aplicación"
-						}
-					],
-					columns: [
-						{
-							"uniqueName": "Measures"
-						}
-					],
-					measures: [
-						{
-							"uniqueName": "Nro.Plantas",
-							"aggregation": "sum"
-						},
-						{
-							"uniqueName": "Plantas aplicadas",
-							"aggregation": "sum"
-						},
-						{
-							"uniqueName": "Veloc. Recomendada",
-							"aggregation": "prom"
-						},
-						{
-							"uniqueName": "Veloc. Promedio",
-							"aggregation": "prom"
-						},
-						{
-							"uniqueName": "Caudal Izquierdo",
-							"aggregation": "prom"
-						},
-						{
-							"uniqueName": "Caudal derecho",
-							"aggregation": "prom"
-						},
-						{
-							"uniqueName": "lts. Aplicados",
-							"aggregation": "sum"
-						},
-						{
-							"uniqueName": "Lts. Hectarias",
-							"aggregation": "sum"
-						},
-						{
-							"uniqueName": "pH",
-							"aggregation": "prom"
-						}
-					]
-				},
-				options: {
-					grid: {
-						"type": "flat"
-					}
-				}
-			},
-			global: {
-				// replace this path with the path to your own translated file
-				localization: "https://cdn.webdatarocks.com/loc/es.json"
-			}
-		});
-		</script>
-    
+			<div class="tab-pane fade" id="tabla">
+				<div class="wmd-panel">
+					<div class="table-responsive" style="height: 800px;">
+						<?php echo widget_excel('wdr-component', $tabla, ''); ?>
+					</div>
+				</div>
+			</div>
+
+        </div>	
 	</div>
 </div>
+
+
 
 
 <div class="clearfix"></div>
@@ -423,7 +314,7 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div> 

@@ -114,7 +114,7 @@ cross_solicitud_aplicacion_listado_cuarteles.VelViento AS CuartelVelViento,
 cross_solicitud_aplicacion_listado_cuarteles.TempMin AS CuartelTempMin,
 cross_solicitud_aplicacion_listado_cuarteles.TempMax AS CuartelTempMax,
 vehiculos_listado.Marca AS Vehiculo_Marca,
-telemetria_listado.Identificador AS Telem_Identificador,
+telemetria_listado.Nombre AS Telem_Identificador,
 telemetria_listado.Capacidad AS Telem_Capacidad,
 cross_solicitud_aplicacion_listado_tractores.Diferencia AS Telem_Diferencia,
 cross_solicitud_aplicacion_listado_tractores.GeoVelocidadMin AS Telem_GeoVelocidadMin,
@@ -141,6 +141,7 @@ cross_checking_temporada.Nombre AS TemporadaNombre,
 core_cross_prioridad.Nombre AS NombrePrioridad,
 
 sistema_productos_categorias.Nombre AS ProductoCategoria,
+productos_listado.IngredienteActivo AS ProductoIngrediente,
 productos_listado.Nombre AS ProductoNombre,
 productos_listado.EfectoResidual AS ProductoEfectoResidual,
 productos_listado.EfectoRetroactivo AS ProductoEfectoRetroactivo,
@@ -227,144 +228,162 @@ $nn=2;
 //Titulo columnas
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Predio')
-            ->setCellValue('B'.$nn, 'N° Solicitud')
-            ->setCellValue('C'.$nn, 'Estado')
-            ->setCellValue('D'.$nn, 'Especie/Variedad')
-            ->setCellValue('E'.$nn, 'Cuartel')
-            ->setCellValue('F'.$nn, 'Año Plantacion')
-            ->setCellValue('G'.$nn, 'Hectareas')
-            ->setCellValue('H'.$nn, 'Hileras')
-            ->setCellValue('I'.$nn, 'Plantas')
+            ->setCellValue('B'.$nn, 'Nro.Solicitud')
+            ->setCellValue('C'.$nn, 'Fecha creación')
+            ->setCellValue('D'.$nn, 'Solicitud Fecha Inicio')
+            ->setCellValue('E'.$nn, 'Solicitud Fecha Termino')
+            ->setCellValue('F'.$nn, 'Programacion Fecha Inicio')
+            ->setCellValue('G'.$nn, 'Programacion Fecha Termino')
+            ->setCellValue('H'.$nn, 'Termino Fecha Inicio')
+            ->setCellValue('I'.$nn, 'Termino Fecha Termino')
+            ->setCellValue('J'.$nn, 'Solicitado Por')
+            ->setCellValue('K'.$nn, 'Especie')
+            ->setCellValue('L'.$nn, 'Variedad')
+            ->setCellValue('M'.$nn, 'Cuartel')
+            ->setCellValue('N'.$nn, 'Nro.Plantas')
+            ->setCellValue('O'.$nn, 'Hectareas')
+            ->setCellValue('P'.$nn, 'Año Plantacion')
+            ->setCellValue('Q'.$nn, 'Estado Fenologico')
+            ->setCellValue('R'.$nn, 'Estado Productivo')
+            ->setCellValue('S'.$nn, 'Estado')
+            ->setCellValue('T'.$nn, 'Dosificador')
+            ->setCellValue('U'.$nn, 'Aplicador')
+            ->setCellValue('V'.$nn, 'Equipo')
+            ->setCellValue('W'.$nn, 'Capacidad Estanque')
+            ->setCellValue('X'.$nn, 'Veloc. Promedio')
+            ->setCellValue('Y'.$nn, 'lts. Aplicados')
+            ->setCellValue('Z'.$nn, 'lts. por hectarias')
+            ->setCellValue('AA'.$nn, 'Plantas aplicada')
+            ->setCellValue('AB'.$nn, 'Caudal Izquierdo')
+            ->setCellValue('AC'.$nn, 'Caudal Derecho')
+            ->setCellValue('AD'.$nn, 'Estado Aplicación')
+            ->setCellValue('AE'.$nn, 'Ingrediente Activo')
+            ->setCellValue('AF'.$nn, 'Nombre Producto')
+            ->setCellValue('AG'.$nn, 'Categoria Producto Quimico')
+            ->setCellValue('AH'.$nn, 'Dosis Recomendada')
+            ->setCellValue('AI'.$nn, 'Dosis Solicitada')
+            ->setCellValue('AJ'.$nn, 'Objetivo Producto')
+            ->setCellValue('AK'.$nn, 'Fin Carencia')
+            ->setCellValue('AL'.$nn, 'Fin efecto Residual')
+            ->setCellValue('AM'.$nn, 'Objetivo');
+            
+            /*->setCellValue('H'.$nn, 'Hileras')
             ->setCellValue('J'.$nn, 'Distancia Plant')
             ->setCellValue('K'.$nn, 'Distancia Hileras')
-            ->setCellValue('L'.$nn, 'Estado Prod')
-            ->setCellValue('M'.$nn, 'Estado Fenologico')
-            ->setCellValue('N'.$nn, 'Fecha creación')
-            ->setCellValue('O'.$nn, 'Solicitud Fecha Inicio')
-            ->setCellValue('P'.$nn, 'Solicitud Hora Inicio')
-            ->setCellValue('Q'.$nn, 'Solicitud Fecha Termino')
-            ->setCellValue('R'.$nn, 'Solicitud Hora Termino')
-            ->setCellValue('S'.$nn, 'Programacion Fecha Inicio')
-            ->setCellValue('T'.$nn, 'Programacion Hora Inicio')
-            ->setCellValue('U'.$nn, 'Programacion Fecha Termino')
-            ->setCellValue('V'.$nn, 'Programacion Hora Termino')
-            ->setCellValue('W'.$nn, 'Termino Fecha Inicio')
-            ->setCellValue('X'.$nn, 'Termino Hora Inicio')
-            ->setCellValue('Y'.$nn, 'Termino Fecha Termino')
-            ->setCellValue('Z'.$nn, 'Termino Hora Termino')
             ->setCellValue('AA'.$nn, 'Fecha de Cierre')
             ->setCellValue('AB'.$nn, 'Vel Tractor')
             ->setCellValue('AC'.$nn, 'Vel Viento')
             ->setCellValue('AD'.$nn, 'Temp Min')
             ->setCellValue('AE'.$nn, 'Temp Max')
             ->setCellValue('AF'.$nn, 'Codigo Tractor')
-            ->setCellValue('AG'.$nn, 'Identificardor Interno')
-            ->setCellValue('AH'.$nn, 'Capacidad Estanque')
             ->setCellValue('AI'.$nn, 'Velocidad Min')
             ->setCellValue('AJ'.$nn, 'Velocidad Max')
-            ->setCellValue('AK'.$nn, 'Velocidad Prom')
             ->setCellValue('AL'.$nn, 'Distancia recorridas (mtrs.)')
-            ->setCellValue('AM'.$nn, 'Categoria Prod Quimico')
-            ->setCellValue('AN'.$nn, 'Codigo Prod Quimico')
             ->setCellValue('AO'.$nn, 'Unidad de medida')
-            ->setCellValue('AP'.$nn, 'Dosis Recomendada')
-            ->setCellValue('AQ'.$nn, 'Dosis Aplicada')
-            ->setCellValue('AR'.$nn, 'Efecto Recidual')
             ->setCellValue('AS'.$nn, 'Efecto Retroactivo')
-            ->setCellValue('AT'.$nn, 'Carencia Exportador')
             ->setCellValue('AU'.$nn, 'Maquinadas')
-            ->setCellValue('AV'.$nn, 'lts. Aplicados')
             ->setCellValue('AW'.$nn, 'Mojamiento')
-            ->setCellValue('AX'.$nn, 'Objetivo de la Aplicacion')
-            ->setCellValue('AY'.$nn, 'Telem Sensor 1 Prom')
             ->setCellValue('AZ'.$nn, 'Telem Sensor 1 Min')
             ->setCellValue('BA'.$nn, 'Telem Sensor 1 Max')
-            ->setCellValue('BB'.$nn, 'Telem Sensor 2 Prom')
             ->setCellValue('BC'.$nn, 'Telem Sensor 2 Min')
             ->setCellValue('BD'.$nn, 'Telem Sensor 2 Max')
-            ->setCellValue('BE'.$nn, 'Dosificador')
-            ->setCellValue('BF'.$nn, 'Conductor')
-            ->setCellValue('BG'.$nn, 'Usuario creador')
             ->setCellValue('BH'.$nn, 'Temporada')
-            ->setCellValue('BI'.$nn, 'Prioridad')
-            ;
+            ->setCellValue('BI'.$nn, 'Prioridad')*/
 
 //variables
 $nn=3;
 foreach ($arrOTS as $ot) {
-	//
-	if(isset($ot['Telem_Capacidad'])&&$ot['Telem_Capacidad']!=0){
-		$sdata1 = $ot['Telem_Diferencia']/$ot['Telem_Capacidad'];
+	//Litros aplicados
+	$sdata1 = $ot['Telem_Diferencia'];
+	//litros por hectareas
+	if(isset($ot['CuartelHectareas'])&&$ot['CuartelHectareas']!=0){
+		$sdata2 = ($ot['Telem_Diferencia']/$ot['CuartelHectareas']);
 	}else{
-		$sdata1 = 'Capacidad con valor 0';
+		$sdata2 = 0;
 	}
-	$sdata2 = ($ot['Telem_Sensor_1_Sum']+$ot['Telem_Sensor_2_Sum']);
-	//
+	//se verifica plantas faltantes
+	if(isset($temp['Telem_GeoDistance'])&&$temp['Telem_GeoDistance']!=0){
+		$sdata3 = ((($temp['Telem_GeoDistance']*1000))/$temp['CuartelDistanciaPlant']);
+		if($sdata3<0){
+			$sdata3 = 0;
+		}
+	}else{
+		$sdata3 = 0;
+	}
+	//Maquinadas
+	if(isset($ot['Telem_Capacidad'])&&$ot['Telem_Capacidad']!=0){
+		$sdata4 = $ot['Telem_Diferencia']/$ot['Telem_Capacidad'];
+	}else{
+		$sdata4 = 'Capacidad con valor 0';
+	}
+	
+	
+	/**************************************************************/
 	$objPHPExcel->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $ot['NombrePredio'])
 				->setCellValue('B'.$nn, $ot['idSolicitud'])
-				->setCellValue('C'.$nn, $ot['Estado'])
-				->setCellValue('D'.$nn, $ot['VariedadCat'].'/'.$ot['VariedadNombre'])
-				->setCellValue('E'.$nn, $ot['CuartelNombre'])
-				->setCellValue('F'.$nn, $ot['CuartelAnoPlantacion'])
-				->setCellValue('G'.$nn, $ot['CuartelHectareas'])
-				->setCellValue('H'.$nn, $ot['CuartelHileras'])
-				->setCellValue('I'.$nn, $ot['CuartelPlantas'])
+				->setCellValue('C'.$nn, fecha_estandar($ot['f_creacion']))
+				->setCellValue('D'.$nn, fecha_estandar($ot['f_programacion']).' '.$ot['horaProg'])
+				->setCellValue('E'.$nn, fecha_estandar($ot['f_programacion_fin']).' '.$ot['horaProg_fin'])
+				->setCellValue('F'.$nn, fecha_estandar($ot['f_ejecucion']).' '.$ot['horaEjecucion'])
+				->setCellValue('G'.$nn, fecha_estandar($ot['f_ejecucion_fin']).' '.$ot['horaEjecucion_fin'])
+				->setCellValue('H'.$nn, fecha_estandar($ot['f_termino']).' '.$ot['horaTermino'])
+				->setCellValue('I'.$nn, fecha_estandar($ot['f_termino_fin']).' '.$ot['horaTermino_fin'])
+				->setCellValue('J'.$nn, $ot['NombreUsuario'])
+				->setCellValue('K'.$nn, $ot['VariedadCat'])
+				->setCellValue('L'.$nn, $ot['VariedadNombre'])
+				->setCellValue('M'.$nn, $ot['CuartelNombre'])
+				->setCellValue('N'.$nn, $ot['CuartelPlantas'])
+				->setCellValue('O'.$nn, $ot['CuartelHectareas'])
+				->setCellValue('P'.$nn, $ot['CuartelAnoPlantacion'])
+				->setCellValue('Q'.$nn, $ot['EstadoFenNombre'])
+				->setCellValue('R'.$nn, $ot['CuartelEstadoProd'])
+				->setCellValue('S'.$nn, $ot['Estado'])
+				->setCellValue('T'.$nn, $ot['DosificadorRut'].' - '.$ot['DosificadorNombre'].' '.$ot['DosificadorApellidoPat'])
+				->setCellValue('U'.$nn, $ot['ConductorRut'].' - '.$ot['ConductorNombre'].' '.$ot['ConductorApellidoPat'])
+				->setCellValue('V'.$nn, $ot['Telem_Identificador'])
+				->setCellValue('W'.$nn, $ot['Telem_Capacidad'])
+				->setCellValue('X'.$nn, $ot['Telem_GeoVelocidadProm'])
+				->setCellValue('Y'.$nn, $sdata1)
+				->setCellValue('Z'.$nn, $sdata2)
+				->setCellValue('AA'.$nn, $sdata3)
+				->setCellValue('AB'.$nn, $ot['Telem_Sensor_1_Prom'])
+				->setCellValue('AC'.$nn, $ot['Telem_Sensor_2_Prom'])
+				->setCellValue('AD'.$nn, $ot['Estado'])
+				->setCellValue('AE'.$nn, $ot['ProductoIngrediente'])
+				->setCellValue('AF'.$nn, $ot['ProductoNombre'])
+				->setCellValue('AG'.$nn, $ot['ProductoCategoria'])
+				->setCellValue('AH'.$nn, $ot['ProductoDosisRecomendada'])
+				->setCellValue('AI'.$nn, $ot['ProductoDosisAplicar'])
+				->setCellValue('AJ'.$nn, $ot['ProductoObjetivo'])
+				->setCellValue('AK'.$nn, $ot['ProductoCarenciaExportador'])
+				->setCellValue('AL'.$nn, $ot['ProductoEfectoResidual'])
+				->setCellValue('AM'.$nn, $ot['ProductoObjetivo']);
+				
+				
+				/*
+				 * ->setCellValue('H'.$nn, $ot['CuartelHileras'])
 				->setCellValue('J'.$nn, $ot['CuartelDistanciaPlant'])
 				->setCellValue('K'.$nn, $ot['CuartelDistanciaHileras'])
-				->setCellValue('L'.$nn, $ot['CuartelEstadoProd'])
-				->setCellValue('M'.$nn, $ot['EstadoFenCodigo'].' '.$ot['EstadoFenNombre'])
-				->setCellValue('N'.$nn, $ot['f_creacion'])
-				->setCellValue('O'.$nn, $ot['f_programacion'])
-				->setCellValue('P'.$nn, $ot['horaProg'])
-				->setCellValue('Q'.$nn, $ot['f_programacion_fin'])
-				->setCellValue('R'.$nn, $ot['horaProg_fin'])
-				->setCellValue('S'.$nn, $ot['f_ejecucion'])
-				->setCellValue('T'.$nn, $ot['horaEjecucion'])
-				->setCellValue('U'.$nn, $ot['f_ejecucion_fin'])
-				->setCellValue('V'.$nn, $ot['horaEjecucion_fin'])
-				->setCellValue('W'.$nn, $ot['f_termino'])
-				->setCellValue('X'.$nn, $ot['horaTermino'])
-				->setCellValue('Y'.$nn, $ot['f_termino_fin'])
-				->setCellValue('Z'.$nn, $ot['horaTermino_fin'])
 				->setCellValue('AA'.$nn, $ot['Cuartelf_cierre'])
 				->setCellValue('AB'.$nn, $ot['CuartelVelTractor'])
 				->setCellValue('AC'.$nn, $ot['CuartelVelViento'])
 				->setCellValue('AD'.$nn, $ot['CuartelTempMin'])
 				->setCellValue('AE'.$nn, $ot['CuartelTempMax'])
 				->setCellValue('AF'.$nn, $ot['Vehiculo_Marca'])
-				->setCellValue('AG'.$nn, $ot['Telem_Identificador'])
-				->setCellValue('AH'.$nn, $ot['Telem_Capacidad'])
 				->setCellValue('AI'.$nn, $ot['Telem_GeoVelocidadMin'])
 				->setCellValue('AJ'.$nn, $ot['Telem_GeoVelocidadMax'])
-				->setCellValue('AK'.$nn, $ot['Telem_GeoVelocidadProm'])
 				->setCellValue('AL'.$nn, $ot['Telem_GeoDistance'])
-				->setCellValue('AM'.$nn, $ot['ProductoCategoria'])
-				->setCellValue('AN'.$nn, $ot['ProductoNombre'])
 				->setCellValue('AO'.$nn, $ot['ProductoUniMed'])
-				->setCellValue('AP'.$nn, $ot['ProductoDosisRecomendada'])
-				->setCellValue('AQ'.$nn, $ot['ProductoDosisAplicar'])
-				->setCellValue('AR'.$nn, $ot['ProductoEfectoResidual'])
 				->setCellValue('AS'.$nn, $ot['ProductoEfectoRetroactivo'])
-				->setCellValue('AT'.$nn, $ot['ProductoCarenciaExportador'])
-				->setCellValue('AU'.$nn, $sdata1)
-				->setCellValue('AV'.$nn, $sdata2)
+				->setCellValue('AU'.$nn, $sdata4)
 				->setCellValue('AW'.$nn, $ot['CuartelMojamiento'])
-				->setCellValue('AX'.$nn, $ot['ProductoObjetivo'])
-				->setCellValue('AY'.$nn, $ot['Telem_Sensor_1_Prom'])
 				->setCellValue('AZ'.$nn, $ot['Telem_Sensor_1_Min'])
 				->setCellValue('BA'.$nn, $ot['Telem_Sensor_1_Max'])
-				->setCellValue('BB'.$nn, $ot['Telem_Sensor_2_Prom'])
 				->setCellValue('BC'.$nn, $ot['Telem_Sensor_2_Min'])
 				->setCellValue('BD'.$nn, $ot['Telem_Sensor_2_Max'])
-				->setCellValue('BE'.$nn, $ot['DosificadorRut'].' - '.$ot['DosificadorNombre'].' '.$ot['DosificadorApellidoPat'])
-				->setCellValue('BF'.$nn, $ot['ConductorRut'].' - '.$ot['ConductorNombre'].' '.$ot['ConductorApellidoPat'])
-				->setCellValue('BG'.$nn, $ot['NombreUsuario'])
 				->setCellValue('BH'.$nn, $ot['TemporadaCodigo'].' '.$ot['TemporadaNombre'])
-				->setCellValue('BI'.$nn, $ot['NombrePrioridad'])
-
-				
-				;
+				->setCellValue('BI'.$nn, $ot['NombrePrioridad'])*/
 
 	//Se suma 1
 	$nn++;

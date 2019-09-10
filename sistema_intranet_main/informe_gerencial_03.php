@@ -26,9 +26,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
-
-             
-  
+/*************************************************************/
 //se traen los datos basicos de la licitacion
 $query = "SELECT 
 licitacion_listado.idEstado,
@@ -565,7 +563,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table"></i></div>
-			<h5>Ver Datos del Contrato</h5>	
+			<h5>Cumplimiento del Contrato</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
 			
@@ -673,7 +671,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$y = "licitacion_listado.idSistema>=0";
 	$w = "idSistema>=0 AND idEstado=1";
 }else{
-	$y = "licitacion_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 AND usuarios_contratos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";		
+	$y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";		
 	$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 }
  
@@ -700,8 +698,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 											 'Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Imputs->form_select_join_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', 'usuarios_contratos', $y, $dbConn);
+					$Form_Imputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);	
 				}
+				
 				
 				?>        
 	   
@@ -710,7 +709,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>          
+            <?php widget_validator(); ?>          
 		</div>
 	</div>
 </div> 

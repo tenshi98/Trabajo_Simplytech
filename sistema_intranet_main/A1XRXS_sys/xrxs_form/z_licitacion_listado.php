@@ -16,12 +16,15 @@ if( ! defined('XMBCXRXSKGC')) {
 	if ( !empty($_POST['Nombre']) )              $Nombre               = $_POST['Nombre'];
 	if ( !empty($_POST['FechaInicio']) )         $FechaInicio          = $_POST['FechaInicio'];
 	if ( !empty($_POST['FechaTermino']) )        $FechaTermino         = $_POST['FechaTermino'];
-	if ( !empty($_POST['Presupuesto']) )         $Presupuesto          = $_POST['Presupuesto'];
+	if ( isset($_POST['Presupuesto']) )          $Presupuesto          = $_POST['Presupuesto'];
 	if ( !empty($_POST['idEstado']) )            $idEstado             = $_POST['idEstado'];
 	if ( !empty($_POST['idBodegaProd']) )        $idBodegaProd         = $_POST['idBodegaProd'];
 	if ( !empty($_POST['idBodegaIns']) )         $idBodegaIns          = $_POST['idBodegaIns'];
 	if ( !empty($_POST['idAprobado']) )          $idAprobado           = $_POST['idAprobado'];
 	if ( !empty($_POST['idCliente']) )           $idCliente            = $_POST['idCliente'];
+	if ( !empty($_POST['idTipoLicitacion']) )    $idTipoLicitacion     = $_POST['idTipoLicitacion'];
+	if ( isset($_POST['ValorMensual']) )         $ValorMensual         = $_POST['ValorMensual'];
+	if ( !empty($_POST['idOpcionItem']) )        $idOpcionItem         = $_POST['idOpcionItem'];
 	
 	if ( !empty($_POST['idUtilizable']) )        $idUtilizable         = $_POST['idUtilizable'];
 	if ( isset($_POST['idFrecuencia']) )         $idFrecuencia         = $_POST['idFrecuencia'];
@@ -95,6 +98,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			case 'idBodegaIns':         if(empty($idBodegaIns)){          $error['idBodegaIns']           = 'error/No ha seleccionado la bodega de insumos';}break;
 			case 'idAprobado':          if(empty($idAprobado)){           $error['idAprobado']            = 'error/No ha seleccionado el estado de aprobacion';}break;
 			case 'idCliente':           if(empty($idCliente)){            $error['idCliente']             = 'error/No ha seleccionado el cliente';}break;
+			case 'idTipoLicitacion':    if(empty($idTipoLicitacion)){     $error['idTipoLicitacion']      = 'error/No ha seleccionado el tipo de contrato';}break;
+			case 'ValorMensual':        if(empty($ValorMensual)){         $error['ValorMensual']          = 'error/No ha ingresado el valor mensual';}break;
+			case 'idOpcionItem':        if(empty($idOpcionItem)){         $error['idOpcionItem']          = 'error/No ha seleccionado la opcion de mostrar itemizado';}break;
 			
 			case 'idUtilizable':        if(empty($idUtilizable)){         $error['idUtilizable']          = 'error/No ha seleccionado si es utilizable';}break;
 			case 'idFrecuencia':        if(empty($idFrecuencia)){         $error['idFrecuencia']          = 'error/No ha seleccionado la unidad de medida';}break;
@@ -161,21 +167,24 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){         $a = "'".$idSistema."'" ;       }else{$a ="''";}
-				if(isset($Codigo) && $Codigo != ''){               $a .= ",'".$Codigo."'" ;        }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){               $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-				if(isset($FechaInicio) && $FechaInicio != ''){     $a .= ",'".$FechaInicio."'" ;   }else{$a .=",''";}
-				if(isset($FechaTermino) && $FechaTermino != ''){   $a .= ",'".$FechaTermino."'" ;  }else{$a .=",''";}
-				if(isset($Presupuesto) && $Presupuesto != ''){     $a .= ",'".$Presupuesto."'" ;   }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){           $a .= ",'".$idEstado."'" ;      }else{$a .=",''";}
-				if(isset($idBodegaProd) && $idBodegaProd != ''){   $a .= ",'".$idBodegaProd."'" ;  }else{$a .=",''";}
-				if(isset($idBodegaIns) && $idBodegaIns != ''){     $a .= ",'".$idBodegaIns."'" ;   }else{$a .=",''";}
-				if(isset($idAprobado) && $idAprobado != ''){       $a .= ",'".$idAprobado."'" ;    }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){         $a .= ",'".$idCliente."'" ;     }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                $a  = "'".$idSistema."'" ;         }else{$a  ="''";}
+				if(isset($Codigo) && $Codigo != ''){                      $a .= ",'".$Codigo."'" ;           }else{$a .=",''";}
+				if(isset($Nombre) && $Nombre != ''){                      $a .= ",'".$Nombre."'" ;           }else{$a .=",''";}
+				if(isset($FechaInicio) && $FechaInicio != ''){            $a .= ",'".$FechaInicio."'" ;      }else{$a .=",''";}
+				if(isset($FechaTermino) && $FechaTermino != ''){          $a .= ",'".$FechaTermino."'" ;     }else{$a .=",''";}
+				if(isset($Presupuesto) && $Presupuesto != ''){            $a .= ",'".$Presupuesto."'" ;      }else{$a .=",''";}
+				if(isset($idEstado) && $idEstado != ''){                  $a .= ",'".$idEstado."'" ;         }else{$a .=",''";}
+				if(isset($idBodegaProd) && $idBodegaProd != ''){          $a .= ",'".$idBodegaProd."'" ;     }else{$a .=",''";}
+				if(isset($idBodegaIns) && $idBodegaIns != ''){            $a .= ",'".$idBodegaIns."'" ;      }else{$a .=",''";}
+				if(isset($idAprobado) && $idAprobado != ''){              $a .= ",'".$idAprobado."'" ;       }else{$a .=",''";}
+				if(isset($idCliente) && $idCliente != ''){                $a .= ",'".$idCliente."'" ;        }else{$a .=",''";}
+				if(isset($idTipoLicitacion) && $idTipoLicitacion != ''){  $a .= ",'".$idTipoLicitacion."'" ; }else{$a .=",''";}
+				if(isset($ValorMensual) && $ValorMensual != ''){          $a .= ",'".$ValorMensual."'" ;     }else{$a .=",''";}
+				if(isset($idOpcionItem) && $idOpcionItem != ''){          $a .= ",'".$idOpcionItem."'" ;     }else{$a .=",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `licitacion_listado` (idSistema, Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto,
-				idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente) 
+				idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem) 
 				VALUES ({$a} )";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -252,7 +261,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
 				$query = "SELECT Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns,
-				idSistema, idAprobado, idCliente, idEstado
+				idSistema, idAprobado, idCliente, idEstado, idTipoLicitacion, ValorMensual, idOpcionItem
 				FROM `licitacion_listado`
 				WHERE idLicitacion = ".$idLicitacion;
 				//Consulta
@@ -273,17 +282,20 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
 				$a = "idLicitacion='".$idLicitacion."'" ;
-				if(isset($idSistema) && $idSistema != ''){          $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($FechaInicio) && $FechaInicio != ''){      $a .= ",FechaInicio='".$FechaInicio."'" ;}
-				if(isset($FechaTermino) && $FechaTermino != ''){    $a .= ",FechaTermino='".$FechaTermino."'" ;}
-				if(isset($Presupuesto) && $Presupuesto != ''){      $a .= ",Presupuesto='".$Presupuesto."'" ;}
-				if(isset($idEstado) && $idEstado != ''){            $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idBodegaProd) && $idBodegaProd != ''){    $a .= ",idBodegaProd='".$idBodegaProd."'" ;}
-				if(isset($idBodegaIns) && $idBodegaIns != ''){      $a .= ",idBodegaIns='".$idBodegaIns."'" ;}
-				if(isset($idAprobado) && $idAprobado != ''){        $a .= ",idAprobado='".$idAprobado."'" ;}
-				if(isset($idCliente) && $idCliente != ''){          $a .= ",idCliente='".$idCliente."'" ;}
+				if(isset($idSistema) && $idSistema != ''){                $a .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                      $a .= ",Codigo='".$Codigo."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                      $a .= ",Nombre='".$Nombre."'" ;}
+				if(isset($FechaInicio) && $FechaInicio != ''){            $a .= ",FechaInicio='".$FechaInicio."'" ;}
+				if(isset($FechaTermino) && $FechaTermino != ''){          $a .= ",FechaTermino='".$FechaTermino."'" ;}
+				if(isset($Presupuesto) && $Presupuesto != ''){            $a .= ",Presupuesto='".$Presupuesto."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                  $a .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idBodegaProd) && $idBodegaProd != ''){          $a .= ",idBodegaProd='".$idBodegaProd."'" ;}
+				if(isset($idBodegaIns) && $idBodegaIns != ''){            $a .= ",idBodegaIns='".$idBodegaIns."'" ;}
+				if(isset($idAprobado) && $idAprobado != ''){              $a .= ",idAprobado='".$idAprobado."'" ;}
+				if(isset($idCliente) && $idCliente != ''){                $a .= ",idCliente='".$idCliente."'" ;}
+				if(isset($idTipoLicitacion) && $idTipoLicitacion != ''){  $a .= ",idTipoLicitacion='".$idTipoLicitacion."'" ;}
+				if(isset($ValorMensual) && $ValorMensual != ''){          $a .= ",ValorMensual='".$ValorMensual."'" ;}
+				if(isset($idOpcionItem) && $idOpcionItem != ''){          $a .= ",idOpcionItem='".$idOpcionItem."'" ;}
 				
 				// inserto los datos de registro en la db
 				$query  = "UPDATE `licitacion_listado` SET ".$a." WHERE idLicitacion = '$idLicitacion'";
@@ -298,17 +310,20 @@ if( ! defined('XMBCXRXSKGC')) {
 					//se crean el mensaje
 					$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
 					
-					if(isset($idSistema) && $idSistema != $rowdata['idSistema']){             $hist_Observacion .= '-Se cambia el sistema<br/>';}
-					if(isset($Codigo) && $Codigo != $rowdata['Codigo']){                      $hist_Observacion .= '-Se cambia el Codigo, de <strong>'.$rowdata['Codigo'].'</strong> a <strong>'.$Codigo.'</strong><br/>';}
-					if(isset($Nombre) && $Nombre != $rowdata['Nombre']){                      $hist_Observacion .= '-Se cambia el Nombre, de <strong>'.$rowdata['Nombre'].'</strong> a <strong>'.$Nombre.'</strong><br/>';}
-					if(isset($FechaInicio) && $FechaInicio != $rowdata['FechaInicio']){       $hist_Observacion .= '-Se cambia la Fecha de Inicio, de <strong>'.fecha_estandar($rowdata['FechaInicio']).'</strong> a <strong>'.fecha_estandar($FechaInicio).'</strong><br/>';}
-					if(isset($FechaTermino) && $FechaTermino != $rowdata['FechaTermino']){    $hist_Observacion .= '-Se cambia la Fecha de Termino, de <strong>'.fecha_estandar($rowdata['FechaTermino']).'</strong> a <strong>'.fecha_estandar($FechaTermino).'</strong><br/>';}
-					if(isset($Presupuesto) && $Presupuesto != $rowdata['Presupuesto']){       $hist_Observacion .= '-Se cambia el Presupuesto, de <strong>'.valores($rowdata['Presupuesto'], 0).'</strong> a <strong>'.valores($Presupuesto, 0).'</strong><br/>';}
-					if(isset($idEstado) && $idEstado != $rowdata['idEstado']){                $hist_Observacion .= '-Se cambia el Estado<br/>';}
-					if(isset($idBodegaProd) && $idBodegaProd != $rowdata['idBodegaProd']){    $hist_Observacion .= '-Se cambia la Bodega de Productos<br/>';}
-					if(isset($idBodegaIns) && $idBodegaIns != $rowdata['idBodegaIns']){       $hist_Observacion .= '-Se cambia la Bodega de Insumos<br/>';}
-					if(isset($idAprobado) && $idAprobado != $rowdata['idAprobado']){          $hist_Observacion .= '-Se cambia el estado de aprobacion<br/>';}
-					if(isset($idCliente) && $idCliente != $rowdata['idCliente']){             $hist_Observacion .= '-Se cambia el cliente<br/>';}
+					if(isset($idSistema) && $idSistema != $rowdata['idSistema']){                      $hist_Observacion .= '-Se cambia el sistema<br/>';}
+					if(isset($Codigo) && $Codigo != $rowdata['Codigo']){                               $hist_Observacion .= '-Se cambia el Codigo, de <strong>'.$rowdata['Codigo'].'</strong> a <strong>'.$Codigo.'</strong><br/>';}
+					if(isset($Nombre) && $Nombre != $rowdata['Nombre']){                               $hist_Observacion .= '-Se cambia el Nombre, de <strong>'.$rowdata['Nombre'].'</strong> a <strong>'.$Nombre.'</strong><br/>';}
+					if(isset($FechaInicio) && $FechaInicio != $rowdata['FechaInicio']){                $hist_Observacion .= '-Se cambia la Fecha de Inicio, de <strong>'.fecha_estandar($rowdata['FechaInicio']).'</strong> a <strong>'.fecha_estandar($FechaInicio).'</strong><br/>';}
+					if(isset($FechaTermino) && $FechaTermino != $rowdata['FechaTermino']){             $hist_Observacion .= '-Se cambia la Fecha de Termino, de <strong>'.fecha_estandar($rowdata['FechaTermino']).'</strong> a <strong>'.fecha_estandar($FechaTermino).'</strong><br/>';}
+					if(isset($Presupuesto) && $Presupuesto != $rowdata['Presupuesto']){                $hist_Observacion .= '-Se cambia el Presupuesto, de <strong>'.valores($rowdata['Presupuesto'], 0).'</strong> a <strong>'.valores($Presupuesto, 0).'</strong><br/>';}
+					if(isset($idEstado) && $idEstado != $rowdata['idEstado']){                         $hist_Observacion .= '-Se cambia el Estado<br/>';}
+					if(isset($idBodegaProd) && $idBodegaProd != $rowdata['idBodegaProd']){             $hist_Observacion .= '-Se cambia la Bodega de Productos<br/>';}
+					if(isset($idBodegaIns) && $idBodegaIns != $rowdata['idBodegaIns']){                $hist_Observacion .= '-Se cambia la Bodega de Insumos<br/>';}
+					if(isset($idAprobado) && $idAprobado != $rowdata['idAprobado']){                   $hist_Observacion .= '-Se cambia el estado de aprobacion<br/>';}
+					if(isset($idCliente) && $idCliente != $rowdata['idCliente']){                      $hist_Observacion .= '-Se cambia el cliente<br/>';}
+					if(isset($idTipoLicitacion) && $idTipoLicitacion != $rowdata['idTipoLicitacion']){ $hist_Observacion .= '-Se cambia el Tipo de Contrato<br/>';}
+					if(isset($ValorMensual) && $ValorMensual != $rowdata['ValorMensual']){             $hist_Observacion .= '-Se cambia el valor mensual del contrato<br/>';}
+					if(isset($idOpcionItem) && $idOpcionItem != $rowdata['idOpcionItem']){             $hist_Observacion .= '-Se cambia la opcion de telemetria<br/>';}
 					
 				
 					/*****************************************************/

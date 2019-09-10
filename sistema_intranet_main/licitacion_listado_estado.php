@@ -47,7 +47,8 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 $query = "SELECT 
 licitacion_listado.idLicitacion,
 licitacion_listado.Nombre,
-core_estados.Nombre AS estado
+core_estados.Nombre AS estado, 
+licitacion_listado.idOpcionItem
 FROM `licitacion_listado`
 LEFT JOIN `core_estados`   ON core_estados.idEstado       = licitacion_listado.idEstado
 WHERE idLicitacion = {$_GET['id']}";
@@ -96,9 +97,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Itemizado</a></li>
+						<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
+							<li class=""><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Itemizado</a></li>
+						<?php } ?> 	
+						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class=""><a href="<?php echo 'licitacion_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivos</a></li>
 					</ul>
-                </li>           
+				</li>
+                           
 			</ul>	
 		</header>
         <div class="table-responsive"> 

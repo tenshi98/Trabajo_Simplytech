@@ -7,7 +7,7 @@
 </footer>
 
 <!--Otros archivos javascript -->
-<script src="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap3/js/bootstrap.min.js"></script>
 <script src="<?php echo DB_SITE ?>/LIB_assets/lib/screenfull/screenfull.js"></script> 
 <script src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
 <script src="<?php echo DB_SITE ?>/LIB_assets/js/main.min.js"></script>
@@ -19,7 +19,7 @@
 require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Utils.Result.php'; 
 /******************************************************************************************************/
 //cuadro mensajes
-require_once '../LIBS_js/avgrund/avgrund.php';
+widget_avgrund();
 /******************************************************************************************************/
 /*                                                                                                    */
 /*                                              CIERRE DE LA BASE                                     */

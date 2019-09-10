@@ -16,63 +16,24 @@ $location = $original;
 //Se agregan ubicaciones
 if(isset($_GET['Mes']) && $_GET['Mes'] != ''){  $location .= "?Mes=".$_GET['Mes'] ; } else { $location .= "?Mes=".mes_actual(); }
 if(isset($_GET['Ano']) && $_GET['Ano'] != ''){  $location .= "&Ano=".$_GET['Ano'] ; } else { $location .= "&Ano=".ano_actual(); }
-
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Views.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<title>Maqueta</title>
-		<!-- Bootstrap Core CSS -->
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
-		<link rel="stylesheet" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
-		<link href="<?php echo DB_SITE ?>/LIBS_js/tooltipster/css/tooltipster.bundle.min.css" rel="stylesheet" type="text/css">
-		<script src="<?php echo DB_SITE ?>/LIBS_js/tooltipster/js/tooltipster.bundle.min.js"></script>
-		<script>
-			<!--
-			$(document).ready(function() {
-				$('.tooltip').tooltipster({
-				   animation: 'grow',
-				   delay: 130,
-				});
-			});
-			//-->
-		</script>
-		<style>
-			body {
-				background-color: #FFF;
-			}
-		</style>
-	</head>
+<div class="col-sm-12">
+	<?php
+	//Manejador de errores
+	if(isset($error)&&$error!=''){echo notifications_list($error);};
+	//Include de la presentacion
+	include '1include_principal_cargas.php';
+	?>
+</div>
 
-	<body>
-		<div class="col-sm-12">
-			<?php
-			//Manejador de errores
-			if(isset($error)&&$error!=''){echo notifications_list($error);};
-			//Include de la presentacion
-			include '1include_principal_cargas.php';
-			?>
-
-		</div>
-
-
-
-	
 
 <?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
 	<div class="clearfix"></div>
@@ -84,6 +45,9 @@ if(isset($_GET['Ano']) && $_GET['Ano'] != ''){  $location .= "&Ano=".$_GET['Ano'
 
 
 
-		
-	</body>
-</html>
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Views.php';
+?>

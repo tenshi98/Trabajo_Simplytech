@@ -90,18 +90,17 @@ cross_solicitud_aplicacion_listado.idSolicitud AS ID,
 (SELECT COUNT(idEstado) FROM cross_solicitud_aplicacion_listado_cuarteles WHERE idSolicitud=ID) AS N_Cuarteles,
 (SELECT COUNT(idEstado) FROM cross_solicitud_aplicacion_listado_cuarteles WHERE idSolicitud=ID AND idEstado = 2) AS N_Cuarteles_Cerrados,
 
-SUM(cross_solicitud_aplicacion_listado_tractores.Diferencia) AS Litros,
-SUM(cross_predios_listado_zonas.Hectareas) AS N_Hectareas
+cross_solicitud_aplicacion_listado.idSolicitud AS IDD,
+(SELECT SUM(cross_predios_listado_zonas.Hectareas) 
+FROM `cross_solicitud_aplicacion_listado_cuarteles` 
+LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona   = cross_solicitud_aplicacion_listado_cuarteles.idZona
+WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD ) AS N_Hectareas,
+(SELECT SUM(Diferencia) FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idSolicitud=IDD ) AS Litros
 						
 FROM `cross_solicitud_aplicacion_listado`
-LEFT JOIN `core_estado_solicitud`                          ON core_estado_solicitud.idEstado                             = cross_solicitud_aplicacion_listado.idEstado
-LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
-LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
-LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
+LEFT JOIN `core_estado_solicitud`   ON core_estado_solicitud.idEstado   = cross_solicitud_aplicacion_listado.idEstado
 
-".$z."
-GROUP BY cross_solicitud_aplicacion_listado.idSolicitud
-ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC";
+".$z."";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -188,7 +187,7 @@ array_push( $arrSolicitudes,$row );
 		</div>
 	</div>
 </div>
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
 <div class="col-sm-12 fcenter" style="margin-bottom:30px">
@@ -214,9 +213,11 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				<?php 
 				//Se verifican si existen los datos
 				if(isset($idSolicitud)) {            $x1  = $idSolicitud;            }else{$x1  = '';}
-				if(isset($idCategoria)) {            $x2  = $idCategoria;            }else{$x2  = '';}
-				if(isset($idProducto)) {             $x3  = $idProducto;             }else{$x3  = '';}
-				if(isset($idEstado)) {               $x4  = $idEstado;               }else{$x4  = '';}
+				if(isset($idPredio)) {               $x2  = $idPredio;               }else{$x2  = '';}
+				if(isset($idZona)) {                 $x3  = $idZona;                 }else{$x3  = '';}
+				if(isset($idCategoria)) {            $x4  = $idCategoria;            }else{$x4  = '';}
+				if(isset($idProducto)) {             $x5  = $idProducto;             }else{$x5  = '';}
+				if(isset($idEstado)) {               $x6  = $idEstado;               }else{$x6  = '';}
 				
 				
 				if(isset($idTemporada)) {            $x7  = $idTemporada;            }else{$x7  = '';}
@@ -232,10 +233,13 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				//se dibujan los inputs
 				$Form_Imputs = new Form_Inputs();
 				$Form_Imputs->form_input_number('N° Solicitud','idSolicitud', $x1, 1);
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x2, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+				$Form_Imputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
+										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select('Estado','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
+				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x4, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+										 'Variedad','idProducto', $x5, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 $dbConn, 'form1');
+				$Form_Imputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
 		
 		
 		
@@ -256,7 +260,7 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div> 

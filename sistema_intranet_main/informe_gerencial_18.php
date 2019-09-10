@@ -26,10 +26,6 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
-
-             
-  
-
 /*************************************************************/
 //se traen los datos basicos de la licitacion
 $query = "SELECT 
@@ -421,12 +417,10 @@ bodegas_productos_facturacion_existencias.Creacion_mes,
 SUM(bodegas_productos_facturacion_existencias.ValorTotal) AS Total
 
 FROM `bodegas_productos_facturacion_existencias` 
-LEFT JOIN `productos_listado` ON productos_listado.idProducto = bodegas_productos_facturacion_existencias.idProducto 
+LEFT JOIN `productos_listado`     ON productos_listado.idProducto  = bodegas_productos_facturacion_existencias.idProducto 
+LEFT JOIN `orden_trabajo_listado` ON orden_trabajo_listado.idOT    = bodegas_productos_facturacion_existencias.idOT 
 
-WHERE bodegas_productos_facturacion_existencias.idTipo=7 
-AND bodegas_productos_facturacion_existencias.idOT!=0 
-AND bodegas_productos_facturacion_existencias.idSistema=".$rowdata['idSistema']." 
-AND bodegas_productos_facturacion_existencias.Creacion_ano BETWEEN '{$ano_min}' AND '{$ano_max}'
+WHERE orden_trabajo_listado.idLicitacion={$_GET['idLicitacion']} 
 
 GROUP BY bodegas_productos_facturacion_existencias.Creacion_ano,
 bodegas_productos_facturacion_existencias.Creacion_mes,
@@ -470,12 +464,10 @@ bodegas_insumos_facturacion_existencias.Creacion_mes,
 SUM(bodegas_insumos_facturacion_existencias.ValorTotal) AS Total
 
 FROM `bodegas_insumos_facturacion_existencias` 
-LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = bodegas_insumos_facturacion_existencias.idProducto 
+LEFT JOIN `insumos_listado`       ON insumos_listado.idProducto    = bodegas_insumos_facturacion_existencias.idProducto  
+LEFT JOIN `orden_trabajo_listado` ON orden_trabajo_listado.idOT    = bodegas_insumos_facturacion_existencias.idOT 
 
-WHERE bodegas_insumos_facturacion_existencias.idTipo=7 
-AND bodegas_insumos_facturacion_existencias.idOT!=0 
-AND bodegas_insumos_facturacion_existencias.idSistema=".$rowdata['idSistema']." 
-AND bodegas_insumos_facturacion_existencias.Creacion_ano BETWEEN '{$ano_min}' AND '{$ano_max}'
+WHERE orden_trabajo_listado.idLicitacion={$_GET['idLicitacion']} 
 
 GROUP BY bodegas_insumos_facturacion_existencias.Creacion_ano,
 bodegas_insumos_facturacion_existencias.Creacion_mes,
@@ -730,7 +722,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table"></i></div>
-			<h5>Datos Actuales del Contrato</h5>	
+			<h5>Cumplimiento del Contrato</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
 			
@@ -822,7 +814,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table"></i></div>
-			<h5>Flujo Mensual</h5>	
+			<h5>Flujo Mensual Cumplimiento del Contrato</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
 			
@@ -1118,7 +1110,274 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 	</div>
 </div>
 	
-  
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div>
+			<h5>Gasto Materiales</h5>	
+		</header>
+		<div id="div-3" class="tab-content">
+			
+			<div class="tab-pane fade active in" id="basicos">
+				<div class="wmd-panel">
+						
+					<div class="table-responsive">		
+						<table id="dataTable" class="table table-bordered table-condensed dataTable">
+											  
+							<tbody role="alert" aria-live="polite" aria-relevant="all">
+								<?php 
+								/******************************************************************************/
+								//Verifico si hay resultados
+								if($CompProd){ ?>	
+									<tr>
+										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Productos Utilizados</td>
+										<?php
+										//Recorro los años
+										$interruptor_mes = 0;
+										for ($z_ano = $ano_min; $z_ano <= $ano_max; $z_ano++) {
+											//recorro los meses
+											if($interruptor_mes==0){
+												for ($z_mes = $mes_min; $z_mes <= 12; $z_mes++) {
+													echo '<td align="center" style="background-color: #ccc;"></td>';
+												}
+											}else{
+												for ($z_mes = 1; $z_mes <= 12; $z_mes++) {
+													echo '<td align="center" style="background-color: #ccc;"></td>';
+												}
+											}
+											//sumo 1 al interruptor
+											$interruptor_mes++;
+										}
+										?>
+										
+										<td colspan="1" align="center" style="background-color: #ccc;"></td>
+										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
+										<td colspan="1" align="center" style="background-color: #ccc;"></td>
+									</tr>
+									
+									<?php foreach ($CompProd as $prod) {  ?>
+										<tr>
+											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
+											
+											<?php
+											//Recorro los años
+											$interruptor_mes = 0;
+											$Total = 0;
+											for ($z_ano = $ano_min; $z_ano <= $ano_max; $z_ano++) {
+												//recorro los meses
+												if($interruptor_mes==0){
+													for ($z_mes = $mes_min; $z_mes <= 12; $z_mes++) {
+														if(isset($prod[$z_ano][$z_mes]['Total'])&&$prod[$z_ano][$z_mes]['Total']!=''){
+															echo '<td align="center">'.valores($prod[$z_ano][$z_mes]['Total'], 0).'</td>';
+															$Total = $Total + $prod[$z_ano][$z_mes]['Total'];
+														}else{
+															echo '<td align="center"></td>';
+														}
+													}
+												}else{
+													for ($z_mes = 1; $z_mes <= 12; $z_mes++) {
+														if(isset($prod[$z_ano][$z_mes]['Total'])&&$prod[$z_ano][$z_mes]['Total']!=''){
+															echo '<td align="center">'.valores($prod[$z_ano][$z_mes]['Total'], 0).'</td>';
+															$Total = $Total + $prod[$z_ano][$z_mes]['Total'];
+														}else{
+															echo '<td align="center"></td>';
+														}
+													}
+												}
+												
+												//sumo 1 al interruptor
+												$interruptor_mes++;
+											}
+											?>
+											
+											<td colspan="1" align="center"></td>
+											<td colspan="1" align="center"><?php echo valores($Total, 0); ?></td>
+											<td colspan="1" align="center"></td>
+										</tr>
+									<?php }
+								}
+								/******************************************************************************/
+								//Verifico si hay resultados
+								if($CompIns){ ?>	
+									<tr>
+										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Insumos Utilizados</td>
+										<?php
+										//Recorro los años
+										$interruptor_mes = 0;
+										for ($z_ano = $ano_min; $z_ano <= $ano_max; $z_ano++) {
+											//recorro los meses
+											if($interruptor_mes==0){
+												for ($z_mes = $mes_min; $z_mes <= 12; $z_mes++) {
+													echo '<td align="center" style="background-color: #ccc;"></td>';
+												}
+											}else{
+												for ($z_mes = 1; $z_mes <= 12; $z_mes++) {
+													echo '<td align="center" style="background-color: #ccc;"></td>';
+												}
+											}
+											//sumo 1 al interruptor
+											$interruptor_mes++;
+										}
+										?>
+										
+										<td colspan="1" align="center" style="background-color: #ccc;"></td>
+										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
+										<td colspan="1" align="center" style="background-color: #ccc;"></td>
+									</tr>
+									
+									<?php foreach ($CompIns as $prod) {  ?>
+										<tr>
+											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
+											
+											<?php
+											//Recorro los años
+											$interruptor_mes = 0;
+											$Total = 0;
+											for ($z_ano = $ano_min; $z_ano <= $ano_max; $z_ano++) {
+												//recorro los meses
+												if($interruptor_mes==0){
+													for ($z_mes = $mes_min; $z_mes <= 12; $z_mes++) {
+														if(isset($prod[$z_ano][$z_mes]['Total'])&&$prod[$z_ano][$z_mes]['Total']!=''){
+															echo '<td align="center">'.valores($prod[$z_ano][$z_mes]['Total'], 0).'</td>';
+															$Total = $Total + $prod[$z_ano][$z_mes]['Total'];
+														}else{
+															echo '<td align="center"></td>';
+														}
+													}
+												}else{
+													for ($z_mes = 1; $z_mes <= 12; $z_mes++) {
+														if(isset($prod[$z_ano][$z_mes]['Total'])&&$prod[$z_ano][$z_mes]['Total']!=''){
+															echo '<td align="center">'.valores($prod[$z_ano][$z_mes]['Total'], 0).'</td>';
+															$Total = $Total + $prod[$z_ano][$z_mes]['Total'];
+														}else{
+															echo '<td align="center"></td>';
+														}
+													}
+												}
+												
+												//sumo 1 al interruptor
+												$interruptor_mes++;
+											}
+											?>
+											
+											<td colspan="1" align="center"></td>
+											<td colspan="1" align="center"><?php echo valores($Total, 0); ?></td>
+											<td colspan="1" align="center"></td>
+										</tr>
+									<?php }
+								} ?>
+							</tbody>
+						</table>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table"></i></div>
+			<h5>Pagos del Cliente</h5>	
+		</header>
+		<div id="div-3" class="tab-content">
+			
+			<div class="tab-pane fade active in" id="basicos">
+				<div class="wmd-panel">
+						
+					<div class="table-responsive">		
+						<table id="dataTable" class="table table-bordered table-condensed dataTable">
+											  
+							<tbody role="alert" aria-live="polite" aria-relevant="all">
+								<?php 
+								/******************************************************************************/
+								//Verifico si hay resultados
+								if($CompCliente){ ?>	
+									<tr>
+										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Pagos Clientes</td>
+										<?php
+										//Recorro los años
+										$interruptor_mes = 0;
+										for ($z_ano = $ano_min; $z_ano <= $ano_max; $z_ano++) {
+											//recorro los meses
+											if($interruptor_mes==0){
+												for ($z_mes = $mes_min; $z_mes <= 12; $z_mes++) {
+													echo '<td align="center" style="background-color: #ccc;"></td>';
+												}
+											}else{
+												for ($z_mes = 1; $z_mes <= 12; $z_mes++) {
+													echo '<td align="center" style="background-color: #ccc;"></td>';
+												}
+											}
+											//sumo 1 al interruptor
+											$interruptor_mes++;
+										}
+										?>
+										
+										<td colspan="1" align="center" style="background-color: #ccc;"></td>
+										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
+										<td colspan="1" align="center" style="background-color: #ccc;"></td>
+									</tr>
+									
+									<?php foreach ($CompCliente as $prod) {  ?>
+										<tr>
+											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
+											
+											<?php
+											//Recorro los años
+											$interruptor_mes = 0;
+											$Total = 0;
+											for ($z_ano = $ano_min; $z_ano <= $ano_max; $z_ano++) {
+												//recorro los meses
+												if($interruptor_mes==0){
+													for ($z_mes = $mes_min; $z_mes <= 12; $z_mes++) {
+														if(isset($prod[$z_ano][$z_mes]['Total'])&&$prod[$z_ano][$z_mes]['Total']!=''){
+															echo '<td align="center">'.valores($prod[$z_ano][$z_mes]['Total'], 0).'</td>';
+															$Total = $Total + $prod[$z_ano][$z_mes]['Total'];
+														}else{
+															echo '<td align="center"></td>';
+														}
+													}
+												}else{
+													for ($z_mes = 1; $z_mes <= 12; $z_mes++) {
+														if(isset($prod[$z_ano][$z_mes]['Total'])&&$prod[$z_ano][$z_mes]['Total']!=''){
+															echo '<td align="center">'.valores($prod[$z_ano][$z_mes]['Total'], 0).'</td>';
+															$Total = $Total + $prod[$z_ano][$z_mes]['Total'];
+														}else{
+															echo '<td align="center"></td>';
+														}
+													}
+												}
+												
+												//sumo 1 al interruptor
+												$interruptor_mes++;
+											}
+											?>
+											
+											<td colspan="1" align="center"></td>
+											<td colspan="1" align="center"><?php echo valores($Total, 0); ?></td>
+											<td colspan="1" align="center"></td>
+										</tr>
+									<?php } ?>
+								<?php } ?>
+								
+								
+					  
+							</tbody>
+						</table>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	
+    
 <div class="clearfix"></div>
 <div class="col-sm-12 fcenter" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -1131,7 +1390,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$y = "licitacion_listado.idSistema>=0";
 	$w = "idSistema>=0 AND idEstado=1";
 }else{
-	$y = "licitacion_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 AND usuarios_contratos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";		
+	$y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";	
 	$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 }
  
@@ -1157,7 +1416,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 											 'Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Imputs->form_select_join_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', 'usuarios_contratos', $y, $dbConn);
+					$Form_Imputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);	
 				}
 				?>        
 	   
@@ -1166,7 +1425,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>          
+            <?php widget_validator(); ?>          
 		</div>
 	</div>
 </div> 

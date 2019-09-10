@@ -305,36 +305,14 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTrabajo,$row );
 }
-
-
-
-$html ='<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-
-<head>
-	<title>Imprimir</title>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<!-- Bootstrap -->
-    <link rel="stylesheet" href="'.DB_SITE.'/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="'.DB_SITE.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="'.DB_SITE.'/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
-    <!-- Metis core stylesheet -->
-    <link rel="stylesheet" href="'.DB_SITE.'/Legacy/gestion_modular/css/main.min.css">
-    <!-- Metis Theme stylesheet -->
-    <link rel="stylesheet" href="'.DB_SITE.'/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
-    <!-- Estilo definido por mi -->
-    <link href="'.DB_SITE.'/Legacy/gestion_modular/css/my_style.css" rel="stylesheet" type="text/css">
-    <link href="'.DB_SITE.'/LIB_assets/css/my_colors.css" rel="stylesheet" type="text/css">
-    <link href="'.DB_SITE.'/Legacy/gestion_modular/css/my_corrections.css" rel="stylesheet" type="text/css">
-    <style>
-    body{background-color:#fff;}
-    </style>
-</head>
-
-<body onload="window.print();">';
- 
-
-$html .='<style>
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Print.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+$html = '<style>
 #address {
     height: auto !important;
 }
@@ -560,15 +538,9 @@ $html .='<style>
 
 </div>';
 
-
-
-
-
-
-
-$html .= '</body>
-</html>';
-
 echo $html;
-
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Print.php';
 ?>

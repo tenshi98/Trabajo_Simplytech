@@ -99,6 +99,8 @@ trabajadores_listado.File_Antecedentes,
 trabajadores_listado.File_Carnet,
 trabajadores_listado.File_Contrato,
 trabajadores_listado.File_Licencia,
+trabajadores_listado.File_RHTM,
+trabajadores_listado.File_RHTM_Fecha,
 
 contratista_listado.Nombre AS Contratista
 
@@ -194,6 +196,7 @@ array_push( $arrCargas,$row );
 						<li class=""><a href="<?php echo 'trabajadores_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Curriculum</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Carnet</a></li>
+						<li class=""><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - RHTM</a></li>
 						
 					</ul>
                 </li>           
@@ -351,10 +354,24 @@ array_push( $arrCargas,$row );
 										</tr>
 									';
 								}
+								//RHTM
+								if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){
+									echo '
+										<tr class="item-row">
+											<td>RHTM Revisado el '.fecha_estandar($rowdata['File_RHTM_Fecha']).'</td>
+											<td width="10">
+												<div class="btn-group" style="width: 70px;">
+													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_RHTM'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+													<a href="1download.php?dir=upload&file='.$rowdata['File_RHTM'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+												</div>
+											</td>
+										</tr>
+									';
+								}
 								?>
 							</tbody>
 						</table>
-						<?php require_once '../LIBS_js/modal/modal.php';?>
+						<?php widget_modal(80, 95); ?>
 						
 
 										
@@ -416,7 +433,7 @@ array_push( $arrCargas,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -571,7 +588,7 @@ array_push( $arrTrabajador,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -657,7 +674,7 @@ array_push( $arrTrabajador,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

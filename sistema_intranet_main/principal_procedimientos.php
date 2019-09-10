@@ -33,8 +33,7 @@ require_once 'core/Web.Header.Main.php';
  
 <?php 
 	//Se dibuja el explorador de archivos
-	$Form_Imputs = new Form_Inputs();
-	$Form_Imputs->file_explorer(1, 'connector_procedimientos', DB_EMPRESA_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
+	echo file_explorer(1, 'connector_procedimientos', DB_EMPRESA_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
 
 
 <div class="clearfix"></div>

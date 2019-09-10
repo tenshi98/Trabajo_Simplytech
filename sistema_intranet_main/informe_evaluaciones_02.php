@@ -65,9 +65,9 @@ LEFT JOIN `quiz_listado`       ON quiz_listado.idQuiz        = quiz_realizadas.i
 LEFT JOIN `alumnos_listado`    ON alumnos_listado.idAlumno   = quiz_realizadas.idAlumno
 ".$z." AND idEstadoAprobacion=3) AS Reintentado,
 
-AVG(quiz_realizadas.Respondido) AS PromRespondido,
-AVG(quiz_realizadas.Correctas) AS PromCorrectas,
-AVG(quiz_realizadas.Rendimiento) AS PromRendimiento
+AVG(NULLIF(IF(quiz_realizadas.Respondido!=0,quiz_realizadas.Respondido,0),0))   AS PromRespondido,
+AVG(NULLIF(IF(quiz_realizadas.Correctas!=0,quiz_realizadas.Correctas,0),0))     AS PromCorrectas,
+AVG(NULLIF(IF(quiz_realizadas.Rendimiento!=0,quiz_realizadas.Rendimiento,0),0)) AS PromRendimiento
 
 FROM `quiz_realizadas`
 LEFT JOIN `quiz_listado`       ON quiz_listado.idQuiz        = quiz_realizadas.idQuiz
@@ -278,7 +278,7 @@ foreach ($arrTemporal as $temp) {
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
  
 <div class="clearfix"></div>
 <div class="col-sm-12 fcenter" style="margin-bottom:30px">
@@ -329,7 +329,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div> 

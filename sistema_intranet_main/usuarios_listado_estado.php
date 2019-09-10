@@ -201,7 +201,7 @@ $x_permisos_2 = $prm_x[36] + $prm_x[37];
 $x_permisos_3 = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41] + $prm_x[42] + $prm_x[43];
 $x_permisos_4 = $prm_x[54] + $prm_x[55] + $prm_x[56] + $prm_x[57] + $prm_x[58];
 $x_permisos_5 = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49] + $prm_x[50] + $prm_x[51] + $prm_x[52] + $prm_x[53];
-$x_permisos_6 = $prm_x[59] + prm_x[60];
+$x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 
 

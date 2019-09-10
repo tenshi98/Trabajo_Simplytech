@@ -117,7 +117,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
-			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+			<?php widget_validator(); ?> 
 		</div>
 	</div>
 </div>
@@ -159,7 +159,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
-			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+			<?php widget_validator(); ?> 
 		</div>
 	</div>
 </div>

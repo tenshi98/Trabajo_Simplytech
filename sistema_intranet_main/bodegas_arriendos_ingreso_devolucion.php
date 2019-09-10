@@ -82,7 +82,7 @@ if ( ! empty($_GET['id']) ) { ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -226,8 +226,8 @@ array_push( $arrTipo,$row );
 				
 				//se dibujan los inputs
 				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, $dbConn);
-				$Form_Imputs->form_select('Tipo Documento','idDocumentos', $x2, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos!=3 AND idDocumentos!=4', '', '', $dbConn);
+				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
+				$Form_Imputs->form_select('Tipo Documento','idDocumentos', $x2, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos!=3 AND idDocumentos!=4', '', $dbConn);
 				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x3, 1);
 				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x4, 1);
 				$Form_Imputs->form_date('F Devolucion Estimada','Devolucion_fecha', $x5, 1);
@@ -244,7 +244,7 @@ array_push( $arrTipo,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -315,7 +315,7 @@ array_push( $arrTipo,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

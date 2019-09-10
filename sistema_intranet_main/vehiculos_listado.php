@@ -78,6 +78,7 @@ vehiculos_listado.idOpciones_7,
 vehiculos_listado.idOpciones_8,
 vehiculos_listado.Capacidad,
 vehiculos_listado.MCubicos, 
+vehiculos_listado.CapacidadPersonas,
 
 
 vehiculos_listado.doc_mantencion,
@@ -87,6 +88,7 @@ vehiculos_listado.doc_resolucion_sanitaria,
 vehiculos_listado.doc_revision_tecnica,
 vehiculos_listado.doc_seguro_carga,
 vehiculos_listado.doc_soap,
+vehiculos_listado.doc_cert_trans_personas,
 vehiculos_listado.doc_fecha_mantencion,
 vehiculos_listado.doc_fecha_padron,
 vehiculos_listado.doc_fecha_permiso_circulacion,
@@ -94,6 +96,7 @@ vehiculos_listado.doc_fecha_resolucion_sanitaria,
 vehiculos_listado.doc_fecha_revision_tecnica,
 vehiculos_listado.doc_fecha_seguro_carga,
 vehiculos_listado.doc_fecha_soap,
+vehiculos_listado.doc_fecha_cert_trans_personas,
 
 core_sistemas.Nombre AS Sistema,
 core_estados.Nombre AS Estado,
@@ -371,15 +374,16 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 							<li class=""><a href="<?php echo 'vehiculos_listado_colegios.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Colegios</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'vehiculos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Foto</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Foto</a></li>
 						
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_padron.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Padron</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_permiso_circulacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Permiso Circulacion</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_soap.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >SOAP</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_revision_tecnica.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Revision Tecnica</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_seguro_carga.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Seguro Carga</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_resolucion_sanitaria.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resolucion Sanitaria</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_mantencion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Mantenciones</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_padron.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Padron</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_permiso_circulacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Permiso Circulacion</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_soap.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - SOAP</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_revision_tecnica.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Revision Tecnica</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_seguro_carga.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Seguro Carga</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_resolucion_sanitaria.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Resolucion Sanitaria</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_mantencion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Mantenciones</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_trans_personas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Cert. Transporte Personas</a></li>
 						
 					</ul>
                 </li>           
@@ -439,6 +443,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Caracteristicos</h2>
 						<p class="text-muted">
 							<strong>Zona de Trabajo : </strong><?php echo $rowdata['Zona']; ?><br/>
+							<strong>Capacidad Pasajeros : </strong><?php echo $rowdata['CapacidadPersonas']; ?><br/>
 							<strong>Capacidad (Kilos) : </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/>
 							<strong>Metros Cubicos (M3) : </strong><?php echo Cantidades_decimales_justos($rowdata['MCubicos']); ?><br/>
 							<strong>Tipo de Carga : </strong><?php echo $rowdata['VehiculoTipoCarga']; ?><br/>
@@ -632,10 +637,24 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 										</tr>
 									';
 								}
+								//Certificado Transporte Personas 
+								if(isset($rowdata['doc_cert_trans_personas'])&&$rowdata['doc_cert_trans_personas']!=''){
+									echo '
+										<tr class="item-row">
+											<td>Certificado Transporte Personas (vence el '.fecha_estandar($rowdata['doc_fecha_cert_trans_personas']).')</td>
+											<td width="10">
+												<div class="btn-group" style="width: 70px;">
+													<a href="view_doc_preview.php?path=upload&file='.$rowdata['doc_cert_trans_personas'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+													<a href="1download.php?dir=upload&file='.$rowdata['doc_cert_trans_personas'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+												</div>
+											</td>
+										</tr>
+									';
+								}
 								?>
 							</tbody>
 						</table>
-						<?php require_once '../LIBS_js/modal/modal.php';?>	
+						<?php widget_modal(80, 95); ?>	
 							
 							
 										
@@ -704,7 +723,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -866,7 +885,7 @@ array_push( $arrTrabajador,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -968,7 +987,7 @@ array_push( $arrTrabajador,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

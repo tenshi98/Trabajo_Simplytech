@@ -6,14 +6,9 @@ li{list-style-image: none !important;list-style-type: none !important;	}
 .inner { min-height:780px !important;}
 .media-body a:hover {color: #428bca !important;	text-decoration: none !important;	}
 .margin_width {margin-left: 15px !important;}
-.form-horizontal .form-group input, #left #menu a .margin_width{margin-right: 15px !important;}
+#left #menu a .margin_width{margin-right: 15px !important;}
 .navvisibility{display:none;}
-.sidebar-left-mini .fa.fa-angle-right.fright.margin_width{display:none !important;}
-textarea {resize:none !important;	}
-[required] {background:url(../img/required.png) no-repeat 5px center;background-color: #fff !important;}
-textarea:required{background:url(../img/required.png) no-repeat 5px 10px !important;background-color: #fff !important;	}	
-input:required:valid , select:valid, textarea:valid{background:url() no-repeat left center !important; background-color: #fff !important;}
-.form-control , .chosen-single{padding-top: 6px;padding-right: 12px;padding-bottom: 6px;padding-left: 25px !important;}  
+.sidebar-left-mini .fa.fa-angle-right.fright.margin_width{display:none !important;} 
 #menu li > ul, .sidebar-left-mini #menu li > ul, .sidebar-left-mini #menu li > a .link-title  {min-width: 300px !important;}
 .filter{background-image: url(../img/search-dark.png);background-repeat: no-repeat;background-position: 7px center;}
 .navbar-brand img{height: 50px;}
@@ -27,7 +22,7 @@ input:required:valid , select:valid, textarea:valid{background:url() no-repeat l
 .table-responsive {width: 100% !important;overflow-y: hidden !important;overflow-x: scroll !important;margin-bottom: 0px !important;padding-left: 0px!important;padding-right: 0px!important;}
 .table {margin-bottom: 0px !important;}
 .invoice .table-responsive {border: 1px solid #ddd;}
-.user-media .media-body {float: none !important;}
+.user-media .media-body {float: none !important;display: contents !important;}
 .sidebar-left-hidden #left ul li {height: 0;}
 .widthtd120{width: 120px !important;}
 .widthtd160{width: 160px !important;}
@@ -101,4 +96,4 @@ border: 1px solid #DC4F21;
 	.dropdown-menu {width: 100% !important;}
 }
 .box .tab-content, #items{background-color: #fff !important;}
-
+#top .navbar-nav .dropdown-toggle {padding-top: 15px !important;}

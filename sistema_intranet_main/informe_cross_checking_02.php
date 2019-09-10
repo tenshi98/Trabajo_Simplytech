@@ -144,6 +144,10 @@ cross_predios_listado_zonas.DistanciaPlant AS CuartelDistanciaPlant,
 cross_predios_listado_zonas.Plantas AS CuartelCantPlantas,
 
 telemetria_listado.Nombre AS TractorNombre,
+telemetria_listado.SensoresNombre_1 AS TractorSensorNombre_1,
+telemetria_listado.SensoresNombre_2 AS TractorSensorNombre_2,
+telemetria_listado.SensoresNombre_3 AS TractorSensorNombre_3,
+telemetria_listado.SensoresNombre_4 AS TractorSensorNombre_4,
 cross_solicitud_aplicacion_listado_tractores.idTractores,
 cross_solicitud_aplicacion_listado_tractores.GeoVelocidadMin,
 cross_solicitud_aplicacion_listado_tractores.GeoVelocidadMax,
@@ -228,10 +232,11 @@ array_push( $arrOTS,$row );
 						<th>Maxima</th>
 						<th>Promedio</th>
 						<th>Programada</th>
-						<th>Sensor 1</th>
-						<th>Sensor 2</th>
-						<th>Sensor 3</th>
-						<th>Sensor 4</th>
+						<th><?php echo $arrOTS[0]['TractorSensorNombre_1']; ?></th>
+						<th><?php echo $arrOTS[0]['TractorSensorNombre_2']; ?></th>
+						<th><?php echo $arrOTS[0]['TractorSensorNombre_3']; ?></th>
+						<th><?php echo $arrOTS[0]['TractorSensorNombre_4']; ?></th>
+						
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
@@ -271,7 +276,7 @@ array_push( $arrOTS,$row );
 		</div>
 	</div>
 </div>
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
 <div class="col-sm-12 fcenter" style="margin-bottom:30px">
@@ -337,7 +342,7 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div> 

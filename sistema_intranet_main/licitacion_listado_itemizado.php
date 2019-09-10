@@ -261,7 +261,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>       
+            <?php widget_validator(); ?>       
 		</div>
 	</div>
 </div>
@@ -421,7 +421,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -432,7 +432,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
 // tomo los datos del usuario
-$query = "SELECT Nombre, idSistema
+$query = "SELECT Nombre, idSistema, idOpcionItem
 FROM `licitacion_listado`
 WHERE idLicitacion = {$_GET['id']}";
 //Consulta
@@ -792,9 +792,14 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class="active"><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Itemizado</a></li>
+						<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
+							<li class="active"><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Itemizado</a></li>
+						<?php } ?> 	
+						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class=""><a href="<?php echo 'licitacion_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivos</a></li>
 					</ul>
-                </li>           
+				</li> 
+                          
 			</ul>	
 		</header>
         <div class="table-responsive">

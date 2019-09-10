@@ -51,10 +51,12 @@ if( ! defined('XMBCXRXSKGC')) {
 	if ( !empty($_POST['doc_fecha_revision_tecnica']) )       $doc_fecha_revision_tecnica        = $_POST['doc_fecha_revision_tecnica'];
 	if ( !empty($_POST['doc_fecha_seguro_carga']) )           $doc_fecha_seguro_carga            = $_POST['doc_fecha_seguro_carga'];
 	if ( !empty($_POST['doc_fecha_soap']) )                   $doc_fecha_soap                    = $_POST['doc_fecha_soap'];
+	if ( !empty($_POST['doc_fecha_cert_trans_personas']) )    $doc_fecha_cert_trans_personas     = $_POST['doc_fecha_cert_trans_personas'];
 	if ( !empty($_POST['idTransporte']) )                     $idTransporte                      = $_POST['idTransporte'];
 	if ( !empty($_POST['idProceso']) )                        $idProceso                         = $_POST['idProceso'];
 	if ( !empty($_POST['Motivo']) )                           $Motivo                            = $_POST['Motivo'];
 	if ( !empty($_POST['LimiteVelocidad']) )                  $LimiteVelocidad                   = $_POST['LimiteVelocidad'];
+	if ( !empty($_POST['CapacidadPersonas']) )                $CapacidadPersonas                 = $_POST['CapacidadPersonas'];
 	
 	if ( !empty($_POST['idColegioAsignado']) )                $idColegioAsignado                 = $_POST['idColegioAsignado'];
 	if ( !empty($_POST['idColegio']) )                        $idColegio                         = $_POST['idColegio'];
@@ -113,10 +115,12 @@ if( ! defined('XMBCXRXSKGC')) {
 			case 'doc_fecha_revision_tecnica':      if(empty($doc_fecha_revision_tecnica)){        $error['doc_fecha_revision_tecnica']         = 'error/No ha ingresado la fecha de revision tecnica';}break;
 			case 'doc_fecha_seguro_carga':          if(empty($doc_fecha_seguro_carga)){            $error['doc_fecha_seguro_carga']             = 'error/No ha ingresado la fecha de seguro de carga';}break;
 			case 'doc_fecha_soap':                  if(empty($doc_fecha_soap)){                    $error['doc_fecha_soap']                     = 'error/No ha ingresado la fecha de SOAP';}break;
+			case 'doc_fecha_cert_trans_personas':   if(empty($doc_fecha_cert_trans_personas)){     $error['doc_fecha_cert_trans_personas']      = 'error/No ha ingresado la fecha de certificado transporte personas';}break;
 			case 'idTransporte':                    if(empty($idTransporte)){                      $error['idTransporte']                       = 'error/No ha seleccionado el transporte';}break;
 			case 'idProceso':                       if(empty($idProceso)){                         $error['idProceso']                          = 'error/No ha seleccionado el estado del proceso';}break;
 			case 'Motivo':                          if(empty($Motivo)){                            $error['Motivo']                             = 'error/No ha ingresado el motivo';}break;
 			case 'LimiteVelocidad':                 if(empty($LimiteVelocidad)){                   $error['LimiteVelocidad']                    = 'error/No ha ingresado el limite de velocidad';}break;
+			case 'CapacidadPersonas':               if(empty($CapacidadPersonas)){                 $error['CapacidadPersonas']                  = 'error/No ha ingresado la capacidad de pasajeros';}break;
 			
 			case 'idColegioAsignado':               if(empty($idColegioAsignado)){                 $error['idColegioAsignado']                  = 'error/No ha seleccionado el id del colegio';}break;
 			case 'idColegio':                       if(empty($idColegio)){                         $error['idColegio']                          = 'error/No ha seleccionado el colegio';}break;
@@ -205,18 +209,21 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($doc_fecha_revision_tecnica) && $doc_fecha_revision_tecnica != ''){          $a .= ",'".$doc_fecha_revision_tecnica."'" ;      }else{$a .=",''";}
 				if(isset($doc_fecha_seguro_carga) && $doc_fecha_seguro_carga != ''){                  $a .= ",'".$doc_fecha_seguro_carga."'" ;          }else{$a .=",''";}
 				if(isset($doc_fecha_soap) && $doc_fecha_soap != ''){                                  $a .= ",'".$doc_fecha_soap."'" ;                  }else{$a .=",''";}
+				if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){    $a .= ",'".$doc_fecha_cert_trans_personas."'" ;   }else{$a .=",''";}
 				if(isset($idTransporte) && $idTransporte != ''){                                      $a .= ",'".$idTransporte."'" ;                    }else{$a .=",''";}
 				if(isset($idProceso) && $idProceso != ''){                                            $a .= ",'".$idProceso."'" ;                       }else{$a .=",''";}
 				if(isset($Motivo) && $Motivo != ''){                                                  $a .= ",'".$Motivo."'" ;                          }else{$a .=",''";}
 				if(isset($LimiteVelocidad) && $LimiteVelocidad != ''){                                $a .= ",'".$LimiteVelocidad."'" ;                 }else{$a .=",''";}
-			
+				if(isset($CapacidadPersonas) && $CapacidadPersonas != ''){                            $a .= ",'".$CapacidadPersonas."'" ;               }else{$a .=",''";}
+				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `vehiculos_listado` (idSistema, idEstado, idTipo, idZona, Nombre, Marca, Modelo, Num_serie,
 				AnoFab, Patente, idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5,idOpciones_6, idOpciones_7,
 				idOpciones_8, idOpciones_9, idOpciones_10, idTelemetria, idBodega, idRuta, idTrabajador,Password,
 				dispositivo, IMEI, GSM, GeoLatitud, GeoLongitud,Capacidad, MCubicos, idTipoCarga, doc_fecha_mantencion, 
 				doc_fecha_padron, doc_fecha_permiso_circulacion, doc_fecha_resolucion_sanitaria, doc_fecha_revision_tecnica, 
-				doc_fecha_seguro_carga, doc_fecha_soap,idTransporte, idProceso, Motivo, LimiteVelocidad ) 
+				doc_fecha_seguro_carga, doc_fecha_soap,doc_fecha_cert_trans_personas,idTransporte, idProceso, Motivo, 
+				LimiteVelocidad, CapacidadPersonas ) 
 				VALUES ({$a} )";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -354,10 +361,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($doc_fecha_revision_tecnica) && $doc_fecha_revision_tecnica != ''){          $a .= ",doc_fecha_revision_tecnica='".$doc_fecha_revision_tecnica."'" ;}
 				if(isset($doc_fecha_seguro_carga) && $doc_fecha_seguro_carga != ''){                  $a .= ",doc_fecha_seguro_carga='".$doc_fecha_seguro_carga."'" ;}
 				if(isset($doc_fecha_soap) && $doc_fecha_soap != ''){                                  $a .= ",doc_fecha_soap='".$doc_fecha_soap."'" ;}
+				if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){    $a .= ",doc_fecha_cert_trans_personas='".$doc_fecha_cert_trans_personas."'" ;}
 				if(isset($idTransporte) && $idTransporte != ''){                                      $a .= ",idTransporte='".$idTransporte."'" ;}
 				if(isset($idProceso) && $idProceso != ''){                                            $a .= ",idProceso='".$idProceso."'" ;}
 				if(isset($Motivo) && $Motivo != ''){                                                  $a .= ",Motivo='".$Motivo."'" ;}
 				if(isset($LimiteVelocidad) && $LimiteVelocidad != ''){                                $a .= ",LimiteVelocidad='".$LimiteVelocidad."'" ;}
+				if(isset($CapacidadPersonas) && $CapacidadPersonas != ''){                            $a .= ",CapacidadPersonas='".$CapacidadPersonas."'" ;}
 				
 				// inserto los datos de registro en la db
 				$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
@@ -393,7 +402,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			// Se obtiene el nombre del logo
 			$query = "SELECT Direccion_img, doc_mantencion, doc_padron, doc_permiso_circulacion, 
-			doc_resolucion_sanitaria, doc_revision_tecnica,doc_seguro_carga, doc_soap
+			doc_resolucion_sanitaria, doc_revision_tecnica,doc_seguro_carga, doc_soap, 
+			doc_cert_trans_personas
 			FROM `vehiculos_listado`
 			WHERE idVehiculo = {$_GET['del']}";
 			$resultado = mysqli_query($dbConn, $query);
@@ -508,7 +518,21 @@ if( ! defined('XMBCXRXSKGC')) {
 					}catch(Exception $e) { 
 						//guardar el dato en un archivo log
 					}
-				}	
+				}
+				
+				//se elimina el archivo
+				if(isset($rowdata['doc_cert_trans_personas'])&&$rowdata['doc_cert_trans_personas']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['doc_cert_trans_personas'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['doc_cert_trans_personas']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+					
 							
 				header( 'Location: '.$location.'&deleted=true' );
 				die;
@@ -1812,7 +1836,142 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 			
 
-		break;		
+		break;	
+/*******************************************************************************************************************/
+		//Cambia el nivel del permiso
+		case 'submit_doc_cert_trans_personas':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			if ($_FILES["doc_cert_trans_personas"]["error"] > 0){ 
+				$error['doc_cert_trans_personas']     = 'error/Ha ocurrido un error'; 
+			} else {
+				//Se verifican las extensiones de los archivos
+				$permitidos = array("application/msword",
+									"application/vnd.ms-word",
+									"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+											
+									"application/pdf",
+									"application/octet-stream",
+									"application/x-real",
+									"application/vnd.adobe.xfdf",
+									"application/vnd.fdf",
+									"binary/octet-stream",
+									
+									"image/jpg", 
+									"image/jpeg", 
+									"image/gif", 
+									"image/png"
+
+											);
+											
+				//Se verifica que el archivo subido no exceda los 100 kb
+				$limite_kb = 10000;
+				//Sufijo
+				$sufijo = 'vehiculo_doc_cert_trans_personas_'.$idVehiculo.'_';
+			  
+				if (in_array($_FILES['doc_cert_trans_personas']['type'], $permitidos) && $_FILES['doc_cert_trans_personas']['size'] <= $limite_kb * 1024){
+					//Se especifica carpeta de destino
+					$ruta = "upload/".$sufijo.$_FILES['doc_cert_trans_personas']['name'];
+					//Se verifica que el archivo un archivo con el mismo nombre no existe
+					if (!file_exists($ruta)){
+						//Se mueve el archivo a la carpeta previamente configurada
+						$move_result = @move_uploaded_file($_FILES["doc_cert_trans_personas"]["tmp_name"], $ruta);
+						if ($move_result){
+					
+							//Filtro para idSistema
+							$a = "doc_cert_trans_personas='".$sufijo.$_FILES['doc_cert_trans_personas']['name']."'" ;
+							if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){   $a .= ",doc_fecha_cert_trans_personas='".$doc_fecha_cert_trans_personas."'" ;}
+							
+							// inserto los datos de registro en la db
+							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if($resultado){
+								
+								header( 'Location: '.$location );
+								die;
+								
+							//si da error, guardar en el log de errores una copia
+							}else{
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+					
+						} else {
+							$error['doc_cert_trans_personas']     = 'error/Ocurrio un error al mover el archivo'; 
+						}
+					} else {
+						$error['doc_cert_trans_personas']     = 'error/El archivo '.$_FILES['doc_cert_trans_personas']['name'].' ya existe'; 
+					}
+				} else {
+					$error['doc_cert_trans_personas']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+				}
+			}
+
+
+		break;	
+/*******************************************************************************************************************/
+		case 'del_doc_cert_trans_personas':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Usuario
+			$idVehiculo = $_GET['del_doc_cert_trans_personas'];
+			// Se obtiene el nombre del logo
+			$query = "SELECT doc_cert_trans_personas
+			FROM `vehiculos_listado`
+			WHERE idVehiculo = {$idVehiculo}";
+			$resultado = mysqli_query($dbConn, $query);
+			$rowdata = mysqli_fetch_assoc ($resultado);
+			
+			//se borra el dato de la base de datos
+			$query  = "UPDATE `vehiculos_listado` SET doc_cert_trans_personas='', doc_fecha_cert_trans_personas='' WHERE idVehiculo = '{$idVehiculo}'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina el archivo
+				if(isset($rowdata['doc_cert_trans_personas'])&&$rowdata['doc_cert_trans_personas']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['doc_cert_trans_personas'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['doc_cert_trans_personas']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&id_img=true' );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}
+			
+
+		break;	
 /*******************************************************************************************************************/		
 		case 'insert_colegio':
 			

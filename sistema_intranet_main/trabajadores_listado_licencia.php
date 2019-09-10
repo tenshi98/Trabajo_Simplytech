@@ -113,6 +113,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'trabajadores_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Curriculum</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Carnet</a></li>
+						<li class=""><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - RHTM</a></li>
 						
 					</ul>
                 </li>           
@@ -139,7 +140,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
         
 						echo '<div class="col-sm-10 fcenter"><h3>Archivo</h3>';
-						echo preview_docs('upload', $rowdata['File_Licencia']); 
+						echo preview_docs('upload', $rowdata['File_Licencia'], ''); 
 						echo '</div>
 						<a href="'.$new_location.'&id='.$_GET['id'].'&del_File_Licencia='.$_GET['id'].'" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 						<div class="clearfix"></div>';
@@ -159,7 +160,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
 					</div>
 				</form>
-				<?php require_once '../LIBS_js/validator/form_validator.php';?>
+				<?php widget_validator(); ?>
 			</div>
 		</div>	
 	</div>

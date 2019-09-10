@@ -51,9 +51,9 @@ if( ! defined('XMBCXRXSKGC')) {
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	//Verifica si el mail corresponde
-	if(isset($email)){if(validaremail($email)){ }else{   $error['email']   = 'error/El Email ingresado no es valido'; }}	
-	if(isset($Fono1)){if(validarnumero($Fono1)) {        $error['Fono1']   = 'error/Ingrese un numero telefonico valido'; }}
-	if(isset($Fono2)){if(validarnumero($Fono2)) {        $error['Fono2']   = 'error/Ingrese un numero telefonico valido'; }}
+	if(isset($email)&&!validarEmail($email)){   $error['email']   = 'error/El Email ingresado no es valido'; }	
+	if(isset($Fono1)&&!validarNumero($Fono1)) { $error['Fono1']   = 'error/Ingrese un numero telefonico valido'; }
+	if(isset($Fono2)&&!validarNumero($Fono2)) { $error['Fono2']   = 'error/Ingrese un numero telefonico valido'; }
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */

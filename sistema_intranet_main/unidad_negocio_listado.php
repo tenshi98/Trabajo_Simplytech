@@ -91,7 +91,7 @@ if ( ! empty($_GET['clone_idMaquina']) ) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>	
@@ -727,7 +727,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 								?>
 							</tbody>
 						</table>
-						<?php require_once '../LIBS_js/modal/modal.php';?>
+						<?php widget_modal(80, 95); ?>
 						
 
 						
@@ -831,7 +831,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				</div>
                       
 			</form> 
-			<?php require_once '../LIBS_js/validator/form_validator.php';?>
+			<?php widget_validator(); ?>
                     
 		</div>
 	</div>
@@ -978,7 +978,7 @@ array_push( $arrMaquina,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div> 
@@ -1063,7 +1063,7 @@ array_push( $arrMaquina,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

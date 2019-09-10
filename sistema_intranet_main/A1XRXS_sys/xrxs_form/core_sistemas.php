@@ -110,11 +110,11 @@ if( ! defined('XMBCXRXSKGC')) {
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	//Verifica si el mail corresponde
-	if(isset($email_principal)&&$email_principal!=''){if(validaremail($email_principal)){ }else{   $error['email_principal']   = 'error/El Email de sistema ingresado no es valido'; }}	
-	if(isset($Contacto_Fono1)&&$Contacto_Fono1!=''){if (validarnumero($Contacto_Fono1)) {         $error['Fono1']	         = 'error/Ingrese un numero telefonico valido'; }}
-	if(isset($Contacto_Fono2)&&$Contacto_Fono2!=''){if (validarnumero($Contacto_Fono2)) {         $error['Fono2']	         = 'error/Ingrese un numero telefonico valido'; }}
-	if(isset($Rut)){if(RutValidate($Rut)==0){                                $error['Rut']               = 'error/El Rut ingresado no es valido'; }}
-	if(isset($Contacto_Email)&&$email_principal!=''){if(validaremail($Contacto_Email)){ }else{     $error['Contacto_Email']    = 'error/El Email de contacto ingresado no es valido'; }}	
+	if(isset($email_principal)&&$email_principal!=''&&!validarEmail($email_principal)){ $error['email_principal']   = 'error/El Email de sistema ingresado no es valido'; }
+	if(isset($Contacto_Fono1)&&$Contacto_Fono1!=''&&!validarNumero($Contacto_Fono1)) {  $error['Fono1']	            = 'error/Ingrese un numero telefonico valido'; }
+	if(isset($Contacto_Fono2)&&$Contacto_Fono2!=''&&!validarNumero($Contacto_Fono2)) {  $error['Fono2']	            = 'error/Ingrese un numero telefonico valido'; }
+	if(isset($Rut)&&$Rut!=''&&!validarRut($Rut)){                                       $error['Rut']               = 'error/El Rut ingresado no es valido'; }
+	if(isset($Contacto_Email)&&$email_principal!=''&&!validarEmail($Contacto_Email)){   $error['Contacto_Email']    = 'error/El Email de contacto ingresado no es valido'; }	
 	
 	
 	

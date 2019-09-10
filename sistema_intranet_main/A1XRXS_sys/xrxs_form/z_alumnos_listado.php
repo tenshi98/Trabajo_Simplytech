@@ -71,18 +71,18 @@ if( ! defined('XMBCXRXSKGC')) {
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	//Verifica si el mail corresponde
-	if(isset($email)){if(validaremail($email)){ }else{   $error['email']   = 'error/El Email ingresado no es valido'; }}	
-	if(isset($Fono1)){if(validarnumero($Fono1)) {        $error['Fono1']   = 'error/Ingrese un numero telefonico valido'; }}
-	if(isset($Fono2)){if(validarnumero($Fono2)) {        $error['Fono2']   = 'error/Ingrese un numero telefonico valido'; }}
-	if(isset($Rut)){if(RutValidate($Rut)==0){            $error['Rut']     = 'error/El Rut ingresado no es valido'; }}
+	if(isset($email)&&!validarEmail($email)){                                 $error['email']                = 'error/El Email ingresado no es valido'; }	
+	if(isset($Fono1)&&!validarNumero($Fono1)) {                               $error['Fono1']                = 'error/Ingrese un numero telefonico valido'; }
+	if(isset($Fono2)&&!validarNumero($Fono2)) {                               $error['Fono2']                = 'error/Ingrese un numero telefonico valido'; }
+	if(isset($Rut)&&!validarRut($Rut)){                                       $error['Rut']                  = 'error/El Rut ingresado no es valido'; }
+	if(isset($PersonaContacto_email)&&!validarEmail($PersonaContacto_email)){ $error['email']                = 'error/El Email ingresado no es valido'; }	
+	if(isset($PersonaContacto_Fono)&&!validarNumero($PersonaContacto_Fono)) { $error['PersonaContacto_Fono'] = 'error/Ingrese un numero telefonico valido'; }
 	if(isset($password)&&isset($repassword)){
 		if ( $password <> $repassword )                  $error['password']  = 'error/Las contraseñas ingresadas no coinciden'; 
 	}
 	if(isset($password)){
 		if (strpos($password, " ")){                     $error['Password1'] = 'error/La contraseña contiene espacios vacios';}
 	}
-	if(isset($PersonaContacto_email)){if(validaremail($PersonaContacto_email)){ }else{   $error['email']   = 'error/El Email ingresado no es valido'; }}	
-	if(isset($PersonaContacto_Fono)){if(validarnumero($PersonaContacto_Fono)) {        $error['PersonaContacto_Fono']   = 'error/Ingrese un numero telefonico valido'; }}
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */

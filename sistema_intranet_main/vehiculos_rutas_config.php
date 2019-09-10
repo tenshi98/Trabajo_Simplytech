@@ -229,7 +229,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 						</div>
 							  
 					</form>
-					<?php require_once '../LIBS_js/validator/form_validator.php';?>
+					<?php widget_validator(); ?>
 					
 				</div>
 			</div>
@@ -562,7 +562,7 @@ array_push( $arrRutas,$row );
 						</div>
 							  
 					</form>
-					<?php require_once '../LIBS_js/validator/form_validator.php';?>
+					<?php widget_validator(); ?>
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<thead>
 						<tr role="row">

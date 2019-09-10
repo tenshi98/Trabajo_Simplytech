@@ -125,7 +125,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 								}?>
 								<tr class="odd"><td>Testeo horas transcurridas</td>     <td><?php echo $Tiempo; ?></td></tr>
 								<tr class="odd"><td>Testeo horas a segundos</td>        <td><?php echo '2 hora = '.horas2segundos('02:00:00'); ?></td></tr>
-								<tr class="odd"><td>IP Cliente</td>                     <td><?php echo get_client_ip(); ?></td></tr>
+								<tr class="odd"><td>IP Cliente</td>                     <td><?php echo obtenerIpCliente(); ?></td></tr>
 								
 								<tr class="odd"><td>Agente de Transporte</td>           <td><?php echo $_SERVER['HTTP_USER_AGENT']; ?></td></tr>
 								<tr class="odd"><td>username = tenshi98</td>            <td><?php $username = 'tenshi98'; echo preg_replace("/[^a-zA-Z0-9_\-]+/","",$username); ?></td></tr>
@@ -220,7 +220,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 									<?php } ?>                    
 								</tbody>
 							</table>
-							<?php require_once '../LIBS_js/modal/modal.php';?>
+							<?php widget_modal(80, 95); ?>
 						</div>
 					</div>
 				</div>
@@ -270,7 +270,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 								</div>
 									  
 							</form> 
-							<?php require_once '../LIBS_js/validator/form_validator.php';?>
+							<?php widget_validator(); ?>
 						</div>
 					</div>
 				</div>

@@ -609,8 +609,8 @@ height: 25px !important;
 white-space: initial;
 }
 .iw-content img {
-    float: right;
-    margin: 0 5px 5px 10px; 
+    float: left;
+    width: 100px; 
 }
 .iw-subTitle {
     font-size: 16px;
@@ -716,7 +716,7 @@ white-space: initial;
 }
 
 /*Modificacion a los checkbox*/
-/*.checkbox {
+.checkbox {
   padding-left: 20px; }
 .checkbox label {
   display: inline-block;
@@ -997,11 +997,7 @@ input[type="radio"] .styled:checked + label::after {
   color: #fff; }
 
 
-/*Imagenes en 3d*/
-#cover_prod {position: relative;perspective: 600px;perspective: 600px;text-align:center;width:100%;height:300px;}
-#cover_prod .threedee {position: absolute;left: 50%;top: 50%;transform-style: preserve-3d;transform-origin: 50% 50% 50%;backface-visibility: hidden;}
-#cover_prod .assembly {animation: spincover 30s linear infinite;}
-@keyframes spincover {to {transform: rotateY(360deg);}}
+
 
 /*El cuadro con el autocompletado*/
 .autocomplete {position: relative;display: inline-block;}

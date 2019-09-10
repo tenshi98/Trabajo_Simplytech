@@ -47,7 +47,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // Se traen todos los datos del trabajador
 $query = "SELECT Nombre,Patente,idOpciones_1,idOpciones_2,idOpciones_3,idOpciones_4,idOpciones_5,idOpciones_6, idOpciones_7,
 idOpciones_8,idTipo, Marca, Modelo, Num_serie, AnoFab, idZona, idSistema, Capacidad, MCubicos, idTipoCarga,
-idProceso, Motivo, LimiteVelocidad
+idProceso, Motivo, LimiteVelocidad, CapacidadPersonas
 FROM `vehiculos_listado`
 WHERE idVehiculo = {$_GET['id']}";
 //Consulta
@@ -202,15 +202,16 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 							<li class=""><a href="<?php echo 'vehiculos_listado_colegios.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Colegios</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'vehiculos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Foto</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Foto</a></li>
 						
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_padron.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Padron</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_permiso_circulacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Permiso Circulacion</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_soap.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >SOAP</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_revision_tecnica.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Revision Tecnica</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_seguro_carga.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Seguro Carga</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_resolucion_sanitaria.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resolucion Sanitaria</a></li>
-						<li class=""><a href="<?php echo 'vehiculos_listado_doc_mantencion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Mantenciones</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_padron.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Padron</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_permiso_circulacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Permiso Circulacion</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_soap.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - SOAP</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_revision_tecnica.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Revision Tecnica</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_seguro_carga.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Seguro Carga</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_resolucion_sanitaria.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Resolucion Sanitaria</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_mantencion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Mantenciones</a></li>
+						<li class=""><a href="<?php echo 'vehiculos_listado_doc_trans_personas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Cert. Transporte Personas</a></li>
 						
 					</ul>
                 </li>           
@@ -221,20 +222,21 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Nombre)) {           $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idTipo)) {           $x2  = $idTipo;            }else{$x2  = $rowdata['idTipo'];}
-					if(isset($Marca)) {            $x3  = $Marca;             }else{$x3  = $rowdata['Marca'];}
-					if(isset($Modelo)) {           $x4  = $Modelo;            }else{$x4  = $rowdata['Modelo'];}
-					if(isset($Patente)) {          $x5  = $Patente;           }else{$x5  = $rowdata['Patente'];}
-					if(isset($Num_serie)) {        $x6  = $Num_serie;         }else{$x6  = $rowdata['Num_serie'];}
-					if(isset($AnoFab)) {           $x7  = $AnoFab;            }else{$x7  = $rowdata['AnoFab'];}
-					if(isset($idZona)) {           $x8  = $idZona;            }else{$x8  = $rowdata['idZona'];}
-					if(isset($Capacidad)) {        $x9  = $Capacidad;         }else{$x9  = Cantidades_decimales_justos($rowdata['Capacidad']);}
-					if(isset($MCubicos)) {         $x10 = $MCubicos;          }else{$x10 = Cantidades_decimales_justos($rowdata['MCubicos']);}
-					if(isset($idTipoCarga)) {      $x11 = $idTipoCarga;       }else{$x11 = $rowdata['idTipoCarga'];}
-					if(isset($idProceso)) {        $x12 = $idProceso;         }else{$x12 = $rowdata['idProceso'];}
-					if(isset($Motivo)) {           $x13 = $Motivo;            }else{$x13 = $rowdata['Motivo'];}
-					if(isset($LimiteVelocidad)) {  $x14 = $LimiteVelocidad;   }else{$x14 = $rowdata['LimiteVelocidad'];}
+					if(isset($Nombre)) {             $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
+					if(isset($idTipo)) {             $x2  = $idTipo;            }else{$x2  = $rowdata['idTipo'];}
+					if(isset($Marca)) {              $x3  = $Marca;             }else{$x3  = $rowdata['Marca'];}
+					if(isset($Modelo)) {             $x4  = $Modelo;            }else{$x4  = $rowdata['Modelo'];}
+					if(isset($Patente)) {            $x5  = $Patente;           }else{$x5  = $rowdata['Patente'];}
+					if(isset($Num_serie)) {          $x6  = $Num_serie;         }else{$x6  = $rowdata['Num_serie'];}
+					if(isset($AnoFab)) {             $x7  = $AnoFab;            }else{$x7  = $rowdata['AnoFab'];}
+					if(isset($idZona)) {             $x8  = $idZona;            }else{$x8  = $rowdata['idZona'];}
+					if(isset($CapacidadPersonas)) {  $x9  = $CapacidadPersonas; }else{$x9  = $rowdata['CapacidadPersonas'];}
+					if(isset($Capacidad)) {          $x10 = $Capacidad;         }else{$x10 = Cantidades_decimales_justos($rowdata['Capacidad']);}
+					if(isset($MCubicos)) {           $x11 = $MCubicos;          }else{$x11 = Cantidades_decimales_justos($rowdata['MCubicos']);}
+					if(isset($idTipoCarga)) {        $x12 = $idTipoCarga;       }else{$x12 = $rowdata['idTipoCarga'];}
+					if(isset($idProceso)) {          $x13 = $idProceso;         }else{$x13 = $rowdata['idProceso'];}
+					if(isset($Motivo)) {             $x14 = $Motivo;            }else{$x14 = $rowdata['Motivo'];}
+					if(isset($LimiteVelocidad)) {    $x15 = $LimiteVelocidad;   }else{$x15 = $rowdata['LimiteVelocidad'];}
 					
 					//se dibujan los inputs
 					$Form_Imputs = new Form_Inputs();
@@ -249,16 +251,17 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 					
 					echo '<h3>Caracteristicos</h3>';
 					$Form_Imputs->form_select('Zona de Trabajo','idZona', $x8, 1, 'idZona', 'Nombre', 'vehiculos_zonas', 0, '', $dbConn);
-					$Form_Imputs->form_input_number('Capacidad (Kilos)','Capacidad', $x9, 1);
-					$Form_Imputs->form_input_number('Metros Cubicos (M3)','MCubicos', $x10, 1);
-					$Form_Imputs->form_select_filter('Tipo de Carga','idTipoCarga', $x11, 1, 'idTipoCarga', 'Nombre', 'vehiculos_tipo_carga', 0, '', $dbConn);
+					$Form_Imputs->form_select_n_auto('Capacidad Pasajeros','CapacidadPersonas', $x9, 1, 1, 99);
+					$Form_Imputs->form_input_number('Capacidad (Kilos)','Capacidad', $x10, 1);
+					$Form_Imputs->form_input_number('Metros Cubicos (M3)','MCubicos', $x11, 1);
+					$Form_Imputs->form_select_filter('Tipo de Carga','idTipoCarga', $x12, 1, 'idTipoCarga', 'Nombre', 'vehiculos_tipo_carga', 0, '', $dbConn);
 				
 					echo '<h3>Proceso Aprobacion</h3>';
-					$Form_Imputs->form_select('Proceso','idProceso', $x12, 2, 'idProceso', 'Nombre', 'core_estado_aprobacion_vehiculos', 0, '', $dbConn);
-					$Form_Imputs->form_textarea('Motivo', 'Motivo', $x13, 1, 160);
+					$Form_Imputs->form_select('Proceso','idProceso', $x13, 2, 'idProceso', 'Nombre', 'core_estado_aprobacion_vehiculos', 0, '', $dbConn);
+					$Form_Imputs->form_textarea('Motivo', 'Motivo', $x14, 1, 160);
 				
 					echo '<h3>Datos Movilizacion</h3>';
-					$Form_Imputs->form_input_number('Velocidad Maxima','LimiteVelocidad', $x14, 1);
+					$Form_Imputs->form_input_number('Velocidad Maxima','LimiteVelocidad', $x15, 1);
 					
 					
 					
@@ -273,7 +276,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
 					</div>
 				</form>
-				<?php require_once '../LIBS_js/validator/form_validator.php';?>
+				<?php widget_validator(); ?>
 			</div>
 		</div>	
 	</div>

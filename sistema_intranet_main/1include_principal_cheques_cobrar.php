@@ -220,7 +220,7 @@ array_push( $arrEventos,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 
 
 <?php

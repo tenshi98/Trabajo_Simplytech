@@ -146,7 +146,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>              
+            <?php widget_validator(); ?>              
 		</div>
 	</div>
 </div>
@@ -218,7 +218,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>               
+            <?php widget_validator(); ?>               
 		</div>
 	</div>
 </div>
@@ -291,7 +291,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>               
+            <?php widget_validator(); ?>               
 		</div>
 	</div>
 </div>
@@ -338,7 +338,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>               
+            <?php widget_validator(); ?>               
 		</div>
 	</div>
 </div>	
@@ -474,7 +474,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -785,7 +785,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 				
 				<tr>
 					<th colspan="8">Detalle</th>
-					<th width="10">Acciones</th>
+					<th width="160">Acciones</th>
 				</tr>		  
 				
 				
@@ -883,7 +883,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <div class="clearfix"></div>
 
 

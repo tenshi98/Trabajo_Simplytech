@@ -152,8 +152,18 @@ cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
 
 cross_predios_listado.Nombre AS PredioNombre,
 
-cross_predios_listado_zonas.Plantas AS CuartelCantPlantas,
-cross_predios_listado_zonas.DistanciaPlant AS CuartelDistanciaPlant,
+cross_solicitud_aplicacion_listado.idSolicitud AS IDD,
+(SELECT SUM(cross_predios_listado_zonas.Plantas) 
+FROM `cross_solicitud_aplicacion_listado_cuarteles` 
+LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona   = cross_solicitud_aplicacion_listado_cuarteles.idZona
+WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD ) AS CuartelCantPlantas,
+
+(SELECT SUM(cross_predios_listado_zonas.DistanciaPlant) 
+FROM `cross_solicitud_aplicacion_listado_cuarteles` 
+LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona   = cross_solicitud_aplicacion_listado_cuarteles.idZona
+WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD ) AS CuartelDistanciaPlant,
+
+
 
 AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm!=0,cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm,0),0)) AS GeoVelocidadProm,
 SUM(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.GeoDistance!=0,cross_solicitud_aplicacion_listado_tractores.GeoDistance,0),0)) AS GeoDistance,
@@ -163,7 +173,6 @@ AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom!=0,cros
 FROM `cross_solicitud_aplicacion_listado`
 LEFT JOIN `cross_predios_listado`                          ON cross_predios_listado.idPredio                             = cross_solicitud_aplicacion_listado.idPredio
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
-LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
 
 ".$z."
@@ -421,7 +430,7 @@ array_push( $arrSolicitudes,$row );
 
 	</div>
 </div>
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
 <div class="col-sm-12 fcenter" style="margin-bottom:30px">
@@ -487,7 +496,7 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div> 

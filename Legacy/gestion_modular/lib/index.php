@@ -1,1 +1,3 @@
-Options -Indexes
+<?php
+header("location:http://www.google.com"); 
+?>

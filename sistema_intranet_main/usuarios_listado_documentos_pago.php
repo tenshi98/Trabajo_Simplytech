@@ -206,7 +206,7 @@ $x_permisos_2 = $prm_x[36] + $prm_x[37];
 $x_permisos_3 = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41] + $prm_x[42] + $prm_x[43];
 $x_permisos_4 = $prm_x[54] + $prm_x[55] + $prm_x[56] + $prm_x[57] + $prm_x[58];
 $x_permisos_5 = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49] + $prm_x[50] + $prm_x[51] + $prm_x[52] + $prm_x[53];
-$x_permisos_6 = $prm_x[59] + prm_x[60];
+$x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 
 //Listo los documentos de pago
@@ -306,9 +306,7 @@ array_push( $arrDocumentos,$row );
 						<th>Nombre</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<tr role="row">
-						<th colspan="2"><input class="form-control" id="InputTableFilter" type="text" placeholder="Filtrar.."></th>
-					</tr>
+					<?php echo widget_sherlock(1, 2);?>
 				</thead>
 								  
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
@@ -331,21 +329,7 @@ array_push( $arrDocumentos,$row );
 					                 
 				</tbody>
 			</table>
-			
-			
-			
-			<script>
-				$(document).ready(function(){
-				  $("#InputTableFilter").on("keyup", function() {
-					var value = $(this).val().toLowerCase();
-					$("#TableFiltered tr").filter(function() {
-					  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-					});
-				  });
-				});
-			</script>
-			
-			
+
 		</div>	
 	</div>
 </div>

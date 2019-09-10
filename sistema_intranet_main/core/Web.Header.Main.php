@@ -1,7 +1,11 @@
-<!doctype html>
-<html class="no-js">
+<!DOCTYPE html>
+<html lang="es-ES">
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
 		<?php 
 		//Se verifican las variables para mostrar el titulo e la pagina
 		if (isset($_SESSION['usuario']['basic_data']['RazonSocial'])&&$_SESSION['usuario']['basic_data']['RazonSocial']!=''){
@@ -13,50 +17,31 @@
 		}else{
 			echo '<title>'.DB_SOFT_NAME.'</title>';
 		} ?>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- Bootstrap -->
-		<link rel="stylesheet" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
-		<!-- Font Awesome -->
-		<link media="all" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="<?php echo DB_SITE ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
-		<!-- Metis core stylesheet -->
-		<link rel="stylesheet" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
-		<!-- Metis Theme stylesheet -->
-		<link rel="stylesheet" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
-		<link rel="stylesheet" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
-		<!-- Estilo definido por mi -->
-		<link href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css" rel="stylesheet" type="text/css">
-		<link href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css" rel="stylesheet" type="text/css">
-		<link href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css" rel="stylesheet" type="text/css">
-		<script src="<?php echo DB_SITE ?>/Legacy/gestion_modular/js/personel.js"></script>
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/bs3.form.input.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/bs3.form.border.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
-		  <script src="<?php echo DB_SITE ?>/LIB_assets/lib/html5shiv/html5shiv.js"></script>
+			<script src="<?php echo DB_SITE ?>/LIB_assets/lib/html5shiv/html5shiv.js"></script>
 			<script src="<?php echo DB_SITE ?>/LIB_assets/lib/respond/respond.min.js"></script>
-			<![endif]-->
-		<!--Modulos de javascript-->
+		<![endif]-->
+		<script type="text/javascript" src="<?php echo DB_SITE ?>/Legacy/gestion_modular/js/personel.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
-		<!-- Icono de la pagina -->
 		<link rel="icon" type="image/png" href="img/mifavicon.png" />
-		<!-- Burbuja de ayuda -->
-		<link href="<?php echo DB_SITE ?>/LIBS_js/tooltipster/css/tooltipster.bundle.min.css" rel="stylesheet" type="text/css">
-		<script src="<?php echo DB_SITE ?>/LIBS_js/tooltipster/js/tooltipster.bundle.min.js"></script>
-		<script>
-			<!--
-			$(document).ready(function() {
-				$('.tooltip').tooltipster({
-				   animation: 'grow',
-				   delay: 130,
-				   maxWidth: 300
-				});
-			});
-			//-->
-		</script>
+		<?php widget_tooltipster();?>
 	</head>
+
 	<?php
 	//modificacion de la interfaz
 	if(isset($_SESSION['menu'])&&$_SESSION['menu']!=''){

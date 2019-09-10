@@ -124,7 +124,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -174,7 +174,7 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -326,7 +326,7 @@ array_push( $arrInasHoras,$row );
 				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 1);
 				$Form_Imputs->form_select_n_auto('Año','Ano', $x3, 1, 2016, ano_actual());
-				$Form_Imputs->form_select_filter('Mes','idMes', $x4, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', '', $dbConn);
+				$Form_Imputs->form_select_filter('Mes','idMes', $x4, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
 				$Form_Imputs->form_select_join_filter('Usuario','idUsuario', $x5, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 				$Form_Imputs->form_select_filter('Bono Asignado','idBonoTemporal', $x6, 1, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
 				
@@ -339,7 +339,7 @@ array_push( $arrInasHoras,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>

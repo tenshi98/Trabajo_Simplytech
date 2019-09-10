@@ -143,12 +143,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 
-<!-- InstanceEndEditable -->   
-            </div>
-        </div>
-      </div> 
-    </div>
-    <?php require_once 'core/Web.Footer.Main.php';?>
-    <?php require_once '../LIBS_js/avgrund/avgrund.php';?>
-  </body>
-</html>
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

@@ -134,7 +134,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>              
+            <?php widget_validator(); ?>              
 		</div>
 	</div>
 </div>	
@@ -178,7 +178,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -206,7 +206,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				$Form_Imputs = new Form_Inputs();
 				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
 				$Form_Imputs->form_select_n_auto('Año','Ano', $x2, 2, 2016, ano_actual());
-				$Form_Imputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', '', $dbConn);
+				$Form_Imputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
 				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
 				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
@@ -220,7 +220,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -304,7 +304,7 @@ $Form_Imputs = new Inputs();
 				echo '
 				<tr>
 					<th colspan="'.$data_column.'">Detalle</th>
-					<th width="10">Acciones</th>
+					<th width="160">Acciones</th>
 				</tr>';
 
 				/***************************************************/
@@ -457,7 +457,7 @@ $Form_Imputs = new Inputs();
 
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <div class="clearfix"></div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -482,7 +482,7 @@ $Form_Imputs = new Inputs();
 				$Form_Imputs = new Form_Inputs();
 				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
 				$Form_Imputs->form_select_n_auto('Año','Ano', $x2, 2, 2016, ano_actual());
-				$Form_Imputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', '', $dbConn);
+				$Form_Imputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
 				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
 				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
@@ -499,7 +499,7 @@ $Form_Imputs = new Inputs();
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -637,7 +637,7 @@ array_push( $arrTipo,$row );
 				//se dibujan los inputs
 				$Form_Imputs = new Form_Inputs();
 				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 1);
-				$Form_Imputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', '', $dbConn);
+				$Form_Imputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
 				$Form_Imputs->form_select_n_auto('Año','Creacion_ano', $x3, 1, 2016, ano_actual());
 						
 			
@@ -650,7 +650,7 @@ array_push( $arrTipo,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -713,7 +713,7 @@ array_push( $arrTipo,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

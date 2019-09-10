@@ -270,15 +270,18 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 										
 								}
 								//Centralizado del mapa
-								$Latitud_z_prom  = $Latitud_z/$zcounter;
-								$Longitud_z_prom = $Longitud_z/$zcounter;
-									
-								if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
-										echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
-												map.setCenter(myLatlng);'; 
-								}else{ 
-									echo 'codeAddress();';
+								if($zcounter!=0){
+									$Latitud_z_prom  = $Latitud_z/$zcounter;
+									$Longitud_z_prom = $Longitud_z/$zcounter;
+										
+									if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
+											echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
+													map.setCenter(myLatlng);'; 
+									}else{ 
+										echo 'codeAddress();';
+									}
 								}
+								
 								
 								 ?>
 							}
@@ -347,7 +350,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
-			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+			<?php widget_validator(); ?> 
 		</div>
 	</div>
 </div>
@@ -495,7 +498,7 @@ array_push( $arrUsers,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -569,7 +572,7 @@ array_push( $arrUsers,$row );
 </div>
 
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 	
 <?php } ?>
 

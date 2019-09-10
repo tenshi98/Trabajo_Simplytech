@@ -81,6 +81,51 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			$ndata_2 = 0;
+			$ndata_3 = 0;
+			$ndata_4 = 0;
+			$ndata_5 = 0;
+			//Consulto los nombres y los sueldos de los trabajadores
+			$arrTrabajador = array();
+			$query = "SELECT idTipoContratoTrab, idTipoContrato, horas_pactadas, idAFP, idSalud
+			FROM `trabajadores_listado`
+			WHERE idEstado = 1";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if(!$resultado){
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+									
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+			}
+			while ( $row = mysqli_fetch_assoc ($resultado)) {
+			array_push( $arrTrabajador,$row );
+			}
+			//verificacion de errores
+			foreach ($arrTrabajador as $trab) {
+				if(isset($trab['idTipoContratoTrab'])&&$trab['idTipoContratoTrab']==0){  $ndata_1++;}
+				if(isset($trab['idTipoContrato'])&&$trab['idTipoContrato']==0){          $ndata_2++;}
+				if(isset($trab['horas_pactadas'])&&$trab['horas_pactadas']==0){          $ndata_3++;}
+				if(isset($trab['idAFP'])&&$trab['idAFP']==0){                            $ndata_4++;}
+				if(isset($trab['idSalud'])&&$trab['idSalud']==0){                        $ndata_5++;}
+			}
+			
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/Uno o mas trabajadores no tiene configurado el tipo de contrato';}
+			if($ndata_2 > 0) {$error['ndata_2'] = 'error/Uno o mas trabajadores no tiene configurado el tipo de contrato';}
+			if($ndata_3 > 0) {$error['ndata_3'] = 'error/Uno o mas trabajadores no tiene configurado las horas pactadas';}
+			if($ndata_4 > 0) {$error['ndata_4'] = 'error/Uno o mas trabajadores no tiene configurado la AFP';}
+			if($ndata_5 > 0) {$error['ndata_5'] = 'error/Uno o mas trabajadores no tiene configurado la Salud';}
+			/*******************************************************************/
+			
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
@@ -127,7 +172,6 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 
 				//Consulto los nombres y los sueldos de los trabajadores
-				// Se trae un listado con todos los usuarios
 				$arrTrabajador = array();
 				$query = "SELECT 
 				trabajadores_listado.idTrabajador,
@@ -169,7 +213,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				LEFT JOIN `trabajadores_listado_tipos`    ON trabajadores_listado_tipos.idTipo   = trabajadores_listado.idTipo
 				LEFT JOIN `sistema_afp`                   ON sistema_afp.idAFP                   = trabajadores_listado.idAFP
 				LEFT JOIN `sistema_salud`                 ON sistema_salud.idSalud               = trabajadores_listado.idSalud
-				LEFT JOIN `core_sistemas`                 ON core_sistemas.idSistema               = trabajadores_listado.idSistema
+				LEFT JOIN `core_sistemas`                 ON core_sistemas.idSistema             = trabajadores_listado.idSistema
 
 				WHERE trabajadores_listado.idEstado = 1
 				ORDER BY trabajadores_listado.ApellidoPat ASC, 
@@ -962,6 +1006,52 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			$ndata_2 = 0;
+			$ndata_3 = 0;
+			$ndata_4 = 0;
+			$ndata_5 = 0;
+			//Consulto los nombres y los sueldos de los trabajadores
+			$arrTrabajador = array();
+			$query = "SELECT idTipoContratoTrab, idTipoContrato, horas_pactadas, idAFP, idSalud
+			FROM `trabajadores_listado`
+			WHERE idEstado = 1";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if(!$resultado){
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+									
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+			}
+			while ( $row = mysqli_fetch_assoc ($resultado)) {
+			array_push( $arrTrabajador,$row );
+			}
+			//verificacion de errores
+			foreach ($arrTrabajador as $trab) {
+				if(isset($trab['idTipoContratoTrab'])&&$trab['idTipoContratoTrab']==0){  $ndata_1++;}
+				if(isset($trab['idTipoContrato'])&&$trab['idTipoContrato']==0){          $ndata_2++;}
+				if(isset($trab['horas_pactadas'])&&$trab['horas_pactadas']==0){          $ndata_3++;}
+				if(isset($trab['idAFP'])&&$trab['idAFP']==0){                            $ndata_4++;}
+				if(isset($trab['idSalud'])&&$trab['idSalud']==0){                        $ndata_5++;}
+			}
+			
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/Uno o mas trabajadores no tiene configurado el tipo de contrato';}
+			if($ndata_2 > 0) {$error['ndata_2'] = 'error/Uno o mas trabajadores no tiene configurado el tipo de contrato';}
+			if($ndata_3 > 0) {$error['ndata_3'] = 'error/Uno o mas trabajadores no tiene configurado las horas pactadas';}
+			if($ndata_4 > 0) {$error['ndata_4'] = 'error/Uno o mas trabajadores no tiene configurado la AFP';}
+			if($ndata_5 > 0) {$error['ndata_5'] = 'error/Uno o mas trabajadores no tiene configurado la Salud';}
+			/*******************************************************************/
+			
 			
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {

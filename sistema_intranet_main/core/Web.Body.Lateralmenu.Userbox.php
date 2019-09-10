@@ -14,7 +14,16 @@
             <h5 class="media-heading"><?php echo $_SESSION['usuario']['basic_data']['Nombre'] ?></h5>
             <ul class="list-unstyled user-info">
                 <li> <a href="principal_datos.php"><?php echo $_SESSION['usuario']['basic_data']['Usuario_Tipo'] ?></a></li>
-            </ul>
+				<li>
+					Ultimo Acceso :<br>
+					<small><i class="fa fa-calendar"></i>&nbsp;
+						<?php echo fecha2NdiaMes($_SESSION['usuario']['basic_data']['FechaLogin']).' '.fecha2NombreMesCorto($_SESSION['usuario']['basic_data']['FechaLogin']).' '.Hora_estandar($_SESSION['usuario']['basic_data']['HoraLogin'])?>
+					</small>
+				</li>
+			</ul>
+
+
+
       </div>
   </div>
 </div>

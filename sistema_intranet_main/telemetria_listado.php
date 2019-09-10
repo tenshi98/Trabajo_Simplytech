@@ -92,7 +92,7 @@ if ( ! empty($_GET['clone_idTelemetria']) ) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -260,6 +260,8 @@ array_push( $arrOpciones,$row );
 						<li class=""><a href="<?php echo 'telemetria_listado_horario.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Horario</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Otros Datos</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivos</a></li>
 						
 					</ul>
                 </li>           
@@ -398,7 +400,7 @@ array_push( $arrOpciones,$row );
 				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Imputs->form_input_hidden('idAlarmaGeneral', 2, 2);
 				$Form_Imputs->form_input_hidden('idUsoContrato', 2, 2);
-				$Form_Imputs->form_input_hidden('idMantencion', 12, 2);
+				$Form_Imputs->form_input_hidden('idMantencion', 2, 2);
 				$Form_Imputs->form_input_hidden('Hor_idActivo_dia1', 1, 2);
 				$Form_Imputs->form_input_hidden('Hor_idActivo_dia2', 1, 2);
 				$Form_Imputs->form_input_hidden('Hor_idActivo_dia3', 1, 2);
@@ -429,7 +431,7 @@ array_push( $arrOpciones,$row );
 					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
-			<?php require_once '../LIBS_js/validator/form_validator.php';?>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
@@ -566,7 +568,7 @@ array_push( $arrUsers,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -648,7 +650,7 @@ array_push( $arrUsers,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 	
 	
 <?php } ?>

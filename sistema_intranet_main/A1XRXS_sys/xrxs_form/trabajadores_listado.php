@@ -49,6 +49,7 @@ if( ! defined('XMBCXRXSKGC')) {
 	if ( !empty($_POST['Gratificacion']) )               $Gratificacion                = $_POST['Gratificacion'];
 	if ( !empty($_POST['idTipoTrabajador']) )            $idTipoTrabajador             = $_POST['idTipoTrabajador'];
 	if ( !empty($_POST['idContratista']) )               $idContratista                = $_POST['idContratista'];
+	if ( !empty($_POST['File_RHTM_Fecha']) )             $File_RHTM_Fecha              = $_POST['File_RHTM_Fecha'];
 	
 	
 /*******************************************************************************************************************/
@@ -101,6 +102,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			case 'Gratificacion':               if(empty($Gratificacion)){                $error['Gratificacion']                = 'error/No ha ingresado el monto de gratificacion';}break;
 			case 'idTipoTrabajador':            if(empty($idTipoTrabajador)){             $error['idTipoTrabajador']             = 'error/No ha seleccionado el tipo de trabajador';}break;
 			case 'idContratista':               if(empty($idContratista)){                $error['idContratista']                = 'error/No ha seleccionado el Contratista';}break;
+			case 'File_RHTM_Fecha':             if(empty($File_RHTM_Fecha)){              $error['File_RHTM_Fecha']              = 'error/No ha ingresado una fecha de termino de RHTM';}break;
 			
 		}
 	}
@@ -108,9 +110,9 @@ if( ! defined('XMBCXRXSKGC')) {
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	//Verifica si el mail corresponde
-	if(isset($Fono)){if(validarnumero($Fono)) {          $error['Fono']    = 'error/Ingrese un numero telefonico valido'; }}
-	if(isset($Rut)){if(RutValidate($Rut)==0){            $error['Rut']     = 'error/El Rut ingresado no es valido'; }}
-	if(isset($email)){if(validaremail($email)){ }else{   $error['email']   = 'error/El Email ingresado no es valido'; }}	
+	if(isset($Fono)&&!validarNumero($Fono)) {  $error['Fono']    = 'error/Ingrese un numero telefonico valido'; }
+	if(isset($Rut)&&!validarRut($Rut)){        $error['Rut']     = 'error/El Rut ingresado no es valido'; }
+	if(isset($email)&&!validarEmail($email)){  $error['email']   = 'error/El Email ingresado no es valido'; }
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -312,8 +314,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se obtiene el nombre del logo
-			$query = "SELECT Direccion_img, File_Curriculum, File_Antecedentes, File_Carnet, File_Contrato,
-			File_Licencia
+			$query = "SELECT Direccion_img, File_Curriculum, File_Antecedentes, File_Carnet, 
+			File_Contrato, File_Licencia, File_RHTM
 			FROM `trabajadores_listado`
 			WHERE idTrabajador = {$_GET['del']}";
 			$resultado = mysqli_query($dbConn, $query);
@@ -398,6 +400,19 @@ if( ! defined('XMBCXRXSKGC')) {
 							//throw new Exception('File not writable');
 						}else{
 							unlink('upload/'.$rowdata['File_Licencia']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//se elimina el contrato
+				if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['File_RHTM'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['File_RHTM']);
 						}
 					}catch(Exception $e) { 
 						//guardar el dato en un archivo log
@@ -903,9 +918,6 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 			}
 			
-			
-			
-
 		break;	
 /*******************************************************************************************************************/
 		//Cambia el nivel del permiso
@@ -1325,12 +1337,144 @@ if( ! defined('XMBCXRXSKGC')) {
 				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
-			
-			
-				
-			
 
-		break;			
+		break;	
+		
+/*******************************************************************************************************************/
+		//Cambia el nivel del permiso
+		case 'submit_rhtm':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			if ($_FILES["File_RHTM"]["error"] > 0){ 
+				$error['File_RHTM']     = 'error/Ha ocurrido un error'; 
+			} else {
+				//Se verifican las extensiones de los archivos
+				$permitidos = array("application/msword",
+									"application/vnd.ms-word",
+									"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+											
+									"application/pdf",
+									"application/octet-stream",
+									"application/x-real",
+									"application/vnd.adobe.xfdf",
+									"application/vnd.fdf",
+									"binary/octet-stream",
+									
+									"image/jpg", 
+									"image/jpeg", 
+									"image/gif", 
+									"image/png"
+
+											);
+											
+				//Se verifica que el archivo subido no exceda los 100 kb
+				$limite_kb = 10000;
+				//Sufijo
+				$sufijo = 'trab_rhtm_'.$idTrabajador.'_';
+			  
+				if (in_array($_FILES['File_RHTM']['type'], $permitidos) && $_FILES['File_RHTM']['size'] <= $limite_kb * 1024){
+					//Se especifica carpeta de destino
+					$ruta = "upload/".$sufijo.$_FILES['File_RHTM']['name'];
+					//Se verifica que el archivo un archivo con el mismo nombre no existe
+					if (!file_exists($ruta)){
+						//Se mueve el archivo a la carpeta previamente configurada
+						$move_result = @move_uploaded_file($_FILES["File_RHTM"]["tmp_name"], $ruta);
+						if ($move_result){
+					
+							//Filtro para idSistema
+							$a = "File_RHTM='".$sufijo.$_FILES['File_RHTM']['name']."'" ;
+							if(isset($File_RHTM_Fecha) && $File_RHTM_Fecha != ''){   $a .= ",File_RHTM_Fecha='".$File_RHTM_Fecha."'" ;}
+							
+							// inserto los datos de registro en la db
+							$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if($resultado){
+								
+								header( 'Location: '.$location );
+								die;
+								
+							//si da error, guardar en el log de errores una copia
+							}else{
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+							
+					
+						} else {
+							$error['File_RHTM']     = 'error/Ocurrio un error al mover el archivo'; 
+						}
+					} else {
+						$error['File_RHTM']     = 'error/El archivo '.$_FILES['File_RHTM']['name'].' ya existe'; 
+					}
+				} else {
+					$error['File_RHTM']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+				}
+			}
+
+
+		break;	
+/*******************************************************************************************************************/
+		case 'del_File_RHTM':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Usuario
+			$idTrabajador = $_GET['del_File_RHTM'];
+			// Se obtiene el nombre del logo
+			$query = "SELECT File_RHTM
+			FROM `trabajadores_listado`
+			WHERE idTrabajador = {$idTrabajador}";
+			$resultado = mysqli_query($dbConn, $query);
+			$rowdata = mysqli_fetch_assoc ($resultado);
+			
+			//se borra el dato de la base de datos
+			$query  = "UPDATE `trabajadores_listado` SET File_RHTM='', File_RHTM_Fecha='' WHERE idTrabajador = '{$idTrabajador}'";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina el archivo
+				if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['File_RHTM'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['File_RHTM']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&id_img=true' );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}
+
+		break;		
 /*******************************************************************************************************************/
 	}
 ?>

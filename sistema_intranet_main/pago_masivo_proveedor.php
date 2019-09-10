@@ -593,7 +593,7 @@ $Form_Imputs = new Inputs();
 		
 	
 		 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 
 <script>
 	//////////////////////////////////////////////////////////
@@ -1482,7 +1482,7 @@ array_push( $arrTipo4,$row );
 				</div>
 			</div>
 		</div>  
-		<?php require_once '../LIBS_js/modal/modal.php';?>
+		<?php widget_modal(80, 95); ?>
 		
 <script>
 
@@ -1676,7 +1676,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div> 

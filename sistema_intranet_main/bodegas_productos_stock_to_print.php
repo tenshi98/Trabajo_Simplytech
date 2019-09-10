@@ -53,21 +53,14 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProductos,$row );
 }
-
-
-
-$my_html ='<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-
-<head>
-	<title>Imprimir</title>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<meta name="generator" content="Geany 1.25" />
-	<!-- Bootstrap -->
-    <link rel="stylesheet" href="'.DB_SITE.'/LIB_assets/css/factura.css">
-</head>
-
-<body onload="window.print();">
-	
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.PrintFact.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+$my_html ='
 	<div class="panel panel-cascade panel-invoice">
           
         <div class="panel-body">
@@ -115,5 +108,8 @@ $my_html ='<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 </html>';
 
 echo $my_html;
-
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Print.php';
 ?>

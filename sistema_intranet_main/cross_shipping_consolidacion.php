@@ -138,7 +138,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>              
+            <?php widget_validator(); ?>              
 		</div>
 	</div>
 </div>
@@ -187,7 +187,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>               
+            <?php widget_validator(); ?>               
 		</div>
 	</div>
 </div>
@@ -237,7 +237,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>               
+            <?php widget_validator(); ?>               
 		</div>
 	</div>
 </div>
@@ -284,7 +284,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>               
+            <?php widget_validator(); ?>               
 		</div>
 	</div>
 </div>	
@@ -308,37 +308,36 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($CTNNombreCompañia)) {     $x1  = $CTNNombreCompañia;     }else{$x1  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia'];}
-				if(isset($Creacion_fecha)) {        $x2  = $Creacion_fecha;        }else{$x2  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Creacion_fecha'];}
-				if(isset($FechaInicioEmbarque)) {   $x3  = $FechaInicioEmbarque;   }else{$x3  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['FechaInicioEmbarque'];}
-				if(isset($HoraInicioCarga)) {       $x4  = $HoraInicioCarga;       }else{$x4  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['HoraInicioCarga'];}
-				if(isset($FechaTerminoEmbarque)) {  $x5  = $FechaTerminoEmbarque;  }else{$x5  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['FechaTerminoEmbarque'];}
-				if(isset($HoraTerminoCarga)) {      $x6  = $HoraTerminoCarga;      }else{$x6  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['HoraTerminoCarga'];}
-				if(isset($idPlantaDespacho)) {      $x7  = $idPlantaDespacho;      }else{$x7  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPlantaDespacho'];}
-				if(isset($idCategoria)) {           $x8  = $idCategoria;           }else{$x8  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idCategoria'];}
-				if(isset($idProducto)) {            $x9  = $idProducto;            }else{$x9  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idProducto'];}
-				if(isset($CantidadCajas)) {         $x10 = $CantidadCajas;         }else{$x10 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CantidadCajas'];}
-				if(isset($idInstructivo)) {         $x11 = $idInstructivo;         }else{$x11 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idInstructivo'];}
-				if(isset($idNaviera)) {             $x12 = $idNaviera;             }else{$x12 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idNaviera'];}
-				if(isset($idPuertoEmbarque)) {      $x13 = $idPuertoEmbarque;      }else{$x13 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPuertoEmbarque'];}
-				if(isset($idPuertoDestino)) {       $x14 = $idPuertoDestino;       }else{$x14 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPuertoDestino'];}
-				if(isset($idMercado)) {             $x15 = $idMercado;             }else{$x15 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idMercado'];}
-				if(isset($idPais)) {                $x16 = $idPais;                }else{$x16 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPais'];}
-				if(isset($idRecibidor)) {           $x17 = $idRecibidor;           }else{$x17 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idRecibidor'];}
-				if(isset($idEmpresaTransporte)) {   $x18 = $idEmpresaTransporte;   }else{$x18 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idEmpresaTransporte'];}
-				if(isset($ChoferNombreRut)) {       $x19 = $ChoferNombreRut;       }else{$x19 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['ChoferNombreRut'];}
-				if(isset($PatenteCamion)) {         $x20 = $PatenteCamion;         }else{$x20 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['PatenteCamion'];}
-				if(isset($PatenteCarro)) {          $x21 = $PatenteCarro;          }else{$x21 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['PatenteCarro'];}
-				if(isset($idCondicion)) {           $x22 = $idCondicion;           }else{$x22 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idCondicion'];}
-				if(isset($idSellado)) {             $x23 = $idSellado;             }else{$x23 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idSellado'];}
-				if(isset($TSetPoint)) {             $x24 = $TSetPoint;             }else{$x24 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['TSetPoint'];}
-				if(isset($TVentilacion)) {          $x25 = $TVentilacion;          }else{$x25 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['TVentilacion'];}
-				if(isset($TAmbiente)) {             $x26 = $TAmbiente;             }else{$x26 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['TAmbiente'];}
-				if(isset($NumeroSello)) {           $x27 = $NumeroSello;           }else{$x27 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['NumeroSello'];}
-				if(isset($idInspector)) {           $x28 = $idInspector;           }else{$x28 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idInspector'];}
-				if(isset($Observaciones)) {         $x29 = $Observaciones;         }else{$x29 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Observaciones'];}
-				
-
+				if(isset($CTNNombreCompañia)) {     $x1  = $CTNNombreCompañia;     }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia']=='Sin Datos'){    $x1  = '';}else{$x1  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia'];}
+				if(isset($Creacion_fecha)) {        $x2  = $Creacion_fecha;        }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Creacion_fecha']=='0000-00-00'){      $x2  = '';}else{$x2  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Creacion_fecha'];}
+				if(isset($FechaInicioEmbarque)) {   $x3  = $FechaInicioEmbarque;   }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['FechaInicioEmbarque']=='0000-00-00'){ $x3  = '';}else{$x3  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['FechaInicioEmbarque'];}
+				if(isset($HoraInicioCarga)) {       $x4  = $HoraInicioCarga;       }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['HoraInicioCarga']=='Sin Datos'){      $x4  = '';}else{$x4  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['HoraInicioCarga'];}
+				if(isset($FechaTerminoEmbarque)) {  $x5  = $FechaTerminoEmbarque;  }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['FechaTerminoEmbarque']=='0000-00-00'){$x5  = '';}else{$x5  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['FechaTerminoEmbarque'];}
+				if(isset($HoraTerminoCarga)) {      $x6  = $HoraTerminoCarga;      }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['HoraTerminoCarga']=='Sin Datos'){     $x6  = '';}else{$x6  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['HoraTerminoCarga'];}
+				if(isset($idPlantaDespacho)) {      $x7  = $idPlantaDespacho;      }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPlantaDespacho']=='Sin Datos'){     $x7  = '';}else{$x7  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPlantaDespacho'];}
+				if(isset($idCategoria)) {           $x8  = $idCategoria;           }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idCategoria']=='Sin Datos'){          $x8  = '';}else{$x8  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idCategoria'];}
+				if(isset($idProducto)) {            $x9  = $idProducto;            }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idProducto']=='Sin Datos'){           $x9  = '';}else{$x9  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idProducto'];}
+				if(isset($CantidadCajas)) {         $x10 = $CantidadCajas;         }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CantidadCajas']=='Sin Datos'){        $x10 = '';}else{$x10 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CantidadCajas'];}
+				if(isset($idInstructivo)) {         $x11 = $idInstructivo;         }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idInstructivo']=='Sin Datos'){        $x11 = '';}else{$x11 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idInstructivo'];}
+				if(isset($idNaviera)) {             $x12 = $idNaviera;             }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idNaviera']=='Sin Datos'){            $x12 = '';}else{$x12 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idNaviera'];}
+				if(isset($idPuertoEmbarque)) {      $x13 = $idPuertoEmbarque;      }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPuertoEmbarque']=='Sin Datos'){     $x13 = '';}else{$x13 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPuertoEmbarque'];}
+				if(isset($idPuertoDestino)) {       $x14 = $idPuertoDestino;       }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPuertoDestino']=='Sin Datos'){      $x14 = '';}else{$x14 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPuertoDestino'];}
+				if(isset($idMercado)) {             $x15 = $idMercado;             }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idMercado']=='Sin Datos'){            $x15 = '';}else{$x15 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idMercado'];}
+				if(isset($idPais)) {                $x16 = $idPais;                }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPais']=='Sin Datos'){               $x16 = '';}else{$x16 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idPais'];}
+				if(isset($idRecibidor)) {           $x17 = $idRecibidor;           }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idRecibidor']=='Sin Datos'){          $x17 = '';}else{$x17 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idRecibidor'];}
+				if(isset($idEmpresaTransporte)) {   $x18 = $idEmpresaTransporte;   }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idEmpresaTransporte']=='Sin Datos'){  $x18 = '';}else{$x18 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idEmpresaTransporte'];}
+				if(isset($ChoferNombreRut)) {       $x19 = $ChoferNombreRut;       }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['ChoferNombreRut']=='Sin Datos'){      $x19 = '';}else{$x19 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['ChoferNombreRut'];}
+				if(isset($PatenteCamion)) {         $x20 = $PatenteCamion;         }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['PatenteCamion']=='Sin Datos'){        $x20 = '';}else{$x20 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['PatenteCamion'];}
+				if(isset($PatenteCarro)) {          $x21 = $PatenteCarro;          }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['PatenteCarro']=='Sin Datos'){         $x21 = '';}else{$x21 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['PatenteCarro'];}
+				if(isset($idCondicion)) {           $x22 = $idCondicion;           }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idCondicion']=='Sin Datos'){          $x22 = '';}else{$x22 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idCondicion'];}
+				if(isset($idSellado)) {             $x23 = $idSellado;             }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idSellado']=='Sin Datos'){            $x23 = '';}else{$x23 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idSellado'];}
+				if(isset($TSetPoint)) {             $x24 = $TSetPoint;             }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['TSetPoint']=='Sin Datos'){            $x24 = '';}else{$x24 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['TSetPoint'];}
+				if(isset($TVentilacion)) {          $x25 = $TVentilacion;          }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['TVentilacion']=='Sin Datos'){         $x25 = '';}else{$x25 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['TVentilacion'];}
+				if(isset($TAmbiente)) {             $x26 = $TAmbiente;             }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['TAmbiente']=='Sin Datos'){            $x26 = '';}else{$x26 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['TAmbiente'];}
+				if(isset($NumeroSello)) {           $x27 = $NumeroSello;           }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['NumeroSello']=='Sin Datos'){          $x27 = '';}else{$x27 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['NumeroSello'];}
+				if(isset($idInspector)) {           $x28 = $idInspector;           }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idInspector']=='Sin Datos'){          $x28 = '';}else{$x28 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['idInspector'];}
+				if(isset($Observaciones)) {         $x29 = $Observaciones;         }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Observaciones']=='Sin Datos'){        $x29 = '';}else{$x29 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Observaciones'];}
+			
 				//se dibujan los inputs
 				$Form_Imputs = new Form_Inputs();
 				echo '<h3>Cuerpo Indentificacion</h3>';
@@ -400,7 +399,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -559,7 +558,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				
 				<tr>
 					<th colspan="8">Detalle</th>
-					<th width="10">Acciones</th>
+					<th width="160">Acciones</th>
 				</tr>		  
 				
 				
@@ -667,7 +666,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <div class="clearfix"></div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -701,7 +700,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -749,7 +748,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -908,7 +907,7 @@ array_push( $arrTipo,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -1039,7 +1038,7 @@ if(isset($pasa)&&$pasa!=0){ ?>
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

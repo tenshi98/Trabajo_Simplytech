@@ -223,7 +223,7 @@ $w = 'idUtilizable=1';
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -818,7 +818,7 @@ foreach ($arrPermisos as $prod) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>       
+            <?php widget_validator(); ?>       
 		</div>
 	</div>
 </div>
@@ -918,7 +918,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					</div>
 							  
 				</form> 
-				<?php require_once '../LIBS_js/validator/form_validator.php';?>
+				<?php widget_validator(); ?>
 			<?php }?>
 			
 			
@@ -1319,7 +1319,7 @@ foreach ($arrPermisos as $prod) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>

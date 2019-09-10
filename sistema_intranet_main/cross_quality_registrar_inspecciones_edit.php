@@ -200,7 +200,7 @@ $row_data = mysqli_fetch_assoc ($resultado);?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>              
+            <?php widget_validator(); ?>              
 		</div>
 	</div>
 </div>
@@ -441,7 +441,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>               
+            <?php widget_validator(); ?>               
 		</div>
 	</div>
 </div>
@@ -697,7 +697,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>               
+            <?php widget_validator(); ?>               
 		</div>
 	</div>
 </div>
@@ -906,7 +906,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>               
+            <?php widget_validator(); ?>               
 		</div>
 	</div>
 </div>	
@@ -989,7 +989,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -1073,7 +1073,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>         
+            <?php widget_validator(); ?>         
 		</div>
 	</div>
 </div>
@@ -1228,7 +1228,7 @@ $z = "idEstado=1 AND idSistema={$_SESSION['usuario']['basic_data']['idSistema']}
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -1468,7 +1468,7 @@ array_push( $arrArchivos,$row );
 				
 				<tr>
 					<th colspan="5">Detalle</th>
-					<th width="10">Acciones</th>
+					<th width="160">Acciones</th>
 				</tr>		  
 				
 				<?php /**********************************************************************************/ ?>
@@ -1611,7 +1611,7 @@ array_push( $arrArchivos,$row );
 
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <div class="clearfix"></div>
 
 <div class="clearfix"></div>

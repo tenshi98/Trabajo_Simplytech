@@ -137,32 +137,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<?php if ($rowdata['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/productos.jpg">
 						<?php }else{
-							//se selecciona el tipo de imagen
-							switch ($rowdata['idTipoImagen']) {
-								//Si no esta configurada
-								case 0:
-									echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture"  >';
-									break;
-								//Normal
-								case 1:
-									echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture"  >';
-									break;
-								//Tambor
-								case 2:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/prefixfree/prefixfree.min.js"></script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/drum.js"></script>';
-									echo '<script>
-										var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";	
-										document.getElementById("cover_prod").appendChild(createBarrel(textura));
-									</script>';
-									break;
-								//Cubo
-								case 2:
-									
-									break;
-							}
-							
+							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE, DB_EMPRESA_PATH, 'upload', $rowdata['Direccion_img']);
 						}?>
 					</div>
 					<div class="col-sm-8">
@@ -213,7 +188,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								?>
 							</tbody>
 						</table>
-						<?php require_once '../LIBS_js/modal/modal.php';?>
+						<?php widget_modal(80, 95); ?>
 						
 
 						
@@ -267,7 +242,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -409,7 +384,7 @@ array_push( $arrProductos,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -492,7 +467,7 @@ array_push( $arrProductos,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

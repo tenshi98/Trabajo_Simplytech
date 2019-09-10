@@ -20,22 +20,11 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-?>
 
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12">
-					<iframe id="myIframe" style="width: 100%;height: 100vh;" src="<?php echo DB_SITE ?>/LIBS_js/rainloop/" frameborder="0" allowfullscreen></iframe>
-				</div>
-			</div>
-			
-			<script>
-				$(function () {
-					document.getElementById('myIframe').style.height = 'calc(100vh - ' + ($('#myIframe').offset().top + 25) + 'px)';            
-				});
-			</script>
+//Se llama a la ventana de correos
+echo widget_rainloop('idCorreos', '');
 
 
-<?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/

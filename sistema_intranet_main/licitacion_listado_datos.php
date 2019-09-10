@@ -48,7 +48,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
 // Se traen todos los datos de mi usuario
 $query = "SELECT Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns,
-idSistema, idAprobado, idCliente
+idSistema, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem
 FROM `licitacion_listado`
 WHERE idLicitacion = {$_GET['id']}";
 //Consulta
@@ -96,9 +96,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Itemizado</a></li>
+						<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
+							<li class=""><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Itemizado</a></li>
+						<?php } ?> 
+						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class=""><a href="<?php echo 'licitacion_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivos</a></li>
 					</ul>
-                </li>           
+				</li> 
+                          
 			</ul>	
 		</header>
         <div class="table-responsive">
@@ -107,39 +112,91 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($idCliente)) {             $x0  = $idCliente;           }else{$x0  = $rowdata['idCliente'];}
-					if(isset($Codigo)) {                $x1  = $Codigo;              }else{$x1  = $rowdata['Codigo'];}
-					if(isset($Nombre)) {                $x2  = $Nombre;              }else{$x2  = $rowdata['Nombre'];}
-					if(isset($FechaInicio)) {           $x3  = $FechaInicio;         }else{$x3  = $rowdata['FechaInicio'];}
-					if(isset($FechaTermino)) {          $x4  = $FechaTermino;        }else{$x4  = $rowdata['FechaTermino'];}
-					if(isset($Presupuesto)) {           $x5  = $Presupuesto;         }else{$x5  = $rowdata['Presupuesto'];}
-					if(isset($idBodegaProd)) {          $x6  = $idBodegaProd;        }else{$x6  = $rowdata['idBodegaProd'];}
-					if(isset($idBodegaIns)) {           $x7  = $idBodegaIns;         }else{$x7  = $rowdata['idBodegaIns'];}
-					if(isset($idAprobado)) {            $x8  = $idAprobado;          }else{$x8  = $rowdata['idAprobado'];}
+					if(isset($idCliente)) {             $x1  = $idCliente;           }else{$x1  = $rowdata['idCliente'];}
+					if(isset($Codigo)) {                $x2  = $Codigo;              }else{$x2  = $rowdata['Codigo'];}
+					if(isset($Nombre)) {                $x3  = $Nombre;              }else{$x3  = $rowdata['Nombre'];}
+					if(isset($FechaInicio)) {           $x4  = $FechaInicio;         }else{$x4  = $rowdata['FechaInicio'];}
+					if(isset($FechaTermino)) {          $x5  = $FechaTermino;        }else{$x5  = $rowdata['FechaTermino'];}
+					if(isset($idTipoLicitacion)) {      $x6  = $idTipoLicitacion;    }else{$x6  = $rowdata['idTipoLicitacion'];}
+					if(isset($ValorMensual)) {          $x7  = $ValorMensual;        }else{$x7  = $rowdata['ValorMensual'];}
+					if(isset($Presupuesto)) {           $x8  = $Presupuesto;         }else{$x8  = $rowdata['Presupuesto'];}
+					if(isset($idBodegaProd)) {          $x9  = $idBodegaProd;        }else{$x9  = $rowdata['idBodegaProd'];}
+					if(isset($idBodegaIns)) {           $x10 = $idBodegaIns;         }else{$x10 = $rowdata['idBodegaIns'];}
+					if(isset($idOpcionItem)) {          $x11 = $idOpcionItem;        }else{$x11 = $rowdata['idOpcionItem'];}
+					if(isset($idAprobado)) {            $x12 = $idAprobado;          }else{$x12 = $rowdata['idAprobado'];}
 					
 					//se dibujan los inputs
 					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_select_filter('Cliente','idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-					$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x1, 1); 
-					$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x2, 2); 
-					$Form_Imputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x3, 1); 
-					$Form_Imputs->form_date('Fecha de Termino Contrato','FechaTermino', $x4, 1); 
-					$Form_Imputs->form_values('Presupuesto', 'Presupuesto', $x5, 1);
-					$Form_Imputs->form_select('Bodega Productos','idBodegaProd', $x6, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', $z, '', $dbConn);
-					$Form_Imputs->form_select('Bodega Insumos','idBodegaIns', $x7, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z, '', $dbConn);
-					$Form_Imputs->form_select('Estado Aprobacion','idAprobado', $x8, 2, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
+					$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+					$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x2, 1); 
+					$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x3, 2); 
+					$Form_Imputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x4, 1); 
+					$Form_Imputs->form_date('Fecha de Termino Contrato','FechaTermino', $x5, 1); 
+					$Form_Imputs->form_select('Tipo Contrato','idTipoLicitacion', $x6, 2, 'idTipoLicitacion', 'Nombre', 'core_licitacion_tipos', 0, '', $dbConn);
+					$Form_Imputs->form_values('Valor Fijo Mensual', 'ValorMensual', $x7, 1);
+					$Form_Imputs->form_values('Presupuesto', 'Presupuesto', $x8, 1);
+					$Form_Imputs->form_select('Bodega Productos','idBodegaProd', $x9, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', $z, '', $dbConn);
+					$Form_Imputs->form_select('Bodega Insumos','idBodegaIns', $x10, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z, '', $dbConn);
+					$Form_Imputs->form_select('Utilizar Itemizado','idOpcionItem', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Imputs->form_select('Estado Aprobacion','idAprobado', $x12, 2, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
 					
 					$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
 					$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Imputs->form_input_hidden('idLicitacion', $_GET['id'], 2);
 						 
 					?> 
+					<script>
+						document.getElementById('div_ValorMensual').style.display = 'none';
+						document.getElementById('div_Presupuesto').style.display = 'none';
+								
+						var TipoLicitacion_val;
+						var modelSelected1;
+								
+						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+									
+							TipoLicitacion_val= $("#idTipoLicitacion").val();
+									
+							//si es A suma Alzada
+							if(TipoLicitacion_val == 1){ 
+								document.getElementById('div_ValorMensual').style.display = '';
+								document.getElementById('div_Presupuesto').style.display = 'none';
+								document.getElementById('Presupuesto').value = "0";						
+										
+							//si es Por Itemizado
+							} else if(TipoLicitacion_val == 2){ 
+								document.getElementById('div_ValorMensual').style.display = 'none';
+								document.getElementById('div_Presupuesto').style.display = '';
+								document.getElementById('ValorMensual').value = "0";	
+
+							}
+											
+						}); 
+								
+						$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
+							modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+							
+							//si es A suma Alzada
+							if(modelSelected1 == 1){ 
+								document.getElementById('div_ValorMensual').style.display = '';
+								document.getElementById('div_Presupuesto').style.display = 'none';
+								document.getElementById('Presupuesto').value = "0";						
+										
+							//si es Por Itemizado
+							} else if(modelSelected1 == 2){ 
+								document.getElementById('div_ValorMensual').style.display = 'none';
+								document.getElementById('div_Presupuesto').style.display = '';
+								document.getElementById('ValorMensual').value = "0";	
+
+							}
+						});
+								
+					</script>
 
 					<div class="form-group">		
 						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
 					</div>
 				</form>
-				<?php require_once '../LIBS_js/validator/form_validator.php';?>
+				<?php widget_validator(); ?>
 			</div>
 		</div>	
 	</div>

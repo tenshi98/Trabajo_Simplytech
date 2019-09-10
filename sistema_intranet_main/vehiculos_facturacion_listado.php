@@ -116,7 +116,7 @@ if ( ! empty($_GET['moddatos']) ) { ?>
 				</div>
                       
 			</form> 
-			<?php require_once '../LIBS_js/validator/form_validator.php';?>
+			<?php widget_validator(); ?>
                     
 		</div>
 	</div>
@@ -247,7 +247,7 @@ if ( ! empty($_GET['moddatos']) ) { ?>
 
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 
 
 	
@@ -289,7 +289,7 @@ if ( ! empty($_GET['moddatos']) ) { ?>
 				</div>
                       
 			</form>
-			<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+			<?php widget_validator(); ?> 
                     
 		</div>
 	</div>
@@ -429,7 +429,7 @@ array_push( $arrDatos,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div> 

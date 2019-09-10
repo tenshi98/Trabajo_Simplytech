@@ -25,8 +25,8 @@ require_once 'core/Web.Header.Main.php';
 /*****************************************************************************************************************/
 /*                                        Se verifica la plataforma                                              */
 /*****************************************************************************************************************/
-echo getBrowser();
-echo getPlatform();
+echo obtenerNavegador();
+echo obtenerSistOperativo();
 /*****************************************************************************************************************/
 /*                                Se verifica si se ha cambiado la clave de inicio                               */
 /*****************************************************************************************************************/
@@ -63,7 +63,7 @@ if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313e
 			<!-- InstanceBeginEditable name="Bodytext" -->
 
 			<?php include '1include_principal.php'; ?>
-			<?php require_once '../LIBS_js/validator/form_validator.php';?>
+			<?php widget_validator(); ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

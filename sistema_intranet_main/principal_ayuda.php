@@ -32,7 +32,7 @@ require_once 'core/Web.Header.Main.php';
 </script>
 	<?php 
 	//Se dibuja el explorador de archivos
-	$Form_Imputs->file_explorer(1, 'connector_ayuda', DB_EMPRESA_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
+	echo file_explorer(1, 'connector_ayuda', DB_EMPRESA_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
 
 
 

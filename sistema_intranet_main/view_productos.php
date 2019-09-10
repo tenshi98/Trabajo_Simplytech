@@ -14,35 +14,13 @@ require_once 'core/Load.Utils.Views.php';
 if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
 //Memora RAM Maxima del servidor, 4GB por defecto
 if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<title>Maqueta</title>
-		<!-- Bootstrap Core CSS -->
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/main.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_style.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/LIB_assets/css/my_colors.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/my_corrections.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/lib/modernizr/modernizr.min.js"></script>
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.7.2.min.js"></script>
-		<script type="text/javascript" src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-1.11.0.min.js"></script>
-		<style>
-			body {background-color: #FFF !important;}
-		</style>
-	</head>
-
-	<body>
-<?php 
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Views.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 productos_listado.Nombre,
@@ -207,7 +185,7 @@ $z.=" OR bodegas_productos_facturacion.idTipo = 2";	//Filtrar ventas
 $arrPromedioProd = array();
 $query = "SELECT
 bodegas_productos_facturacion.idTipo,
-AVG(bodegas_productos_facturacion_existencias.Valor) AS Precio,
+AVG(NULLIF(IF(bodegas_productos_facturacion_existencias.Valor!=0,bodegas_productos_facturacion_existencias.Valor,0),0)) AS Precio,
 bodegas_productos_facturacion_existencias.Creacion_mes
 
 FROM `bodegas_productos_facturacion_existencias`
@@ -279,128 +257,7 @@ foreach ($arrPromedioProd as $productos) {
 						<?php if ($rowdata['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/productos.jpg">
 						<?php }else{
-							//se selecciona el tipo de imagen
-							switch ($rowdata['idTipoImagen']) {
-								//Si no esta configurada
-								case 0:
-									echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture"  >';
-									break;
-								//Normal
-								case 1:
-									echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture"  >';
-									break;
-								//Tambor
-								case 2:
-								case 3:
-								case 4:
-								case 5:
-								case 6:
-								case 7:
-								case 8:
-								case 9:
-								case 10:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/prefixfree/prefixfree.min.js"></script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/drum.js"></script>';
-									echo '<script>
-										var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";	
-										document.getElementById("cover_prod").appendChild(createBarrel(textura));
-									</script>';
-									break;
-								//Cubo Carton 1x1x1
-								case 11:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 10;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 10;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
-									break;
-									
-								//Cubo Carton 2x1x1
-								case 12:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 30;</script>';
-									echo '<script>var med_largo = 5;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
-									break;
-								//Cubo Carton 1x2x1
-								case 13:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 5;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
-									break;
-								//Cubo Carton 2x2x1
-								case 14:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 10;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
-									break;
-								//Cubo Madera 1x1x1
-								case 15:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 10;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 10;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
-									break;
-									
-								//Cubo Madera 2x1x1
-								case 16:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 30;</script>';
-									echo '<script>var med_largo = 5;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
-									break;
-								//Cubo Madera 1x2x1
-								case 17:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 5;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:300px;}</style>';
-									break;
-								//Cubo Madera 2x2x1
-								case 18:
-									echo '<div class="fcenter" id="cover_prod"></div>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/three_js/three.min.js"></script>';
-									echo '<script>var textura = "'.DB_SITE.DB_EMPRESA_PATH.'/upload/'.$rowdata['Direccion_img'].'";</script>';
-									echo '<script>var med_alto  = 10;</script>';
-									echo '<script>var med_largo = 10;</script>';
-									echo '<script>var med_ancho = 5;</script>';
-									echo '<script src="'.DB_SITE.'/LIBS_js/3d_cover/cube_normal.js"></script>';
-									echo '<style>#cover_prod canvas{margin-top: 10px;background-color: #eeeeee;}#cover_prod{height:600px;}</style>';
-									break;
-									
-									
-							}
-						
+							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE, DB_EMPRESA_PATH, 'upload', $rowdata['Direccion_img']);
 						}?>
 					</div>
 					<div class="col-sm-8">
@@ -620,11 +477,9 @@ foreach ($arrPromedioProd as $productos) {
 	</div>
 <?php } ?>
 
-<script src="<?php echo DB_SITE ?>/LIB_assets/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="<?php echo DB_SITE ?>/LIB_assets/lib/screenfull/screenfull.js"></script> 
-<script src="<?php echo DB_SITE ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
-<script src="<?php echo DB_SITE ?>/LIB_assets/js/main.min.js"></script>
-
-		
-	</body>
-</html>
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Views.php';
+?>

@@ -1,0 +1,184 @@
+<?php
+/*******************************************************************************************************************/
+/*                                              Bloque de seguridad                                                */
+/*******************************************************************************************************************/
+if( ! defined('XMBCXRXSKGC')) {
+    die('No tienes acceso a esta carpeta o archivo.');
+}
+/*******************************************************************************************************************/
+/*                                        Se traspasan los datos a variables                                       */
+/*******************************************************************************************************************/
+
+	//Traspaso de valores input a variables
+	if ( !empty($_POST['idArchivos']) )     $idArchivos      = $_POST['idArchivos'];
+	if ( !empty($_POST['idTelemetria']) )   $idTelemetria    = $_POST['idTelemetria'];
+	if ( !empty($_POST['idUsuario']) )      $idUsuario       = $_POST['idUsuario'];
+	if ( !empty($_POST['Fecha_ingreso']) )  $Fecha_ingreso   = $_POST['Fecha_ingreso'];
+	if ( !empty($_POST['Detalle']) )        $Detalle         = $_POST['Detalle'];
+
+	
+	
+/*******************************************************************************************************************/
+/*                                      Verificacion de los datos obligatorios                                     */
+/*******************************************************************************************************************/
+
+	//limpio y separo los datos de la cadena de comprobacion
+	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
+	$piezas = explode(",", $form_obligatorios);
+	//recorro los elementos
+	foreach ($piezas as $valor) {
+		//veo si existe el dato solicitado y genero el error
+		switch ($valor) {
+			case 'idArchivos':     if(empty($idArchivos)){      $error['idArchivos']     = 'error/No ha ingresado el id';}break;
+			case 'idTelemetria':   if(empty($idTelemetria)){    $error['idTelemetria']   = 'error/No ha seleccionado el equipo de telemetria';}break;
+			case 'idUsuario':      if(empty($idUsuario)){       $error['idUsuario']      = 'error/No ha seleccionado un usuario';}break;
+			case 'Fecha_ingreso':  if(empty($Fecha_ingreso)){   $error['Fecha_ingreso']  = 'error/No ha ingresado la fecha';}break;
+			case 'Detalle':        if(empty($Detalle)){         $error['Detalle']        = 'error/No ha ingresado la observacion';}break;
+			
+		}
+	}
+	
+/*******************************************************************************************************************/
+/*                                            Se ejecutan las instrucciones                                        */
+/*******************************************************************************************************************/
+	//ejecuto segun la funcion
+	switch ($form_trabajo) {
+/*******************************************************************************************************************/		
+		case 'new_archivo':
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			if ($_FILES["NombreArchivo"]["error"] > 0){ 
+				$error['NombreArchivo']     = 'error/Ha ocurrido un error'; 
+			} else {
+				//Se verifican las extensiones de los archivos
+				$permitidos = array("application/x-rar-compressed",
+				                    "application/x-rar",
+				                    
+				                    "application/zip",
+				                    "application/x-zip-compressed",
+				                    "multipart/x-zip",
+				                    
+				                    "application/octet-stream"
+									);
+											
+				//Se verifica que el archivo subido no exceda los 100 kb
+				$limite_kb = 10000;
+				//Sufijo
+				$sufijo = 'Telemetria_'.$idTelemetria.'_'.$Fecha_ingreso.'_';
+			  
+				if (in_array($_FILES['NombreArchivo']['type'], $permitidos) && $_FILES['NombreArchivo']['size'] <= $limite_kb * 1024){
+					//Se especifica carpeta de destino
+					$ruta = "upload/".$sufijo.$_FILES['NombreArchivo']['name'];
+					//Se verifica que el archivo un archivo con el mismo nombre no existe
+					if (!file_exists($ruta)){
+						//Se mueve el archivo a la carpeta previamente configurada
+						$move_result = @move_uploaded_file($_FILES["NombreArchivo"]["tmp_name"], $ruta);
+						if ($move_result){
+					
+							//Inserto el registro de las mantenciones
+							//filtros
+							$a = "'".$sufijo.$_FILES['NombreArchivo']['name']."'" ;
+							if(isset($idTelemetria) && $idTelemetria != ''){    $a .= ",'".$idTelemetria."'" ;  }else{$a .= ",''";}
+							if(isset($idUsuario) && $idUsuario != ''){          $a .= ",'".$idUsuario."'" ;     }else{$a .= ",''";}
+							if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){  $a .= ",'".$Fecha_ingreso."'" ; }else{$a .= ",''";}
+							if(isset($Detalle) && $Detalle != ''){              $a .= ",'".$Detalle."'" ;       }else{$a .= ",''";}
+				
+							// inserto los datos de registro en la db
+							$query  = "INSERT INTO `telemetria_listado_archivos` (NombreArchivo, idTelemetria, idUsuario, Fecha_ingreso, Detalle) VALUES ({$a} )";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if($resultado){
+								
+								header( 'Location: '.$location.'&created=true' );
+								die;
+								
+							//si da error, guardar en el log de errores una copia
+							}else{
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+							
+						} else {
+							$error['NombreArchivo']     = 'error/Ocurrio un error al mover el archivo'; 
+						}
+					} else {
+						$error['NombreArchivo']     = 'error/El archivo '.$_FILES['NombreArchivo']['name'].' ya existe'; 
+					}
+				} else {
+					$error['NombreArchivo']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+				}
+			}
+			
+	
+		break;
+			
+/*******************************************************************************************************************/
+		case 'del_archivo':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Variables
+			$idArchivos  = $_GET['del_archivo'];
+			
+			// Se obtiene el nombre del documento a borrar
+			$query = "SELECT NombreArchivo
+			FROM `telemetria_listado_archivos`
+			WHERE idArchivos = {$idArchivos}";
+			$resultado = mysqli_query($dbConn, $query);
+			$rowMantencion = mysqli_fetch_assoc ($resultado);
+			
+			/*************************************************/
+			//se borran los datos seleccionados
+			$query  = "DELETE FROM `telemetria_listado_archivos` WHERE idArchivos = {$idArchivos}";
+			//Consulta
+			$resultado = mysqli_query ($dbConn, $query);
+			
+			
+			//Si ejecuto correctamente la consulta
+			if($resultado){
+				
+				//se elimina el archivo
+				if(isset($rowMantencion['NombreArchivo'])&&$rowMantencion['NombreArchivo']!=''){
+					try {
+						if(!is_writable('upload/'.$rowMantencion['NombreArchivo'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowMantencion['NombreArchivo']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Redirijo			
+				header( 'Location: '.$location.'&deleted=true' );
+				die;
+				
+			//si da error, guardar en el log de errores una copia
+			}else{
+				//Genero numero aleatorio
+				$vardata = genera_password(8,'alfanumerico');
+				
+				//Guardo el error en una variable temporal
+				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+			}
+			
+
+		break;							
+						
+/*******************************************************************************************************************/
+	}
+?>

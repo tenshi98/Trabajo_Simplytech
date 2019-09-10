@@ -120,7 +120,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs('upload', $rowdata['FichaTecnica']); ?>
+						<?php echo preview_docs('upload', $rowdata['FichaTecnica'], ''); ?>
 					</div> 
 				
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_file='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
@@ -143,7 +143,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						</div>
 							  
 					</form> 
-					<?php require_once '../LIBS_js/validator/form_validator.php';?>
+					<?php widget_validator(); ?>
 				<?php }?> 
 				
 				
@@ -160,12 +160,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 
-<!-- InstanceEndEditable -->   
-            </div>
-        </div>
-      </div> 
-    </div>
-    <?php require_once 'core/Web.Footer.Main.php';?>
-    <?php require_once '../LIBS_js/avgrund/avgrund.php';?>
-  </body>
-</html>
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

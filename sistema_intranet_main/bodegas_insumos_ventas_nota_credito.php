@@ -174,7 +174,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>              
+            <?php widget_validator(); ?>              
 		</div>
 	</div>
 </div>	
@@ -273,7 +273,7 @@ foreach ($arrPermisos as $prod) {
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -330,7 +330,7 @@ $Form_Imputs = new Inputs();
 				</div>
 				
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -488,7 +488,7 @@ $Form_Imputs = new Inputs();
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -524,7 +524,7 @@ $Form_Imputs = new Inputs();
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -558,7 +558,7 @@ $Form_Imputs = new Inputs();
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>                
+            <?php widget_validator(); ?>                
 		</div>
 	</div>
 </div>
@@ -608,7 +608,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -665,7 +665,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -744,7 +744,7 @@ $Form_Imputs = new Inputs();
 				
 				<tr>
 					<th colspan="5">Detalle</th>
-					<th width="10">Acciones</th>
+					<th width="160">Acciones</th>
 				</tr>		  
 				
 
@@ -974,7 +974,7 @@ $Form_Imputs = new Inputs();
 
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <div class="clearfix"></div>
 
 
@@ -1031,7 +1031,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -1206,7 +1206,7 @@ array_push( $arrTipo,$row );
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>
+            <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
@@ -1278,7 +1278,7 @@ array_push( $arrTipo,$row );
 	</div>
 </div>
 
-<?php require_once '../LIBS_js/modal/modal.php';?>
+<?php widget_modal(80, 95); ?>
 <?php } ?>           
 <?php
 /**********************************************************************************************************************************/

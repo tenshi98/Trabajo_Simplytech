@@ -126,7 +126,7 @@ mysqli_free_result($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -180,7 +180,7 @@ mysqli_free_result($resultado);
 				</div>
                       
 			</form> 
-            <?php require_once '../LIBS_js/validator/form_validator.php';?>        
+            <?php widget_validator(); ?>        
 		</div>
 	</div>
 </div>
@@ -243,9 +243,9 @@ array_push( $arrPermisos,$row );
 						<th>Visualizacion</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<tr role="row">
-						<th colspan="6"><input class="form-control" id="InputTableFilter" type="text" placeholder="Filtrar.."></th>
-					</tr>
+					<?php echo widget_sherlock(1, 6);?>
+					
+				
 				</thead>				  
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php
@@ -283,17 +283,6 @@ array_push( $arrPermisos,$row );
 								   
 				</tbody>
 				
-				<script>
-					$(document).ready(function(){
-					  $("#InputTableFilter").on("keyup", function() {
-						var value = $(this).val().toLowerCase();
-						$("#TableFiltered tr").filter(function() {
-						  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-						});
-					  });
-					});
-				</script>
-			
 			</table>
 		</div>
 	</div>

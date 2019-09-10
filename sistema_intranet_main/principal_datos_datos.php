@@ -155,7 +155,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 					</div>
 						  
 				</form> 
-				<?php require_once '../LIBS_js/validator/form_validator.php';?> 
+				<?php widget_validator(); ?> 
 			</div>
 		</div>	
 	</div>
