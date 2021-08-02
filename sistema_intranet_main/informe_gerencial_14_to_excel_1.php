@@ -30,27 +30,27 @@ $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
 $z3 = "WHERE bodegas_productos_facturacion.idTipo=1"; //solo ventas
 $z4 = "WHERE bodegas_servicios_facturacion.idTipo=1"; //solo ventas
 //sololas del mismo sistema
-$z1.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z2.=" AND bodegas_insumos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z3.=" AND bodegas_productos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z4.=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z2.=" AND bodegas_insumos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z3.=" AND bodegas_productos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z4.=" AND bodegas_servicios_facturacion.idProveedor={$_GET['idProveedor']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z2.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z3.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z4.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['idProveedor'];
 }
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idEstado={$_GET['idEstado']}";
-	$z2.=" AND bodegas_insumos_facturacion.idEstado={$_GET['idEstado']}";
-	$z3.=" AND bodegas_productos_facturacion.idEstado={$_GET['idEstado']}";
-	$z4.=" AND bodegas_servicios_facturacion.idEstado={$_GET['idEstado']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idEstado=".$_GET['idEstado'];
+	$z2.=" AND bodegas_insumos_facturacion.idEstado=".$_GET['idEstado'];
+	$z3.=" AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado'];
+	$z4.=" AND bodegas_servicios_facturacion.idEstado=".$_GET['idEstado'];
 }
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 
 
@@ -77,15 +77,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTemporal_1,$row );
@@ -112,15 +105,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTemporal_2,$row );
@@ -147,15 +133,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTemporal_3,$row );
@@ -182,15 +161,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTemporal_4,$row );

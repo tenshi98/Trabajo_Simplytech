@@ -19,8 +19,8 @@ $location .='?pagina='.$_GET['pagina'];
 //Variables para filtro y paginacion
 $search = '';
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){
-	$location .= "&Nombre=".$_GET['Nombre'] ;
-	$search .= "&Nombre=".$_GET['Nombre'] ;  	
+	$location .= "&Nombre=".$_GET['Nombre'];
+	$search .= "&Nombre=".$_GET['Nombre'];  	
 }
 /********************************************************************/
 
@@ -133,7 +133,7 @@ if ( !empty($_GET['backup']) )     {
 
 		// inserto los datos de registro en la db
 		$query  = "INSERT INTO `mantencion_backup` (Nombre, FileName, Fecha, Hora) 
-		VALUES ({$a} )";
+		VALUES (".$a.")";
 		//Consulta
 		$resultado = mysqli_query ($dbConn, $query);
 		//Si ejecuto correctamente la consulta
@@ -180,9 +180,11 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Respaldo Creado cor
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Respaldo Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Respaldo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { ?>
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 
 
 
@@ -286,7 +288,7 @@ array_push( $arrBackup,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Backups</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Backups</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -300,22 +302,22 @@ array_push( $arrBackup,$row );
 						<th width="120">
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="160">
 							<div class="pull-left">Hora</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=hora_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=hora_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=hora_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=hora_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -329,7 +331,7 @@ array_push( $arrBackup,$row );
 						<td><?php echo $back['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo '1download.php?dir=upload&file='.$back['FileName']; ?>" title="Descargar Backup" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a><?php } ?>								
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo '1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($back['FileName'], fecha_actual()); ?>" title="Descargar Backup" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a><?php } ?>								
 							</div>
 						</td>
 					</tr>

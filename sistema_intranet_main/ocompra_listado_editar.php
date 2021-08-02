@@ -16,7 +16,7 @@ $location = $original;
 $new_location = "ocompra_listado_editar.php";
 //Se agregan ubicaciones
 $new_location .='?view='.$_GET['view'];
-if(isset($_GET['soli']) && $_GET['soli'] != ''){   $new_location .= "&soli=".$_GET['soli'] ; 	}
+if(isset($_GET['soli']) && $_GET['soli'] != ''){   $new_location .= "&soli=".$_GET['soli']; 	}
 
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -286,7 +286,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -298,25 +298,25 @@ if ( ! empty($_GET['addFile']) ) { ?>
 
          
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				/**************************************/
 					
 				?> 
 
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -330,7 +330,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 //Traigo los datos del producto previamente seleccionado
 $query = "SELECT idDocPago, NDocPago, Fpago, vTotal, idSistema
 FROM `ocompra_listado_documentos`
-WHERE idDocumento = {$_GET['editDoc']}";
+WHERE idDocumento = ".$_GET['editDoc'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -351,7 +351,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Documentos Acompañantes</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -365,29 +365,29 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($vTotal)) {      $x4  = $vTotal;     }else{$x4  = Cantidades_decimales_justos($rowdata['vTotal']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Documento','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Numero Documento', 'NDocPago', $x2, 2);
-				$Form_Imputs->form_date('Fecha de Pago','Fpago', $x3, 2);
-				$Form_Imputs->form_input_number('Valor', 'vTotal', $x4, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('N° Documento de Pago', 'NDocPago', $x2, 2);
+				$Form_Inputs->form_date('Fecha de Pago','Fpago', $x3, 2);
+				$Form_Inputs->form_input_number('Valor', 'vTotal', $x4, 2);
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idDocumento', $_GET['editDoc'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idDocumento', $_GET['editDoc'], 2);
 				/**************************************/
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_documento"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -401,7 +401,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Documentos Acompañantes</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -415,28 +415,28 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($vTotal)) {      $x4  = $vTotal;     }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Documento','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Numero Documento', 'NDocPago', $x2, 2);
-				$Form_Imputs->form_date('Fecha de Pago','Fpago', $x3, 2);
-				$Form_Imputs->form_input_number('Valor', 'vTotal', $x4, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('N° Documento de Pago', 'NDocPago', $x2, 2);
+				$Form_Inputs->form_date('Fecha de Pago','Fpago', $x3, 2);
+				$Form_Inputs->form_input_number('Valor', 'vTotal', $x4, 2);
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				/**************************************/
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_documento"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -449,7 +449,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 //se consiltan los datos
 $query = "SELECT Descripcion, Valor
 FROM `ocompra_listado_existencias_boletas_empresas`
-WHERE idExistencia = {$_GET['editBoletaEmp']}";
+WHERE idExistencia = ".$_GET['editBoletaEmp'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -469,7 +469,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Boletas</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -481,20 +481,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Valor)) {          $x2  = $Valor;         }else{$x2  = Cantidades_decimales_justos($rowdata['Valor']);}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Descripcion','Descripcion', $x1, 2, 160);
-				$Form_Imputs->form_input_number('Valor', 'Valor', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2, 160);
+				$Form_Inputs->form_input_number('Valor', 'Valor', $x2, 2);
 				
-				$Form_Imputs->form_input_hidden('idExistencia', $_GET['editBoletaEmp'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editBoletaEmp'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_boleta_emp"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -508,7 +508,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Boletas</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -520,19 +520,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Valor)) {          $x2  = $Valor;         }else{$x2  = '';}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Descripcion','Descripcion', $x1, 2, 160);
-				$Form_Imputs->form_input_number('Valor', 'Valor', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2, 160);
+				$Form_Inputs->form_input_number('Valor', 'Valor', $x2, 2);
 				
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_boleta_emp"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -543,11 +543,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editBoleta']) ) {  
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 //se consiltan los datos
 $query = "SELECT idTrabajador, N_Doc, Descripcion, Valor
 FROM `ocompra_listado_existencias_boletas`
-WHERE idExistencia = {$_GET['editBoleta']}";
+WHERE idExistencia = ".$_GET['editBoleta'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -567,7 +567,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Boletas</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -581,22 +581,22 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Valor)) {          $x4  = $Valor;         }else{$x4  = Cantidades_decimales_justos($rowdata['Valor']);}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $z, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
-				$Form_Imputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
-				$Form_Imputs->form_input_number('Valor', 'Valor', $x4, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $z, '', $dbConn);
+				$Form_Inputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
+				$Form_Inputs->form_input_number('Valor', 'Valor', $x4, 2);
 				
-				$Form_Imputs->form_input_hidden('idExistencia', $_GET['editBoleta'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editBoleta'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_boleta"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -607,12 +607,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addBoleta']) ) {  
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	?>
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Boletas</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -626,21 +626,21 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($Valor)) {          $x4  = $Valor;         }else{$x4  = '';}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $z, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
-				$Form_Imputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
-				$Form_Imputs->form_input_number('Valor', 'Valor', $x4, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $z, '', $dbConn);
+				$Form_Inputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
+				$Form_Inputs->form_input_number('Valor', 'Valor', $x4, 2);
 				
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_boleta"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -653,7 +653,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 }elseif ( ! empty($_GET['editOtros']) ) {  
 $query = "SELECT Nombre, Cantidad, vUnitario, idSistema, vTotal, idFrecuencia
 FROM `ocompra_listado_existencias_otros`
-WHERE idExistencia = {$_GET['editOtros']}";
+WHERE idExistencia = ".$_GET['editOtros'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -673,7 +673,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Otros</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -687,34 +687,34 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($vTotal)) {         $x4  = $vTotal;        }else{$x4  = Cantidades_decimales_justos($rowdata['vTotal']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				/****************************/
-				$Form_Imputs->form_input_disabled('Nombre','Nombre_fake', $x1, 1);
-				$Form_Imputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_input_disabled('Nombre','Nombre_fake', $x1, 1);
+				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
 				/****************************/
-				$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
 				//if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
-				//$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 				
 				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idExistencia', $_GET['editOtros'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editOtros'], 2);
 				/**************************************/
 				
 				?>
@@ -736,7 +736,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_otros"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -750,7 +750,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Otros</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -764,35 +764,35 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($vTotal)) {         $x4  = $vTotal;        }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				//$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', '', 2);
+				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
 				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);	
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				/**************************************/
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_otros"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -819,7 +819,7 @@ FROM `ocompra_listado_existencias_servicios`
 LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia    = ocompra_listado_existencias_servicios.idFrecuencia
 LEFT JOIN `servicios_listado`          ON servicios_listado.idServicio           = ocompra_listado_existencias_servicios.idServicio
 LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor          = servicios_listado.idProveedor
-WHERE ocompra_listado_existencias_servicios.idExistencia = {$_GET['editServicios']}";
+WHERE ocompra_listado_existencias_servicios.idExistencia = ".$_GET['editServicios'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -839,7 +839,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Servicio</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -853,34 +853,34 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($vTotal)) {         $x4  = $vTotal;        }else{$x4  = Cantidades_decimales_justos($rowdata['vTotal']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				/****************************/
-				$Form_Imputs->form_select_disabled('Servicio','idServicio_fake', $x1, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', $dbConn);
-				$Form_Imputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_select_disabled('Servicio','idServicio_fake', $x1, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', $dbConn);
+				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
 				/****************************/
-				$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
 				//if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
-				//$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 				
 				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idExistencia', $_GET['editServicios'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editServicios'], 2);
 				/**************************************/
 				
 				?>
@@ -903,7 +903,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_servicio"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -917,7 +917,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Servicio</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -931,35 +931,35 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($vTotal)) {         $x4  = $vTotal;        }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				//$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', '', 2);
+				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
 				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				/**************************************/
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicio"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -984,7 +984,7 @@ FROM `ocompra_listado_existencias_arriendos`
 LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia    = ocompra_listado_existencias_arriendos.idFrecuencia
 LEFT JOIN `equipos_arriendo_listado`   ON equipos_arriendo_listado.idEquipo      = ocompra_listado_existencias_arriendos.idEquipo
 LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor          = equipos_arriendo_listado.idProveedor
-WHERE ocompra_listado_existencias_arriendos.idExistencia = {$_GET['editArriendo']}";
+WHERE ocompra_listado_existencias_arriendos.idExistencia = ".$_GET['editArriendo'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1005,7 +1005,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Equipo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1019,34 +1019,34 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($vTotal)) {         $x4  = $vTotal;        }else{$x4  = Cantidades_decimales_justos($rowdata['vTotal']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				/****************************/
-				$Form_Imputs->form_select_disabled('Equipos','idEquipo_fake', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
-				$Form_Imputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_select_disabled('Equipos','idEquipo_fake', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
+				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
 				/****************************/
-				$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
 				//if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
-				//$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 				
 				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idExistencia', $_GET['editArriendo'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editArriendo'], 2);
 				/**************************************/
 				
 				?>
@@ -1068,7 +1068,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_arriendo"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1082,7 +1082,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Equipo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1096,35 +1096,35 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($vTotal)) {         $x4  = $vTotal;        }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				//$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', '', 2);
+				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
 				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);	
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				/**************************************/
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_arriendo"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1148,7 +1148,7 @@ FROM `ocompra_listado_existencias_insumos`
 LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto       = ocompra_listado_existencias_insumos.idProducto
 LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = insumos_listado.idUml
 LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = insumos_listado.idProveedor
-WHERE ocompra_listado_existencias_insumos.idExistencia = {$_GET['editIns']}";
+WHERE ocompra_listado_existencias_insumos.idExistencia = ".$_GET['editIns'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1169,7 +1169,7 @@ $zx2 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_insumos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1196,7 +1196,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar solicitud de Insumo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1209,34 +1209,34 @@ foreach ($arrPermisos as $prod) {
 				if(isset($vTotal)) {           $x3  = $vTotal;          }else{$x3  = Cantidades_decimales_justos($rowdata['vTotal']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				/****************************/
-				$Form_Imputs->form_select_disabled('Insumo','idProducto_fake', $x1, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, $dbConn);
-				$Form_Imputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_select_disabled('Insumo','idProducto_fake', $x1, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, $dbConn);
+				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
 				/****************************/
 				
 				if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
-				$Form_Imputs->form_input_disabled('Unidad de Medida','unimed', $rowdata['Unimed'], 1);
-				$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowdata['Unimed'], 1);
+				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 				
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idExistencia', $_GET['editIns'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editIns'], 2);
 				/**************************************/
 				
 				?>
@@ -1258,7 +1258,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_ins"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1274,7 +1274,7 @@ $zx2 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_insumos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1300,7 +1300,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Insumos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1313,35 +1313,35 @@ foreach ($arrPermisos as $prod) {
 				if(isset($vTotal)) {           $x3  = $vTotal;          }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
-				$Form_Imputs->form_input_disabled('Unidad de Medida','unimed', '', 1);
-				$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', '', 2);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '', 1);
+				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				/**************************************/
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ins"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1365,7 +1365,7 @@ FROM `ocompra_listado_existencias_productos`
 LEFT JOIN `productos_listado`       ON productos_listado.idProducto     = ocompra_listado_existencias_productos.idProducto
 LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = productos_listado.idUml
 LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = productos_listado.idProveedor
-WHERE ocompra_listado_existencias_productos.idExistencia = {$_GET['editProd']}";
+WHERE ocompra_listado_existencias_productos.idExistencia = ".$_GET['editProd'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1387,7 +1387,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1412,7 +1412,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar solicitud de Productos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1425,34 +1425,34 @@ foreach ($arrPermisos as $prod) {
 				if(isset($vTotal)) {           $x3  = $vTotal;          }else{$x3  = Cantidades_decimales_justos($rowdata['vTotal']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				/****************************/
-				$Form_Imputs->form_select_disabled('Producto','idProducto_fake', $x1, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, $dbConn);
-				$Form_Imputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_select_disabled('Producto','idProducto_fake', $x1, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, $dbConn);
+				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
 				/****************************/
 				
 				if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
-				$Form_Imputs->form_input_disabled('Unidad de Medida','unimed', $rowdata['Unimed'], 1);
-				$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowdata['Unimed'], 1);
+				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']), 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 				
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idExistencia', $_GET['editProd'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editProd'], 2);
 				/**************************************/
 				
 				?>
@@ -1473,7 +1473,7 @@ foreach ($arrPermisos as $prod) {
 			
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1489,7 +1489,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1514,7 +1514,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Productos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1527,15 +1527,15 @@ foreach ($arrPermisos as $prod) {
 				if(isset($vTotal)) {           $x3  = $vTotal;          }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
-				$Form_Imputs->form_input_disabled('Unidad de Medida','unimed', '', 1);
-				$Form_Imputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', '', 2);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '', 1);
+				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
@@ -1544,20 +1544,20 @@ foreach ($arrPermisos as $prod) {
 				
 				/**************************************/
 				//Datos para agregar al sistema
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idProveedor', $_GET['idProveedor'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				/**************************************/
 
 				?>
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1568,11 +1568,11 @@ foreach ($arrPermisos as $prod) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //se traen los datos
 $query = "SELECT idProveedor, Creacion_fecha, Observaciones, idSistema
 FROM `ocompra_listado`
-WHERE idOcompra = {$_GET['view']}";
+WHERE idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1592,7 +1592,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Orden de Compra</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1605,20 +1605,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Observaciones)) {    $x3  = $Observaciones;  }else{$x3  = $rowdata['Observaciones'];}
 				
 				//se dibujan los inputs	
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x3, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1, 160);
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['view'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Modificar Documento" name="submit_modBase">
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1644,7 +1644,7 @@ LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario            
 LEFT JOIN `core_oc_estado`             ON core_oc_estado.idEstado               = ocompra_listado.idEstado
 LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor         = ocompra_listado.idProveedor
 
-WHERE ocompra_listado.idOcompra = {$_GET['view']}";
+WHERE ocompra_listado.idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1675,7 +1675,7 @@ sistema_productos_uml.Nombre AS Unidad
 FROM `ocompra_listado_existencias_insumos` 
 LEFT JOIN `insumos_listado`          ON insumos_listado.idProducto    = ocompra_listado_existencias_insumos.idProducto
 LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml   = insumos_listado.idUml
-WHERE ocompra_listado_existencias_insumos.idOcompra = {$_GET['view']} ";
+WHERE ocompra_listado_existencias_insumos.idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1707,7 +1707,7 @@ sistema_productos_uml.Nombre AS Unidad
 FROM `ocompra_listado_existencias_productos` 
 LEFT JOIN `productos_listado`          ON productos_listado.idProducto    = ocompra_listado_existencias_productos.idProducto
 LEFT JOIN `sistema_productos_uml`      ON sistema_productos_uml.idUml     = productos_listado.idUml
-WHERE ocompra_listado_existencias_productos.idOcompra = {$_GET['view']} ";
+WHERE ocompra_listado_existencias_productos.idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1739,7 +1739,7 @@ core_tiempo_frecuencia.Nombre AS Frecuencia
 FROM `ocompra_listado_existencias_arriendos` 
 LEFT JOIN `equipos_arriendo_listado`    ON equipos_arriendo_listado.idEquipo     = ocompra_listado_existencias_arriendos.idEquipo
 LEFT JOIN `core_tiempo_frecuencia`      ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_arriendos.idFrecuencia
-WHERE ocompra_listado_existencias_arriendos.idOcompra = {$_GET['view']} ";
+WHERE ocompra_listado_existencias_arriendos.idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1771,7 +1771,7 @@ core_tiempo_frecuencia.Nombre AS Frecuencia
 FROM `ocompra_listado_existencias_servicios` 
 LEFT JOIN `servicios_listado`       ON servicios_listado.idServicio          = ocompra_listado_existencias_servicios.idServicio
 LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_servicios.idFrecuencia
-WHERE ocompra_listado_existencias_servicios.idOcompra = {$_GET['view']} ";
+WHERE ocompra_listado_existencias_servicios.idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1801,7 +1801,7 @@ core_tiempo_frecuencia.Nombre AS Frecuencia
 
 FROM `ocompra_listado_existencias_otros` 
 LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_otros.idFrecuencia
-WHERE ocompra_listado_existencias_otros.idOcompra = {$_GET['view']} ";
+WHERE ocompra_listado_existencias_otros.idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1833,7 +1833,7 @@ trabajadores_listado.ApellidoPat AS TrabApellidoPat
 
 FROM `ocompra_listado_existencias_boletas` 
 LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador
-WHERE ocompra_listado_existencias_boletas.idOcompra = {$_GET['view']} ";
+WHERE ocompra_listado_existencias_boletas.idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1855,7 +1855,7 @@ array_push( $arrBoletas,$row );
 $arrBoletasEmp = array();
 $query = "SELECT  idExistencia, Descripcion, Valor
 FROM `ocompra_listado_existencias_boletas_empresas` 
-WHERE idOcompra = {$_GET['view']} ";
+WHERE idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1884,7 +1884,7 @@ sistema_documentos_pago.Nombre AS Documento
 
 FROM `ocompra_listado_documentos` 
 LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = ocompra_listado_documentos.idDocPago
-WHERE ocompra_listado_documentos.idOcompra = {$_GET['view']} 
+WHERE ocompra_listado_documentos.idOcompra = ".$_GET['view']." 
 ORDER BY ocompra_listado_documentos.Fpago ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -1907,7 +1907,7 @@ array_push( $arrDocumentos,$row );
 $arrArchivo = array();
 $query = "SELECT idFile, Nombre
 FROM `ocompra_listado_archivos` 
-WHERE idOcompra = {$_GET['view']} ";
+WHERE idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1994,7 +1994,7 @@ LEFT JOIN `core_sistemas`             otros_sis        ON otros_sis.idSistema   
 LEFT JOIN `core_tiempo_frecuencia`    otros_med        ON otros_med.idFrecuencia                                  = solicitud_listado_existencias_otros.idFrecuencia
 
 
-WHERE ocompra_listado_sol_rel.idOcompra = {$_GET['view']} 
+WHERE ocompra_listado_sol_rel.idOcompra = ".$_GET['view']." 
 ORDER BY ocompra_listado_sol_rel.Type ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -2018,7 +2018,7 @@ array_push( $arrSolMat,$row );
 $total = 0;		
 ?>
 
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 	<?php
 	$ubicacion = $new_location.'&view='.$_GET['view'].'&ing_ocompra='.$_GET['view'];
 	$dialogo   = '¿Desea terminar el documento?';?>
@@ -2027,7 +2027,7 @@ $total = 0;
 	<div class="clearfix"></div>
 </div> 
 
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 <div id="page-wrap">
     <div id="header"> Modificacion Orden de Compra N°<?php echo n_doc($_GET['view'], 5)?></div>
@@ -2039,7 +2039,7 @@ $total = 0;
             <tbody>
                 <tr>
                     <td class="meta-head"><strong>DATOS BASICOS</strong></td>
-                    <td class="meta-head"><a href="<?php echo $new_location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary fright tooltip" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+                    <td class="meta-head"><a href="<?php echo $new_location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary fright tooltip" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
                 </tr>
                 <tr>
                     <td class="meta-head">Proveedor</td>
@@ -2110,13 +2110,13 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 						</td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo $new_location.'&editProd='.$prod['idExistencia']; ?>" title="Editar Producto" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
-								<a href="<?php echo 'view_precios.php?type=1&view='.$prod['idProducto']; ?>" title="Ver Variacion Precios Producto" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart"></i></a>
+								<a href="<?php echo $new_location.'&editProd='.$prod['idExistencia']; ?>" title="Editar Producto" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_precios.php?type='.simpleEncode( 1, fecha_actual()).'&view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Variacion Precios Producto" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>
 									<?php 
-									$ubicacion = $new_location.'&del_prod='.$prod['idExistencia'];
+									$ubicacion = $new_location.'&del_prod='.simpleEncode($prod['idExistencia'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								<?php } ?>
 							</div>
 						</td>
@@ -2153,13 +2153,13 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 						</td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo $new_location.'&editIns='.$prod['idExistencia']; ?>" title="Editar Insumo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
-								<a href="<?php echo 'view_precios.php?type=2&view='.$prod['idProducto']; ?>" title="Ver Variacion Precios Insumo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart"></i></a>
+								<a href="<?php echo $new_location.'&editIns='.$prod['idExistencia']; ?>" title="Editar Insumo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_precios.php?type='.simpleEncode( 2, fecha_actual()).'&view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Variacion Precios Insumo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 										<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>
 									<?php 
-									$ubicacion = $new_location.'&del_ins='.$prod['idExistencia'];
+									$ubicacion = $new_location.'&del_ins='.simpleEncode($prod['idExistencia'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								<?php } ?>
 							</div>
 						</td>
@@ -2195,13 +2195,13 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 						</td>		
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo $new_location.'&editArriendo='.$prod['idExistencia']; ?>" title="Editar Arriendo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
-								<a href="<?php echo 'view_precios.php?type=3&view='.$prod['idEquipo']; ?>" title="Ver Variacion Precios Arriendo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart"></i></a>
+								<a href="<?php echo $new_location.'&editArriendo='.$prod['idExistencia']; ?>" title="Editar Arriendo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_precios.php?type='.simpleEncode( 3, fecha_actual()).'&view='.simpleEncode($prod['idEquipo'], fecha_actual()); ?>" title="Ver Variacion Precios Arriendo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>	
 									<?php 
-									$ubicacion = $new_location.'&del_arriendo='.$prod['idExistencia'];
+									$ubicacion = $new_location.'&del_arriendo='.simpleEncode($prod['idExistencia'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el arriendo '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Arriendo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Arriendo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								<?php } ?>
 							</div>
 						</td>
@@ -2238,13 +2238,13 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 						</td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo $new_location.'&editServicios='.$prod['idExistencia']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
-								<a href="<?php echo 'view_precios.php?type=4&view='.$prod['idServicio']; ?>" title="Ver Variacion Precios Servicio" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart"></i></a>
+								<a href="<?php echo $new_location.'&editServicios='.$prod['idExistencia']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_precios.php?type='.simpleEncode( 4, fecha_actual()).'&view='.simpleEncode($prod['idServicio'], fecha_actual()); ?>" title="Ver Variacion Precios Servicio" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>	
 									<?php 
-									$ubicacion = $new_location.'&del_servicio='.$prod['idExistencia'];
+									$ubicacion = $new_location.'&del_servicio='.simpleEncode($prod['idExistencia'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el servicio '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								<?php } ?>
 							</div>
 						</td>
@@ -2279,12 +2279,12 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 						</td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $new_location.'&editOtros='.$prod['idExistencia']; ?>" title="Editar Otros" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $new_location.'&editOtros='.$prod['idExistencia']; ?>" title="Editar Otros" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>	
 									<?php 
-									$ubicacion = $new_location.'&del_otros='.$prod['idExistencia'];
+									$ubicacion = $new_location.'&del_otros='.simpleEncode($prod['idExistencia'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar  '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Otros" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Otros" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								<?php } ?>
 							</div>
 						</td>
@@ -2312,15 +2312,15 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 						<td class="item-name" colspan="2"><?php echo $prod['TrabRut'].' - '.$prod['TrabNombre'].' '.$prod['TrabApellidoPat']; ?></td>
 						<td class="item-name"><?php echo $prod['Descripcion']; ?></td>
 						<td class="item-name"><?php echo 'Boleta N° '.$prod['N_Doc']; ?></td>
-						<td class="item-name"><?php echo valores($prod['Valor'], 0); ?></td>
+						<td align="right" class="item-name"><?php echo valores($prod['Valor'], 0); ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $new_location.'&editBoleta='.$prod['idExistencia']; ?>" title="Editar Boleta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $new_location.'&editBoleta='.$prod['idExistencia']; ?>" title="Editar Boleta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>	
 									<?php 
-									$ubicacion = $new_location.'&del_boleta='.$prod['idExistencia'];
+									$ubicacion = $new_location.'&del_boleta='.simpleEncode($prod['idExistencia'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la boleta del trabajador '.$prod['TrabNombre'].' '.$prod['TrabApellidoPat'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Boleta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Boleta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								<?php } ?>
 							</div>
 						</td>
@@ -2344,15 +2344,15 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				foreach ($arrBoletasEmp as $prod){?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="4"><?php echo $prod['Descripcion']; ?></td>
-						<td class="item-name"><?php echo valores($prod['Valor'], 0); ?></td>
+						<td align="right" class="item-name"><?php echo valores($prod['Valor'], 0); ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $new_location.'&editBoletaEmp='.$prod['idExistencia']; ?>" title="Editar Boleta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $new_location.'&editBoletaEmp='.$prod['idExistencia']; ?>" title="Editar Boleta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>	
 									<?php 
-									$ubicacion = $new_location.'&del_boleta_emp='.$prod['idExistencia'];
+									$ubicacion = $new_location.'&del_boleta_emp='.simpleEncode($prod['idExistencia'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la boleta de la empresa?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Boleta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Boleta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								<?php } ?>
 							</div>
 						</td>
@@ -2419,7 +2419,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 										$ubicacion .= '&del_sol_prod='.$producto['Prod_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Prod_Cantidad']);
 										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Prod_Nombre'].' por '.Cantidades_decimales_justos($producto['Prod_Cantidad']).' '.$producto['Prod_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 									</div>
 								</td>
 							</tr>
@@ -2441,12 +2441,12 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 										//Ubicacion
 										$ubicacion = $new_location;
 										$ubicacion .= '&del_solicitud='.$producto['idExistencia'];
-										$ubicacion .= '&del_sol_SolRel='.$producto['idSolRel'];
+										$ubicacion .= '&del_sol_SolRel='.simpleEncode($producto['idSolRel'], fecha_actual());
 										$ubicacion .= '&del_sol_type='.$producto['Type'];
 										$ubicacion .= '&del_sol_prod='.$producto['Ins_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Ins_Cantidad']);
 										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Ins_Nombre'].' por '.Cantidades_decimales_justos($producto['Ins_Cantidad']).' '.$producto['Ins_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 									</div>
 								</td>
 							</tr>
@@ -2468,12 +2468,12 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 										//Ubicacion
 										$ubicacion = $new_location;
 										$ubicacion .= '&del_solicitud='.$producto['idExistencia'];
-										$ubicacion .= '&del_sol_SolRel='.$producto['idSolRel'];
+										$ubicacion .= '&del_sol_SolRel='.simpleEncode($producto['idSolRel'], fecha_actual());
 										$ubicacion .= '&del_sol_type='.$producto['Type'];
 										$ubicacion .= '&del_sol_prod='.$producto['Arri_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Arri_Cantidad']);
 										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Arri_Nombre'].' por '.Cantidades_decimales_justos($producto['Arri_Cantidad']).' '.$producto['Arri_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 									</div>
 								</td>
 							</tr>
@@ -2495,12 +2495,12 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 										//Ubicacion
 										$ubicacion = $new_location;
 										$ubicacion .= '&del_solicitud='.$producto['idExistencia'];
-										$ubicacion .= '&del_sol_SolRel='.$producto['idSolRel'];
+										$ubicacion .= '&del_sol_SolRel='.simpleEncode($producto['idSolRel'], fecha_actual());
 										$ubicacion .= '&del_sol_type='.$producto['Type'];
 										$ubicacion .= '&del_sol_prod='.$producto['Serv_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Serv_Cantidad']);
 										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Serv_Nombre'].' por '.Cantidades_decimales_justos($producto['Serv_Cantidad']).' '.$producto['Serv_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 									</div>
 								</td>
 							</tr>
@@ -2522,12 +2522,12 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 										//Ubicacion
 										$ubicacion = $new_location;
 										$ubicacion .= '&del_solicitud='.$producto['idExistencia'];
-										$ubicacion .= '&del_sol_SolRel='.$producto['idSolRel'];
+										$ubicacion .= '&del_sol_SolRel='.simpleEncode($producto['idSolRel'], fecha_actual());
 										$ubicacion .= '&del_sol_type='.$producto['Type'];
 										$ubicacion .= '&del_sol_prod='.$producto['Otro_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Otro_Cantidad']);
 										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Otro_Nombre'].' por '.Cantidades_decimales_justos($producto['Otro_Cantidad']).' '.$producto['Otro_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 									</div>
 								</td>
 							</tr>
@@ -2556,11 +2556,11 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 						<td colspan="5"><?php echo $numeral.' - '.$prod['Documento'].' N°'.$prod['NDocPago'].' por '.valores($prod['vTotal'], 0).' (Pago para el '.fecha_estandar($prod['Fpago']).')'; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $new_location.'&editDoc='.$prod['idDocumento']; ?>" title="Editar Documento" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $new_location.'&editDoc='.$prod['idDocumento']; ?>" title="Editar Documento" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php 
-								$ubicacion = $new_location.'&del_documento='.$prod['idDocumento'];
+								$ubicacion = $new_location.'&del_documento='.simpleEncode($prod['idDocumento'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el documento '.$prod['Documento'].' N°'.str_replace('"','',$prod['NDocPago']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Documento" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Documento" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
 					</tr>
@@ -2590,12 +2590,12 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-								<a href="<?php echo '1download.php?dir=upload&file='.$producto['Nombre']; ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<a href="<?php echo '1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 								<?php 
-								$ubicacion = $new_location.'&del_file='.$producto['idFile'];
+								$ubicacion = $new_location.'&del_file='.simpleEncode($producto['idFile'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
 					</tr>

@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 usuarios_listado.Nombre AS Usuario,
@@ -35,7 +48,7 @@ FROM `trabajadores_horas_extras_facturacion`
 LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema         = trabajadores_horas_extras_facturacion.idSistema
 LEFT JOIN `usuarios_listado`        ON usuarios_listado.idUsuario      = trabajadores_horas_extras_facturacion.idUsuario
 
-WHERE trabajadores_horas_extras_facturacion.idFacturacion = {$_GET['view']} ";
+WHERE trabajadores_horas_extras_facturacion.idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -46,15 +59,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
@@ -79,7 +85,7 @@ FROM `trabajadores_horas_extras_facturacion_horas`
 LEFT JOIN `trabajadores_listado`           ON trabajadores_listado.idTrabajador            = trabajadores_horas_extras_facturacion_horas.idTrabajador
 LEFT JOIN `core_horas_extras_porcentajes`  ON core_horas_extras_porcentajes.idPorcentaje   = trabajadores_horas_extras_facturacion_horas.idPorcentaje
 
-WHERE trabajadores_horas_extras_facturacion_horas.idFacturacion = {$_GET['view']} ";
+WHERE trabajadores_horas_extras_facturacion_horas.idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -90,15 +96,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrHoras,$row );
@@ -126,7 +125,7 @@ core_horas_extras_turnos.Nombre AS Turno
 FROM `trabajadores_horas_extras_facturacion_turnos` 
 LEFT JOIN `core_horas_extras_turnos`   ON core_horas_extras_turnos.idTurnos   = trabajadores_horas_extras_facturacion_turnos.idTurnos
 
-WHERE trabajadores_horas_extras_facturacion_turnos.idFacturacion = {$_GET['view']} ";
+WHERE trabajadores_horas_extras_facturacion_turnos.idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -137,15 +136,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTurnos,$row );
@@ -160,7 +152,7 @@ foreach ($arrTurnos as $prod){
 $arrArchivo = array();
 $query = "SELECT Nombre
 FROM `trabajadores_horas_extras_facturacion_archivos` 
-WHERE idFacturacion = {$_GET['view']} ";
+WHERE idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -171,15 +163,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivo,$row );
@@ -195,7 +180,7 @@ core_horas_extras_porcentajes.Porcentaje
 FROM `trabajadores_horas_extras_facturacion_horas` 
 LEFT JOIN `core_horas_extras_porcentajes`  ON core_horas_extras_porcentajes.idPorcentaje   = trabajadores_horas_extras_facturacion_horas.idPorcentaje
 
-WHERE trabajadores_horas_extras_facturacion_horas.idFacturacion = {$_GET['view']} 
+WHERE trabajadores_horas_extras_facturacion_horas.idFacturacion = ".$X_Puntero." 
 GROUP BY trabajadores_horas_extras_facturacion_horas.idPorcentaje
 ORDER BY trabajadores_horas_extras_facturacion_horas.idPorcentaje ASC ";
 //Consulta
@@ -208,15 +193,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrHorasTotal,$row );
@@ -225,7 +203,7 @@ array_push( $arrHorasTotal,$row );
 
 ?>
 
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 	<div id="page-wrap">
 		<div id="header"> Horas Extras</div>
@@ -434,8 +412,8 @@ array_push( $arrHorasTotal,$row );
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?return=true&path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-								<a href="1download.php?dir=upload&file=<?php echo $producto['Nombre']; ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -448,15 +426,31 @@ array_push( $arrHorasTotal,$row );
 </div>
 
 
-
-
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
  
 <?php
 /**********************************************************************************************************************************/

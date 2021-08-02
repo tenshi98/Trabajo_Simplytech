@@ -50,13 +50,15 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Shield Creado corre
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Shield Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Shield borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre
 FROM `telemetria_listado_unidad_medida`
-WHERE idUniMed = {$_GET['id']}";
+WHERE idUniMed = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -75,7 +77,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Shield</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -86,14 +88,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_hidden('idUniMed', $_GET['id'], 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_hidden('idUniMed', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -103,11 +105,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Shield</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -118,13 +123,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -208,7 +213,7 @@ $search='';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Shield</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Shield</h5>
 			<div class="toolbar">
 				<?php 
 				//paginador
@@ -230,11 +235,11 @@ $search='';
 						<td><?php echo $cat['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idUniMed']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idUniMed']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$cat['idUniMed'];
+									$ubicacion = $location.'&del='.simpleEncode($cat['idUniMed'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el dato '.$cat['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>	
 							</div>
 						</td>

@@ -44,9 +44,10 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre,Config_idTheme, Config_CorreoRespaldo, email_principal, idOpcionesTel, 
 idConfigRam, idConfigTime, idOpcionesGen_1, idOpcionesGen_2, idOpcionesGen_3, idOpcionesGen_4, 
-idOpcionesGen_5, idOpcionesGen_6, idOpcionesGen_7, idOpcionesGen_8, idOpcionesGen_9
+idOpcionesGen_5, idOpcionesGen_6, idOpcionesGen_7, idOpcionesGen_8, idOpcionesGen_9,
+Config_Gmail_Usuario, Config_Gmail_Password
 FROM `core_sistemas`
-WHERE idSistema = {$_GET['id']}";
+WHERE idSistema = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -63,21 +64,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Sistema</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Configuracion</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Configuracion');?>
 </div>
 <div class="clearfix"></div>
 
@@ -85,20 +72,22 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'core_sistemas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'core_sistemas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'core_sistemas_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contacto</a></li>
+				<li class=""><a href="<?php echo 'core_sistemas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'core_sistemas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'core_sistemas_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'core_sistemas_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contrato</a></li>
-						<li class="active"><a href="<?php echo 'core_sistemas_datos_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Configuracion</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
+						<li class="active"><a href="<?php echo 'core_sistemas_datos_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >APIS</a></li>
-						<li class=""><a href="<?php echo 'core_sistemas_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'core_sistemas_datos_facturacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Facturacion</a></li>
-						<li class=""><a href="<?php echo 'core_sistemas_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >OT</a></li>
-						<li class=""><a href="<?php echo 'core_sistemas_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Logo</a></li>
-						<li class=""><a href="<?php echo 'core_sistemas_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Aprobador OC</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_facturacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_crosstech.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossTech</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 						
 					</ul>
                 </li>           
@@ -110,44 +99,52 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Config_idTheme)) {          $x1  = $Config_idTheme;          }else{$x1  = $rowdata['Config_idTheme'];}
-					if(isset($Config_CorreoRespaldo)) {   $x2  = $Config_CorreoRespaldo;   }else{$x2  = $rowdata['Config_CorreoRespaldo'];}
-					if(isset($email_principal)) {         $x3  = $email_principal;         }else{$x3  = $rowdata['email_principal'];}
-					if(isset($idOpcionesTel)) {           $x4  = $idOpcionesTel;           }else{$x4  = $rowdata['idOpcionesTel'];}
-					if(isset($idConfigRam)) {             $x5  = $idConfigRam;             }else{$x5  = $rowdata['idConfigRam'];}
-					if(isset($idConfigTime)) {            $x6  = $idConfigTime;            }else{$x6  = $rowdata['idConfigTime'];}
-					if(isset($idOpcionesGen_1)) {         $x7  = $idOpcionesGen_1;         }else{$x7  = $rowdata['idOpcionesGen_1'];}
-					if(isset($idOpcionesGen_2)) {         $x8  = $idOpcionesGen_2;         }else{$x8  = $rowdata['idOpcionesGen_2'];}
-					if(isset($idOpcionesGen_3)) {         $x9  = $idOpcionesGen_3;         }else{$x9  = $rowdata['idOpcionesGen_3'];}
-					if(isset($idOpcionesGen_4)) {         $x10 = $idOpcionesGen_4;         }else{$x10 = $rowdata['idOpcionesGen_4'];}
-					if(isset($idOpcionesGen_5)) {         $x11 = $idOpcionesGen_5;         }else{$x11 = $rowdata['idOpcionesGen_5'];}
-					if(isset($idOpcionesGen_6)) {         $x12 = $idOpcionesGen_6;         }else{$x12 = $rowdata['idOpcionesGen_6'];}
-					if(isset($idOpcionesGen_7)) {         $x13 = $idOpcionesGen_7;         }else{$x13 = $rowdata['idOpcionesGen_7'];}
-					if(isset($idOpcionesGen_8)) {         $x14 = $idOpcionesGen_8;         }else{$x14 = $rowdata['idOpcionesGen_8'];}
-					if(isset($idOpcionesGen_9)) {         $x15 = $idOpcionesGen_9;         }else{$x15 = $rowdata['idOpcionesGen_9'];}
+					if(isset($Config_idTheme)) {            $x1  = $Config_idTheme;             }else{$x1  = $rowdata['Config_idTheme'];}
+					if(isset($Config_CorreoRespaldo)) {     $x2  = $Config_CorreoRespaldo;      }else{$x2  = $rowdata['Config_CorreoRespaldo'];}
+					if(isset($email_principal)) {           $x3  = $email_principal;            }else{$x3  = $rowdata['email_principal'];}
+					if(isset($idOpcionesTel)) {             $x4  = $idOpcionesTel;              }else{$x4  = $rowdata['idOpcionesTel'];}
+					if(isset($idConfigRam)) {               $x5  = $idConfigRam;                }else{$x5  = $rowdata['idConfigRam'];}
+					if(isset($idConfigTime)) {              $x6  = $idConfigTime;               }else{$x6  = $rowdata['idConfigTime'];}
+					if(isset($idOpcionesGen_1)) {           $x7  = $idOpcionesGen_1;            }else{$x7  = $rowdata['idOpcionesGen_1'];}
+					if(isset($idOpcionesGen_2)) {           $x8  = $idOpcionesGen_2;            }else{$x8  = $rowdata['idOpcionesGen_2'];}
+					if(isset($idOpcionesGen_3)) {           $x9  = $idOpcionesGen_3;            }else{$x9  = $rowdata['idOpcionesGen_3'];}
+					if(isset($idOpcionesGen_4)) {           $x10 = $idOpcionesGen_4;            }else{$x10 = $rowdata['idOpcionesGen_4'];}
+					if(isset($idOpcionesGen_5)) {           $x11 = $idOpcionesGen_5;            }else{$x11 = $rowdata['idOpcionesGen_5'];}
+					if(isset($idOpcionesGen_6)) {           $x12 = $idOpcionesGen_6;            }else{$x12 = $rowdata['idOpcionesGen_6'];}
+					if(isset($idOpcionesGen_7)) {           $x13 = $idOpcionesGen_7;            }else{$x13 = $rowdata['idOpcionesGen_7'];}
+					if(isset($idOpcionesGen_8)) {           $x14 = $idOpcionesGen_8;            }else{$x14 = $rowdata['idOpcionesGen_8'];}
+					if(isset($idOpcionesGen_9)) {           $x15 = $idOpcionesGen_9;            }else{$x15 = $rowdata['idOpcionesGen_9'];}
+					if(isset($Config_Gmail_Usuario)) {      $x16 = $Config_Gmail_Usuario;       }else{$x16 = $rowdata['Config_Gmail_Usuario'];}
+					if(isset($Config_Gmail_Password)) {     $x17 = $Config_Gmail_Password;      }else{$x17 = $rowdata['Config_Gmail_Password'];}
+					
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					echo '<h3>Configuracion</h3>';
-					$Form_Imputs->form_select('Tema','Config_idTheme', $x1, 2, 'idTheme', 'Nombre', 'core_theme_colors', 0, '', $dbConn);	
-					$Form_Imputs->form_input_icon( 'Correo de Respaldo', 'Config_CorreoRespaldo', $x2, 1,'fa fa-envelope-o');
-					$Form_Imputs->form_input_icon( 'Correo de Sistema', 'email_principal', $x3, 1,'fa fa-envelope-o');
-					$Form_Imputs->form_select('Tipo Resumen Telemetria','idOpcionesTel', $x4, 1, 'idOpcionesTel', 'Nombre', 'core_sistemas_opciones_telemetria', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Ram Maxima (Mega Bytes)','idConfigRam', $x5, 2, 'idConfigRam', 'Nombre', 'core_config_ram', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Tiempo Maximo (Minutos)','idConfigTime', $x6, 2, 'idConfigTime', 'Nombre', 'core_config_time', 0, '', $dbConn);	
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_tittle(3, 'Visualizacion General');
+					$Form_Inputs->form_select('Tema','Config_idTheme', $x1, 2, 'idTheme', 'Nombre', 'core_theme_colors', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Mostrar Repositorio Comun','idOpcionesGen_9', $x15, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Gestor de Correo','idOpcionesGen_8', $x14, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					
-					echo '<h3>Opciones</h3>';
-					$Form_Imputs->form_select('Widget Comunes','idOpcionesGen_1', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Widget de acceso directo','idOpcionesGen_2', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Valores promedios de las mediciones','idOpcionesGen_3', $x9, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Refresh Pagina Principal','idOpcionesGen_4', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Imputs->form_input_number('Segundos para Refrescar','idOpcionesGen_6', $x12, 1);
-					$Form_Imputs->form_select('Motor PDF','idOpcionesGen_5', $x11, 2, 'idPDF', 'Nombre', 'core_pdf_motores', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Interfaz','idOpcionesGen_7', $x13, 2, 'idInterfaz', 'Nombre', 'core_interfaces', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Correo Interno','idOpcionesGen_8', $x14, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Mostrar Repositorio','idOpcionesGen_9', $x15, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_tittle(3, 'Visualizacion Pagina Inicio');
+					$Form_Inputs->form_select('Interfaz','idOpcionesGen_7', $x13, 2, 'idInterfaz', 'Nombre', 'core_interfaces', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Tipo Resumen Telemetria','idOpcionesTel', $x4, 1, 'idOpcionesTel', 'Nombre', 'core_sistemas_opciones_telemetria', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Refresh Pagina Principal','idOpcionesGen_4', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_input_number('Segundos para Refrescar','idOpcionesGen_6', $x12, 1);
+					$Form_Inputs->form_select('Widget Comunes','idOpcionesGen_1', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Widget de acceso directo','idOpcionesGen_2', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Valores promedios de las mediciones','idOpcionesGen_3', $x9, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					
+					$Form_Inputs->form_tittle(3, 'Configuracion Sistema');
+					$Form_Inputs->form_select('Ram Maxima (Mega Bytes)','idConfigRam', $x5, 2, 'idConfigRam', 'Nombre', 'core_config_ram', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Tiempo Maximo (Minutos)','idConfigTime', $x6, 2, 'idConfigTime', 'Nombre', 'core_config_time', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Motor PDF','idOpcionesGen_5', $x11, 2, 'idPDF', 'Nombre', 'core_pdf_motores', 0, '', $dbConn);	
+					$Form_Inputs->form_input_icon('Correo Respaldo Datos', 'Config_CorreoRespaldo', $x2, 1,'fa fa-envelope-o');
+					$Form_Inputs->form_input_icon('Correo Envio Notificaciones', 'email_principal', $x3, 1,'fa fa-envelope-o');
+					$Form_Inputs->form_input_icon('Usuario Gmail Envio Notificaciones', 'Config_Gmail_Usuario', $x16, 1,'fa fa-envelope-o');
+					$Form_Inputs->form_input_icon('Password Usuario Gmail', 'Config_Gmail_Password', $x17, 1,'fa fa-key');
+					
 						
-					$Form_Imputs->form_input_hidden('idSistema', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					?>
 					
 					<script>
@@ -200,8 +197,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

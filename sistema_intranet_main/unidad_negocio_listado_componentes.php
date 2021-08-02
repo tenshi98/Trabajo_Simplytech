@@ -107,7 +107,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 if ( ! empty($_GET['addTrabajo']) ) { 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema>=0";	
+	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 }else{
 	//filtro
 	$z = "idLicitacion=0";
@@ -115,7 +115,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$arrPermisos = array();
 	$query = "SELECT idLicitacion
 	FROM `usuarios_contratos`
-	WHERE idUsuario={$_SESSION['usuario']['basic_data']['idUsuario']}";
+	WHERE idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
 	//Si ejecuto correctamente la consulta
@@ -133,10 +133,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	array_push( $arrPermisos,$row );
 	}
 	foreach ($arrPermisos as $prod) {
-		$z .= " OR (idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
-	}
-	//$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1 AND idAprobado=2 idLicitacion=";
-		
+		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
+	}	
 }
 
 
@@ -148,7 +146,7 @@ $w = 'idUtilizable=1';
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Trabajo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -184,8 +182,8 @@ $w = 'idUtilizable=1';
 				if(isset($idLevel_25)) {       $x25  = $idLevel_25;      }else{$x25  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend25('Contrato','idLicitacion',$x0 ,1,'idLicitacion','Nombre','licitacion_listado',$z,0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend25('Contrato','idLicitacion',$x0 ,1,'idLicitacion','Nombre','licitacion_listado',$z,0,
 										  'Nivel 1','idLevel_1',$x1 ,1,'idLevel_1','Nombre','licitacion_listado_level_1',$w,0,
 										  'Nivel 2','idLevel_2',$x2 ,1,'idLevel_2','Nombre','licitacion_listado_level_2',$w,0,
 										  'Nivel 3','idLevel_3',$x3 ,1,'idLevel_3','Nombre','licitacion_listado_level_3',$w,0,
@@ -213,13 +211,13 @@ $w = 'idUtilizable=1';
 										  $dbConn, 'form1');
 										  
 									  
-				$Form_Imputs->form_input_hidden('lvl', $_GET['lvl'], 2);
-				$Form_Imputs->form_input_hidden('addTrabajo', $_GET['addTrabajo'], 2);
+				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
+				$Form_Inputs->form_input_hidden('addTrabajo', $_GET['addTrabajo'], 2);
 				?> 
 			
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_addTrabajo"> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -254,7 +252,7 @@ sistema_productos_uml.Nombre AS UnidadMedida
 
 FROM `maquinas_listado_level_".$_GET['lvl']."`
 LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = maquinas_listado_level_".$_GET['lvl'].".idUml
-WHERE maquinas_listado_level_".$_GET['lvl'].".idLevel_".$_GET['lvl']." = {$_GET['edit']}";
+WHERE maquinas_listado_level_".$_GET['lvl'].".idLevel_".$_GET['lvl']." = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -276,7 +274,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -301,7 +299,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Componente</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -334,35 +332,35 @@ foreach ($arrPermisos as $prod) {
 				
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
-				$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x2, 2);
-				$Form_Imputs->form_input_text( 'Marca', 'Marca', $x3, 1);
-				$Form_Imputs->form_select('Componente','idUtilizable', $x4, 2, 'idUtilizable', 'Nombre', 'core_maquinas_tipo_componente', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 2);
+				$Form_Inputs->form_input_text('Marca', 'Marca', $x3, 1);
+				$Form_Inputs->form_select('Componente','idUtilizable', $x4, 2, 'idUtilizable', 'Nombre', 'core_maquinas_tipo_componente', 0, '', $dbConn);
 				//si es componente
-				$Form_Imputs->form_input_text( 'Modelo', 'Modelo', $x6, 1);
-				$Form_Imputs->form_select_n_auto('Año de Fabricacion','AnoFab', $x7, 1, 1975, ano_actual());
-				$Form_Imputs->form_input_text( 'Serie', 'Serie', $x8, 1);
+				$Form_Inputs->form_input_text('Modelo', 'Modelo', $x6, 1);
+				$Form_Inputs->form_select_n_auto('Año de Fabricacion','AnoFab', $x7, 1, 1975, ano_actual());
+				$Form_Inputs->form_input_text('Serie', 'Serie', $x8, 1);
 				//Si es subcomponente
-				$Form_Imputs->form_input_text( 'Saf', 'Saf', $x9, 1);
-				$Form_Imputs->form_input_text( 'Numero', 'Numero', $x10, 1);
-				$Form_Imputs->form_select_depend1('Tareas Relacionadas','idSubTipo', $x11, 1, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, 0,
+				$Form_Inputs->form_input_text('Saf', 'Saf', $x9, 1);
+				$Form_Inputs->form_input_text('Numero', 'Numero', $x10, 1);
+				$Form_Inputs->form_select_depend1('Tareas Relacionadas','idSubTipo', $x11, 1, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, 0,
 										 'Producto utilizado','idProducto', $x12, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_number('Grasa inicial','Grasa_inicial', $x13, 1);
-				$Form_Imputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x14, 1);
-				$Form_Imputs->form_input_number('Cantidad de Aceite','Aceite', $x15, 1);
-				$Form_Imputs->form_input_number('Cantidad a consumir','Cantidad', $x16, 1);
-				$Form_Imputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x17, 1);
-				$Form_Imputs->form_input_text('Unidad de Medida','idUml', $x18, 1);
-				$Form_Imputs->form_input_text( 'Frecuencia', 'Frecuencia', $x19, 1);
-				$Form_Imputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('Grasa inicial','Grasa_inicial', $x13, 1);
+				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x14, 1);
+				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x15, 1);
+				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x16, 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x17, 1);
+				$Form_Inputs->form_input_text('Unidad de Medida','idUml', $x18, 1);
+				$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
+				$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
 				
 				
-				$Form_Imputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idMaquina', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('lvl', $_GET['lvl'], 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 				
 				
 				//Imprimo las variables
@@ -786,35 +784,35 @@ foreach ($arrPermisos as $prod) {
 				<div class="form-group">
 				
 					
-					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){ $Form_Imputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
-					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){ $Form_Imputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
-					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){ $Form_Imputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
-					<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){ $Form_Imputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
-					<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){ $Form_Imputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
-					<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){ $Form_Imputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
-					<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){ $Form_Imputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
-					<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){ $Form_Imputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
-					<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){ $Form_Imputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
-					<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){ $Form_Imputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
-					<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){ $Form_Imputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
-					<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){ $Form_Imputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
-					<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){ $Form_Imputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
-					<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){ $Form_Imputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
-					<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){ $Form_Imputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
-					<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){ $Form_Imputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
-					<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){ $Form_Imputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
-					<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){ $Form_Imputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
-					<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){ $Form_Imputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
-					<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){ $Form_Imputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
-					<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){ $Form_Imputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
-					<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){ $Form_Imputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
-					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){ $Form_Imputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
-					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){ $Form_Imputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
-					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){ $Form_Imputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
+					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){ $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
+					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){ $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
+					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){ $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
+					<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){ $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
+					<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){ $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
+					<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){ $Form_Inputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
+					<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){ $Form_Inputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
+					<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){ $Form_Inputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
+					<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){ $Form_Inputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
+					<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){ $Form_Inputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
+					<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){ $Form_Inputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
+					<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){ $Form_Inputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
+					<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){ $Form_Inputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
+					<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){ $Form_Inputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
+					<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){ $Form_Inputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
+					<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){ $Form_Inputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
+					<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){ $Form_Inputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
+					<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){ $Form_Inputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
+					<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){ $Form_Inputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
+					<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){ $Form_Inputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
+					<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){ $Form_Inputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
+					<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){ $Form_Inputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
+					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){ $Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
+					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){ $Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
+					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){ $Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
 			
 				
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -831,7 +829,7 @@ maquinas_listado_level_".$_GET['lvl'].".Nombre,
 maquinas_listado_level_".$_GET['lvl'].".Direccion_img
 
 FROM `maquinas_listado_level_".$_GET['lvl']."`
-WHERE maquinas_listado_level_".$_GET['lvl'].".idLevel_".$_GET['lvl']." = {$_GET['editimg']}";
+WHERE maquinas_listado_level_".$_GET['lvl'].".idLevel_".$_GET['lvl']." = ".$_GET['editimg'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -852,7 +850,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar imagen de <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -865,7 +863,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				<div class="form-group">
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&lvl='.$_GET['lvl'].'&del_img='.$_GET['editimg']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 				<div class="clearfix"></div>
 					
@@ -875,46 +873,46 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					
 					<?php 
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
 						
 						
-					$Form_Imputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
-					$Form_Imputs->form_input_hidden('idMaquina', $_GET['id'], 2);
-					$Form_Imputs->form_input_hidden('lvl', $_GET['lvl'], 2);
+					$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 						
 					?> 
 
 					<div class="form-group">
 
-						<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){ $Form_Imputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
-						<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){ $Form_Imputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
-						<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){ $Form_Imputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
-						<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){ $Form_Imputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
-						<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){ $Form_Imputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
-						<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){ $Form_Imputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
-						<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){ $Form_Imputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
-						<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){ $Form_Imputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
-						<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){ $Form_Imputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
-						<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){ $Form_Imputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
-						<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){ $Form_Imputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
-						<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){ $Form_Imputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
-						<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){ $Form_Imputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
-						<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){ $Form_Imputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
-						<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){ $Form_Imputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
-						<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){ $Form_Imputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
-						<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){ $Form_Imputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
-						<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){ $Form_Imputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
-						<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){ $Form_Imputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
-						<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){ $Form_Imputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
-						<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){ $Form_Imputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
-						<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){ $Form_Imputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
-						<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){ $Form_Imputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
-						<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){ $Form_Imputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
-						<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){ $Form_Imputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
+						<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){ $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
+						<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){ $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
+						<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){ $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
+						<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){ $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
+						<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){ $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
+						<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){ $Form_Inputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
+						<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){ $Form_Inputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
+						<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){ $Form_Inputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
+						<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){ $Form_Inputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
+						<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){ $Form_Inputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
+						<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){ $Form_Inputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
+						<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){ $Form_Inputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
+						<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){ $Form_Inputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
+						<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){ $Form_Inputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
+						<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){ $Form_Inputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
+						<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){ $Form_Inputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
+						<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){ $Form_Inputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
+						<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){ $Form_Inputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
+						<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){ $Form_Inputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
+						<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){ $Form_Inputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
+						<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){ $Form_Inputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
+						<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){ $Form_Inputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
+						<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){ $Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
+						<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){ $Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
+						<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){ $Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
 					
 						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_img"> 
-						<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+						<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 					</div>
 							  
 				</form> 
@@ -928,13 +926,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //filtro
 $zx1 = "idProducto=0";
 //Se revisan los permisos a los productos
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -959,7 +960,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Componente</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -992,33 +993,33 @@ foreach ($arrPermisos as $prod) {
 				
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
-				$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x2, 2);
-				$Form_Imputs->form_input_text( 'Marca', 'Marca', $x3, 1);
-				$Form_Imputs->form_select('Componente','idUtilizable', $x4, 2, 'idUtilizable', 'Nombre', 'core_maquinas_tipo_componente', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 2);
+				$Form_Inputs->form_input_text('Marca', 'Marca', $x3, 1);
+				$Form_Inputs->form_select('Componente','idUtilizable', $x4, 2, 'idUtilizable', 'Nombre', 'core_maquinas_tipo_componente', 0, '', $dbConn);
 				//si es componente
-				$Form_Imputs->form_input_text( 'Modelo', 'Modelo', $x6, 1);
-				$Form_Imputs->form_select_n_auto('Año de Fabricacion','AnoFab', $x7, 1, 1975, ano_actual());
-				$Form_Imputs->form_input_text( 'Serie', 'Serie', $x8, 1);
+				$Form_Inputs->form_input_text('Modelo', 'Modelo', $x6, 1);
+				$Form_Inputs->form_select_n_auto('Año de Fabricacion','AnoFab', $x7, 1, 1975, ano_actual());
+				$Form_Inputs->form_input_text('Serie', 'Serie', $x8, 1);
 				//Si es subcomponente
-				$Form_Imputs->form_input_text( 'Saf', 'Saf', $x9, 1);
-				$Form_Imputs->form_input_text( 'Numero', 'Numero', $x10, 1);
-				$Form_Imputs->form_select_depend1('Tareas Relacionadas','idSubTipo', $x11, 1, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, 0,
+				$Form_Inputs->form_input_text('Saf', 'Saf', $x9, 1);
+				$Form_Inputs->form_input_text('Numero', 'Numero', $x10, 1);
+				$Form_Inputs->form_select_depend1('Tareas Relacionadas','idSubTipo', $x11, 1, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, 0,
 										 'Producto utilizado','idProducto', $x12, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_number('Grasa inicial','Grasa_inicial', $x13, 1);
-				$Form_Imputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x14, 1);
-				$Form_Imputs->form_input_number('Cantidad de Aceite','Aceite', $x15, 1);
-				$Form_Imputs->form_input_number('Cantidad a consumir','Cantidad', $x16, 1);
-				$Form_Imputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x17, 1);
-				$Form_Imputs->form_input_text('Unidad de Medida','idUml', $x18, 1);
-				$Form_Imputs->form_input_text( 'Frecuencia', 'Frecuencia', $x19, 1);
-				$Form_Imputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('Grasa inicial','Grasa_inicial', $x13, 1);
+				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x14, 1);
+				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x15, 1);
+				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x16, 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x17, 1);
+				$Form_Inputs->form_input_text('Unidad de Medida','idUml', $x18, 1);
+				$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
+				$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 
-				$Form_Imputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idMaquina', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('lvl', $_GET['lvl'], 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 				
 			
 				
@@ -1284,38 +1285,38 @@ foreach ($arrPermisos as $prod) {
 				<div class="form-group">
 					
 					
-					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Imputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
-					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Imputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
-					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Imputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
-					<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Imputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
-					<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Imputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
-					<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){   $Form_Imputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
-					<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){   $Form_Imputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
-					<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){   $Form_Imputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
-					<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){   $Form_Imputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
-					<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){ $Form_Imputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
-					<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){ $Form_Imputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
-					<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){ $Form_Imputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
-					<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){ $Form_Imputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
-					<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){ $Form_Imputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
-					<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){ $Form_Imputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
-					<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){ $Form_Imputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
-					<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){ $Form_Imputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
-					<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){ $Form_Imputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
-					<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){ $Form_Imputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
-					<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){ $Form_Imputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
-					<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){ $Form_Imputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
-					<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){ $Form_Imputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
-					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){ $Form_Imputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
-					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){ $Form_Imputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
-					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){ $Form_Imputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
+					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
+					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
+					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
+					<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
+					<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
+					<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){   $Form_Inputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
+					<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){   $Form_Inputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
+					<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){   $Form_Inputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
+					<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){   $Form_Inputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
+					<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){ $Form_Inputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
+					<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){ $Form_Inputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
+					<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){ $Form_Inputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
+					<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){ $Form_Inputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
+					<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){ $Form_Inputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
+					<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){ $Form_Inputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
+					<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){ $Form_Inputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
+					<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){ $Form_Inputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
+					<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){ $Form_Inputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
+					<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){ $Form_Inputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
+					<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){ $Form_Inputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
+					<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){ $Form_Inputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
+					<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){ $Form_Inputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
+					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){ $Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
+					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){ $Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
+					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){ $Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
 					
 				
 					
 					
 					
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1332,7 +1333,7 @@ foreach ($arrPermisos as $prod) {
 // tomo los datos del usuario
 $query = "SELECT Nombre, idSistema, idConfig_1, idConfig_2
 FROM `maquinas_listado`
-WHERE idMaquina = {$_GET['id']}";
+WHERE idMaquina = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1379,7 +1380,7 @@ maquinas_listado_level_1.idLevel_1 AS bla
 ".$z."
 FROM `maquinas_listado_level_1`
 ".$leftjoin."
-WHERE maquinas_listado_level_1.idMaquina={$_GET['id']}
+WHERE maquinas_listado_level_1.idMaquina=".$_GET['id']."
 ORDER BY maquinas_listado_level_1.Codigo ASC ".$orderby."
 
 ";
@@ -1429,7 +1430,7 @@ foreach($arrTipos as $tipo) {
 }
 /*********************************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$z="WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z="WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Se crea el arreglo
 $Trabajo = array();
 //Creo el arreglo para saber los datos de las licitaciones
@@ -1759,7 +1760,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
         if (isset($value['Nombre'])) {
 			echo '<li><div class="blum">';
 				echo '<div class="pull-left">';
-					if(isset($value['Imagen'])&&$value['Imagen']!=''){echo '<div class="btn-group" style="width: 35px;" ><a href="#" title="Click Preview Imagen" class="btn btn-primary btn-sm tooltip pop" src="upload/'.$value['Imagen'].'"><i class="fa fa-picture-o"></i></a></div>';}
+					if(isset($value['Imagen'])&&$value['Imagen']!=''){echo '<div class="btn-group" style="width: 35px;" ><a href="#" title="Click Preview Imagen" class="btn btn-primary btn-sm tooltip pop" src="upload/'.$value['Imagen'].'"><i class="fa fa-picture-o" aria-hidden="true"></i></a></div>';}
 					echo '<strong>'.$TipoMaq[$value['Tipo']]['Nombre'].':</strong> ';
 					if(isset($value['Codigo'])&&$value['Codigo']!=''){echo ' '.$value['Codigo'].' - ';}
 					echo $value['Nombre'];
@@ -1776,25 +1777,25 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 				echo '<div class="btn-group pull-right" >';
 					//Boton para agregar familia tarea componente
 					if ($rowlevel>=2&&$value['Tipo']==2){
-						echo '<a href="'.$loc.'&addTrabajo='.$value['id'].'&lvl='.$lv.'" title="Agregar Familia Trabajo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-cogs"></i></a>';
+						echo '<a href="'.$loc.'&addTrabajo='.$value['id'].'&lvl='.$lv.'" title="Agregar Familia Trabajo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-cogs" aria-hidden="true"></i></a>';
 					}
 					//Boton para editar
 					if ($rowlevel>=2){
-						echo '<a href="'.$loc.'&edit='.$value['id'].'&lvl='.$lv.'" title="Editar este Componente" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>';
+						echo '<a href="'.$loc.'&edit='.$value['id'].'&lvl='.$lv.'" title="Editar este Componente" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
 					}
 					//Boton para editar imagen
 					if ($rowlevel>=2){
-						echo '<a href="'.$loc.'&editimg='.$value['id'].'&lvl='.$lv.'" title="Editar imagen Componente" class="btn btn-primary btn-sm tooltip"><i class="fa fa-picture-o"></i></a>';
+						echo '<a href="'.$loc.'&editimg='.$value['id'].'&lvl='.$lv.'" title="Editar imagen Componente" class="btn btn-primary btn-sm tooltip"><i class="fa fa-picture-o" aria-hidden="true"></i></a>';
 					}
 					//Boton para clonar
 					if ($rowlevel>=2){
-						echo '<a href="'.$loc.'&clone_compo='.$value['id'].'&lvl='.$lv.'" title="Clonar este Componente" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a>';
+						echo '<a href="'.$loc.'&clone_compo='.$value['id'].'&lvl='.$lv.'" title="Clonar este Componente" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>';
 					}
 					//boton para eliminar
 					if ($rowlevel>=3){
-						$ubicacion = $loc.'&del_idLevel='.$value['id'].'&lvl='.$lv.'&nmax='.$nmax;
+						$ubicacion = $loc.'&del_idLevel='.simpleEncode($value['id'], fecha_actual()).'&lvl='.$lv.'&nmax='.$nmax;
 						$dialogo   = '¿Realmente deseas eliminar todos los datos relacionados a esta Rama?';
-						echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar este Componente" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>';
+						echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar este Componente" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
 					}
 				echo '</div>';
 				
@@ -1806,7 +1807,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 					echo '<div class="btn-group pull-right" style="margin-right:5px;" >';
 						if ($rowlevel>=1){
 							$xc = $lv + 1;
-							echo '<a href="'.$loc.'&new=true&lvl='.$xc.'" title="Crear Sub-Componente" class="btn btn-primary btn-sm tooltip"><i class="fa fa-file-o"></i></a>';
+							echo '<a href="'.$loc.'&new=true&lvl='.$xc.'" title="Crear Sub-Componente" class="btn btn-primary btn-sm tooltip"><i class="fa fa-file-o" aria-hidden="true"></i></a>';
 						}
 					echo '</div>';
 				}				
@@ -1826,21 +1827,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text"><?php echo $x_column_maquina_plur; ?></span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Componentes</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_maquina_plur, $rowdata['Nombre'], 'Componentes');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php }?>
 	</div>
@@ -1852,23 +1839,23 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'unidad_negocio_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'unidad_negocio_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'unidad_negocio_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Configuracion</a></li>
+				<li class=""><a href="<?php echo 'unidad_negocio_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'unidad_negocio_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'unidad_negocio_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Ubicacion</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Ficha Tecnica</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >HDS</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Imagen</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Descripcion</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 						<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
-							<li class="active"><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Componentes</a></li>
+							<li class="active"><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
 						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
-							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Matriz Analisis</a></li>
+							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 						
 					</ul>
@@ -1905,8 +1892,8 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

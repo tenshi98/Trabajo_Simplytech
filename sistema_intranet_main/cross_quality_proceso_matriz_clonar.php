@@ -55,7 +55,7 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Tipo Planilla <?php echo $_GET['nombre_matriz']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -67,16 +67,16 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 				if(isset($idSistema)) { $x2  = $idSistema; }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_select('Sistema','idSistema', $x2, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_select('Sistema','idSistema', $x2, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
+				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
 				?>  
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c5; Clonar" name="clone_Matriz">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -196,7 +196,7 @@ array_push( $arrMatriz,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -217,14 +217,14 @@ array_push( $arrMatriz,$row );
 				if(isset($idSistema)) {  $x5  = $idSistema;   }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 1); 
-				$Form_Imputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 1, 1, 100);
-				$Form_Imputs->form_select('Tipo Planilla','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Sistema','idSistema', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1); 
+				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 1, 1, 100);
+				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Sistema','idSistema', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -243,7 +243,7 @@ array_push( $arrMatriz,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Tipos Planillas</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Tipos Planillas</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -257,36 +257,36 @@ array_push( $arrMatriz,$row );
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Planilla</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=planilla_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=planilla_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=planilla_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=planilla_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">N° Puntos</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=npuntos_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=npuntos_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=npuntos_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=npuntos_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Sistema</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=sistema_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=sistema_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=sistema_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=sistema_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -302,8 +302,8 @@ array_push( $arrMatriz,$row );
 							<td><?php echo $maq['RazonSocial']; ?></td>		
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_quality_proceso_matriz.php?view='.$maq['idMatriz']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_quality_proceso_matriz.php?view='.simpleEncode($maq['idMatriz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>	
 						</tr>

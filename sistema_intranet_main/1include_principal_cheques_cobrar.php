@@ -23,12 +23,12 @@ $meses=array(1=>"Enero",
 				"Noviembre", 
 				"Diciembre"
 			);
+//Filtro
+$z =" AND pagos_facturas_clientes.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //verifico el tipo de usuario
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z    = " AND pagos_facturas_clientes.idSistema>=0";	
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){	
 	$join = "";
 }else{
-	$z =" AND pagos_facturas_clientes.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 	$z.=" AND usuarios_documentos_pago.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 	$join = " INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_clientes.idDocPago";	
 }
@@ -44,7 +44,7 @@ pagos_facturas_clientes.F_Pago_dia
 FROM `pagos_facturas_clientes`
 LEFT JOIN `sistema_documentos_pago`  ON sistema_documentos_pago.idDocPago   = pagos_facturas_clientes.idDocPago
 ".$join." 
-WHERE pagos_facturas_clientes.F_Pago_ano='{$Ano}' AND pagos_facturas_clientes.F_Pago_mes='{$Mes}' 
+WHERE pagos_facturas_clientes.F_Pago_ano='".$Ano."' AND pagos_facturas_clientes.F_Pago_mes='".$Mes."' 
 ".$z." 
 ORDER BY pagos_facturas_clientes.F_Pago ASC  ";
 //Consulta
@@ -154,7 +154,7 @@ array_push( $arrEventos,$row );
 																switch ($evento['idTipo']) {
 																	//Factura Insumos
 																	case 1:
-																		$ver = 'view_mov_insumos.php?view='.$evento['idFacturacion'];
+																		$ver = 'view_mov_insumos.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
 																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor1.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
@@ -163,7 +163,7 @@ array_push( $arrEventos,$row );
 																		break;
 																	//Factura Productos
 																	case 2:
-																		$ver = 'view_mov_productos.php?view='.$evento['idFacturacion'];
+																		$ver = 'view_mov_productos.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
 																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor2.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
@@ -172,7 +172,7 @@ array_push( $arrEventos,$row );
 																		break;
 																	//Factura Servicios
 																	case 3:
-																		$ver = 'view_mov_servicios.php?view='.$evento['idFacturacion'];
+																		$ver = 'view_mov_servicios.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
 																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor3.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
@@ -181,7 +181,7 @@ array_push( $arrEventos,$row );
 																		break;
 																	//Factura Arriendos
 																	case 4:
-																		$ver = 'view_mov_arriendos.php?view='.$evento['idFacturacion'];
+																		$ver = 'view_mov_arriendos.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
 																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor4.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
@@ -231,7 +231,7 @@ array_push( $arrEventos,$row );
 																/*switch ($evento['idTipo']) {
 																	//Factura Insumos
 																	case 1:
-																		$ver = 'view_mov_insumos.php?view='.$evento['idFacturacion'];
+																		$ver = 'view_mov_insumos.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
 																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor1.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
@@ -240,7 +240,7 @@ array_push( $arrEventos,$row );
 																		break;
 																	//Factura Productos
 																	case 2:
-																		$ver = 'view_mov_productos.php?view='.$evento['idFacturacion'];
+																		$ver = 'view_mov_productos.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
 																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor2.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
@@ -249,7 +249,7 @@ array_push( $arrEventos,$row );
 																		break;
 																	//Factura Servicios
 																	case 3:
-																		$ver = 'view_mov_servicios.php?view='.$evento['idFacturacion'];
+																		$ver = 'view_mov_servicios.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
 																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor3.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
@@ -258,7 +258,7 @@ array_push( $arrEventos,$row );
 																		break;
 																	//Factura Arriendos
 																	case 4:
-																		$ver = 'view_mov_arriendos.php?view='.$evento['idFacturacion'];
+																		$ver = 'view_mov_arriendos.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
 																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor4.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{

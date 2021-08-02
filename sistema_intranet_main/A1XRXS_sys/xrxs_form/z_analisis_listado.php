@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	
@@ -38,11 +42,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idAnalisis':        if(empty($idAnalisis)){         $error['idAnalisis']          = 'error/No ha ingresado el id';}break;
 			case 'idMaquina':         if(empty($idMaquina)){          $error['idMaquina']           = 'error/No ha seleccionado la maquina';}break;
 			case 'idMatriz':          if(empty($idMatriz)){           $error['idMatriz']            = 'error/No ha seleccionado la matriz';}break;
@@ -66,6 +70,12 @@ if( ! defined('XMBCXRXSKGC')) {
 		}
 	}
 /*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($obs_Diagnostico)&&contar_palabras_censuradas($obs_Diagnostico)!=0){  $error['obs_Diagnostico'] = 'error/Edita obs Diagnostico, contiene palabras no permitidas'; }	
+	if(isset($obs_Accion)&&contar_palabras_censuradas($obs_Accion)!=0){            $error['obs_Accion']      = 'error/Edita obs Accion, contiene palabras no permitidas'; }	
+		
+/*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
@@ -81,7 +91,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idMaquina)&&isset($idMatriz)&&isset($n_muestra)){
-				$ndata_1 = db_select_nrows ('idAnalisis', 'analisis_listado', '', "idMaquina='".$idMaquina."' AND idMatriz='".$idMatriz."' AND n_muestra='".$n_muestra."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idAnalisis', 'analisis_listado', '', "idMaquina='".$idMaquina."' AND idMatriz='".$idMatriz."' AND n_muestra='".$n_muestra."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			
 			//generacion de errores
@@ -119,7 +129,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				f_recibida,f_reporte,n_muestra,obs_Diagnostico,obs_Accion, idTipo, idLaboratorio
 				".$zz."
 				) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -142,14 +152,8 @@ if( ! defined('XMBCXRXSKGC')) {
 
 						/**************************************/
 						// Se traen todos los datos de la maquina
-						$query = "SELECT 
-						idMaquina, cantPuntos
-						".$qry."
-						FROM `maquinas_listado_matriz`
-						WHERE idMatriz = {$idMatriz}";
-						$resultado = mysqli_query($dbConn, $query);
-						$rowdata = mysqli_fetch_assoc ($resultado);
-						
+						$rowdata = db_select_data (false, 'idMaquina, cantPuntos '.$qry, 'maquinas_listado_matriz', '', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 						/**************************************/
 						//se realiza la verificacion
 						for ($i = 1; $i <= 50; $i++) {
@@ -189,7 +193,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									$query  = "INSERT INTO `analisis_listado_alertas` (idAnalisis,nivel,idPunto,Nombrepunto,
 									Creacion_fecha, Creacion_dia, Creacion_Semana, Creacion_mes, Creacion_ano,valor,
 									medAceptable,medAlerta, medCondenatorio ) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -236,7 +240,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									$query  = "INSERT INTO `analisis_listado_alertas` (idAnalisis,nivel,idPunto,Nombrepunto,
 									Creacion_fecha, Creacion_dia, Creacion_Semana, Creacion_mes, Creacion_ano,valor,
 									medAceptable,medAlerta, medCondenatorio ) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -283,7 +287,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									$query  = "INSERT INTO `analisis_listado_alertas` (idAnalisis,nivel,idPunto,Nombrepunto,
 									Creacion_fecha, Creacion_dia, Creacion_Semana, Creacion_mes, Creacion_ano,valor,
 									medAceptable,medAlerta, medCondenatorio ) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -335,7 +339,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									$query  = "INSERT INTO `analisis_listado_alertas` (idAnalisis,nivel,idPunto,Nombrepunto,
 									Creacion_fecha, Creacion_dia, Creacion_Semana, Creacion_mes, Creacion_ano,valor,
 									medAceptable,medAlerta, medCondenatorio ) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -382,7 +386,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									$query  = "INSERT INTO `analisis_listado_alertas` (idAnalisis,nivel,idPunto,Nombrepunto,
 									Creacion_fecha, Creacion_dia, Creacion_Semana, Creacion_mes, Creacion_ano,valor,
 									medAceptable,medAlerta, medCondenatorio ) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -429,7 +433,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									$query  = "INSERT INTO `analisis_listado_alertas` (idAnalisis,nivel,idPunto,Nombrepunto,
 									Creacion_fecha, Creacion_dia, Creacion_Semana, Creacion_mes, Creacion_ano,valor,
 									medAceptable,medAlerta, medCondenatorio ) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -528,33 +532,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `analisis_listado` WHERE idAnalisis = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//Redirijo			
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
-
 			
-
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
 			
-
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'analisis_listado', 'idAnalisis = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 		break;	
 					
 /*******************************************************************************************************************/

@@ -34,14 +34,16 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Especie creada corr
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Especie editada correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Especie borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ if ( ! empty($_GET['id']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn); 
 // Se traen todos los datos de mi usuario
 $query = "SELECT  
 Nombre
 FROM `sistema_variedades_categorias`
-WHERE sistema_variedades_categorias.idCategoria = {$_GET['id']}";
+WHERE sistema_variedades_categorias.idCategoria = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -68,8 +70,8 @@ FROM `sistema_variedades_categorias_matriz_calidad`
 LEFT JOIN `cross_quality_calidad_matriz`         ON cross_quality_calidad_matriz.idMatriz         = sistema_variedades_categorias_matriz_calidad.idMatriz
 LEFT JOIN `core_cross_quality_analisis_calidad`  ON core_cross_quality_analisis_calidad.idTipo    = sistema_variedades_categorias_matriz_calidad.idProceso
 
-WHERE sistema_variedades_categorias_matriz_calidad.idCategoria = {$_GET['id']}
-AND sistema_variedades_categorias_matriz_calidad.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE sistema_variedades_categorias_matriz_calidad.idCategoria = ".$_GET['id']."
+AND sistema_variedades_categorias_matriz_calidad.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -97,8 +99,8 @@ FROM `sistema_variedades_categorias_matriz_proceso`
 LEFT JOIN `cross_quality_calidad_matriz`         ON cross_quality_calidad_matriz.idMatriz         = sistema_variedades_categorias_matriz_proceso.idMatriz
 LEFT JOIN `core_cross_quality_analisis_calidad`  ON core_cross_quality_analisis_calidad.idTipo    = sistema_variedades_categorias_matriz_proceso.idProceso
 
-WHERE sistema_variedades_categorias_matriz_proceso.idCategoria = {$_GET['id']}
-AND sistema_variedades_categorias_matriz_proceso.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE sistema_variedades_categorias_matriz_proceso.idCategoria = ".$_GET['id']."
+AND sistema_variedades_categorias_matriz_proceso.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -127,8 +129,8 @@ FROM `sistema_variedades_categorias_tipo_emb`
 LEFT JOIN `sistema_cross_analisis_embalaje`      ON sistema_cross_analisis_embalaje.idTipo        = sistema_variedades_categorias_tipo_emb.idTipo
 LEFT JOIN `core_cross_quality_analisis_calidad`  ON core_cross_quality_analisis_calidad.idTipo    = sistema_variedades_categorias_tipo_emb.idProceso
 
-WHERE sistema_variedades_categorias_tipo_emb.idCategoria = {$_GET['id']}
-AND sistema_variedades_categorias_tipo_emb.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE sistema_variedades_categorias_tipo_emb.idCategoria = ".$_GET['id']."
+AND sistema_variedades_categorias_tipo_emb.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -147,21 +149,7 @@ array_push( $arrTiposEmbalaje,$row );
 }
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Especie</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -169,7 +157,7 @@ array_push( $arrTiposEmbalaje,$row );
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'cross_sistema_variedades_categorias.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
+				<li class="active"><a href="<?php echo 'cross_sistema_variedades_categorias.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'cross_sistema_variedades_categorias_matriz_calidad.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Matriz Calidad</a></li>
 				<li class=""><a href="<?php echo 'cross_sistema_variedades_categorias_matriz_proceso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Matriz Proceso</a></li>
 				<li class=""><a href="<?php echo 'cross_sistema_variedades_categorias_tipo_embalaje.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Tipo Embalaje</a></li>
@@ -182,7 +170,7 @@ array_push( $arrTiposEmbalaje,$row );
 					
 					
 					<div class="col-sm-4">
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/productos.jpg">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 					</div>
 					<div class="col-sm-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
@@ -195,7 +183,7 @@ array_push( $arrTiposEmbalaje,$row );
 					<div class="col-sm-12">
 						<div class="box">
 							<header>
-								<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Matrices de calidad</h5>
+								<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Matrices de calidad</h5>
 							</header>
 							<div class="table-responsive">
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -225,7 +213,7 @@ array_push( $arrTiposEmbalaje,$row );
 					<div class="col-sm-12">
 						<div class="box">
 							<header>
-								<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Matrices de Proceso</h5>
+								<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Matrices de Proceso</h5>
 							</header>
 							<div class="table-responsive">
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -255,7 +243,7 @@ array_push( $arrTiposEmbalaje,$row );
 					<div class="col-sm-12">
 						<div class="box">
 							<header>
-								<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Tipos de Embalaje</h5>
+								<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Tipos de Embalaje</h5>
 							</header>
 							<div class="table-responsive">
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -290,8 +278,8 @@ array_push( $arrTiposEmbalaje,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
@@ -330,7 +318,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE sistema_variedades_categorias.idCategoria!=0";
 //verifico que sea un administrador
-$z.=" AND core_sistemas_variedades_categorias.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";	
+$z.=" AND core_sistemas_variedades_categorias.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){ $z .= " AND sistema_variedades_categorias.Nombre LIKE '%".$_GET['Nombre']."%'";}
@@ -384,7 +372,7 @@ array_push( $arrCategorias,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -402,10 +390,10 @@ array_push( $arrCategorias,$row );
 				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -424,7 +412,7 @@ array_push( $arrCategorias,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Especies</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Especies</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -438,8 +426,8 @@ array_push( $arrCategorias,$row );
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -451,11 +439,11 @@ array_push( $arrCategorias,$row );
 						<td><?php echo $cat['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idCategoria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idCategoria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$cat['idCategoria'];
+									$ubicacion = $location.'&del='.simpleEncode($cat['idCategoria'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la Especie '.$cat['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

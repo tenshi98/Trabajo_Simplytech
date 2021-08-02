@@ -15,15 +15,15 @@ $original = "informe_busqueda_pagos_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idType'])&&$_GET['idType']!=''){               $search .="&idType={$_GET['idType']}";}
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor={$_GET['idProveedor']}";}
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){         $search .="&idCliente={$_GET['idCliente']}";}
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo={$_GET['idTipo']}";}
-if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){         $search .="&idDocPago={$_GET['idDocPago']}";}
-if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){         $search .="&N_DocPago={$_GET['N_DocPago']}";}
+if(isset($_GET['idType'])&&$_GET['idType']!=''){               $search .="&idType=".$_GET['idType'];}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){         $search .="&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){         $search .="&idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){         $search .="&N_DocPago=".$_GET['N_DocPago'];}
 if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
-	$search .="&f_inicio_p={$_GET['f_inicio_p']}";
-	$search .="&f_termino_p={$_GET['f_termino_p']}";
+	$search .="&f_inicio_p=".$_GET['f_inicio_p'];
+	$search .="&f_termino_p=".$_GET['f_termino_p'];
 }
 	
 
@@ -81,13 +81,13 @@ switch ($_GET['idType']) {
 		//Variable de busqueda
 		$z    = "WHERE pagos_facturas_proveedores.idPago!=0";
 
-		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $z.=" AND pagos_facturas_proveedores.idDocPago={$_GET['idDocPago']}";}
-		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $z.=" AND pagos_facturas_proveedores.N_DocPago={$_GET['N_DocPago']}";}
-		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $z.=" AND pagos_facturas_proveedores.idTipo={$_GET['idTipo']}";}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND pagos_facturas_proveedores.idProveedor={$_GET['idProveedor']}";}
+		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $z.=" AND pagos_facturas_proveedores.idDocPago=".$_GET['idDocPago'];}
+		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $z.=" AND pagos_facturas_proveedores.N_DocPago=".$_GET['N_DocPago'];}
+		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $z.=" AND pagos_facturas_proveedores.idTipo=".$_GET['idTipo'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND pagos_facturas_proveedores.idProveedor=".$_GET['idProveedor'];}
 
 		if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
-			$z.=" AND pagos_facturas_proveedores.F_Pago BETWEEN '{$_GET['f_inicio_p']}' AND '{$_GET['f_termino_p']}'";
+			$z.=" AND pagos_facturas_proveedores.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
 		}
 		/**********************************************************/
 		//Realizo una consulta para saber el total de elementos existentes
@@ -172,13 +172,13 @@ switch ($_GET['idType']) {
 		//Variable de busqueda
 		$z    = "WHERE pagos_facturas_clientes.idPago!=0";
 
-		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $z.=" AND pagos_facturas_clientes.idDocPago={$_GET['idDocPago']}";}
-		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $z.=" AND pagos_facturas_clientes.N_DocPago={$_GET['N_DocPago']}";}
-		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $z.=" AND pagos_facturas_clientes.idTipo={$_GET['idTipo']}";}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND pagos_facturas_clientes.idCliente={$_GET['idCliente']}";}
+		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $z.=" AND pagos_facturas_clientes.idDocPago=".$_GET['idDocPago'];}
+		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $z.=" AND pagos_facturas_clientes.N_DocPago=".$_GET['N_DocPago'];}
+		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $z.=" AND pagos_facturas_clientes.idTipo=".$_GET['idTipo'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND pagos_facturas_clientes.idCliente=".$_GET['idCliente'];}
 
 		if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
-			$z.=" AND pagos_facturas_clientes.F_Pago BETWEEN '{$_GET['f_inicio_p']}' AND '{$_GET['f_termino_p']}'";
+			$z.=" AND pagos_facturas_clientes.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
 		}
 		/**********************************************************/
 		//Realizo una consulta para saber el total de elementos existentes
@@ -264,7 +264,7 @@ switch ($_GET['idType']) {
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Documentos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Documentos</h5>
 			<div class="toolbar">
 				<?php echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
@@ -276,29 +276,29 @@ switch ($_GET['idType']) {
 						<th>
 							<div class="pull-left">Tipo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Empresa</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=empresa_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=empresa_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=empresa_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=empresa_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Documento</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=documento_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=documento_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=documento_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=documento_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fecha Pagada</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fechapag_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fechapag_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fechapag_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fechapag_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -318,16 +318,16 @@ switch ($_GET['idType']) {
 								<?php
 								switch ($tipo['idTipo']) {
 									case 1://Factura Insumos
-										echo '<a href="view_mov_insumos.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+										echo '<a href="view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 									case 2://Factura Productos
-										echo '<a href="view_mov_productos.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+										echo '<a href="view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 									case 3://Factura Servicios
-										echo '<a href="view_mov_servicios.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+										echo '<a href="view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 									case 4://Factura Arriendos
-										echo '<a href="view_mov_arriendos.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+										echo '<a href="view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 								}
 								?>
@@ -346,20 +346,20 @@ switch ($_GET['idType']) {
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -377,15 +377,15 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($f_termino_p)) {          $x8  = $f_termino_p;         }else{$x8  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo Pago','idType', $x1, 2, 'idType', 'Nombre', 'pagos_facturas_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x3, 1, 'idCliente', 'Nombre', 'clientes_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select('Tipo Documento','idTipo', $x4, 1, 'idTipo', 'Nombre', 'pagos_facturas_proveedores_tipo', 0, '', $dbConn);
-				$Form_Imputs->form_select('Documento de pago','idDocPago', $x5, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('N° Documento', 'N_DocPago', $x6, 1);
-				$Form_Imputs->form_date('Fecha Pagada Desde','f_inicio_p', $x7, 1);
-				$Form_Imputs->form_date('Fecha Pagada Hasta','f_termino_p', $x8, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo Pago','idType', $x1, 2, 'idType', 'Nombre', 'pagos_facturas_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x3, 1, 'idCliente', 'Nombre', 'clientes_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select('Documento de Pago','idTipo', $x4, 1, 'idTipo', 'Nombre', 'pagos_facturas_proveedores_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x5, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x6, 1);
+				$Form_Inputs->form_date('Fecha Pagada Desde','f_inicio_p', $x7, 1);
+				$Form_Inputs->form_date('Fecha Pagada Hasta','f_termino_p', $x8, 1);
 						
 				?> 
 				

@@ -31,7 +31,7 @@ array_push( $arrLog,$row );
 		<div class="col-sm-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>Log de Cambios</h5>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Log de Cambios</h5>
 				</header>
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">			  

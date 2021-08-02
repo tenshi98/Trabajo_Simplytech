@@ -21,35 +21,56 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
-
-sistema_origen.Nombre AS SistemaOrigen,
+core_sistemas.Nombre AS SistemaOrigen,
 sis_or_ciudad.Nombre AS SistemaOrigenCiudad,
 sis_or_comuna.Nombre AS SistemaOrigenComuna,
-sistema_origen.Direccion AS SistemaOrigenDireccion,
-sistema_origen.Contacto_Fono1 AS SistemaOrigenFono,
-sistema_origen.email_principal AS SistemaOrigenEmail,
-sistema_origen.Rut AS SistemaOrigenRut,
-sistema_origen.Contacto_Nombre AS SistemaContacto,
+core_sistemas.Direccion AS SistemaOrigenDireccion,
+core_sistemas.Contacto_Fono1 AS SistemaOrigenFono,
+core_sistemas.email_principal AS SistemaOrigenEmail,
+core_sistemas.Rut AS SistemaOrigenRut,
+core_sistemas.Contacto_Nombre AS SistemaContacto,
 
 usuarios_listado.Nombre AS NombreEncargado,
 
 telemetria_historial_mantencion.Fecha, 
+telemetria_historial_mantencion.h_Inicio, 
+telemetria_historial_mantencion.h_Termino, 
 telemetria_historial_mantencion.Duracion, 
 telemetria_historial_mantencion.Resumen, 
 telemetria_historial_mantencion.Resolucion,
+telemetria_historial_mantencion.idOpciones_1,
+telemetria_historial_mantencion.idOpciones_2,
+telemetria_historial_mantencion.idOpciones_3,
+telemetria_historial_mantencion.Recepcion_Nombre, 
+telemetria_historial_mantencion.Recepcion_Rut, 
+telemetria_historial_mantencion.Recepcion_Email,
+telemetria_historial_mantencion.Path_Firma,
 
-telemetria_listado.Nombre AS Equipo
+core_telemetria_servicio_tecnico.Nombre AS Servicio
 
 FROM `telemetria_historial_mantencion`
-LEFT JOIN `core_sistemas`   sistema_origen          ON sistema_origen.idSistema                     = telemetria_historial_mantencion.idSistema
-LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                       = sistema_origen.idCiudad
-LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = sistema_origen.idComuna
 LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                   = telemetria_historial_mantencion.idUsuario
-LEFT JOIN `telemetria_listado`                      ON telemetria_listado.idTelemetria              = telemetria_historial_mantencion.idTelemetria
+LEFT JOIN `core_telemetria_servicio_tecnico`        ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio
+LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                      = telemetria_historial_mantencion.idSistema
+LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                       = core_sistemas.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = core_sistemas.idComuna
 
-WHERE telemetria_historial_mantencion.idMantencion = {$_GET['view']}";
+WHERE telemetria_historial_mantencion.idMantencion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -60,23 +81,68 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado); 
 
+/**********************************/				
+$arrOpciones = array();
+$query = "SELECT idOpciones, Nombre
+FROM `core_telemetria_servicio_tecnico_opciones`
+ORDER BY Nombre ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrOpciones,$row );
+}
+/**********************************/
+$arrOpcionesDisplay = array();
+foreach ($arrOpciones as $mant) {
+	$arrOpcionesDisplay[$mant['idOpciones']]['Nombre'] = $mant['Nombre'];
+}
+/*************************************************************************/
+//Se buscan todos los archivos relacionados
+$arrEquipos = array();
+$query = "SELECT 
+telemetria_listado.Identificador AS Identificador,
+telemetria_listado.Nombre AS Equipo
+
+FROM `telemetria_historial_mantencion_equipos`
+LEFT JOIN `telemetria_listado`  ON telemetria_listado.idTelemetria  = telemetria_historial_mantencion_equipos.idTelemetria
+WHERE telemetria_historial_mantencion_equipos.idMantencion = ".$X_Puntero;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrEquipos,$row );
+}
+/*************************************************************************/
 //Se buscan todos los archivos relacionados
 $arrArchivos = array();
 $query = "SELECT Nombre
 FROM `telemetria_historial_mantencion_archivos`
-WHERE idMantencion = {$_GET['view']}";
+WHERE idMantencion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -87,15 +153,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivos,$row );
@@ -103,8 +162,8 @@ array_push( $arrArchivos,$row );
 
 ?>
 <div class="col-xs-12" style="margin-top:15px;">
-	<a target="new" href="view_telemetria_mantencion_to_pdf.php?view=<?php echo $_GET['view'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
-		<i class="fa fa-file-pdf-o"></i> Exportar a PDF
+	<a target="new" href="view_telemetria_mantencion_to_pdf.php?view=<?php echo $_GET['view'].'&idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual()) ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
+		<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF
 	</a>
 </div>
 <div class="clearfix"></div>
@@ -116,8 +175,8 @@ array_push( $arrArchivos,$row );
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> Mantenciones.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Fecha'])?></small>
+				<i class="fa fa-globe" aria-hidden="true"></i> Visita Tecnica.
+				<small class="pull-right">N°: <?php echo n_doc($X_Puntero, 7)?></small>
 			</h2>
 		</div>   
 	</div>
@@ -129,31 +188,43 @@ array_push( $arrArchivos,$row );
 
 				echo '
 				<div class="col-sm-4 invoice-col">
-					Empresa Visitada
+					<strong>Empresa Visitada</strong>
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
-						'.$row_data['SistemaOrigenDireccion'].'<br>
-						Fono Fijo: '.$row_data['SistemaOrigenFono'].'<br>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br>
-						Email: '.$row_data['SistemaOrigenEmail'].'<br>
-						Contacto: '.$row_data['SistemaContacto'].'<br>
+						Nombre: '.$row_data['SistemaOrigen'].'<br/>
+						Ubicacion: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
+						Direccion: '.$row_data['SistemaOrigenDireccion'].'<br/>
+						Fono Fijo: '.$row_data['SistemaOrigenFono'].'<br/>
+						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
+						Email: '.$row_data['SistemaOrigenEmail'].'<br/>
+						Persona contacto:'.$row_data['SistemaContacto'].'<br/>
+						Aprobador Nombre: '.$row_data['Recepcion_Nombre'].'<br/>
+						Aprobador Rut: '.$row_data['Recepcion_Rut'].'<br/>
+						Aprobador Email: '.$row_data['Recepcion_Email'].'<br/>
 					</address>
 				</div>
 				
 				<div class="col-sm-4 invoice-col">
-					Tecnico a Cargo
+					<strong>Tecnico a Cargo</strong>
 					<address>
-						<strong>'.$row_data['NombreEncargado'].'</strong><br>
-						Fecha: '.Fecha_estandar($row_data['Fecha']).'<br>
-						Horas: '.$row_data['Duracion'].'<br>
+						Nombre: '.$row_data['NombreEncargado'].'<br/>
+						Fecha: '.Fecha_estandar($row_data['Fecha']).'<br/>
+						Hora Inicio: '.$row_data['h_Inicio'].'<br/>
+						Hora Termino: '.$row_data['h_Termino'].'<br/>
+						Duracion: '.$row_data['Duracion'].'<br/>
 					</address>
 				</div>
 			   
 				<div class="col-sm-4 invoice-col">
-					Equipo
+					<strong>Trabajo</strong>
 					<address>
-						<strong>'.$row_data['Equipo'].'</strong><br>
+						Servicio: '.$row_data['Servicio'].'<br/>
+						Opciones: ';
+						$ntot = 0;
+						if(isset($row_data['idOpciones_1'])&&$row_data['idOpciones_1']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
+						if(isset($row_data['idOpciones_2'])&&$row_data['idOpciones_2']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
+						if(isset($row_data['idOpciones_3'])&&$row_data['idOpciones_3']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[3]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[3]['Nombre'];$ntot++;}}
+						echo '
+						<br/>
 					</address>
 				</div>';
 
@@ -161,19 +232,30 @@ array_push( $arrArchivos,$row );
 	</div>
 	
 	
+	<div class="">
+		<p class="lead"><a name="Ancla_obs"></a>Equipos:</p>
+		<table id="items" style="margin-bottom: 20px;">
+			<tbody>
+				<?php foreach ($arrEquipos as $archivos) { ?>
+					<tr class="odd">
+						<td><?php echo $archivos['Identificador']; ?></td>
+						<td><?php echo $archivos['Equipo']; ?></td>
+					</tr>
+				<?php } ?>
+			</tbody>
+		</table>			
+    </div>
 
-	
-	
 	<div class="row">
 		<div class="col-xs-12">
-			<p class="lead"><a name="Ancla_obs"></a>Resumen:</p>
+			<p class="lead"><a name="Ancla_obs"></a>Diagnostico tecnico y acciones realizadas:</p>
 			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resumen'];?></div>
 		</div>
 	</div>
 	
 	<div class="row">
 		<div class="col-xs-12">
-			<p class="lead"><a name="Ancla_obs"></a>Resolucion:</p>
+			<p class="lead"><a name="Ancla_obs"></a>Resumen de Visita:</p>
 			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resolucion'];?></div>
 		</div>
 	</div>
@@ -188,30 +270,58 @@ array_push( $arrArchivos,$row );
 						<td><?php echo $archivos['Nombre']; ?></td>
 						<td width="10">
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$archivos['Nombre'].'&return=true'; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-								<a href="<?php echo '1download.php?dir=upload&file='.$archivos['Nombre']; ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($archivos['Nombre'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<a href="<?php echo '1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($archivos['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
 				<?php } ?>
 			</tbody>
-		</table>
-						
+		</table>			
     </div>
 
-
+	<div class="row firma">
+		
+		<div class="col-sm-6 fcont">
+			<?php if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){ ?>
+				<div class="col-sm-6 fcenter">
+					<img style="" class="media-object user-img width100" alt="User Picture" src="upload/<?php echo $row_data['Path_Firma']; ?>">
+				</div>	
+			<?php } ?>
+			<p>Firma Aprobador</p>
+		</div>
+		<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div> 
+	</div>
 
       
 </section>
 
  
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 
 <?php

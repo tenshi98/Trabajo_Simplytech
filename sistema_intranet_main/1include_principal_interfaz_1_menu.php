@@ -3,7 +3,7 @@ echo '
 <div class="cover-info">
 	<div class="avatar">';
 		if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') {
-			echo '<img alt="User Picture" src="'.DB_SITE.'/LIB_assets/img/usr.png">';
+			echo '<img alt="User Picture" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png">';
 		}else{
 			echo '<img alt="User Picture" src="upload/'.$_SESSION['usuario']['basic_data']['Direccion_img'].'">';
 		}
@@ -12,29 +12,29 @@ echo '
 	<div class="name"><a href="#">'.$_SESSION['usuario']['basic_data']['Nombre'].'</a></div>
 	
 	<ul class="cover-nav nav nav-tabs">';
-		echo '<li class="active"><a href="#Menu_tab_1" data-toggle="tab"><i class="fa fa-fw fa-bars"></i> Resumen</a></li>';
+		echo '<li class="active"><a href="#Menu_tab_1" data-toggle="tab"><i class="fa fa-fw fa-bars" aria-hidden="true"></i> Resumen</a></li>';
 
 		
 		//Telemetria
 		$temp = $prm_x[7] + $prm_x[8] + $prm_x[9];
 		if($temp!=0){
-			echo '<li><a href="#Menu_tab_2" data-toggle="tab"><i class="fa fa-fw fa-bullseye"></i> Telemetria</a></li>';
+			echo '<li><a href="#Menu_tab_2" data-toggle="tab"><i class="fa fa-fw fa-bullseye" aria-hidden="true"></i> Telemetria</a></li>';
 		}
 		
 		//Bodegas					
 		$temp = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4] + $prm_x[5];
 		if($temp!=0){
-			echo '<li><a href="#Menu_tab_3" data-toggle="tab"><i class="fa fa-fw fa-cubes"></i> Bodegas</a></li>';
+			echo '<li><a href="#Menu_tab_3" data-toggle="tab"><i class="fa fa-fw fa-cubes" aria-hidden="true"></i> Bodegas</a></li>';
 		}
 		
 		//Lubricacion
 		$temp = $prm_x[6] + $prm_x[10] + $prm_x[11];					
 		if($temp!=0) {
-			echo '<li><a href="#Menu_tab_4" data-toggle="tab"><i class="fa fa-fw fa-cubes"></i> '.$x_column_lubricacion.'</a></li>';
+			echo '<li><a href="#Menu_tab_4" data-toggle="tab"><i class="fa fa-fw fa-cubes" aria-hidden="true"></i> '.$x_column_lubricacion.'</a></li>';
 		}
 		
 		//Repositorio
-		if($n_permisos['idOpcionesGen_9']=='1' or $idTipoUsuario==1) { 
+		if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1) { 
 			echo '<li><a href="#Menu_tab_5" data-toggle="tab"><i class="fa fa-database" aria-hidden="true"></i> Repositorio</a></li>';
 		}
 			
@@ -52,7 +52,7 @@ echo '
 						
 		//Log de cambios					
 		if($idTipoUsuario==1 OR $idTipoUsuario==2) { 
-			echo '<li><a href="#Menu_tab_99" data-toggle="tab"><i class="fa fa-refresh"></i> Actualizaciones</a></li>';
+			echo '<li><a href="#Menu_tab_99" data-toggle="tab"><i class="fa fa-refresh" aria-hidden="true"></i> Actualizaciones</a></li>';
 		}
 		
 

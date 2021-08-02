@@ -47,7 +47,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // tomo los datos del usuario
 $query = "SELECT Nombre, idSistema, idPais, idCiudad, idComuna, Direccion
 FROM `cross_predios_listado`
-WHERE idPredio = {$_GET['id']}";
+WHERE idPredio = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -64,31 +64,18 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-map-o" aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Predio</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos Basicos</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
+<div class="clearfix"></div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'cross_predios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class="active"><a href="<?php echo 'cross_predios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'cross_predios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-				<li class=""><a href="<?php echo 'cross_predios_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Cuarteles</a></li>
+				<li class=""><a href="<?php echo 'cross_predios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class="active"><a href="<?php echo 'cross_predios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'cross_predios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+				<li class=""><a href="<?php echo 'cross_predios_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Editar Cuarteles</a></li>
 			</ul>	
 		</header>
         <div class="table-responsive" >
@@ -104,18 +91,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($Direccion)) {    $x5  = $Direccion;     }else{$x5  = $rowdata['Direccion'];}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_input_text( 'Nombre del Predio', 'Nombre', $x1, 2);
-					$Form_Imputs->form_select_country('Pais','idPais', $x2, 1, $dbConn);
-					$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_input_text('Nombre del Predio', 'Nombre', $x1, 2);
+					$Form_Inputs->form_select_country('Pais','idPais', $x2, 1, $dbConn);
+					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
-					$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x5, 1,'fa fa-map'); 
+					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 1,'fa fa-map'); 
 					
 					
-					$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-					$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-					$Form_Imputs->form_input_hidden('idPredio', $_GET['id'], 2);
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
 					?>
 					
 					<script>
@@ -169,8 +156,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

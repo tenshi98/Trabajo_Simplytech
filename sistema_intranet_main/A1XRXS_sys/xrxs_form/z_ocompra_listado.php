@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -49,21 +53,18 @@ if( ! defined('XMBCXRXSKGC')) {
 	if ( !empty($_POST['N_Doc']) )              $N_Doc                = $_POST['N_Doc'];
 	if ( !empty($_POST['Descripcion']) )        $Descripcion          = $_POST['Descripcion'];
 	if ( !empty($_POST['Valor']) )              $Valor                = $_POST['Valor'];
-		
-
-
-				
+			
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idOcompra':         if(empty($idOcompra)){        $error['idOcompra']       = 'error/No ha ingresado el id';}break;
 			case 'idSistema':         if(empty($idSistema)){        $error['idSistema']       = 'error/No ha seleccionado el sistema';}break;
 			case 'idUsuario':         if(empty($idUsuario)){        $error['idUsuario']       = 'error/No ha seleccionado el usuario';}break;
@@ -97,7 +98,14 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			
 		}
-	}	
+	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){      $error['Observacion']   = 'error/Edita Observacion, contiene palabras no permitidas'; }	
+		
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -152,33 +160,21 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				unset($_SESSION['ocompra_archivos']);
 				
-				//Se guarda el dato del proveedor
-				$query = "SELECT Nombre
-				FROM `proveedor_listado`
-				WHERE idProveedor = {$idProveedor}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowProveedor = mysqli_fetch_assoc ($resultado);
+				//Se buscan los datos
+				$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor ='.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowUsuario   = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario ='.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				// Se trae el usuario
-				$query = "SELECT Nombre
-				FROM `usuarios_listado`
-				WHERE idUsuario = {$idUsuario}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowUsuario = mysqli_fetch_assoc ($resultado);
-
 				/*******************************************************************/
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['ocompra_basicos']['idSistema']       = $idSistema;
-				$_SESSION['ocompra_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['ocompra_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['ocompra_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['ocompra_basicos']['idEstado']        = $idEstado;
-				$_SESSION['ocompra_basicos']['idProveedor']     = $idProveedor;
+				if(isset($idSistema)&&$idSistema!=''){           $_SESSION['ocompra_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['ocompra_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){           $_SESSION['ocompra_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['ocompra_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){ $_SESSION['ocompra_basicos']['Creacion_fecha']  = $Creacion_fecha; }else{$_SESSION['ocompra_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){   $_SESSION['ocompra_basicos']['Observaciones']   = $Observaciones;  }else{$_SESSION['ocompra_basicos']['Observaciones']   = '';}
+				if(isset($idEstado)&&$idEstado!=''){             $_SESSION['ocompra_basicos']['idEstado']        = $idEstado;       }else{$_SESSION['ocompra_basicos']['idEstado']        = '';}
+				if(isset($idProveedor)&&$idProveedor!=''){       $_SESSION['ocompra_basicos']['idProveedor']     = $idProveedor;    }else{$_SESSION['ocompra_basicos']['idProveedor']     = '';}
 				$_SESSION['ocompra_basicos']['Solicitud']       = 2;
-				$_SESSION['ocompra_basicos']['Proveedor']       = $rowProveedor['Nombre'];
-				$_SESSION['ocompra_basicos']['Usuario']         = $rowUsuario['Nombre'];
+				$_SESSION['ocompra_basicos']['Proveedor']       = $rowProveedor['Nombre']; 
+				$_SESSION['ocompra_basicos']['Usuario']         = $rowUsuario['Nombre']; 
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -237,70 +233,24 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Borro todas las sesiones
 				unset($_SESSION['insumos_ing_temporal']);
 				
-				//Se guarda el dato del proveedor
-				$query = "SELECT Nombre
-				FROM `proveedor_listado`
-				WHERE idProveedor = {$idProveedor}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowProveedor = mysqli_fetch_assoc ($resultado);
-				
-				// Se trae el usuario
-				$query = "SELECT Nombre
-				FROM `usuarios_listado`
-				WHERE idUsuario = {$idUsuario}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowUsuario = mysqli_fetch_assoc ($resultado);
-				
+				//Se buscan los datos
+				$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor ='.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowUsuario   = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario ='.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*******************************************************************/
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['ocompra_basicos']['idSistema']       = $idSistema;
-				$_SESSION['ocompra_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['ocompra_basicos']['idProveedor']     = $idProveedor;
-				$_SESSION['ocompra_basicos']['Solicitud']       = 2;
-				$_SESSION['ocompra_basicos']['Proveedor']       = $rowProveedor['Nombre'];
-				$_SESSION['ocompra_basicos']['Usuario']         = $rowUsuario['Nombre'];
+				if(isset($idSistema)&&$idSistema!=''){           $_SESSION['ocompra_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['ocompra_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){           $_SESSION['ocompra_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['ocompra_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){ $_SESSION['ocompra_basicos']['Creacion_fecha']  = $Creacion_fecha; }else{$_SESSION['ocompra_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){   $_SESSION['ocompra_basicos']['Observaciones']   = $Observaciones;  }else{$_SESSION['ocompra_basicos']['Observaciones']   = '';}
+				if(isset($idEstado)&&$idEstado!=''){             $_SESSION['ocompra_basicos']['idEstado']        = $idEstado;       }else{$_SESSION['ocompra_basicos']['idEstado']        = '';}
+				if(isset($idProveedor)&&$idProveedor!=''){       $_SESSION['ocompra_basicos']['idProveedor']     = $idProveedor;    }else{$_SESSION['ocompra_basicos']['idProveedor']     = '';}
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
 	
-		break;			
-/*******************************************************************************************************************/		
-		case 'add_obs_ocompra':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['ocompra_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ocompra':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['ocompra_temporal'] = $_SESSION['ocompra_basicos']['Observaciones'];
-			$_SESSION['ocompra_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;		
+		break;	
 /*******************************************************************************************************************/		
 		case 'new_prod_ocompra':
 			
@@ -316,16 +266,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//Se traen los datos del producto seleccionado
-				$query = "SELECT 
-				productos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE productos_listado.idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowProducto = mysqli_fetch_assoc ($resultado);
-
+				$rowProducto = db_select_data (false, 'productos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idProducto='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_productos'][$idProducto]['idProducto']  = $idProducto;
@@ -354,16 +296,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['ocompra_productos'][$oldidProducto]);
 			
 				//Se traen los datos del producto seleccionado
-				$query = "SELECT 
-				productos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE productos_listado.idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowProducto = mysqli_fetch_assoc ($resultado);
-
+				$rowProducto = db_select_data (false, 'productos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idProducto='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_productos'][$idProducto]['idProducto']  = $idProducto;
@@ -406,17 +340,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//Se traen los datos del producto seleccionado
-				$query = "SELECT 
-				insumos_listado.idProducto, 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowProducto = mysqli_fetch_assoc ($resultado);
-
+				$rowProducto = db_select_data (false, 'insumos_listado.idProducto, insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idProducto='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_insumos'][$idProducto]['idProducto']  = $idProducto;
@@ -445,17 +370,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['ocompra_insumos'][$oldidProducto]);
 			
 				//Se traen los datos del producto seleccionado
-				$query = "SELECT 
-				insumos_listado.idProducto, 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowProducto = mysqli_fetch_assoc ($resultado);
-
+				$rowProducto = db_select_data (false, 'insumos_listado.idProducto, insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idProducto='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_insumos'][$idProducto]['idProducto']  = $idProducto;
@@ -497,22 +413,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				//Se traen los datos del equipo a arrendar
-				$query = "SELECT Nombre
-				FROM `equipos_arriendo_listado` 
-				WHERE idEquipo=".$idEquipo;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowEquipo = mysqli_fetch_assoc ($resultado);
-
-				//Se traen los datos de la frecuencia
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
-
+				//Se traen los datos
+				$rowEquipo     = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_arriendos'][$idEquipo]['idEquipo']      = $idEquipo;
@@ -541,23 +445,10 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Borro el producto
 				unset($_SESSION['ocompra_arriendos'][$oldidProducto]);
 			
-				//Se traen los datos del equipo a arrendar
-				$query = "SELECT Nombre
-				FROM `equipos_arriendo_listado` 
-				WHERE idEquipo=".$idEquipo;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowEquipo = mysqli_fetch_assoc ($resultado);
-
-				//Se traen los datos de la frecuencia
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
-
-
+				//Se traen los datos
+				$rowEquipo     = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_arriendos'][$idEquipo]['idEquipo']      = $idEquipo;
@@ -600,22 +491,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				//Se traen los datos del equipo a arrendar
-				$query = "SELECT Nombre
-				FROM `servicios_listado` 
-				WHERE idServicio=".$idServicio;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowServicio = mysqli_fetch_assoc ($resultado);
-
-				//Se traen los datos de la frecuencia
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
-
+				//Se traen los datos
+				$rowServicio   = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_servicios'][$idServicio]['idServicio']    = $idServicio;
@@ -644,22 +523,10 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Borro el producto
 				unset($_SESSION['ocompra_servicios'][$oldidProducto]);
 			
-				//Se traen los datos del equipo a arrendar
-				$query = "SELECT Nombre
-				FROM `servicios_listado` 
-				WHERE idServicio=".$idServicio;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowServicio = mysqli_fetch_assoc ($resultado);
-
-				//Se traen los datos de la frecuencia
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
-
+				//Se traen los datos
+				$rowServicio   = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_servicios'][$idServicio]['idServicio']    = $idServicio;
@@ -708,13 +575,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//Se traen los datos de la frecuencia
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
-
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_otros'][$bvar]['idOtros']       = $bvar;
@@ -741,13 +603,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//Se traen los datos de la frecuencia
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
-
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_otros'][$oldidProducto]['idOtros']       = $oldidProducto;
@@ -796,13 +653,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//Se traen los datos de la frecuencia
-				$query = "SELECT Rut, Nombre, ApellidoPat
-				FROM `trabajadores_listado` 
-				WHERE idTrabajador=".$idTrabajador;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowTrabajador = mysqli_fetch_assoc ($resultado);
-
+				$rowTrabajador = db_select_data (false, 'Rut, Nombre, ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_boletas'][$bvar]['idBoleta']      = $bvar;
@@ -828,13 +680,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//Se traen los datos de la frecuencia
-				$query = "SELECT Rut, Nombre, ApellidoPat
-				FROM `trabajadores_listado` 
-				WHERE idTrabajador=".$idTrabajador;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowTrabajador = mysqli_fetch_assoc ($resultado);
-
+				$rowTrabajador = db_select_data (false, 'Rut, Nombre, ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_boletas'][$oldidProducto]['idBoleta']      = $bvar;
@@ -946,13 +793,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se trae un listado con todos los frecuencias
-				$query = "SELECT Nombre
-				FROM `sistema_documentos_pago` 
-				WHERE idDocPago=".$idDocPago;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowDocumentos = mysqli_fetch_assoc ($resultado);
-
+				$rowDocumentos = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_documentos'][$bvar]['idDoc']       = $bvar;
@@ -978,13 +820,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se trae un listado con todos los frecuencias
-				$query = "SELECT Nombre
-				FROM `sistema_documentos_pago` 
-				WHERE idDocPago=".$idDocPago;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowDocumentos = mysqli_fetch_assoc ($resultado);
-
+				$rowDocumentos = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*************************************************************************/
 				//creo el producto
 				$_SESSION['ocompra_documentos'][$oldidProducto]['idDoc']       = $oldidProducto;
@@ -1035,7 +872,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -1141,11 +978,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['ocompra_basicos'])){
-				if(!isset($_SESSION['ocompra_basicos']['idSistema']) or $_SESSION['ocompra_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['ocompra_basicos']['idUsuario']) or $_SESSION['ocompra_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['ocompra_basicos']['Creacion_fecha']) or $_SESSION['ocompra_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['ocompra_basicos']['Observaciones']) or $_SESSION['ocompra_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['ocompra_basicos']['idProveedor']) or $_SESSION['ocompra_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado un proveedor';}
+				if(!isset($_SESSION['ocompra_basicos']['idSistema']) OR $_SESSION['ocompra_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['ocompra_basicos']['idUsuario']) OR $_SESSION['ocompra_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['ocompra_basicos']['Creacion_fecha']) OR $_SESSION['ocompra_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['ocompra_basicos']['Observaciones']) OR $_SESSION['ocompra_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['ocompra_basicos']['idProveedor']) OR $_SESSION['ocompra_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado un proveedor';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la Orden de Compra';
 			}
@@ -1246,7 +1083,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado` (idSistema,idUsuario,idEstado, idProveedor, Creacion_fecha, Creacion_mes,
 				Creacion_ano, Observaciones, Solicitud ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1291,7 +1128,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_existencias_insumos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
 							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1335,7 +1172,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_existencias_productos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
 							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1380,7 +1217,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_existencias_arriendos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
 							Creacion_mes, Creacion_ano, idEquipo, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1425,7 +1262,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_existencias_servicios` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
 							Creacion_mes, Creacion_ano, idServicio, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1470,7 +1307,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_existencias_otros` (idOcompra, idSistema, idUsuario, idEstado, idProveedor, 
 							Creacion_fecha, Creacion_mes, Creacion_ano, Nombre, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1513,7 +1350,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_existencias_boletas` (idOcompra, idSistema, idUsuario, 
 							Creacion_fecha, Creacion_mes, Creacion_ano, idTrabajador, N_Doc, Descripcion, Valor, idUso) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1553,7 +1390,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_existencias_boletas_empresas` (idOcompra, idSistema, idUsuario, 
 							Creacion_fecha, Creacion_mes, Creacion_ano, Descripcion, Valor) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1599,7 +1436,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_documentos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
 							Creacion_mes, Creacion_ano, Creacion_semana, idDocPago, NDocPago, Fpago, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1640,7 +1477,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_archivos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1683,7 +1520,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `ocompra_listado_sol_rel` (idOcompra, idSistema, idUsuario, idEstado, idProveedor, 
 							Creacion_fecha, Creacion_mes, Creacion_ano, Type, idExistencia) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1819,7 +1656,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -1974,29 +1811,14 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT 
-				proveedor_listado.Nombre AS Proveedor,
-				ocompra_listado.idProveedor,
-				ocompra_listado.Creacion_fecha,
-				ocompra_listado.Observaciones
+				$rowdata_1 = db_select_data (false, 'proveedor_listado.Nombre AS Proveedor, ocompra_listado.idProveedor, ocompra_listado.Creacion_fecha, ocompra_listado.Observaciones', 'ocompra_listado', 'LEFT JOIN `proveedor_listado` ON proveedor_listado.idProveedor = ocompra_listado.idProveedor', 'ocompra_listado.idOcompra ='.$idOcompra, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_2 = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor ='.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				FROM `ocompra_listado`
-				LEFT JOIN `proveedor_listado`    ON proveedor_listado.idProveedor   = ocompra_listado.idProveedor
-
-				WHERE ocompra_listado.idOcompra = '$idOcompra' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_1 = mysqli_fetch_assoc ($resultado);
-				
-				//Se toman los datos
-				$query = "SELECT Nombre FROM `proveedor_listado` WHERE idProveedor = '$idProveedor' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-			
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se realizan cambios en los datos basicos de la OC ';
-				if(isset($idProveedor)&&isset($rowdata_1['idProveedor'])&&$idProveedor!=$rowdata_1['idProveedor']){               $cambios .= ",se cambia proveedor de ".$rowdata_1['Proveedor']." a ".$rowdata_2['Nombre']." " ;}
-				if(isset($Creacion_fecha)&&isset($rowdata_1['Creacion_fecha'])&&$Creacion_fecha!=$rowdata_1['Creacion_fecha']){   $cambios .= ",se cambia fecha de ".$rowdata_1['Creacion_fecha']." a ".$Creacion_fecha."" ;}
+				if(isset($idProveedor)&&isset($rowdata_1['idProveedor'])&&$idProveedor!=$rowdata_1['idProveedor']){               $cambios .= ",se cambia proveedor de ".$rowdata_1['Proveedor']." a ".$rowdata_2['Nombre'];}
+				if(isset($Creacion_fecha)&&isset($rowdata_1['Creacion_fecha'])&&$Creacion_fecha!=$rowdata_1['Creacion_fecha']){   $cambios .= ",se cambia fecha de ".$rowdata_1['Creacion_fecha']." a ".$Creacion_fecha;}
 				if(isset($Observaciones)&&isset($rowdata_1['Observaciones'])&&$Observaciones!=$rowdata_1['Observaciones']){       $cambios .= ",se cambia observacion " ;}
 				
 				/******************************************/
@@ -2010,7 +1832,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2076,7 +1898,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)&&isset($idProducto)){
-				$ndata_1 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_productos', '', "idOcompra='".$idOcompra."' AND idProducto='".$idProducto."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_productos', '', "idOcompra='".$idOcompra."' AND idProducto='".$idProducto."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Producto ya existe';}
@@ -2109,7 +1931,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `ocompra_listado_existencias_productos` (idOcompra, idSistema, 
 				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
 				idProducto, Cantidad, vUnitario, vTotal) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2127,10 +1949,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `productos_listado` WHERE idProducto = '$idProducto' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata = mysqli_fetch_assoc ($resultado);
-			
+				$rowdata = db_select_data (false, 'Nombre', 'productos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
@@ -2149,7 +1969,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2184,7 +2004,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)&&isset($idProducto)&&isset($idExistencia)){
-				$ndata_1 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_productos', '', "idOcompra='".$idOcompra."' AND idProducto='".$idProducto."' AND idExistencia!='".$idExistencia."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_productos', '', "idOcompra='".$idOcompra."' AND idProducto='".$idProducto."' AND idExistencia!='".$idExistencia."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Producto ya existe';}
@@ -2196,19 +2016,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `productos_listado` WHERE idProducto = '$idProducto' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_1 = mysqli_fetch_assoc ($resultado);
-				
-				$query = "SELECT 
-				ocompra_listado_existencias_productos.Cantidad,
-				ocompra_listado_existencias_productos.vTotal,
-				productos_listado.Nombre AS Producto
-				FROM `ocompra_listado_existencias_productos` 
-				LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto
-				WHERE ocompra_listado_existencias_productos.idExistencia = '$idExistencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
+				$rowdata_1 = db_select_data (false, 'Nombre', 'productos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vTotal, productos_listado.Nombre AS Producto', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto', 'ocompra_listado_existencias_productos.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************/
 				//Se realizan comparacion
@@ -2226,7 +2035,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2289,71 +2098,84 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*********************************************************************/	
-			/*********************************************************************/	
-			//Se toman los datos
-			$query = "SELECT 
-			ocompra_listado_existencias_productos.idOcompra,
-			ocompra_listado_existencias_productos.Cantidad,
-			ocompra_listado_existencias_productos.vTotal,
-			productos_listado.Nombre AS Producto
-			FROM `ocompra_listado_existencias_productos` 
-			LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto
-			WHERE ocompra_listado_existencias_productos.idExistencia = '".$_GET['del_prod']."' ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata_2 = mysqli_fetch_assoc ($resultado);
-				
-			/******************************************/
-			//Se realizan comparacion
-			$cambios = 'Se elimina '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
-				
-			/******************************************/
-			//Se guarda en historial la accion
-			$fecha     = fecha_actual();
-			$idOcompra = $rowdata_2['idOcompra'];
-			if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-			if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-			$a .= ",'2'";                                                     //Creacion Satisfactoria
-			$a .= ",'".$cambios."'";                                          //Observacion
-			$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
-			// inserto los datos de registro en la db
-			$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-			VALUES ({$a} )";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-			/*********************************************************************/	
-			/*********************************************************************/
+			//Variable
+			$errorn = 0;
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `ocompra_listado_existencias_productos` WHERE idExistencia = {$_GET['del_prod']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_prod']) OR !validaEntero($_GET['del_prod']))&&$_GET['del_prod']!=''){
+				$indice = simpleDecode($_GET['del_prod'], fecha_actual());
+			}else{
+				$indice = $_GET['del_prod'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*********************************************************************/	
+				/*********************************************************************/	
+				//Se toman los datos
+				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_productos.idOcompra, ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vTotal, productos_listado.Nombre AS Producto', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto', 'ocompra_listado_existencias_productos.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				/******************************************/
+				//Se realizan comparacion
+				$cambios = 'Se elimina '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
 					
-			}	
+				/******************************************/
+				//Se guarda en historial la accion
+				$fecha     = fecha_actual();
+				$idOcompra = $rowdata_2['idOcompra'];
+				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+				$a .= ",'2'";                                                     //Creacion Satisfactoria
+				$a .= ",'".$cambios."'";                                          //Observacion
+				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+					
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
 						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+				}
+				/*********************************************************************/	
+				/*********************************************************************/
+				//se borran los datos
+				$resultado = db_delete_data (false, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;							
 /*******************************************************************************************************************/		
@@ -2368,7 +2190,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)&&isset($idProducto)){
-				$ndata_1 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_insumos', '', "idOcompra='".$idOcompra."' AND idProducto='".$idProducto."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_insumos', '', "idOcompra='".$idOcompra."' AND idProducto='".$idProducto."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Producto ya existe';}
@@ -2401,7 +2223,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `ocompra_listado_existencias_insumos` (idOcompra, idSistema, 
 				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
 				idProducto, Cantidad, vUnitario, vTotal) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2419,10 +2241,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `insumos_listado` WHERE idProducto = '$idProducto' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata = mysqli_fetch_assoc ($resultado);
-			
+				$rowdata = db_select_data (false, 'Nombre', 'insumos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
@@ -2441,7 +2261,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2475,7 +2295,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)&&isset($idProducto)&&isset($idExistencia)){
-				$ndata_1 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_insumos', '', "idOcompra='".$idOcompra."' AND idProducto='".$idProducto."' AND idExistencia!='".$idExistencia."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_insumos', '', "idOcompra='".$idOcompra."' AND idProducto='".$idProducto."' AND idExistencia!='".$idExistencia."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Producto ya existe';}
@@ -2487,19 +2307,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `insumos_listado` WHERE idProducto = '$idProducto' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_1 = mysqli_fetch_assoc ($resultado);
-				
-				$query = "SELECT 
-				ocompra_listado_existencias_insumos.Cantidad, 
-				ocompra_listado_existencias_insumos.vTotal,
-				insumos_listado.Nombre AS Producto
-				FROM `ocompra_listado_existencias_insumos` 
-				LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto
-				WHERE ocompra_listado_existencias_insumos.idExistencia = '$idExistencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
+				$rowdata_1 = db_select_data (false, 'Nombre', 'insumos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vTotal, insumos_listado.Nombre AS Producto', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto', 'ocompra_listado_existencias_insumos.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************/
 				//Se realizan comparacion
@@ -2517,7 +2326,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2580,71 +2389,84 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*********************************************************************/	
-			/*********************************************************************/	
-			//Se toman los datos
-			$query = "SELECT 
-			ocompra_listado_existencias_insumos.idOcompra,
-			ocompra_listado_existencias_insumos.Cantidad, 
-			ocompra_listado_existencias_insumos.vTotal,
-			insumos_listado.Nombre AS Producto
-			FROM `ocompra_listado_existencias_insumos` 
-			LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto
-			WHERE ocompra_listado_existencias_insumos.idExistencia = '".$_GET['del_ins']."' ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata_2 = mysqli_fetch_assoc ($resultado);
-				
-			/******************************************/
-			//Se realizan comparacion
-			$cambios = 'Se elimina '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
-				
-			/******************************************/
-			//Se guarda en historial la accion
-			$fecha     = fecha_actual();
-			$idOcompra = $rowdata_2['idOcompra'];
-			if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-			if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-			$a .= ",'2'";                                                     //Creacion Satisfactoria
-			$a .= ",'".$cambios."'";                                                      //Observacion
-			$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
-			// inserto los datos de registro en la db
-			$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-			VALUES ({$a} )";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-			/*********************************************************************/	
-			/*********************************************************************/
+			//Variable
+			$errorn = 0;
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `ocompra_listado_existencias_insumos` WHERE idExistencia = {$_GET['del_ins']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_ins']) OR !validaEntero($_GET['del_ins']))&&$_GET['del_ins']!=''){
+				$indice = simpleDecode($_GET['del_ins'], fecha_actual());
+			}else{
+				$indice = $_GET['del_ins'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*********************************************************************/	
+				/*********************************************************************/	
+				//Se toman los datos
+				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_insumos.idOcompra, ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vTotal, insumos_listado.Nombre AS Producto', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto', 'ocompra_listado_existencias_insumos.idExistencia = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+				/******************************************/
+				//Se realizan comparacion
+				$cambios = 'Se elimina '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
+					
+				/******************************************/
+				//Se guarda en historial la accion
+				$fecha     = fecha_actual();
+				$idOcompra = $rowdata_2['idOcompra'];
+				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+				$a .= ",'2'";                                                     //Creacion Satisfactoria
+				$a .= ",'".$cambios."'";                                                      //Observacion
+				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+					
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
 						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+				}
+				/*********************************************************************/	
+				/*********************************************************************/
+				//se borran los datos
+				$resultado = db_delete_data (false, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;
 /*******************************************************************************************************************/		
@@ -2659,7 +2481,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)&&isset($idEquipo)){
-				$ndata_1 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_arriendos', '', "idOcompra='".$idOcompra."' AND idEquipo='".$idEquipo."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_arriendos', '', "idOcompra='".$idOcompra."' AND idEquipo='".$idEquipo."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Arriendo ya existe';}
@@ -2693,7 +2515,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `ocompra_listado_existencias_arriendos` (idOcompra, idSistema, 
 				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
 				idEquipo, Cantidad, idFrecuencia, vUnitario, vTotal) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2711,13 +2533,9 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `equipos_arriendo_listado` WHERE idEquipo = '$idEquipo' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_1 = mysqli_fetch_assoc ($resultado);
-				$query = "SELECT Nombre FROM `core_tiempo_frecuencia` WHERE idFrecuencia = '$idFrecuencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-			
+				$rowdata_1 = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo ='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
@@ -2736,7 +2554,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2770,7 +2588,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)&&isset($idEquipo)&&isset($idExistencia)){
-				$ndata_1 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_arriendos', '', "idOcompra='".$idOcompra."' AND idEquipo='".$idEquipo."' AND idExistencia!='".$idExistencia."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_arriendos', '', "idOcompra='".$idOcompra."' AND idEquipo='".$idEquipo."' AND idExistencia!='".$idExistencia."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Arriendo ya existe';}
@@ -2781,25 +2599,9 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `equipos_arriendo_listado` WHERE idEquipo = '$idEquipo' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_1 = mysqli_fetch_assoc ($resultado);
-				
-				$query = "SELECT Nombre FROM `core_tiempo_frecuencia` WHERE idFrecuencia = '$idFrecuencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-				
-				$query = "SELECT 
-				ocompra_listado_existencias_arriendos.Cantidad, 
-				ocompra_listado_existencias_arriendos.vTotal,
-				equipos_arriendo_listado.Nombre AS Producto,
-				core_tiempo_frecuencia.Nombre AS Frecuencia
-				FROM `ocompra_listado_existencias_arriendos` 
-				LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo   = ocompra_listado_existencias_arriendos.idEquipo
-				LEFT JOIN `core_tiempo_frecuencia`   ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia
-				WHERE ocompra_listado_existencias_arriendos.idExistencia = '$idExistencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_3 = mysqli_fetch_assoc ($resultado);
+				$rowdata_1 = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo ='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vTotal, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************/
 				//Se realizan comparacion
@@ -2817,7 +2619,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2881,73 +2683,84 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*********************************************************************/	
-			/*********************************************************************/	
-			//Se toman los datos
-			$query = "SELECT 
-			ocompra_listado_existencias_arriendos.idOcompra,
-			ocompra_listado_existencias_arriendos.Cantidad, 
-			ocompra_listado_existencias_arriendos.vTotal,
-			equipos_arriendo_listado.Nombre AS Producto,
-			core_tiempo_frecuencia.Nombre AS Frecuencia
-			FROM `ocompra_listado_existencias_arriendos` 
-			LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo   = ocompra_listado_existencias_arriendos.idEquipo
-			LEFT JOIN `core_tiempo_frecuencia`   ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia
-			WHERE ocompra_listado_existencias_arriendos.idExistencia = '".$_GET['del_arriendo']."' ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata_3 = mysqli_fetch_assoc ($resultado);
-				
-			/******************************************/
-			//Se realizan comparacion
-			$cambios = 'Se elimina '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-				
-			/******************************************/
-			//Se guarda en historial la accion
-			$fecha     = fecha_actual();
-			$idOcompra = $rowdata_3['idOcompra'];
-			if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-			if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-			$a .= ",'2'";                                                     //Creacion Satisfactoria
-			$a .= ",'".$cambios."'";                                          //Observacion
-			$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
-			// inserto los datos de registro en la db
-			$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-			VALUES ({$a} )";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-			/*********************************************************************/	
-			/*********************************************************************/
+			//Variable
+			$errorn = 0;
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `ocompra_listado_existencias_arriendos` WHERE idExistencia = {$_GET['del_arriendo']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_arriendo']) OR !validaEntero($_GET['del_arriendo']))&&$_GET['del_arriendo']!=''){
+				$indice = simpleDecode($_GET['del_arriendo'], fecha_actual());
+			}else{
+				$indice = $_GET['del_arriendo'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*********************************************************************/	
+				/*********************************************************************/	
+				//Se toman los datos
+				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_arriendos.idOcompra, ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vTotal, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				/******************************************/
+				//Se realizan comparacion
+				$cambios = 'Se elimina '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
 					
-			}	
+				/******************************************/
+				//Se guarda en historial la accion
+				$fecha     = fecha_actual();
+				$idOcompra = $rowdata_3['idOcompra'];
+				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+				$a .= ",'2'";                                                     //Creacion Satisfactoria
+				$a .= ",'".$cambios."'";                                          //Observacion
+				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+					
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
 						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+				}
+				/*********************************************************************/	
+				/*********************************************************************/
+				//se borran los datos
+				$resultado = db_delete_data (false, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;
 /*******************************************************************************************************************/		
@@ -2962,7 +2775,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)&&isset($idServicio)){
-				$ndata_1 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_servicios', '', "idOcompra='".$idOcompra."' AND idServicio='".$idServicio."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_servicios', '', "idOcompra='".$idOcompra."' AND idServicio='".$idServicio."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Servicio ya existe';}
@@ -2996,7 +2809,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `ocompra_listado_existencias_servicios` (idOcompra, idSistema, 
 				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
 				idServicio, Cantidad, idFrecuencia, vUnitario, vTotal) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3014,13 +2827,9 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `servicios_listado` WHERE idServicio = '$idServicio' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_1 = mysqli_fetch_assoc ($resultado);
-				$query = "SELECT Nombre FROM `core_tiempo_frecuencia` WHERE idFrecuencia = '$idFrecuencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-			
+				$rowdata_1 = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio ='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
@@ -3039,7 +2848,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3073,7 +2882,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)&&isset($idServicio)&&isset($idExistencia)){
-				$ndata_1 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_servicios', '', "idOcompra='".$idOcompra."' AND idServicio='".$idServicio."' AND idExistencia!='".$idExistencia."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_servicios', '', "idOcompra='".$idOcompra."' AND idServicio='".$idServicio."' AND idExistencia!='".$idExistencia."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Servicio ya existe';}
@@ -3085,27 +2894,9 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `servicios_listado` WHERE idServicio = '$idServicio' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_1 = mysqli_fetch_assoc ($resultado);
-				
-				$query = "SELECT Nombre FROM `core_tiempo_frecuencia` WHERE idFrecuencia = '$idFrecuencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-				
-				$query = "SELECT 
-				ocompra_listado_existencias_servicios.idServicio,
-				ocompra_listado_existencias_servicios.idFrecuencia,
-				ocompra_listado_existencias_servicios.Cantidad, 
-				ocompra_listado_existencias_servicios.vTotal,
-				servicios_listado.Nombre AS Producto,
-				core_tiempo_frecuencia.Nombre AS Frecuencia
-				FROM `ocompra_listado_existencias_servicios` 
-				LEFT JOIN `servicios_listado`        ON servicios_listado.idServicio         = ocompra_listado_existencias_servicios.idServicio
-				LEFT JOIN `core_tiempo_frecuencia`   ON core_tiempo_frecuencia.idFrecuencia  = ocompra_listado_existencias_servicios.idFrecuencia
-				WHERE ocompra_listado_existencias_servicios.idExistencia = '$idExistencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_3 = mysqli_fetch_assoc ($resultado);
+				$rowdata_1 = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio ='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_servicios.idServicio, ocompra_listado_existencias_servicios.idFrecuencia, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vTotal, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************/
 				//Se realizan comparacion
@@ -3123,7 +2914,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3187,73 +2978,84 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*********************************************************************/	
-			/*********************************************************************/	
-			//Se toman los datos
-			$query = "SELECT 
-			ocompra_listado_existencias_servicios.idOcompra,
-			ocompra_listado_existencias_servicios.Cantidad, 
-			ocompra_listado_existencias_servicios.vTotal,
-			servicios_listado.Nombre AS Producto,
-			core_tiempo_frecuencia.Nombre AS Frecuencia
-			FROM `ocompra_listado_existencias_servicios` 
-			LEFT JOIN `servicios_listado`        ON servicios_listado.idServicio         = ocompra_listado_existencias_servicios.idServicio
-			LEFT JOIN `core_tiempo_frecuencia`   ON core_tiempo_frecuencia.idFrecuencia  = ocompra_listado_existencias_servicios.idFrecuencia
-			WHERE ocompra_listado_existencias_servicios.idExistencia = '".$_GET['del_servicio']."' ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata_3 = mysqli_fetch_assoc ($resultado);
-				
-			/******************************************/
-			//Se realizan comparacion
-			$cambios = 'Se elimina '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-				
-			/******************************************/
-			//Se guarda en historial la accion
-			$fecha      = fecha_actual();
-			$idOcompra  = $rowdata_3['idOcompra'];
-			if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-			if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-			$a .= ",'2'";                                                     //Creacion Satisfactoria
-			$a .= ",'".$cambios."'";                                          //Observacion
-			$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
-			// inserto los datos de registro en la db
-			$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-			VALUES ({$a} )";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-			/*********************************************************************/	
-			/*********************************************************************/
+			//Variable
+			$errorn = 0;
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `ocompra_listado_existencias_servicios` WHERE idExistencia = {$_GET['del_servicio']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_servicio']) OR !validaEntero($_GET['del_servicio']))&&$_GET['del_servicio']!=''){
+				$indice = simpleDecode($_GET['del_servicio'], fecha_actual());
+			}else{
+				$indice = $_GET['del_servicio'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*********************************************************************/	
+				/*********************************************************************/	
+				//Se toman los datos
+				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_servicios.idOcompra, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vTotal, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+				/******************************************/
+				//Se realizan comparacion
+				$cambios = 'Se elimina '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
+					
+				/******************************************/
+				//Se guarda en historial la accion
+				$fecha      = fecha_actual();
+				$idOcompra  = $rowdata_3['idOcompra'];
+				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+				$a .= ",'2'";                                                     //Creacion Satisfactoria
+				$a .= ",'".$cambios."'";                                          //Observacion
+				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+					
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
 						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+				}
+				/*********************************************************************/	
+				/*********************************************************************/
+				//se borran los datos
+				$resultado = db_delete_data (false, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;
 /*******************************************************************************************************************/		
@@ -3291,7 +3093,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `ocompra_listado_existencias_otros` (idOcompra, idSistema, 
 				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
 				Nombre, Cantidad, idFrecuencia, vUnitario, vTotal) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3309,10 +3111,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `core_tiempo_frecuencia` WHERE idFrecuencia = '$idFrecuencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-			
+				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
@@ -3331,7 +3131,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3366,20 +3166,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `core_tiempo_frecuencia` WHERE idFrecuencia = '$idFrecuencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-				
-				$query = "SELECT 
-				ocompra_listado_existencias_otros.Cantidad, 
-				ocompra_listado_existencias_otros.vTotal,
-				ocompra_listado_existencias_otros.Nombre,
-				core_tiempo_frecuencia.Nombre AS Frecuencia
-				FROM `ocompra_listado_existencias_otros` 
-				LEFT JOIN `core_tiempo_frecuencia`   ON core_tiempo_frecuencia.idFrecuencia  = ocompra_listado_existencias_otros.idFrecuencia
-				WHERE ocompra_listado_existencias_otros.idExistencia = '$idExistencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_3 = mysqli_fetch_assoc ($resultado);
+				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vTotal, ocompra_listado_existencias_otros.Nombre, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************/
 				//Se realizan comparacion
@@ -3397,7 +3185,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3462,72 +3250,84 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*********************************************************************/	
-			/*********************************************************************/	
-			//Se toman los datos
-			$query = "SELECT 
-			ocompra_listado_existencias_otros.idOcompra,
-			ocompra_listado_existencias_otros.Cantidad, 
-			ocompra_listado_existencias_otros.vTotal,
-			ocompra_listado_existencias_otros.Nombre,
-			core_tiempo_frecuencia.Nombre AS Frecuencia
-			FROM `ocompra_listado_existencias_otros` 
-			LEFT JOIN `core_tiempo_frecuencia`   ON core_tiempo_frecuencia.idFrecuencia  = ocompra_listado_existencias_otros.idFrecuencia
-			WHERE ocompra_listado_existencias_otros.idExistencia = '".$_GET['del_otros']."' ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata_3 = mysqli_fetch_assoc ($resultado);
-				
-			/******************************************/
-			//Se realizan comparacion
-			$cambios = 'Se elimina '.$rowdata_3['Nombre'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-				
-			/******************************************/
-			//Se guarda en historial la accion
-			$fecha     = fecha_actual();
-			$idOcompra = $rowdata_3['idOcompra'];
-			if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-			if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-			$a .= ",'2'";                                                     //Creacion Satisfactoria
-			$a .= ",'".$cambios."'";                                          //Observacion
-			$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
-			// inserto los datos de registro en la db
-			$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-			VALUES ({$a} )";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-			/*********************************************************************/	
-			/*********************************************************************/
+			//Variable
+			$errorn = 0;
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `ocompra_listado_existencias_otros` WHERE idExistencia = {$_GET['del_otros']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_otros']) OR !validaEntero($_GET['del_otros']))&&$_GET['del_otros']!=''){
+				$indice = simpleDecode($_GET['del_otros'], fecha_actual());
+			}else{
+				$indice = $_GET['del_otros'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*********************************************************************/	
+				/*********************************************************************/	
+				//Se toman los datos
+				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_otros.idOcompra, ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vTotal, ocompra_listado_existencias_otros.Nombre, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia  = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				/******************************************/
+				//Se realizan comparacion
+				$cambios = 'Se elimina '.$rowdata_3['Nombre'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
 					
-			}	
+				/******************************************/
+				//Se guarda en historial la accion
+				$fecha     = fecha_actual();
+				$idOcompra = $rowdata_3['idOcompra'];
+				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+				$a .= ",'2'";                                                     //Creacion Satisfactoria
+				$a .= ",'".$cambios."'";                                          //Observacion
+				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+					
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
 						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+				}
+				/*********************************************************************/	
+				/*********************************************************************/
+				//se borran los datos
+				$resultado = db_delete_data (false, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;
 		
@@ -3564,7 +3364,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `ocompra_listado_existencias_boletas` (idOcompra, idSistema, 
 				idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idTrabajador, N_Doc, Descripcion,
 				Valor, idUso ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3582,10 +3382,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre, ApellidoPat FROM `trabajadores_listado` WHERE idTrabajador = '$idTrabajador' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-			
+				$rowdata_2 = db_select_data (false, 'Nombre, ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
@@ -3604,7 +3402,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3639,22 +3437,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre, ApellidoPat FROM `trabajadores_listado` WHERE idTrabajador = '$idTrabajador' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-				
-				$query = "SELECT 
-				ocompra_listado_existencias_boletas.N_Doc,
-				ocompra_listado_existencias_boletas.Valor,
-
-				trabajadores_listado.Nombre AS TrabNombre,
-				trabajadores_listado.ApellidoPat AS TrabApellidoPat
-
-				FROM `ocompra_listado_existencias_boletas` 
-				LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador
-				WHERE ocompra_listado_existencias_boletas.idExistencia = '$idExistencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_3 = mysqli_fetch_assoc ($resultado);
+				$rowdata_2 = db_select_data (false, 'Nombre, ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_boletas.N_Doc, ocompra_listado_existencias_boletas.Valor, trabajadores_listado.Nombre AS TrabNombre, trabajadores_listado.ApellidoPat AS TrabApellidoPat', 'ocompra_listado_existencias_boletas', 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador', 'ocompra_listado_existencias_boletas.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************/
 				//Se realizan comparacion
@@ -3672,7 +3456,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3734,73 +3518,84 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*********************************************************************/	
-			/*********************************************************************/	
-			//Se toman los datos
-			$query = "SELECT 
-			ocompra_listado_existencias_boletas.N_Doc,
-			ocompra_listado_existencias_boletas.Valor,
-
-			trabajadores_listado.Nombre AS TrabNombre,
-			trabajadores_listado.ApellidoPat AS TrabApellidoPat
-
-			FROM `ocompra_listado_existencias_boletas` 
-			LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador
-			WHERE ocompra_listado_existencias_boletas.idExistencia = '$idExistencia' ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata_3 = mysqli_fetch_assoc ($resultado);
-				
-			/******************************************/
-			//Se realizan comparacion
-			$cambios = 'Se elimina la boleta de honorarios N° '.$rowdata_3['N_Doc'].' del trabajador '.$rowdata_3['TrabNombre'].' '.$rowdata_3['TrabApellidoPat'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'.';
-				
-			/******************************************/
-			//Se guarda en historial la accion
-			$fecha     = fecha_actual();
-			$idOcompra = $rowdata_3['idOcompra'];
-			if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-			if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-			$a .= ",'2'";                                                     //Creacion Satisfactoria
-			$a .= ",'".$cambios."'";                                          //Observacion
-			$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
-			// inserto los datos de registro en la db
-			$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-			VALUES ({$a} )";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-			/*********************************************************************/	
-			/*********************************************************************/
+			//Variable
+			$errorn = 0;
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `ocompra_listado_existencias_boletas` WHERE idExistencia = {$_GET['del_boleta']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_boleta']) OR !validaEntero($_GET['del_boleta']))&&$_GET['del_boleta']!=''){
+				$indice = simpleDecode($_GET['del_boleta'], fecha_actual());
+			}else{
+				$indice = $_GET['del_boleta'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*********************************************************************/	
+				/*********************************************************************/	
+				//Se toman los datos
+				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_boletas.N_Doc, ocompra_listado_existencias_boletas.Valor, trabajadores_listado.Nombre AS TrabNombre, trabajadores_listado.ApellidoPat AS TrabApellidoPat', 'ocompra_listado_existencias_boletas', 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador', 'ocompra_listado_existencias_boletas.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				/******************************************/
+				//Se realizan comparacion
+				$cambios = 'Se elimina la boleta de honorarios N° '.$rowdata_3['N_Doc'].' del trabajador '.$rowdata_3['TrabNombre'].' '.$rowdata_3['TrabApellidoPat'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'.';
 					
-			}	
+				/******************************************/
+				//Se guarda en historial la accion
+				$fecha     = fecha_actual();
+				$idOcompra = $rowdata_3['idOcompra'];
+				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+				$a .= ",'2'";                                                     //Creacion Satisfactoria
+				$a .= ",'".$cambios."'";                                          //Observacion
+				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+					
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
 						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+				}
+				/*********************************************************************/	
+				/*********************************************************************/
+				//se borran los datos
+				$resultado = db_delete_data (false, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+				
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 
 		break;
 /*******************************************************************************************************************/		
@@ -3832,7 +3627,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_existencias_boletas_empresas` (idOcompra, idSistema, 
 				idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, Descripcion,Valor ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3863,7 +3658,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3898,11 +3693,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Valor,Descripcion
-				FROM `ocompra_listado_existencias_boletas_empresas` 
-				WHERE idExistencia = '$idExistencia' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_3 = mysqli_fetch_assoc ($resultado);
+				$rowdata_3 = db_select_data (false, 'Valor,Descripcion', 'ocompra_listado_existencias_boletas_empresas', '', 'idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************/
 				//Se realizan comparacion
@@ -3920,7 +3711,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3980,66 +3771,84 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*********************************************************************/	
-			/*********************************************************************/	
-			//Se toman los datos
-			$query = "SELECT Valor,Descripcion
-			FROM `ocompra_listado_existencias_boletas_empresas` 
-			WHERE idExistencia = '$idExistencia' ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata_3 = mysqli_fetch_assoc ($resultado);
-				
-			/******************************************/
-			//Se realizan comparacion
-			$cambios = 'Se elimina la boleta de honorarios con la descripcion '.$rowdata_3['Descripcion'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'.';
-				
-			/******************************************/
-			//Se guarda en historial la accion
-			$fecha     = fecha_actual();
-			$idOcompra = $rowdata_3['idOcompra'];
-			if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-			if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-			$a .= ",'2'";                                                     //Creacion Satisfactoria
-			$a .= ",'".$cambios."'";                                          //Observacion
-			$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
-			// inserto los datos de registro en la db
-			$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-			VALUES ({$a} )";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-			/*********************************************************************/	
-			/*********************************************************************/
+			//Variable
+			$errorn = 0;
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `ocompra_listado_existencias_boletas_empresas` WHERE idExistencia = {$_GET['del_boleta']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_boleta']) OR !validaEntero($_GET['del_boleta']))&&$_GET['del_boleta']!=''){
+				$indice = simpleDecode($_GET['del_boleta'], fecha_actual());
+			}else{
+				$indice = $_GET['del_boleta'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*********************************************************************/	
+				/*********************************************************************/	
+				//Se toman los datos
+				$rowdata_3 = db_select_data (false, 'Valor,Descripcion', 'ocompra_listado_existencias_boletas_empresas', '', 'idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				/******************************************/
+				//Se realizan comparacion
+				$cambios = 'Se elimina la boleta de honorarios con la descripcion '.$rowdata_3['Descripcion'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'.';
 					
-			}	
+				/******************************************/
+				//Se guarda en historial la accion
+				$fecha     = fecha_actual();
+				$idOcompra = $rowdata_3['idOcompra'];
+				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+				$a .= ",'2'";                                                     //Creacion Satisfactoria
+				$a .= ",'".$cambios."'";                                          //Observacion
+				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+					
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
 						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+				}
+				/*********************************************************************/	
+				/*********************************************************************/
+				//se borran los datos
+				$resultado = db_delete_data (false, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;
 /*******************************************************************************************************************/		
@@ -4078,7 +3887,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `ocompra_listado_documentos` (idOcompra, idSistema, 
 				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
 				Creacion_semana, idDocPago, NDocPago, Fpago, vTotal) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -4096,10 +3905,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `sistema_documentos_pago` WHERE idDocPago = '$idDocPago' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-			
+				$rowdata_2 = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago = '.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
@@ -4118,7 +3925,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -4153,21 +3960,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/	
 				/*********************************************************************/	
 				//Se toman los datos
-				$query = "SELECT Nombre FROM `sistema_documentos_pago` WHERE idDocPago = '$idDocPago' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_2 = mysqli_fetch_assoc ($resultado);
-				
-				$query = "SELECT 
-				sistema_documentos_pago.Nombre,
-				ocompra_listado_documentos.NDocPago,
-				ocompra_listado_documentos.Fpago,
-				ocompra_listado_documentos.vTotal
-				
-				FROM `ocompra_listado_documentos` 
-				LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = ocompra_listado_documentos.idDocPago
-				WHERE ocompra_listado_documentos.idDocumento = '$idDocumento' ";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_3 = mysqli_fetch_assoc ($resultado);
+				$rowdata_2 = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago = '.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata_3 = db_select_data (false, 'sistema_documentos_pago.Nombre, ocompra_listado_documentos.NDocPago, ocompra_listado_documentos.Fpago, ocompra_listado_documentos.vTotal', 'ocompra_listado_documentos', 'LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = ocompra_listado_documentos.idDocPago', 'ocompra_listado_documentos.idDocumento'.$idDocumento, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************/
 				//Se realizan comparacion
@@ -4185,7 +3979,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -4249,71 +4043,83 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*********************************************************************/	
-			/*********************************************************************/	
-			//Se toman los datos
-			$query = "SELECT 
-			sistema_documentos_pago.Nombre,
-			ocompra_listado_documentos.NDocPago,
-			ocompra_listado_documentos.Fpago,
-			ocompra_listado_documentos.vTotal
-				
-			FROM `ocompra_listado_documentos` 
-			LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = ocompra_listado_documentos.idDocPago
-			WHERE ocompra_listado_documentos.idDocumento = '".$_GET['del_documento']."' ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata_3 = mysqli_fetch_assoc ($resultado);
-				
-			/******************************************/
-			//Se realizan comparacion
-			$cambios = 'Se elimina '.$rowdata_3['Nombre'].' N°'.$rowdata_3['NDocPago'].' con fecha de pago '.$rowdata_3['Fpago'].' por un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-				
-			/******************************************/
-			//Se guarda en historial la accion
-			$fecha = fecha_actual();
-			if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-			if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-			$a .= ",'2'";                                                     //Creacion Satisfactoria
-			$a .= ",'".$cambios."'";                                          //Observacion
-			$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
-			// inserto los datos de registro en la db
-			$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-			VALUES ({$a} )";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-			/*********************************************************************/	
-			/*********************************************************************/
+			//Variable
+			$errorn = 0;
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `ocompra_listado_documentos` WHERE idDocumento = {$_GET['del_documento']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_documento']) OR !validaEntero($_GET['del_documento']))&&$_GET['del_documento']!=''){
+				$indice = simpleDecode($_GET['del_documento'], fecha_actual());
+			}else{
+				$indice = $_GET['del_documento'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*********************************************************************/	
+				/*********************************************************************/	
+				//Se toman los datos
+				$rowdata_3 = db_select_data (false, 'sistema_documentos_pago.Nombre, ocompra_listado_documentos.NDocPago, ocompra_listado_documentos.Fpago, ocompra_listado_documentos.vTotal', 'ocompra_listado_documentos', 'LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = ocompra_listado_documentos.idDocPago', 'ocompra_listado_documentos.idDocumento'.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				/******************************************/
+				//Se realizan comparacion
+				$cambios = 'Se elimina '.$rowdata_3['Nombre'].' N°'.$rowdata_3['NDocPago'].' con fecha de pago '.$rowdata_3['Fpago'].' por un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
 					
-			}	
+				/******************************************/
+				//Se guarda en historial la accion
+				$fecha = fecha_actual();
+				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+				$a .= ",'2'";                                                     //Creacion Satisfactoria
+				$a .= ",'".$cambios."'";                                          //Observacion
+				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+					
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
 						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
+				}
+				/*********************************************************************/	
+				/*********************************************************************/
+				//se borran los datos
+				$resultado = db_delete_data (false, 'ocompra_listado_documentos', 'idDocumento = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;
 /*******************************************************************************************************************/
@@ -4329,7 +4135,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -4394,7 +4200,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									// inserto los datos de registro en la db
 									$query  = "INSERT INTO `ocompra_listado_archivos` (idOcompra, idSistema, 
 									idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, Nombre) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -4425,7 +4231,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									
 									// inserto los datos de registro en la db
 									$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -4467,80 +4273,96 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			// Se obtiene el nombre del logo
-			$query = "SELECT Nombre
-			FROM `ocompra_listado_archivos`
-			WHERE idFile = {$_GET['del_file']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			/*********************************************************************/	
-			/*********************************************************************/	
-			//Se realizan comparacion
-			$cambios = 'Se elimina archivo '.$rowdata['Nombre'];
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_file']) OR !validaEntero($_GET['del_file']))&&$_GET['del_file']!=''){
+				$indice = simpleDecode($_GET['del_file'], fecha_actual());
+			}else{
+				$indice = $_GET['del_file'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
-			/******************************************/
-			//Se guarda en historial la accion
-			$fecha = fecha_actual();
-			if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-			if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-			$a .= ",'2'";                                                     //Creacion Satisfactoria
-			$a .= ",'".$cambios."'";                                          //Observacion
-			$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
-			// inserto los datos de registro en la db
-			$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-			VALUES ({$a} )";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-			/*********************************************************************/	
-			/*********************************************************************/
-			
-			
-			//se borra el archivo de la base de datos
-			$query  = "DELETE FROM `ocompra_listado_archivos` WHERE idFile = {$_GET['del_file']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 			}
 			
-			//se elimina el archivo
-			if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
-				try {
-					if(!is_writable('upload/'.$rowdata['Nombre'])){
-						//throw new Exception('File not writable');
-					}else{
-						unlink('upload/'.$rowdata['Nombre']);
-						unset($_SESSION['ocompra_archivos'][$_GET['del_file']]);
-					}
-				}catch(Exception $e) { 
-						//guardar el dato en un archivo log
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'Nombre', 'ocompra_listado_archivos', '', 'idFile = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+				/*********************************************************************/	
+				/*********************************************************************/	
+				//Se realizan comparacion
+				$cambios = 'Se elimina archivo '.$rowdata['Nombre'];
+					
+				/******************************************/
+				//Se guarda en historial la accion
+				$fecha = fecha_actual();
+				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+				$a .= ",'2'";                                                     //Creacion Satisfactoria
+				$a .= ",'".$cambios."'";                                          //Observacion
+				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+					
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if(!$resultado){
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+						
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						
 				}
+				/*********************************************************************/	
+				/*********************************************************************/
+				//se borran los datos
+				$resultado = db_delete_data (false, 'ocompra_listado_archivos', 'idFile = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina el archivo
+					if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['Nombre'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['Nombre']);
+								unset($_SESSION['ocompra_archivos'][$indice]);
+							}
+						}catch(Exception $e) { 
+								//guardar el dato en un archivo log
+						}
+					}
+				
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
 			}
 			
-			//Redirijo			
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			
 
 
 		break;	
@@ -4552,619 +4374,500 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
-				//Verifico el tipo
-				switch ($_GET['del_sol_type']) {
-					/****************************************/
-					//Productos
-					case 1:
-						//Se trae los datos
-						$query = "SELECT 
-						ocompra_listado_existencias_productos.idExistencia,
-						ocompra_listado_existencias_productos.Cantidad,
-						ocompra_listado_existencias_productos.vUnitario,
-						productos_listado.Nombre AS Producto,
-						sistema_productos_uml.Nombre AS Medida
-						FROM `ocompra_listado_existencias_productos`
-						LEFT JOIN `productos_listado`      ON productos_listado.idProducto   = ocompra_listado_existencias_productos.idProducto
-						LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml    = productos_listado.idUml
-						WHERE ocompra_listado_existencias_productos.idOcompra = {$_GET['view']}
-						AND ocompra_listado_existencias_productos.idProducto= {$_GET['del_sol_prod']}
-						LIMIT 1";
-						$resultado = mysqli_query($dbConn, $query);
-						$rowdata = mysqli_fetch_assoc ($resultado);
-						/*********************************************************************/	
-						/*********************************************************************/	
-						//Se realizan comparacion
-						$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
-						/******************************************/
-						//Se guarda en historial la accion
-						$fecha = fecha_actual();
-						if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-						if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-						$a .= ",'2'";                                                     //Creacion Satisfactoria
-						$a .= ",'".$cambios."'";                                          //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
-						/*********************************************************************/	
-						/*********************************************************************/
-						//Verifico cantidades
-						$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
-						//Elimino en caso de que quede en 0
-						if($Resta==0){
-							//Elimino el dato de la lista de la OC
-							$query  = "DELETE FROM `ocompra_listado_existencias_productos` WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_productos` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						//Sino Actualizo valores
-						}else{
-							$nuevo = $Resta * $rowdata['vUnitario'];
-							//Actualizo las cantidades
-							$query  = "UPDATE `ocompra_listado_existencias_productos` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_productos` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						}
-						break;
-					/****************************************/
-					//Insumos
-					case 2:
-						//Se trae los datos
-						$query = "SELECT 
-						ocompra_listado_existencias_insumos.idExistencia,
-						ocompra_listado_existencias_insumos.Cantidad,
-						ocompra_listado_existencias_insumos.vUnitario,
-						insumos_listado.Nombre AS Producto,
-						sistema_productos_uml.Nombre AS Medida
-						FROM `ocompra_listado_existencias_insumos`
-						LEFT JOIN `insumos_listado`        ON insumos_listado.idProducto     = ocompra_listado_existencias_insumos.idProducto
-						LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml    = insumos_listado.idUml
-						WHERE ocompra_listado_existencias_insumos.idOcompra = {$_GET['view']}
-						AND ocompra_listado_existencias_insumos.idProducto= {$_GET['del_sol_prod']}
-						LIMIT 1";
-						$resultado = mysqli_query($dbConn, $query);
-						$rowdata = mysqli_fetch_assoc ($resultado);
-						/*********************************************************************/	
-						/*********************************************************************/	
-						//Se realizan comparacion
-						$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
-						/******************************************/
-						//Se guarda en historial la accion
-						$fecha = fecha_actual();
-						if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-						if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-						$a .= ",'2'";                                                     //Creacion Satisfactoria
-						$a .= ",'".$cambios."'";                                          //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
-						/*********************************************************************/	
-						/*********************************************************************/
-						//Verifico cantidades
-						$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
-						//Elimino en caso de que quede en 0
-						if($Resta==0){
-							//Elimino el dato de la lista de la OC
-							$query  = "DELETE FROM `ocompra_listado_existencias_insumos` WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_insumos` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						//Sino Actualizo valores
-						}else{
-							$nuevo = $Resta * $rowdata['vUnitario'];
-							//Actualizo las cantidades
-							$query  = "UPDATE `ocompra_listado_existencias_insumos` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_insumos` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						}
-						break;
-					/****************************************/
-					//Arriendos
-					case 3:
-						//Se trae los datos
-						$query = "SELECT 
-						ocompra_listado_existencias_arriendos.idExistencia,
-						ocompra_listado_existencias_arriendos.Cantidad,
-						ocompra_listado_existencias_arriendos.vUnitario,
-						equipos_arriendo_listado.Nombre AS Producto,
-						core_tiempo_frecuencia.Nombre AS Medida
-						FROM `ocompra_listado_existencias_arriendos`
-						LEFT JOIN `equipos_arriendo_listado`   ON equipos_arriendo_listado.idEquipo     = ocompra_listado_existencias_arriendos.idEquipo
-						LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_arriendos.idFrecuencia
-						WHERE ocompra_listado_existencias_arriendos.idOcompra = {$_GET['view']}
-						AND ocompra_listado_existencias_arriendos.idEquipo= {$_GET['del_sol_prod']}
-						LIMIT 1";
-						$resultado = mysqli_query($dbConn, $query);
-						$rowdata = mysqli_fetch_assoc ($resultado);
-						/*********************************************************************/	
-						/*********************************************************************/	
-						//Se realizan comparacion
-						$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
-						/******************************************/
-						//Se guarda en historial la accion
-						$fecha = fecha_actual();
-						if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-						if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-						$a .= ",'2'";                                                     //Creacion Satisfactoria
-						$a .= ",'".$cambios."'";                                          //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
-						/*********************************************************************/	
-						/*********************************************************************/
-						//Verifico cantidades
-						$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
-						//Elimino en caso de que quede en 0
-						if($Resta==0){
-							//Elimino el dato de la lista de la OC
-							$query  = "DELETE FROM `ocompra_listado_existencias_arriendos` WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_arriendos` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						//Sino Actualizo valores
-						}else{
-							$nuevo = $Resta * $rowdata['vUnitario'];
-							//Actualizo las cantidades
-							$query  = "UPDATE `ocompra_listado_existencias_arriendos` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_arriendos` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						}
-						break;
-					/****************************************/
-					//Servicios
-					case 4:
-						//Se trae los datos
-						$query = "SELECT 
-						ocompra_listado_existencias_servicios.idExistencia,
-						ocompra_listado_existencias_servicios.Cantidad,
-						ocompra_listado_existencias_servicios.vUnitario,
-						servicios_listado.Nombre AS Producto,
-						core_tiempo_frecuencia.Nombre AS Medida
-						FROM `ocompra_listado_existencias_servicios`
-						LEFT JOIN `servicios_listado`          ON servicios_listado.idServicio          = ocompra_listado_existencias_servicios.idServicio
-						LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_servicios.idFrecuencia
-						WHERE ocompra_listado_existencias_servicios.idOcompra = {$_GET['view']}
-						AND ocompra_listado_existencias_servicios.idServicio= {$_GET['del_sol_prod']}
-						LIMIT 1";
-						$resultado = mysqli_query($dbConn, $query);
-						$rowdata = mysqli_fetch_assoc ($resultado);
-						/*********************************************************************/	
-						/*********************************************************************/	
-						//Se realizan comparacion
-						$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
-						/******************************************/
-						//Se guarda en historial la accion
-						$fecha = fecha_actual();
-						if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-						if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-						$a .= ",'2'";                                                     //Creacion Satisfactoria
-						$a .= ",'".$cambios."'";                                          //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
-						/*********************************************************************/	
-						/*********************************************************************/
-						//Verifico cantidades
-						$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
-						//Elimino en caso de que quede en 0
-						if($Resta==0){
-							//Elimino el dato de la lista de la OC
-							$query  = "DELETE FROM `ocompra_listado_existencias_servicios` WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_servicios` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						//Sino Actualizo valores
-						}else{
-							$nuevo = $Resta * $rowdata['vUnitario'];
-							//Actualizo las cantidades
-							$query  = "UPDATE `ocompra_listado_existencias_servicios` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_servicios` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						}
-						break;
-					/****************************************/
-					//Otros
-					case 5:
-						//Se trae los datos
-						$query = "SELECT 
-						ocompra_listado_existencias_otros.idExistencia,
-						ocompra_listado_existencias_otros.Cantidad,
-						ocompra_listado_existencias_otros.vUnitario,
-						ocompra_listado_existencias_otros.Nombre AS Producto,
-						core_tiempo_frecuencia.Nombre AS Medida
-						FROM `ocompra_listado_existencias_otros`
-						LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_otros.idFrecuencia
-						WHERE ocompra_listado_existencias_otros.idOcompra = {$_GET['view']}
-						AND ocompra_listado_existencias_otros.Nombre= {$_GET['del_sol_prod']}
-						LIMIT 1";
-						$resultado = mysqli_query($dbConn, $query);
-						$rowdata = mysqli_fetch_assoc ($resultado);
-						/*********************************************************************/	
-						/*********************************************************************/	
-						//Se realizan comparacion
-						$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
-						/******************************************/
-						//Se guarda en historial la accion
-						$fecha = fecha_actual();
-						if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-						if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-						$a .= ",'2'";                                                     //Creacion Satisfactoria
-						$a .= ",'".$cambios."'";                                          //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
-						/*********************************************************************/	
-						/*********************************************************************/
-						//Verifico cantidades
-						$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
-						//Elimino en caso de que quede en 0
-						if($Resta==0){
-							//Elimino el dato de la lista de la OC
-							$query  = "DELETE FROM `ocompra_listado_existencias_otros` WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_otros` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						//Sino Actualizo valores
-						}else{
-							$nuevo = $Resta * $rowdata['vUnitario'];
-							//Actualizo las cantidades
-							$query  = "UPDATE `ocompra_listado_existencias_otros` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = {$rowdata['idExistencia']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							//Elimino el numero de OC para dejar libre la solicitud
-							$query  = "UPDATE `solicitud_listado_existencias_otros` SET idOcompra=0 WHERE idExistencia = {$_GET['del_solicitud']}";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-						}
-						break;
-				}
-				
-				//elimino el dato de las solicitudes relacionadas
-				$query  = "DELETE FROM `ocompra_listado_sol_rel` WHERE idSolRel = {$_GET['del_sol_SolRel']}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
+			//siempre pasa
+			$errorn = 0;
+			
+			if($errorn==0){
+				// si no hay errores ejecuto el codigo	
+				if ( empty($error) ) {
 					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					//Verifico el tipo
+					switch ($_GET['del_sol_type']) {
+						/****************************************/
+						//Productos
+						case 1:
+							//Se trae los datos
+							$rowdata = db_select_data (false, 'ocompra_listado_existencias_productos.idExistencia, ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vUnitario, productos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Medida', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'ocompra_listado_existencias_productos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_productos.idProducto= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+							/*********************************************************************/	
+							/*********************************************************************/	
+							//Se realizan comparacion
+							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							/******************************************/
+							//Se guarda en historial la accion
+							$fecha = fecha_actual();
+							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+							$a .= ",'2'";                                                     //Creacion Satisfactoria
+							$a .= ",'".$cambios."'";                                          //Observacion
+							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							// inserto los datos de registro en la db
+							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+							VALUES (".$a.")";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if(!$resultado){
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+							/*********************************************************************/	
+							/*********************************************************************/
+							//Verifico cantidades
+							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							//Elimino en caso de que quede en 0
+							if($Resta==0){
+								//se borran los datos
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_productos` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							//Sino Actualizo valores
+							}else{
+								$nuevo = $Resta * $rowdata['vUnitario'];
+								//Actualizo las cantidades
+								$query  = "UPDATE `ocompra_listado_existencias_productos` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = ".$rowdata['idExistencia'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_productos` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							}
+							break;
+						/****************************************/
+						//Insumos
+						case 2:
+							//Se trae los datos
+							$rowdata = db_select_data (false, 'ocompra_listado_existencias_insumos.idExistencia, ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vUnitario, insumos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Medida', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'ocompra_listado_existencias_insumos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_insumos.idProducto= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+							/*********************************************************************/	
+							/*********************************************************************/	
+							//Se realizan comparacion
+							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							/******************************************/
+							//Se guarda en historial la accion
+							$fecha = fecha_actual();
+							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+							$a .= ",'2'";                                                     //Creacion Satisfactoria
+							$a .= ",'".$cambios."'";                                          //Observacion
+							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							// inserto los datos de registro en la db
+							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+							VALUES (".$a.")";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if(!$resultado){
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+							/*********************************************************************/	
+							/*********************************************************************/
+							//Verifico cantidades
+							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							//Elimino en caso de que quede en 0
+							if($Resta==0){
+								//se borran los datos
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
+								
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_insumos` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							//Sino Actualizo valores
+							}else{
+								$nuevo = $Resta * $rowdata['vUnitario'];
+								//Actualizo las cantidades
+								$query  = "UPDATE `ocompra_listado_existencias_insumos` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = ".$rowdata['idExistencia'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_insumos` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							}
+							break;
+						/****************************************/
+						//Arriendos
+						case 3:
+							//Se trae los datos
+							$rowdata = db_select_data (false, 'ocompra_listado_existencias_arriendos.idExistencia, ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vUnitario, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_arriendos.idEquipo= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+							/*********************************************************************/	
+							/*********************************************************************/	
+							//Se realizan comparacion
+							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							/******************************************/
+							//Se guarda en historial la accion
+							$fecha = fecha_actual();
+							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+							$a .= ",'2'";                                                     //Creacion Satisfactoria
+							$a .= ",'".$cambios."'";                                          //Observacion
+							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							// inserto los datos de registro en la db
+							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+							VALUES (".$a.")";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if(!$resultado){
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+							/*********************************************************************/	
+							/*********************************************************************/
+							//Verifico cantidades
+							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							//Elimino en caso de que quede en 0
+							if($Resta==0){
+								//se borran los datos
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_arriendos` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							//Sino Actualizo valores
+							}else{
+								$nuevo = $Resta * $rowdata['vUnitario'];
+								//Actualizo las cantidades
+								$query  = "UPDATE `ocompra_listado_existencias_arriendos` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = ".$rowdata['idExistencia'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_arriendos` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							}
+							break;
+						/****************************************/
+						//Servicios
+						case 4:
+							//Se trae los datos
+							$rowdata = db_select_data (false, 'ocompra_listado_existencias_servicios.idExistencia, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vUnitario, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio  = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_servicios.idServicio= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+							/*********************************************************************/	
+							/*********************************************************************/	
+							//Se realizan comparacion
+							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							/******************************************/
+							//Se guarda en historial la accion
+							$fecha = fecha_actual();
+							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+							$a .= ",'2'";                                                     //Creacion Satisfactoria
+							$a .= ",'".$cambios."'";                                          //Observacion
+							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							// inserto los datos de registro en la db
+							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+							VALUES (".$a.")";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if(!$resultado){
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+							/*********************************************************************/	
+							/*********************************************************************/
+							//Verifico cantidades
+							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							//Elimino en caso de que quede en 0
+							if($Resta==0){
+								//se borran los datos
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_servicios` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							//Sino Actualizo valores
+							}else{
+								$nuevo = $Resta * $rowdata['vUnitario'];
+								//Actualizo las cantidades
+								$query  = "UPDATE `ocompra_listado_existencias_servicios` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = ".$rowdata['idExistencia'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_servicios` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							}
+							break;
+						/****************************************/
+						//Otros
+						case 5:
+							//Se trae los datos
+							$rowdata = db_select_data (false, 'ocompra_listado_existencias_otros.idExistencia, ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vUnitario, ocompra_listado_existencias_otros.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_otros.Nombre= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+							/*********************************************************************/	
+							/*********************************************************************/	
+							//Se realizan comparacion
+							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							/******************************************/
+							//Se guarda en historial la accion
+							$fecha = fecha_actual();
+							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
+							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
+							$a .= ",'2'";                                                     //Creacion Satisfactoria
+							$a .= ",'".$cambios."'";                                          //Observacion
+							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							// inserto los datos de registro en la db
+							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
+							VALUES (".$a.")";
+							//Consulta
+							$resultado = mysqli_query ($dbConn, $query);
+							//Si ejecuto correctamente la consulta
+							if(!$resultado){
+								//Genero numero aleatorio
+								$vardata = genera_password(8,'alfanumerico');
+								
+								//Guardo el error en una variable temporal
+								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								
+							}
+							/*********************************************************************/	
+							/*********************************************************************/
+							//Verifico cantidades
+							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							//Elimino en caso de que quede en 0
+							if($Resta==0){
+								//se borran los datos
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_otros` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							//Sino Actualizo valores
+							}else{
+								$nuevo = $Resta * $rowdata['vUnitario'];
+								//Actualizo las cantidades
+								$query  = "UPDATE `ocompra_listado_existencias_otros` SET Cantidad=".$Resta.", vTotal=".$nuevo." WHERE idExistencia = ".$rowdata['idExistencia'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+								//Elimino el numero de OC para dejar libre la solicitud
+								$query  = "UPDATE `solicitud_listado_existencias_otros` SET idOcompra=0 WHERE idExistencia = ".$_GET['del_solicitud'];
+								//Consulta
+								$resultado = mysqli_query ($dbConn, $query);
+								//Si ejecuto correctamente la consulta
+								if(!$resultado){
+									//Genero numero aleatorio
+									$vardata = genera_password(8,'alfanumerico');
+									
+									//Guardo el error en una variable temporal
+									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+								}
+							}
+							break;
+					}
+					
+					//se borran los datos
+					$resultado = db_delete_data (false, 'ocompra_listado_sol_rel', 'idSolRel = "'.$_GET['del_sol_SolRel'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//Si ejecuto correctamente la consulta
+					if($resultado==true){
+						
+						//redirijo
+						header( 'Location: '.$location.'&deleted=true' );
+						die;
+						
+					}
 					
 				}
-							
-				
-				//Redirijo
-				header( 'Location: '.$location );
-				die;	
-				
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
 			}
+			
 		
 		
 		break;
@@ -5325,7 +5028,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -5493,7 +5196,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -5660,7 +5363,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -5698,7 +5401,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)&&$idOcompra!=''&&isset($idUsuario)&&$idUsuario!=''){
-				$ndata_1 = db_select_nrows ('idOcompra', 'ocompra_listado_aprobaciones', '', "idOcompra='".$idOcompra."' AND idUsuario='".$idUsuario."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_aprobaciones', '', "idOcompra='".$idOcompra."' AND idUsuario='".$idUsuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La aprobacion ya fue realizada';}
@@ -5721,7 +5424,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -5745,7 +5448,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_aprobaciones` (idOcompra, Creacion_fecha, Creacion_hora, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -5763,19 +5466,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/**********************************************************/
 				//Reviso si las aprobaciones igualan a los aprobadores
 				$arrAprobado = array();
-				$query = "SELECT 
-				sistema_aprobador_oc.idUsuario,
-				ocompra_listado.idOcompra,
-				(SELECT COUNT(idAprobaciones) FROM `ocompra_listado_aprobaciones` WHERE idOcompra=ocompra_listado.idOcompra AND idUsuario=sistema_aprobador_oc.idUsuario  LIMIT 1) AS C_apro
-
-				FROM `ocompra_listado` 
-				LEFT JOIN `sistema_aprobador_oc`  ON sistema_aprobador_oc.idSistema   = ocompra_listado.idSistema
-				
-				WHERE ocompra_listado.idOcompra = {$idOcompra} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrAprobado,$row );
-				}
+				$arrAprobado = db_select_array (false, 'sistema_aprobador_oc.idUsuario, ocompra_listado.idOcompra, (SELECT COUNT(idAprobaciones) FROM `ocompra_listado_aprobaciones` WHERE idOcompra=ocompra_listado.idOcompra AND idUsuario=sistema_aprobador_oc.idUsuario  LIMIT 1) AS C_apro', 'ocompra_listado', 'LEFT JOIN `sistema_aprobador_oc`  ON sistema_aprobador_oc.idSistema   = ocompra_listado.idSistema', 'ocompra_listado.idOcompra ='.$idOcompra, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 				//variables
 				$napro_list = 0;
 				$napro_true = 0;
@@ -5931,7 +5623,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -6111,7 +5803,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -6296,131 +5988,139 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*******************************************************************/
-			//variables
-			$ndata_1 = 0;
-			$ndata_2 = 0;
-			$ndata_3 = 0;
-			$ndata_4 = 0;
-			$ndata_5 = 0;
-			$ndata_6 = 0;
-			$ndata_7 = 0;
-			//Se verifica si el dato existe
-			if(isset($_GET['del'])&&$_GET['del']!=''){
-				$ndata_1 = db_select_nrows ('idOcompra', 'ocompra_listado', '', "idOcompra='".$_GET['del']."'", $dbConn);
-				$ndata_2 = db_select_nrows ('idOcompra', 'ocompra_listado_existencias_arriendos', '', "idOcompra='".$_GET['del']."' AND cant_ingresada!=0", $dbConn);
-				$ndata_3 = db_select_nrows ('idOcompra', 'ocompra_listado_existencias_insumos', '', "idOcompra='".$_GET['del']."' AND cant_ingresada!=0", $dbConn);
-				$ndata_4 = db_select_nrows ('idOcompra', 'ocompra_listado_existencias_productos', '', "idOcompra='".$_GET['del']."' AND cant_ingresada!=0", $dbConn);
-				$ndata_5 = db_select_nrows ('idOcompra', 'ocompra_listado_existencias_servicios', '', "idOcompra='".$_GET['del']."' AND cant_ingresada!=0", $dbConn);
-				$ndata_6 = db_select_nrows ('idOcompra', 'ocompra_listado_existencias_boletas', '', "idOcompra='".$_GET['del']."' AND idUso=2", $dbConn);
-				$ndata_7 = db_select_nrows ('idOcompra', 'ocompra_listado_existencias_boletas_empresas', '', "idOcompra='".$_GET['del']."' AND Total_Ingresado!=0", $dbConn);
+			//Variable
+			$errorn = 0;
 			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				$error['del'] = 'error/No existe OC a eliminar';
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
 			}
-			//generacion de errores
-			if($ndata_1==0) {$error['ndata_1'] = 'error/No existe OC a eliminar';}
-			if($ndata_2 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de arriendo facturadas';}
-			if($ndata_3 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de insumos facturadas';}
-			if($ndata_4 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de productos facturadas';}
-			if($ndata_5 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de servicios facturadas';}
-			if($ndata_6 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de boletas de honorarios facturadas';}
-			if($ndata_7 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de boletas de honorarios de empresas facturadas';}
-			/*******************************************************************/
 			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
-				/********************************************************/
-				//Log oculto de la eliminacion de la OC
-				$idOcompra   = $_GET['del'];
-				$idSistema   = $_SESSION['usuario']['basic_data']['idSistema'];
-				$idUsuario   = $_SESSION['usuario']['basic_data']['idUsuario'];
-				$Fecha_elim  = fecha_actual();
-				$Hora_elim   = hora_actual();
-				
-				//filtros
-				$a = "'".$idOcompra."'" ;
-				$a .= ",'".$idSistema."'" ;
-				$a .= ",'".$idUsuario."'" ;
-				$a .= ",'".$Fecha_elim."'" ;
-				$a .= ",'".$Hora_elim."'" ;
-				
-				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_log_eliminacion` (idOcompra, idSistema, idUsuario, Fecha_elim, Hora_elim) 
-				VALUES ({$a} )";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				
-				
-				/********************************************************/
-				// Se trae un listado con todos los archivos relacionados
-				$arrArchivos = array();
-				$query = "SELECT Nombre
-				FROM `ocompra_listado_archivos` 
-				WHERE idOcompra = {$_GET['del']} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrArchivos,$row );
-				}
-				
-				/********************************************************/
-				//Se borran los archivos relacionados
-				foreach ($arrArchivos as $archivo){
-					try {
-						if(!is_writable('upload/'.$archivo['Nombre'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$archivo['Nombre']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				
-				/********************************************************/
-				//se borran los datos
-				$query  = "DELETE FROM `ocompra_listado` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_aprobaciones` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_archivos` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_documentos` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_existencias_arriendos` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_existencias_boletas` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_existencias_boletas_empresas` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_existencias_insumos` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_existencias_otros` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_existencias_productos` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_existencias_servicios` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_historial` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `ocompra_listado_sol_rel` WHERE idOcompra = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
 			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*******************************************************************/
+				//variables
+				$ndata_1 = 0;
+				$ndata_2 = 0;
+				$ndata_3 = 0;
+				$ndata_4 = 0;
+				$ndata_5 = 0;
+				$ndata_6 = 0;
+				$ndata_7 = 0;
+				//Se verifica si el dato existe
+				if(isset($_GET['del'])&&$_GET['del']!=''){
+					$ndata_1 = db_select_nrows (false, 'idOcompra', 'ocompra_listado', '', "idOcompra='".$indice."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ndata_2 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_arriendos', '', "idOcompra='".$indice."' AND cant_ingresada!=0", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ndata_3 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_insumos', '', "idOcompra='".$indice."' AND cant_ingresada!=0", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ndata_4 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_productos', '', "idOcompra='".$indice."' AND cant_ingresada!=0", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ndata_5 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_servicios', '', "idOcompra='".$indice."' AND cant_ingresada!=0", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ndata_6 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_boletas', '', "idOcompra='".$indice."' AND idUso=2", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ndata_7 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_boletas_empresas', '', "idOcompra='".$indice."' AND Total_Ingresado!=0", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				}else{
+					$error['del'] = 'error/No existe OC a eliminar';
+				}
+				//generacion de errores
+				if($ndata_1==0) {$error['ndata_1'] = 'error/No existe OC a eliminar';}
+				if($ndata_2 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de arriendo facturadas';}
+				if($ndata_3 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de insumos facturadas';}
+				if($ndata_4 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de productos facturadas';}
+				if($ndata_5 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de servicios facturadas';}
+				if($ndata_6 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de boletas de honorarios facturadas';}
+				if($ndata_7 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de boletas de honorarios de empresas facturadas';}
+				/*******************************************************************/
+				
+				// si no hay errores ejecuto el codigo	
+				if ( empty($error) ) {
+					
+					/********************************************************/
+					//Log oculto de la eliminacion de la OC
+					$idOcompra   = $indice;
+					$idSistema   = $_SESSION['usuario']['basic_data']['idSistema'];
+					$idUsuario   = $_SESSION['usuario']['basic_data']['idUsuario'];
+					$Fecha_elim  = fecha_actual();
+					$Hora_elim   = hora_actual();
+					
+					//filtros
+					$a = "'".$idOcompra."'" ;
+					$a .= ",'".$idSistema."'" ;
+					$a .= ",'".$idUsuario."'" ;
+					$a .= ",'".$Fecha_elim."'" ;
+					$a .= ",'".$Hora_elim."'" ;
+					
+					// inserto los datos de registro en la db
+					$query  = "INSERT INTO `ocompra_listado_log_eliminacion` (idOcompra, idSistema, idUsuario, Fecha_elim, Hora_elim) 
+					VALUES (".$a.")";
+					//Consulta
+					$resultado = mysqli_query ($dbConn, $query);
+					
+					
+					/********************************************************/
+					// Se trae un listado con todos los archivos relacionados
+					$arrArchivos = array();
+					$arrArchivos = db_select_array (false, 'Nombre', 'ocompra_listado_archivos', '', 'idOcompra ='.$indice, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
+					
+					/********************************************************/
+					//se borran los datos
+					$resultado_1  = db_delete_data (false, 'ocompra_listado', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_2  = db_delete_data (false, 'ocompra_listado_aprobaciones', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_3  = db_delete_data (false, 'ocompra_listado_archivos', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_4  = db_delete_data (false, 'ocompra_listado_documentos', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_5  = db_delete_data (false, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_6  = db_delete_data (false, 'ocompra_listado_existencias_boletas', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_7  = db_delete_data (false, 'ocompra_listado_existencias_boletas_empresas', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_8  = db_delete_data (false, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_9  = db_delete_data (false, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_10 = db_delete_data (false, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_11 = db_delete_data (false, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_12 = db_delete_data (false, 'ocompra_listado_historial', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_13 = db_delete_data (false, 'ocompra_listado_sol_rel', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//Si ejecuto correctamente la consulta
+					if($resultado_1==true OR $resultado_2==true OR $resultado_3==true OR $resultado_4==true OR $resultado_5==true OR $resultado_6==true OR $resultado_7==true OR $resultado_8==true OR $resultado_9==true OR $resultado_10==true OR $resultado_11==true OR $resultado_12==true OR $resultado_13==true){
+						
+						/********************************************************/
+						//Se borran los archivos relacionados
+						foreach ($arrArchivos as $archivo){
+							try {
+								if(!is_writable('upload/'.$archivo['Nombre'])){
+									//throw new Exception('File not writable');
+								}else{
+									unlink('upload/'.$archivo['Nombre']);
+								}
+							}catch(Exception $e) { 
+								//guardar el dato en un archivo log
+							}
+						}
+						
+						//redirijo
+						header( 'Location: '.$location.'&deleted=true' );
+						die;
+						
+					}
+					
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 	
 		break;		
 /*******************************************************************************************************************/		

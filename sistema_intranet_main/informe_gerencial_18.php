@@ -49,7 +49,7 @@ LEFT JOIN `bodegas_insumos_listado`      ON bodegas_insumos_listado.idBodega    
 LEFT JOIN `clientes_listado`             ON clientes_listado.idCliente           = licitacion_listado.idCliente
 LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema              = licitacion_listado.idSistema
 
-WHERE licitacion_listado.idLicitacion={$_GET['idLicitacion']} ";
+WHERE licitacion_listado.idLicitacion=".$_GET['idLicitacion'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -98,7 +98,7 @@ licitacion_listado_level_1.idLevel_1 AS bla
 ".$z."
 FROM `licitacion_listado_level_1`
 ".$leftjoin."
-WHERE licitacion_listado_level_1.idLicitacion={$_GET['idLicitacion']}
+WHERE licitacion_listado_level_1.idLicitacion=".$_GET['idLicitacion']."
 ORDER BY licitacion_listado_level_1.Codigo ASC ".$orderby."
 
 ";
@@ -330,7 +330,7 @@ item_tabla,
 item_tabla_id
 
 FROM `orden_trabajo_listado_trabajos`
-WHERE orden_trabajo_listado_trabajos.idLicitacion={$_GET['idLicitacion']} 
+WHERE orden_trabajo_listado_trabajos.idLicitacion=".$_GET['idLicitacion']." 
 GROUP BY item_tabla,item_tabla_id
 ORDER BY item_tabla ASC, item_tabla_id ASC";
 //Consulta
@@ -366,7 +366,7 @@ orden_trabajo_listado.terAno AS AnoTermino
 
 FROM `orden_trabajo_listado_trabajos`
 LEFT JOIN `orden_trabajo_listado` ON orden_trabajo_listado.idOT = orden_trabajo_listado_trabajos.idOT
-WHERE orden_trabajo_listado_trabajos.idLicitacion={$_GET['idLicitacion']} 
+WHERE orden_trabajo_listado_trabajos.idLicitacion=".$_GET['idLicitacion']." 
 GROUP BY orden_trabajo_listado.terAno,
 orden_trabajo_listado.terMes,
 orden_trabajo_listado_trabajos.item_tabla,
@@ -420,7 +420,7 @@ FROM `bodegas_productos_facturacion_existencias`
 LEFT JOIN `productos_listado`     ON productos_listado.idProducto  = bodegas_productos_facturacion_existencias.idProducto 
 LEFT JOIN `orden_trabajo_listado` ON orden_trabajo_listado.idOT    = bodegas_productos_facturacion_existencias.idOT 
 
-WHERE orden_trabajo_listado.idLicitacion={$_GET['idLicitacion']} 
+WHERE orden_trabajo_listado.idLicitacion=".$_GET['idLicitacion']." 
 
 GROUP BY bodegas_productos_facturacion_existencias.Creacion_ano,
 bodegas_productos_facturacion_existencias.Creacion_mes,
@@ -467,7 +467,7 @@ FROM `bodegas_insumos_facturacion_existencias`
 LEFT JOIN `insumos_listado`       ON insumos_listado.idProducto    = bodegas_insumos_facturacion_existencias.idProducto  
 LEFT JOIN `orden_trabajo_listado` ON orden_trabajo_listado.idOT    = bodegas_insumos_facturacion_existencias.idOT 
 
-WHERE orden_trabajo_listado.idLicitacion={$_GET['idLicitacion']} 
+WHERE orden_trabajo_listado.idLicitacion=".$_GET['idLicitacion']." 
 
 GROUP BY bodegas_insumos_facturacion_existencias.Creacion_ano,
 bodegas_insumos_facturacion_existencias.Creacion_mes,
@@ -520,7 +520,7 @@ if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''&&$rowdata['idCliente'
 	WHERE bodegas_servicios_facturacion.idTipo=2 
 	AND pagos_facturas_clientes.idTipo=3 
 	AND bodegas_servicios_facturacion.idCliente=".$rowdata['idCliente']." 
-	AND bodegas_servicios_facturacion.Creacion_ano BETWEEN '{$ano_min}' AND '{$ano_max}'
+	AND bodegas_servicios_facturacion.Creacion_ano BETWEEN '".$ano_min."' AND '".$ano_max."'
 
 	GROUP BY bodegas_servicios_facturacion.Creacion_ano,
 	bodegas_servicios_facturacion.Creacion_mes,
@@ -721,7 +721,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Cumplimiento del Contrato</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
@@ -813,7 +813,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Flujo Mensual Cumplimiento del Contrato</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
@@ -1113,7 +1113,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Gasto Materiales</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
@@ -1280,7 +1280,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Pagos del Cliente</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
@@ -1379,26 +1379,21 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 	
     
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$y = "licitacion_listado.idSistema>=0";
-	$w = "idSistema>=0 AND idEstado=1";
-}else{
-	$y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";	
-	$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-}
+//sistema
+$y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1410,13 +1405,13 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idLicitacion)) {    $x1  = $idLicitacion;  }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Imputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, 0,
+					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, 0,
 											 'Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Imputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);	
 				}
 				?>        
 	   

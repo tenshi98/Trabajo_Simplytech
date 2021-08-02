@@ -14,8 +14,8 @@ require_once 'core/Load.Utils.Web.php';
 $original = "comunicaciones_calendario_listado.php";
 $location = $original;
 //Se agregan ubicaciones
-if(isset($_GET['Mes']) && $_GET['Mes'] != ''){  $location .= "?Mes=".$_GET['Mes'] ; } else { $location .= "?Mes=".mes_actual(); }
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){  $location .= "&Ano=".$_GET['Ano'] ; } else { $location .= "&Ano=".ano_actual(); }
+if(isset($_GET['Mes']) && $_GET['Mes'] != ''){  $location .= "?Mes=".$_GET['Mes']; } else { $location .= "?Mes=".mes_actual(); }
+if(isset($_GET['Ano']) && $_GET['Ano'] != ''){  $location .= "&Ano=".$_GET['Ano']; } else { $location .= "&Ano=".ano_actual(); }
 
 
 
@@ -34,7 +34,7 @@ if ( !empty($_POST['submit']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit']) )  { 
 	//Se agregan ubicaciones
-	$location .= "&view=".$_GET['id'] ; 
+	$location .= "&view=".$_GET['id']; 
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/principal_calendario_listado.php';
@@ -57,13 +57,15 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Evento Creado corre
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Evento Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Evento borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT Fecha, Titulo, Cuerpo, idSistema, idUsuario
 FROM `principal_calendario_listado`
-WHERE idCalendario = {$_GET['id']}";
+WHERE idCalendario = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -82,7 +84,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Evento</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -95,23 +97,23 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Cuerpo)) {     $x3  = $Cuerpo;     }else{$x3  = $rowdata['Cuerpo'];}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha del Evento','Fecha', $x1, 2);
-				$Form_Imputs->form_input_text( 'Titulo', 'Titulo', $x2, 2);
-				$Form_Imputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha del Evento','Fecha', $x1, 2);
+				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
+				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
 				
 				
 				if($rowdata['idUsuario']==9999){
-					$Form_Imputs->form_input_hidden('idUsuario', 9999, 2);
+					$Form_Inputs->form_input_hidden('idUsuario', 9999, 2);
 				}
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idCalendario', $_GET['id'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idCalendario', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location.'&view='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -130,7 +132,7 @@ principal_calendario_listado.idUsuario
 
 FROM `principal_calendario_listado`
 LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = principal_calendario_listado.idUsuario
-WHERE principal_calendario_listado.idCalendario = '{$_GET['view']}'  ";
+WHERE principal_calendario_listado.idCalendario = '".$_GET['view']."'";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -150,7 +152,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Evento</h5>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -159,7 +161,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				<div class="wmd-panel">
 					
 					<div class="col-sm-4" style="margin-bottom:5px;">
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/calendario.jpg">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/calendario.jpg">
 					</div>
 					<div class="col-sm-8">
 						<h2 class="text-primary">Datos del Evento</h2>
@@ -176,7 +178,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 						<div class="form-group" >
 							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$_GET["view"]; ?>" class="btn btn-default fright margin_width" >Editar Evento</a><?php }?>
 							<?php if ($rowlevel['level']>=4){
-								$ubicacion = $location.'&del='.$_GET['view'];
+								$ubicacion = $location.'&del='.simpleEncode($_GET['view'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro?';?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width" ><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Evento</a>
 							<?php } ?>
@@ -195,17 +197,20 @@ $row_data = mysqli_fetch_assoc ($resultado);
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div> 
 	  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);  ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Evento</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -218,20 +223,20 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				if(isset($Cuerpo)) {     $x3  = $Cuerpo;     }else{$x3  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha del Evento','Fecha', $x1, 2);
-				$Form_Imputs->form_input_text( 'Titulo', 'Titulo', $x2, 2);
-				$Form_Imputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha del Evento','Fecha', $x1, 2);
+				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
+				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idUsuario', 9999, 2);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idUsuario', 9999, 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -268,13 +273,13 @@ $meses=array(1=>"Enero",
 			);
 
 //verifico el tipo de usuario
-$z=" AND idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z=" AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 //Traigo los eventos guardados en la base de datos
 $arrEventos = array();
 $query = "SELECT idCalendario, Titulo, Dia, idUsuario
 FROM `principal_calendario_listado`
-WHERE Ano='{$Ano}' AND Mes='{$Mes}' ".$z."
+WHERE Ano='".$Ano."' AND Mes='".$Mes."' ".$z."
 ORDER BY Fecha ASC  ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);

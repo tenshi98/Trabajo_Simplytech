@@ -21,7 +21,7 @@ $search = '';
 if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){        $location .= "&idProveedor=".$_GET['idProveedor'];        $search .= "&idProveedor=".$_GET['idProveedor'];}
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];  $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
 /********************************************************************/
-if(isset($_GET['soli']) && $_GET['soli'] != ''){          $location .= "&soli=".$_GET['soli'] ; 	}
+if(isset($_GET['soli']) && $_GET['soli'] != ''){          $location .= "&soli=".$_GET['soli']; 	}
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -64,7 +64,7 @@ if ( ! empty($_GET['compra_rechazo']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Rechazar Orden de Compra</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -75,19 +75,19 @@ if ( ! empty($_GET['compra_rechazo']) ) { ?>
 				if(isset($Observacion)) {     $x1  = $Observacion;    }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
 				
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['compra_rechazo'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('Creacion_hora', hora_actual(), 2);
-				$Form_Imputs->form_input_hidden('idTipo', 4, 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['compra_rechazo'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('Creacion_hora', hora_actual(), 2);
+				$Form_Inputs->form_input_hidden('idTipo', 4, 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 				
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_rechazo">
-					<a href="<?php echo $location.'&view='.$_GET['compra_rechazo']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location.'&view='.$_GET['compra_rechazo']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -100,7 +100,7 @@ if ( ! empty($_GET['compra_rechazo']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Anular Orden de Compra</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -111,19 +111,19 @@ if ( ! empty($_GET['compra_rechazo']) ) { ?>
 				if(isset($Observacion)) {     $x1  = $Observacion;    }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
 				
-				$Form_Imputs->form_input_hidden('idOcompra', $_GET['compra_nula'], 2);
-				$Form_Imputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('Creacion_hora', hora_actual(), 2);
-				$Form_Imputs->form_input_hidden('idTipo', 4, 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idOcompra', $_GET['compra_nula'], 2);
+				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('Creacion_hora', hora_actual(), 2);
+				$Form_Inputs->form_input_hidden('idTipo', 4, 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 				
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_nula">
-					<a href="<?php echo $location.'&view='.$_GET['compra_nula']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location.'&view='.$_GET['compra_nula']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -147,7 +147,7 @@ FROM `ocompra_listado`
 LEFT JOIN `sistema_aprobador_oc`  ON sistema_aprobador_oc.idSistema   = ocompra_listado.idSistema
 LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario       = sistema_aprobador_oc.idUsuario
 
-WHERE ocompra_listado.idOcompra = {$_GET['view']} ";
+WHERE ocompra_listado.idOcompra = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -170,7 +170,7 @@ array_push( $arrAprobado,$row );
 <div class="col-sm-6">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Usuarios aprobadores</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Usuarios aprobadores</h5>	
 		</header>
 		<div class="table-responsive">    
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -190,12 +190,12 @@ array_push( $arrAprobado,$row );
 									echo 'Aprobada el '.fecha_estandar($apro['FechaApro']).' a las '.$apro['HoraApro'].' hrs';
 								}elseif(isset($apro['idUsuario'])&&$apro['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']){ ?>
 									<div class="btn-group" style="width: 105px;" >
-										<a href="<?php echo $location.'&compra_rechazo='.$apro['idOcompra']; ?>" title="Rechazar Orden" class="btn btn-danger btn-sm tooltip"><i class="fa fa fa-times"></i></a>
-										<a href="<?php echo $location.'&compra_nula='.$apro['idOcompra']; ?>" title="Anular Orden" class="btn btn-danger btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+										<a href="<?php echo $location.'&compra_rechazo='.$apro['idOcompra']; ?>" title="Rechazar Orden" class="btn btn-danger btn-sm tooltip"><i class="fa fa-times" aria-hidden="true"></i></a>
+										<a href="<?php echo $location.'&compra_nula='.$apro['idOcompra']; ?>" title="Anular Orden" class="btn btn-danger btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php //Confirmacion
 										$ubicacion = $location.'&compra_aprobar='.$apro['idOcompra'];
 										$dialogo   = '¿Realmente deseas aprobar la Orden de Compra n '.n_doc($_GET['view'], 5).'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Aprobar Orden" class="btn btn-success btn-sm tooltip"><i class="fa fa fa-check"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Aprobar Orden" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>
 									</div>
 								<?php } ?>		
 							</td>
@@ -212,8 +212,8 @@ array_push( $arrAprobado,$row );
 	<?php include '1include_ocompra.php'; ?>
 	  
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -254,12 +254,12 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 /**********************************************************/
 //Variable de busqueda
 $z = "WHERE ocompra_listado.idEstado=1";
 //verifico que sea un administrador
-$z.=" AND ocompra_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";	
+$z.=" AND ocompra_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){        $z .= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
@@ -323,7 +323,7 @@ array_push( $arrSolicitudes,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -341,12 +341,12 @@ array_push( $arrSolicitudes,$row );
 				if(isset($Creacion_fecha)) {   $x2  = $Creacion_fecha; }else{$x2  = '';}
 				
 				//se dibujan los inputs	
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 1);
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -365,7 +365,7 @@ array_push( $arrSolicitudes,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Ordenes de Compra</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Ordenes de Compra</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -379,29 +379,29 @@ array_push( $arrSolicitudes,$row );
 						<th width="120">
 							<div class="pull-left">N° Doc</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=ndoc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=ndoc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=ndoc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=ndoc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Proveedor</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=proveedor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=proveedor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=proveedor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=proveedor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -417,7 +417,7 @@ array_push( $arrSolicitudes,$row );
 						<td><?php echo Fecha_estandar($sol['Creacion_fecha']); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&view='.$sol['idOcompra']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&view='.$sol['idOcompra']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

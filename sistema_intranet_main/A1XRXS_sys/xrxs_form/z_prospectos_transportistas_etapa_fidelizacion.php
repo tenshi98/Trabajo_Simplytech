@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -25,11 +29,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idEtapaFide':    if(empty($idEtapaFide)){     $error['idEtapaFide']    = 'error/No ha ingresado el id';}break;
 			case 'idProspecto':    if(empty($idProspecto)){     $error['idProspecto']    = 'error/No ha seleccionado el prospecto';}break;
 			case 'idUsuario':      if(empty($idUsuario)){       $error['idUsuario']      = 'error/No ha seleccionado un usuario';}break;
@@ -39,6 +43,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita Observacion, contiene palabras no permitidas'; }	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -63,7 +71,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `prospectos_transportistas_etapa_fidelizacion` (idProspecto, idUsuario, idEtapa, Fecha, Observacion) VALUES ({$a} )";
+				$query  = "INSERT INTO `prospectos_transportistas_etapa_fidelizacion` (idProspecto, idUsuario, idEtapa, Fecha, Observacion) VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta

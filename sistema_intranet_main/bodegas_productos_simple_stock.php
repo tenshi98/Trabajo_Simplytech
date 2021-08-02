@@ -19,8 +19,8 @@ $location .='?pagina='.$_GET['pagina'];
 //Variables para filtro y paginacion
 $search = '';
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){
-	$location .= "&Nombre=".$_GET['Nombre'] ;
-	$search .= "&Nombre=".$_GET['Nombre'] ;  	
+	$location .= "&Nombre=".$_GET['Nombre'];
+	$search .= "&Nombre=".$_GET['Nombre'];  	
 }
 /********************************************************************/
 
@@ -55,7 +55,7 @@ LEFT JOIN `productos_listado`           ON productos_listado.idProducto        =
 LEFT JOIN `sistema_productos_uml`       ON sistema_productos_uml.idUml         = productos_listado.idUml
 LEFT JOIN `bodegas_productos_listado`     ON bodegas_productos_listado.idBodega    = bodegas_productos_facturacion_existencias.idBodega
 LEFT JOIN `core_tipo_producto`          ON core_tipo_producto.idTipoProducto   = productos_listado.idTipoProducto
-WHERE bodegas_productos_facturacion_existencias.idBodega={$_GET['idBodega']}
+WHERE bodegas_productos_facturacion_existencias.idBodega=".$_GET['idBodega']."
 GROUP BY bodegas_productos_facturacion_existencias.idProducto
 ORDER BY core_tipo_producto.Nombre ASC, productos_listado.Nombre ASC";
 //Consulta
@@ -74,20 +74,20 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProductos,$row );
 } ?>
+<div class="col-sm-12 clearfix">
+	<?php
+	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$zz .= '&idBodega='.$_GET['idBodega'];
+	?>			
+	<a target="new" href="<?php echo 'bodegas_productos_simple_stock_to_excel.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+	<a target="new" href="<?php echo 'bodegas_productos_simple_stock_to_pdf.php?bla=bla'.$zz ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
+	<a target="new" href="<?php echo 'bodegas_productos_simple_stock_to_print.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-5 pull-right margin_width"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>
+</div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Productos de la bodega <?php echo $arrProductos[0]['NombreBodega']; ?></h5>
-			<div class="toolbar">
-				<?php
-				$zz  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-				$zz .= '&idBodega='.$_GET['idBodega'];
-				?>
-				<a target="new" href="bodegas_productos_simple_stock_to_excel.php<?php echo $zz ?>" class="btn btn-sm btn-metis-2"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-				<a target="new" href="bodegas_productos_simple_stock_to_pdf.php<?php echo $zz ?>" class="btn btn-sm btn-metis-3"><i class="fa fa-file-pdf-o"></i> Exportar a PDF</a>
-				<a target="new" href="bodegas_productos_simple_stock_to_print.php<?php echo $zz ?>" class="btn btn-sm btn-metis-5"><i class="fa fa-print"></i> Imprimir</a>
-			</div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos de la bodega <?php echo $arrProductos[0]['NombreBodega']; ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -118,8 +118,8 @@ array_push( $arrProductos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
@@ -156,13 +156,11 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 /**********************************************************/
 //Variable con la ubicacion
 $z    = "WHERE bodegas_productos_listado.idBodega!=0";
+$z   .= " AND bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $join = "";
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z.=" AND bodegas_productos_listado.idSistema>=0";	
-}else{
-	$z.=" AND bodegas_productos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-	$z.=" AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z   .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 	$join = "INNER JOIN `usuarios_bodegas_productos` ON usuarios_bodegas_productos.idBodega = bodegas_productos_listado.idBodega";	
 }
 /**********************************************************/
@@ -228,7 +226,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Bodegas</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Bodegas</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -242,8 +240,8 @@ array_push( $arrTipo,$row );
 						<th>
 							<div class="pull-left">Bodega</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -257,7 +255,7 @@ array_push( $arrTipo,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&idBodega='.$tipo['idBodega']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&idBodega='.$tipo['idBodega']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

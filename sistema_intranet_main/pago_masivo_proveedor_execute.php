@@ -32,13 +32,13 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				bodegas_insumos_facturacion.idDocumentos,
 				proveedor_listado.Nombre AS ProveedorNombre,
 				core_documentos_mercantiles.Nombre AS Documento,
-				(SELECT SUM(MontoPagado) FROM `pagos_facturas_proveedores` WHERE idFacturacion= bodegas_insumos_facturacion.idFacturacion LIMIT 1) AS MontoPagado
+				(SELECT SUM(MontoPagado) FROM `pagos_facturas_proveedores` WHERE idFacturacion= bodegas_insumos_facturacion.idFacturacion AND idTipo=1 LIMIT 1) AS MontoPagado
 
 				FROM `bodegas_insumos_facturacion`
 				LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos  = bodegas_insumos_facturacion.idDocumentos
 				LEFT JOIN `proveedor_listado`            ON proveedor_listado.idProveedor             = bodegas_insumos_facturacion.idProveedor
 								
-				WHERE bodegas_insumos_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+				WHERE bodegas_insumos_facturacion.idFacturacion=".$_GET['idFacturacion'];
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -93,13 +93,13 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				bodegas_productos_facturacion.idDocumentos,
 				proveedor_listado.Nombre AS ProveedorNombre,
 				core_documentos_mercantiles.Nombre AS Documento,
-				(SELECT SUM(MontoPagado) FROM `pagos_facturas_proveedores` WHERE idFacturacion= bodegas_productos_facturacion.idFacturacion LIMIT 1) AS MontoPagado
+				(SELECT SUM(MontoPagado) FROM `pagos_facturas_proveedores` WHERE idFacturacion= bodegas_productos_facturacion.idFacturacion AND idTipo=2 LIMIT 1) AS MontoPagado
 								
 				FROM `bodegas_productos_facturacion`
 				LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos  = bodegas_productos_facturacion.idDocumentos
 				LEFT JOIN `proveedor_listado`            ON proveedor_listado.idProveedor             = bodegas_productos_facturacion.idProveedor
 								
-				WHERE bodegas_productos_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+				WHERE bodegas_productos_facturacion.idFacturacion=".$_GET['idFacturacion'];
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -153,13 +153,13 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				bodegas_arriendos_facturacion.idDocumentos,
 				proveedor_listado.Nombre AS ProveedorNombre,
 				core_documentos_mercantiles.Nombre AS Documento,
-				(SELECT SUM(MontoPagado) FROM `pagos_facturas_proveedores` WHERE idFacturacion= bodegas_arriendos_facturacion.idFacturacion LIMIT 1) AS MontoPagado
+				(SELECT SUM(MontoPagado) FROM `pagos_facturas_proveedores` WHERE idFacturacion= bodegas_arriendos_facturacion.idFacturacion AND idTipo=3 LIMIT 1) AS MontoPagado
 								
 				FROM `bodegas_arriendos_facturacion`
 				LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos  = bodegas_arriendos_facturacion.idDocumentos
 				LEFT JOIN `proveedor_listado`            ON proveedor_listado.idProveedor             = bodegas_arriendos_facturacion.idProveedor
 								
-				WHERE bodegas_arriendos_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+				WHERE bodegas_arriendos_facturacion.idFacturacion=".$_GET['idFacturacion'];
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -213,13 +213,13 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				bodegas_servicios_facturacion.idDocumentos,
 				proveedor_listado.Nombre AS ProveedorNombre,
 				core_documentos_mercantiles.Nombre AS Documento,
-				(SELECT SUM(MontoPagado) FROM `pagos_facturas_proveedores` WHERE idFacturacion= bodegas_servicios_facturacion.idFacturacion LIMIT 1) AS MontoPagado
+				(SELECT SUM(MontoPagado) FROM `pagos_facturas_proveedores` WHERE idFacturacion= bodegas_servicios_facturacion.idFacturacion AND idTipo=4 LIMIT 1) AS MontoPagado
 								
 				FROM `bodegas_servicios_facturacion`
 				LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos  = bodegas_servicios_facturacion.idDocumentos
 				LEFT JOIN `proveedor_listado`            ON proveedor_listado.idProveedor             = bodegas_servicios_facturacion.idProveedor
 								
-				WHERE bodegas_servicios_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+				WHERE bodegas_servicios_facturacion.idFacturacion=".$_GET['idFacturacion'];
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta

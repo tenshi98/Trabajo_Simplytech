@@ -67,7 +67,7 @@ if ( ! empty($_GET['edit']) ) {
 // tomo los datos del usuario
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat
 FROM `postulantes_listado`
-WHERE idPostulante = {$_GET['id']}";
+WHERE idPostulante = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -86,7 +86,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 // Se trae un listado con todas las observaciones el cliente
 $query = "SELECT AnoInicio,AnoTermino,idEstado,Nombre,CasaEstudios,Descripcion
 FROM `postulantes_listado_cursos`
-WHERE idEstudioPost = {$_GET['edit']}";
+WHERE idEstudioPost = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -107,7 +107,7 @@ $rowdatax = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Editar Curso</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -123,20 +123,20 @@ $rowdatax = mysqli_fetch_assoc ($resultado);
 				if(isset($Descripcion)) {      $x6  = $Descripcion;       }else{$x6  = $rowdatax['Descripcion'];}
 						
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_n_auto('AnoInicio','AnoInicio', $x1, 2, 1970, ano_actual());
-				$Form_Imputs->form_select_n_auto('AnoTermino','AnoTermino', $x2, 1, 1970, ano_actual());
-				$Form_Imputs->form_select('idEstado','idEstado', $x3, 2, 'idEstado', 'Nombre', 'core_estado_estudio', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nombres', 'Nombre', $x4, 2);
-				$Form_Imputs->form_input_text( 'Casa de Estudios', 'CasaEstudios', $x5, 2);
-				$Form_Imputs->form_textarea('Descripcion','Descripcion', $x6, 1, 160);						 
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_n_auto('AnoInicio','AnoInicio', $x1, 2, 1970, ano_actual());
+				$Form_Inputs->form_select_n_auto('AnoTermino','AnoTermino', $x2, 1, 1970, ano_actual());
+				$Form_Inputs->form_select('idEstado','idEstado', $x3, 2, 'idEstado', 'Nombre', 'core_estado_estudio', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x4, 2);
+				$Form_Inputs->form_input_text('Casa de Estudios', 'CasaEstudios', $x5, 2);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x6, 1, 160);						 
 				
-				$Form_Imputs->form_input_hidden('idEstudioPost', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('idEstudioPost', $_GET['edit'], 2);
 				?>
 				
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -145,11 +145,14 @@ $rowdatax = mysqli_fetch_assoc ($resultado);
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { ?>
+}elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Curso</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -165,20 +168,20 @@ $rowdatax = mysqli_fetch_assoc ($resultado);
 				if(isset($Descripcion)) {      $x6  = $Descripcion;       }else{$x6  = '';}
 						
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_n_auto('AnoInicio','AnoInicio', $x1, 2, 1970, ano_actual());
-				$Form_Imputs->form_select_n_auto('AnoTermino','AnoTermino', $x2, 1, 1970, ano_actual());
-				$Form_Imputs->form_select('idEstado','idEstado', $x3, 2, 'idEstado', 'Nombre', 'core_estado_estudio', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nombres', 'Nombre', $x4, 2);
-				$Form_Imputs->form_input_text( 'Casa de Estudios', 'CasaEstudios', $x4, 2);
-				$Form_Imputs->form_textarea('Descripcion','Descripcion', $x5, 1, 160);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_n_auto('AnoInicio','AnoInicio', $x1, 2, 1970, ano_actual());
+				$Form_Inputs->form_select_n_auto('AnoTermino','AnoTermino', $x2, 1, 1970, ano_actual());
+				$Form_Inputs->form_select('idEstado','idEstado', $x3, 2, 'idEstado', 'Nombre', 'core_estado_estudio', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x4, 2);
+				$Form_Inputs->form_input_text('Casa de Estudios', 'CasaEstudios', $x4, 2);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 1, 160);	
 		
-				$Form_Imputs->form_input_hidden('idPostulante', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idPostulante', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -192,7 +195,7 @@ $rowdatax = mysqli_fetch_assoc ($resultado);
 // tomo los datos del usuario
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat
 FROM `postulantes_listado`
-WHERE idPostulante = {$_GET['id']}";
+WHERE idPostulante = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -221,7 +224,7 @@ postulantes_listado_cursos.CasaEstudios
 FROM `postulantes_listado_cursos`
 LEFT JOIN `core_estado_estudio`         ON core_estado_estudio.idEstado             = postulantes_listado_cursos.idEstado
 
-WHERE idPostulante = {$_GET['id']}
+WHERE idPostulante = ".$_GET['id']."
 ORDER BY idEstudioPost ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -244,22 +247,7 @@ array_push( $arrEstudios,$row );
 
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Postulante</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Cursos</span>
-			</div>
-		</div>
-	</div>
-	
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Cursos');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Curso</a><?php }?>
 	</div>	
@@ -270,17 +258,17 @@ array_push( $arrEstudios,$row );
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'postulantes_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'postulantes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos</a></li>
-				<li class=""><a href="<?php echo 'postulantes_listado_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estudios</a></li>
+				<li class=""><a href="<?php echo 'postulantes_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'postulantes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'postulantes_listado_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-graduation-cap" aria-hidden="true"></i>  Estudios</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class="active"><a href="<?php echo 'postulantes_listado_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Cursos</a></li>
-						<li class=""><a href="<?php echo 'postulantes_listado_experiencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Experiencia</a></li>
-						<li class=""><a href="<?php echo 'postulantes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Curriculum</a></li>
-						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Otros</a></li>
+						<li class="active"><a href="<?php echo 'postulantes_listado_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-graduation-cap" aria-hidden="true"></i>  Cursos</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_experiencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-industry" aria-hidden="true"></i>  Experiencia</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i>  Curriculum</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i>  Otros</a></li>
 						
 					</ul>
                 </li>           
@@ -306,11 +294,11 @@ array_push( $arrEstudios,$row );
 						<td><?php echo $estudios['CasaEstudios']; ?></td>		
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$estudios['idEstudioPost']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$estudios['idEstudioPost']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.$estudios['idEstudioPost'];
+									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($estudios['idEstudioPost'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el Curso '.$estudios['CursoListado'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	
@@ -323,8 +311,8 @@ array_push( $arrEstudios,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

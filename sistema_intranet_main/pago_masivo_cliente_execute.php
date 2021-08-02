@@ -38,7 +38,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos  = bodegas_insumos_facturacion.idDocumentos
 				LEFT JOIN `clientes_listado`             ON clientes_listado.idCliente                = bodegas_insumos_facturacion.idCliente
 								
-				WHERE bodegas_insumos_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+				WHERE bodegas_insumos_facturacion.idFacturacion=".$_GET['idFacturacion'];
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -99,7 +99,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos  = bodegas_productos_facturacion.idDocumentos
 				LEFT JOIN `clientes_listado`             ON clientes_listado.idCliente                = bodegas_productos_facturacion.idCliente
 								
-				WHERE bodegas_productos_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+				WHERE bodegas_productos_facturacion.idFacturacion=".$_GET['idFacturacion'];
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -159,7 +159,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos  = bodegas_arriendos_facturacion.idDocumentos
 				LEFT JOIN `clientes_listado`             ON clientes_listado.idCliente                = bodegas_arriendos_facturacion.idCliente
 								
-				WHERE bodegas_arriendos_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+				WHERE bodegas_arriendos_facturacion.idFacturacion=".$_GET['idFacturacion'];
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -219,7 +219,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos  = bodegas_servicios_facturacion.idDocumentos
 				LEFT JOIN `clientes_listado`             ON clientes_listado.idCliente                = bodegas_servicios_facturacion.idCliente
 								
-				WHERE bodegas_servicios_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+				WHERE bodegas_servicios_facturacion.idFacturacion=".$_GET['idFacturacion'];
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta

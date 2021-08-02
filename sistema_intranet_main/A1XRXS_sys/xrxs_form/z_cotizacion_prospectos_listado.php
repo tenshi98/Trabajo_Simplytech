@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -48,11 +52,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idCotizacion':      if(empty($idCotizacion)){     $error['idCotizacion']    = 'error/No ha ingresado el id';}break;
 			case 'idSistema':         if(empty($idSistema)){        $error['idSistema']       = 'error/No ha seleccionado el sistema';}break;
 			case 'idUsuario':         if(empty($idUsuario)){        $error['idUsuario']       = 'error/No ha seleccionado el usuario';}break;
@@ -88,7 +92,14 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			
 		}
-	}	
+	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){      $error['Observacion']   = 'error/Edita Observacion, contiene palabras no permitidas'; }	
+		
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -141,36 +152,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['cotizacion_prospectos_basicos']['idSistema']       = $idSistema;
-				$_SESSION['cotizacion_prospectos_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['cotizacion_prospectos_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['cotizacion_prospectos_basicos']['idProspecto']     = $idProspecto;
-				$_SESSION['cotizacion_prospectos_basicos']['fecha_auto']      = $fecha_auto;
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['cotizacion_prospectos_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['cotizacion_prospectos_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['cotizacion_prospectos_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['cotizacion_prospectos_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']  = $Creacion_fecha; }else{$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['cotizacion_prospectos_basicos']['Observaciones']   = $Observaciones;  }else{$_SESSION['cotizacion_prospectos_basicos']['Observaciones']   = '';}
+				if(isset($idProspecto)&&$idProspecto!=''){        $_SESSION['cotizacion_prospectos_basicos']['idProspecto']     = $idProspecto;    }else{$_SESSION['cotizacion_prospectos_basicos']['idProspecto']     = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['cotizacion_prospectos_basicos']['fecha_auto']      = $fecha_auto;     }else{$_SESSION['cotizacion_prospectos_basicos']['fecha_auto']      = '';}
 				
 				//Se agrega el impuesto
 				$_SESSION['cotizacion_prospectos_impuestos'][1]['idImpuesto'] = 1;
 				
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `usuarios_listado`
-					WHERE idUsuario = ".$idUsuario;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUsuario = mysqli_fetch_assoc ($resultado);
+					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario ='.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_prospectos_basicos']['Usuario'] = $rowUsuario['Nombre'];
 				}else{
@@ -178,24 +172,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				/********************************************************************************/
 				if(isset($idProspecto) && $idProspecto != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `prospectos_listado`
-					WHERE idProspecto = ".$idProspecto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProspecto = mysqli_fetch_assoc ($resultado);
+					$rowProspecto = db_select_data (false, 'Nombre', 'prospectos_listado', '', 'idProspecto ='.$idProspecto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_prospectos_basicos']['Prospecto'] = $rowProspecto['Nombre'];
 				}else{
@@ -203,23 +180,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
+				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//se guarda dato
 				$_SESSION['cotizacion_prospectos_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
 				$_SESSION['cotizacion_prospectos_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
@@ -281,34 +243,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_ing_temporal']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['cotizacion_prospectos_basicos']['idSistema']       = $idSistema;
-				$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['cotizacion_prospectos_basicos']['idProspecto']     = $idProspecto;
-				$_SESSION['cotizacion_prospectos_basicos']['fecha_auto']      = $fecha_auto;
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['cotizacion_prospectos_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['cotizacion_prospectos_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['cotizacion_prospectos_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['cotizacion_prospectos_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']  = $Creacion_fecha; }else{$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['cotizacion_prospectos_basicos']['Observaciones']   = $Observaciones;  }else{$_SESSION['cotizacion_prospectos_basicos']['Observaciones']   = '';}
+				if(isset($idProspecto)&&$idProspecto!=''){        $_SESSION['cotizacion_prospectos_basicos']['idProspecto']     = $idProspecto;    }else{$_SESSION['cotizacion_prospectos_basicos']['idProspecto']     = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['cotizacion_prospectos_basicos']['fecha_auto']      = $fecha_auto;     }else{$_SESSION['cotizacion_prospectos_basicos']['fecha_auto']      = '';}
 				
 				//Se agrega el impuesto
 				$_SESSION['cotizacion_prospectos_impuestos'][1]['idImpuesto'] = 1;
 				
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `usuarios_listado`
-					WHERE idUsuario = ".$idUsuario;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUsuario = mysqli_fetch_assoc ($resultado);
+					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario ='.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_prospectos_basicos']['Usuario'] = $rowUsuario['Nombre'];
 				}else{
@@ -316,24 +263,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				/********************************************************************************/
 				if(isset($idProspecto) && $idProspecto != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `prospectos_listado`
-					WHERE idProspecto = ".$idProspecto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProspecto = mysqli_fetch_assoc ($resultado);
+					$rowProspecto = db_select_data (false, 'Nombre', 'prospectos_listado', '', 'idProspecto ='.$idProspecto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_prospectos_basicos']['Prospecto'] = $rowProspecto['Nombre'];
 				}else{
@@ -341,23 +271,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
+				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//se guarda dato
 				$_SESSION['cotizacion_prospectos_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
 				$_SESSION['cotizacion_prospectos_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
@@ -367,39 +282,6 @@ if( ! defined('XMBCXRXSKGC')) {
 				die;
 			}
 	
-		break;			
-/*******************************************************************************************************************/		
-		case 'add_obs_cotizacion':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['cotizacion_prospectos_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_cotizacion':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['cotizacion_prospectos_temporal'] = $_SESSION['cotizacion_prospectos_basicos']['Observaciones'];
-			$_SESSION['cotizacion_prospectos_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
 		break;		
 /*******************************************************************************************************************/		
 		case 'new_prod_cotizacion':
@@ -416,26 +298,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen los datos del producto
-				$query = "SELECT 
-				productos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto   = db_select_data (false, 'productos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'idProducto='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************************************/
 				$_SESSION['cotizacion_prospectos_productos'][$idProducto]['idProducto']  = $idProducto;
@@ -461,26 +324,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen los datos del producto
-				$query = "SELECT 
-				productos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto   = db_select_data (false, 'productos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'idProducto='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************************************/
 				//Borro el producto
@@ -527,26 +371,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen los datos del producto
-				$query = "SELECT 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto   = db_select_data (false, 'insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'idProducto='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************************************/
 				$_SESSION['cotizacion_prospectos_insumos'][$idProducto]['idProducto']  = $idProducto;
@@ -572,26 +397,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen los datos del producto
-				$query = "SELECT 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto   = db_select_data (false, 'insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'idProducto='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************************************/
 				//Borro el producto
@@ -638,42 +444,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen los datos del producto
-				$query = "SELECT Nombre
-				FROM `equipos_arriendo_listado` 
-				WHERE idEquipo=".$idEquipo;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
-				/***************************************/
-				// Se traen los datos del producto
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
+				$rowProducto   = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************************************/
 				$_SESSION['cotizacion_prospectos_arriendos'][$idEquipo]['idEquipo']      = $idEquipo;
@@ -701,42 +473,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				// Se traen los datos del producto
-				$query = "SELECT Nombre
-				FROM `equipos_arriendo_listado` 
-				WHERE idEquipo=".$idEquipo;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
-				/***************************************/
-				// Se traen los datos del producto
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
+				$rowProducto   = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************************************/
 				//Borro el producto
@@ -784,42 +522,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen los datos del producto
-				$query = "SELECT Nombre
-				FROM `servicios_listado` 
-				WHERE idServicio=".$idServicio;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
-				/***************************************/
-				// Se traen los datos del producto
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
+				$rowProducto   = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************************************/
 				$_SESSION['cotizacion_prospectos_servicios'][$idServicio]['idServicio']    = $idServicio;
@@ -846,42 +550,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen los datos del producto
-				$query = "SELECT Nombre
-				FROM `servicios_listado` 
-				WHERE idServicio=".$idServicio;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
-				/***************************************/
-				// Se traen los datos del producto
-				$query = "SELECT Nombre
-				FROM `core_tiempo_frecuencia` 
-				WHERE idFrecuencia=".$idFrecuencia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowFrecuencia = mysqli_fetch_assoc ($resultado);
+				$rowProducto   = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************************************/
 				//Borro el producto
@@ -936,7 +606,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -1074,11 +744,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['cotizacion_prospectos_basicos'])){
-				if(!isset($_SESSION['cotizacion_prospectos_basicos']['idSistema']) or $_SESSION['cotizacion_prospectos_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['cotizacion_prospectos_basicos']['idUsuario']) or $_SESSION['cotizacion_prospectos_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) or $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['cotizacion_prospectos_basicos']['Observaciones']) or $_SESSION['cotizacion_prospectos_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto']) or $_SESSION['cotizacion_prospectos_basicos']['idProspecto']=='' ){       $error['idProspecto']      = 'error/No ha seleccionado un proveedor';}
+				if(!isset($_SESSION['cotizacion_prospectos_basicos']['idSistema']) OR $_SESSION['cotizacion_prospectos_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['cotizacion_prospectos_basicos']['idUsuario']) OR $_SESSION['cotizacion_prospectos_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) OR $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cotizacion_prospectos_basicos']['Observaciones']) OR $_SESSION['cotizacion_prospectos_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto']) OR $_SESSION['cotizacion_prospectos_basicos']['idProspecto']=='' ){       $error['idProspecto']      = 'error/No ha seleccionado un proveedor';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la Cotizacion';
 			}
@@ -1166,7 +836,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `cotizacion_prospectos_listado` (idSistema,idUsuario, idProspecto, Creacion_fecha, Creacion_mes,
 				Creacion_ano, Observaciones, fecha_auto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, Impuesto_04, 
 				Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10 ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1210,7 +880,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `cotizacion_prospectos_listado_existencias_insumos` (idCotizacion, idSistema, idUsuario, idProspecto,Creacion_fecha,
 							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1253,7 +923,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `cotizacion_prospectos_listado_existencias_productos` (idCotizacion, idSistema, idUsuario, idProspecto,Creacion_fecha,
 							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1297,7 +967,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `cotizacion_prospectos_listado_existencias_arriendos` (idCotizacion, idSistema, idUsuario, idProspecto,Creacion_fecha,
 							Creacion_mes, Creacion_ano, idEquipo, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1341,7 +1011,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `cotizacion_prospectos_listado_existencias_servicios` (idCotizacion, idSistema, idUsuario, idProspecto,Creacion_fecha,
 							Creacion_mes, Creacion_ano, idServicio, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1381,7 +1051,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `cotizacion_prospectos_listado_archivos` (idCotizacion, idSistema, idUsuario, idProspecto,Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta

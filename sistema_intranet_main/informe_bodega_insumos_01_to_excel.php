@@ -31,9 +31,9 @@ insumos_listado.StockLimite,
 insumos_listado.ValorIngreso,
 insumos_listado.Nombre AS NombreProd,
 sistema_productos_uml.Nombre AS UnidadMedida,
-(SELECT SUM(Cantidad_ing) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega={$_GET['idBodega']}  LIMIT 1) AS stock_entrada,
-(SELECT SUM(Cantidad_eg) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega={$_GET['idBodega']} LIMIT 1) AS stock_salida,
-(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega={$_GET['idBodega']} LIMIT 1) AS NombreBodega
+(SELECT SUM(Cantidad_ing) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega=".$_GET['idBodega']."  LIMIT 1) AS stock_entrada,
+(SELECT SUM(Cantidad_eg) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega=".$_GET['idBodega']." LIMIT 1) AS stock_salida,
+(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega=".$_GET['idBodega']." LIMIT 1) AS NombreBodega
 
 FROM `insumos_listado`
 LEFT JOIN `sistema_productos_uml`                ON sistema_productos_uml.idUml                        = insumos_listado.idUml
@@ -48,15 +48,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProductos,$row );

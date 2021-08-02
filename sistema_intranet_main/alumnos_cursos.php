@@ -18,10 +18,11 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){   $location .= "&idCliente=".$_GET['idCliente'];   $search .= "&idCliente=".$_GET['idCliente'];}
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){         $location .= "&Nombre=".$_GET['Nombre'];         $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Semanas']) && $_GET['Semanas'] != ''){       $location .= "&Semanas=".$_GET['Semanas'];       $search .= "&Semanas=".$_GET['Semanas'];}
 if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''){     $location .= "&F_inicio=".$_GET['F_inicio'];     $search .= "&F_inicio=".$_GET['F_inicio'];}
 if(isset($_GET['F_termino']) && $_GET['F_termino'] != ''){   $location .= "&F_termino=".$_GET['F_termino'];   $search .= "&F_termino=".$_GET['F_termino'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){     $location .= "&idEstado=".$_GET['idEstado'];     $search .= "&idEstado=".$_GET['idEstado'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -48,14 +49,15 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Grupo Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Grupo Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Grupo borrado correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Asignatura Creada correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Asignatura Modificada correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Asignatura borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
-?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT  
 alumnos_cursos.Nombre AS CursoNombre,
@@ -63,14 +65,12 @@ alumnos_cursos.Semanas AS CursoSemanas,
 alumnos_cursos.F_inicio AS CursoF_inicio,
 alumnos_cursos.F_termino AS CursoF_termino,
 core_estados.Nombre AS CursoEstado,
-clientes_listado.Nombre AS CursoCliente,
 core_sistemas.Nombre AS CursoSistema
 
 FROM `alumnos_cursos`
 LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema      = alumnos_cursos.idSistema
-LEFT JOIN `clientes_listado`    ON clientes_listado.idCliente   = alumnos_cursos.idCliente
 LEFT JOIN `core_estados`        ON core_estados.idEstado        = alumnos_cursos.idEstado
-WHERE alumnos_cursos.idCurso = {$_GET['id']}";
+WHERE alumnos_cursos.idCurso = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -88,13 +88,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 //Listado con los elearning
 $arrElearnng = array();
-$query =
-"SELECT 
+$query = "SELECT 
 alumnos_elearning_listado.Nombre AS NombreElearning
 
 FROM `alumnos_cursos_elearning`
-LEFT JOIN `alumnos_elearning_listado`   ON alumnos_elearning_listado.idElearning     = alumnos_elearning_listado.idElearning
-WHERE alumnos_cursos_elearning.idCurso = {$_GET['id']}
+LEFT JOIN `alumnos_elearning_listado`   ON alumnos_elearning_listado.idElearning     = alumnos_cursos_elearning.idElearning
+WHERE alumnos_cursos_elearning.idCurso = ".$_GET['id']."
 ORDER BY alumnos_elearning_listado.Nombre ASC  ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -117,7 +116,7 @@ array_push( $arrElearnng,$row );
 $arrArchivos = array();
 $query = "SELECT idDocumentacion, File, Semana
 FROM `alumnos_cursos_documentacion`
-WHERE idCurso = {$_GET['id']}";
+WHERE idCurso = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -136,21 +135,7 @@ array_push( $arrArchivos,$row );
 }
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Grupo</span>
-				<span class="info-box-number"><?php echo $rowdata['CursoNombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['CursoNombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -158,13 +143,13 @@ array_push( $arrArchivos,$row );
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'alumnos_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'alumnos_cursos_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'alumnos_cursos_elearning.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Elearning Asignados</a></li>
+				<li class="active"><a href="<?php echo 'alumnos_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'alumnos_cursos_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'alumnos_cursos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'alumnos_cursos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
+						<li class=""><a href="<?php echo 'alumnos_cursos_elearning.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Elearning Asignados</a></li>
 						<li class=""><a href="<?php echo 'alumnos_cursos_documentacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Documentos Relacionados</a></li>
 					</ul>
                 </li>           
@@ -175,21 +160,20 @@ array_push( $arrArchivos,$row );
 				<div class="wmd-panel">
 					
 					<div class="col-sm-4">
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/training.jpg">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/training.jpg">
 					</div>
 					<div class="col-sm-8">
 						<h2 class="text-primary">Datos Basicos</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['CursoNombre']; ?><br/>
-							<strong>Semanas : </strong><?php echo $rowdata['CursoSemanas'].' semanas de duracion'; ?><br/>
+							<?php /*<strong>Semanas : </strong><?php echo $rowdata['CursoSemanas'].' semanas de duracion'; ?><br/>
 							<strong>Fecha de Inicio : </strong><?php echo Fecha_completa($rowdata['CursoF_inicio']); ?><br/>
-							<strong>Fecha de Termino : </strong><?php echo Fecha_completa($rowdata['CursoF_termino']); ?><br/>
-							<strong>Cliente : </strong><?php echo $rowdata['CursoCliente']; ?><br/>
+							<strong>Fecha de Termino : </strong><?php echo Fecha_completa($rowdata['CursoF_termino']); ?><br/>*/ ?>
 							<strong>Sistema Relacionado : </strong><?php echo $rowdata['CursoSistema']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['CursoEstado']; ?>
 						</p>
 						
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Elearnings  Asignados</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Elearnings  Relacionados</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
 								<?php foreach ($arrElearnng as $permiso) {?>
@@ -204,11 +188,11 @@ array_push( $arrArchivos,$row );
 							<tbody>
 								<?php foreach ($arrArchivos as $ciudad) { ?>
 									<tr class="odd">
-										<td><?php echo $ciudad['Semana']; ?></td>
+										<?php /*<td><?php echo 'Semana '.$ciudad['Semana']; ?></td>*/ ?>
 										<td><?php echo $ciudad['File']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 70px;" >
-												<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$ciudad['File']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+												<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($ciudad['File'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 											</div>
 										</td>
 									</tr>
@@ -228,47 +212,48 @@ array_push( $arrArchivos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
-			<h5>Crear Grupo</h5>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Asignatura</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {   $x1  = $idCliente;   }else{$x1  = '';}
 				if(isset($Nombre)) {      $x2  = $Nombre;      }else{$x2  = '';}
-				if(isset($Semanas)) {     $x3  = $Semanas;     }else{$x3  = '';}
+				/*if(isset($Semanas)) {     $x3  = $Semanas;     }else{$x3  = '';}
 				if(isset($F_inicio)) {    $x4  = $F_inicio;    }else{$x4  = '';}
-				if(isset($F_termino)) {   $x5  = $F_termino;   }else{$x5  = '';}
+				if(isset($F_termino)) {   $x5  = $F_termino;   }else{$x5  = '';}*/
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x2, 2);
-				$Form_Imputs->form_select_n_auto('Semanas de Duracion','Semanas', $x3, 2, 1, 50);
-				$Form_Imputs->form_date('F. Inicio','F_inicio', $x4, 1);
-				$Form_Imputs->form_date('F. Termino','F_termino', $x5, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
+				/*$Form_Inputs->form_select_n_auto('Semanas de Duracion','Semanas', $x3, 2, 1, 50);
+				$Form_Inputs->form_date('F. Inicio','F_inicio', $x4, 1);
+				$Form_Inputs->form_date('F. Termino','F_termino', $x5, 1);*/
 					
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -302,29 +287,30 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
 		case 'nombre_asc':    $order_by = 'ORDER BY alumnos_cursos.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
 		case 'nombre_desc':   $order_by = 'ORDER BY alumnos_cursos.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'cliente_asc':   $order_by = 'ORDER BY clientes_listado.Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente'; break;
-		case 'cliente_desc':  $order_by = 'ORDER BY clientes_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
 		case 'semana_asc':    $order_by = 'ORDER BY alumnos_cursos.Semanas ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Semanas Ascendente'; break;
 		case 'semana_desc':   $order_by = 'ORDER BY alumnos_cursos.Semanas DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Semanas Descendente';break;
 		case 'fini_asc':      $order_by = 'ORDER BY alumnos_cursos.F_inicio ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Inicio Ascendente'; break;
 		case 'fini_desc':     $order_by = 'ORDER BY alumnos_cursos.F_inicio DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Inicio Descendente';break;
 		case 'fter_asc':      $order_by = 'ORDER BY alumnos_cursos.F_termino ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Termino Ascendente'; break;
-		case 'fter_desc':     $order_by = 'ORDER BY alumnos_cursos.F_termino DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Termino Descendente';break;
+		case 'fter_desc':     $order_by = 'ORDER BY alumnos_cursos.F_termino DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Termino Descendente';break;
+		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 
-		default: $order_by = 'ORDER BY clientes_listado.Nombre ASC, alumnos_cursos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'ORDER BY alumnos_cursos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY clientes_listado.Nombre ASC, alumnos_cursos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'ORDER BY alumnos_cursos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE alumnos_cursos.idCurso!=0";
+$z = "WHERE alumnos_cursos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){  $z .= " AND alumnos_cursos.idCliente=".$_GET['idCliente']."";}
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $z .= " AND alumnos_cursos.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Semanas']) && $_GET['Semanas'] != ''){      $z .= " AND alumnos_cursos.Semanas='".$_GET['Semanas']."'";}
 if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''){    $z .= " AND alumnos_cursos.F_inicio='".$_GET['F_inicio']."'";}
 if(isset($_GET['F_termino']) && $_GET['F_termino'] != ''){  $z .= " AND alumnos_cursos.F_termino='".$_GET['F_termino']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $z .= " AND alumnos_cursos.idEstado='".$_GET['idEstado']."'";}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $query = "SELECT idCurso FROM `alumnos_cursos` ".$z;
@@ -347,14 +333,17 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los usuarios
 $arrCiudad = array();
 $query = "SELECT 
-alumnos_cursos.idCurso,
-alumnos_cursos.Nombre,
-alumnos_cursos.Semanas,
-alumnos_cursos.F_inicio,
+alumnos_cursos.idCurso, 
+alumnos_cursos.Nombre, 
+alumnos_cursos.Semanas, 
+alumnos_cursos.F_inicio, 
 alumnos_cursos.F_termino,
-clientes_listado.Nombre AS Cliente
+alumnos_cursos.idEstado,
+core_estados.Nombre AS Estado,
+core_sistemas.Nombre AS sistema
 FROM `alumnos_cursos`
-LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = alumnos_cursos.idCliente
+LEFT JOIN `core_estados`    ON core_estados.idEstado    = alumnos_cursos.idEstado
+LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema  = alumnos_cursos.idSistema
 ".$z."
 ".$order_by."
 LIMIT $comienzo, $cant_reg ";
@@ -378,14 +367,14 @@ array_push( $arrCiudad,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>		
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Grupo</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Asignatura</a><?php } ?>
 
 </div>
 <div class="clearfix"></div> 
@@ -395,19 +384,21 @@ array_push( $arrCiudad,$row );
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {   $x1  = $idCliente;  }else{$x1  = '';}
-				if(isset($Nombre)) {      $x2  = $Nombre;     }else{$x2  = '';}
+				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = '';}
+				/*if(isset($Semanas)) {     $x2  = $Semanas;    }else{$x2  = '';}
 				if(isset($F_inicio)) {    $x3  = $F_inicio;   }else{$x3  = '';}
-				if(isset($F_termino)) {   $x4  = $F_termino;  }else{$x4  = '';}
+				if(isset($F_termino)) {   $x4  = $F_termino;  }else{$x4  = '';}*/
+				if(isset($idEstado)) {    $x5  = $idEstado;   }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Cliente','idCliente', $x1, 1, 'idCliente', 'Nombre', 'clientes_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x2, 1);
-				$Form_Imputs->form_date('F. Inicio','F_inicio', $x3, 1);
-				$Form_Imputs->form_date('F. Termino','F_termino', $x4, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
+				/*$Form_Inputs->form_select_n_auto('Semanas de Duracion','Semanas', $x2, 1, 1, 56);
+				$Form_Inputs->form_date('F. Inicio','F_inicio', $x3, 1);
+				$Form_Inputs->form_date('F. Termino','F_termino', $x4, 1);*/
+				$Form_Inputs->form_select('Estado','idEstado', $x5, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -426,7 +417,7 @@ array_push( $arrCiudad,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Grupos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Asignaturas</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -438,59 +429,62 @@ array_push( $arrCiudad,$row );
 				<thead>
 					<tr role="row">
 						<th>
-							<div class="pull-left">Cliente</div>
+							<div class="pull-left">Nombre Asignatura</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=cliente_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=cliente_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
-						<th>
-							<div class="pull-left">Nombre Grupo</div>
-							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
-							</div>
-						</th>
+						<?php /*
 						<th>
 							<div class="pull-left">Semanas de Duracion</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=semana_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=semana_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=semana_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=semana_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fecha Inicio</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fini_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fini_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fini_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fini_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fecha Termino</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fter_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fter_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fter_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fter_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>*/?>
+						<th>
+							<div class="pull-left">Estado</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>				  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrCiudad as $ciudad) { ?>
 					<tr class="odd">
-						<td><?php echo $ciudad['Cliente']; ?></td>
 						<td><?php echo $ciudad['Nombre']; ?></td>
-						<td><?php echo $ciudad['Semanas']; ?></td>
+						<?php /*<td><?php echo $ciudad['Semanas']; ?></td>
 						<td><?php echo fecha_estandar($ciudad['F_inicio']); ?></td>
-						<td><?php echo fecha_estandar($ciudad['F_termino']); ?></td>
+						<td><?php echo fecha_estandar($ciudad['F_termino']); ?></td>*/ ?>
+						<td><label class="label <?php if(isset($ciudad['idEstado'])&&$ciudad['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $ciudad['Estado']; ?></label></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $ciudad['sistema']; ?></td><?php } ?>			
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_curso.php?view='.$ciudad['idCurso']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$ciudad['idCurso']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_alumno_curso.php?view='.simpleEncode($ciudad['idCurso'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$ciudad['idCurso']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$ciudad['idCurso'];
-									$dialogo   = '¿Realmente deseas eliminar el grupo '.$ciudad['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									$ubicacion = $location.'&del='.simpleEncode($ciudad['idCurso'], fecha_actual());
+									$dialogo   = '¿Realmente deseas eliminar la Asignatura '.$ciudad['Nombre'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

@@ -47,7 +47,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // tomo los datos del usuario
 $query = "SELECT idRuta, idSistema, idTipo, Fecha, idDia, HoraInicio, HoraTermino, Nombre
 FROM `vehiculos_ruta_alternativa`
-WHERE idRutaAlt = {$_GET['id']}";
+WHERE idRutaAlt = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -63,37 +63,21 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema>=0";	
-}else{
-	$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-} ?>
+//sistema
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+ ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-truck" aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Ruta Alternativa</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos Basicos</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
+<div class="clearfix"></div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class="active"><a href="<?php echo 'vehiculos_ruta_alternativa_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class="active"><a href="<?php echo 'vehiculos_ruta_alternativa_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
 			</ul>	
@@ -113,20 +97,20 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					if(isset($Nombre)) {          $x7  = $Nombre;           }else{$x7  = $rowdata["Nombre"];}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					echo '<h3>Datos Basicos</h3>';
-					$Form_Imputs->form_select('Ruta','idRuta', $x1, 2, 'idRuta', 'Nombre', 'vehiculos_rutas', $z, '', $dbConn);
-					$Form_Imputs->form_select('Tipo de Ruta','idTipo', $x2, 2, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
-					$Form_Imputs->form_date('Fecha','Fecha', $x3, 1);
-					$Form_Imputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
-					$Form_Imputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
-					$Form_Imputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
-					$Form_Imputs->form_input_text( 'Nombre de la Ruta', 'Nombre', $x7, 2);
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_tittle(3, 'Datos Basicos');
+					$Form_Inputs->form_select('Ruta','idRuta', $x1, 2, 'idRuta', 'Nombre', 'vehiculos_rutas', $z, '', $dbConn);
+					$Form_Inputs->form_select('Tipo de Ruta','idTipo', $x2, 2, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
+					$Form_Inputs->form_date('Fecha','Fecha', $x3, 1);
+					$Form_Inputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
+					$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
+					$Form_Inputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
+					$Form_Inputs->form_input_text('Nombre de la Ruta', 'Nombre', $x7, 2);
 					
 					
-					$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-					$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-					$Form_Imputs->form_input_hidden('idRutaAlt', $_GET['id'], 2);
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idRutaAlt', $_GET['id'], 2);
 					?>
 				
 					<script>
@@ -177,8 +161,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

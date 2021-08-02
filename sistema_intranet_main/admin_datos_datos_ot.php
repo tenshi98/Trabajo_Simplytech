@@ -42,7 +42,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre, OT_idBodegaProd,OT_idBodegaIns
 FROM `core_sistemas`
-WHERE idSistema = {$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -160,21 +160,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 }
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Sistema</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Bodegas asignadas a las OT</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Bodegas asignadas a las OT');?>
 </div>
 <div class="clearfix"></div>
 
@@ -182,36 +168,37 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'admin_datos.php';?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'admin_datos_datos.php';?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'admin_datos_datos_contacto.php';?>" >Datos Contacto</a></li>
+				<li class=""><a href="<?php echo 'admin_datos.php';?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'admin_datos_datos.php';?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'admin_datos_datos_contacto.php';?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'admin_datos_datos_contrato.php';?>" >Datos Contrato</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_configuracion.php';?>" >Configuracion</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_temas.php';?>" >Temas</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_facturacion.php';?>" >Datos Facturacion</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_contrato.php';?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_configuracion.php';?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_temas.php';?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_facturacion.php';?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
 						<?php if(isset($Count_OT)&&$Count_OT!=0){?>
-							<li class="active"><a href="<?php echo 'admin_datos_datos_ot.php';?>" >OT</a></li>
+							<li class="active"><a href="<?php echo 'admin_datos_datos_ot.php';?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'admin_datos_datos_imagen.php';?>" >Logo</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_imagen.php';?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
 						<?php if(isset($Count_OC)&&$Count_OC!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_oc.php';?>" >Aprobador OC</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_oc.php';?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<?php } ?>
 						<?php if(isset($Count_productos)&&$Count_productos!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_productos.php';?>" >Productos Usados</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_productos.php';?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_insumos)&&$Count_insumos!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_insumos.php';?>" >Insumos Usados</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_insumos.php';?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_especies.php';?>" >Especies</a></li>
-							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_nombres.php';?>" >Variedades</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_especies.php';?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_nombres.php';?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_cross.php';?>" >Aprobador Cross Shipping</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_cross.php';?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
 						<?php } ?>
+						<li class=""><a href="<?php echo 'admin_datos_datos_social.php'; ?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 					</ul>
                 </li>           
 			</ul>	
@@ -226,12 +213,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					if(isset($OT_idBodegaIns)) {   $x2  = $OT_idBodegaIns;    }else{$x2  = $rowdata['OT_idBodegaIns'];}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_select('Bodega de Productos','OT_idBodegaProd', $x1, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Bodega de Insumos','OT_idBodegaIns', $x2, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 0, '', $dbConn);	
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_select('Bodega de Productos','OT_idBodegaProd', $x1, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Bodega de Insumos','OT_idBodegaIns', $x2, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 0, '', $dbConn);	
 					
-					$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-					$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					?>
 
 

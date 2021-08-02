@@ -95,7 +95,7 @@ if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
 	$query = "SELECT
 	clientes_listado.Nombre AS Cliente
 	FROM `clientes_listado`
-	WHERE clientes_listado.idCliente='{$_GET['idCliente']}'
+	WHERE clientes_listado.idCliente='".$_GET['idCliente']."'
 	";
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
@@ -201,7 +201,7 @@ if(isset($_SESSION['pago_clientes_servicio'])){
 	}				
 }
 
-$Form_Imputs = new Inputs();							
+$Form_Inputs = new Inputs();							
 ?>
 
 <?php if(isset($row_data['Cliente'])&&$row_data['Cliente']!=''){ ?>
@@ -222,11 +222,11 @@ $Form_Imputs = new Inputs();
 		<div class="col-lg-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 					<h5>Facturaciones Pendientes de Pago</h5>
 					<div class="toolbar">
 						<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes!=0){ ?>
-							<a onclick="addpagoTodos()" class="btn btn-xs btn-primary">Asignar Todos</a>
+							<a onclick="addpagoTodos()" class="btn btn-xs btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Asignar Todos</a>
 						<?php } ?>
 					</div>
 				</header>
@@ -267,11 +267,11 @@ $Form_Imputs = new Inputs();
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_insumo_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
-												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>	
 										</div>
 									</td>
@@ -296,9 +296,9 @@ $Form_Imputs = new Inputs();
 										</td>
 										<td align="right">
 											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
-												<a onclick="delDoc(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+												<a onclick="delDoc(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>	
-												<a onclick="addDoc(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+												<a onclick="addDoc(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</td>
 									<?php }else{ ?>
@@ -315,7 +315,7 @@ $Form_Imputs = new Inputs();
 												$TotalGeneral = $TotalGeneral + $tipo['ValorPagado'];
 												$Registro_ok++;
 											}else{
-												$Form_Imputs->input_values_val('text','Total a Pagar','ingpago_1_'.$tipo['idFacturacion'],2,'','',$total);
+												$Form_Inputs->input_values_val('text','Total a Pagar','ingpago_1_'.$tipo['idFacturacion'],2,'','',$total);
 											}
 											?>
 										</td>
@@ -323,9 +323,9 @@ $Form_Imputs = new Inputs();
 										<td align="right">
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
 												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
-													<a onclick="delpago(1, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+													<a onclick="delpago(1, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php }else{ ?>	
-													<a onclick="addpago(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+													<a onclick="addpago(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											<?php } ?>
 										</td>
@@ -345,11 +345,11 @@ $Form_Imputs = new Inputs();
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_productos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_producto_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
-												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>	
 										</div>
 									</td>
@@ -374,9 +374,9 @@ $Form_Imputs = new Inputs();
 										</td>
 										<td align="right">
 											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
-												<a onclick="delDoc(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+												<a onclick="delDoc(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>	
-												<a onclick="addDoc(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+												<a onclick="addDoc(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</td>
 									<?php }else{ ?>
@@ -393,7 +393,7 @@ $Form_Imputs = new Inputs();
 												$TotalGeneral = $TotalGeneral + $tipo['ValorPagado'];
 												$Registro_ok++;
 											}else{
-												$Form_Imputs->input_values_val('text','Total a Pagar','ingpago_2_'.$tipo['idFacturacion'],2,'','',$total);
+												$Form_Inputs->input_values_val('text','Total a Pagar','ingpago_2_'.$tipo['idFacturacion'],2,'','',$total);
 											}
 											?>
 										</td>
@@ -401,9 +401,9 @@ $Form_Imputs = new Inputs();
 										<td align="right">
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
 												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
-													<a onclick="delpago(2, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+													<a onclick="delpago(2, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php }else{ ?>	
-													<a onclick="addpago(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+													<a onclick="addpago(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											<?php } ?>
 										</td>
@@ -423,11 +423,11 @@ $Form_Imputs = new Inputs();
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_arriendo_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
-												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>	
 										</div>
 									</td>
@@ -452,9 +452,9 @@ $Form_Imputs = new Inputs();
 										</td>
 										<td align="right">
 											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
-												<a onclick="delDoc(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+												<a onclick="delDoc(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>	
-												<a onclick="addDoc(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+												<a onclick="addDoc(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</td>
 									<?php }else{ ?>
@@ -471,7 +471,7 @@ $Form_Imputs = new Inputs();
 												$TotalGeneral = $TotalGeneral + $tipo['ValorPagado'];
 												$Registro_ok++;
 											}else{
-												$Form_Imputs->input_values_val('text','Total a Pagar','ingpago_3_'.$tipo['idFacturacion'],2,'','',$total);
+												$Form_Inputs->input_values_val('text','Total a Pagar','ingpago_3_'.$tipo['idFacturacion'],2,'','',$total);
 											}
 											?>
 										</td>
@@ -479,9 +479,9 @@ $Form_Imputs = new Inputs();
 										<td align="right">
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
 												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
-													<a onclick="delpago(3, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+													<a onclick="delpago(3, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php }else{ ?>	
-													<a onclick="addpago(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+													<a onclick="addpago(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											<?php } ?>
 										</td>
@@ -501,11 +501,11 @@ $Form_Imputs = new Inputs();
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_servicios.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_servicio_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
-												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>	
 										</div>
 									</td>
@@ -530,9 +530,9 @@ $Form_Imputs = new Inputs();
 										</td>
 										<td align="right">
 											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
-												<a onclick="delDoc(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+												<a onclick="delDoc(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>	
-												<a onclick="addDoc(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+												<a onclick="addDoc(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</td>
 									<?php }else{ ?>
@@ -549,7 +549,7 @@ $Form_Imputs = new Inputs();
 												$TotalGeneral = $TotalGeneral + $tipo['ValorPagado'];
 												$Registro_ok++;
 											}else{
-												$Form_Imputs->input_values_val('text','Total a Pagar','ingpago_4_'.$tipo['idFacturacion'],2,'','',$total);
+												$Form_Inputs->input_values_val('text','Total a Pagar','ingpago_4_'.$tipo['idFacturacion'],2,'','',$total);
 											}
 											?>
 										</td>
@@ -557,9 +557,9 @@ $Form_Imputs = new Inputs();
 										<td align="right">
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
 												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
-													<a onclick="delpago(4, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+													<a onclick="delpago(4, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php }else{ ?>	
-													<a onclick="addpago(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+													<a onclick="addpago(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											<?php } ?>
 										</td>
@@ -762,7 +762,7 @@ $Form_Imputs = new Inputs();
 	<div class="col-md-7">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-edit"></i></div>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Anulacion Documento</h5>
 			</header>
 			<div id="div-1" class="body">
@@ -773,10 +773,10 @@ $Form_Imputs = new Inputs();
 					if(isset($F_Pago)) {     $x3  = $F_Pago;   }else{$x3  = '';}
 				
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_date('Fecha de Pago','F_Pago', $x3, 2);
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_date('Fecha de Pago','F_Pago', $x3, 2);
 
-					$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 						
 					?>
 						
@@ -794,7 +794,7 @@ $Form_Imputs = new Inputs();
 
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-edit"></i></div>
+					<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 					<h5>Ingresar Pago Facturas</h5>
 				</header>
 				<div id="div-1" class="body">
@@ -807,10 +807,10 @@ $Form_Imputs = new Inputs();
 						if(isset($F_Pago)) {            $x3  = $F_Pago;             }else{$x3  = '';}
 				
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_select('Forma de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-						$Form_Imputs->form_input_number('Numero de Documento', 'N_DocPago', $x2, 1);
-						$Form_Imputs->form_date('F Vencimiento','F_Pago', $x3, 2);
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
+						$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);
+						$Form_Inputs->form_date('F Vencimiento','F_Pago', $x3, 2);
 
 						echo '<div class="form-group" id="div_">
 							<label class="control-label col-sm-4" id="label_">Valor a Pagar</label>
@@ -821,7 +821,7 @@ $Form_Imputs = new Inputs();
 						
 						
 						
-						$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+						$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 						
 						?>
 						
@@ -881,7 +881,7 @@ $Form_Imputs = new Inputs();
 		<div class="col-md-7">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-edit"></i></div>
+					<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 					<h5>Ingresar Pago Facturas</h5>
 				</header>
 				<div id="div-1" class="body">
@@ -892,10 +892,10 @@ $Form_Imputs = new Inputs();
 						if(isset($F_Pago)) {     $x3  = $F_Pago;   }else{$x3  = '';}
 					
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_date('Fecha de Pago','F_Pago', $x3, 2);
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_date('Fecha de Pago','F_Pago', $x3, 2);
 
-						$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+						$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 							
 						?>
 							
@@ -913,7 +913,7 @@ $Form_Imputs = new Inputs();
 	</div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar</a>
 <div class="clearfix"></div>
 </div>
@@ -947,10 +947,10 @@ unset($_SESSION['pago_clientes_arriendo']);
 unset($_SESSION['pago_clientes_servicio']);
 /*************************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$z1=" AND bodegas_insumos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z2=" AND bodegas_productos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z3=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-$z4=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";			
+$z1=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z3=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z4=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];			
 
 /**********************************************************************************************/
 //datos de la obra
@@ -1274,9 +1274,9 @@ array_push( $arrTipo4,$row );
 <?php } ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 	<a style="display: none;" id="acep_1" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
-	<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+	<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 	<div class="clearfix"></div>
 </div>
 
@@ -1284,7 +1284,7 @@ array_push( $arrTipo4,$row );
 <div class="col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Facturaciones Pendientes de Pago</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Facturaciones Pendientes de Pago</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -1337,7 +1337,7 @@ array_push( $arrTipo4,$row );
 									<?php } ?>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>
@@ -1375,7 +1375,7 @@ array_push( $arrTipo4,$row );
 									<?php } ?>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_productos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>
@@ -1413,7 +1413,7 @@ array_push( $arrTipo4,$row );
 									<?php } ?>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>
@@ -1451,7 +1451,7 @@ array_push( $arrTipo4,$row );
 									<?php } ?>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_servicios.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>
@@ -1547,12 +1547,12 @@ array_push( $arrTipo4,$row );
 			if (document.querySelector('#checkbox_1_<?php echo $tipo['idFacturacion']; ?>').checked) {
 				
 				<?php if(isset($tipo['idDocumentos'])&&$tipo['idDocumentos']==3){ ?>
-					NCCancelado = NCCancelado + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
-					Totalgen = Totalgen - <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					NCCancelado  = NCCancelado + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					Totalgen     = Totalgen - <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
 				<?php }else{ ?>
-					Total = Total + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
-					MontoCancelado = MontoCancelado + <?php echo Cantidades_decimales_justos($tipo['MontoPagado']); ?>;
-					Totalgen = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
+					Total           = Total + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					MontoCancelado  = MontoCancelado + <?php echo Cantidades_decimales_justos($tipo['MontoPagado']); ?>;
+					Totalgen        = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
 				<?php } ?>
 				
 			}
@@ -1563,12 +1563,12 @@ array_push( $arrTipo4,$row );
 			if (document.querySelector('#checkbox_2_<?php echo $tipo['idFacturacion']; ?>').checked) {
 				
 				<?php if(isset($tipo['idDocumentos'])&&$tipo['idDocumentos']==3){ ?>
-					NCCancelado = NCCancelado + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
-					Totalgen = Totalgen - <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					NCCancelado  = NCCancelado + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					Totalgen     = Totalgen - <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
 				<?php }else{ ?>
-					Total = Total + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
-					MontoCancelado = MontoCancelado + <?php echo Cantidades_decimales_justos($tipo['MontoPagado']); ?>;
-					Totalgen = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
+					Total           = Total + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					MontoCancelado  = MontoCancelado + <?php echo Cantidades_decimales_justos($tipo['MontoPagado']); ?>;
+					Totalgen        = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
 				<?php } ?>
 				
 			}
@@ -1579,12 +1579,12 @@ array_push( $arrTipo4,$row );
 			if (document.querySelector('#checkbox_3_<?php echo $tipo['idFacturacion']; ?>').checked) {
 				
 				<?php if(isset($tipo['idDocumentos'])&&$tipo['idDocumentos']==3){ ?>
-					NCCancelado = NCCancelado + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
-					Totalgen = Totalgen - <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					NCCancelado  = NCCancelado + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					Totalgen     = Totalgen - <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
 				<?php }else{ ?>
-					Total = Total + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
-					MontoCancelado = MontoCancelado + <?php echo Cantidades_decimales_justos($tipo['MontoPagado']); ?>;
-					Totalgen = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
+					Total           = Total + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					MontoCancelado  = MontoCancelado + <?php echo Cantidades_decimales_justos($tipo['MontoPagado']); ?>;
+					Totalgen        = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
 				<?php } ?>
 				
 			}
@@ -1595,12 +1595,12 @@ array_push( $arrTipo4,$row );
 			if (document.querySelector('#checkbox_4_<?php echo $tipo['idFacturacion']; ?>').checked) {
 				
 				<?php if(isset($tipo['idDocumentos'])&&$tipo['idDocumentos']==3){ ?>
-					NCCancelado = NCCancelado + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
-					Totalgen = Totalgen - <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					NCCancelado  = NCCancelado + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					Totalgen     = Totalgen - <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
 				<?php }else{ ?>
-					Total = Total + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
-					MontoCancelado = MontoCancelado + <?php echo Cantidades_decimales_justos($tipo['MontoPagado']); ?>;
-					Totalgen = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
+					Total           = Total + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
+					MontoCancelado  = MontoCancelado + <?php echo Cantidades_decimales_justos($tipo['MontoPagado']); ?>;
+					Totalgen        = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
 				<?php } ?>
 				
 			}
@@ -1632,21 +1632,21 @@ array_push( $arrTipo4,$row );
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 <a style="display: none;" id="acep_2" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
-<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando 
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";		
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1659,10 +1659,10 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";
 				if(isset($N_Doc)) {         $x3  = $N_Doc;        }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Rut,Nombre', 'clientes_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select('Tipo Documento','idDocumentos', $x2, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos!=1 AND idDocumentos!=3 AND idDocumentos!=4', '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x3, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Rut,Nombre', 'clientes_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select('Documento de Pago','idDocumentos', $x2, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos!=1 AND idDocumentos!=3 AND idDocumentos!=4', '', $dbConn);
+				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_Doc', $x3, 1);
 					
 				?> 
 

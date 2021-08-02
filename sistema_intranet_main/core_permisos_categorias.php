@@ -50,13 +50,13 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Categoria Creada co
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Categoria Modificada correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Categoria borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 // Se traen todos los datos de mi usuario
-$query = "SELECT Nombre, idFont
+$query = "SELECT Nombre, idFont, IconColor
 FROM `core_permisos_categorias`
-WHERE id_pmcat = {$_GET['id']}";
+WHERE id_pmcat = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -80,7 +80,7 @@ select {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de Categoria</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -90,18 +90,20 @@ select {
 				//Se verifican si existen los datos
 				if(isset($Nombre)) {              $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
 				if(isset($idFont)) {              $x2  = $idFont;             }else{$x2  = $rowdata['idFont'];}
-			
-				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_select_filter('Icono de la Categoria','idFont', $x2, 2, 'idFont', 'Nombre', 'core_font_awesome', 0, '', $dbConn);
+				if(isset($IconColor)) {           $x3  = $IconColor;          }else{$x3  = $rowdata['IconColor'];}
 				
-				$Form_Imputs->form_input_hidden('id_pmcat', $_GET['id'], 2);
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_select_filter('Icono de la Categoria','idFont', $x2, 2, 'idFont', 'Nombre', 'core_font_awesome', 0, '', $dbConn);
+				$Form_Inputs->form_input_color( 'Color Icono', 'IconColor', $x3, 1);
+				
+				$Form_Inputs->form_input_hidden('id_pmcat', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -124,7 +126,7 @@ select {
  <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Categoria</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -134,16 +136,18 @@ select {
 				//Se verifican si existen los datos
 				if(isset($Nombre)) {              $x1  = $Nombre;             }else{$x1  = '';}
 				if(isset($idFont)) {              $x2  = $idFont;             }else{$x2  = '';}
-			
+				if(isset($IconColor)) {           $x3  = $IconColor;          }else{$x3  = '';}
+				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_select_filter('Icono de la Categoria','idFont', $x2, 2, 'idFont', 'Nombre', 'core_font_awesome', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_select_filter('Icono de la Categoria','idFont', $x2, 2, 'idFont', 'Nombre', 'core_font_awesome', 0, '', $dbConn);
+				$Form_Inputs->form_input_color('Color Icono', 'IconColor', $x3, 1);
 				?>
 	 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -197,6 +201,7 @@ $arrCatpem = array();
 $query = "SELECT 
 core_permisos_categorias.id_pmcat,
 core_permisos_categorias.Nombre,
+core_permisos_categorias.IconColor,
 core_font_awesome.Codigo,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE id_pmcat = core_permisos_categorias.id_pmcat  LIMIT 1) AS Cuenta
 FROM `core_permisos_categorias`
@@ -231,7 +236,7 @@ $search='';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Categorias de los permisos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Categorias de los permisos</h5>
 			<div class="toolbar">
 				<?php 
 				//paginacion
@@ -252,16 +257,16 @@ $search='';
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrCatpem as $catpem) { ?>
 					<tr class="odd">
-						<td><i class="<?php echo $catpem['Codigo']; ?>"></i></td>
+						<td><i class="<?php echo $catpem['Codigo']; ?>" style="<?php if(isset($catpem['IconColor'])&&$catpem['IconColor']!=''){echo 'color: '.$catpem['IconColor'].';';}?>"></i></td>
 						<td><?php echo $catpem['Cuenta']; ?></td>
 						<td><?php echo $catpem['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&id='.$catpem['id_pmcat']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $location.'&id='.$catpem['id_pmcat']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php 
-								$ubicacion = $location.'&del='.$catpem['id_pmcat'];
+								$ubicacion = $location.'&del='.simpleEncode($catpem['id_pmcat'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro '.$catpem['Nombre'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 							</div>
 						</td>
 					</tr>

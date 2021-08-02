@@ -92,22 +92,22 @@ if(isset($_GET['idEstadoDevolucion']) && $_GET['idEstadoDevolucion'] != ''){
 }
 
 if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '{$_GET['Creacion_fecha_ini']}' AND '{$_GET['Creacion_fecha_fin']}'" ;
+	$z .= " AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'" ;
 	$search .= "&Creacion_fecha_ini=".$_GET['Creacion_fecha_ini'];
 	$search .= "&Creacion_fecha_fin=".$_GET['Creacion_fecha_fin'];
 }
 if(isset($_GET['Pago_fecha_ini']) && $_GET['Pago_fecha_ini'] != ''&&isset($_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.Pago_fecha BETWEEN '{$_GET['Pago_fecha_ini']}' AND '{$_GET['Pago_fecha_fin']}'" ;
+	$z .= " AND bodegas_arriendos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'" ;
 	$search .= "&Pago_fecha_ini=".$_GET['Pago_fecha_ini'];
 	$search .= "&Pago_fecha_fin=".$_GET['Pago_fecha_fin'];
 }
 if(isset($_GET['F_Pago_ini']) && $_GET['F_Pago_ini'] != ''&&isset($_GET['F_Pago_fin']) && $_GET['F_Pago_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '{$_GET['F_Pago_ini']}' AND '{$_GET['F_Pago_fin']}'" ;
+	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'" ;
 	$search .= "&F_Pago_ini=".$_GET['F_Pago_ini'];
 	$search .= "&F_Pago_fin=".$_GET['F_Pago_fin'];
 }
 if(isset($_GET['F_Devolucion_ini']) && $_GET['F_Devolucion_ini'] != ''&&isset($_GET['F_Devolucion_fin']) && $_GET['F_Devolucion_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '{$_GET['F_Devolucion_ini']}' AND '{$_GET['F_Devolucion_fin']}'" ;
+	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Devolucion_ini']."' AND '".$_GET['F_Devolucion_fin']."'" ;
 	$search .= "&F_Devolucion_ini=".$_GET['F_Devolucion_ini'];
 	$search .= "&F_Devolucion_fin=".$_GET['F_Devolucion_fin'];
 }
@@ -193,13 +193,15 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProductos,$row );
 } ?>
+
+<div class="col-sm-12 clearfix">
+	<a target="new" href="<?php echo 'informe_bodega_arriendos_05_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+</div>
+
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Productos de la bodega</h5>
-			<div class="toolbar">
-				<a target="new" href="informe_bodega_arriendos_05_to_excel.php<?php echo $search ?>" class="btn btn-sm btn-metis-2"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			</div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos de la bodega</h5>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -296,28 +298,25 @@ array_push( $arrProductos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$z1 = "bodegas_arriendos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z1="bodegas_arriendos_listado.idSistema>=0";
-	$z2="idSistema>=0";		
-}else{
-	$z1="bodegas_arriendos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_arriendos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";	
-	$z2="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";	
-	
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z1 .= " AND usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -350,30 +349,30 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idEstadoDevolucion)) {   $x23 = $idEstadoDevolucion;    }else{$x23 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $z1, $dbConn);
-				$Form_Imputs->form_select_join_filter('Bodega Destino','idBodegaDestino', $x2, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $z1, $dbConn);
-				$Form_Imputs->form_select('Sistema Origen','idSistema', $x3, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Imputs->form_select('Sistema Destino','idSistemaDestino', $x4, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Imputs->form_date('F Creacion Ini','Creacion_fecha_ini', $x5, 1);
-				$Form_Imputs->form_date('F Creacion Fin','Creacion_fecha_fin', $x6, 1);
-				$Form_Imputs->form_select('Tipo Documento','idDocumentos', $x7, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x8, 1);
-				$Form_Imputs->form_select('Tipo Documento','idTipo', $x9, 1, 'idTipo', 'Nombre', 'bodegas_arriendos_facturacion_tipo', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x10, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z2, '', $dbConn);
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x11, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z2, '', $dbConn);
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x12, 1, 'idCliente', 'Nombre', 'clientes_listado', $z2, '', $dbConn);
-				$Form_Imputs->form_date('F Vencimiento Ini','Pago_fecha_ini', $x13, 1);
-				$Form_Imputs->form_date('F Vencimiento Fin','Pago_fecha_fin', $x14, 1);
-				$Form_Imputs->form_select('Estado Pago','idEstado', $x15, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 0, '', $dbConn);
-				$Form_Imputs->form_select('Documento Pago','idDocPago', $x16, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('N° de Documento Pago', 'N_DocPago', $x17, 1);
-				$Form_Imputs->form_date('F Pago Ini','F_Pago_ini', $x18, 1);
-				$Form_Imputs->form_date('F Pago Fin','F_Pago_fin', $x19, 1);
-				$Form_Imputs->form_date('F Devolucion Ini','F_Devolucion_ini', $x20, 1);
-				$Form_Imputs->form_date('F Devolucion Fin','F_Devolucion_fin', $x21, 1);
-				$Form_Imputs->form_select_filter('Equipo Arrendado','idEquipo', $x22, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 0, '', $dbConn);
-				$Form_Imputs->form_select('Estado Devolucion','idEstadoDevolucion', $x23, 1, 'idEstadoDevolucion', 'Nombre', 'core_estado_devolucion', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $z1, $dbConn);
+				$Form_Inputs->form_select_join_filter('Bodega Destino','idBodegaDestino', $x2, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $z1, $dbConn);
+				$Form_Inputs->form_select('Sistema Origen','idSistema', $x3, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_select('Sistema Destino','idSistemaDestino', $x4, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_date('F Creacion Ini','Creacion_fecha_ini', $x5, 1);
+				$Form_Inputs->form_date('F Creacion Fin','Creacion_fecha_fin', $x6, 1);
+				$Form_Inputs->form_select('Documento de Pago','idDocumentos', $x7, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_Doc', $x8, 1);
+				$Form_Inputs->form_select('Documento de Pago','idTipo', $x9, 1, 'idTipo', 'Nombre', 'bodegas_arriendos_facturacion_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x10, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z2, '', $dbConn);
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x11, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z2, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x12, 1, 'idCliente', 'Nombre', 'clientes_listado', $z2, '', $dbConn);
+				$Form_Inputs->form_date('F Vencimiento Ini','Pago_fecha_ini', $x13, 1);
+				$Form_Inputs->form_date('F Vencimiento Fin','Pago_fecha_fin', $x14, 1);
+				$Form_Inputs->form_select('Estado Pago','idEstado', $x15, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x16, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x17, 1);
+				$Form_Inputs->form_date('F Pago Ini','F_Pago_ini', $x18, 1);
+				$Form_Inputs->form_date('F Pago Fin','F_Pago_fin', $x19, 1);
+				$Form_Inputs->form_date('F Devolucion Ini','F_Devolucion_ini', $x20, 1);
+				$Form_Inputs->form_date('F Devolucion Fin','F_Devolucion_fin', $x21, 1);
+				$Form_Inputs->form_select_filter('Equipo Arrendado','idEquipo', $x22, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 0, '', $dbConn);
+				$Form_Inputs->form_select('Estado Devolucion','idEstadoDevolucion', $x23, 1, 'idEstadoDevolucion', 'Nombre', 'core_estado_devolucion', 0, '', $dbConn);
 				
 				
 				?>        

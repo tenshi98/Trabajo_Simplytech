@@ -57,7 +57,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // tomo los datos del usuario
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat, File_Contrato, idOpciones_1,idOpciones_2
 FROM `apoderados_listado`
-WHERE idApoderado = {$_GET['id']}";
+WHERE idApoderado = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -75,20 +75,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-			<div class="info-box-content">
-				<span class="info-box-text">Apoderado</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Contrato</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Contrato');?>
 </div>
 <div class="clearfix"></div>
 
@@ -97,41 +84,44 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'apoderados_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'apoderados_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos</a></li>
-				<li class=""><a href="<?php echo 'apoderados_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Ubicacion</a></li>
+				<li class=""><a href="<?php echo 'apoderados_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'apoderados_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'apoderados_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Configuracion</a></li>
+						<li class=""><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 						<?php
 						//Si se utiliza la APP 
-						if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){
-							//Si se utiliza subcuentas
-							if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
-								<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Subcuentas</a></li>
-							<?php }else{ ?>
-								<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Password</a></li>
-							<?php } ?>
-						<?php } ?><li class=""><a href="<?php echo 'apoderados_listado_hijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Hijos</a></li>
-						<li class=""><a href="<?php echo 'apoderados_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class="active"><a href="<?php echo 'apoderados_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Contrato</a></li>
-						<li class=""><a href="<?php echo 'apoderados_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Foto</a></li>
+						if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+							<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Subcuentas</a></li>
+						<?php } ?>
+						<?php 
+						//Si se utiliza subcuentas
+						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+							<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
+						<?php } ?>
+						<li class=""><a href="<?php echo 'apoderados_listado_hijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-child" aria-hidden="true"></i> Hijos</a></li>
+						<li class=""><a href="<?php echo 'apoderados_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class="active"><a href="<?php echo 'apoderados_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contrato</a></li>
+						<li class=""><a href="<?php echo 'apoderados_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Foto</a></li>
+						<li class=""><a href="<?php echo 'apoderados_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						
 					</ul>
                 </li>           
 			</ul>	
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
+			<div class="col-sm-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 				
 				<?php if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){?>
         
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs('upload', $rowdata['File_Contrato'], ''); ?>
+						<?php echo preview_docs('upload', $rowdata['File_Contrato'], '', '', ''); ?>
+						<br/>
+						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_File_Contrato='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					</div>
-					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_File_Contrato='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>
 					
 				<?php }else{?>
@@ -140,10 +130,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					
 						<?php 
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_multiple_upload('Seleccionar archivo','File_Contrato', 1, '"pdf", "doc", "docx", "jpg", "png", "gif", "jpeg"');
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Contrato', 1, '"pdf", "doc", "docx", "jpg", "png", "gif", "jpeg"');
 					
-						$Form_Imputs->form_input_hidden('idApoderado', $_GET['id'], 2);
+						$Form_Inputs->form_input_hidden('idApoderado', $_GET['id'], 2);
 						?> 
 
 						<div class="form-group">
@@ -162,8 +152,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -35,10 +35,10 @@ $z.=" AND idEstado=1";//solo facturas No pagadas
 $z.=" AND Pago_mes=".$Mes;//el mes actual
 $z.=" AND Pago_ano=".$Ano;//el año actual
 
-$z1=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z2=" AND bodegas_insumos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-$z3=" AND bodegas_productos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z4=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z1=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z3=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 /******************************/
 // Se trae un listado con todas las facturas no pagadas del mes
@@ -232,7 +232,7 @@ array_push( $arrFacturas_4,$row );
 														//Arriendos
 														foreach ($arrFacturas_1 as $prod) { 
 															if ($prod['Dia']==$Dia) {
-																$ver = 'view_mov_arriendos.php?view='.$prod['idFacturacion'];
+																$ver = 'view_mov_arriendos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual());
 																$trabajo = 'Factura Arriendos N°'.$prod['NumDoc'];
 																//verifico el mes, año y dia
 																if(($compare_data_2+$prod['Dia'])<$compare_data_1){
@@ -252,7 +252,7 @@ array_push( $arrFacturas_4,$row );
 														//Insumos
 														foreach ($arrFacturas_2 as $prod) { 
 															if ($prod['Dia']==$Dia) {
-																$ver = 'view_mov_insumos.php?view='.$prod['idFacturacion'];
+																$ver = 'view_mov_insumos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual());
 																$trabajo = 'Factura Insumos N°'.$prod['NumDoc'];
 																//verifico el mes, año y dia
 																if(($compare_data_2+$prod['Dia'])<$compare_data_1){
@@ -271,7 +271,7 @@ array_push( $arrFacturas_4,$row );
 														//Productos
 														foreach ($arrFacturas_3 as $prod) { 
 															if ($prod['Dia']==$Dia) {
-																$ver = 'view_mov_productos.php?view='.$prod['idFacturacion'];
+																$ver = 'view_mov_productos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual());
 																$trabajo = 'Factura Productos N°'.$prod['NumDoc'];
 																//verifico el mes, año y dia
 																if(($compare_data_2+$prod['Dia'])<$compare_data_1){
@@ -290,7 +290,7 @@ array_push( $arrFacturas_4,$row );
 														//Servicios
 														foreach ($arrFacturas_4 as $prod) { 
 															if ($prod['Dia']==$Dia) {
-																$ver = 'view_mov_servicios.php?view='.$prod['idFacturacion'];
+																$ver = 'view_mov_servicios.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual());
 																$trabajo = 'Factura Servicios N°'.$prod['NumDoc'];
 																//verifico el mes, año y dia
 																if(($compare_data_2+$prod['Dia'])<$compare_data_1){

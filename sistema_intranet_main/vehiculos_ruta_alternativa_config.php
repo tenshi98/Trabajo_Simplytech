@@ -67,7 +67,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // tomo los datos del usuario
 $query = "SELECT Nombre
 FROM `vehiculos_ruta_alternativa`
-WHERE idRutaAlt = {$_GET['id']}";
+WHERE idRutaAlt = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -86,7 +86,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 //Se traen las rutas
 $query = "SELECT idUbicaciones, Latitud, Longitud, direccion
 FROM `vehiculos_ruta_alternativa_ubicaciones`
-WHERE idUbicaciones = {$_GET['mod']}";
+WHERE idUbicaciones = ".$_GET['mod'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -106,7 +106,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 $arrRutas = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud, direccion
 FROM `vehiculos_ruta_alternativa_ubicaciones`
-WHERE idRutaAlt = {$_GET['id']}
+WHERE idRutaAlt = ".$_GET['id']."
 ORDER BY idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -127,29 +127,16 @@ array_push( $arrRutas,$row );
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-truck" aria-hidden="true"></i></span>
-
-			   <div class="info-box-content">
-				<span class="info-box-text">Ruta</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Ruta</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Editar Ruta');?>
 </div>
+<div class="clearfix"></div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'telemetria_rutas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'telemetria_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'telemetria_rutas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'telemetria_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class="active"><a href="<?php echo 'telemetria_rutas_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
 			</ul>	
@@ -161,10 +148,11 @@ array_push( $arrRutas,$row );
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
 
@@ -187,7 +175,7 @@ array_push( $arrRutas,$row );
 									map			: map,
 									title		: "Tu Ubicacion",
 									animation 	: google.maps.Animation.DROP,
-									icon      	: "<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_orange.png"
+									icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
 							
 								google.maps.event.addListener(marker, 'dragend', function (event) {
@@ -367,15 +355,15 @@ array_push( $arrRutas,$row );
 				
 						<?php 
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowUbicacion['Latitud'], 1);
-						$Form_Imputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowUbicacion['Longitud'], 1);
-						$Form_Imputs->form_input_disabled( 'Direccion', 'direccion_fake', $rowUbicacion['direccion'], 1);
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowUbicacion['Latitud'], 1);
+						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowUbicacion['Longitud'], 1);
+						$Form_Inputs->form_input_disabled( 'Direccion', 'direccion_fake', $rowUbicacion['direccion'], 1);
 						
-						$Form_Imputs->form_input_hidden('Latitud', $rowUbicacion['Latitud'], 2);
-						$Form_Imputs->form_input_hidden('Longitud', $rowUbicacion['Longitud'], 2);
-						$Form_Imputs->form_input_hidden('direccion', $rowUbicacion['direccion'], 2);
-						$Form_Imputs->form_input_hidden('idUbicaciones', $_GET['mod'], 2);
+						$Form_Inputs->form_input_hidden('Latitud', $rowUbicacion['Latitud'], 2);
+						$Form_Inputs->form_input_hidden('Longitud', $rowUbicacion['Longitud'], 2);
+						$Form_Inputs->form_input_hidden('direccion', $rowUbicacion['direccion'], 2);
+						$Form_Inputs->form_input_hidden('idUbicaciones', $_GET['mod'], 2);
 						?>
 
 						<div class="form-group">
@@ -393,8 +381,8 @@ array_push( $arrRutas,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
@@ -403,7 +391,7 @@ array_push( $arrRutas,$row );
 // tomo los datos del usuario
 $query = "SELECT Nombre, idRuta
 FROM `vehiculos_ruta_alternativa`
-WHERE idRutaAlt = {$_GET['id']}";
+WHERE idRutaAlt = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -446,7 +434,7 @@ array_push( $arrRutas,$row );
 $arrRutasAlt = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud, direccion
 FROM `vehiculos_ruta_alternativa_ubicaciones`
-WHERE idRutaAlt = {$_GET['id']}
+WHERE idRutaAlt = ".$_GET['id']."
 ORDER BY idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -466,29 +454,16 @@ array_push( $arrRutasAlt,$row );
 }?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-truck" aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Ruta</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Ruta</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowdata['Nombre'], 'Editar Ruta');?>
 </div>
+<div class="clearfix"></div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class="active"><a href="<?php echo 'vehiculos_ruta_alternativa_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
 			</ul>	
@@ -500,10 +475,11 @@ array_push( $arrRutasAlt,$row );
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
 
@@ -681,15 +657,15 @@ array_push( $arrRutasAlt,$row );
 				
 						<?php 
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_input_disabled( 'Latitud', 'Latitud_fake', '', 1);
-						$Form_Imputs->form_input_disabled( 'Longitud', 'Longitud_fake', '', 1);
-						$Form_Imputs->form_input_disabled( 'Direccion', 'direccion_fake', '', 1);
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', '', 1);
+						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', '', 1);
+						$Form_Inputs->form_input_disabled( 'Direccion', 'direccion_fake', '', 1);
 						
-						$Form_Imputs->form_input_hidden('Latitud', 0, 2);
-						$Form_Imputs->form_input_hidden('Longitud', 0, 2);
-						$Form_Imputs->form_input_hidden('direccion', 0, 2);
-						$Form_Imputs->form_input_hidden('idRutaAlt', $_GET['id'], 2);
+						$Form_Inputs->form_input_hidden('Latitud', 0, 2);
+						$Form_Inputs->form_input_hidden('Longitud', 0, 2);
+						$Form_Inputs->form_input_hidden('direccion', 0, 2);
+						$Form_Inputs->form_input_hidden('idRutaAlt', $_GET['id'], 2);
 						?>
 
 						<div class="form-group">
@@ -716,11 +692,11 @@ array_push( $arrRutasAlt,$row );
 								<td><?php echo $rutas['direccion']; ?></td>
 								<td> 
 									<div class="btn-group" style="width: 70px;" >  
-										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$rutas['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$rutas['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=4){
-											$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.$rutas['idUbicaciones'];
+											$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($rutas['idUbicaciones'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar el dato '.$rutas['direccion'].'?';?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
 								</td>
@@ -738,8 +714,8 @@ array_push( $arrRutasAlt,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php } ?>

@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -43,11 +47,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idFacturacion':              if(empty($idFacturacion)){              $error['idFacturacion']                = 'error/No ha seleccionado el id';}break;
 			case 'idCajaChica':                if(empty($idCajaChica)){                $error['idCajaChica']                  = 'error/No ha seleccionado la caja chica';}break;
 			case 'idSistema':                  if(empty($idSistema)){                  $error['idSistema']                    = 'error/No ha seleccionado el sistema';}break;
@@ -77,6 +81,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}	
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -125,44 +134,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae el tipo de documento
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'caja_chica_facturacion_tipo', '', 'idTipo ='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idCajaChica)&&$idCajaChica!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = ".$idCajaChica;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCaja = mysqli_fetch_assoc ($resultado);
+					$rowCaja = db_select_data (false, 'Nombre', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -172,14 +149,14 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['caja_ing_basicos']['idCajaChica']     = $idCajaChica;
-				$_SESSION['caja_ing_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['caja_ing_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['caja_ing_basicos']['idSistema']       = $idSistema;
-				$_SESSION['caja_ing_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['caja_ing_basicos']['idTipo']          = $idTipo;
-				$_SESSION['caja_ing_basicos']['idEstado']        = $idEstado;
-				$_SESSION['caja_ing_basicos']['fecha_auto']      = $fecha_auto;
+				if(isset($idCajaChica)&&$idCajaChica!=''){        $_SESSION['caja_ing_basicos']['idCajaChica']     = $idCajaChica;     }else{$_SESSION['caja_ing_basicos']['idCajaChica']     = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['caja_ing_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['caja_ing_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['caja_ing_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['caja_ing_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['caja_ing_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['caja_ing_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['caja_ing_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['caja_ing_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['caja_ing_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['caja_ing_basicos']['idTipo']          = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['caja_ing_basicos']['idEstado']        = $idEstado;        }else{$_SESSION['caja_ing_basicos']['idEstado']        = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['caja_ing_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['caja_ing_basicos']['fecha_auto']      = '';}
 				$_SESSION['caja_ing_basicos']['Valor']           = 0;
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -239,44 +216,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae el tipo de documento
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'caja_chica_facturacion_tipo', '', 'idTipo ='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idCajaChica)&&$idCajaChica!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = ".$idCajaChica;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCaja = mysqli_fetch_assoc ($resultado);
+					$rowCaja = db_select_data (false, 'Nombre', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -285,15 +230,14 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($rowCaja['Nombre'])&&$rowCaja['Nombre']!=''){                     $_SESSION['caja_ing_basicos']['Caja']           = $rowCaja['Nombre'];}
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['caja_ing_basicos']['idCajaChica']     = $idCajaChica;
-				$_SESSION['caja_ing_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['caja_ing_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['caja_ing_basicos']['idSistema']       = $idSistema;
-				$_SESSION['caja_ing_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['caja_ing_basicos']['idTipo']          = $idTipo;
-				$_SESSION['caja_ing_basicos']['idEstado']        = $idEstado;
-				$_SESSION['caja_ing_basicos']['fecha_auto']      = $fecha_auto;
-				
+				if(isset($idCajaChica)&&$idCajaChica!=''){        $_SESSION['caja_ing_basicos']['idCajaChica']     = $idCajaChica;     }else{$_SESSION['caja_ing_basicos']['idCajaChica']     = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['caja_ing_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['caja_ing_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['caja_ing_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['caja_ing_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['caja_ing_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['caja_ing_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['caja_ing_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['caja_ing_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['caja_ing_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['caja_ing_basicos']['idTipo']          = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['caja_ing_basicos']['idEstado']        = $idEstado;        }else{$_SESSION['caja_ing_basicos']['idEstado']        = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['caja_ing_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['caja_ing_basicos']['fecha_auto']      = '';}
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -324,23 +268,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idDocPago)&&$idDocPago!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_documentos_pago`
-					WHERE idDocPago = ".$idDocPago;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocPago = mysqli_fetch_assoc ($resultado);
+					$rowDocPago = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago ='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -371,23 +299,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idDocPago)&&$idDocPago!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_documentos_pago`
-					WHERE idDocPago = ".$idDocPago;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocPago = mysqli_fetch_assoc ($resultado);
+					$rowDocPago = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago ='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -419,39 +331,6 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;
 /*******************************************************************************************************************/		
-		case 'add_obs_ing':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['caja_ing_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['caja_ing_temporal'] = $_SESSION['caja_ing_basicos']['Observaciones'];
-			$_SESSION['caja_ing_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_ing':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -473,7 +352,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -575,14 +454,14 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['caja_ing_basicos'])){
-				if(!isset($_SESSION['caja_ing_basicos']['idCajaChica']) or $_SESSION['caja_ing_basicos']['idCajaChica']=='' ){       $error['idCajaChica']      = 'error/No ha seleccionado la caja chica de destino';}
-				if(!isset($_SESSION['caja_ing_basicos']['idSistema']) or $_SESSION['caja_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el id del sistema';}
-				if(!isset($_SESSION['caja_ing_basicos']['idUsuario']) or $_SESSION['caja_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['caja_ing_basicos']['idTipo']) or $_SESSION['caja_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['caja_ing_basicos']['idEstado']) or $_SESSION['caja_ing_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
-				if(!isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) or $_SESSION['caja_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['caja_ing_basicos']['Observaciones']) or $_SESSION['caja_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['caja_ing_basicos']['Valor']) or $_SESSION['caja_ing_basicos']['Valor']=='' ){                   $error['Valor']            = 'error/No ha ingresado el valor total del documento';}
+				if(!isset($_SESSION['caja_ing_basicos']['idCajaChica']) OR $_SESSION['caja_ing_basicos']['idCajaChica']=='' ){       $error['idCajaChica']      = 'error/No ha seleccionado la caja chica de destino';}
+				if(!isset($_SESSION['caja_ing_basicos']['idSistema']) OR $_SESSION['caja_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el id del sistema';}
+				if(!isset($_SESSION['caja_ing_basicos']['idUsuario']) OR $_SESSION['caja_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['caja_ing_basicos']['idTipo']) OR $_SESSION['caja_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['caja_ing_basicos']['idEstado']) OR $_SESSION['caja_ing_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
+				if(!isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) OR $_SESSION['caja_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['caja_ing_basicos']['Observaciones']) OR $_SESSION['caja_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['caja_ing_basicos']['Valor']) OR $_SESSION['caja_ing_basicos']['Valor']=='' ){                   $error['Valor']            = 'error/No ha ingresado el valor total del documento';}
 				
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de caja';
@@ -633,7 +512,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `caja_chica_facturacion` (idCajaChica,idSistema,
 				idUsuario,idTipo,idEstado,fecha_auto,Creacion_fecha,Creacion_Semana,
 				Creacion_mes,Creacion_ano,Observaciones,Valor) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -679,7 +558,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `caja_chica_facturacion_existencias` (idFacturacion, idCajaChica,
 							idSistema, idUsuario, idTipo, fecha_auto, Creacion_fecha, Creacion_mes, Creacion_ano,
 							idDocPago, N_Doc, Valor) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -719,7 +598,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `caja_chica_facturacion_archivos` (idFacturacion, idCajaChica, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -749,7 +628,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `caja_chica_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -766,12 +645,8 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					/*********************************************************************/		
 					//Consulto el saldo para poder sumarlo
-					$query = "SELECT MontoActual
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = {$_SESSION['caja_ing_basicos']['idCajaChica']} ";
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
-					
+					$rowResultado = db_select_data (false, 'MontoActual', 'caja_chica_listado', '', 'idCajaChica ='.$_SESSION['caja_ing_basicos']['idCajaChica'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+	
 					//Actualizo el monto
 					$nuevoMonto = $rowResultado['MontoActual'] + $_SESSION['caja_ing_basicos']['Valor'];
 					$a = "MontoActual='".$nuevoMonto."'" ;
@@ -851,65 +726,17 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae el tipo de documento
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'caja_chica_facturacion_tipo', '', 'idTipo ='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idCajaChica)&&$idCajaChica!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = ".$idCajaChica;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCaja = mysqli_fetch_assoc ($resultado);
+					$rowCaja = db_select_data (false, 'Nombre', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae el trabajador
 				if(isset($idTrabajador)&&$idTrabajador!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut
-					FROM `trabajadores_listado`
-					WHERE idTrabajador =".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -924,15 +751,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['caja_eg_basicos']['idCajaChica']     = $idCajaChica;
-				$_SESSION['caja_eg_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['caja_eg_basicos']['idTrabajador']    = $idTrabajador;
-				$_SESSION['caja_eg_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['caja_eg_basicos']['idSistema']       = $idSistema;
-				$_SESSION['caja_eg_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['caja_eg_basicos']['idTipo']          = $idTipo;
-				$_SESSION['caja_eg_basicos']['idEstado']        = $idEstado;
-				$_SESSION['caja_eg_basicos']['fecha_auto']      = $fecha_auto;
+				if(isset($idCajaChica)&&$idCajaChica!=''){        $_SESSION['caja_eg_basicos']['idCajaChica']     = $idCajaChica;     }else{$_SESSION['caja_eg_basicos']['idCajaChica']     = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['caja_eg_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['caja_eg_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTrabajador)&&$idTrabajador!=''){      $_SESSION['caja_eg_basicos']['idTrabajador']    = $idTrabajador;    }else{$_SESSION['caja_eg_basicos']['idTrabajador']    = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['caja_eg_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['caja_eg_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['caja_eg_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['caja_eg_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['caja_eg_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['caja_eg_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['caja_eg_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['caja_eg_basicos']['idTipo']          = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['caja_eg_basicos']['idEstado']        = $idEstado;        }else{$_SESSION['caja_eg_basicos']['idEstado']        = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['caja_eg_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['caja_eg_basicos']['fecha_auto']      = '';}
 				$_SESSION['caja_eg_basicos']['Valor']           = 0;
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -992,65 +819,17 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae el tipo de documento
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'caja_chica_facturacion_tipo', '', 'idTipo ='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idCajaChica)&&$idCajaChica!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = ".$idCajaChica;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCaja = mysqli_fetch_assoc ($resultado);
+					$rowCaja = db_select_data (false, 'Nombre', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae el trabajador
 				if(isset($idTrabajador)&&$idTrabajador!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut
-					FROM `trabajadores_listado`
-					WHERE idTrabajador =".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -1065,16 +844,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['caja_eg_basicos']['idCajaChica']     = $idCajaChica;
-				$_SESSION['caja_eg_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['caja_eg_basicos']['idTrabajador']    = $idTrabajador;
-				$_SESSION['caja_eg_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['caja_eg_basicos']['idSistema']       = $idSistema;
-				$_SESSION['caja_eg_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['caja_eg_basicos']['idTipo']          = $idTipo;
-				$_SESSION['caja_eg_basicos']['idEstado']        = $idEstado;
-				$_SESSION['caja_eg_basicos']['fecha_auto']      = $fecha_auto;
-				
+				if(isset($idCajaChica)&&$idCajaChica!=''){        $_SESSION['caja_eg_basicos']['idCajaChica']     = $idCajaChica;     }else{$_SESSION['caja_eg_basicos']['idCajaChica']     = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['caja_eg_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['caja_eg_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTrabajador)&&$idTrabajador!=''){      $_SESSION['caja_eg_basicos']['idTrabajador']    = $idTrabajador;    }else{$_SESSION['caja_eg_basicos']['idTrabajador']    = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['caja_eg_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['caja_eg_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['caja_eg_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['caja_eg_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['caja_eg_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['caja_eg_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['caja_eg_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['caja_eg_basicos']['idTipo']          = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['caja_eg_basicos']['idEstado']        = $idEstado;        }else{$_SESSION['caja_eg_basicos']['idEstado']        = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['caja_eg_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['caja_eg_basicos']['fecha_auto']      = '';}
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -1100,11 +878,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 			
 			// Se traen los totales de los productos
-			$query = "SELECT MontoActual
-			FROM `caja_chica_listado`
-			WHERE idCajaChica = {$idCajaChica} ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
+			$rowResultado = db_select_data (false, 'MontoActual', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			
 			//Verifico si los egresos son inferiores a los ingresos
 			if($rowResultado['MontoActual']<$Valor){
 				$error['MontoActual'] = 'error/No hay suficientes saldo, solo quedan '.Valores($rowResultado['MontoActual'], 0);
@@ -1117,23 +892,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idDocPago)&&$idDocPago!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_documentos_pago`
-					WHERE idDocPago = ".$idDocPago;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocPago = mysqli_fetch_assoc ($resultado);
+					$rowDocPago = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago ='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -1159,11 +918,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen los totales de los productos
-			$query = "SELECT MontoActual
-			FROM `caja_chica_listado`
-			WHERE idCajaChica = {$idCajaChica} ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
+			$rowResultado = db_select_data (false, 'MontoActual', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			
 			//Verifico si los egresos son inferiores a los ingresos
 			if($rowResultado['MontoActual']<$Valor){
 				$error['MontoActual'] = 'error/No hay suficientes saldo, solo quedan '.Valores($rowResultado['MontoActual'], 0);
@@ -1175,23 +931,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idDocPago)&&$idDocPago!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_documentos_pago`
-					WHERE idDocPago = ".$idDocPago;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocPago = mysqli_fetch_assoc ($resultado);
+					$rowDocPago = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago ='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -1223,39 +963,6 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;
 /*******************************************************************************************************************/		
-		case 'add_obs_eg':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['caja_eg_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_eg':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['caja_eg_temporal'] = $_SESSION['caja_eg_basicos']['Observaciones'];
-			$_SESSION['caja_eg_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_eg':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -1277,7 +984,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -1379,15 +1086,15 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['caja_eg_basicos'])){
-				if(!isset($_SESSION['caja_eg_basicos']['idCajaChica']) or $_SESSION['caja_eg_basicos']['idCajaChica']=='' ){       $error['idCajaChica']      = 'error/No ha seleccionado la caja chica de destino';}
-				if(!isset($_SESSION['caja_eg_basicos']['idSistema']) or $_SESSION['caja_eg_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el id del sistema';}
-				if(!isset($_SESSION['caja_eg_basicos']['idUsuario']) or $_SESSION['caja_eg_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['caja_eg_basicos']['idTipo']) or $_SESSION['caja_eg_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['caja_eg_basicos']['idEstado']) or $_SESSION['caja_eg_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
-				if(!isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) or $_SESSION['caja_eg_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['caja_eg_basicos']['idTrabajador']) or $_SESSION['caja_eg_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
-				if(!isset($_SESSION['caja_eg_basicos']['Observaciones']) or $_SESSION['caja_eg_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['caja_eg_basicos']['Valor']) or $_SESSION['caja_eg_basicos']['Valor']=='' ){                   $error['Valor']            = 'error/No ha ingresado el valor total del documento';}
+				if(!isset($_SESSION['caja_eg_basicos']['idCajaChica']) OR $_SESSION['caja_eg_basicos']['idCajaChica']=='' ){       $error['idCajaChica']      = 'error/No ha seleccionado la caja chica de destino';}
+				if(!isset($_SESSION['caja_eg_basicos']['idSistema']) OR $_SESSION['caja_eg_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el id del sistema';}
+				if(!isset($_SESSION['caja_eg_basicos']['idUsuario']) OR $_SESSION['caja_eg_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['caja_eg_basicos']['idTipo']) OR $_SESSION['caja_eg_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['caja_eg_basicos']['idEstado']) OR $_SESSION['caja_eg_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
+				if(!isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) OR $_SESSION['caja_eg_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['caja_eg_basicos']['idTrabajador']) OR $_SESSION['caja_eg_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
+				if(!isset($_SESSION['caja_eg_basicos']['Observaciones']) OR $_SESSION['caja_eg_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['caja_eg_basicos']['Valor']) OR $_SESSION['caja_eg_basicos']['Valor']=='' ){                   $error['Valor']            = 'error/No ha ingresado el valor total del documento';}
 				
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al egreso de caja';
@@ -1410,12 +1117,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			/*********************************************************************/		
 			//Consulto el saldo para poder sumarlo
-			$query = "SELECT MontoActual
-			FROM `caja_chica_listado`
-			WHERE idCajaChica = {$_SESSION['caja_eg_basicos']['idCajaChica']} ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
-				
+			$rowResultado = db_select_data (false, 'MontoActual', 'caja_chica_listado', '', 'idCajaChica ='.$_SESSION['caja_eg_basicos']['idCajaChica'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+		
 			//Se verifica el minimo de trabajos
 			if($rowResultado['MontoActual'] < $_SESSION['caja_eg_basicos']['Valor']){
 				$error['trabajos'] = 'error/El valor total del egreso es superior al saldo, solo hay '.valores($rowResultado['MontoActual'], 0);
@@ -1452,7 +1155,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `caja_chica_facturacion` (idCajaChica,idSistema,
 				idUsuario,idTipo,idEstado,fecha_auto,Creacion_fecha,Creacion_Semana,
 				Creacion_mes,Creacion_ano,Observaciones,idTrabajador,Valor) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1498,7 +1201,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `caja_chica_facturacion_existencias` (idFacturacion, idCajaChica,
 							idSistema, idUsuario, idTipo, fecha_auto, Creacion_fecha, Creacion_mes, Creacion_ano,
 							idDocPago, N_Doc, Valor) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1538,7 +1241,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `caja_chica_facturacion_archivos` (idFacturacion, idCajaChica, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1568,7 +1271,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `caja_chica_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -1585,12 +1288,8 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					/*********************************************************************/		
 					//Consulto el saldo para poder sumarlo
-					$query = "SELECT MontoActual
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = {$_SESSION['caja_eg_basicos']['idCajaChica']} ";
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
-					
+					$rowResultado = db_select_data (false, 'MontoActual', 'caja_chica_listado', '', 'idCajaChica ='.$_SESSION['caja_eg_basicos']['idCajaChica'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+	
 					//Actualizo el monto
 					$nuevoMonto = $rowResultado['MontoActual'] - $_SESSION['caja_eg_basicos']['Valor'];
 					$a = "MontoActual='".$nuevoMonto."'" ;
@@ -1671,76 +1370,17 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae el tipo de documento
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'caja_chica_facturacion_tipo', '', 'idTipo ='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idCajaChica)&&$idCajaChica!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = ".$idCajaChica;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCaja = mysqli_fetch_assoc ($resultado);
+					$rowCaja = db_select_data (false, 'Nombre', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la facturacion relacionada
 				if(isset($idFacturacionRelacionada)&&$idFacturacionRelacionada!=''){
-					/*************************************/
-					$query = "SELECT 
-					caja_chica_facturacion.idFacturacion,
-					caja_chica_facturacion.Valor,
-					caja_chica_facturacion.ValorDevolucion,
-					trabajadores_listado.Nombre AS TrabajadorNombre,
-					trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat,
-					trabajadores_listado.ApellidoMat AS TrabajadorApellidoMat
-
-					FROM `caja_chica_facturacion`
-					LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador = caja_chica_facturacion.idTrabajador
-
-					WHERE caja_chica_facturacion.idFacturacion = ".$idFacturacionRelacionada;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowFacRel = mysqli_fetch_assoc ($resultado);
+					$rowFacRel = db_select_data (false, 'caja_chica_facturacion.idFacturacion, caja_chica_facturacion.Valor, caja_chica_facturacion.ValorDevolucion, trabajadores_listado.Nombre AS TrabajadorNombre, trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat, trabajadores_listado.ApellidoMat AS TrabajadorApellidoMat', 'caja_chica_facturacion', 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador = caja_chica_facturacion.idTrabajador', 'caja_chica_facturacion.idFacturacion ='.$idFacturacionRelacionada, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -1755,16 +1395,16 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['caja_rend_basicos']['idCajaChica']              = $idCajaChica;
-				$_SESSION['caja_rend_basicos']['Creacion_fecha']           = $Creacion_fecha;
-				$_SESSION['caja_rend_basicos']['Observaciones']            = $Observaciones;
-				$_SESSION['caja_rend_basicos']['idSistema']                = $idSistema;
-				$_SESSION['caja_rend_basicos']['idUsuario']                = $idUsuario;
-				$_SESSION['caja_rend_basicos']['idTipo']                   = $idTipo;
-				$_SESSION['caja_rend_basicos']['idEstado']                 = $idEstado;
-				$_SESSION['caja_rend_basicos']['fecha_auto']               = $fecha_auto;
+				if(isset($idCajaChica)&&$idCajaChica!=''){                            $_SESSION['caja_rend_basicos']['idCajaChica']              = $idCajaChica;              }else{$_SESSION['caja_rend_basicos']['idCajaChica']               = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){                      $_SESSION['caja_rend_basicos']['Creacion_fecha']           = $Creacion_fecha;           }else{$_SESSION['caja_rend_basicos']['Creacion_fecha']            = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){                        $_SESSION['caja_rend_basicos']['Observaciones']            = $Observaciones;            }else{$_SESSION['caja_rend_basicos']['Observaciones']             = '';}
+				if(isset($idSistema)&&$idSistema!=''){                                $_SESSION['caja_rend_basicos']['idSistema']                = $idSistema;                }else{$_SESSION['caja_rend_basicos']['idSistema']                 = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){                                $_SESSION['caja_rend_basicos']['idUsuario']                = $idUsuario;                }else{$_SESSION['caja_rend_basicos']['idUsuario']                 = '';}
+				if(isset($idTipo)&&$idTipo!=''){                                      $_SESSION['caja_rend_basicos']['idTipo']                   = $idTipo;                   }else{$_SESSION['caja_rend_basicos']['idTipo']                    = '';}
+				if(isset($idEstado)&&$idEstado!=''){                                  $_SESSION['caja_rend_basicos']['idEstado']                 = $idEstado;                 }else{$_SESSION['caja_rend_basicos']['idEstado']                  = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){                              $_SESSION['caja_rend_basicos']['fecha_auto']               = $fecha_auto;               }else{$_SESSION['caja_rend_basicos']['fecha_auto']                = '';}
+				if(isset($idFacturacionRelacionada)&&$idFacturacionRelacionada!=''){  $_SESSION['caja_rend_basicos']['idFacturacionRelacionada'] = $idFacturacionRelacionada; }else{$_SESSION['caja_rend_basicos']['idFacturacionRelacionada']  = '';}
 				$_SESSION['caja_rend_basicos']['Valor']                    = 0;
-				$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'] = $idFacturacionRelacionada;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -1828,76 +1468,17 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae el tipo de documento
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'caja_chica_facturacion_tipo', '', 'idTipo ='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idCajaChica)&&$idCajaChica!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = ".$idCajaChica;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCaja = mysqli_fetch_assoc ($resultado);
+					$rowCaja = db_select_data (false, 'Nombre', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la facturacion relacionada
 				if(isset($idFacturacionRelacionada)&&$idFacturacionRelacionada!=''){
-					/*************************************/
-					$query = "SELECT 
-					caja_chica_facturacion.idFacturacion,
-					caja_chica_facturacion.Valor,
-					caja_chica_facturacion.ValorDevolucion,
-					trabajadores_listado.Nombre AS TrabajadorNombre,
-					trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat,
-					trabajadores_listado.ApellidoMat AS TrabajadorApellidoMat
-
-					FROM `caja_chica_facturacion`
-					LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador = caja_chica_facturacion.idTrabajador
-
-					WHERE caja_chica_facturacion.idFacturacion = ".$idFacturacionRelacionada;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowFacRel = mysqli_fetch_assoc ($resultado);
+					$rowFacRel = db_select_data (false, 'caja_chica_facturacion.idFacturacion, caja_chica_facturacion.Valor, caja_chica_facturacion.ValorDevolucion, trabajadores_listado.Nombre AS TrabajadorNombre, trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat, trabajadores_listado.ApellidoMat AS TrabajadorApellidoMat', 'caja_chica_facturacion', 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador = caja_chica_facturacion.idTrabajador', 'caja_chica_facturacion.idFacturacion ='.$idFacturacionRelacionada, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -1912,16 +1493,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['caja_rend_basicos']['idCajaChica']              = $idCajaChica;
-				$_SESSION['caja_rend_basicos']['Creacion_fecha']           = $Creacion_fecha;
-				$_SESSION['caja_rend_basicos']['Observaciones']            = $Observaciones;
-				$_SESSION['caja_rend_basicos']['idSistema']                = $idSistema;
-				$_SESSION['caja_rend_basicos']['idUsuario']                = $idUsuario;
-				$_SESSION['caja_rend_basicos']['idTipo']                   = $idTipo;
-				$_SESSION['caja_rend_basicos']['idEstado']                 = $idEstado;
-				$_SESSION['caja_rend_basicos']['fecha_auto']               = $fecha_auto;
-				$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'] = $idFacturacionRelacionada;
-				
+				if(isset($idCajaChica)&&$idCajaChica!=''){                            $_SESSION['caja_rend_basicos']['idCajaChica']              = $idCajaChica;              }else{$_SESSION['caja_rend_basicos']['idCajaChica']               = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){                      $_SESSION['caja_rend_basicos']['Creacion_fecha']           = $Creacion_fecha;           }else{$_SESSION['caja_rend_basicos']['Creacion_fecha']            = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){                        $_SESSION['caja_rend_basicos']['Observaciones']            = $Observaciones;            }else{$_SESSION['caja_rend_basicos']['Observaciones']             = '';}
+				if(isset($idSistema)&&$idSistema!=''){                                $_SESSION['caja_rend_basicos']['idSistema']                = $idSistema;                }else{$_SESSION['caja_rend_basicos']['idSistema']                 = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){                                $_SESSION['caja_rend_basicos']['idUsuario']                = $idUsuario;                }else{$_SESSION['caja_rend_basicos']['idUsuario']                 = '';}
+				if(isset($idTipo)&&$idTipo!=''){                                      $_SESSION['caja_rend_basicos']['idTipo']                   = $idTipo;                   }else{$_SESSION['caja_rend_basicos']['idTipo']                    = '';}
+				if(isset($idEstado)&&$idEstado!=''){                                  $_SESSION['caja_rend_basicos']['idEstado']                 = $idEstado;                 }else{$_SESSION['caja_rend_basicos']['idEstado']                  = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){                              $_SESSION['caja_rend_basicos']['fecha_auto']               = $fecha_auto;               }else{$_SESSION['caja_rend_basicos']['fecha_auto']                = '';}
+				if(isset($idFacturacionRelacionada)&&$idFacturacionRelacionada!=''){  $_SESSION['caja_rend_basicos']['idFacturacionRelacionada'] = $idFacturacionRelacionada; }else{$_SESSION['caja_rend_basicos']['idFacturacionRelacionada']  = '';}
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -1948,12 +1528,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			/*********************************************************************/		
 			//Consulto el saldo para poder sumarlo
-			$query = "SELECT Valor, ValorDevolucion
-			FROM `caja_chica_facturacion`
-			WHERE idFacturacion = {$_SESSION['caja_rend_basicos']['idFacturacionRelacionada']} ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
-				
+			$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+		
 			//Se verifica el minimo de trabajos
 			if(($rowResultado['Valor']-$rowResultado['ValorDevolucion']) < $Valor){
 				$error['trabajos'] = 'error/El valor total de la rendicion es superior al del saldo del documento relacionado, solo son '.valores($rowResultado['Valor']-$rowResultado['ValorDevolucion'], 0).' como maximo';
@@ -1965,23 +1541,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idDocPago)&&$idDocPago!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_documentos_pago`
-					WHERE idDocPago = ".$idDocPago;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocPago = mysqli_fetch_assoc ($resultado);
+					$rowDocPago = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago ='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -2007,12 +1567,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			/*********************************************************************/		
 			//Consulto el saldo para poder sumarlo
-			$query = "SELECT Valor, ValorDevolucion
-			FROM `caja_chica_facturacion`
-			WHERE idFacturacion = {$_SESSION['caja_rend_basicos']['idFacturacionRelacionada']} ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
-				
+			$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+		
 			//Se verifica el minimo de trabajos
 			if(($rowResultado['Valor']-$rowResultado['ValorDevolucion']) < $Valor){
 				$error['trabajos'] = 'error/El valor total de la rendicion es superior al del saldo del documento relacionado, solo son '.valores($rowResultado['Valor']-$rowResultado['ValorDevolucion'], 0).' como maximo';
@@ -2024,23 +1580,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idDocPago)&&$idDocPago!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_documentos_pago`
-					WHERE idDocPago = ".$idDocPago;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocPago = mysqli_fetch_assoc ($resultado);
+					$rowDocPago = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago ='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -2089,12 +1629,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			/*********************************************************************/		
 			//Consulto el saldo para poder sumarlo
-			$query = "SELECT Valor, ValorDevolucion
-			FROM `caja_chica_facturacion`
-			WHERE idFacturacion = {$_SESSION['caja_rend_basicos']['idFacturacionRelacionada']} ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
-				
+			$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+		
 			//Se verifica el minimo de trabajos
 			if(($rowResultado['Valor']-$rowResultado['ValorDevolucion']) < $Valor){
 				$error['trabajos'] = 'error/El valor total de la rendicion es superior al del saldo del documento relacionado, solo son '.valores($rowResultado['Valor']-$rowResultado['ValorDevolucion'], 0).' como maximo';
@@ -2121,12 +1657,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			/*********************************************************************/		
 			//Consulto el saldo para poder sumarlo
-			$query = "SELECT Valor, ValorDevolucion
-			FROM `caja_chica_facturacion`
-			WHERE idFacturacion = {$_SESSION['caja_rend_basicos']['idFacturacionRelacionada']} ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
-				
+			$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+		
 			//Se verifica el minimo de trabajos
 			if(($rowResultado['Valor']-$rowResultado['ValorDevolucion']) < $Valor){
 				$error['trabajos'] = 'error/El valor total de la rendicion es superior al del saldo del documento relacionado, solo son '.valores($rowResultado['Valor']-$rowResultado['ValorDevolucion'], 0).' como maximo';
@@ -2159,39 +1691,6 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;
 /*******************************************************************************************************************/		
-		case 'add_obs_rend':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['caja_rend_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_rend':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['caja_rend_temporal'] = $_SESSION['caja_rend_basicos']['Observaciones'];
-			$_SESSION['caja_rend_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_rend':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -2213,7 +1712,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -2315,15 +1814,15 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['caja_rend_basicos'])){
-				if(!isset($_SESSION['caja_rend_basicos']['idCajaChica']) or $_SESSION['caja_rend_basicos']['idCajaChica']=='' ){                           $error['idCajaChica']               = 'error/No ha seleccionado la caja chica de destino';}
-				if(!isset($_SESSION['caja_rend_basicos']['idSistema']) or $_SESSION['caja_rend_basicos']['idSistema']=='' ){                               $error['idSistema']                 = 'error/No ha seleccionado el id del sistema';}
-				if(!isset($_SESSION['caja_rend_basicos']['idUsuario']) or $_SESSION['caja_rend_basicos']['idUsuario']=='' ){                               $error['idUsuario']                 = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['caja_rend_basicos']['idTipo']) or $_SESSION['caja_rend_basicos']['idTipo']=='' ){                                     $error['idTipo']                    = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['caja_rend_basicos']['idEstado']) or $_SESSION['caja_rend_basicos']['idEstado']=='' ){                                 $error['idEstado']                  = 'error/No ha seleccionado el estado';}
-				if(!isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) or $_SESSION['caja_rend_basicos']['Creacion_fecha']=='' ){                     $error['Creacion_fecha']            = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['caja_rend_basicos']['Observaciones']) or $_SESSION['caja_rend_basicos']['Observaciones']=='' ){                       $error['Observaciones']             = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['caja_rend_basicos']['Valor']) or $_SESSION['caja_rend_basicos']['Valor']=='' ){                                       $error['Valor']                     = 'error/No ha ingresado el valor total del documento';}
-				if(!isset($_SESSION['caja_rend_basicos']['idFacturacionRelacionada']) or $_SESSION['caja_rend_basicos']['idFacturacionRelacionada']=='' ){ $error['idFacturacionRelacionada']  = 'error/No ha ingresado el documento relacionado';}
+				if(!isset($_SESSION['caja_rend_basicos']['idCajaChica']) OR $_SESSION['caja_rend_basicos']['idCajaChica']=='' ){                           $error['idCajaChica']               = 'error/No ha seleccionado la caja chica de destino';}
+				if(!isset($_SESSION['caja_rend_basicos']['idSistema']) OR $_SESSION['caja_rend_basicos']['idSistema']=='' ){                               $error['idSistema']                 = 'error/No ha seleccionado el id del sistema';}
+				if(!isset($_SESSION['caja_rend_basicos']['idUsuario']) OR $_SESSION['caja_rend_basicos']['idUsuario']=='' ){                               $error['idUsuario']                 = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['caja_rend_basicos']['idTipo']) OR $_SESSION['caja_rend_basicos']['idTipo']=='' ){                                     $error['idTipo']                    = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['caja_rend_basicos']['idEstado']) OR $_SESSION['caja_rend_basicos']['idEstado']=='' ){                                 $error['idEstado']                  = 'error/No ha seleccionado el estado';}
+				if(!isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) OR $_SESSION['caja_rend_basicos']['Creacion_fecha']=='' ){                     $error['Creacion_fecha']            = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['caja_rend_basicos']['Observaciones']) OR $_SESSION['caja_rend_basicos']['Observaciones']=='' ){                       $error['Observaciones']             = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['caja_rend_basicos']['Valor']) OR $_SESSION['caja_rend_basicos']['Valor']=='' ){                                       $error['Valor']                     = 'error/No ha ingresado el valor total del documento';}
+				if(!isset($_SESSION['caja_rend_basicos']['idFacturacionRelacionada']) OR $_SESSION['caja_rend_basicos']['idFacturacionRelacionada']=='' ){ $error['idFacturacionRelacionada']  = 'error/No ha ingresado el documento relacionado';}
 				
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la rendicion de caja';
@@ -2346,12 +1845,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			/*********************************************************************/		
 			//Consulto el saldo para poder sumarlo
-			$query = "SELECT Valor, ValorDevolucion
-			FROM `caja_chica_facturacion`
-			WHERE idFacturacion = {$_SESSION['caja_rend_basicos']['idFacturacionRelacionada']} ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
-				
+			$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+		
 			//Se verifica el minimo de trabajos
 			if(($rowResultado['Valor']-$rowResultado['ValorDevolucion']) < $_SESSION['caja_rend_basicos']['Valor']){
 				$error['trabajos'] = 'error/El valor total de la rendicion es superior al del saldo del documento relacionado, solo son '.valores($rowResultado['Valor']-$rowResultado['ValorDevolucion'], 0).' como maximo';
@@ -2388,7 +1883,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `caja_chica_facturacion` (idCajaChica,idSistema,
 				idUsuario,idTipo,idEstado,fecha_auto,Creacion_fecha,Creacion_Semana,
 				Creacion_mes,Creacion_ano,Observaciones,Valor, idFacturacionRelacionada) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2433,7 +1928,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `caja_chica_facturacion_rendiciones` (idFacturacion, idCajaChica,
 							idSistema, idUsuario, idTipo, fecha_auto, Creacion_fecha, Creacion_mes, Creacion_ano,
 							Item, Valor) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2481,7 +1976,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `caja_chica_facturacion_existencias` (idFacturacion, idCajaChica,
 							idSistema, idUsuario, idTipo, fecha_auto, Creacion_fecha, Creacion_mes, Creacion_ano,
 							idDocPago, N_Doc, Valor) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2526,7 +2021,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `caja_chica_facturacion_archivos` (idFacturacion, idCajaChica, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2556,7 +2051,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `caja_chica_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -2573,12 +2068,8 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					/*********************************************************************/		
 					//Consulto el saldo para poder sumarlo
-					$query = "SELECT MontoActual
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = {$_SESSION['caja_rend_basicos']['idCajaChica']} ";
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
-					
+					$rowResultado = db_select_data (false, 'MontoActual', 'caja_chica_listado', '', 'idCajaChica ='.$_SESSION['caja_rend_basicos']['idCajaChica'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 					//Actualizo el monto
 					$nuevoMonto = $rowResultado['MontoActual'] + $subDevolucion;
 					$a = "MontoActual='".$nuevoMonto."'" ;
@@ -2600,12 +2091,8 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					/*********************************************************************/		
 					//Consulto el documento relacionado para poder sumarle el valor de la devolucion
-					$query = "SELECT Valor, ValorDevolucion
-					FROM `caja_chica_facturacion`
-					WHERE idFacturacion = {$_SESSION['caja_rend_basicos']['idFacturacionRelacionada']} ";
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
-					
+					$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 					//Actualizo el monto
 					$nuevoMonto = $rowResultado['ValorDevolucion'] + $_SESSION['caja_rend_basicos']['Valor'];
 					$a = "ValorDevolucion='".$nuevoMonto."'" ;
@@ -2691,130 +2178,33 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae el tipo de documento
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'caja_chica_facturacion_tipo', '', 'idTipo ='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idCajaChica)&&$idCajaChica!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = ".$idCajaChica;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCaja = mysqli_fetch_assoc ($resultado);
+					$rowCaja = db_select_data (false, 'Nombre', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae el trabajador
 				if(isset($idTrabajador)&&$idTrabajador!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la persona ue los solicito
 				if(isset($idSolicitado)&&$idSolicitado!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idSolicitado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSolicitante = mysqli_fetch_assoc ($resultado);	
+					$rowSolicitante = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador ='.$idSolicitado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la persona que lo reviso
 				if(isset($idRevisado)&&$idRevisado!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idRevisado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowRevisador = mysqli_fetch_assoc ($resultado);
+					$rowRevisador = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador ='.$idRevisado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la persona que lo aprobo
 				if(isset($idAprobado)&&$idAprobado!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idAprobado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowAprobador = mysqli_fetch_assoc ($resultado);
+					$rowAprobador = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador ='.$idAprobado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
-				
 				
 				/*****************************************/
 				// Se guardan los datos
@@ -2838,19 +2228,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['caja_rendida_basicos']['idCajaChica']     = $idCajaChica;
-				$_SESSION['caja_rendida_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['caja_rendida_basicos']['idTrabajador']    = $idTrabajador;
-				$_SESSION['caja_rendida_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['caja_rendida_basicos']['idSistema']       = $idSistema;
-				$_SESSION['caja_rendida_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['caja_rendida_basicos']['idTipo']          = $idTipo;
-				$_SESSION['caja_rendida_basicos']['idEstado']        = $idEstado;
-				$_SESSION['caja_rendida_basicos']['fecha_auto']      = $fecha_auto;
+				if(isset($idCajaChica)&&$idCajaChica!=''){        $_SESSION['caja_rendida_basicos']['idCajaChica']     = $idCajaChica;    }else{$_SESSION['caja_rendida_basicos']['idCajaChica']     = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['caja_rendida_basicos']['Creacion_fecha']  = $Creacion_fecha; }else{$_SESSION['caja_rendida_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTrabajador)&&$idTrabajador!=''){      $_SESSION['caja_rendida_basicos']['idTrabajador']    = $idTrabajador;   }else{$_SESSION['caja_rendida_basicos']['idTrabajador']    = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['caja_rendida_basicos']['Observaciones']   = $Observaciones;  }else{$_SESSION['caja_rendida_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['caja_rendida_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['caja_rendida_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['caja_rendida_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['caja_rendida_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['caja_rendida_basicos']['idTipo']          = $idTipo;         }else{$_SESSION['caja_rendida_basicos']['idTipo']          = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['caja_rendida_basicos']['idEstado']        = $idEstado;       }else{$_SESSION['caja_rendida_basicos']['idEstado']        = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['caja_rendida_basicos']['fecha_auto']      = $fecha_auto;     }else{$_SESSION['caja_rendida_basicos']['fecha_auto']      = '';}
+				if(isset($idSolicitado)&&$idSolicitado!=''){      $_SESSION['caja_rendida_basicos']['idSolicitado']    = $idSolicitado;   }else{$_SESSION['caja_rendida_basicos']['idSolicitado']    = '';}
+				if(isset($idRevisado)&&$idRevisado!=''){          $_SESSION['caja_rendida_basicos']['idRevisado']      = $idRevisado;     }else{$_SESSION['caja_rendida_basicos']['idRevisado']      = '';}
+				if(isset($idAprobado)&&$idAprobado!=''){          $_SESSION['caja_rendida_basicos']['idAprobado']      = $idAprobado;     }else{$_SESSION['caja_rendida_basicos']['idAprobado']      = '';}
 				$_SESSION['caja_rendida_basicos']['Valor']           = 0;
-				$_SESSION['caja_rendida_basicos']['idSolicitado']    = $idSolicitado;
-				$_SESSION['caja_rendida_basicos']['idRevisado']      = $idRevisado;
-				$_SESSION['caja_rendida_basicos']['idAprobado']      = $idAprobado;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -2911,130 +2301,33 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae el tipo de documento
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'caja_chica_facturacion_tipo', '', 'idTipo ='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idCajaChica)&&$idCajaChica!=''){
-					$query = "SELECT Nombre
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = ".$idCajaChica;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCaja = mysqli_fetch_assoc ($resultado);
+					$rowCaja = db_select_data (false, 'Nombre', 'caja_chica_listado', '', 'idCajaChica ='.$idCajaChica, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae el trabajador
 				if(isset($idTrabajador)&&$idTrabajador!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la persona ue los solicito
 				if(isset($idSolicitado)&&$idSolicitado!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idSolicitado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSolicitante = mysqli_fetch_assoc ($resultado);	
+					$rowSolicitante = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador ='.$idSolicitado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la persona que lo reviso
 				if(isset($idRevisado)&&$idRevisado!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idRevisado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowRevisador = mysqli_fetch_assoc ($resultado);
+					$rowRevisador = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador ='.$idRevisado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*****************************************/
 				// Se trae la persona que lo aprobo
 				if(isset($idAprobado)&&$idAprobado!=''){
-					$query = "SELECT idTrabajador, Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idAprobado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowAprobador = mysqli_fetch_assoc ($resultado);
+					$rowAprobador = db_select_data (false, 'idTrabajador, Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador ='.$idAprobado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
-				
 				
 				/*****************************************/
 				// Se guardan los datos
@@ -3058,19 +2351,18 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['caja_rendida_basicos']['idCajaChica']     = $idCajaChica;
-				$_SESSION['caja_rendida_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['caja_rendida_basicos']['idTrabajador']    = $idTrabajador;
-				$_SESSION['caja_rendida_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['caja_rendida_basicos']['idSistema']       = $idSistema;
-				$_SESSION['caja_rendida_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['caja_rendida_basicos']['idTipo']          = $idTipo;
-				$_SESSION['caja_rendida_basicos']['idEstado']        = $idEstado;
-				$_SESSION['caja_rendida_basicos']['fecha_auto']      = $fecha_auto;
-				$_SESSION['caja_rendida_basicos']['idSolicitado']    = $idSolicitado;
-				$_SESSION['caja_rendida_basicos']['idRevisado']      = $idRevisado;
-				$_SESSION['caja_rendida_basicos']['idAprobado']      = $idAprobado;
-				
+				if(isset($idCajaChica)&&$idCajaChica!=''){        $_SESSION['caja_rendida_basicos']['idCajaChica']     = $idCajaChica;    }else{$_SESSION['caja_rendida_basicos']['idCajaChica']     = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['caja_rendida_basicos']['Creacion_fecha']  = $Creacion_fecha; }else{$_SESSION['caja_rendida_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTrabajador)&&$idTrabajador!=''){      $_SESSION['caja_rendida_basicos']['idTrabajador']    = $idTrabajador;   }else{$_SESSION['caja_rendida_basicos']['idTrabajador']    = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['caja_rendida_basicos']['Observaciones']   = $Observaciones;  }else{$_SESSION['caja_rendida_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['caja_rendida_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['caja_rendida_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['caja_rendida_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['caja_rendida_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['caja_rendida_basicos']['idTipo']          = $idTipo;         }else{$_SESSION['caja_rendida_basicos']['idTipo']          = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['caja_rendida_basicos']['idEstado']        = $idEstado;       }else{$_SESSION['caja_rendida_basicos']['idEstado']        = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['caja_rendida_basicos']['fecha_auto']      = $fecha_auto;     }else{$_SESSION['caja_rendida_basicos']['fecha_auto']      = '';}
+				if(isset($idSolicitado)&&$idSolicitado!=''){      $_SESSION['caja_rendida_basicos']['idSolicitado']    = $idSolicitado;   }else{$_SESSION['caja_rendida_basicos']['idSolicitado']    = '';}
+				if(isset($idRevisado)&&$idRevisado!=''){          $_SESSION['caja_rendida_basicos']['idRevisado']      = $idRevisado;     }else{$_SESSION['caja_rendida_basicos']['idRevisado']      = '';}
+				if(isset($idAprobado)&&$idAprobado!=''){          $_SESSION['caja_rendida_basicos']['idAprobado']      = $idAprobado;     }else{$_SESSION['caja_rendida_basicos']['idAprobado']      = '';}
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -3101,23 +2393,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idDocPago)&&$idDocPago!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_documentos_pago`
-					WHERE idDocPago = ".$idDocPago;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocPago = mysqli_fetch_assoc ($resultado);
+					$rowDocPago = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago ='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -3146,23 +2422,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idDocPago)&&$idDocPago!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_documentos_pago`
-					WHERE idDocPago = ".$idDocPago;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocPago = mysqli_fetch_assoc ($resultado);
+					$rowDocPago = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago ='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*****************************************/
@@ -3255,39 +2515,6 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;
 /*******************************************************************************************************************/		
-		case 'add_obs_rendida':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['caja_rendida_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_rendida':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['caja_rendida_temporal'] = $_SESSION['caja_rendida_basicos']['Observaciones'];
-			$_SESSION['caja_rendida_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_rendida':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -3309,7 +2536,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -3411,18 +2638,18 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['caja_rendida_basicos'])){
-				if(!isset($_SESSION['caja_rendida_basicos']['idCajaChica']) or $_SESSION['caja_rendida_basicos']['idCajaChica']=='' ){           $error['idCajaChica']     = 'error/No ha seleccionado la caja chica de destino';}
-				if(!isset($_SESSION['caja_rendida_basicos']['idSistema']) or $_SESSION['caja_rendida_basicos']['idSistema']=='' ){               $error['idSistema']       = 'error/No ha seleccionado el id del sistema';}
-				if(!isset($_SESSION['caja_rendida_basicos']['idUsuario']) or $_SESSION['caja_rendida_basicos']['idUsuario']=='' ){               $error['idUsuario']       = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['caja_rendida_basicos']['idTipo']) or $_SESSION['caja_rendida_basicos']['idTipo']=='' ){                     $error['idTipo']          = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['caja_rendida_basicos']['idEstado']) or $_SESSION['caja_rendida_basicos']['idEstado']=='' ){                 $error['idEstado']        = 'error/No ha seleccionado el estado';}
-				if(!isset($_SESSION['caja_rendida_basicos']['Creacion_fecha']) or $_SESSION['caja_rendida_basicos']['Creacion_fecha']=='' ){     $error['Creacion_fecha']  = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['caja_rendida_basicos']['Observaciones']) or $_SESSION['caja_rendida_basicos']['Observaciones']=='' ){       $error['Observaciones']   = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['caja_rendida_basicos']['Valor']) or $_SESSION['caja_rendida_basicos']['Valor']=='' ){                       $error['Valor']           = 'error/No ha ingresado el valor total del documento';}
-				if(!isset($_SESSION['caja_rendida_basicos']['idTrabajador']) or $_SESSION['caja_rendida_basicos']['idTrabajador']=='' ){         $error['idTrabajador']    = 'error/No ha seleccionado el trabajador';}
-				if(!isset($_SESSION['caja_rendida_basicos']['idSolicitado']) or $_SESSION['caja_rendida_basicos']['idSolicitado']=='' ){         $error['idSolicitado']    = 'error/No ha seleccionado a la persona solicitante';}
-				if(!isset($_SESSION['caja_rendida_basicos']['idRevisado']) or $_SESSION['caja_rendida_basicos']['idRevisado']=='' ){             $error['idRevisado']      = 'error/No ha seleccionado a la persona encargada de revisar';}
-				if(!isset($_SESSION['caja_rendida_basicos']['idAprobado']) or $_SESSION['caja_rendida_basicos']['idAprobado']=='' ){             $error['idAprobado']      = 'error/No ha seleccionado a la persona que aprobo';}
+				if(!isset($_SESSION['caja_rendida_basicos']['idCajaChica']) OR $_SESSION['caja_rendida_basicos']['idCajaChica']=='' ){           $error['idCajaChica']     = 'error/No ha seleccionado la caja chica de destino';}
+				if(!isset($_SESSION['caja_rendida_basicos']['idSistema']) OR $_SESSION['caja_rendida_basicos']['idSistema']=='' ){               $error['idSistema']       = 'error/No ha seleccionado el id del sistema';}
+				if(!isset($_SESSION['caja_rendida_basicos']['idUsuario']) OR $_SESSION['caja_rendida_basicos']['idUsuario']=='' ){               $error['idUsuario']       = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['caja_rendida_basicos']['idTipo']) OR $_SESSION['caja_rendida_basicos']['idTipo']=='' ){                     $error['idTipo']          = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['caja_rendida_basicos']['idEstado']) OR $_SESSION['caja_rendida_basicos']['idEstado']=='' ){                 $error['idEstado']        = 'error/No ha seleccionado el estado';}
+				if(!isset($_SESSION['caja_rendida_basicos']['Creacion_fecha']) OR $_SESSION['caja_rendida_basicos']['Creacion_fecha']=='' ){     $error['Creacion_fecha']  = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['caja_rendida_basicos']['Observaciones']) OR $_SESSION['caja_rendida_basicos']['Observaciones']=='' ){       $error['Observaciones']   = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['caja_rendida_basicos']['Valor']) OR $_SESSION['caja_rendida_basicos']['Valor']=='' ){                       $error['Valor']           = 'error/No ha ingresado el valor total del documento';}
+				if(!isset($_SESSION['caja_rendida_basicos']['idTrabajador']) OR $_SESSION['caja_rendida_basicos']['idTrabajador']=='' ){         $error['idTrabajador']    = 'error/No ha seleccionado el trabajador';}
+				if(!isset($_SESSION['caja_rendida_basicos']['idSolicitado']) OR $_SESSION['caja_rendida_basicos']['idSolicitado']=='' ){         $error['idSolicitado']    = 'error/No ha seleccionado a la persona solicitante';}
+				if(!isset($_SESSION['caja_rendida_basicos']['idRevisado']) OR $_SESSION['caja_rendida_basicos']['idRevisado']=='' ){             $error['idRevisado']      = 'error/No ha seleccionado a la persona encargada de revisar';}
+				if(!isset($_SESSION['caja_rendida_basicos']['idAprobado']) OR $_SESSION['caja_rendida_basicos']['idAprobado']=='' ){             $error['idAprobado']      = 'error/No ha seleccionado a la persona que aprobo';}
 				
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la rendicion de caja';
@@ -3480,7 +2707,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				idUsuario,idTipo,idEstado,fecha_auto,Creacion_fecha,Creacion_Semana,
 				Creacion_mes,Creacion_ano,Observaciones,idTrabajador,Valor,
 				idSolicitado, idRevisado, idAprobado) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3527,7 +2754,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `caja_chica_facturacion_existencias` (idFacturacion, idCajaChica,
 							idSistema, idUsuario, idTipo, fecha_auto, Creacion_fecha, Creacion_mes, Creacion_ano,
 							idDocPago, N_Doc, Valor) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -3558,7 +2785,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `caja_chica_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -3575,12 +2802,8 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					/*********************************************************************/		
 					//Consulto el saldo para poder sumarlo
-					$query = "SELECT MontoActual
-					FROM `caja_chica_listado`
-					WHERE idCajaChica = {$_SESSION['caja_rendida_basicos']['idCajaChica']} ";
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
-					
+					$rowResultado = db_select_data (false, 'MontoActual', 'caja_chica_listado', '', 'idCajaChica ='.$_SESSION['caja_rendida_basicos']['idCajaChica'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 					//Actualizo el monto
 					$nuevoMonto = $rowResultado['MontoActual'] - $_SESSION['caja_rendida_basicos']['Valor'];
 					$a = "MontoActual='".$nuevoMonto."'" ;
@@ -3638,7 +2861,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					idUsuario,idTipo,idEstado,fecha_auto,Creacion_fecha,Creacion_Semana,
 					Creacion_mes,Creacion_ano,Observaciones,Valor, idFacturacionRelacionada,
 					idSolicitado, idRevisado, idAprobado) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -3683,7 +2906,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								$query  = "INSERT INTO `caja_chica_facturacion_rendiciones` (idFacturacion, idCajaChica,
 								idSistema, idUsuario, idTipo, fecha_auto, Creacion_fecha, Creacion_mes, Creacion_ano,
 								Item, Valor) 
-								VALUES ({$a} )";
+								VALUES (".$a.")";
 								//Consulta
 								$resultado = mysqli_query ($dbConn, $query);
 								//Si ejecuto correctamente la consulta
@@ -3725,7 +2948,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								// inserto los datos de registro en la db
 								$query  = "INSERT INTO `caja_chica_facturacion_archivos` (idFacturacion, idCajaChica, idSistema, idUsuario, Creacion_fecha,
 								Creacion_mes, Creacion_ano, Nombre) 
-								VALUES ({$a} )";
+								VALUES (".$a.")";
 								//Consulta
 								$resultado = mysqli_query ($dbConn, $query);
 								//Si ejecuto correctamente la consulta
@@ -3755,7 +2978,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `caja_chica_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta

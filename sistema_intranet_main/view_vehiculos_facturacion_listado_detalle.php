@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 //Se traen todos los datos
 $query = "SELECT
 vehiculos_facturacion_listado_detalle.idFacturacionDetalle,
@@ -102,7 +115,7 @@ LEFT JOIN `core_ubicacion_ciudad`    sisciu     ON sisciu.idCiudad              
 LEFT JOIN `core_ubicacion_comunas`   apocom     ON apocom.idComuna                      = apoderados_listado.idComuna
 LEFT JOIN `core_ubicacion_ciudad`    apociu     ON apociu.idCiudad                      = apoderados_listado.idCiudad
 
-WHERE vehiculos_facturacion_listado_detalle.idFacturacionDetalle = {$_GET['view']} ";
+WHERE vehiculos_facturacion_listado_detalle.idFacturacionDetalle = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -113,20 +126,13 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowDatos = mysqli_fetch_assoc ($resultado);
 
 
-
+ 
 
 ?>
 
@@ -134,7 +140,7 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 	
 	<div class="row no-print">
 		<div class="col-xs-12">
-			<a target="new" href="view_facturacion_to_print_1.php?view=" class="btn btn-default pull-right" style="margin-right: 5px;"><i class="fa fa-print"></i> Imprimir</a>
+			<a target="new" href="view_facturacion_to_print_1.php?view=<?php echo $X_Puntero; ?>" class="btn btn-default pull-right" style="margin-right: 5px;"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>
 
 		</div>
 	</div>
@@ -162,10 +168,10 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 						<div class="panel-body">
 							<p>
 								<?php 
-								if(isset($rowDatos['SistemaRut'])&&$rowDatos['SistemaRut']!=''){                 echo 'R.U.T.: '.$rowDatos['SistemaRut'].'<br>';}
-								if(isset($rowDatos['SistemaDireccion'])&&$rowDatos['SistemaDireccion']!=''){     echo $rowDatos['SistemaDireccion'].' '.$rowDatos['SistemaComuna'].' '.$rowDatos['SistemaCiudad'].'<br>';}
-								if(isset($rowDatos['SistemaFono1'])&&$rowDatos['SistemaFono1']!=''){             echo 'Telefono Fijo: '.$rowDatos['SistemaFono1'].'<br>';}
-								if(isset($rowDatos['SistemaFono2'])&&$rowDatos['SistemaFono2']!=''){             echo 'Celular: '.$rowDatos['SistemaFono2'].'<br>';}
+								if(isset($rowDatos['SistemaRut'])&&$rowDatos['SistemaRut']!=''){                 echo 'R.U.T.: '.$rowDatos['SistemaRut'].'<br/>';}
+								if(isset($rowDatos['SistemaDireccion'])&&$rowDatos['SistemaDireccion']!=''){     echo $rowDatos['SistemaDireccion'].' '.$rowDatos['SistemaComuna'].' '.$rowDatos['SistemaCiudad'].'<br/>';}
+								if(isset($rowDatos['SistemaFono1'])&&$rowDatos['SistemaFono1']!=''){             echo 'Telefono Fijo: '.$rowDatos['SistemaFono1'].'<br/>';}
+								if(isset($rowDatos['SistemaFono2'])&&$rowDatos['SistemaFono2']!=''){             echo 'Celular: '.$rowDatos['SistemaFono2'].'<br/>';}
 								
 								?>
 							</p>
@@ -186,10 +192,10 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 						<div class="panel-body">
 							<p>
 								<?php 
-								if(isset($rowDatos['ApoderadoRut'])&&$rowDatos['ApoderadoRut']!=''){                 echo 'R.U.T.: '.$rowDatos['ApoderadoRut'].'<br>';}
-								if(isset($rowDatos['ApoderadoDireccion'])&&$rowDatos['ApoderadoDireccion']!=''){     echo $rowDatos['ApoderadoDireccion'].' '.$rowDatos['ApoderadoComuna'].' '.$rowDatos['ApoderadoCiudad'].'<br>';}
-								if(isset($rowDatos['ApoderadoFono1'])&&$rowDatos['ApoderadoFono1']!=''){             echo 'Telefono Fijo: '.$rowDatos['ApoderadoFono1'].'<br>';}
-								if(isset($rowDatos['ApoderadoFono2'])&&$rowDatos['ApoderadoFono2']!=''){             echo 'Celular: '.$rowDatos['ApoderadoFono2'].'<br>';}
+								if(isset($rowDatos['ApoderadoRut'])&&$rowDatos['ApoderadoRut']!=''){                 echo 'R.U.T.: '.$rowDatos['ApoderadoRut'].'<br/>';}
+								if(isset($rowDatos['ApoderadoDireccion'])&&$rowDatos['ApoderadoDireccion']!=''){     echo $rowDatos['ApoderadoDireccion'].' '.$rowDatos['ApoderadoComuna'].' '.$rowDatos['ApoderadoCiudad'].'<br/>';}
+								if(isset($rowDatos['ApoderadoFono1'])&&$rowDatos['ApoderadoFono1']!=''){             echo 'Telefono Fijo: '.$rowDatos['ApoderadoFono1'].'<br/>';}
+								if(isset($rowDatos['ApoderadoFono2'])&&$rowDatos['ApoderadoFono2']!=''){             echo 'Celular: '.$rowDatos['ApoderadoFono2'].'<br/>';}
 								
 								?>
 							</p>
@@ -203,7 +209,7 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 					<tr>
 						<th><h4>Vehiculo</h4></th>
 						<th><h4>Nombre</h4></th>
-						<th width="100px" class="text-right"><h4>Total Item</h4></th>
+						<th width="100px" align="right"><h4>Total Item</h4></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -212,35 +218,35 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_1_Nombre'].' Patente '.$rowDatos['Vehiculo_1_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_1_Nombre'].' '.$rowDatos['Hijo_1_ApellidoPat'].' '.$rowDatos['Hijo_1_ApellidoMat']; ?></td>
-							<td class="text-right"><?php echo Valores($rowDatos['Monto_1'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_1'], 0);?></td>
 						</tr>	
 					<?php }?>
 					<?php if(isset($rowDatos['Vehiculo_2_Nombre'])&&$rowDatos['Vehiculo_2_Nombre']!=''){ ?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_2_Nombre'].' Patente '.$rowDatos['Vehiculo_2_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_2_Nombre'].' '.$rowDatos['Hijo_2_ApellidoPat'].' '.$rowDatos['Hijo_2_ApellidoMat']; ?></td>
-							<td class="text-right"><?php echo Valores($rowDatos['Monto_2'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_2'], 0);?></td>
 						</tr>	
 					<?php }?>
 					<?php if(isset($rowDatos['Vehiculo_3_Nombre'])&&$rowDatos['Vehiculo_3_Nombre']!=''){ ?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_3_Nombre'].' Patente '.$rowDatos['Vehiculo_3_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_3_Nombre'].' '.$rowDatos['Hijo_3_ApellidoPat'].' '.$rowDatos['Hijo_3_ApellidoMat']; ?></td>
-							<td class="text-right"><?php echo Valores($rowDatos['Monto_3'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_3'], 0);?></td>
 						</tr>	
 					<?php }?>
 					<?php if(isset($rowDatos['Vehiculo_4_Nombre'])&&$rowDatos['Vehiculo_4_Nombre']!=''){ ?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_4_Nombre'].' Patente '.$rowDatos['Vehiculo_4_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_4_Nombre'].' '.$rowDatos['Hijo_4_ApellidoPat'].' '.$rowDatos['Hijo_4_ApellidoMat']; ?></td>
-							<td class="text-right"><?php echo Valores($rowDatos['Monto_4'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_4'], 0);?></td>
 						</tr>	
 					<?php }?>
 					<?php if(isset($rowDatos['Vehiculo_5_Nombre'])&&$rowDatos['Vehiculo_5_Nombre']!=''){ ?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_5_Nombre'].' Patente '.$rowDatos['Vehiculo_5_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_5_Nombre'].' '.$rowDatos['Hijo_5_ApellidoPat'].' '.$rowDatos['Hijo_5_ApellidoMat']; ?></td>
-							<td class="text-right"><?php echo Valores($rowDatos['Monto_5'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_5'], 0);?></td>
 						</tr>	
 					<?php }?>
 								
@@ -249,19 +255,19 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 					
 					<tr>
 						<td colspan="2"><strong>Subtotal</strong></td>
-						<td class="text-right"><strong><?php echo Valores($rowDatos['MontoSubTotal'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($rowDatos['MontoSubTotal'], 0); ?></strong></td>
 					</tr>
 					<tr>
 						<td colspan="2"><strong>Atrasos</strong></td>
-						<td class="text-right"><strong><?php echo Valores($rowDatos['MontoAtraso'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($rowDatos['MontoAtraso'], 0); ?></strong></td>
 					</tr>
 					<tr>
 						<td colspan="2"><strong>Adelantos</strong></td>
-						<td class="text-right"><strong><?php echo Valores($rowDatos['MontoAdelanto'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($rowDatos['MontoAdelanto'], 0); ?></strong></td>
 					</tr>
 					<tr>
 						<td colspan="2"><strong>Total</strong></td>
-						<td class="text-right"><strong><?php echo Valores($rowDatos['MontoTotal'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($rowDatos['MontoTotal'], 0); ?></strong></td>
 					</tr>
 					
 					
@@ -286,13 +292,31 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
  
           
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

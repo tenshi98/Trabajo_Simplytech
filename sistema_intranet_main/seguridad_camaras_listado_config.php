@@ -65,7 +65,7 @@ if ( ! empty($_GET['edit_camara']) ) {
 // tomo los datos del usuario
 $query = "SELECT idSubconfiguracion
 FROM `seguridad_camaras_listado`
-WHERE idCamara = {$_GET['id']}";
+WHERE idCamara = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -82,9 +82,9 @@ if(!$resultado){
 $rowConfig = mysqli_fetch_assoc ($resultado);	 
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre,idTipoCamara,Config_usuario,Config_Password,Config_IP,
-Config_Puerto,Config_Web,idEstado
+Config_Puerto,Config_Web,idEstado, Chanel
 FROM `seguridad_camaras_listado_canales`
-WHERE idCanal = {$_GET['edit_camara']}";
+WHERE idCanal = ".$_GET['edit_camara'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -103,7 +103,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Editar Camara</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -119,30 +119,33 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Config_IP)) {        $x5  = $Config_IP;        }else{$x5  = $rowdata['Config_IP'];}
 				if(isset($Config_Puerto)) {    $x6  = $Config_Puerto;    }else{$x6  = $rowdata['Config_Puerto'];}
 				if(isset($Config_Web)) {       $x7  = $Config_Web;       }else{$x7  = $rowdata['Config_Web'];}
-				if(isset($idEstado)) {         $x8  = $idEstado;         }else{$x8  = $rowdata['idEstado'];}
+				if(isset($Chanel)) {           $x8  = $Chanel;           }else{$x8  = $rowdata['Chanel'];}
+				if(isset($idEstado)) {         $x9  = $idEstado;         }else{$x9  = $rowdata['idEstado'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre dela Camara', 'Nombre', $x1, 2);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre dela Camara', 'Nombre', $x1, 2);	
 				//se verifica que permita subconfiguracion
 				if(isset($rowConfig['idSubconfiguracion'])&&$rowConfig['idSubconfiguracion']==1){
-					$Form_Imputs->form_select('Tipo de Camara','idTipoCamara', $x2, 1, 'idTipoCamara', 'Nombre', 'core_tipos_camara', 0, '', $dbConn);
-					$Form_Imputs->form_input_text( 'Usuario', 'Config_usuario', $x3, 1);
-					$Form_Imputs->form_input_text( 'Password', 'Config_Password', $x4, 1);
-					$Form_Imputs->form_input_text( 'Web o IP', 'Config_IP', $x5, 1);
-					$Form_Imputs->form_input_number_spinner('N° Puerto','Config_Puerto', $x6, 0, 10000, 1, 0, 1);
-					$Form_Imputs->form_input_text( 'Web configuracion', 'Config_Web', $x7, 1);
+					$Form_Inputs->form_select('Tipo de Camara','idTipoCamara', $x2, 1, 'idTipoCamara', 'Nombre', 'core_tipos_camara', 0, '', $dbConn);
+					$Form_Inputs->form_input_text('Usuario', 'Config_usuario', $x3, 1);
+					$Form_Inputs->form_input_text('Password', 'Config_Password', $x4, 1);
+					$Form_Inputs->form_input_text('Web o IP', 'Config_IP', $x5, 1);
+					$Form_Inputs->form_input_number_spinner('N° Puerto','Config_Puerto', $x6, 0, 10000, 1, 0, 1);
+					$Form_Inputs->form_input_text('Web configuracion', 'Config_Web', $x7, 1);
 				}
-				$Form_Imputs->form_select('Estado','idEstado', $x8, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
+				$Form_Inputs->form_post_data(2, 'Este numero de canal debe de coincidir con el que figura en el DVR O NVR.');
+				$Form_Inputs->form_input_number_spinner('N° de Canal','Chanel', $x8, 0, 99, 1, 0, 2);
+				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
 				
-				$Form_Imputs->form_input_hidden('idCamara', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('idCanal', $_GET['edit_camara'], 2);
+				$Form_Inputs->form_input_hidden('idCamara', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idCanal', $_GET['edit_camara'], 2);
 				?>
 
 							
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_camara">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?>
@@ -151,10 +154,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div> 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 // tomo los datos del usuario
 $query = "SELECT idSubconfiguracion
 FROM `seguridad_camaras_listado`
-WHERE idCamara = {$_GET['id']}";
+WHERE idCamara = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -171,10 +177,11 @@ if(!$resultado){
 $rowConfig = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
- <div class="col-sm-8 fcenter">
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Camara</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -189,28 +196,32 @@ $rowConfig = mysqli_fetch_assoc ($resultado);
 				if(isset($Config_IP)) {        $x5  = $Config_IP;        }else{$x5  = '';}
 				if(isset($Config_Puerto)) {    $x6  = $Config_Puerto;    }else{$x6  = '';}
 				if(isset($Config_Web)) {       $x7  = $Config_Web;       }else{$x7  = '';}
+				if(isset($Chanel)) {           $x8  = $Chanel;           }else{$x8  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre de la Camara', 'Nombre', $x1, 2);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre de la Camara', 'Nombre', $x1, 2);	
 				//se verifica que permita subconfiguracion
 				if(isset($rowConfig['idSubconfiguracion'])&&$rowConfig['idSubconfiguracion']==1){
-					$Form_Imputs->form_select('Tipo de Camara','idTipoCamara', $x2, 1, 'idTipoCamara', 'Nombre', 'core_tipos_camara', 0, '', $dbConn);
-					$Form_Imputs->form_input_text( 'Usuario', 'Config_usuario', $x3, 1);
-					$Form_Imputs->form_input_text( 'Password', 'Config_Password', $x4, 1);
-					$Form_Imputs->form_input_text( 'Web o IP', 'Config_IP', $x5, 1);
-					$Form_Imputs->form_input_number_spinner('N° Puerto','Config_Puerto', $x6, 0, 10000, 1, 0, 1);
-					$Form_Imputs->form_input_text( 'Web configuracion', 'Config_Web', $x7, 1);
+					$Form_Inputs->form_select('Tipo de Camara','idTipoCamara', $x2, 1, 'idTipoCamara', 'Nombre', 'core_tipos_camara', 0, '', $dbConn);
+					$Form_Inputs->form_input_text('Usuario', 'Config_usuario', $x3, 1);
+					$Form_Inputs->form_input_text('Password', 'Config_Password', $x4, 1);
+					$Form_Inputs->form_input_text('Web o IP', 'Config_IP', $x5, 1);
+					$Form_Inputs->form_input_number_spinner('N° Puerto','Config_Puerto', $x6, 0, 10000, 1, 0, 1);
+					$Form_Inputs->form_input_text('Web configuracion', 'Config_Web', $x7, 1);
 				}
-				$Form_Imputs->form_input_hidden('idCamara', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_post_data(2, 'Este numero de canal debe de coincidir con el que figura en el DVR O NVR.');
+				$Form_Inputs->form_input_number_spinner('N° de Canal','Chanel', $x8, 0, 99, 1, 0, 2);
+				
+				$Form_Inputs->form_input_hidden('idCamara', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				
 				?>
 
 							
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?>
@@ -220,9 +231,9 @@ $rowConfig = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } else  { 	 
 // tomo los datos del usuario
-$query = "SELECT Nombre, N_Camaras
+$query = "SELECT Nombre, N_Camaras, idSubconfiguracion
 FROM `seguridad_camaras_listado`
-WHERE idCamara = {$_GET['id']}";
+WHERE idCamara = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -240,10 +251,21 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 //Se traen las rutas
 $arrCamaras = array();
-$query = "SELECT idCanal,idCamara,Nombre
+$query = "SELECT 
+seguridad_camaras_listado_canales.idCanal,
+seguridad_camaras_listado_canales.idCamara,
+seguridad_camaras_listado_canales.Nombre,
+seguridad_camaras_listado_canales.Chanel,
+seguridad_camaras_listado_canales.Config_usuario,
+seguridad_camaras_listado_canales.Config_Password,
+seguridad_camaras_listado_canales.Config_IP,
+core_estados.Nombre AS estado,
+seguridad_camaras_listado_canales.idEstado
+
 FROM `seguridad_camaras_listado_canales`
-WHERE idCamara = {$_GET['id']}
-ORDER BY idCanal ASC";
+LEFT JOIN `core_estados`   ON core_estados.idEstado = seguridad_camaras_listado_canales.idEstado
+WHERE seguridad_camaras_listado_canales.idCamara = ".$_GET['id']."
+ORDER BY seguridad_camaras_listado_canales.idCanal ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -270,34 +292,21 @@ foreach ($arrCamaras as $zona) {
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Grupo Camaras</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Camaras</span>
-			</div>
-		</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Editar Camaras');?>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<?php if ($rowlevel['level']>=3&&$rowdata['N_Camaras']>$total_cam){?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Camara</a><?php } ?>
 	</div>
-	
-	<?php if ($rowlevel['level']>=3&&$rowdata['N_Camaras']>$total_cam){?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Camara</a><?php } ?>
-
 </div>
+<div class="clearfix"></div>   
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'seguridad_camaras_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'seguridad_camaras_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'seguridad_camaras_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-				<li class="active"><a href="<?php echo 'seguridad_camaras_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Camaras</a></li>
+				<li class=""><a href="<?php echo 'seguridad_camaras_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'seguridad_camaras_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'seguridad_camaras_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+				<li class="active"><a href="<?php echo 'seguridad_camaras_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Editar Camaras</a></li>
 			</ul>	
 		</header>
         <div class="table-responsive">
@@ -305,25 +314,39 @@ foreach ($arrCamaras as $zona) {
 				<thead>
 					<tr role="row">
 						<th>Nombre</th>
+						<?php if(isset($rowdata['idSubconfiguracion'])&&$rowdata['idSubconfiguracion']==1){ ?>
+							<th>Usuario</th>
+							<th>Password</th>
+							<th>IP</th>
+						<?php } ?>
+						<th width="160">N° de Canal</th>
+						<th width="160">Estado</th>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrCamaras as $zona) { ?>
-					<tr class="odd">		
-						<td><?php echo $zona['Nombre']; ?></td>	
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_camara='.$zona['idCanal']; ?>" title="Editar Informacion Basica" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									//se verifica que el usuario no sea uno mismo
-									$ubicacion = $new_location.'&idCamara='.$zona['idCamara'].'&del_camara='.$zona['idCanal'];
-									$dialogo   = '¿Realmente deseas eliminar la camara '.$zona['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
-								<?php } ?>								
-							</div>
-						</td>
-					</tr>
+						<tr class="odd">		
+							<td><?php echo $zona['Nombre']; ?></td>	
+							<?php if(isset($rowdata['idSubconfiguracion'])&&$rowdata['idSubconfiguracion']==1){ ?>
+								<td><?php echo $zona['Config_usuario']; ?></td>	
+								<td><?php echo $zona['Config_Password']; ?></td>	
+								<td><?php echo $zona['Config_IP']; ?></td>	
+							<?php } ?>
+							<td><?php echo $zona['Chanel']; ?></td>	
+							<td><label class="label <?php if(isset($zona['idEstado'])&&$zona['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $zona['estado']; ?></label></td>		
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_camara='.$zona['idCanal']; ?>" title="Editar Informacion Basica" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										//se verifica que el usuario no sea uno mismo
+										$ubicacion = $new_location.'&idCamara='.$zona['idCamara'].'&del_camara='.simpleEncode($zona['idCanal'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar la camara '.$zona['Nombre'].'?';?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>								
+								</div>
+							</td>
+						</tr>
 					<?php } ?>                    
 				</tbody>
 			</table>
@@ -334,8 +357,8 @@ foreach ($arrCamaras as $zona) {
 <?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php } ?>

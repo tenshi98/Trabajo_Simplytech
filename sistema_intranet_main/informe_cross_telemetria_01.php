@@ -20,8 +20,8 @@ if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){      $location 
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $location .= "&idPredio=".$_GET['idPredio'];              $search .= "&idPredio=".$_GET['idPredio'];}
 if(isset($_GET['idZona']) && $_GET['idZona'] != ''){                  $location .= "&idZona=".$_GET['idZona'];                  $search .= "&idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$search .="&fecha_desde={$_GET['fecha_desde']}";
-	$search .="&fecha_hasta={$_GET['fecha_hasta']}";
+	$search .="&fecha_desde=".$_GET['fecha_desde'];
+	$search .="&fecha_hasta=".$_GET['fecha_hasta'];
 }
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -42,7 +42,7 @@ $z = "WHERE telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabl
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $z .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
 if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $z .= " AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$z.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '{$_GET['fecha_desde']}' AND '{$_GET['fecha_hasta']}'";
+	$z.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
 /**********************************************************/
 //Numero del sensor
@@ -58,10 +58,10 @@ cross_predios_listado_zonas.Nombre AS CuartelNombre,
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona,
 cross_predios_listado_zonas.idPredio,
 
-MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."!=999,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedMin,
-MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."!=999,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedMax,
-AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."!=999,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedProm,
-STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."!=999,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedDesStan,
+MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedMin,
+MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedMax,
+AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedProm,
+STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedDesStan,
 COUNT(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla) AS CantidadMuestra					
 
 FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
@@ -70,12 +70,16 @@ LEFT JOIN `cross_predios_listado`         ON cross_predios_listado.idPredio     
 LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria        = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
 
 ".$z."
+
 GROUP BY cross_predios_listado_zonas.idPredio, 
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona,
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
+
 ORDER BY cross_predios_listado_zonas.idPredio ASC, 
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona ASC,
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria ASC
+
+LIMIT 10000
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -101,7 +105,7 @@ array_push( $arrMediciones,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen Mediciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen Mediciones</h5>
 		</header>
 		<div class="table-responsive">    
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -138,12 +142,12 @@ array_push( $arrMediciones,$row );
 									$search .="&idZona=".$med['idZona'];
 									$search .="&idPredio=".$med['idPredio'];
 									if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-										$search .="&fecha_desde={$_GET['fecha_desde']}";
-										$search .="&fecha_hasta={$_GET['fecha_hasta']}";
+										$search .="&fecha_desde=".$_GET['fecha_desde'];
+										$search .="&fecha_hasta=".$_GET['fecha_hasta'];
 									}
 									?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_cross_telemetria_01_map.php?bla=bla'.$search; ?>" title="Ver Mapa" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-map"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_cross_telemetria_01_view.php?bla=bla'.$search; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_cross_telemetria_01_map.php?bla=bla'.$search; ?>" title="Ver Mapa" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-map" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_cross_telemetria_01_view.php?bla=bla'.$search; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -156,26 +160,28 @@ array_push( $arrMediciones,$row );
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 $y = "idEstado=1";
-$x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$w = "telemetria_listado.idSistema>=0  AND telemetria_listado.idEstado=1";
-}else{
-	$w = "telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_equipos_telemetria.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']} AND telemetria_listado.idEstado=1";		
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
 } 
- ?>
+//Se escribe el dato
+$Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
+alert_post_data(2,1,1, $Alert_Text);
+?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -190,17 +196,17 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($fecha_hasta)) {            $x5  = $fecha_hasta;            }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Imputs->form_select_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
 				}else{
-					$Form_Imputs->form_select_join_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+					$Form_Inputs->form_select_join_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
-				$Form_Imputs->form_select_depend1('Predio','idPredio', $x2, 2, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
-										 'Cuarteles','idZona', $x3, 2, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
+				$Form_Inputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
+										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_date('Fecha Desde','fecha_desde', $x4, 1);
-				$Form_Imputs->form_date('Fecha Hasta','fecha_hasta', $x5, 1);
+				$Form_Inputs->form_date('Fecha Desde','fecha_desde', $x4, 1);
+				$Form_Inputs->form_date('Fecha Hasta','fecha_hasta', $x5, 1);
 						
 				?> 
 

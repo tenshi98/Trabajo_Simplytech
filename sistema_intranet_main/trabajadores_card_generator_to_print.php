@@ -26,7 +26,7 @@ card_listado.idCardType,
 card_listado.idPosition
 
 FROM `card_listado`
-WHERE card_listado.idCard = {$_GET['idCard']}";
+WHERE card_listado.idCard = ".$_GET['idCard'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -36,15 +36,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowCard = mysqli_fetch_assoc ($resultado);
 
@@ -65,7 +58,7 @@ core_sistemas.Nombre AS Sistema
 FROM `trabajadores_listado`
 LEFT JOIN `core_sexo`       ON core_sexo.idSexo         = trabajadores_listado.idSexo
 LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema  = trabajadores_listado.idSistema
-WHERE trabajadores_listado.idTrabajador = {$_GET['idTrabajador']}";
+WHERE trabajadores_listado.idTrabajador = ".$_GET['idTrabajador'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -76,15 +69,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowTrabajador = mysqli_fetch_assoc ($resultado);
 
@@ -384,15 +370,15 @@ require_once 'core/Web.Header.Print.php';
 $html ='
 	<div id="identification_card">';
 		
-		if ($rowCard['idPosition']==1 or $rowCard['idPosition']==4 or $rowCard['idPosition']==7 or $rowCard['idPosition']==2 or $rowCard['idPosition']==5 or $rowCard['idPosition']==8) {
+		if ($rowCard['idPosition']==1 OR $rowCard['idPosition']==4 OR $rowCard['idPosition']==7 OR $rowCard['idPosition']==2 OR $rowCard['idPosition']==5 OR $rowCard['idPosition']==8) {
 			$html .= '
 			<div id="card_text">
 				<table>
-					<tr><td><b>Nombre</b></td><td><b>: '.$rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'].'</b></td></tr>
-					<tr><td><b>Rut</b></td><td>: '.$rowTrabajador['Rut'].'</td></tr>
-					<tr><td><b>Sexo</b></td><td>: '.$rowTrabajador['Sexo'].'</td></tr>
-					<tr><td><b>Fono</b></td><td>: '.$rowTrabajador['Fono'].'</td></tr>
-					<tr><td><b>Email</b></td><td>: '.$rowTrabajador['email'].'</td></tr>
+					<tr><td><strong>Nombre</strong></td><td><strong>: '.$rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'].'</strong></td></tr>
+					<tr><td><strong>Rut</strong></td><td>: '.$rowTrabajador['Rut'].'</td></tr>
+					<tr><td><strong>Sexo</strong></td><td>: '.$rowTrabajador['Sexo'].'</td></tr>
+					<tr><td><strong>Fono</strong></td><td>: '.$rowTrabajador['Fono'].'</td></tr>
+					<tr><td><strong>Email</strong></td><td>: '.$rowTrabajador['email'].'</td></tr>
 				</table> 
 			</div>';
 		}
@@ -401,9 +387,9 @@ $html ='
 			if ($rowCard['idPosition']!=2 && $rowCard['idPosition']!=5 && $rowCard['idPosition']!=8) {
 				$html .= '<div id="card_box">';
 					if ($rowTrabajador['Direccion_img']=='') {
-						$html .= '<img width="80px" height="100px" style="border:1px solid black;" src="'.DB_SITE.'/LIB_assets/img/usr.png"><br>';
+						$html .= '<img width="80px" height="100px" style="border:1px solid black;" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png"><br/>';
 					}else{
-						$html .= '<img width="80px" height="100px" style="border:1px solid black;"  src="upload/'.$rowTrabajador['Direccion_img'].'"><br>';
+						$html .= '<img width="80px" height="100px" style="border:1px solid black;"  src="upload/'.$rowTrabajador['Direccion_img'].'"><br/>';
 					}			
 					$html .= '
 					<div id="card_ID">
@@ -413,15 +399,15 @@ $html ='
 			}
 		}
 		
-		if ($rowCard['idPosition']==3 or $rowCard['idPosition']==6 or $rowCard['idPosition']==9) {
+		if ($rowCard['idPosition']==3 OR $rowCard['idPosition']==6 OR $rowCard['idPosition']==9) {
 			$html .= '
 			<div id="card_text">
 				<table>
-					<tr><td><b>Nombre</b></td><td><b>: '.$rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'].'</b></td></tr>
-					<tr><td><b>Rut</b></td><td>: '.$rowTrabajador['Rut'].'</td></tr>
-					<tr><td><b>Sexo</b></td><td>: '.$rowTrabajador['Sexo'].'</td></tr>
-					<tr><td><b>Fono</b></td><td>: '.$rowTrabajador['Fono'].'</td></tr>
-					<tr><td><b>Email</b></td><td>: '.$rowTrabajador['email'].'</td></tr>
+					<tr><td><strong>Nombre</strong></td><td><strong>: '.$rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'].'</strong></td></tr>
+					<tr><td><strong>Rut</strong></td><td>: '.$rowTrabajador['Rut'].'</td></tr>
+					<tr><td><strong>Sexo</strong></td><td>: '.$rowTrabajador['Sexo'].'</td></tr>
+					<tr><td><strong>Fono</strong></td><td>: '.$rowTrabajador['Fono'].'</td></tr>
+					<tr><td><strong>Email</strong></td><td>: '.$rowTrabajador['email'].'</td></tr>
 				</table> 
 			</div>';
 		}

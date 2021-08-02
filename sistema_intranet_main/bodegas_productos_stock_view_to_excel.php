@@ -25,29 +25,8 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$query = "SELECT Nombre	
-FROM `core_sistemas` 
-WHERE idSistema = '{$_GET['idSistema']}'  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
-	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
-}
-$rowEmpresa = mysqli_fetch_array ($resultado);
 
 // Se trae un listado con todos los datos
 $arrProductos = array();
@@ -74,8 +53,8 @@ LEFT JOIN `proveedor_listado`                           ON proveedor_listado.idP
 LEFT JOIN `clientes_listado`                            ON clientes_listado.idCliente                              = bodegas_productos_facturacion.idCliente
 LEFT JOIN `bodegas_productos_listado`                   ON bodegas_productos_listado.idBodega                      = bodegas_productos_facturacion_existencias.idBodega
 
-WHERE bodegas_productos_facturacion_existencias.idProducto={$_GET['view']}  
-AND bodegas_productos_facturacion_existencias.idBodega={$_GET['idBodega']}
+WHERE bodegas_productos_facturacion_existencias.idProducto=".$_GET['view']."  
+AND bodegas_productos_facturacion_existencias.idBodega=".$_GET['idBodega']."
 ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha DESC 
 LIMIT 100";
 //Consulta
@@ -87,15 +66,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProductos,$row );

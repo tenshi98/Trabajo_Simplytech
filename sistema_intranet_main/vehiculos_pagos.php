@@ -42,7 +42,7 @@ if ( ! empty($_GET['pagar']) ) {
 //obtengo los datos del cliente
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat
 FROM `apoderados_listado`
-WHERE idApoderado = '{$_GET['idApoderado']}' ";
+WHERE idApoderado = '".$_GET['idApoderado']."' ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -61,7 +61,7 @@ $rowCliente = mysqli_fetch_assoc ($resultado);
 //obtengo los datos de la ultima facturacion
 $query = "SELECT idFacturacionDetalle, MontoSubTotal,MontoAtraso,MontoAdelanto,MontoTotal,montoPago
 FROM `vehiculos_facturacion_listado_detalle`
-WHERE idApoderado = '{$_GET['idApoderado']}'
+WHERE idApoderado = '".$_GET['idApoderado']."'
 AND idEstado = 1
 ORDER BY Ano DESC, idMes DESC
 LIMIT 1";
@@ -96,7 +96,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 	  
 	<div class="col-sm-4">
 		<ul class="list-group inbox-options">
-			<li class="list-group-item"><i class="fa fa-inbox"></i>  Detalle Ultima Facturacion</li>
+			<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Detalle Ultima Facturacion</li>
 			<li class="list-group-item">		
 					
 				<div class="pull-left">Subtotal</div>
@@ -146,7 +146,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 		<ul class="list-group inbox-options">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
-				<li class="list-group-item"><i class="fa fa-inbox"></i>  Pago</li>
+				<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Pago</li>
 				<li class="list-group-item">		
 					<?php 
 					//Se verifican si existen los datos
@@ -156,22 +156,22 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 					if(isset($montoPago)) {    $x4  = $montoPago;     }else{$x4  = '';}
 						
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_date('Fecha Pago','Pagofecha', $x1, 2);
-					$Form_Imputs->form_select('Documento de Pago','idTipoPago', $x2, 2, 'idTipoPago', 'Nombre', 'sistema_tipos_pago', 0, '', $dbConn);
-					$Form_Imputs->form_input_text( 'N° Documento', 'nDocPago', $x3, 1);
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_date('Fecha Pago','Pagofecha', $x1, 2);
+					$Form_Inputs->form_select('Documento de Pago','idTipoPago', $x2, 2, 'idTipoPago', 'Nombre', 'sistema_tipos_pago', 0, '', $dbConn);
+					$Form_Inputs->form_input_text('N° Documento', 'nDocPago', $x3, 1);
 					echo '<div class="form-group" id="div_">
 							<label class="control-label col-sm-4" id="label_">Total a Pagar</label>
 							<div class="col-sm-8">
 								<input value="'.Valores($calculo, 0).'" type="text" placeholder="Unidad de Medida" class="form-control"  name="unimed" id="unimed" disabled >
 							</div>
 						</div>';
-					$Form_Imputs->form_values('Monto Pagado', 'montoPago', $x4, 2);
+					$Form_Inputs->form_values('Monto Pagado', 'montoPago', $x4, 2);
 						
-					$Form_Imputs->form_input_hidden('idUsuarioPago', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-					$Form_Imputs->form_input_hidden('idApoderado', $_GET['idApoderado'], 2);
-					$Form_Imputs->form_input_hidden('idFacturacionDetalle', $rowFacturacion['idFacturacionDetalle'], 2);
-					$Form_Imputs->form_input_hidden('montoPactado', $calculo, 2);
+					$Form_Inputs->form_input_hidden('idUsuarioPago', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+					$Form_Inputs->form_input_hidden('idApoderado', $_GET['idApoderado'], 2);
+					$Form_Inputs->form_input_hidden('idFacturacionDetalle', $rowFacturacion['idFacturacionDetalle'], 2);
+					$Form_Inputs->form_input_hidden('montoPactado', $calculo, 2);
 				
 					?>
 
@@ -196,8 +196,8 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 
  
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" >
-<a href="<?php echo $location.'&submit=Buscar&idApoderado='.$_GET['idApoderado']; ?>"  class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" >
+<a href="<?php echo $location.'&submit=Buscar&idApoderado='.$_GET['idApoderado']; ?>"  class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div> 
 
@@ -206,7 +206,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 //obtengo los datos del cliente
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat
 FROM `apoderados_listado`
-WHERE idApoderado = '{$_GET['idApoderado']}' ";
+WHERE idApoderado = '".$_GET['idApoderado']."' ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -225,7 +225,7 @@ $rowCliente = mysqli_fetch_assoc ($resultado);
 //obtengo los datos de la ultima facturacion
 $query = "SELECT MontoSubTotal,MontoAtraso,MontoAdelanto,MontoTotal,montoPago
 FROM `vehiculos_facturacion_listado_detalle`
-WHERE idApoderado = '{$_GET['idApoderado']}'
+WHERE idApoderado = '".$_GET['idApoderado']."'
 AND idEstado = 1
 ORDER BY Ano DESC, idMes DESC
 LIMIT 1";
@@ -255,7 +255,7 @@ core_estado_facturacion.Nombre AS Estado
 
 FROM `vehiculos_facturacion_listado_detalle`
 LEFT JOIN `core_estado_facturacion` ON core_estado_facturacion.idEstado = vehiculos_facturacion_listado_detalle.idEstado
-WHERE vehiculos_facturacion_listado_detalle.idApoderado = '{$_GET['idApoderado']}'
+WHERE vehiculos_facturacion_listado_detalle.idApoderado = '".$_GET['idApoderado']."'
 AND vehiculos_facturacion_listado_detalle.idEstado = 1
 ORDER BY vehiculos_facturacion_listado_detalle.Ano DESC, vehiculos_facturacion_listado_detalle.idMes DESC";
 //Consulta
@@ -293,7 +293,7 @@ array_push( $arrFacturaciones,$row );
 		<div class="col-sm-8">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>Facturaciones Pendientes</h5>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Facturaciones Pendientes</h5>
 				</header>
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -312,10 +312,10 @@ array_push( $arrFacturaciones,$row );
 								<td><?php echo $fac['Ano']; ?></td>
 								<td><?php echo numero_a_mes($fac['idMes']); ?></td>
 								<td><?php echo $fac['Estado']; ?></td>
-								<td><?php echo  Valores($fac['MontoTotal'], 0); ?></td>
+								<td align="right"><?php echo  Valores($fac['MontoTotal'], 0); ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.$fac['idFacturacionDetalle']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>
@@ -331,7 +331,7 @@ array_push( $arrFacturaciones,$row );
 		
 		<div class="col-sm-4 mail-left-box">
 			<ul class="list-group inbox-options">
-				<li class="list-group-item"><i class="fa fa-inbox"></i>  Detalle Ultima Facturacion</li>
+				<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Detalle Ultima Facturacion</li>
 				<li class="list-group-item">		
 					
 					<div class="pull-left">Subtotal</div>
@@ -383,11 +383,11 @@ array_push( $arrFacturaciones,$row );
  
 <div class="clearfix"></div>
 <?php if ($rowlevel['level']>=3){?>
-	<div class="col-sm-12 fcenter" >
+	<div class="col-sm-12" >
 		<?php if($rowFacturacion['MontoTotal']!=0){ ?>
 		<a href="<?php echo $location.'&idApoderado='.$_GET['idApoderado'].'&pagar=true'; ?>"  class="btn btn-primary fright margin_width"><i class="fa fa-usd" aria-hidden="true"></i> Pagar</a>
 		<?php } ?>
-		<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div> 
 <?php } ?> 
@@ -401,7 +401,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Seleccionar Apoderado</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -412,10 +412,10 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 				if(isset($idApoderado)) {        $x1  = $idApoderado;        }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Apoderado','idApoderado', $x1, 2, 'idApoderado', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'apoderados_listado', $z, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Apoderado','idApoderado', $x1, 2, 'idApoderado', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'apoderados_listado', $z, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 2); 
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2); 
 				?>
 				
 				<div class="form-group">

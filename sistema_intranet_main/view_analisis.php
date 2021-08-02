@@ -21,11 +21,24 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 //Preconsulta
 $query = "SELECT maquinas_listado_matriz.cantPuntos
 FROM `analisis_listado`
 LEFT JOIN `maquinas_listado_matriz`   ON maquinas_listado_matriz.idMatriz   = analisis_listado.idMatriz
-WHERE analisis_listado.idAnalisis = {$_GET['view']}";
+WHERE analisis_listado.idAnalisis = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -36,15 +49,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowpre = mysqli_fetch_assoc ($resultado);
 /**********************************************************************/	
@@ -126,7 +132,7 @@ LEFT JOIN `laboratorio_listado`                     ON laboratorio_listado.idLab
 LEFT JOIN `core_ubicacion_ciudad`   lab_ciudad      ON lab_ciudad.idCiudad                     = laboratorio_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  lab_comuna      ON lab_comuna.idComuna                     = laboratorio_listado.idComuna
 
-WHERE analisis_listado.idAnalisis = {$_GET['view']}";
+WHERE analisis_listado.idAnalisis = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -137,15 +143,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado);	
 
@@ -165,15 +164,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUnimed,$row );
@@ -194,15 +186,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrGrupo,$row );
@@ -223,15 +208,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProducto,$row );
@@ -252,15 +230,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrDispersancia,$row );
@@ -281,15 +252,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrFlashpoint,$row );
@@ -303,7 +267,7 @@ array_push( $arrFlashpoint,$row );
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> <?php echo $row_data['Analisis_Nombre']?>.
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['Analisis_Nombre']?>.
 				<small class="pull-right">Fecha Reporte: <?php echo Fecha_estandar($row_data['Analisis_f_reporte'])?></small>
 			</h2>
 		</div>   
@@ -319,12 +283,12 @@ array_push( $arrFlashpoint,$row );
 					<div class="col-sm-4 invoice-col">
 						Laboratorio
 						<address>
-							<strong>'.$row_data['SistemaOrigen'].'</strong><br>
-							'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
-							'.$row_data['SistemaOrigenDireccion'].'<br>
-							Fono : '.$row_data['SistemaOrigenFono'].'<br>
-							Rut: '.$row_data['SistemaOrigenRut'].'<br>
-							Email: '.$row_data['SistemaOrigenEmail'].'<br>
+							<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
+							'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
+							'.$row_data['SistemaOrigenDireccion'].'<br/>
+							Fono : '.$row_data['SistemaOrigenFono'].'<br/>
+							Rut: '.$row_data['SistemaOrigenRut'].'<br/>
+							Email: '.$row_data['SistemaOrigenEmail'].'<br/>
 						</address>
 					</div>';
 				//si es externo muestro los datos del laboratorio	
@@ -333,14 +297,14 @@ array_push( $arrFlashpoint,$row );
 					<div class="col-sm-4 invoice-col">
 						Laboratorio
 						<address>
-							<strong>'.$row_data['LaboratorioNombre'].'</strong><br>
-							'.$row_data['LaboratorioCiudad'].', '.$row_data['LaboratorioComuna'].'<br>
-							'.$row_data['LaboratorioDireccion'].'<br>
-							Fono 1 : '.$row_data['LaboratorioFono1'].'<br>
-							Fono 2 : '.$row_data['LaboratorioFono2'].'<br>
-							Rut: '.$row_data['LaboratorioRut'].'<br>
-							Email: '.$row_data['LaboratorioEmail'].'<br>
-							Persona Contacto: '.$row_data['LaboratorioContacto'].'<br>
+							<strong>'.$row_data['LaboratorioNombre'].'</strong><br/>
+							'.$row_data['LaboratorioCiudad'].', '.$row_data['LaboratorioComuna'].'<br/>
+							'.$row_data['LaboratorioDireccion'].'<br/>
+							Fono 1 : '.$row_data['LaboratorioFono1'].'<br/>
+							Fono 2 : '.$row_data['LaboratorioFono2'].'<br/>
+							Rut: '.$row_data['LaboratorioRut'].'<br/>
+							Email: '.$row_data['LaboratorioEmail'].'<br/>
+							Persona Contacto: '.$row_data['LaboratorioContacto'].'<br/>
 						</address>
 					</div>';
 				}
@@ -349,11 +313,11 @@ array_push( $arrFlashpoint,$row );
 				<div class="col-sm-4 invoice-col">
 					'.$x_column_maquina_sing.'
 					<address>
-						<strong>'.$row_data['MaquinaNombre'].'</strong><br>
-						Codigo: '.$row_data['MaquinaCodigo'].'<br>
-						Modelo: '.$row_data['MaquinaModelo'].'<br>
-						Serie: '.$row_data['MaquinaSerie'].'<br>
-						Fabricante: '.$row_data['MaquinaFabricante'].'<br>
+						<strong>'.$row_data['MaquinaNombre'].'</strong><br/>
+						Codigo: '.$row_data['MaquinaCodigo'].'<br/>
+						Modelo: '.$row_data['MaquinaModelo'].'<br/>
+						Serie: '.$row_data['MaquinaSerie'].'<br/>
+						Fabricante: '.$row_data['MaquinaFabricante'].'<br/>
 						Ubicacion: '.$row_data['MaquinaUbicacion'];
 						if(isset($row_data['MaquinaUbicacion_lvl_1'])&&$row_data['MaquinaUbicacion_lvl_1']!=''){ 
 							echo ' - '.$row_data['MaquinaUbicacion_lvl_1'];
@@ -375,24 +339,24 @@ array_push( $arrFlashpoint,$row );
 				</div>
 			   
 				<div class="col-sm-4 invoice-col">
-					<strong>Datos</strong><br>
-					<b>Estado: </b>'.$row_data['Analisis_Estado'].'<br>
-					<b>Sistema: </b>'.$row_data['Analisis_Sistema'].'<br>';
+					<strong>Datos</strong><br/>
+					<strong>Estado: </strong>'.$row_data['Analisis_Estado'].'<br/>
+					<strong>Sistema: </strong>'.$row_data['Analisis_Sistema'].'<br/>';
 					
 					if(isset($row_data['Analisis_OT'])&&$row_data['Analisis_OT']!=''&&$row_data['Analisis_OT']!=0){ 
-						echo '<b>Orden Trabajo Relacionada: </b>'.$row_data['Analisis_OT'].'<br>';
+						echo '<strong>Orden Trabajo Relacionada: </strong>'.$row_data['Analisis_OT'].'<br/>';
 					}
 					if(isset($row_data['Analisis_f_muestreo'])&&$row_data['Analisis_f_muestreo']!=''&&$row_data['Analisis_f_muestreo']!='0000-00-00'){ 
-						echo '<b>Fecha Muestreo : </b>'.Fecha_estandar($row_data['Analisis_f_muestreo']).'<br>';
+						echo '<strong>Fecha Muestreo : </strong>'.Fecha_estandar($row_data['Analisis_f_muestreo']).'<br/>';
 					}
 					if(isset($row_data['Analisis_f_recibida'])&&$row_data['Analisis_f_recibida']!=''&&$row_data['Analisis_f_recibida']!='0000-00-00'){ 
-						echo '<b>Fecha Recepcion : </b>'.Fecha_estandar($row_data['Analisis_f_recibida']).'<br>';
+						echo '<strong>Fecha Recepcion : </strong>'.Fecha_estandar($row_data['Analisis_f_recibida']).'<br/>';
 					}
 					if(isset($row_data['Analisis_f_reporte'])&&$row_data['Analisis_f_reporte']!=''&&$row_data['Analisis_f_reporte']!='0000-00-00'){ 
-						echo '<b>Fecha Reporte : </b>'.Fecha_estandar($row_data['Analisis_f_reporte']).'<br>';
+						echo '<strong>Fecha Reporte : </strong>'.Fecha_estandar($row_data['Analisis_f_reporte']).'<br/>';
 					}
 					if(isset($row_data['Analisis_n_muestra'])&&$row_data['Analisis_n_muestra']!=''){ 
-						echo '<b>Muestra N° : </b>'.$row_data['Analisis_n_muestra'].'<br>';
+						echo '<strong>Muestra N° : </strong>'.$row_data['Analisis_n_muestra'].'<br/>';
 					}
 				echo '</div>';
 			?>
@@ -416,7 +380,7 @@ array_push( $arrFlashpoint,$row );
 					
 					echo '<table class="table table-striped">';
 					echo '<tbody><tr class="active"><td colspan="5"><strong>'.$grupo['Nombre'].'</strong></td></tr>';
-					if($grupo['idGrupo']==4 or $grupo['idGrupo']==5){
+					if($grupo['idGrupo']==4 OR $grupo['idGrupo']==5){
 						echo '
 						<tr class="active">
 							<td><strong>Dato Medido</strong></td>
@@ -575,22 +539,31 @@ array_push( $arrFlashpoint,$row );
 </section>
 
 
-
-
-
-
-
-
-
-
-
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

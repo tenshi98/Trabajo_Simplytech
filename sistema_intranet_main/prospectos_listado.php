@@ -28,8 +28,22 @@ if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){                      
 if(isset($_GET['Giro']) && $_GET['Giro'] != ''){                                  $location .= "&Giro=".$_GET['Giro'];                                   $search .= "&Giro=".$_GET['Giro'];}
 if(isset($_GET['idEstadoFidelizacion']) && $_GET['idEstadoFidelizacion'] != ''){  $location .= "&idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];   $search .= "&idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];}
 if(isset($_GET['idEtapa']) && $_GET['idEtapa'] != ''){                            $location .= "&idEtapa=".$_GET['idEtapa'];                             $search .= "&idEtapa=".$_GET['idEtapa'];}
-
-
+if(isset($_GET['FModificacion']) && $_GET['FModificacion'] != ''){                $location .= "&FModificacion=".$_GET['FModificacion'];                 $search .= "&FModificacion=".$_GET['FModificacion'];}
+if(isset($_GET['idTab_1']) && $_GET['idTab_1'] != ''){                            $location .= "&idTab_1=".$_GET['idTab_1'];                             $search .= "&idTab_1=".$_GET['idTab_1'];}
+if(isset($_GET['idTab_2']) && $_GET['idTab_2'] != ''){                            $location .= "&idTab_2=".$_GET['idTab_2'];                             $search .= "&idTab_2=".$_GET['idTab_2'];}
+if(isset($_GET['idTab_3']) && $_GET['idTab_3'] != ''){                            $location .= "&idTab_3=".$_GET['idTab_3'];                             $search .= "&idTab_3=".$_GET['idTab_3'];}
+if(isset($_GET['idTab_4']) && $_GET['idTab_4'] != ''){                            $location .= "&idTab_4=".$_GET['idTab_4'];                             $search .= "&idTab_4=".$_GET['idTab_4'];}
+if(isset($_GET['idTab_5']) && $_GET['idTab_5'] != ''){                            $location .= "&idTab_5=".$_GET['idTab_5'];                             $search .= "&idTab_5=".$_GET['idTab_5'];}
+if(isset($_GET['idTab_6']) && $_GET['idTab_6'] != ''){                            $location .= "&idTab_6=".$_GET['idTab_6'];                             $search .= "&idTab_6=".$_GET['idTab_6'];}
+if(isset($_GET['idTab_7']) && $_GET['idTab_7'] != ''){                            $location .= "&idTab_7=".$_GET['idTab_7'];                             $search .= "&idTab_7=".$_GET['idTab_7'];}
+if(isset($_GET['idTab_8']) && $_GET['idTab_8'] != ''){                            $location .= "&idTab_8=".$_GET['idTab_8'];                             $search .= "&idTab_8=".$_GET['idTab_8'];}
+if(isset($_GET['idTab_9']) && $_GET['idTab_9'] != ''){                            $location .= "&idTab_9=".$_GET['idTab_9'];                             $search .= "&idTab_9=".$_GET['idTab_9'];}
+if(isset($_GET['idTab_10']) && $_GET['idTab_10'] != ''){                          $location .= "&idTab_10=".$_GET['idTab_10'];                           $search .= "&idTab_10=".$_GET['idTab_10'];}
+if(isset($_GET['idTab_11']) && $_GET['idTab_11'] != ''){                          $location .= "&idTab_11=".$_GET['idTab_11'];                           $search .= "&idTab_11=".$_GET['idTab_11'];}
+if(isset($_GET['idTab_12']) && $_GET['idTab_12'] != ''){                          $location .= "&idTab_12=".$_GET['idTab_12'];                           $search .= "&idTab_12=".$_GET['idTab_12'];}
+if(isset($_GET['idTab_13']) && $_GET['idTab_13'] != ''){                          $location .= "&idTab_13=".$_GET['idTab_13'];                           $search .= "&idTab_13=".$_GET['idTab_13'];}
+if(isset($_GET['idTab_14']) && $_GET['idTab_14'] != ''){                          $location .= "&idTab_14=".$_GET['idTab_14'];                           $search .= "&idTab_14=".$_GET['idTab_14'];}
+if(isset($_GET['idTab_15']) && $_GET['idTab_15'] != ''){                          $location .= "&idTab_15=".$_GET['idTab_15'];                           $search .= "&idTab_15=".$_GET['idTab_15'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -60,9 +74,11 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Prospecto creado co
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Prospecto editado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Prospecto borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT  
 prospectos_listado.email, 
@@ -77,6 +93,7 @@ prospectos_listado.Fax,
 prospectos_listado.PersonaContacto,
 prospectos_listado.PersonaContacto_Fono,
 prospectos_listado.PersonaContacto_email,
+prospectos_listado.PersonaContacto_Cargo,
 prospectos_listado.Web,
 prospectos_listado.Giro,
 core_ubicacion_ciudad.Nombre AS nombre_region,
@@ -88,20 +105,35 @@ core_rubros.Nombre AS Rubro,
 usuarios_listado.Nombre AS prospectoVendedor,
 prospectos_estado_fidelizacion.Nombre AS prospectoEstado,
 prospectos_listado.F_Ingreso AS prospectoFecha,
-prospectos_etapa.Nombre AS prospectoEtapa
+prospectos_etapa.Nombre AS prospectoEtapa,
+prospectos_listado.idTab_1,
+prospectos_listado.idTab_2,
+prospectos_listado.idTab_3,
+prospectos_listado.idTab_4,
+prospectos_listado.idTab_5,
+prospectos_listado.idTab_6,
+prospectos_listado.idTab_7,
+prospectos_listado.idTab_8,
+prospectos_listado.idTab_9,
+prospectos_listado.idTab_10,
+prospectos_listado.idTab_11,
+prospectos_listado.idTab_12,
+prospectos_listado.idTab_13,
+prospectos_listado.idTab_14,
+prospectos_listado.idTab_15
 
 FROM `prospectos_listado`
-LEFT JOIN `core_estados`                    ON core_estados.idEstado                                = prospectos_listado.idEstado
-LEFT JOIN `core_ubicacion_ciudad`           ON core_ubicacion_ciudad.idCiudad                       = prospectos_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`          ON core_ubicacion_comunas.idComuna                      = prospectos_listado.idComuna
-LEFT JOIN `core_sistemas`                   ON core_sistemas.idSistema                              = prospectos_listado.idSistema
-LEFT JOIN `prospectos_tipos`                ON prospectos_tipos.idTipo                              = prospectos_listado.idTipo
-LEFT JOIN `core_rubros`                     ON core_rubros.idRubro                                  = prospectos_listado.idRubro
-LEFT JOIN `usuarios_listado`                ON usuarios_listado.idUsuario                           = prospectos_listado.idUsuario
-LEFT JOIN `prospectos_estado_fidelizacion`  ON prospectos_estado_fidelizacion.idEstadoFidelizacion  = prospectos_listado.idEstadoFidelizacion
-LEFT JOIN `prospectos_etapa`                ON prospectos_etapa.idEtapa                             = prospectos_listado.idEtapa
+LEFT JOIN `core_estados`                      ON core_estados.idEstado                                = prospectos_listado.idEstado
+LEFT JOIN `core_ubicacion_ciudad`             ON core_ubicacion_ciudad.idCiudad                       = prospectos_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`            ON core_ubicacion_comunas.idComuna                      = prospectos_listado.idComuna
+LEFT JOIN `core_sistemas`                     ON core_sistemas.idSistema                              = prospectos_listado.idSistema
+LEFT JOIN `prospectos_tipos`                  ON prospectos_tipos.idTipo                              = prospectos_listado.idTipo
+LEFT JOIN `core_rubros`                       ON core_rubros.idRubro                                  = prospectos_listado.idRubro
+LEFT JOIN `usuarios_listado`                  ON usuarios_listado.idUsuario                           = prospectos_listado.idUsuario
+LEFT JOIN `prospectos_estado_fidelizacion`    ON prospectos_estado_fidelizacion.idEstadoFidelizacion  = prospectos_listado.idEstadoFidelizacion
+LEFT JOIN `prospectos_etapa`                  ON prospectos_etapa.idEtapa                             = prospectos_listado.idEtapa
 
-WHERE prospectos_listado.idProspecto = {$_GET['id']}";
+WHERE prospectos_listado.idProspecto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -117,24 +149,34 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-
+/*******************************************/
+//Listado con los tabs
+$arrTabs = array();
+$query = "SELECT idTab, Nombre FROM `core_telemetria_tabs` ORDER BY idTab ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrTabs,$row );
+}
+//recorro
+$arrTabsSorter = array();
+foreach ($arrTabs as $tab) {
+	$arrTabsSorter[$tab['idTab']] = $tab['Nombre'];
+}
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Prospecto</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -142,18 +184,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'prospectos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'prospectos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'prospectos_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contacto</a></li>
+				<li class="active"><a href="<?php echo 'prospectos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'prospectos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'prospectos_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'prospectos_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Persona Contacto</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Comerciales</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_fidelizacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado Fidelizacion</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_etapas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Etapa Fidelizacion</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_fidelizacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Estado Fidelizacion</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_etapas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sort-amount-asc" aria-hidden="true"></i> Etapa Fidelizacion</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_crear_cliente.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Crear Cliente</a></li>
 					</ul>
                 </li>           
 			</ul>	
@@ -161,91 +204,119 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div id="div-3" class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="wmd-panel">
-					<table id="dataTable" class="table table-bordered table-condensed table-striped dataTable">
-						<thead>
-							<tr role="row">
-								<th width="50%" class="word_break">Datos</th>
-								<th width="50%">Mapa</th>
-							</tr>
-						</thead>					  
-						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<tr class="odd">
-								<td class="word_break">
-									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Prospecto</h2>
-									<p class="text-muted">
-										<strong>Vendedor : </strong><?php echo $rowdata['prospectoVendedor']; ?><br/>
-										<strong>Fecha de Registrado : </strong><?php echo Fecha_completa($rowdata['prospectoFecha']); ?><br/>
-										<strong>Estado Fidelizacion: </strong><?php echo $rowdata['prospectoEstado']; ?><br/>
-										<strong>Etapa Fidelizacion: </strong><?php echo $rowdata['prospectoEtapa']; ?>
-									</p>
+				<div class="col-sm-6">
+					<div class="row" style="border-right: 1px solid #333;">
+						<div class="col-sm-12">
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Prospecto</h2>
+							<p class="text-muted word_break">
+								<strong>Vendedor : </strong><?php echo $rowdata['prospectoVendedor']; ?><br/>
+								<strong>Fecha de Registrado : </strong><?php echo Fecha_completa($rowdata['prospectoFecha']); ?><br/>
+								<strong>Estado Fidelizacion: </strong><?php echo $rowdata['prospectoEstado']; ?><br/>
+								<strong>Etapa Fidelizacion: </strong><?php echo $rowdata['prospectoEtapa']; ?>
+							</p>
 									
-									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
-									<p class="text-muted">
-										<strong>Tipo de Prospecto : </strong><?php echo $rowdata['tipoProspecto']; ?><br/>
-										<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
-										<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-										<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
-										<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-										<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
-										<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-										<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
-									</p>
-									
-									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
-									<p class="text-muted">
-										<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-										<strong>Razon Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
-										<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
-										<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
-									</p>
-										
-									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
-									<p class="text-muted">
-										<strong>Telefono Fijo : </strong><?php echo $rowdata['Fono1']; ?><br/>
-										<strong>Telefono Movil : </strong><?php echo $rowdata['Fono2']; ?><br/>
-										<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
-										<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-										<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="http://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
-									</p>
-									
-									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
-									<p class="text-muted">
-										<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
-										<strong>Telefono : </strong><?php echo $rowdata['PersonaContacto_Fono']; ?><br/>
-										<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
-									</p>
-
-								</td>
-								<td>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+							<p class="text-muted word_break">
+								<strong>Tipo de Prospecto : </strong><?php echo $rowdata['tipoProspecto']; ?><br/>
+								<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
+								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
+								<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
+								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
+							</p>
+							
+							<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){?>
+								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Unidades de Negocio</h2>
+								<p class="text-muted word_break">
 									<?php 
-									$direccion = "";
-									if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
-									if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
-									if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
-									echo mapa2($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle']) ?>
-								</td>
-							</tr>                  
-						</tbody>
-					</table>
+										if(isset($rowdata['idTab_1'])&&$rowdata['idTab_1']==2&&isset($arrTabsSorter[1])){    echo ' - '.$arrTabsSorter[1].'<br/>';}
+										if(isset($rowdata['idTab_2'])&&$rowdata['idTab_2']==2&&isset($arrTabsSorter[2])){    echo ' - '.$arrTabsSorter[2].'<br/>';}
+										if(isset($rowdata['idTab_3'])&&$rowdata['idTab_3']==2&&isset($arrTabsSorter[3])){    echo ' - '.$arrTabsSorter[3].'<br/>';}
+										if(isset($rowdata['idTab_4'])&&$rowdata['idTab_4']==2&&isset($arrTabsSorter[4])){    echo ' - '.$arrTabsSorter[4].'<br/>';}
+										if(isset($rowdata['idTab_5'])&&$rowdata['idTab_5']==2&&isset($arrTabsSorter[5])){    echo ' - '.$arrTabsSorter[5].'<br/>';}
+										if(isset($rowdata['idTab_6'])&&$rowdata['idTab_6']==2&&isset($arrTabsSorter[6])){    echo ' - '.$arrTabsSorter[6].'<br/>';}
+										if(isset($rowdata['idTab_7'])&&$rowdata['idTab_7']==2&&isset($arrTabsSorter[7])){    echo ' - '.$arrTabsSorter[7].'<br/>';}
+										if(isset($rowdata['idTab_8'])&&$rowdata['idTab_8']==2&&isset($arrTabsSorter[8])){    echo ' - '.$arrTabsSorter[8].'<br/>';} 
+										if(isset($rowdata['idTab_9'])&&$rowdata['idTab_9']==2&&isset($arrTabsSorter[9])){    echo ' - '.$arrTabsSorter[9].'<br/>';} 
+										if(isset($rowdata['idTab_10'])&&$rowdata['idTab_10']==2&&isset($arrTabsSorter[10])){ echo ' - '.$arrTabsSorter[10].'<br/>';} 
+										if(isset($rowdata['idTab_11'])&&$rowdata['idTab_11']==2&&isset($arrTabsSorter[11])){ echo ' - '.$arrTabsSorter[11].'<br/>';} 
+										if(isset($rowdata['idTab_12'])&&$rowdata['idTab_12']==2&&isset($arrTabsSorter[12])){ echo ' - '.$arrTabsSorter[12].'<br/>';} 
+										if(isset($rowdata['idTab_13'])&&$rowdata['idTab_13']==2&&isset($arrTabsSorter[13])){ echo ' - '.$arrTabsSorter[13].'<br/>';} 
+										if(isset($rowdata['idTab_14'])&&$rowdata['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].'<br/>';} 
+										if(isset($rowdata['idTab_15'])&&$rowdata['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].'<br/>';} 
+									?>
+								</p>			
+							<?php } ?>
+									
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
+							<p class="text-muted word_break">
+								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
+								<strong>Razon Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
+								<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
+								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
+							</p>
+										
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
+							<p class="text-muted word_break">
+								<strong>Telefono Fijo : </strong><?php echo $rowdata['Fono1']; ?><br/>
+								<strong>Telefono Movil : </strong><?php echo $rowdata['Fono2']; ?><br/>
+								<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
+								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
+							</p>
+									
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
+							<p class="text-muted word_break">
+								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
+								<strong>Cargo Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto_Cargo']; ?><br/>
+								<strong>Telefono : </strong><?php echo $rowdata['PersonaContacto_Fono']; ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
+							</p>
+						</div>
+					</div>
 				</div>
+				<div class="col-sm-6">
+					<div class="row">
+						<?php 
+							//se arma la direccion
+							$direccion = "";
+							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
+							if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
+							if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
+							//se despliega mensaje en caso de no existir direccion
+							if($direccion!=''){
+								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); 
+							}else{
+								$Alert_Text  = 'No tiene una direccion definida';
+								alert_post_data(4,2,2, $Alert_Text);
+							}
+						?>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				
 			</div>
         </div>	
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Prospecto</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -261,32 +332,56 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idComuna)) {         $x6  = $idComuna;          }else{$x6  = '';}
 				if(isset($Direccion)) {        $x7  = $Direccion;         }else{$x7  = '';}
 				if(isset($Giro)) {             $x8  = $Giro;              }else{$x8  = '';}
-
+				if(isset($idTab_1)) {          $x9  = $idTab_1;           }else{$x9  = '';}
+				if(isset($idTab_2)) {          $x9 .= ','.$idTab_2;       }else{$x9 .= ',';}
+				if(isset($idTab_3)) {          $x9 .= ','.$idTab_3;       }else{$x9 .= ',';}
+				if(isset($idTab_4)) {          $x9 .= ','.$idTab_4;       }else{$x9 .= ',';}
+				if(isset($idTab_5)) {          $x9 .= ','.$idTab_5;       }else{$x9 .= ',';}
+				if(isset($idTab_6)) {          $x9 .= ','.$idTab_6;       }else{$x9 .= ',';}
+				if(isset($idTab_7)) {          $x9 .= ','.$idTab_7;       }else{$x9 .= ',';}
+				if(isset($idTab_8)) {          $x9 .= ','.$idTab_8;       }else{$x9 .= ',';}
+				if(isset($idTab_9)) {          $x9 .= ','.$idTab_9;       }else{$x9 .= ',';}
+				if(isset($idTab_10)) {         $x9 .= ','.$idTab_10;      }else{$x9 .= ',';}
+				if(isset($idTab_11)) {         $x9 .= ','.$idTab_11;      }else{$x9 .= ',';}
+				if(isset($idTab_12)) {         $x9 .= ','.$idTab_12;      }else{$x9 .= ',';}
+				if(isset($idTab_13)) {         $x9 .= ','.$idTab_13;      }else{$x9 .= ',';}
+				if(isset($idTab_14)) {         $x9 .= ','.$idTab_14;      }else{$x9 .= ',';}
+				if(isset($idTab_15)) {         $x9 .= ','.$idTab_15;      }else{$x9 .= ',';}
+				
+				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Basicos</h3>';
-				$Form_Imputs->form_select('Tipo de Prospecto','idTipo', $x1, 2, 'idTipo', 'Nombre', 'prospectos_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nombres', 'Nombre', $x2, 2);
-				$Form_Imputs->form_input_rut('Rut', 'Rut', $x3, 1);
-				$Form_Imputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
-				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_select('Tipo de Prospecto','idTipo', $x1, 2, 'idTipo', 'Nombre', 'prospectos_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 2);
+				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
+				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
+				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
-				$Form_Imputs->form_input_icon( 'Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
-				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('F_Ingreso', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idEstadoFidelizacion', 2, 2);
-				$Form_Imputs->form_input_hidden('idEtapa', 1, 2);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
+				//Solo para plataforma Intranet
+				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
+					$Form_Inputs->form_tittle(3, 'Unidades de Negocio');
+					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x9, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+				}
+					
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('F_Ingreso', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idEstadoFidelizacion', 2, 2);
+				$Form_Inputs->form_input_hidden('idEtapa', 1, 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('FModificacion', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);
+				$Form_Inputs->form_input_hidden('idUsuarioMod', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 								
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?>
@@ -314,29 +409,40 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'rut_asc':       $order_by = 'ORDER BY prospectos_listado.Rut ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
-		case 'rut_desc':      $order_by = 'ORDER BY prospectos_listado.Rut DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
-		case 'nombre_asc':    $order_by = 'ORDER BY prospectos_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':   $order_by = 'ORDER BY prospectos_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY prospectos_listado.idEstado ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':   $order_by = 'ORDER BY prospectos_listado.idEstado DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'etapa_asc':     $order_by = 'ORDER BY prospectos_etapa.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Etapa Ascendente';break;
-		case 'etapa_desc':    $order_by = 'ORDER BY prospectos_etapa.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Etapa Descendente';break;
-	
-		default: $order_by = 'ORDER BY prospectos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		case 'rut_asc':       $order_by = 'ORDER BY prospectos_listado.Rut ASC ';                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
+		case 'rut_desc':      $order_by = 'ORDER BY prospectos_listado.Rut DESC ';                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
+		case 'nombre_asc':    $order_by = 'ORDER BY prospectos_listado.Nombre ASC ';                                                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':   $order_by = 'ORDER BY prospectos_listado.Nombre DESC ';                                                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'ORDER BY prospectos_listado.idEstado ASC ';                                                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':   $order_by = 'ORDER BY prospectos_listado.idEstado DESC ';                                                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'etapa_asc':     $order_by = 'ORDER BY prospectos_etapa.Nombre ASC ';                                                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Etapa Ascendente';break;
+		case 'etapa_desc':    $order_by = 'ORDER BY prospectos_etapa.Nombre DESC ';                                                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Etapa Descendente';break;
+		case 'fmod_asc':      $order_by = 'ORDER BY prospectos_listado.FModificacion ASC, prospectos_listado.HModificacion ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Modificacion Ascendente';break;
+		case 'fmod_desc':     $order_by = 'ORDER BY prospectos_listado.FModificacion DESC, prospectos_listado.HModificacion DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Modificacion Descendente';break;
+		case 'tab_asc':       $order_by = 'ORDER BY prospectos_listado.idTab_1 ASC ';                                                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Unidad de Negocio Ascendente';break;
+		case 'tab_desc':      $order_by = 'ORDER BY prospectos_listado.idTab_1 DESC ';                                                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Unidad de Negocio Descendente';break;
+		
+		default: $order_by = 'ORDER BY prospectos_listado.idEstado ASC, prospectos_listado.FModificacion DESC, prospectos_listado.HModificacion DESC, prospectos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY prospectos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'ORDER BY prospectos_listado.idEstado ASC, prospectos_listado.FModificacion DESC, prospectos_listado.HModificacion DESC, prospectos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE prospectos_listado.idProspecto!=0";
+$z = "WHERE prospectos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //verifico que sea un administrador
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z.=" AND prospectos_listado.idSistema>=0";	
-}else{
-	$z.=" AND prospectos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND prospectos_listado.idUsuario={$_SESSION['usuario']['basic_data']['idUsuario']}";	
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	//si es la interfaz de intranet no filtra
+	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
+	
+	//para el resto se filtra al vendedor	
+	}else{
+		$z.= " AND prospectos_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	}
 }
+
+	
+	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                              $z .= " AND prospectos_listado.idTipo=".$_GET['idTipo'];}
@@ -349,6 +455,22 @@ if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){                      
 if(isset($_GET['Giro']) && $_GET['Giro'] != ''){                                  $z .= " AND prospectos_listado.Giro LIKE '%".$_GET['Giro']."%'";}
 if(isset($_GET['idEstadoFidelizacion']) && $_GET['idEstadoFidelizacion'] != ''){  $z .= " AND prospectos_listado.idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];}
 if(isset($_GET['idEtapa']) && $_GET['idEtapa'] != ''){                            $z .= " AND prospectos_listado.idEtapa=".$_GET['idEtapa'];}
+if(isset($_GET['FModificacion']) && $_GET['FModificacion'] != ''){                $z .= " AND prospectos_listado.FModificacion='".$_GET['FModificacion']."'";}
+if(isset($_GET['idTab_1']) && $_GET['idTab_1'] != 1){                             $z .= " AND prospectos_listado.idTab_1='".$_GET['idTab_1']."'";}
+if(isset($_GET['idTab_2']) && $_GET['idTab_2'] != 1){                             $z .= " AND prospectos_listado.idTab_2='".$_GET['idTab_2']."'";}
+if(isset($_GET['idTab_3']) && $_GET['idTab_3'] != 1){                             $z .= " AND prospectos_listado.idTab_3='".$_GET['idTab_3']."'";}
+if(isset($_GET['idTab_4']) && $_GET['idTab_4'] != 1){                             $z .= " AND prospectos_listado.idTab_4='".$_GET['idTab_4']."'";}
+if(isset($_GET['idTab_5']) && $_GET['idTab_5'] != 1){                             $z .= " AND prospectos_listado.idTab_5='".$_GET['idTab_5']."'";}
+if(isset($_GET['idTab_6']) && $_GET['idTab_6'] != 1){                             $z .= " AND prospectos_listado.idTab_6='".$_GET['idTab_6']."'";}
+if(isset($_GET['idTab_7']) && $_GET['idTab_7'] != 1){                             $z .= " AND prospectos_listado.idTab_7='".$_GET['idTab_7']."'";}
+if(isset($_GET['idTab_8']) && $_GET['idTab_8'] != 1){                             $z .= " AND prospectos_listado.idTab_8='".$_GET['idTab_8']."'";}
+if(isset($_GET['idTab_9']) && $_GET['idTab_9'] != ''){                            $z .= " AND prospectos_listado.idTab_9='".$_GET['idTab_9']."'";}
+if(isset($_GET['idTab_10']) && $_GET['idTab_10'] != ''){                          $z .= " AND prospectos_listado.idTab_10='".$_GET['idTab_10']."'";}
+if(isset($_GET['idTab_11']) && $_GET['idTab_11'] != ''){                          $z .= " AND prospectos_listado.idTab_11='".$_GET['idTab_11']."'";}
+if(isset($_GET['idTab_12']) && $_GET['idTab_12'] != ''){                          $z .= " AND prospectos_listado.idTab_12='".$_GET['idTab_12']."'";}
+if(isset($_GET['idTab_13']) && $_GET['idTab_13'] != ''){                          $z .= " AND prospectos_listado.idTab_13='".$_GET['idTab_13']."'";}
+if(isset($_GET['idTab_14']) && $_GET['idTab_14'] != ''){                          $z .= " AND prospectos_listado.idTab_14='".$_GET['idTab_14']."'";}
+if(isset($_GET['idTab_15']) && $_GET['idTab_15'] != ''){                          $z .= " AND prospectos_listado.idTab_15='".$_GET['idTab_15']."'";}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $query = "SELECT prospectos_listado.idProspecto FROM `prospectos_listado` LEFT JOIN `prospectos_etapa`  ON prospectos_etapa.idEtapa = prospectos_listado.idEtapa ".$z;
@@ -369,7 +491,7 @@ $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los usuarios
-$arrUsers = array();
+$arrProspecto = array();
 $query = "SELECT 
 prospectos_listado.idProspecto,
 prospectos_listado.Rut,
@@ -377,12 +499,30 @@ prospectos_listado.Nombre,
 core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema,
 prospectos_etapa.Nombre AS Etapa,
-prospectos_listado.idEstado
+prospectos_listado.idEstado,
+prospectos_listado.FModificacion,
+prospectos_listado.HModificacion,
+prospectos_listado.idTab_1,
+prospectos_listado.idTab_2,
+prospectos_listado.idTab_3,
+prospectos_listado.idTab_4,
+prospectos_listado.idTab_5,
+prospectos_listado.idTab_6,
+prospectos_listado.idTab_7,
+prospectos_listado.idTab_8,
+prospectos_listado.idTab_9,
+prospectos_listado.idTab_10,
+prospectos_listado.idTab_11,
+prospectos_listado.idTab_12,
+prospectos_listado.idTab_13,
+prospectos_listado.idTab_14,
+prospectos_listado.idTab_15
 
 FROM `prospectos_listado`
-LEFT JOIN `core_estados`      ON core_estados.idEstado        = prospectos_listado.idEstado
-LEFT JOIN `core_sistemas`     ON core_sistemas.idSistema      = prospectos_listado.idSistema
-LEFT JOIN `prospectos_etapa`  ON prospectos_etapa.idEtapa     = prospectos_listado.idEtapa
+LEFT JOIN `core_estados`                      ON core_estados.idEstado        = prospectos_listado.idEstado
+LEFT JOIN `core_sistemas`                     ON core_sistemas.idSistema      = prospectos_listado.idSistema
+LEFT JOIN `prospectos_etapa`                  ON prospectos_etapa.idEtapa     = prospectos_listado.idEtapa
+
 ".$z."
 ".$order_by."
 LIMIT $comienzo, $cant_reg ";
@@ -400,14 +540,39 @@ if(!$resultado){
 					
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
+array_push( $arrProspecto,$row );
 }
 
+/*******************************************/
+//Listado con los tabs
+$arrTabs = array();
+$query = "SELECT idTab, Nombre FROM `core_telemetria_tabs` ORDER BY idTab ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrTabs,$row );
+}
+//recorro
+$arrTabsSorter = array();
+foreach ($arrTabs as $tab) {
+	$arrTabsSorter[$tab['idTab']] = $tab['Nombre'];
+}
 ?>
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -434,22 +599,44 @@ array_push( $arrUsers,$row );
 				if(isset($Giro)) {                  $x9  = $Giro;                   }else{$x9  = '';}
 				if(isset($idEstadoFidelizacion)) {  $x10 = $idEstadoFidelizacion;   }else{$x10 = '';}
 				if(isset($idEtapa)) {               $x11 = $idEtapa;                }else{$x11 = '';}
+				if(isset($FModificacion)) {         $x12 = $FModificacion;          }else{$x12 = '';}
+				if(isset($idTab_1)) {               $x13  = $idTab_1;               }else{$x13  = '';}
+				if(isset($idTab_2)) {               $x13 .= ','.$idTab_2;           }else{$x13 .= ',';}
+				if(isset($idTab_3)) {               $x13 .= ','.$idTab_3;           }else{$x13 .= ',';}
+				if(isset($idTab_4)) {               $x13 .= ','.$idTab_4;           }else{$x13 .= ',';}
+				if(isset($idTab_5)) {               $x13 .= ','.$idTab_5;           }else{$x13 .= ',';}
+				if(isset($idTab_6)) {               $x13 .= ','.$idTab_6;           }else{$x13 .= ',';}
+				if(isset($idTab_7)) {               $x13 .= ','.$idTab_7;           }else{$x13 .= ',';}
+				if(isset($idTab_8)) {               $x13 .= ','.$idTab_8;           }else{$x13 .= ',';}
+				if(isset($idTab_9)) {               $x13 .= ','.$idTab_9;           }else{$x13 .= ',';}
+				if(isset($idTab_10)) {              $x13 .= ','.$idTab_10;          }else{$x13 .= ',';}
+				if(isset($idTab_11)) {              $x13 .= ','.$idTab_11;          }else{$x13 .= ',';}
+				if(isset($idTab_12)) {              $x13 .= ','.$idTab_12;          }else{$x13 .= ',';}
+				if(isset($idTab_13)) {              $x13 .= ','.$idTab_13;          }else{$x13 .= ',';}
+				if(isset($idTab_14)) {              $x13 .= ','.$idTab_14;          }else{$x13 .= ',';}
+				if(isset($idTab_15)) {              $x13 .= ','.$idTab_15;          }else{$x13 .= ',';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo de Prospecto','idTipo', $x1, 1, 'idTipo', 'Nombre', 'prospectos_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nombres', 'Nombre', $x2, 1);
-				$Form_Imputs->form_input_rut('Rut', 'Rut', $x3, 1);
-				$Form_Imputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
-				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo de Prospecto','idTipo', $x1, 1, 'idTipo', 'Nombre', 'prospectos_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 1);
+				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
+				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
+				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
-				$Form_Imputs->form_input_icon( 'Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
-				$Form_Imputs->form_select('Estado Fidelizacion','idEstadoFidelizacion', $x10, 1, 'idEstadoFidelizacion', 'Nombre', 'prospectos_estado_fidelizacion', 0, '', $dbConn);
-				$Form_Imputs->form_select('Etapa','idEtapa', $x11, 1, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
+				$Form_Inputs->form_select('Estado Fidelizacion','idEstadoFidelizacion', $x10, 1, 'idEstadoFidelizacion', 'Nombre', 'prospectos_estado_fidelizacion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Etapa','idEtapa', $x11, 1, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha ultima modificacion','FModificacion', $x12, 1);
+				//Solo para plataforma Intranet
+				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
+					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x13, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+				}
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -467,7 +654,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Prospectos</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Prospectos</h5>	
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -481,51 +668,89 @@ array_push( $arrUsers,$row );
 						<th>
 							<div class="pull-left">Rut</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=rut_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=rut_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=rut_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=rut_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Nombre del Prospecto</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Etapa</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=etapa_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=etapa_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=etapa_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=etapa_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
+						<th>
+							<div class="pull-left">Ultima Modificacion</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=fmod_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fmod_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>
+							<th>
+								<div class="pull-left">Unidad de Negocio</div>
+								<div class="btn-group pull-right" style="width: 50px;" >
+									<a href="<?php echo $location.'&order_by=tab_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+									<a href="<?php echo $location.'&order_by=tab_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+								</div>
+							</th>
+						<?php } ?>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrUsers as $usuarios) { ?>
+					<?php foreach ($arrProspecto as $prospect) { ?>
 					<tr class="odd">		
-						<td><?php echo $usuarios['Rut']; ?></td>		
-						<td><?php echo $usuarios['Nombre']; ?></td>		
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>		
-						<td><?php echo $usuarios['Etapa']; ?></td>		
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
+						<td><?php echo $prospect['Rut']; ?></td>		
+						<td><?php echo $prospect['Nombre']; ?></td>		
+						<td><label class="label <?php if(isset($prospect['idEstado'])&&$prospect['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $prospect['estado']; ?></label></td>		
+						<td><?php echo $prospect['Etapa']; ?></td>		
+						<td><?php echo fecha_estandar($prospect['FModificacion']).' - '.$prospect['HModificacion']; ?></td>
+						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>		
+							<td>
+								<?php 
+									if(isset($prospect['idTab_1'])&&$prospect['idTab_1']==2&&isset($arrTabsSorter[1])){    echo ' - '.$arrTabsSorter[1].'<br/>';}
+									if(isset($prospect['idTab_2'])&&$prospect['idTab_2']==2&&isset($arrTabsSorter[2])){    echo ' - '.$arrTabsSorter[2].'<br/>';}
+									if(isset($prospect['idTab_3'])&&$prospect['idTab_3']==2&&isset($arrTabsSorter[3])){    echo ' - '.$arrTabsSorter[3].'<br/>';}
+									if(isset($prospect['idTab_4'])&&$prospect['idTab_4']==2&&isset($arrTabsSorter[4])){    echo ' - '.$arrTabsSorter[4].'<br/>';}
+									if(isset($prospect['idTab_5'])&&$prospect['idTab_5']==2&&isset($arrTabsSorter[5])){    echo ' - '.$arrTabsSorter[5].'<br/>';}
+									if(isset($prospect['idTab_6'])&&$prospect['idTab_6']==2&&isset($arrTabsSorter[6])){    echo ' - '.$arrTabsSorter[6].'<br/>';}
+									if(isset($prospect['idTab_7'])&&$prospect['idTab_7']==2&&isset($arrTabsSorter[7])){    echo ' - '.$arrTabsSorter[7].'<br/>';}
+									if(isset($prospect['idTab_8'])&&$prospect['idTab_8']==2&&isset($arrTabsSorter[8])){    echo ' - '.$arrTabsSorter[8].'<br/>';} 
+									if(isset($prospect['idTab_9'])&&$prospect['idTab_9']==2&&isset($arrTabsSorter[9])){    echo ' - '.$arrTabsSorter[9].'<br/>';} 
+									if(isset($prospect['idTab_10'])&&$prospect['idTab_10']==2&&isset($arrTabsSorter[10])){ echo ' - '.$arrTabsSorter[10].'<br/>';} 
+									if(isset($prospect['idTab_11'])&&$prospect['idTab_11']==2&&isset($arrTabsSorter[11])){ echo ' - '.$arrTabsSorter[11].'<br/>';} 
+									if(isset($prospect['idTab_12'])&&$prospect['idTab_12']==2&&isset($arrTabsSorter[12])){ echo ' - '.$arrTabsSorter[12].'<br/>';} 
+									if(isset($prospect['idTab_13'])&&$prospect['idTab_13']==2&&isset($arrTabsSorter[13])){ echo ' - '.$arrTabsSorter[13].'<br/>';} 
+									if(isset($prospect['idTab_14'])&&$prospect['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].'<br/>';} 
+									if(isset($prospect['idTab_15'])&&$prospect['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].'<br/>';} 
+								?>
+							</td>		
+						<?php } ?>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $prospect['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_prospecto.php?view='.$usuarios['idProspecto']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idProspecto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_prospecto.php?view='.simpleEncode($prospect['idProspecto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prospect['idProspecto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$usuarios['idProspecto'];
-									$dialogo   = '¿Realmente deseas eliminar al prospecto '.$usuarios['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									$ubicacion = $location.'&del='.simpleEncode($prospect['idProspecto'], fecha_actual());
+									$dialogo   = '¿Realmente deseas eliminar al prospecto '.$prospect['Nombre'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	

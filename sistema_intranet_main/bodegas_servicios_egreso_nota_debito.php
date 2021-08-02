@@ -18,11 +18,14 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){            $location .= "&idCliente=".$_GET['idCliente'];              $search .= "&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                $location .= "&idCliente=".$_GET['idCliente'];                  $search .= "&idCliente=".$_GET['idCliente'];}
 if(isset($_GET['idDocumentos']) && $_GET['idDocumentos'] != ''){          $location .= "&idDocumentos=".$_GET['idDocumentos'];            $search .= "&idDocumentos=".$_GET['idDocumentos'];}
 if(isset($_GET['N_Doc']) && $_GET['N_Doc'] != ''){                        $location .= "&N_Doc=".$_GET['N_Doc'];                          $search .= "&N_Doc=".$_GET['N_Doc'];}
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){      $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];        $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+if(isset($_GET['Creacion_ano']) && $_GET['Creacion_ano'] != ''){          $location .= "&Creacion_ano=".$_GET['Creacion_ano'];            $search .= "&Creacion_ano=".$_GET['Creacion_ano'];}
+if(isset($_GET['Creacion_mes']) && $_GET['Creacion_mes'] != ''){          $location .= "&Creacion_mes=".$_GET['Creacion_mes'];            $search .= "&Creacion_mes=".$_GET['Creacion_mes'];}
 if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){        $location .= "&Observaciones=".$_GET['Observaciones'];          $search .= "&Observaciones=".$_GET['Observaciones'];}
+if(isset($_GET['idUsoIVA']) && $_GET['idUsoIVA'] != ''){                  $location .= "&idUsoIVA=".$_GET['idUsoIVA'];                    $search .= "&idUsoIVA=".$_GET['idUsoIVA'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -92,19 +95,6 @@ if ( !empty($_GET['del_otros']) )     {
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_servicios.php';	
 }
 /**********************************************/
-//se borra un dato
-if ( !empty($_GET['add_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'add_obs_egr_nd';
-	require_once 'A1XRXS_sys/xrxs_form/z_bodega_servicios.php';	
-}
-//se borra un dato
-if ( !empty($_GET['del_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'del_obs_egr_nd';
-	require_once 'A1XRXS_sys/xrxs_form/z_bodega_servicios.php';	
-}
-/**********************************************/
 //formulario para crear
 if ( !empty($_POST['submit_file']) )  { 
 	//Llamamos al formulario
@@ -155,7 +145,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -163,14 +153,14 @@ if ( ! empty($_GET['addFile']) ) { ?>
 			
 				<?php           
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 					
 				?> 
 
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -185,7 +175,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Ingreso de Equipo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -199,24 +189,24 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($ValorTotal)) {     $x4  = $ValorTotal;    }else{$x4  = Cantidades_decimales_justos($_SESSION['servicios_egr_nd_productos'][$_GET['editProd']]['ValorTotal']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad_eg', $x2, 2);
-				$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad_eg', $x2, 2);
+				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['servicios_egr_nd_productos'][$_GET['editProd']]['ValorIngreso']), 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['servicios_egr_nd_productos'][$_GET['editProd']]['ValorIngreso']), 2);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['servicios_egr_nd_productos'][$_GET['editProd']]['ValorIngreso']), 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['servicios_egr_nd_productos'][$_GET['editProd']]['ValorIngreso']), 2);
 				
 				echo operacion_input('Cantidad_eg', 'ValorTotal', 'Unitario', 'vUnitario', 4);
 				
-				$Form_Imputs->form_input_hidden('oldItemID', $_GET['editProd'], 2);
+				$Form_Inputs->form_input_hidden('oldItemID', $_GET['editProd'], 2);
 				?>
 				
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -230,7 +220,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Equipo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -244,14 +234,14 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($ValorTotal)) {     $x4  = $ValorTotal;    }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad_eg', $x2, 2);
-				$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad_eg', $x2, 2);
+				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
-				$Form_Imputs->form_input_hidden('vUnitario', '', 2);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
+				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
 				echo operacion_input('Cantidad_eg', 'ValorTotal', 'Unitario', 'vUnitario', 4);
 				?>
@@ -259,7 +249,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -274,7 +264,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Impuestos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -285,14 +275,14 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($idImpuesto )) {       $x1  = $idImpuesto ;      }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Impuestos','idImpuesto', $x1, 2, 'idImpuesto', 'Nombre', 'sistema_impuestos', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Impuestos','idImpuesto', $x1, 2, 'idImpuesto', 'Nombre', 'sistema_impuestos', 0, '', $dbConn);
 
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_impuesto"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -306,7 +296,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Otros</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -318,17 +308,17 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($vTotal)) {  $x2  = $vTotal;  }else{$x2  = Cantidades_decimales_justos($_SESSION['servicios_egr_nd_otros'][$_GET['editOtros']]['vTotal']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
 				
-				$Form_Imputs->form_input_hidden('oldidProducto', $_SESSION['servicios_egr_nd_otros'][$_GET['editOtros']]['idOtros'], 2);
+				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['servicios_egr_nd_otros'][$_GET['editOtros']]['idOtros'], 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_otros"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -342,7 +332,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Otros</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -354,15 +344,15 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($vTotal)) {  $x2  = $vTotal;  }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
 
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_otros"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -374,18 +364,14 @@ if ( ! empty($_GET['addFile']) ) { ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modCentroCosto']) ) { 
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema>=0 AND idEstado=1";	
-}else{
-	$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
-}
+//sistema
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
-			<h5>Modificar datos basicos de la Entrega</h5>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Modificar Centro de Costo</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -400,8 +386,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idLevel_5)) {      $x6  = $idLevel_5;      }else{$x6  = $_SESSION['servicios_egr_nd_basicos']['idLevel_5'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend5('Centro de Costo', 'idCentroCosto',  $x1,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $z,   0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend5('Centro de Costo', 'idCentroCosto',  $x1,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $z,   0,
 							             'Nivel 1', 'idLevel_1',  $x2,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
 							             'Nivel 2', 'idLevel_2',  $x3,  1,  'idLevel_2',  'Nombre',  'centrocosto_listado_level_2',  0,   0,
 							             'Nivel 3', 'idLevel_3',  $x4,  1,  'idLevel_3',  'Nombre',  'centrocosto_listado_level_3',  0,   0,
@@ -412,7 +398,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modCentroCosto"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -423,15 +409,15 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
-			<h5>Modificar datos basicos del Ingreso</h5>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Modificar Datos Basicos</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -442,28 +428,78 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 				if(isset($N_Doc)) {              $x2  = $N_Doc;            }else{$x2  = $_SESSION['servicios_egr_nd_basicos']['N_Doc'];}
 				if(isset($Creacion_fecha)) {     $x3  = $Creacion_fecha;   }else{$x3  = $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'];}
 				if(isset($Observaciones)) {      $x4  = $Observaciones;    }else{$x4  = $_SESSION['servicios_egr_nd_basicos']['Observaciones'];}
+				if(isset($idUsoIVA)) {           $x5  = $idUsoIVA;         }else{$x5  = $_SESSION['servicios_egr_nd_basicos']['idUsoIVA'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
-				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
+				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_post_data(1, 'Solo las empresas que no sean contribuyentes del Impuesto al Valor Agregado (IVA) y las que gocen de exención del IVA de conformidad a lo dispuesto en los Artículos 12 y 13 de la <a href="http://www.sii.cl/pagina/jurisprudencia/legislacion/basica/dl825.doc">Ley del IVA</a> pueden elegir la opcion <strong>SI</strong>, para el resto es de uso obligatorio la opcion <strong>NO</strong>. ');
+				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idTipo', 12, 2);
-				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idDocumentos', 4, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', 12, 2);
+				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idDocumentos', 4, 2);
 				
 				
 				?> 
 
+				<script>
+					document.getElementById('div_fecha_fact_desde').style.display = 'none';
+					document.getElementById('div_fecha_fact_hasta').style.display = 'none';
+					
+					var idDocumentos;
+					var idDocumentosSelected;
+					
+					//se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){ 
+							
+						idDocumentosSelected= $("#idDocumentos").val();
+						//si es Factura
+						if(idDocumentosSelected == 2){ 
+							document.getElementById('div_fecha_fact_desde').style.display = '';
+							document.getElementById('div_fecha_fact_hasta').style.display = '';
+															
+						//Para el resto
+						} else { 
+							document.getElementById('div_fecha_fact_desde').style.display = 'none';
+							document.getElementById('div_fecha_fact_hasta').style.display = 'none';
+							//Reseteo los valores a 0
+							document.getElementsByName('fecha_fact_desde').value = "0";
+							document.getElementsByName('fecha_fact_hasta').value = "0";
+						}
+							
+					}); 
+						
+					$("#idDocumentos").on("change", function(){ //se ejecuta al cambiar valor del select
+						idDocumentos = $(this).val(); //Asignamos el valor seleccionado
+					
+						//si es Factura
+						if(idDocumentos == 2){ 
+							document.getElementById('div_fecha_fact_desde').style.display = '';
+							document.getElementById('div_fecha_fact_hasta').style.display = '';
+															
+						//Para el resto
+						} else { 
+							document.getElementById('div_fecha_fact_desde').style.display = 'none';
+							document.getElementById('div_fecha_fact_hasta').style.display = 'none';
+							//Reseteo los valores a 0
+							document.getElementsByName('fecha_fact_desde').value = "0";
+							document.getElementsByName('fecha_fact_hasta').value = "0";
+						}
+					});
+
+				</script>
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -473,17 +509,17 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) { 
-$Form_Imputs = new Inputs();
+$Form_Inputs = new Inputs();
 ?>
 
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 
 	<?php 		
 	$ubicacion = $location.'&view=true&egr_bodega_nd=true';
 	$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
 	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
 
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<?php 
 	$ubicacion = $location.'&clear_all=true';
@@ -493,7 +529,7 @@ $Form_Imputs = new Inputs();
 	<div class="clearfix"></div>
 </div> 
 
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 	<div id="page-wrap">
 		<div id="header"> <?php echo $_SESSION['servicios_egr_nd_basicos']['TipoDocumento']; ?></div>
@@ -505,7 +541,7 @@ $Form_Imputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Cliente</td>
@@ -517,12 +553,18 @@ $Form_Imputs = new Inputs();
 					</tr>
 					<tr>
 						<td class="meta-head"><strong>Centro de Costo</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modCentroCosto=true' ?>" title="Modificar Centro de Costo" class="btn btn-xs btn-primary fright tooltip" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modCentroCosto=true' ?>" title="Modificar Centro de Costo" class="btn btn-xs btn-primary fright tooltip" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Centro de Costo</td>
 						<td><?php echo $_SESSION['servicios_egr_nd_basicos']['CentroCosto']; ?></td>
 					</tr>
+					<?php if(isset($_SESSION['servicios_egr_nd_basicos']['idUsoIVA'])&&$_SESSION['servicios_egr_nd_basicos']['idUsoIVA']==1){ ?>
+						<tr>
+							<td class="meta-head">Exento de IVA</td>
+							<td>Factura exenta de IVA</td>
+						</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 			<table id="meta" class="otdata2">
@@ -571,11 +613,11 @@ $Form_Imputs = new Inputs();
 							</td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo $location.'&editProd='.$producto['idServicio']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+									<a href="<?php echo $location.'&editProd='.$producto['idServicio']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php 
 									$ubicacion = $location.'&del_prod='.$producto['idServicio'];
 									$dialogo   = '¿Realmente deseas eliminar el servicio '.str_replace('"','',$producto['Servicio']).'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								</div>
 							</td>
 						</tr> 
@@ -600,12 +642,12 @@ $Form_Imputs = new Inputs();
 							</td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo $location.'&editOtros='.$producto['idOtros']; ?>" title="Editar Otros" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+									<a href="<?php echo $location.'&editOtros='.$producto['idOtros']; ?>" title="Editar Otros" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>	
 										<?php 
 										$ubicacion = $location.'&del_otros='.$producto['idOtros'];
 										$dialogo   = '¿Realmente deseas eliminar  '.$producto['Nombre'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Otros" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Otros" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 									<?php } ?>
 								</div>
 							</td>
@@ -664,7 +706,7 @@ $Form_Imputs = new Inputs();
 										<?php 
 										$ubicacion = $location.'&del_impuesto='.$producto['idImpuesto'];
 										$dialogo   = '¿Realmente deseas eliminar el impuesto '.$producto['Nombre'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Impuesto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Impuesto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 									</div>
 								</td>
 							</tr>
@@ -678,56 +720,16 @@ $Form_Imputs = new Inputs();
 						<td></td>
 					</tr>
 					
-				
-				
-				
-				<tr>
-					<?php if(isset($_SESSION['servicios_egr_nd_basicos']['Observaciones'])&&$_SESSION['servicios_egr_nd_basicos']['Observaciones']!=''){ ?>
-					
-						<td colspan="5" class="blank word_break"> 
-							<?php echo $_SESSION['servicios_egr_nd_basicos']['Observaciones'];?>
-						</td>
-						<td class="blank">
-							<div class="btn-group" style="width: 35px;" >
-								<?php 
-								$ubicacion = $location.'&view=true&del_obs=true';
-								$dialogo   = '¿Realmente deseas eliminar la observacion?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
-							</div>
-						</td>
-					
-					<?php }else{?>
-						<td colspan="5" class="blank"> 
-							<?php 
-							$non = '';
-							if(isset($_SESSION['servicios_egr_nd_temporal'])&&$_SESSION['servicios_egr_nd_temporal']!=''){
-								$non = $_SESSION['servicios_egr_nd_temporal'];
-							}	
-								
-							$Form_Imputs->input_textarea_obs('Observaciones','Observaciones', 1,'width:100%; height: 200px;', $non);?>
-						</td>
-						<td class="blank">
-							<div class="btn-group" style="width: 35px;" >
-								<?php $ubicacion=$location.'&view=true&add_obs=true';?>			
-								<a onclick="add_obs('<?php echo $ubicacion ?>')" title="Agregar Observacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
-							</div>
-						</td>
-						
-					<?php }?>	
-					
-					
-				</tr>
-				<tr>
-					<td colspan="6" class="blank"><p>Observaciones</p></td> 
-				</tr>
-				
-				
-							
-							
-				
 			</tbody>
 		</table>
     </div>
+    
+    <div class="row">
+		<div class="col-xs-12">
+			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['servicios_egr_nd_basicos']['Observaciones'];?></p>
+		</div>
+	</div>
     
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
@@ -746,11 +748,11 @@ $Form_Imputs = new Inputs();
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 								<?php 
 								$ubicacion = $location.'&del_file='.$producto['idFile'];
 								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
 					</tr>
@@ -771,13 +773,17 @@ $Form_Imputs = new Inputs();
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
- <div class="col-sm-8 fcenter">
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingresar Nota de Debito</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -789,27 +795,56 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($N_Doc)) {              $x2  = $N_Doc;            }else{$x2  = '';}
 				if(isset($Creacion_fecha)) {     $x3  = $Creacion_fecha;   }else{$x3  = '';}
 				if(isset($Observaciones)) {      $x4  = $Observaciones;    }else{$x4  = '';}
+				if(isset($idUsoIVA)) {           $x5  = $idUsoIVA;         }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
-				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
+				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_post_data(1, 'Solo las empresas que no sean contribuyentes del Impuesto al Valor Agregado (IVA) y las que gocen de exención del IVA de conformidad a lo dispuesto en los Artículos 12 y 13 de la <a href="http://www.sii.cl/pagina/jurisprudencia/legislacion/basica/dl825.doc">Ley del IVA</a> pueden elegir la opcion <strong>SI</strong>, para el resto es de uso obligatorio la opcion <strong>NO</strong>. ');
+				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idTipo', 12, 2);
-				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idDocumentos', 4, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', 12, 2);
+				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idDocumentos', 4, 2);
 						
 				?>
 				
+				<script>
+					document.getElementById('div_fecha_fact_desde').style.display = 'none';
+					document.getElementById('div_fecha_fact_hasta').style.display = 'none';
+						
+					var idDocumentos;
+						
+					$("#idDocumentos").on("change", function(){ //se ejecuta al cambiar valor del select
+						idDocumentos = $(this).val(); //Asignamos el valor seleccionado
+					
+						//si es Factura
+						if(idDocumentos == 2){ 
+							document.getElementById('div_fecha_fact_desde').style.display = '';
+							document.getElementById('div_fecha_fact_hasta').style.display = '';
+															
+						//Para el resto
+						} else { 
+							document.getElementById('div_fecha_fact_desde').style.display = 'none';
+							document.getElementById('div_fecha_fact_hasta').style.display = 'none';
+							//Reseteo los valores a 0
+							document.getElementsByName('fecha_fact_desde').value = "0";
+							document.getElementsByName('fecha_fact_hasta').value = "0";
+						}
+					});
+
+				</script>
+				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -855,13 +890,13 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 /**********************************************************/
 //Variable con la ubicacion
 $z="WHERE bodegas_servicios_facturacion.idTipo=12";//Solo ingresos
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Se aplican los filtros
@@ -869,7 +904,10 @@ if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                $z .= 
 if(isset($_GET['idDocumentos']) && $_GET['idDocumentos'] != ''){          $z .= " AND bodegas_servicios_facturacion.idDocumentos=".$_GET['idDocumentos'];}
 if(isset($_GET['N_Doc']) && $_GET['N_Doc'] != ''){                        $z .= " AND bodegas_servicios_facturacion.N_Doc LIKE '%".$_GET['N_Doc']."%'";}
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){      $z .= " AND bodegas_servicios_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['Creacion_ano']) && $_GET['Creacion_ano'] != ''){          $z .= " AND bodegas_servicios_facturacion.Creacion_ano='".$_GET['Creacion_ano']."'";}
+if(isset($_GET['Creacion_mes']) && $_GET['Creacion_mes'] != ''){          $z .= " AND bodegas_servicios_facturacion.Creacion_mes='".$_GET['Creacion_mes']."'";}
 if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){        $z .= " AND bodegas_servicios_facturacion.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+if(isset($_GET['idUsoIVA']) && $_GET['idUsoIVA'] != ''){                  $z .= " AND bodegas_servicios_facturacion.idUsoIVA=".$_GET['idUsoIVA'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $query = "SELECT idFacturacion FROM `bodegas_servicios_facturacion` ".$z;
@@ -926,7 +964,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -957,18 +995,25 @@ array_push( $arrTipo,$row );
 				if(isset($idCliente)) {          $x1  = $idCliente;        }else{$x1  = '';}
 				if(isset($N_Doc)) {              $x2  = $N_Doc;            }else{$x2  = '';}
 				if(isset($Creacion_fecha)) {     $x3  = $Creacion_fecha;   }else{$x3  = '';}
-				if(isset($Observaciones)) {      $x4  = $Observaciones;    }else{$x4  = '';}
+				if(isset($Creacion_ano)) {       $x4  = $Creacion_ano;     }else{$x4  = '';}
+				if(isset($Creacion_mes)) {       $x5  = $Creacion_mes;     }else{$x5  = '';}
+				if(isset($Observaciones)) {      $x6  = $Observaciones;    }else{$x6  = '';}
+				if(isset($idUsoIVA)) {           $x7  = $idUsoIVA;         }else{$x7  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 1);
-				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x3, 1);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 1);
+				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 1);
+				$Form_Inputs->form_select_n_auto('Año Documento','Creacion_ano', $x4, 1, 2016, ano_actual());
+				$Form_Inputs->form_select_filter('Mes Documento','Creacion_mes', $x5, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1, 160);
+				$Form_Inputs->form_post_data(1, 'Solo las empresas que no sean contribuyentes del Impuesto al Valor Agregado (IVA) y las que gocen de exención del IVA de conformidad a lo dispuesto en los Artículos 12 y 13 de la <a href="http://www.sii.cl/pagina/jurisprudencia/legislacion/basica/dl825.doc">Ley del IVA</a> pueden elegir la opcion <strong>SI</strong>, para el resto es de uso obligatorio la opcion <strong>NO</strong>. ');
+				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x7, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
-				$Form_Imputs->form_input_hidden('idDocumentos', 4, 2);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('idDocumentos', 4, 2);
 				?>
 				
 				<div class="form-group">
@@ -987,7 +1032,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Notas de Debito</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Notas de Debito</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -1001,22 +1046,22 @@ array_push( $arrTipo,$row );
 						<th>
 							<div class="pull-left">Cliente</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=proveedor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=proveedor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=proveedor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=proveedor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Documento</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=doc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=doc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=doc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=doc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fecha de Compra</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -1033,7 +1078,7 @@ array_push( $arrTipo,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_servicios.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

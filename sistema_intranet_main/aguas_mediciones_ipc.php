@@ -1,0 +1,477 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "aguas_mediciones_ipc.php";
+$location = $original;
+//Se agregan ubicaciones
+$location .='?pagina='.$_GET['pagina'];
+/********************************************************************/
+//Variables para filtro y paginacion
+$search = '';
+if(isset($_GET['Ano']) && $_GET['Ano'] != ''){                   $location .= "&Ano=".$_GET['Ano'];                    $search .= "&Ano=".$_GET['Ano'];}
+if(isset($_GET['idMes']) && $_GET['idMes'] != ''){               $location .= "&idMes=".$_GET['idMes'];                $search .= "&idMes=".$_GET['idMes'];}
+if(isset($_GET['UTM']) && $_GET['UTM'] != ''){                   $location .= "&UTM=".$_GET['UTM'];                    $search .= "&UTM=".$_GET['UTM'];}
+if(isset($_GET['UTA']) && $_GET['UTA'] != ''){                   $location .= "&UTA=".$_GET['UTA'];                    $search .= "&UTA=".$_GET['UTA'];}
+if(isset($_GET['ValorPuntos']) && $_GET['ValorPuntos'] != ''){   $location .= "&ValorPuntos=".$_GET['ValorPuntos'];    $search .= "&ValorPuntos=".$_GET['ValorPuntos'];}
+if(isset($_GET['Mensual']) && $_GET['Mensual'] != ''){           $location .= "&Mensual=".$_GET['Mensual'];            $search .= "&Mensual=".$_GET['Mensual'];}
+if(isset($_GET['Acumulado']) && $_GET['Acumulado'] != ''){       $location .= "&Acumulado=".$_GET['Acumulado'];        $search .= "&Acumulado=".$_GET['Acumulado'];}
+if(isset($_GET['DoceMeses']) && $_GET['DoceMeses'] != ''){       $location .= "&DoceMeses=".$_GET['DoceMeses'];        $search .= "&DoceMeses=".$_GET['DoceMeses'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $location .= "&Nombre=".$_GET['Nombre'];              $search .= "&Nombre=".$_GET['Nombre'];}
+/********************************************************************/
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para crear
+if ( !empty($_POST['submit']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'insert';
+	require_once 'A1XRXS_sys/xrxs_form/aguas_mediciones_ipc.php';
+}
+//formulario para editar
+if ( !empty($_POST['submit_edit']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'update';
+	require_once 'A1XRXS_sys/xrxs_form/aguas_mediciones_ipc.php';
+}
+//se borra un dato
+if ( !empty($_GET['del']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'del';
+	require_once 'A1XRXS_sys/xrxs_form/aguas_mediciones_ipc.php';	
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/IPC Creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/IPC Modificado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/IPC borrado correctamente';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
+// Se traen todos los datos de mi usuario
+$query = "SELECT Ano, idMes, UTM, UTA, ValorPuntos, Mensual, Acumulado, DoceMeses
+FROM `aguas_mediciones_ipc`
+WHERE idIPC = ".$_GET['id'];
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);	?>
+ 
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Modificacion del IPC</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Ano)) {          $x1  = $Ano;            }else{$x1  = $rowdata['Ano'];}
+				if(isset($idMes)) {        $x2  = $idMes;          }else{$x2  = $rowdata['idMes'];}
+				if(isset($UTM)) {          $x3  = $UTM;            }else{$x3  = Cantidades_decimales_justos($rowdata['UTM']);}
+				if(isset($UTA)) {          $x4  = $UTA;            }else{$x4  = Cantidades_decimales_justos($rowdata['UTA']);}
+				if(isset($ValorPuntos)) {  $x5  = $ValorPuntos;    }else{$x5  = Cantidades_decimales_justos($rowdata['ValorPuntos']);}
+				if(isset($Mensual)) {      $x6  = $Mensual;        }else{$x6  = Cantidades_decimales_justos($rowdata['Mensual']);}
+				if(isset($Acumulado)) {    $x7  = $Acumulado;      }else{$x7  = Cantidades_decimales_justos($rowdata['Acumulado']);}
+				if(isset($DoceMeses)) {    $x8  = $DoceMeses;      }else{$x8  = Cantidades_decimales_justos($rowdata['DoceMeses']);}
+				
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 2, 2016, ano_actual());
+				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_input_number('UTM', 'UTM', $x3, 1);
+				$Form_Inputs->form_input_number('UTA', 'UTA', $x4, 1);
+				$Form_Inputs->form_input_number('Valor Puntos', 'ValorPuntos', $x5, 1);
+				$Form_Inputs->form_input_number('Mensual', 'Mensual', $x6, 1);
+				$Form_Inputs->form_input_number('Acumulado', 'Acumulado', $x7, 1);
+				$Form_Inputs->form_input_number('Doce Meses', 'DoceMeses', $x8, 1);
+				
+				
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idIPC', $_GET['id'], 2);
+				?>
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php widget_validator(); ?>        
+		</div>
+	</div>
+</div>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear IPC</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+        	
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Ano)) {          $x1  = $Ano;            }else{$x1  = '';}
+				if(isset($idMes)) {        $x2  = $idMes;          }else{$x2  = '';}
+				if(isset($UTM)) {          $x3  = $UTM;            }else{$x3  = '';}
+				if(isset($UTA)) {          $x4  = $UTA;            }else{$x4  = '';}
+				if(isset($ValorPuntos)) {  $x5  = $ValorPuntos;    }else{$x5  = '';}
+				if(isset($Mensual)) {      $x6  = $Mensual;        }else{$x6  = '';}
+				if(isset($Acumulado)) {    $x7  = $Acumulado;      }else{$x7  = '';}
+				if(isset($DoceMeses)) {    $x8  = $DoceMeses;      }else{$x8  = '';}
+				
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 2, 2016, ano_actual());
+				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_input_number('UTM', 'UTM', $x3, 1);
+				$Form_Inputs->form_input_number('UTA', 'UTA', $x4, 1);
+				$Form_Inputs->form_input_number('Valor Puntos', 'ValorPuntos', $x5, 1);
+				$Form_Inputs->form_input_number('Mensual', 'Mensual', $x6, 1);
+				$Form_Inputs->form_input_number('Acumulado', 'Acumulado', $x7, 1);
+				$Form_Inputs->form_input_number('Doce Meses', 'DoceMeses', $x8, 1);
+				
+				
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php widget_validator(); ?>        
+		</div>
+	</div>
+</div>
+
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+/**********************************************************/
+//paginador de resultados
+if(isset($_GET["pagina"])){
+	$num_pag = $_GET["pagina"];	
+} else {
+	$num_pag = 1;	
+}
+//Defino la cantidad total de elementos por pagina
+$cant_reg = 30;
+//resto de variables
+if (!$num_pag){
+	$comienzo = 0 ;
+	$num_pag = 1 ;
+} else {
+	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
+}
+/**********************************************************/
+//ordenamiento
+if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
+	switch ($_GET['order_by']) {
+		case 'mes_asc':          $order_by = 'ORDER BY core_tiempo_meses.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mes Ascendente'; break;
+		case 'mes_desc':         $order_by = 'ORDER BY core_tiempo_meses.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mes Descendente';break;
+		case 'ano_asc':          $order_by = 'ORDER BY aguas_mediciones_ipc.Ano ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año Ascendente'; break;
+		case 'ano_desc':         $order_by = 'ORDER BY aguas_mediciones_ipc.Ano DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Año Descendente';break;
+		case 'utm_asc':          $order_by = 'ORDER BY aguas_mediciones_ipc.UTM ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> UTM Ascendente'; break;
+		case 'utm_desc':         $order_by = 'ORDER BY aguas_mediciones_ipc.UTM DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> UTM Descendente';break;
+		case 'uta_asc':          $order_by = 'ORDER BY aguas_mediciones_ipc.UTA ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> UTA Ascendente'; break;
+		case 'uta_desc':         $order_by = 'ORDER BY aguas_mediciones_ipc.UTA DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> UTA Descendente';break;
+		case 'valor_asc':        $order_by = 'ORDER BY aguas_mediciones_ipc.ValorPuntos ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Puntos Ascendente'; break;
+		case 'valor_desc':       $order_by = 'ORDER BY aguas_mediciones_ipc.ValorPuntos DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Puntos Descendente';break;
+		case 'mensual_asc':      $order_by = 'ORDER BY aguas_mediciones_ipc.Mensual ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mensual Ascendente'; break;
+		case 'mensual_desc':     $order_by = 'ORDER BY aguas_mediciones_ipc.Mensual DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mensual Descendente';break;
+		case 'acumulado_asc':    $order_by = 'ORDER BY aguas_mediciones_ipc.Acumulado ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Acumulado Ascendente'; break;
+		case 'acumulado_desc':   $order_by = 'ORDER BY aguas_mediciones_ipc.Acumulado DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Acumulado Descendente';break;
+		case 'doce_asc':         $order_by = 'ORDER BY aguas_mediciones_ipc.DoceMeses ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Doce Meses Ascendente'; break;
+		case 'doce_desc':        $order_by = 'ORDER BY aguas_mediciones_ipc.DoceMeses DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Doce Meses Descendente';break;
+		
+		default: $order_by = 'ORDER BY aguas_mediciones_ipc.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
+	}
+}else{
+	$order_by = 'ORDER BY aguas_mediciones_ipc.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
+}
+/**********************************************************/
+//Variable de busqueda
+$z = "WHERE aguas_mediciones_ipc.idIPC!=0";
+//Verifico el tipo de usuario que esta ingresando
+$z.=" AND aguas_mediciones_ipc.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+/**********************************************************/
+//Se aplican los filtros
+if(isset($_GET['Ano']) && $_GET['Ano'] != ''){                   $z .= " AND aguas_mediciones_ipc.Ano='".$_GET['Ano']."'";}
+if(isset($_GET['idMes']) && $_GET['idMes'] != ''){               $z .= " AND aguas_mediciones_ipc.idMes='".$_GET['idMes']."'";}
+if(isset($_GET['UTM']) && $_GET['UTM'] != ''){                   $z .= " AND aguas_mediciones_ipc.UTM='".$_GET['UTM']."'";}
+if(isset($_GET['UTA']) && $_GET['UTA'] != ''){                   $z .= " AND aguas_mediciones_ipc.UTA='".$_GET['UTA']."'";}
+if(isset($_GET['ValorPuntos']) && $_GET['ValorPuntos'] != ''){   $z .= " AND aguas_mediciones_ipc.ValorPuntos='".$_GET['ValorPuntos']."'";}
+if(isset($_GET['Mensual']) && $_GET['Mensual'] != ''){           $z .= " AND aguas_mediciones_ipc.Mensual='".$_GET['Mensual']."'";}
+if(isset($_GET['Acumulado']) && $_GET['Acumulado'] != ''){       $z .= " AND aguas_mediciones_ipc.Acumulado='".$_GET['Acumulado']."'";}
+if(isset($_GET['DoceMeses']) && $_GET['DoceMeses'] != ''){       $z .= " AND aguas_mediciones_ipc.DoceMeses='".$_GET['DoceMeses']."'";}
+/**********************************************************/
+//Realizo una consulta para saber el total de elementos existentes
+$query = "SELECT idIPC FROM `aguas_mediciones_ipc` ".$z;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$cuenta_registros = mysqli_num_rows($resultado);
+//Realizo la operacion para saber la cantidad de paginas que hay
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los usuarios
+$arrUML = array();
+$query = "SELECT 
+aguas_mediciones_ipc.idIPC,
+aguas_mediciones_ipc.Ano,
+aguas_mediciones_ipc.UTM, 
+aguas_mediciones_ipc.UTA, 
+aguas_mediciones_ipc.ValorPuntos,
+aguas_mediciones_ipc.Mensual,
+aguas_mediciones_ipc.Acumulado,
+aguas_mediciones_ipc.DoceMeses,
+core_sistemas.Nombre AS sistema,
+core_tiempo_meses.Nombre AS Mes
+
+FROM `aguas_mediciones_ipc`
+LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema    = aguas_mediciones_ipc.idSistema
+LEFT JOIN `core_tiempo_meses`   ON core_tiempo_meses.idMes    = aguas_mediciones_ipc.idMes
+".$z."
+".$order_by."
+LIMIT $comienzo, $cant_reg ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrUML,$row );
+}?>
+
+<div class="col-sm-12 breadcrumb-bar">
+
+	<ul class="btn-group btn-breadcrumb pull-left">
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
+		<?php } ?>		
+	</ul>
+	
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear IPC</a><?php } ?>
+	
+</div>
+<div class="clearfix"></div> 
+<div class="collapse col-sm-12" id="collapseExample">
+	<div class="well">
+		<div class="col-sm-8 fcenter">
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Ano)) {          $x1  = $Ano;           }else{$x1  = '';}
+				if(isset($idMes)) {        $x2  = $idMes;         }else{$x2  = '';}
+				if(isset($UTM)) {          $x3  = $UTM;           }else{$x3  = '';}
+				if(isset($UTA)) {          $x4  = $UTA;           }else{$x4  = '';}
+				if(isset($ValorPuntos)) {  $x5  = $ValorPuntos;   }else{$x5  = '';}
+				if(isset($Mensual)) {      $x6  = $Mensual;       }else{$x6  = '';}
+				if(isset($Acumulado)) {    $x7  = $Acumulado;     }else{$x7  = '';}
+				if(isset($DoceMeses)) {    $x8  = $DoceMeses;     }else{$x8  = '';}
+				
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
+				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_input_number('UTM', 'UTM', $x3, 1);
+				$Form_Inputs->form_input_number('UTA', 'UTA', $x4, 1);
+				$Form_Inputs->form_input_number('Valor Puntos', 'ValorPuntos', $x5, 1);
+				$Form_Inputs->form_input_number('Mensual', 'Mensual', $x6, 1);
+				$Form_Inputs->form_input_number('Acumulado', 'Acumulado', $x7, 1);
+				$Form_Inputs->form_input_number('Doce Meses', 'DoceMeses', $x8, 1);
+				
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+				</div>
+                      
+			</form> 
+            <?php widget_validator(); ?>
+        </div>
+	</div>
+</div>
+<div class="clearfix"></div> 
+                     
+                                 
+<div class="col-sm-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de IPC</h5>
+			<div class="toolbar">
+				<?php 
+				//se llama al paginador
+				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+			</div>
+		</header>
+		<div class="table-responsive">
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>
+							<div class="pull-left">Año</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=ano_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=ano_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Mes</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=mes_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=mes_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">UTM</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=utm_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=utm_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">UTA</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=uta_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=uta_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Valor Puntos</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=valor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=valor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Mensual</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=mensual_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=mensual_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Acumulado</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=acumulado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=acumulado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Doce Meses</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=doce_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=doce_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>		  
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				<?php foreach ($arrUML as $uml) { ?>
+					<tr class="odd">
+						<td><?php echo $uml['Ano']; ?></td>
+						<td><?php echo $uml['Mes']; ?></td>
+						<td><?php echo Cantidades_decimales_justos($uml['UTM']); ?></td>
+						<td><?php echo Cantidades_decimales_justos($uml['UTA']); ?></td>
+						<td><?php echo Cantidades_decimales_justos($uml['ValorPuntos']); ?></td>
+						<td><?php echo Cantidades_decimales_justos($uml['Mensual']); ?></td>
+						<td><?php echo Cantidades_decimales_justos($uml['Acumulado']); ?></td>
+						<td><?php echo Cantidades_decimales_justos($uml['DoceMeses']); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>			
+						<td>
+							<div class="btn-group" style="width: 70px;" >
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idIPC']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=4){
+									$ubicacion = $location.'&del='.simpleEncode($uml['idIPC'], fecha_actual());
+									$dialogo   = '¿Realmente deseas eliminar el IPC del '.$uml['Ano'].' '.$uml['Mes'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+								<?php } ?>								
+							</div>
+						</td>
+					</tr>
+				<?php } ?>                    
+				</tbody>
+			</table>
+		</div>
+		<div class="pagrow">	
+			<?php 
+			//se llama al paginador
+			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+		</div>
+	</div>
+</div>
+<?php } ?>           
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

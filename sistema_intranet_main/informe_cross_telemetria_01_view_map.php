@@ -33,6 +33,7 @@ telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema,
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor." AS CantidadMuestra,
 
 telemetria_listado.Nombre AS EquipoNombre,
+telemetria_listado.Identificador AS EquipoIdentificador,
 cross_predios_listado.Nombre AS PredioNombre,
 cross_predios_listado_zonas.Nombre AS CuartelNombre
 
@@ -71,7 +72,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['EquipoNombre']; ?></h5>
 						
 		</header>
@@ -79,10 +80,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<?php 
 			//Si no existe una ID se utiliza una por defecto
 			if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-				echo '<p>No ha ingresado Una API de Google Maps</p>';
+				$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+				alert_post_data(4,2,2, $Alert_Text);
 			}else{
 				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-				<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 				<script type="text/javascript">
 					function initialize() {
 						var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
@@ -101,7 +103,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						var content = '<div id="iw-container">' +
 										'<div class="iw-title">Mediciones</div>' +
 										'<div class="iw-content">'+
-											'<img src="upload/tel_fot_<?php echo $_GET['idTelemetria'].'_'.$rowdata['idTabla'].'.jpg'; ?>" alt="foto"> '+
+											'<img src="upload/bayas_<?php echo $rowdata['EquipoIdentificador'].'_'.$rowdata['idTabla'].'.jpg'; ?>" alt="foto"> '+
 											'<p>'+
 												'<strong>Equipo: </strong><?php echo $rowdata['EquipoNombre']; ?><br/>' +
 												'<strong>Predio: </strong><?php echo $rowdata['PredioNombre']; ?><br/>' +
@@ -127,7 +129,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							map			: map,
 							title		: "Direccion",
 							animation 	: google.maps.Animation.DROP,
-							icon      	: "<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_red.png"
+							icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_red.png"
 						});
 						
 						// This event expects a click on a marker
@@ -215,8 +217,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
 	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div>
 <?php } ?>

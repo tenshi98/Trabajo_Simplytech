@@ -32,7 +32,7 @@ if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre, cantSensores, Direccion_img
 FROM `telemetria_listado`
-WHERE idTelemetria = {$_GET['view']}";
+WHERE idTelemetria = ".simpleDecode($_GET['view'], fecha_actual());
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -55,10 +55,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Equipo <?php echo $rowdata['Nombre']; ?></h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#uso" data-toggle="tab">Sensores</a></li>
+				<li class="active"><a href="#uso" data-toggle="tab"><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -68,10 +68,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					
 					<div class="col-sm-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/maquina.jpg">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<?php if (isset($_GET['data_1'])&&$_GET['data_1']=='si') { ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo 'http://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo 'https://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
 							<?php }else{  ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 							<?php }?>	
@@ -95,7 +95,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						$query = "SELECT Nombre
 						".$aa."
 						FROM `telemetria_listado`
-						WHERE idTelemetria = {$_GET['view']}";
+						WHERE idTelemetria = ".simpleDecode($_GET['view'], fecha_actual());
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -122,7 +122,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<div class="col-sm-12">
 								<div class="box">	
 									<header>		
-										<div class="icons"><i class="fa fa-table"></i></div><h5>Sensores Supervisados</h5>
+										<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Sensores Supervisados</h5>
 									</header>
 									<div class="table-responsive">
 				
@@ -166,7 +166,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								</div>
 							</div>
 						<?php } else{ ?>
-							<div class="alert alert-info" role="alert" style="margin-top:15px;">No existen sensores configurados para la supervision</div>
+							<div style="margin-top:15px;">
+								<?php 
+								$Alert_Text  = 'No existen sensores configurados para la supervision';
+								alert_post_data(2,1,1, $Alert_Text);
+								?>
+							</div>
 						<?php } ?>
 					</div>	
 					<div class="clearfix"></div>

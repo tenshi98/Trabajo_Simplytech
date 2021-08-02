@@ -53,9 +53,11 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Evento Creado corre
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Evento Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Evento borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 seguridad_eventos_listado.Fecha,
@@ -68,7 +70,7 @@ FROM `seguridad_eventos_listado`
 LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario  = seguridad_eventos_listado.idUsuario
 LEFT JOIN `core_sistemas`    ON core_sistemas.idSistema     = seguridad_eventos_listado.idSistema
 
-WHERE seguridad_eventos_listado.idEvento = {$_GET['id']}";
+WHERE seguridad_eventos_listado.idEvento = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -88,7 +90,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $arrArchivos = array();
 $query = "SELECT idArchivo, Nombre 
 FROM `seguridad_eventos_listado_archivos`
-WHERE idEvento = {$_GET['id']}";
+WHERE idEvento = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -108,21 +110,7 @@ array_push( $arrArchivos,$row );
 ?>
  
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Evento</span>
-				<span class="info-box-number"><?php echo fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs'; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
@@ -130,9 +118,9 @@ array_push( $arrArchivos,$row );
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'seguridad_eventos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'seguridad_eventos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'seguridad_eventos_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivos Adjuntos</a></li>          
+				<li class="active"><a href="<?php echo 'seguridad_eventos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'seguridad_eventos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'seguridad_eventos_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos Adjuntos</a></li>          
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -141,7 +129,7 @@ array_push( $arrArchivos,$row );
 				<div class="wmd-panel">
 
 					<div class="col-sm-4">
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/evento-seguridad.jpg">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/evento-seguridad.jpg">
 					</div>
 					<div class="col-sm-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Evento</h2>
@@ -153,7 +141,12 @@ array_push( $arrArchivos,$row );
 						</p>
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observacion</h2>
-						<p class="text-muted"><?php echo $rowdata['Observacion']; ?></p>
+						<p class="text-muted word_break">
+							<div class="text-muted well well-sm no-shadow">
+								<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+								<div class="clearfix"></div>
+							</div>
+						</p>
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos Adjuntos</h2>
 						<table id="items" style="margin-bottom: 20px;">
@@ -164,8 +157,8 @@ array_push( $arrArchivos,$row );
 											<td>'.$tipo['Nombre'].'</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$tipo['Nombre'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$tipo['Nombre'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Nombre'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Nombre'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -189,17 +182,20 @@ array_push( $arrArchivos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Evento</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -212,20 +208,20 @@ array_push( $arrArchivos,$row );
 				if(isset($Observacion)) {   $x3  = $Observacion;  }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Imputs->form_time('Hora','Hora', $x2, 2, 2);
-				$Form_Imputs->form_ckeditor('Observacion','Observacion', $x3, 2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
+				$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
+				$Form_Inputs->form_ckeditor('Observacion','Observacion', $x3, 2, 2);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -273,18 +269,23 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE seguridad_eventos_listado.idEvento!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND seguridad_eventos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$z.=" AND seguridad_eventos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+//Verifico el tipo de usuario que esta ingresando
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
 	$z .= " AND seguridad_eventos_listado.idUsuario = '".$_GET['idUsuario']."'" ;
 }
 if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
-	$z .= " AND seguridad_eventos_listado.Hora BETWEEN '{$_GET['h_inicio']}' AND '{$_GET['h_termino']}'" ;
+	$z .= " AND seguridad_eventos_listado.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
 }
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z .= " AND seguridad_eventos_listado.Fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'" ;
+	$z .= " AND seguridad_eventos_listado.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'" ;
 }
 
 /**********************************************************/
@@ -341,7 +342,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -365,14 +366,14 @@ array_push( $arrTipo,$row );
 				if(isset($h_termino)) {   $x5  = $h_termino;  }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_join_filter('Usuario','idUsuario', $x1, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x2, 1);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x3, 1);
-				$Form_Imputs->form_time('Hora Inicio','h_inicio', $x4, 1, 1);
-				$Form_Imputs->form_time('Hora Termino','h_termino', $x5, 1, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x2, 1);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 1);
+				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x4, 1, 1);
+				$Form_Inputs->form_time('Hora Termino','h_termino', $x5, 1, 1);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -390,7 +391,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Eventos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Eventos</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -404,22 +405,22 @@ array_push( $arrTipo,$row );
 						<th>
 							<div class="pull-left">Usuario</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Hora</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=hora_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=hora_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=hora_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=hora_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -435,11 +436,11 @@ array_push( $arrTipo,$row );
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idEvento']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idEvento']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
-										$ubicacion = $location.'&del='.$tipo['idEvento'];
+										$ubicacion = $location.'&del='.simpleEncode($tipo['idEvento'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el evento?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>								
 								</div>
 							</td>

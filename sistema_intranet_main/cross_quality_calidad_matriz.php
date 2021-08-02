@@ -83,7 +83,7 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Tipo Planilla <?php echo $_GET['nombre_matriz']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -94,18 +94,18 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 				if(isset($Nombre)) {           $x1  = $Nombre;           }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				
 				?>  
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c5; Clonar" name="clone_Matriz">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -130,7 +130,7 @@ $cadena .= ',Validacion_'.$_GET['mod'].' AS Validar';
 // tomo los datos del usuario
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
-WHERE idMatriz = {$_GET['idMatriz']}";
+WHERE idMatriz = ".$_GET['idMatriz'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -153,7 +153,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Parametros  del punto</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -161,19 +161,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         	
 				<?php 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Parametro','PuntoidGrupo', $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'cross_quality_calidad_matriz_grupos', 0, '', $dbConn);	
-				$Form_Imputs->form_input_text( 'Nombre', 'PuntoNombre', $rowdata['Nombre'], 1);
-				$Form_Imputs->form_select('Tipo','PuntoidTipo', $rowdata['Tipo'], 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 0, '', $dbConn);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Parametro','PuntoidGrupo', $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'cross_quality_calidad_matriz_grupos', 0, '', $dbConn);	
+				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowdata['Nombre'], 1);
+				$Form_Inputs->form_select('Tipo','PuntoidTipo', $rowdata['Tipo'], 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 0, '', $dbConn);	
 				
-				$Form_Imputs->form_input_number($x_column_puntomed_aceptable,'PuntoMedAceptable', Cantidades_decimales_justos($rowdata['Aceptable']), 1);
-				$Form_Imputs->form_input_number($x_column_puntomed_alerta,'PuntoMedAlerta', Cantidades_decimales_justos($rowdata['Alerta']), 1);
-				$Form_Imputs->form_input_number($x_column_puntomed_condenatorio,'PuntoMedCondenatorio', Cantidades_decimales_justos($rowdata['Condenatorio']), 1);
-				$Form_Imputs->form_select('Unidad de Medida','PuntoUniMed', $rowdata['UniMed'], 1, 'idUml', 'Nombre', 'sistema_cross_analisis_uml', 0, '', $dbConn);	
-				$Form_Imputs->form_input_text( 'Datos a Validar', 'Validar', $rowdata['Validar'], 1);
+				$Form_Inputs->form_input_number($x_column_puntomed_aceptable,'PuntoMedAceptable', Cantidades_decimales_justos($rowdata['Aceptable']), 1);
+				$Form_Inputs->form_input_number($x_column_puntomed_alerta,'PuntoMedAlerta', Cantidades_decimales_justos($rowdata['Alerta']), 1);
+				$Form_Inputs->form_input_number($x_column_puntomed_condenatorio,'PuntoMedCondenatorio', Cantidades_decimales_justos($rowdata['Condenatorio']), 1);
+				$Form_Inputs->form_select('Unidad de Medida','PuntoUniMed', $rowdata['UniMed'], 1, 'idUml', 'Nombre', 'sistema_cross_analisis_uml', 0, '', $dbConn);	
+				$Form_Inputs->form_input_text('Datos a Validar', 'Validar', $rowdata['Validar'], 1);
 				
-				$Form_Imputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
-				$Form_Imputs->form_input_hidden('mod', $_GET['mod'], 2);
+				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
+				$Form_Inputs->form_input_hidden('mod', $_GET['mod'], 2);
 				?>
 
 				<script>
@@ -304,7 +304,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_2">
-					<a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -397,7 +397,7 @@ PuntoidTipo_46,PuntoidTipo_47,PuntoidTipo_48,PuntoidTipo_49,PuntoidTipo_50
 
 
 FROM `cross_quality_calidad_matriz`
-WHERE idMatriz = {$_GET['idMatriz']}";
+WHERE idMatriz = ".$_GET['idMatriz'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -487,7 +487,7 @@ array_push( $arrGrupos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Puntos de Tipo Planilla</h5>		
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Puntos de Tipo Planilla</h5>		
 		</header>
 		
 		
@@ -526,7 +526,7 @@ array_push( $arrGrupos,$row );
 									
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
@@ -540,8 +540,8 @@ array_push( $arrGrupos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -550,7 +550,7 @@ array_push( $arrGrupos,$row );
 $query = "SELECT Nombre, cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1,
 idNotaTipo_2, idNotaTipo_3, idTipo, idSistema, Validar_1, Validar_2, Validar_3
 FROM `cross_quality_calidad_matriz`
-WHERE idMatriz = {$_GET['idMatriz_2']}";
+WHERE idMatriz = ".$_GET['idMatriz_2'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -569,7 +569,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Tipo Planilla</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -592,28 +592,28 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Validar_3)) {    $x13 = $Validar_3;    }else{$x13 = $rowdata['Validar_3'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
-				$Form_Imputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 100);
-				$Form_Imputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 100);
+				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
 				
-				$Form_Imputs->form_select('Nota Calidad','idNota_1', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Tipo Nota Calidad','idNotaTipo_1', $x6, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);	
-				$Form_Imputs->form_input_text( 'Datos a Validar', 'Validar_1', $x7, 1);
+				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Tipo Nota Calidad','idNotaTipo_1', $x6, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);	
+				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_1', $x7, 1);
 				
-				$Form_Imputs->form_select('Nota Condicion','idNota_2', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Tipo Nota Condicion','idNotaTipo_2', $x9, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);	
-				$Form_Imputs->form_input_text( 'Datos a Validar', 'Validar_2', $x10, 1);
+				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Tipo Nota Condicion','idNotaTipo_2', $x9, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);	
+				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_2', $x10, 1);
 				
-				$Form_Imputs->form_select('Calificacion','idNota_3', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Tipo Calificacion','idNotaTipo_3', $x12, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);	
-				$Form_Imputs->form_input_text( 'Datos a Validar', 'Validar_3', $x13, 1);
+				$Form_Inputs->form_select('Calificacion','idNota_3', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Tipo Calificacion','idNotaTipo_3', $x12, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);	
+				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_3', $x13, 1);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
-				$Form_Imputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
 				?> 
 				
 				<script>
@@ -828,7 +828,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_1"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -837,14 +837,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	</div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {  
+ } elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro  
 //verifico que sea un administrador
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";		 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		 
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Tipo Planilla</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -857,24 +861,24 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($idTipo)) {      $x3  = $idTipo;       }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
-				$Form_Imputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 100);
-				$Form_Imputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 100);
+				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
-				$Form_Imputs->form_input_hidden('idNota_1', 2, 2);
-				$Form_Imputs->form_input_hidden('idNota_2', 2, 2);
-				$Form_Imputs->form_input_hidden('idNota_3', 2, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idNota_1', 2, 2);
+				$Form_Inputs->form_input_hidden('idNota_2', 2, 2);
+				$Form_Inputs->form_input_hidden('idNota_3', 2, 2);
 				
 				?>        
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -930,7 +934,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE cross_quality_calidad_matriz.idMatriz!=0";
 //verifico que sea un administrador
-$z.=" AND cross_quality_calidad_matriz.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND cross_quality_calidad_matriz.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){      $z .= " AND cross_quality_calidad_matriz.idEstado=".$_GET['idEstado'];}
@@ -1012,7 +1016,7 @@ array_push( $arrMatriz,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -1037,15 +1041,15 @@ array_push( $arrMatriz,$row );
 				if(isset($idNota_3)) {   $x6  = $idNota_3;    }else{$x6  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 1); 
-				$Form_Imputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 1, 1, 100);
-				$Form_Imputs->form_select('Tipo Planilla','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
-				$Form_Imputs->form_select('Nota Calidad','idNota_1', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Nota Condicion','idNota_2', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Calificacion','idNota_3', $x6, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1); 
+				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 1, 1, 100);
+				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
+				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Calificacion','idNota_3', $x6, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -1064,7 +1068,7 @@ array_push( $arrMatriz,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Tipos Planillas</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Tipos Planillas</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -1078,50 +1082,50 @@ array_push( $arrMatriz,$row );
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Planilla</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=planilla_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=planilla_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=planilla_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=planilla_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">N° Puntos</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=npuntos_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=npuntos_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=npuntos_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=npuntos_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Nota Calidad</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=ops1_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=ops1_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=ops1_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=ops1_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Nota Condicion</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=ops2_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=ops2_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=ops2_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=ops2_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Calificacion</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=ops3_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=ops3_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=ops3_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=ops3_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -1141,13 +1145,13 @@ array_push( $arrMatriz,$row );
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['RazonSocial']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 140px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
-										$ubicacion = $location.'&del='.$maq['idMatriz'];
+										$ubicacion = $location.'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>								
 								</div>
 							</td>	

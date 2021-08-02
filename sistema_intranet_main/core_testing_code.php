@@ -23,16 +23,106 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['test_fnx']) ) { 
+if ( ! empty($_GET['test_proyecciones']) ) { 
+//Libreria
+require_once '../LIBS_php/PHP_ML/vendor/autoload.php';
+//Funcion
+//use Phpml\Regression\LeastSquares;	
 	
-	$rowData = db_select_data ('Nombre', 'core_sistemas', '', 'idSistema=1', $dbConn);
-	echo 'Nombre Sistema 1:'.$rowData['Nombre'].'<br/>'; 
-	$rowData = db_select_nrows ('idSistema', 'core_sistemas', '', 'Nombre="Empresa 1"', $dbConn);
-	echo 'numero Sistema 1:'.$rowData.'<br/>'; 
-	 
+
+$arrContador     = array();
+$arrTemperatura  = array();	
+	
+$temp = 10;
+$n_Prediccion = 2;
+				
+for ($counter = 1; $counter <= 10; $counter++) {
+	$temp++;
+    $arrContador[$counter][0]   = $counter;
+	//$arrTemperatura[$counter]   = str_replace(',', '.', cantidades($temp, 2));
+	$arrTemperatura[$counter]   = cantidades_google(cantidades($temp, 2));
+}				
+	
+echo '<pre>';
+var_dump($arrTemperatura);
+echo '</pre>';
+					
+$regression = new Phpml\Regression\LeastSquares();
+$regression->train($arrContador, $arrTemperatura);
+//se guarda dato (60 datos por 5 horas + 36 datos por 3 horas a futuro)
+$Helada = $regression->predict([$n_Prediccion]);
+
+echo $Helada;
+?>
+
+
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+}elseif ( ! empty($_GET['test_logo']) ) { 
+	
+	//variables
+	$email     = 'tenshi98@gmail.com';
+	$Nombre    = 'test';
+	$usuario   = 'test';
+	$idSistema = 1;
+	
+	//logo de la compañia
+	$login_logo = DB_SITE_MAIN.'/img/login_logo.png';
+	$login_logo2 = 'img/login_logo.png';
+	
+	//solo si existe
+	if (file_exists($login_logo2)) {
+		//envio de correo
+		try {
+								
+			//se consulta el correo
+			$rowusr = db_select_data (false, 'Nombre, email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_logo');
+									
+			//Se crea el cuerpo	
+			$BodyMail  = '<div style="background-color: #D9D9D9; padding: 10px;">';
+			$BodyMail .= '<img src="'.$login_logo.'" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
+			$BodyMail .= '<h3 style="text-align: center;font-size: 30px;">';
+			$BodyMail .= '¡Hola <strong>'.$Nombre.'</strong>!<br/>';
+			$BodyMail .= 'Bienvenido/a a <strong>'.$rowusr['Nombre'].'</strong>';
+			$BodyMail .= '</h3>';
+			$BodyMail .= '<p style="text-align: center;font-size: 20px;">';
+			$BodyMail .= 'Tu usuario es: <strong>'.$usuario.'</strong><br/>';
+			$BodyMail .= 'La contraseña predeterminada es <strong>1234</strong>, luego el sistema te pedira cambiarla una vez iniciada sesion por primera vez.';
+			$BodyMail .= '</p>';
+			$BodyMail .= '<a href="'.DB_SITE_MAIN.'" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Empezar &#8594;</strong></a>';
+			$BodyMail .= '</div>';
+									
+			$rmail = tareas_envio_correo($rowusr['email_principal'], $rowusr['Nombre'], 
+										 $email, $Nombre, 
+										 '', '', 
+										 'Registro de Usuario', 
+										 $BodyMail,'', 
+										 '', 
+										 1, 
+										 $rowusr['Gmail_Usuario'], 
+										 $rowusr['Gmail_Password']);
+			//se guarda el log
+			log_response(1, $rmail, $email.' (Asunto:Registro de Usuario)');
+									 
+			echo "correo de test enviado";
+		} catch (Exception $e) {
+			echo "error de test:".$e->getMessage();
+		}	
+	}else{
+		echo "logo no existe (".$login_logo.")";
+	}
+	
 	?>
 	 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ }elseif ( ! empty($_GET['test_fnx']) ) { 
+	
+	$rowData = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema=1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_fnx');
+	echo 'Nombre Sistema 1:'.$rowData['Nombre'].'<br/>'; 
+	$rowData = db_select_nrows (false, 'idSistema', 'core_sistemas', '', 'Nombre="Empresa 1"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_fnx');
+	echo 'numero Sistema 1:'.$rowData.'<br/>'; 
 	 
+	?>	 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  }elseif ( ! empty($_GET['fact_repair']) ) { 
 // Se trae un listado con todos los pagos
@@ -340,7 +430,7 @@ array_push( $arrZonas,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 			
@@ -349,7 +439,8 @@ array_push( $arrZonas,$row );
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle'];
 					
@@ -361,7 +452,7 @@ array_push( $arrZonas,$row );
 							$Longitud = -70.65170304882815;
 						}
 						?>
-						<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
 							
@@ -384,7 +475,7 @@ array_push( $arrZonas,$row );
 									map			: map,
 									title		: "Tu Ubicacion",
 									animation 	:google.maps.Animation.DROP,
-									icon      	:"<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_orange.png"
+									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
 								
 								google.maps.event.addListener(marker, 'dragend', function (event) {
@@ -505,28 +596,28 @@ array_push( $arrZonas,$row );
 						if(isset($Sensor_4)) {       $x8  = $Sensor_4;      }elseif(isset($_GET['Sensor_4'])&&$_GET['Sensor_4']!=''){            $x8  = $_GET['Sensor_4'];       }else{$x8  = '';}
 						
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_input_disabled( 'Latitud', 'Latitud_fake', $Latitud, 1);
-						$Form_Imputs->form_input_disabled( 'Longitud', 'Longitud_fake', $Longitud, 1);
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $Latitud, 1);
+						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $Longitud, 1);
 						
-						$Form_Imputs->form_select_filter('Tractor','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 0, '', $dbConn);	
-						$Form_Imputs->form_input_number('Velocidad','GeoVelocidad', $x3, 2);
-						$Form_Imputs->form_input_number('Distancia','GeoMovimiento', $x4, 2);
-						$Form_Imputs->form_input_number('Caudal Derecho','Sensor_1', $x5, 2);
-						$Form_Imputs->form_input_number('Caudal Izquierdo','Sensor_2', $x6, 2);
-						$Form_Imputs->form_input_number('nivel','Sensor_3', $x7, 2);
-						$Form_Imputs->form_input_number('otro','Sensor_4', $x8, 2);
+						$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 0, '', $dbConn);	
+						$Form_Inputs->form_input_number('Velocidad','GeoVelocidad', $x3, 2);
+						$Form_Inputs->form_input_number('Distancia','GeoMovimiento', $x4, 2);
+						$Form_Inputs->form_input_number('Caudal Derecho','Sensor_1', $x5, 2);
+						$Form_Inputs->form_input_number('Caudal Izquierdo','Sensor_2', $x6, 2);
+						$Form_Inputs->form_input_number('nivel','Sensor_3', $x7, 2);
+						$Form_Inputs->form_input_number('otro','Sensor_4', $x8, 2);
 						
-						$Form_Imputs->form_input_hidden('FechaSistema', fecha_actual(), 2);
-						$Form_Imputs->form_input_hidden('HoraSistema', hora_actual(), 2);
-						$Form_Imputs->form_input_hidden('TimeStamp', fecha_actual().' '.hora_actual(), 2);
-						$Form_Imputs->form_input_hidden('GeoLatitud', $Latitud, 2);
-						$Form_Imputs->form_input_hidden('GeoLongitud', $Longitud, 2);
+						$Form_Inputs->form_input_hidden('FechaSistema', fecha_actual(), 2);
+						$Form_Inputs->form_input_hidden('HoraSistema', hora_actual(), 2);
+						$Form_Inputs->form_input_hidden('TimeStamp', fecha_actual().' '.hora_actual(), 2);
+						$Form_Inputs->form_input_hidden('GeoLatitud', $Latitud, 2);
+						$Form_Inputs->form_input_hidden('GeoLongitud', $Longitud, 2);
 						
 						//no borrar
-						$Form_Imputs->form_input_hidden('Latitud', 0, 2);
-						$Form_Imputs->form_input_hidden('Longitud', 0, 2);
-						$Form_Imputs->form_input_hidden('test_cross', 'true', 2);
+						$Form_Inputs->form_input_hidden('Latitud', 0, 2);
+						$Form_Inputs->form_input_hidden('Longitud', 0, 2);
+						$Form_Inputs->form_input_hidden('test_cross', 'true', 2);
 						
 								
 						/********************************************************/
@@ -568,7 +659,7 @@ array_push( $arrZonas,$row );
 							idTelemetria, FechaSistema, HoraSistema, TimeStamp, 
 							GeoLatitud, GeoLongitud, GeoVelocidad,GeoMovimiento, 
 							idZona, Sensor_1, Sensor_2,Sensor_3, Sensor_4
-							) VALUES ({$a} )";
+							) VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							
@@ -597,8 +688,8 @@ array_push( $arrZonas,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -636,24 +727,24 @@ array_push( $arrUsuarios,$row );
 		}
 				
 		// inserto los datos de registro en la db
-		echo $query  = "INSERT INTO `usuarios_sistemas` (idUsuario, idSistema) VALUES ({$a} );<br/>";
+		echo $query  = "INSERT INTO `usuarios_sistemas` (idUsuario, idSistema) VALUES (".$a.");<br/>";
 	}
 	?>
 </pre>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>	
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['test_cctv']) ) { ?>
 
-<img name="main" id="main" border="0" width="640" height="480" src="http://victor:victor2019@190.47.221.128/cgi-bin/mjpg/video.cgi?channel=1&subtype=1">
+<img name="main" id="main" border="0" width="640" height="480" src="https://victor:victor2019@190.47.221.128/cgi-bin/mjpg/video.cgi?channel=1&subtype=1">
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>	
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -662,7 +753,7 @@ array_push( $arrUsuarios,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Funciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Funciones</h5>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -678,7 +769,7 @@ array_push( $arrUsuarios,$row );
 						<td>Cross Checking - Entregar ubicaciones falsas equipo telemetria</td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<a href="<?php echo $location.'?test_cross=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $location.'?test_cross=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -687,7 +778,7 @@ array_push( $arrUsuarios,$row );
 						<td>Correccion sistemas usuarios</td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<a href="<?php echo $location.'?user_correction=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $location.'?user_correction=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -696,7 +787,7 @@ array_push( $arrUsuarios,$row );
 						<td>Camaras CCTV</td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<a href="<?php echo $location.'?test_cctv=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $location.'?test_cctv=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -705,7 +796,7 @@ array_push( $arrUsuarios,$row );
 						<td>Arreglar Facturaciones</td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<a href="<?php echo $location.'?fact_repair=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $location.'?fact_repair=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -714,11 +805,30 @@ array_push( $arrUsuarios,$row );
 						<td>Testeo funciones db_select_data</td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<a href="<?php echo $location.'?test_fnx=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $location.'?test_fnx=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
-				                  
+					
+					<tr class="odd">
+						<td>existencia logo y envio correo</td>
+						<td>
+							<div class="btn-group" style="width: 35px;" >
+								<a href="<?php echo $location.'?test_logo=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+							</div>
+						</td>
+					</tr>
+				     
+					<tr class="odd">
+						<td>testeo proyecciones</td>
+						<td>
+							<div class="btn-group" style="width: 35px;" >
+								<a href="<?php echo $location.'?test_proyecciones=true'; ?>" title="Ingresar Testeo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+							</div>
+						</td>
+					</tr>
+					
+					             
 				</tbody>
 			</table>
 		</div>

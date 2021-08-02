@@ -28,9 +28,9 @@ if ( ! empty($_GET['submit_filter']) ) {
 //se verifica si se ingreso la hora, es un dato optativo
 $z='';
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.=" WHERE (TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" WHERE (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 //Se traen todos los registros
 $arrRutas = array();
@@ -45,7 +45,9 @@ telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoVelocidad
 FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
 LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
 
-".$z;
+".$z."
+ORDER BY telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema ASC
+LIMIT 10000";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -74,7 +76,7 @@ foreach ($arrRutas as $fac) {
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5> Graficos </h5>
 			
 		</header>
@@ -164,7 +166,7 @@ foreach ($arrRutas as $fac) {
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Informe Velocidades equipo <?php echo $arrRutas[0]['NombreEquipo']; ?></h5>
 			
 		</header>
@@ -189,7 +191,7 @@ foreach ($arrRutas as $fac) {
 						<td><?php echo Cantidades($rutas['LimiteVelocidad'], 0).' KM/h'; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<a href="<?php echo 'informe_telemetria_registro_velocidad_view.php?idTelemetria='.$_GET['idTelemetria'].'&view='.$rutas['idTabla']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+								<a href="<?php echo 'informe_telemetria_registro_velocidad_view.php?idTelemetria='.simpleEncode($_GET['idTelemetria'], fecha_actual()).'&view='.simpleEncode($rutas['idTabla'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -205,23 +207,31 @@ foreach ($arrRutas as $fac) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo=1";	 
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema>=0 AND id_Geo=1";	
-}else{
-	$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND id_Geo=1";	
-} ?>			
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+}
+//Solo para plataforma CrossTech
+if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
+	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
+}
+
+//Se escribe el dato
+$Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
+alert_post_data(2,1,1, $Alert_Text);	
+?>			
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Filtro de busqueda</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -239,13 +249,17 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($_GET['view'])&&$_GET['view']!='') { $x5  = $_GET['view']; }
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x2, 2);
-				$Form_Imputs->form_time('Hora Inicio','h_inicio', $x3, 1, 1);
-				$Form_Imputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
-				$Form_Imputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
-				
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
+				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x3, 1, 1);
+				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
+				//Verifico el tipo de usuario que esta ingresando
+				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+				}else{
+					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
+				}
 				?>        
 	   
 				

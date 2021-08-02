@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -36,11 +40,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idContratista':     if(empty($idContratista)){     $error['idContratista']      = 'error/No ha ingresado el id';}break;
 			case 'idSistema':         if(empty($idSistema)){         $error['idSistema']          = 'error/No ha seleccionado el sistema';}break;
 			case 'idEstado':          if(empty($idEstado)){          $error['idEstado']           = 'error/No ha seleccionado el Estado';}break;
@@ -63,7 +67,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			
 		}
-	}
+	}	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -73,6 +77,14 @@ if( ! defined('XMBCXRXSKGC')) {
 	if(isset($Fono2)&&!validarNumero($Fono2)) { $error['Fono2']   = 'error/Ingrese un numero telefonico valido'; }
 	if(isset($Rut)&&!validarRut($Rut)){         $error['Rut']     = 'error/El Rut ingresado no es valido'; }
 	if(isset($Fax)&&!validarNumero($Fax)) {     $error['Fax']     = 'error/Ingrese un numero de fax valido'; }
+	
+	if(isset($email)&&contar_palabras_censuradas($email)!=0){                      $error['email']           = 'error/Edita email, contiene palabras no permitidas'; }	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                    $error['Nombre']          = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){              $error['Direccion']       = 'error/Edita la Direccion, contiene palabras no permitidas'; }	
+	if(isset($PersonaContacto)&&contar_palabras_censuradas($PersonaContacto)!=0){  $error['PersonaContacto'] = 'error/Edita la Persona de Contacto, contiene palabras no permitidas'; }	
+	if(isset($Web)&&contar_palabras_censuradas($Web)!=0){                          $error['Web']             = 'error/Edita la Web, contiene palabras no permitidas'; }	
+	if(isset($Giro)&&contar_palabras_censuradas($Giro)!=0){                        $error['Giro']            = 'error/Edita Giro, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -91,13 +103,13 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_3 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'contratista_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'contratista_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Rut)&&isset($idSistema)){
-				$ndata_2 = db_select_nrows ('Rut', 'contratista_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'Rut', 'contratista_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($email)&&isset($idSistema)){
-				$ndata_3 = db_select_nrows ('email', 'contratista_listado', '', "email='".$email."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_3 = db_select_nrows (false, 'email', 'contratista_listado', '', "email='".$email."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ingresado ya existe en el sistema';}
@@ -134,7 +146,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `contratista_listado` (idSistema, idEstado, idTipo, email, Nombre,
 				Rut, fNacimiento, Direccion, Fono1, Fono2, idCiudad, idComuna, Fax, PersonaContacto,
-				Web, idPais, Giro, FormaPago) VALUES ({$a} )";
+				Web, idPais, Giro, FormaPago) VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -173,13 +185,13 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_3 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)&&isset($idContratista)){
-				$ndata_1 = db_select_nrows ('Nombre', 'contratista_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idContratista!='".$idContratista."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'contratista_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idContratista!='".$idContratista."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Rut)&&isset($idSistema)&&isset($idContratista)){
-				$ndata_2 = db_select_nrows ('Rut', 'contratista_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idContratista!='".$idContratista."'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'Rut', 'contratista_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idContratista!='".$idContratista."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($email)&&isset($idSistema)&&isset($idContratista)){
-				$ndata_3 = db_select_nrows ('email', 'contratista_listado', '', "email='".$email."' AND idSistema='".$idSistema."' AND idContratista!='".$idContratista."'", $dbConn);
+				$ndata_3 = db_select_nrows (false, 'email', 'contratista_listado', '', "email='".$email."' AND idSistema='".$idSistema."' AND idContratista!='".$idContratista."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ingresado ya existe en el sistema';}
@@ -243,27 +255,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `contratista_listado` WHERE idContratista = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'contratista_listado', 'idContratista = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 			
 
 		break;							
@@ -274,9 +306,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idContratista  = $_GET['id'];
-			$estado     = $_GET['estado'];
-			$query  = "UPDATE contratista_listado SET idEstado = '$estado'	
-			WHERE idContratista    = '$idContratista'";
+			$idEstado       = simpleDecode($_GET['estado'], fecha_actual());
+			$query  = "UPDATE contratista_listado SET idEstado = '".$idEstado."'	
+			WHERE idContratista = '".$idContratista."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta

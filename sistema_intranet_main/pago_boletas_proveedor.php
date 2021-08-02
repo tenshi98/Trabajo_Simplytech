@@ -60,7 +60,7 @@ if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $location .= '&idPr
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){
 	$query = "SELECT Nombre
 	FROM `proveedor_listado`
-	WHERE proveedor_listado.idProveedor='{$_GET['idProveedor']}' ";
+	WHERE proveedor_listado.idProveedor='".$_GET['idProveedor']."' ";
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
 	//Si ejecuto correctamente la consulta
@@ -105,11 +105,11 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 	<div class="col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Boletas Pendientes de Pago</h5>
 				<div class="toolbar">
 					<?php if(isset($Data_Pendientes)&&$Data_Pendientes!=0){ ?>
-						<a onclick="addpagoTodos()" class="btn btn-xs btn-primary">Asignar Todos</a>
+						<a onclick="addpagoTodos()" class="btn btn-xs btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Asignar Todos</a>
 					<?php } ?>
 				</div>
 			</header>
@@ -141,11 +141,11 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_boleta_honorarios.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_boleta_honorarios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_boleta='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la Boleta N° '.$tipo['N_Doc'].'?';?>
-												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>	
 										</div>
 									</td>
@@ -161,16 +161,16 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 											$TotalGeneral = $TotalGeneral + $tipo['ValorReal'];
 											$Registro_ok++;
 										}else{
-											$Form_Imputs = new Inputs();
-											$Form_Imputs->input_values_val('text','Total a Pagar','ingpago_'.$tipo['idFacturacion'],2,'','',$total);
+											$Form_Inputs = new Inputs();
+											$Form_Inputs->input_values_val('text','Total a Pagar','ingpago_'.$tipo['idFacturacion'],2,'','',$total);
 										}
 										?>
 									</td>
 									<td align="right">
 										<?php if(isset($tipo['ValorReal'])&&$tipo['ValorReal']!=''){?>
-											<a onclick="delpago(<?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+											<a onclick="delpago(<?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php }else{ ?>	
-											<a onclick="addpago(<?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
+											<a onclick="addpago(<?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</td>
 								</tr>
@@ -280,7 +280,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-edit"></i></div>
+					<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 					<h5>Ingresar Pago Facturas</h5>
 				</header>
 				<div id="div-1" class="body">
@@ -293,10 +293,10 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 						if(isset($F_Pago)) {            $x3  = $F_Pago;             }else{$x3  = '';}
 				
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_select('Forma de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-						$Form_Imputs->form_input_number('Numero de Documento', 'N_DocPago', $x2, 1);
-						$Form_Imputs->form_date('F Vencimiento','F_Pago', $x3, 2);
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
+						$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);
+						$Form_Inputs->form_date('F Vencimiento','F_Pago', $x3, 2);
 
 						echo '<div class="form-group" id="div_">
 							<label class="control-label col-sm-4" id="label_">Valor a Pagar</label>
@@ -307,7 +307,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 						
 						
 						
-						$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+						$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 						
 						?>
 						
@@ -370,7 +370,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 	</div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar</a>
 <div class="clearfix"></div>
 </div>
@@ -401,7 +401,7 @@ if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){
 unset($_SESSION['pagos_boletas_empresas']);
 /*************************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$z=" AND boleta_honorarios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";		
+$z=" AND boleta_honorarios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		
 /**********************************************************************************************/
 //datos de la obra
 $Docsubmit_filter   = '';
@@ -469,9 +469,9 @@ array_push( $arrBoletas,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 	<a style="display: none;" id="acep_1" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
-	<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+	<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 	<div class="clearfix"></div>
 </div>
 
@@ -479,7 +479,7 @@ array_push( $arrBoletas,$row );
 <div class="col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Boletas Pendientes de Pago</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Boletas Pendientes de Pago</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -512,7 +512,7 @@ array_push( $arrBoletas,$row );
 								<td align="right"><?php echo valores($tipo['ValorTotal']-($tipo['MontoPagado']), 0); ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_boleta_honorarios.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_boleta_honorarios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>
@@ -629,21 +629,21 @@ array_push( $arrBoletas,$row );
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 <a style="display: none;" id="acep_2" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
-<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando 
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1 ";		
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 ";		
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -655,9 +655,9 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($N_Doc)) {        $x2  = $N_Doc;       }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_Doc', $x2, 1);
 					
 				?> 
 

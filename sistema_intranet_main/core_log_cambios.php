@@ -50,13 +50,13 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Log Creado correcta
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Log Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Log borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 // Se traen todos los datos de mi usuario
 $query = "SELECT Fecha, Descripcion
 FROM `core_log_cambios`
-WHERE idLog = {$_GET['id']}";
+WHERE idLog = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -75,7 +75,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Log</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -87,16 +87,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Descripcion)) {  $x2  = $Descripcion;  }else{$x2  = $rowdata['Descripcion'];}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Imputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
 				
-				$Form_Imputs->form_input_hidden('idLog', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idLog', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -109,12 +109,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
+ } elseif ( ! empty($_GET['new']) ) {  ?>
 
- <div class="col-sm-8 fcenter">
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Log</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -126,14 +126,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Descripcion)) { $x2  = $Descripcion; }else{$x2  = '';}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Imputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
 				?>
 	 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -212,7 +212,7 @@ $search='';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Cambios al sistema</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Cambios al sistema</h5>
 			<div class="toolbar">
 				<?php 
 				//paginacion
@@ -234,11 +234,11 @@ $search='';
 						<td><?php echo fecha_estandar($logs['Fecha']).' '.cortar($logs['Descripcion'], 120); ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&id='.$logs['idLog']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $location.'&id='.$logs['idLog']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php 
-								$ubicacion = $location.'&del='.$logs['idLog'];
+								$ubicacion = $location.'&del='.simpleEncode($logs['idLog'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro '.$logs['Descripcion'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 							</div>
 						</td>
 					</tr>

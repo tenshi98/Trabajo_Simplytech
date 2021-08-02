@@ -19,7 +19,7 @@ function notifications_list($errores){
 	if (!empty($errores)) {  
 		foreach ($errores as $mensaje) { 
 			list($tipo, $error) = explode("/", $mensaje);
-			$despliegue .= '<p><img src="'.DB_SITE.'/Legacy/gestion_modular/img/icon_'.$tipo.'.png" height="24" width="24">  '.$error.'</p>';
+			$despliegue .= '<p><img src="'.DB_SITE_REPO.'/Legacy/gestion_modular/img/icon_'.$tipo.'.png" height="24" width="24">  '.$error.'</p>';
 		} 
 	}
 
@@ -93,9 +93,9 @@ function paginador_1($total_paginas, $original, $search, $num_pag){
 /*******************************************************************************************************************/
 //paginador
 function paginador_2($nombre, $total_paginas, $original, $search, $num_pag){
+	
 	$paginador='';
 	
-
 	//Verifico si hay mas de una pagina, sino coulto el paginador
 	if($total_paginas>1){
 	//Cargamos la ubicacion original
@@ -106,9 +106,9 @@ function paginador_2($nombre, $total_paginas, $original, $search, $num_pag){
 				<div id="dataTable_paginate" class="dataTables_paginate paging_simple_numbers fright">
 					<ul class="pagination tablepag custom-pagination">';
 						if(($num_pag - 1) > 0) { 
-							$paginador .='<li class="prev"><a href="'.$location.($num_pag-1).$search.'"><i class="fa fa-angle-double-left"></i></a></li>';
+							$paginador .='<li class="prev"><a href="'.$location.($num_pag-1).$search.'"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>';
 						} else {
-							$paginador .='<li class="prev disabled"><a href=""><i class="fa fa-angle-double-left"></i></a></li>';
+							$paginador .='<li class="prev disabled"><a href=""><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>';
 						} 
 						
 						
@@ -128,9 +128,9 @@ function paginador_2($nombre, $total_paginas, $original, $search, $num_pag){
 						</script>';
 						
 						if(($num_pag + 1)<=$total_paginas) { 
-							$paginador .='<li class="next"><a href="'.$location.($num_pag+1).$search.'"><i class="fa fa-angle-double-right"></i></a></li>';
+							$paginador .='<li class="next"><a href="'.$location.($num_pag+1).$search.'"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>';
 						} else {
-							$paginador .='<li class="next disabled"><a href=""><i class="fa fa-angle-double-right"></i></a></li>';
+							$paginador .='<li class="next disabled"><a href=""><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>';
 						} 
 					$paginador .='</ul>
 				</div>
@@ -234,13 +234,13 @@ function widget_widgetcolor($dato){
 }
 /*******************************************************************************************************************/
 //Muestra los widget de acceso comun			
-function widget_comunes($com_tras, $Wheater, $NombreUsuario, $Notificacion,$CuentaContactos,$CuentaEventos){
+function widget_comunes($com_tras, $Wheater, $NombreUsuario, $Notificacion,$CuentaContactos,$CuentaEventos,$CuentaProgramas){
 	
 	$comunes='
 	<div class="row">
 		
-		<script src="'.DB_SITE.'/Legacy/gestion_modular/lib/weather/jquery.simpleWeather.js"></script>
-		<script src="'.DB_SITE.'/Legacy/gestion_modular/lib/skycons/skycons.js"></script>
+		<script src="'.DB_SITE_REPO.'/Legacy/gestion_modular/lib/weather/jquery.simpleWeather.js"></script>
+		<script src="'.DB_SITE_REPO.'/Legacy/gestion_modular/lib/skycons/skycons.js"></script>
 
 		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 			<div class="info-box bg-aqua" id="weather">
@@ -357,7 +357,7 @@ function widget_comunes($com_tras, $Wheater, $NombreUsuario, $Notificacion,$Cuen
 						html += \'		<div class="progress-bar" style="width: 100%"></div>\';
 						html += \'	</div>\';
 						html += \'	<span class="progress-description">\';
-						html += \'		<a target="_blank" href="'.$Wheater.'">\';
+						html += \'		<a target="_blank" rel="noopener noreferrer" href="'.$Wheater.'">\';
 						html += \'         '.$comuna.', Chile\';
 						html += \'		</a>\';
 						html += \'	</span>\';
@@ -384,153 +384,21 @@ function widget_comunes($com_tras, $Wheater, $NombreUsuario, $Notificacion,$Cuen
 					}
 				  });
 				});
-			</script>
+			</script>';
 			
-			
-			
-		
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div class="info-box bg-green">
-				<span class="info-box-icon"><i class="fa fa-user"></i></span>
-				<div class="info-box-content">
-					<span class="info-box-text">Perfil</span>
-					<span class="info-box-number">'.$NombreUsuario.'</span>
-					<div class="progress">
-						<div class="progress-bar" style="width: 100%"></div>
-					</div>
-					<span class="progress-description">
-						<a class="faa-parent animated-hover" href="principal_datos.php">
-							Editar Mis Datos
-							<i class="fa fa-arrow-circle-right faa-passing"></i>
-						</a>
-					</span>
-				</div>
-			</div>
-		</div>';
+		$comunes.=widget_Ficha_1('bg-green', 'fa-user', 100, 'Perfil', $NombreUsuario, 'principal_datos.php', 'Editar Mis Datos', 1, 1);
 		
 		$animated = '';
 		if($Notificacion!=0){ $animated = 'faa-horizontal animated'; }
 		
+		$comunes.=widget_Ficha_1('bg-yellow', 'fa-commenting-o '.$animated, 100, 'Notificaciones', $Notificacion.' sin leer', 'principal_notificaciones.php?pagina=1', 'Ver Notificaciones', 1, 1);
+		$comunes.=widget_Ficha_1('bg-red', 'fa-question', 100, 'Archivos de ayuda', 'Archivos', 'principal_ayuda.php?pagina=1', 'Ver Archivos', 1, 1);
+		$comunes.=widget_Ficha_1('bg-purple', 'fa-file-word-o', 100, 'Procedimientos', 'Archivos', 'principal_procedimientos.php?pagina=1', 'Ver Procedimientos', 1, 1);
+		$comunes.=widget_Ficha_1('bg-black', 'fa-phone', 100, 'Contactos', $CuentaContactos.' Contactos', 'principal_agenda_telefonica.php?pagina=1', 'Ver Contactos', 1, 1);
+		$comunes.=widget_Ficha_1('bg-aqua', 'fa-calendar', 100, 'Calendario', $CuentaEventos.' Este Mes', 'principal_calendario.php?pagina=1', 'Ver Eventos', 1, 1);
+		$comunes.=widget_Ficha_1('bg-green', 'fa-desktop', 100, 'Programas Recomendados', $CuentaProgramas.' Programas', 'principal_software.php?pagina=1', 'Ver Programas', 1, 1);
 		
-		$comunes.='
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div class="info-box bg-yellow">
-				<span class="info-box-icon"><i class="fa fa-commenting-o '.$animated.'" ></i><br/></span>
-				<div class="info-box-content">
-					<span class="info-box-text">Notificaciones</span>
-					<span class="info-box-number">'.$Notificacion.' sin leer</span>
-					<div class="progress">
-						<div class="progress-bar" style="width: 100%"></div>
-					</div>
-					<span class="progress-description">
-						<a class="faa-parent animated-hover" href="principal_notificaciones.php?pagina=1">
-							Ver Notificaciones
-							<i class="fa fa-arrow-circle-right faa-passing"></i>
-						</a>
-					</span>
-				</div>
-			</div>
-		</div>
-	 
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div class="info-box bg-red">
-				<span class="info-box-icon"><i class="fa fa-question"></i></span>
-				<div class="info-box-content">
-					<span class="info-box-text">Archivos de ayuda</span>
-					<span class="info-box-number">Archivos</span>
-					<div class="progress">
-						<div class="progress-bar" style="width: 100%"></div>
-					</div>
-					<span class="progress-description">
-						<a class="faa-parent animated-hover" href="principal_ayuda.php?pagina=1">
-							Ver Archivos
-							<i class="fa fa-arrow-circle-right faa-passing"></i>
-						</a>
-					</span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div class="info-box bg-purple">
-				<span class="info-box-icon"><i class="fa fa-file-word-o"></i></span>
-				<div class="info-box-content">
-					<span class="info-box-text">Procedimientos</span>
-					<span class="info-box-number">Archivos</span>
-					<div class="progress">
-						<div class="progress-bar" style="width: 100%"></div>
-					</div>
-					<span class="progress-description">
-						<a class="faa-parent animated-hover" href="principal_procedimientos.php?pagina=1">
-							Ver Procedimientos
-							<i class="fa fa-arrow-circle-right faa-passing"></i>
-						</a>
-					</span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div class="info-box bg-black">
-				<span class="info-box-icon"><i class="fa fa-phone"></i></span>
-				<div class="info-box-content">
-					<span class="info-box-text">Contactos</span>
-					<span class="info-box-number">'.$CuentaContactos.' Contactos</span>
-					<div class="progress">
-						<div class="progress-bar" style="width: 100%"></div>
-					</div>
-					<span class="progress-description">
-						<a class="faa-parent animated-hover" href="principal_agenda_telefonica.php?pagina=1">
-							Ver Contactos
-							<i class="fa fa-arrow-circle-right faa-passing"></i>
-						</a>
-					</span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div class="info-box bg-aqua">
-				<span class="info-box-icon"><i class="fa fa-calendar"></i></span>
-				<div class="info-box-content">
-					<span class="info-box-text">Calendario</span>
-					<span class="info-box-number">'.$CuentaEventos.' Este Mes</span>
-					<div class="progress">
-						<div class="progress-bar" style="width: 100%"></div>
-					</div>
-					<span class="progress-description">
-						<a class="faa-parent animated-hover" href="principal_calendario.php?pagina=1">
-							Ver Eventos
-							<i class="fa fa-arrow-circle-right faa-passing"></i>
-						</a>
-					</span>
-				</div>
-			</div>
-		</div> 
-		
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div class="info-box bg-green">
-				<span class="info-box-icon"><i class="fa fa-desktop"></i></span>
-				<div class="info-box-content">
-					<span class="info-box-text">Programas Recomendados</span>
-					<span class="info-box-number">0 Programas</span>
-					<div class="progress">
-						<div class="progress-bar" style="width: 100%"></div>
-					</div>
-					<span class="progress-description">
-						<a class="faa-parent animated-hover" href="principal_software.php?pagina=1">
-							Ver Programas
-							<i class="fa fa-arrow-circle-right faa-passing"></i>
-						</a>
-					</span>
-				</div>
-			</div>
-		</div> 
-		
-		
-		
-			
-	</div>';
+		$comunes.='</div>';
 	
 
 	return $comunes; 
@@ -549,82 +417,26 @@ function widget_especificos($idTipoUsuario,
 		/*****************************************************************************************************************/
 		/*                                         Administracion de clientes                                            */
 		/*****************************************************************************************************************/
-		if($n_link_1=='1' or $idTipoUsuario==1) {
-			$especificos.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="small-box btn-primary">
-					<div class="innerbox">
-						<h3>'.$cant_link_1.'</h3>
-						<p>Clientes</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-user"></i>
-					</div>
-					<a href="'.$link_1.'?pagina=1" class="small-box-footer faa-parent animated-hover">
-						Administrar <i class="fa fa-arrow-circle-right faa-passing"></i>
-					</a>
-				</div>
-			</div>';
+		if($n_link_1=='1' OR $idTipoUsuario==1) {
+			$especificos.= widget_Ficha_3('btn-primary', 'fa-user', $cant_link_1, 'Clientes', $link_1.'?pagina=1', 'Administrar', 1, 1);
 		}
 		/*****************************************************************************************************************/
 		/*                                         Administracion de Usuarios                                            */
 		/*****************************************************************************************************************/
-		if($n_link_2=='1' or $idTipoUsuario==1) {  
-			$especificos.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="small-box bg-green">
-					<div class="innerbox">
-						<h3>'.$cant_link_2.'</h3>
-						<p>Usuarios</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-users"></i>
-					</div>
-					<a href="'.$link_2.'?pagina=1" class="small-box-footer faa-parent animated-hover">
-						Administrar <i class="fa fa-arrow-circle-right faa-passing"></i>
-					</a>
-				</div>
-			</div>';
+		if($n_link_2=='1' OR $idTipoUsuario==1) {  
+			$especificos.= widget_Ficha_3('bg-green', 'fa-users', $cant_link_2, 'Usuarios', $link_2.'?pagina=1', 'Administrar', 1, 1);
 		}
 		/*****************************************************************************************************************/
 		/*                                        Administracion de Proveedores                                          */
 		/*****************************************************************************************************************/
-		if($n_link_3=='1' or $idTipoUsuario==1) {  
-			$especificos.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="small-box bg-yellow">
-					<div class="innerbox">
-						<h3>'.$cant_link_3.'</h3>
-						<p>Proveedores</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-truck"></i>
-					</div>
-					<a href="'.$link_3.'?pagina=1" class="small-box-footer faa-parent animated-hover">
-						Administrar <i class="fa fa-arrow-circle-right faa-passing"></i>
-					</a>
-				</div>
-			</div>';
+		if($n_link_3=='1' OR $idTipoUsuario==1) {  
+			$especificos.= widget_Ficha_3('bg-yellow', 'fa-truck', $cant_link_2, 'Proveedores', $link_3.'?pagina=1', 'Administrar', 1, 1);
 		}
 		/*****************************************************************************************************************/
 		/*                                      Administracion de Trabajadores                                           */
 		/*****************************************************************************************************************/
-		if($n_link_4=='1' or $idTipoUsuario==1) {   
-			$especificos.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="small-box bg-red">
-					<div class="innerbox">
-						<h3>'.$cant_link_4.'</h3>
-						<p>Trabajadores</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-male"></i>
-					</div>
-					<a href="'.$link_4.'?pagina=1" class="small-box-footer faa-parent animated-hover">
-						Administrar <i class="fa fa-arrow-circle-right faa-passing"></i>
-					</a>
-				</div>
-			</div>';
+		if($n_link_4=='1' OR $idTipoUsuario==1) {   
+			$especificos.= widget_Ficha_3('bg-red', 'fa-male', $cant_link_4, 'Trabajadores', $link_4.'?pagina=1', 'Administrar', 1, 1);
 		}
 		
 	
@@ -654,76 +466,22 @@ function widget_recordatorios($idTipoUsuario,
 		/*****************************************************************************************************************/
 		/*                                       Cargas por vencer esta semana                                           */
 		/*****************************************************************************************************************/
-		if($n_link_1=='1' or $idTipoUsuario==1) {
-			$recordatorios.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="info-box bg-aqua">
-					<span class="info-box-icon"><i class="fa fa-usd"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Cargas por Vencer</span>
-						<span class="info-box-number">'.$cant_link_1.' Esta Semana</span>
-						<div class="progress">
-							<div class="progress-bar" style="width: 100%"></div>
-						</div>
-						<span class="progress-description">
-							<a class="faa-parent animated-hover" href="principal_cargas.php?pagina=1">
-								Ver Cargas
-								<i class="fa fa-arrow-circle-right faa-passing"></i>
-							</a>
-						</span>
-					</div>
-				</div>
-			</div>';
+		if($n_link_1=='1' OR $idTipoUsuario==1) {
+			$recordatorios.=widget_Ficha_1('bg-aqua', 'fa-usd', 100, 'Cargas por Vencer', $cant_link_1.' Esta Semana', 'principal_cargas.php?pagina=1', 'Ver Cargas', 1, 1);
 		}
 		/*****************************************************************************************************************/
 		/*                                       Solicitudes sin OC Asignada                                             */
 		/*****************************************************************************************************************/
-		if($n_link_2=='1' or $idTipoUsuario==1) {
-			$recordatorios.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="info-box bg-green">
-					<span class="info-box-icon"><i class="fa fa-cube"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Solicitudes sin OC</span>
-						<span class="info-box-number">'.$cant_link_2.' Sin Asignar</span>
-						<div class="progress">
-							<div class="progress-bar" style="width: 100%"></div>
-						</div>
-						<span class="progress-description">
-							<a class="faa-parent animated-hover" href="ocompra_generacion.php">
-								Ver Solicitudes
-								<i class="fa fa-arrow-circle-right faa-passing"></i>
-							</a>
-						</span>
-					</div>
-				</div>
-			</div>';
+		if($n_link_2=='1' OR $idTipoUsuario==1) {
+			$recordatorios.=widget_Ficha_1('bg-green', 'fa-cube', 100, 'Solicitudes sin OC', $cant_link_2.' Sin Asignar', 'ocompra_generacion.php', 'Ver Solicitudes', 1, 1);
 		}
-		
 		/*****************************************************************************************************************/
 		/*                                             OC sin Aprobar                                                    */
 		/*****************************************************************************************************************/
-		if($n_link_3=='1' or $idTipoUsuario==1) {
-			$recordatorios.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="info-box bg-yellow">
-					<span class="info-box-icon"><i class="fa fa-database"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">OC sin Aprobar</span>
-						<span class="info-box-number">'.$cant_link_3.' Pendientes</span>
-						<div class="progress">
-							<div class="progress-bar" style="width: 100%"></div>
-						</div>
-						<span class="progress-description">
-							<a class="faa-parent animated-hover" href="ocompra_listado_sin_aprobar.php?pagina=1">
-								Ver OC sin Aprobar
-								<i class="fa fa-arrow-circle-right faa-passing"></i>
-							</a>
-						</span>
-					</div>
-				</div>
-			</div>';
+		if($n_link_3=='1' OR $idTipoUsuario==1) {
+			$recordatorios.=widget_Ficha_1('bg-yellow', 'fa-database', 100, 'OC sin Aprobar', $cant_link_3.' Pendientes', 'ocompra_listado_sin_aprobar.php?pagina=1', 'Ver OC sin Aprobar', 1, 1);
 		}
+	/*****************************************************************************************************************/
 	$recordatorios.='</div>';
 	/////////////////////////////////////////////////////////////////////////////////////
 	$recordatorios .= '<h3 class="supertittle text-primary">Compras</h3>';
@@ -731,98 +489,27 @@ function widget_recordatorios($idTipoUsuario,
 		/*****************************************************************************************************************/
 		/*                                       Facturas a pagar o retrasadas                                           */
 		/*****************************************************************************************************************/
-		if($n_link_4!='0' or $idTipoUsuario==1) {
+		if($n_link_4!='0' OR $idTipoUsuario==1) {
 			if($cant_link_4b!=0){
-				$recordatorios.='
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="info-box bg-red">
-						<span class="info-box-icon"><i class="fa fa-cc-paypal" aria-hidden="true"></i></span>
-						<div class="info-box-content">
-							<span class="info-box-text">Facturas atrasadas</span>
-							<span class="info-box-number">'.$cant_link_4b.' Pago Atrasado</span>
-							<div class="progress">
-								<div class="progress-bar" style="width: 100%"></div>
-							</div>
-							<span class="progress-description">
-								<a class="faa-parent animated-hover" href="principal_facturas.php?pagina=1&idTipo=1">
-									Ver Facturas
-									<i class="fa fa-arrow-circle-right faa-passing"></i>
-								</a>
-							</span>
-						</div>
-					</div>
-				</div>';
+				$recordatorios.=widget_Ficha_1('bg-red', 'fa-cc-paypal', 100, 'Facturas atrasadas', $cant_link_4b.' Pago Atrasado', 'principal_facturas.php?pagina=1&idTipo=1', 'Ver Facturas', 1, 1);
 			}else{
-				$recordatorios.='
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="info-box bg-black">
-						<span class="info-box-icon"><i class="fa fa-cc-paypal" aria-hidden="true"></i></span>
-						<div class="info-box-content">
-							<span class="info-box-text">Facturas x Pagar</span>
-							<span class="info-box-number">'.$cant_link_4a.' Esta Semana</span>
-							<div class="progress">
-								<div class="progress-bar" style="width: 100%"></div>
-							</div>
-							<span class="progress-description">
-								<a class="faa-parent animated-hover" href="principal_facturas.php?pagina=1&idTipo=1">
-									Ver Facturas
-									<i class="fa fa-arrow-circle-right faa-passing"></i>
-								</a>
-							</span>
-						</div>
-					</div>
-				</div>';
+				$recordatorios.=widget_Ficha_1('bg-black', 'fa-cc-paypal', 100, 'Facturas x Pagar', $cant_link_4a.' Esta Semana', 'principal_facturas.php?pagina=1&idTipo=1', 'Ver Facturas', 1, 1);
 			}
 		}
 		
 		/*****************************************************************************************************************/
 		/*                                     Arriendos por vencer esta semana                                          */
 		/*****************************************************************************************************************/
-		if($n_link_5=='1' or $idTipoUsuario==1) {
-			$recordatorios.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="info-box bg-yellow">
-					<span class="info-box-icon"><i class="fa fa-calendar-o"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Devolucion Arriendos</span>
-						<span class="info-box-number">'.$cant_link_5.' Devoluciones</span>
-						<div class="progress">
-							<div class="progress-bar" style="width: 100%"></div>
-						</div>
-						<span class="progress-description">
-							<a class="faa-parent animated-hover" href="principal_arriendos.php?pagina=1&idTipo=1">
-								Ver Devolucion Arriendos
-								<i class="fa fa-arrow-circle-right faa-passing"></i>
-							</a>
-						</span>
-					</div>
-				</div>
-			</div>';
+		if($n_link_5=='1' OR $idTipoUsuario==1) {
+			$recordatorios.=widget_Ficha_1('bg-yellow', 'fa-calendar-o', 100, 'Devolucion Arriendos', $cant_link_5.' Devoluciones', 'principal_arriendos.php?pagina=1&idTipo=1', 'Ver Devolucion Arriendos', 1, 1);
 		}
 		/*****************************************************************************************************************/
 		/*                                          Documentos por pagar                                                 */
 		/*****************************************************************************************************************/
-		if($n_link_8!=0 or $idTipoUsuario==1) {
-			$recordatorios.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="info-box bg-aqua">
-					<span class="info-box-icon"><i class="fa fa-credit-card"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Documentos por Pagar</span>
-						<span class="info-box-number">'.$cant_link_8.' Esta Semana</span>
-						<div class="progress">
-							<div class="progress-bar" style="width: 100%"></div>
-						</div>
-						<span class="progress-description">
-							<a class="faa-parent animated-hover" href="principal_cheques_pagar.php?pagina=1">
-								Ver Documentos
-								<i class="fa fa-arrow-circle-right faa-passing"></i>
-							</a>
-						</span>
-					</div>
-				</div>
-			</div>';
+		if($n_link_8!=0 OR $idTipoUsuario==1) {
+			$recordatorios.=widget_Ficha_1('bg-aqua', 'fa-credit-card', 100, 'Documentos por Pagar', $cant_link_8.' Esta Semana', 'principal_cheques_pagar.php?pagina=1', 'Ver Documentos', 1, 1);
 		}
+	/*****************************************************************************************************************/
 	$recordatorios.='</div>';
 	/////////////////////////////////////////////////////////////////////////////////////
 	$recordatorios .= '<h3 class="supertittle text-primary">Ventas</h3>';
@@ -830,63 +517,18 @@ function widget_recordatorios($idTipoUsuario,
 		/*****************************************************************************************************************/
 		/*                                            Facturas a Cobrar                                                  */
 		/*****************************************************************************************************************/
-		if($n_link_6!='0' or $idTipoUsuario==1) {
-		
-			$recordatorios.='
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="info-box bg-black">
-						<span class="info-box-icon"><i class="fa fa-cc-paypal" aria-hidden="true"></i></span>
-						<div class="info-box-content">
-							<span class="info-box-text">Facturas x Cobrar</span>
-							<span class="info-box-number">'.$cant_link_6.' Esta Semana</span>
-							<div class="progress">
-								<div class="progress-bar" style="width: 100%"></div>
-							</div>
-							<span class="progress-description">
-								<a class="faa-parent animated-hover" href="principal_facturas.php?pagina=1&idTipo=2">
-									Ver Facturas
-									<i class="fa fa-arrow-circle-right faa-passing"></i>
-								</a>
-							</span>
-						</div>
-					</div>
-				</div>';
-			
+		if($n_link_6!='0' OR $idTipoUsuario==1) {
+			$recordatorios.=widget_Ficha_1('bg-black', 'fa-cc-paypal', 100, 'Facturas x Cobrar', $cant_link_6.' Esta Semana', 'principal_facturas.php?pagina=1&idTipo=2', 'Ver Facturas', 1, 1);
 		}
 		/*****************************************************************************************************************/
 		/*                                     Arriendos por vencer esta semana                                          */
 		/*****************************************************************************************************************/
-		if($n_link_7=='1' or $idTipoUsuario==1) {
-			$recordatorios.='
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-				<div class="info-box bg-yellow">
-					<span class="info-box-icon"><i class="fa fa-calendar-o"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Devolucion Arriendos</span>
-						<span class="info-box-number">'.$cant_link_7.' Devoluciones</span>
-						<div class="progress">
-							<div class="progress-bar" style="width: 100%"></div>
-						</div>
-						<span class="progress-description">
-							<a class="faa-parent animated-hover" href="principal_arriendos.php?pagina=1&idTipo=2">
-								Ver Devolucion Arriendos
-								<i class="fa fa-arrow-circle-right faa-passing"></i>
-							</a>
-						</span>
-					</div>
-				</div>
-			</div>';
+		if($n_link_7=='1' OR $idTipoUsuario==1) {
+			$recordatorios.=widget_Ficha_1('bg-yellow', 'fa-calendar-o', 100, 'Devolucion Arriendos', $cant_link_7.' Devoluciones', 'principal_arriendos.php?pagina=1&idTipo=2', 'Ver Devolucion Arriendos', 1, 1);
 		}
+	/*****************************************************************************************************************/
 	$recordatorios.='</div>';
-		
-		
-		
-		
-	
 
-	
-	
-	
 	return $recordatorios; 
 }	
 /*******************************************************************************************************************/
@@ -913,17 +555,12 @@ function widget_bodega($titulo,
 	//Si existe el dato de la tabla
 	if($tablaPermiso!=''){
 		$join_1  = "INNER JOIN ".$tablaPermiso." ON ".$tablaPermiso.".idBodega = ".$bodega_existencia.".idBodega";
-		$where_1 = " AND ".$bodega_existencia.".".$x1." AND ".$tablaPermiso.".".$x2."";
+		$where_1 = " AND ".$bodega_existencia.".".$x1." AND ".$tablaPermiso.".".$x2;
 	}
 	
-
-		
 		
 	//Variable
 	$Graficos = '';
-	
-	
-	
 
 	/***********************************************************/
 	// Se trae un listado con los valores de las existencias actuales
@@ -932,12 +569,12 @@ function widget_bodega($titulo,
 		$z = "WHERE idSistema>=0";
 		$z.= " AND Creacion_ano >= ".$año_pasado;
 	}else{
-		$z = "WHERE idSistema='{$_SESSION['usuario']['basic_data']['idSistema']}'";
+		$z = "WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
 		$z.= " AND Creacion_ano >= ".$año_pasado;
 	}
 	//se consulta
 	$arrExistencias = array();
-	$query = "SELECT Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor
+	$query = "SELECT Creacion_ano,Creacion_mes,idTipo,SUM(ValorTotal) AS Valor
 	FROM `".$bodega_existencia."`
 	".$join_1."
 	".$z."
@@ -968,7 +605,7 @@ function widget_bodega($titulo,
 		if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 			$z = " AND ".$bodega_existencia.".idSistema>=0";
 		}else{
-			$z = " AND ".$bodega_existencia.".idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+			$z = " AND ".$bodega_existencia.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		}
 		//se consulta
 		$arrMovimientos = array();
@@ -1018,8 +655,8 @@ function widget_bodega($titulo,
 		".$producto.".StockLimite,
 		".$producto.".Nombre AS NombreProd,
 		".$uml.".Nombre AS UnidadMedida,
-		(SELECT SUM(Cantidad_ing) FROM ".$bodega_existencia." WHERE idProducto = ".$producto.".idProducto AND idSistema = {$_SESSION['usuario']['basic_data']['idSistema']} ) AS stock_entrada,
-		(SELECT SUM(Cantidad_eg)  FROM ".$bodega_existencia." WHERE idProducto = ".$producto.".idProducto AND idSistema = {$_SESSION['usuario']['basic_data']['idSistema']} ) AS stock_salida
+		(SELECT SUM(Cantidad_ing) FROM ".$bodega_existencia." WHERE idProducto = ".$producto.".idProducto AND idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']." ) AS stock_entrada,
+		(SELECT SUM(Cantidad_eg)  FROM ".$bodega_existencia." WHERE idProducto = ".$producto.".idProducto AND idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']." ) AS stock_salida
 		FROM `".$producto."`
 		LEFT JOIN `".$uml."` ON ".$uml.".idUml = ".$producto.".idUml
 		WHERE ".$producto.".StockLimite >0  
@@ -1179,7 +816,7 @@ $Graficos = '';
 			<div class="col-sm-12">
 				<div class="box">
 					<header>
-						<div class="icons"><i class="fa fa-table"></i></div><h5>'.$titulo.'</h5>        
+						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>        
 						<div class="toolbar">
 							<a target="new" href="'.$enlace.'?pagina=1" class="btn btn-xs btn-primary btn-line">Ver Mas</a>
 						</div>
@@ -1269,7 +906,7 @@ $Graficos = '';
 				if(isset($grafico[12][$datos[0]])&&$grafico[12][$datos[0]]!=''){
 					$Graficos .= '
 					<div class="info-box '.widget_widgetcolor($datos[0]).'">
-						<span class="info-box-icon"><i class="fa fa-cubes"></i></span>
+						<span class="info-box-icon"><i class="fa fa-cubes" aria-hidden="true"></i></span>
 						<div class="info-box-content">
 							<span class="info-box-text">Total '.widget_nombre($datos[0]).' del mes</span>
 							<span class="info-box-number">';
@@ -1284,7 +921,7 @@ $Graficos = '';
 							</div>
 							<span class="progress-description">
 								<a href="'.widget_pagina($datos[0], $type).'" class="faa-parent animated-hover">
-									Ver '.widget_nombre($datos[0]).' <i class="fa fa-arrow-circle-right faa-passing"></i>
+									Ver '.widget_nombre($datos[0]).' <i class="fa fa-arrow-circle-right faa-passing" aria-hidden="true"></i>
 								</a>
 							</span>
 						</div>
@@ -1296,7 +933,7 @@ $Graficos = '';
 					if(isset($grafico[12][$dato])&&$grafico[12][$dato]!=''){
 						$Graficos .= '
 						<div class="info-box '.widget_widgetcolor($dato).'">
-							<span class="info-box-icon"><i class="fa fa-cubes"></i></span>
+							<span class="info-box-icon"><i class="fa fa-cubes" aria-hidden="true"></i></span>
 							<div class="info-box-content">
 								<span class="info-box-text">Total '.widget_nombre($dato).' del mes</span>
 								<span class="info-box-number">';
@@ -1311,7 +948,7 @@ $Graficos = '';
 								</div>
 								<span class="progress-description">
 									<a href="'.widget_pagina($dato, $type).'" class="faa-parent animated-hover">
-										Ver '.widget_nombre($dato).' <i class="fa fa-arrow-circle-right faa-passing"></i>
+										Ver '.widget_nombre($dato).' <i class="fa fa-arrow-circle-right faa-passing" aria-hidden="true"></i>
 									</a>
 								</span>
 							</div>
@@ -1344,7 +981,7 @@ $Graficos .= '<div class="row">
 		<div class="col-sm-6">
 			<div class="box">	
 				<header>		
-					<div class="icons"><i class="fa fa-table"></i></div><h5>Ultimos movimientos</h5>	
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ultimos movimientos</h5>	
 				</header>
 				<div class="table-responsive">    
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -1386,7 +1023,7 @@ $Graficos .= '<div class="row">
 		<div class="col-sm-6">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>Productos con bajo Stock</h5>        			  
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Productos con bajo Stock</h5>        			  
 				</header> 
 				<div class="table-responsive">                 
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -1421,13 +1058,13 @@ $Graficos .= '<div class="row">
 return $Graficos;
 }
 /*******************************************************************************************************************/
-//Muestra el calendario de OT
+//Muestra los equipos en el mapa
 function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility, $idSistema,
 							$IDGoogle, $idTipoUsuario, $idUsuario, $dbConn){
 	
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		$GPS = '<p>No ha ingresado Una API de Google Maps</p>';
+		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
 	}else{
 		
 		
@@ -1450,10 +1087,8 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 			$z .= " AND telemetria_listado.id_Geo = ".$seguimiento;
 		}
 		//Filtro el sistema al cual pertenece	
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1){
-			if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-				$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
-			}
+		if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+			$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$join = "";	
@@ -1461,35 +1096,29 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 			$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
 			$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
 		}
-			
+		
+		//numero sensores equipo
+		$N_Maximo_Sensores = 60;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresMedErrores_'.$i;
+			$subquery .= ',SensoresErrorActual_'.$i;
+		}	
 		//Listar los equipos
 		$arrEquipo = array();
-		$query = "SELECT LastUpdateFecha,LastUpdateHora,cantSensores,GeoLatitud, GeoLongitud, NDetenciones,
-		TiempoFueraLinea,GeoErrores,NErrores,
-
-		SensoresMedErrores_1, SensoresMedErrores_2, SensoresMedErrores_3, SensoresMedErrores_4, SensoresMedErrores_5, 
-		SensoresMedErrores_6, SensoresMedErrores_7, SensoresMedErrores_8, SensoresMedErrores_9, SensoresMedErrores_10, 
-		SensoresMedErrores_11, SensoresMedErrores_12, SensoresMedErrores_13, SensoresMedErrores_14, SensoresMedErrores_15, 
-		SensoresMedErrores_16, SensoresMedErrores_17, SensoresMedErrores_18, SensoresMedErrores_19, SensoresMedErrores_20, 
-		SensoresMedErrores_21, SensoresMedErrores_22, SensoresMedErrores_23, SensoresMedErrores_24, SensoresMedErrores_25, 
-		SensoresMedErrores_26, SensoresMedErrores_27, SensoresMedErrores_28, SensoresMedErrores_29, SensoresMedErrores_30, 
-		SensoresMedErrores_31, SensoresMedErrores_32, SensoresMedErrores_33, SensoresMedErrores_34, SensoresMedErrores_35, 
-		SensoresMedErrores_36, SensoresMedErrores_37, SensoresMedErrores_38, SensoresMedErrores_39, SensoresMedErrores_40, 
-		SensoresMedErrores_41, SensoresMedErrores_42, SensoresMedErrores_43, SensoresMedErrores_44, SensoresMedErrores_45, 
-		SensoresMedErrores_46, SensoresMedErrores_47, SensoresMedErrores_48, SensoresMedErrores_49, SensoresMedErrores_50,
-			
-		SensoresErrorActual_1, SensoresErrorActual_2, SensoresErrorActual_3, SensoresErrorActual_4, SensoresErrorActual_5, 
-		SensoresErrorActual_6, SensoresErrorActual_7, SensoresErrorActual_8, SensoresErrorActual_9, SensoresErrorActual_10, 
-		SensoresErrorActual_11, SensoresErrorActual_12, SensoresErrorActual_13, SensoresErrorActual_14, SensoresErrorActual_15, 
-		SensoresErrorActual_16, SensoresErrorActual_17, SensoresErrorActual_18, SensoresErrorActual_19, SensoresErrorActual_20, 
-		SensoresErrorActual_21, SensoresErrorActual_22, SensoresErrorActual_23, SensoresErrorActual_24, SensoresErrorActual_25, 
-		SensoresErrorActual_26, SensoresErrorActual_27, SensoresErrorActual_28, SensoresErrorActual_29, SensoresErrorActual_30, 
-		SensoresErrorActual_31, SensoresErrorActual_32, SensoresErrorActual_33, SensoresErrorActual_34, SensoresErrorActual_35, 
-		SensoresErrorActual_36, SensoresErrorActual_37, SensoresErrorActual_38, SensoresErrorActual_39, SensoresErrorActual_40, 
-		SensoresErrorActual_41, SensoresErrorActual_42, SensoresErrorActual_43, SensoresErrorActual_44, SensoresErrorActual_45, 
-		SensoresErrorActual_46, SensoresErrorActual_47, SensoresErrorActual_48, SensoresErrorActual_49, SensoresErrorActual_50
-			
-			
+		$query = "SELECT 
+		telemetria_listado.LastUpdateFecha,
+		telemetria_listado.LastUpdateHora,
+		telemetria_listado.cantSensores,
+		telemetria_listado.GeoLatitud, 
+		telemetria_listado.GeoLongitud, 
+		telemetria_listado.NDetenciones,
+		telemetria_listado.TiempoFueraLinea,
+		telemetria_listado.GeoErrores,
+		telemetria_listado.NErrores
+		
+		".$subquery."
+	
 		FROM `telemetria_listado`
 		".$join."
 		".$z."
@@ -1526,7 +1155,7 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 												
 			/**********************************************/
 			//Fuera de linea
-			$diaInicio   = fecha_estandar($data['LastUpdateFecha']);
+			$diaInicio   = $data['LastUpdateFecha'];
 			$diaTermino  = $FechaSistema;
 			$tiempo1     = $data['LastUpdateHora'];
 			$tiempo2     = $HoraSistema;
@@ -1598,394 +1227,293 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 
 
 
-			$GPS = '<h3 class="supertittle text-primary">'.$titulo.'</h3>';
-			
+		$GPS = '<h3 class="supertittle text-primary">'.$titulo.'</h3>';
+		$GPS.= '<div class="clearfix"></div>';	
+		
 		if(isset($map_visibility)&&$map_visibility!=''&&$map_visibility==1){	
 			$GPS .= '
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="box box-blue xbox box-solid">
-					<div class="box-header with-border">
-						<h3 class="box-title">'.$titulo.'</h3>
-						<div class="box-tools pull-right">';
-						if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==1){
-							$GPS .= '<a target="new" href="telemetria_gestion_flota.php" class="btn btn-xs btn-primary btn-line">Ver Mas</a>';
-						}elseif(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==2){
-							$GPS .= '';
-						}		
-						$GPS .= '</div>
-					</div>
-					<div class="box-body">
-						<div class="">
-							<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
-							<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-							<div id="consulta"></div>
-					
-							<script>
-											
-								var map;
-								var marker;
-								/* ************************************************************************** */
-								function initialize() {
-									var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
-
-									var myOptions = {
-										zoom: 12,
-										zoomControl: false,
-										scaleControl: false,
-										scrollwheel: false,
-										disableDoubleClickZoom: true,
-										disableDefaultUI: true,
-										center: myLatlng,
-										mapTypeId: google.maps.MapTypeId.ROADMAP
-									};
-									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);';
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="box box-blue xbox box-solid">
+						<div class="box-header with-border">
+							<h3 class="box-title">'.$titulo.'</h3>
+							<div class="box-tools pull-right">';
+							if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==1){
+								$GPS .= '<a target="new" href="telemetria_gestion_flota.php" class="btn btn-xs btn-primary btn-line">Ver Mas</a>';
+							}elseif(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==2){
+								$GPS .= '';
+							}		
+							$GPS .= '</div>
+						</div>
+						<div class="box-body">
+							<div class="">
+								<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+								<div id="consulta"></div>
 						
-									if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==1){
-										$GPS .= '
-										//Ubicacion de los distintos dispositivos
-										transMarker(10000);';
-									}elseif(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==2){
-										$GPS .= 'ubiquity();';
-									}	
+								<script>
+												
+									var map;
+									var marker;
+									/* ************************************************************************** */
+									function initialize() {
+										var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+										var myOptions = {
+											zoom: 12,
+											zoomControl: false,
+											scaleControl: false,
+											scrollwheel: false,
+											disableDoubleClickZoom: true,
+											disableDefaultUI: true,
+											center: myLatlng,
+											mapTypeId: google.maps.MapTypeId.ROADMAP
+										};
+										map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);';
+							
+										if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==1){
+											$GPS .= '
+											//Ubicacion de los distintos dispositivos
+											transMarker(10000);';
+										}elseif(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==2){
+											$GPS .= 'ubiquity();';
+										}	
+											
+										$GPS .= '	
+									}
+									/* ************************************************************************** */
+									function ubiquity() {
+									
+										var locations = [ ';
 										
-									$GPS .= '	
-								}
-								/* ************************************************************************** */
-								function ubiquity() {
-								
-									var locations = [ ';
-									
-									$ordenx=1;
-									foreach ( $arrEquipo as $pos ) {
-										$GPS .= "['".$ordenx."', ".$pos['GeoLatitud'].", ".$pos['GeoLongitud']."], ";					
-										$ordenx++;
-									} 
-									$GPS .= '];
-									
-									//Se ocultan y eliminan los iconos
-									hideMarkers(\'transMarkers\');
-									deleteMarkers(\'transMarkers\');
+										$ordenx=1;
+										foreach ( $arrEquipo as $pos ) {
+											$GPS .= "['".$ordenx."', ".$pos['GeoLatitud'].", ".$pos['GeoLongitud']."], ";					
+											$ordenx++;
+										} 
+										$GPS .= '];
+										
+										//Se ocultan y eliminan los iconos
+										hideMarkers(\'transMarkers\');
+										deleteMarkers(\'transMarkers\');
+															
+										for(var i in locations){
+											transporte = addMarker(icon_transMarker);
+											transporte.show().setPosition(new google.maps.LatLng(locations[i][1], locations[i][2]));	
+										}
+									}
+									/* ************************************************************************** */
+									var icon_transMarker = {
+											name: \'transMarkers\',
+											visible: true
+									}
+												
+									var markers={}
+
+									function transMarker(time) {
+										setInterval(function(){myTimer2()},time);
+									}
+												
+									var mapax = 0;	
+									function myTimer2() {
+
+										switch(mapax) {
+											//Ejecutar formulario con el recorrido y la ruta
+											case 1:
+												$(\'#consulta\').load(\'principal_update_map.php?idSistema='.$idSistema.'\');
+											break;
+											//se dibujan los iconos 	
+											case 2:
+												//Se ocultan y eliminan los iconos
+												hideMarkers(\'transMarkers\');
+												deleteMarkers(\'transMarkers\');
+															
+												for(var i in locations){
+													transporte = addMarker(icon_transMarker);
+													transporte.show().setPosition(new google.maps.LatLng(locations[i][1], locations[i][2]));	
+												}
+
+											break;		
+										}
+
+										mapax++;	
+										if(mapax==3){mapax=1}
+									}
+												
+												
+									/* ************************************************************************** */
+									var foreachMarkerByName=function(name,callback){
+										
+										var toRet=false
+													
+										if (typeof name != \'object\') {
+											name=[name]
+										}
+													
+										for (var a in name){
+											var tmp=name[a];
 														
-									for(var i in locations){
-										transporte = addMarker(icon_transMarker);
-										transporte.show().setPosition(new google.maps.LatLng(locations[i][1], locations[i][2]));	
-									}
-								}
-								/* ************************************************************************** */
-								var icon_transMarker = {
-										name: \'transMarkers\',
-										visible: true
-								}
-											
-								var markers={}
-
-								function transMarker(time) {
-									setInterval(function(){myTimer2()},time);
-								}
-											
-								var mapax = 0;	
-								function myTimer2() {
-
-									switch(mapax) {
-										//Ejecutar formulario con el recorrido y la ruta
-										case 1:
-											$(\'#consulta\').load(\'principal_update_map.php?idSistema='.$idSistema.'\');
-										break;
-										//se dibujan los iconos 	
-										case 2:
-											//Se ocultan y eliminan los iconos
-											hideMarkers(\'transMarkers\');
-											deleteMarkers(\'transMarkers\');
+											if (tmp==undefined||markers[tmp]==undefined) {
+												continue;
+											}
 														
-											for(var i in locations){
-												transporte = addMarker(icon_transMarker);
-												transporte.show().setPosition(new google.maps.LatLng(locations[i][1], locations[i][2]));	
+											toRet=true;
+														
+											for (var a in markers[tmp]) callback(markers[tmp][a]);
+										}
+													
+										return toRet;
+									}
+									/* ************************************************************************** */
+									hideMarkers=function(name){
+										foreachMarkerByName(name,function(el){
+											el.hide();
+										});
+										return this;
+									}
+									/* ************************************************************************** */
+									deleteMarkers=function(name){
+										foreachMarkerByName(name,function(el){            
+											el.delete();
+										});
+										delete markers[name];
+										return this;
+									}
+									/* ************************************************************************** */
+									addMarker=function(opt){
+										
+										if (opt == undefined) return false;
+													
+										opt.map=map;
+													
+										var tmp=new google.maps.Marker(opt);
+													
+										if (opt.pos) tmp.setPosition(opt.pos);
+										//tmp.setVisible(opt.visible||true);
+												
+										if (opt.name) {	
+											if (markers[opt.name] == undefined) markers[opt.name]=[];
+											
+											markers[opt.name].push(tmp);
+											
+											tmp.markerFamilyName=opt.name;
+											tmp.markerFamilyPos=markers[opt.name].length-1;
+										}
+										
+										if (opt.events) {
+											for (var a in opt.events) {
+												google.maps.event.addListener(tmp,a,opt.events[a].bind(tmp));
 											}
-
-										break;		
-									}
-
-									mapax++;	
-									if(mapax==3){mapax=1}
-								}
-											
-											
-								/* ************************************************************************** */
-								var foreachMarkerByName=function(name,callback){
-									
-									var toRet=false
-												
-									if (typeof name != \'object\') {
-										name=[name]
-									}
-												
-									for (var a in name){
-										var tmp=name[a];
-													
-										if (tmp==undefined||markers[tmp]==undefined) {
-											continue;
 										}
-													
-										toRet=true;
-													
-										for (var a in markers[tmp]) callback(markers[tmp][a]);
-									}
-												
-									return toRet;
-								}
-								/* ************************************************************************** */
-								hideMarkers=function(name){
-									foreachMarkerByName(name,function(el){
-										el.hide();
-									});
-									return this;
-								}
-								/* ************************************************************************** */
-								deleteMarkers=function(name){
-									foreachMarkerByName(name,function(el){            
-										el.delete();
-									});
-									delete markers[name];
-									return this;
-								}
-								/* ************************************************************************** */
-								addMarker=function(opt){
-									
-									if (opt == undefined) return false;
-												
-									opt.map=map;
-												
-									var tmp=new google.maps.Marker(opt);
-												
-									if (opt.pos) tmp.setPosition(opt.pos);
-									//tmp.setVisible(opt.visible||true);
-											
-									if (opt.name) {	
-										if (markers[opt.name] == undefined) markers[opt.name]=[];
 										
-										markers[opt.name].push(tmp);
-										
-										tmp.markerFamilyName=opt.name;
-										tmp.markerFamilyPos=markers[opt.name].length-1;
-									}
-									
-									if (opt.events) {
-										for (var a in opt.events) {
-											google.maps.event.addListener(tmp,a,opt.events[a].bind(tmp));
-										}
-									}
-									
-									// Borrar, esconder y mostrar
-									tmp.delete=function(){
-										this.deleteInfo();
-										this.setMap(null);
-										
-										return this;
-									}.bind(tmp);
-									
-									tmp.hide=function(){
-										this.setVisible(false);
-										
-										return this;
-									}.bind(tmp);
-									
-									tmp.show=function(){
-										google.maps.event.trigger(this, \'show\');
-										this.setVisible(true);
-										
-										return this;
-									}.bind(tmp)
-									
-									tmp.isVisible=function(){
-										return this.visible
-									}.bind(tmp)
-									
-									// Agrega mensajes a los marcadores
-									tmp.info=function(message,click,opt){
-										
-										opt=opt||{}
-										
-										var custom=click===true;
-										
-										click=typeof click==\'function\'?click:opt.click||function(){};
-									
-										var opt=$.extend({content: message},opt);
-									
-										this.infoBox=custom;
-									
-										if (custom) {
-											this.infoWindow = new InfoBox(opt);
-										} else {
-											this.infoWindow = new google.maps.InfoWindow(opt);
-										}
-									
-
-										this.infoWindowListener=google.maps.event.addListener(this, \'click\', function () {
-											
-											if (activeInfoWindow) {
-												activeInfoWindow.close();
-											}
-											this.infoWindow.open(map, this);
-											activeInfoWindow=this.infoWindow;                
-											click.bind(this)();
+										// Borrar, esconder y mostrar
+										tmp.delete=function(){
+											this.deleteInfo();
+											this.setMap(null);
 											
 											return this;
-											
-										}.bind(this));
-									}.bind(tmp);
-									
-									tmp.deleteInfo=function(){
-										if (this.infoWindow) {
-											this.infoWindow.setMap(null);
-											delete this.infoWindow;
-											
-											google.maps.event.removeListener(this.infoWindowListener);
-											delete this.infoWindowListener;
-										}
-										return this;
+										}.bind(tmp);
 										
-									}.bind(tmp);
+										tmp.hide=function(){
+											this.setVisible(false);
+											
+											return this;
+										}.bind(tmp);
+										
+										tmp.show=function(){
+											google.maps.event.trigger(this, \'show\');
+											this.setVisible(true);
+											
+											return this;
+										}.bind(tmp)
+										
+										tmp.isVisible=function(){
+											return this.visible
+										}.bind(tmp)
+										
+										// Agrega mensajes a los marcadores
+										tmp.info=function(message,click,opt){
+											
+											opt=opt||{}
+											
+											var custom=click===true;
+											
+											click=typeof click==\'function\'?click:opt.click||function(){};
+										
+											var opt=$.extend({content: message},opt);
+										
+											this.infoBox=custom;
+										
+											if (custom) {
+												this.infoWindow = new InfoBox(opt);
+											} else {
+												this.infoWindow = new google.maps.InfoWindow(opt);
+											}
+										
+
+											this.infoWindowListener=google.maps.event.addListener(this, \'click\', function () {
+												
+												if (activeInfoWindow) {
+													activeInfoWindow.close();
+												}
+												this.infoWindow.open(map, this);
+												activeInfoWindow=this.infoWindow;                
+												click.bind(this)();
+												
+												return this;
+												
+											}.bind(this));
+										}.bind(tmp);
+										
+										tmp.deleteInfo=function(){
+											if (this.infoWindow) {
+												this.infoWindow.setMap(null);
+												delete this.infoWindow;
+												
+												google.maps.event.removeListener(this.infoWindowListener);
+												delete this.infoWindowListener;
+											}
+											return this;
+											
+										}.bind(tmp);
+										
+										tmp.click=function(){
+											google.maps.event.trigger(this, \'click\');
+										}.bind(tmp);
+										
+										return tmp;
+										
+									}
 									
-									tmp.click=function(){
-										google.maps.event.trigger(this, \'click\');
-									}.bind(tmp);
 									
-									return tmp;
-									
-								}
-								
-								
-								/* ************************************************************************** */
-								google.maps.event.addDomListener(window, "load", initialize());
-							</script>
-					
-					
+									/* ************************************************************************** */
+									google.maps.event.addDomListener(window, "load", initialize());
+								</script>
+						
+						
+							</div>
+							
+							
 						</div>
-						
-						
 					</div>
 				</div>
-			</div>
-		</div>';
+			</div>';
 		}
 
 		if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==1){
 
 			$GPS .= '
-		   <link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
-			<div class="row">    
-				
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="box box-yellow box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">'.$nombreEquipo.' con alertas</h3>
-							<div class="box-tools pull-right">
-								<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=1" class="iframe btn btn-xs btn-warning btn-line">Ver Mas</a>
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="value">
-								<span><i class="fa fa-truck faa-float animated"></i></span>
-								<span>'.$eq_alertas.'</span>
-								Equipos
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="box box-red box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">'.$nombreEquipo.' fuera de linea</h3>
-							<div class="box-tools pull-right">
-								<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=2" class="iframe btn btn-xs btn-danger btn-line">Ver Mas</a>
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="value">
-								<span><i class="fa fa-truck faa-float animated"></i></span>
-								<span>'.$eq_fueralinea.'</span>
-								Equipos
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="box box-green box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">'.$nombreEquipo.' fuera de ruta</h3>
-							<div class="box-tools pull-right">
-								<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=3" class="iframe btn btn-xs btn-success btn-line">Ver Mas</a>
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="value">
-								<span><i class="fa fa-truck faa-float animated"></i></span>
-								<span>'.$eq_fueraruta.'</span>
-								Equipos
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="box box-purple box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">'.$nombreEquipo.' detenidos</h3>
-							<div class="box-tools pull-right">
-								<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=5" class="iframe btn btn-xs btn-primary btn-line">Ver Mas</a>
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="value">
-								<span><i class="fa fa-truck faa-float animated"></i></span>
-								<span>'.$eq_detenidos.'</span>
-								Equipos
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="box box-yellow box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">'.$nombreEquipo.' con GPS en 0</h3>
-							<div class="box-tools pull-right">
-								<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=5" class="iframe btn btn-xs btn-warning btn-line">Ver Mas</a>
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="value">
-								<span><i class="fa fa-truck faa-float animated"></i></span>
-								<span>'.$eq_gps_fuera.'</span>
-								Equipos
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="box box-blue box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">'.$nombreEquipo.' OK</h3>
-							<div class="box-tools pull-right">
-								<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=4" class="iframe btn btn-xs btn-primary btn-line">Ver Mas</a>
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="value">
-								<span><i class="fa fa-truck faa-float animated"></i></span>
-								<span>'.$eq_ok.'</span>
-								Equipos
-							</div>
-						</div>
-					</div>
-				</div>
-				
+			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
+			<div class="row">';
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_alertas, 4, $nombreEquipo.' con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-red', 'fa-truck faa-float animated', $eq_fueralinea, 4, $nombreEquipo.' fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+				$GPS .= widget_Ficha_2('box-green', 'fa-truck faa-float animated', $eq_fueraruta, 4, $nombreEquipo.' fuera de ruta', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 3, fecha_actual()), 'Ver Mas', 'btn-success', 1, 2);    
+				$GPS .= widget_Ficha_2('box-purple', 'fa-truck faa-float animated', $eq_detenidos, 4, $nombreEquipo.' detenidos', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_gps_fuera, 4, $nombreEquipo.' con GPS en 0', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-blue', 'fa-truck faa-float animated', $eq_ok, 4, $nombreEquipo.' OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+				$GPS .= '
 			</div>  
-			<script src="'.DB_SITE.'/LIBS_js/modal/jquery.colorbox.js"></script>
+			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
 
 			<script>
 				$(document).ready(function(){
@@ -2006,74 +1534,20 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 						return false;
 					});
 				});
-			</script>
+			</script>';
 			
 			
-			
-			
-			';
 		}elseif(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==2){
 
 			$GPS .= '
-		   <link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
-			<div class="row">    
-				
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="box box-yellow box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">'.$nombreEquipo.' con alertas</h3>
-							<div class="box-tools pull-right">
-								<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=1" class="iframe btn btn-xs btn-warning btn-line">Ver Mas</a>
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="value">
-								<span><i class="fa fa-industry"></i></span>
-								<span>'.$eq_alertas.'</span>
-								Equipos
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="box box-red box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">'.$nombreEquipo.' fuera de linea</h3>
-							<div class="box-tools pull-right">
-								<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=2" class="iframe btn btn-xs btn-danger btn-line">Ver Mas</a>
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="value">
-								<span><i class="fa fa-industry"></i></span>
-								<span>'.$eq_fueralinea.'</span>
-								Equipos
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<div class="box box-blue box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">'.$nombreEquipo.' OK</h3>
-							<div class="box-tools pull-right">
-								<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=4" class="iframe btn btn-xs btn-primary btn-line">Ver Mas</a>
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="value">
-								<span><i class="fa fa-industry"></i></span>
-								<span>'.$eq_ok.'</span>
-								Equipos
-							</div>
-						</div>
-					</div>
-				</div>
-				
+			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
+			<div class="row">';    
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-industry', $eq_alertas, 4, $nombreEquipo.' con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, $nombreEquipo.' fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+				$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, $nombreEquipo.' OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+				$GPS .= '
 			</div>  
-			<script src="'.DB_SITE.'/LIBS_js/modal/jquery.colorbox.js"></script>
+			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
 
 			<script>
 				$(document).ready(function(){
@@ -2094,21 +1568,14 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 						return false;
 					});
 				});
-			</script>
-			
-			
-			
-			
-			';
+			</script>';
 		}
-
-
 	}
 
 return $GPS;						
 }
 /*******************************************************************************************************************/
-//Muestra el calendario de OT
+//Muestra los equipos
 function widget_Equipos($nombreEquipo, $seguimiento, $equipo, $enlace, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
 
 //variables
@@ -2138,35 +1605,28 @@ if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
 	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
 }
-	
+
+//numero sensores equipo
+$N_Maximo_Sensores = 60;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+}	
 //Listar los equipos
 $arrEquipo = array();
-$query = "SELECT LastUpdateFecha,LastUpdateHora,cantSensores,
-GeoLatitud, GeoLongitud, NDetenciones,TiempoFueraLinea,NErrores,
+$query = "SELECT 
+telemetria_listado.LastUpdateFecha,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.cantSensores,
+telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLongitud, 
+telemetria_listado.NDetenciones,
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.NErrores
+		
+".$subquery."
 
-SensoresMedErrores_1, SensoresMedErrores_2, SensoresMedErrores_3, SensoresMedErrores_4, SensoresMedErrores_5, 
-SensoresMedErrores_6, SensoresMedErrores_7, SensoresMedErrores_8, SensoresMedErrores_9, SensoresMedErrores_10, 
-SensoresMedErrores_11, SensoresMedErrores_12, SensoresMedErrores_13, SensoresMedErrores_14, SensoresMedErrores_15, 
-SensoresMedErrores_16, SensoresMedErrores_17, SensoresMedErrores_18, SensoresMedErrores_19, SensoresMedErrores_20, 
-SensoresMedErrores_21, SensoresMedErrores_22, SensoresMedErrores_23, SensoresMedErrores_24, SensoresMedErrores_25, 
-SensoresMedErrores_26, SensoresMedErrores_27, SensoresMedErrores_28, SensoresMedErrores_29, SensoresMedErrores_30, 
-SensoresMedErrores_31, SensoresMedErrores_32, SensoresMedErrores_33, SensoresMedErrores_34, SensoresMedErrores_35, 
-SensoresMedErrores_36, SensoresMedErrores_37, SensoresMedErrores_38, SensoresMedErrores_39, SensoresMedErrores_40, 
-SensoresMedErrores_41, SensoresMedErrores_42, SensoresMedErrores_43, SensoresMedErrores_44, SensoresMedErrores_45, 
-SensoresMedErrores_46, SensoresMedErrores_47, SensoresMedErrores_48, SensoresMedErrores_49, SensoresMedErrores_50,
-	
-SensoresErrorActual_1, SensoresErrorActual_2, SensoresErrorActual_3, SensoresErrorActual_4, SensoresErrorActual_5, 
-SensoresErrorActual_6, SensoresErrorActual_7, SensoresErrorActual_8, SensoresErrorActual_9, SensoresErrorActual_10, 
-SensoresErrorActual_11, SensoresErrorActual_12, SensoresErrorActual_13, SensoresErrorActual_14, SensoresErrorActual_15, 
-SensoresErrorActual_16, SensoresErrorActual_17, SensoresErrorActual_18, SensoresErrorActual_19, SensoresErrorActual_20, 
-SensoresErrorActual_21, SensoresErrorActual_22, SensoresErrorActual_23, SensoresErrorActual_24, SensoresErrorActual_25, 
-SensoresErrorActual_26, SensoresErrorActual_27, SensoresErrorActual_28, SensoresErrorActual_29, SensoresErrorActual_30, 
-SensoresErrorActual_31, SensoresErrorActual_32, SensoresErrorActual_33, SensoresErrorActual_34, SensoresErrorActual_35, 
-SensoresErrorActual_36, SensoresErrorActual_37, SensoresErrorActual_38, SensoresErrorActual_39, SensoresErrorActual_40, 
-SensoresErrorActual_41, SensoresErrorActual_42, SensoresErrorActual_43, SensoresErrorActual_44, SensoresErrorActual_45, 
-SensoresErrorActual_46, SensoresErrorActual_47, SensoresErrorActual_48, SensoresErrorActual_49, SensoresErrorActual_50
-	
-	
 FROM `telemetria_listado`
 ".$join."
 ".$z."
@@ -2199,7 +1659,7 @@ foreach ($arrEquipo as $data) {
 										
 	/**********************************************/
 	//Fuera de linea
-	$diaInicio   = fecha_estandar($data['LastUpdateFecha']);
+	$diaInicio   = $data['LastUpdateFecha'];
 	$diaTermino  = $FechaSistema;
 	$tiempo1     = $data['LastUpdateHora'];
 	$tiempo2     = $HoraSistema;
@@ -2252,69 +1712,18 @@ foreach ($arrEquipo as $data) {
 
 	$GPS = '';
 	$GPS .= '
-	<div class="row">    
+	<div class="row">  
+		<h3 class="supertittle text-primary">'.$nombreEquipo.'</h3>';
 		
-		<h3 class="supertittle text-primary">'.$nombreEquipo.'</h3>
+		$GPS .= widget_Ficha_2('box-yellow', 'fa-industry', $eq_alertas, 4, $nombreEquipo.' con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+		$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, $nombreEquipo.' fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+		$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, $nombreEquipo.' OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
 		
-		<div class="col-md-4">
-			<div class="box box-yellow box-solid">
-				<div class="box-header with-border">
-					<h3 class="box-title">'.$nombreEquipo.' con alertas</h3>
-					<div class="box-tools pull-right">
-						<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=1" class="iframe btn btn-xs btn-warning btn-line">Ver Mas</a>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="value">
-						<span><i class="fa fa-industry"></i></span>
-						<span>'.$eq_alertas.'</span>
-						Sensores
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col-md-4">
-			<div class="box box-red box-solid">
-				<div class="box-header with-border">
-					<h3 class="box-title">'.$nombreEquipo.' fuera de linea</h3>
-					<div class="box-tools pull-right">
-						<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=2" class="iframe btn btn-xs btn-danger btn-line">Ver Mas</a>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="value">
-						<span><i class="fa fa-industry"></i></span>
-						<span>'.$eq_fueralinea.'</span>
-						Equipos
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col-md-4">
-			<div class="box box-blue box-solid">
-				<div class="box-header with-border">
-					<h3 class="box-title">'.$nombreEquipo.' OK</h3>
-					<div class="box-tools pull-right">
-						<a target="_blank" href="principal_gps_view.php?seguimiento='.$seguimiento.'&idSistema='.$idSistema.'&dataType=4" class="iframe btn btn-xs btn-primary btn-line">Ver Mas</a>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="value">
-						<span><i class="fa fa-industry"></i></span>
-						<span>'.$eq_ok.'</span>
-						Equipos
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		
+		$GPS .= '
 	</div> 
 	
 	 
-	<script src="'.DB_SITE.'/LIBS_js/modal/jquery.colorbox.js"></script>
+	<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
 	<script>
 		$(document).ready(function(){
 			//Examples of how to assign the Colorbox event to elements
@@ -2341,7 +1750,7 @@ foreach ($arrEquipo as $data) {
 return $GPS;						
 }
 /*******************************************************************************************************************/
-//Muestra el calendario de OT
+//Muestra una tabla con los equipos gps
 function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
 	
 	//Consulto por los equipos dentro de las zonas
@@ -2361,6 +1770,18 @@ if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
 	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
 }	
+
+//numero sensores equipo
+$N_Maximo_Sensores = 60;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',SensoresMedActual_'.$i;
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}
 //Listar los equipos
 $arrEquipo = array();
 $query = "SELECT 
@@ -2370,74 +1791,9 @@ telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
 telemetria_listado.id_Sensores,
 telemetria_listado.TiempoFueraLinea,
-telemetria_listado.NErrores,
+telemetria_listado.NErrores
 
-
-SensoresNombre_1, SensoresNombre_2, SensoresNombre_3, SensoresNombre_4, SensoresNombre_5, 
-SensoresNombre_6, SensoresNombre_7, SensoresNombre_8, SensoresNombre_9, SensoresNombre_10, 
-SensoresNombre_11, SensoresNombre_12, SensoresNombre_13, SensoresNombre_14, SensoresNombre_15, 
-SensoresNombre_16, SensoresNombre_17, SensoresNombre_18, SensoresNombre_19, SensoresNombre_20, 
-SensoresNombre_21, SensoresNombre_22, SensoresNombre_23, SensoresNombre_24, SensoresNombre_25, 
-SensoresNombre_26, SensoresNombre_27, SensoresNombre_28, SensoresNombre_29, SensoresNombre_30, 
-SensoresNombre_31, SensoresNombre_32, SensoresNombre_33, SensoresNombre_34, SensoresNombre_35, 
-SensoresNombre_36, SensoresNombre_37, SensoresNombre_38, SensoresNombre_39, SensoresNombre_40, 
-SensoresNombre_41, SensoresNombre_42, SensoresNombre_43, SensoresNombre_44, SensoresNombre_45, 
-SensoresNombre_46, SensoresNombre_47, SensoresNombre_48, SensoresNombre_49, SensoresNombre_50,
-
-SensoresUniMed_1, SensoresUniMed_2, SensoresUniMed_3, SensoresUniMed_4, SensoresUniMed_5, 
-SensoresUniMed_6, SensoresUniMed_7, SensoresUniMed_8, SensoresUniMed_9, SensoresUniMed_10, 
-SensoresUniMed_11, SensoresUniMed_12, SensoresUniMed_13, SensoresUniMed_14, SensoresUniMed_15, 
-SensoresUniMed_16, SensoresUniMed_17, SensoresUniMed_18, SensoresUniMed_19, SensoresUniMed_20, 
-SensoresUniMed_21, SensoresUniMed_22, SensoresUniMed_23, SensoresUniMed_24, SensoresUniMed_25, 
-SensoresUniMed_26, SensoresUniMed_27, SensoresUniMed_28, SensoresUniMed_29, SensoresUniMed_30, 
-SensoresUniMed_31, SensoresUniMed_32, SensoresUniMed_33, SensoresUniMed_34, SensoresUniMed_35, 
-SensoresUniMed_36, SensoresUniMed_37, SensoresUniMed_38, SensoresUniMed_39, SensoresUniMed_40, 
-SensoresUniMed_41, SensoresUniMed_42, SensoresUniMed_43, SensoresUniMed_44, SensoresUniMed_45, 
-SensoresUniMed_46, SensoresUniMed_47, SensoresUniMed_48, SensoresUniMed_49, SensoresUniMed_50,
-	
-SensoresMedActual_1, SensoresMedActual_2, SensoresMedActual_3, SensoresMedActual_4, SensoresMedActual_5, 
-SensoresMedActual_6, SensoresMedActual_7, SensoresMedActual_8, SensoresMedActual_9, SensoresMedActual_10, 
-SensoresMedActual_11, SensoresMedActual_12, SensoresMedActual_13, SensoresMedActual_14, SensoresMedActual_15, 
-SensoresMedActual_16, SensoresMedActual_17, SensoresMedActual_18, SensoresMedActual_19, SensoresMedActual_20, 
-SensoresMedActual_21, SensoresMedActual_22, SensoresMedActual_23, SensoresMedActual_24, SensoresMedActual_25, 
-SensoresMedActual_26, SensoresMedActual_27, SensoresMedActual_28, SensoresMedActual_29, SensoresMedActual_30, 
-SensoresMedActual_31, SensoresMedActual_32, SensoresMedActual_33, SensoresMedActual_34, SensoresMedActual_35, 
-SensoresMedActual_36, SensoresMedActual_37, SensoresMedActual_38, SensoresMedActual_39, SensoresMedActual_40, 
-SensoresMedActual_41, SensoresMedActual_42, SensoresMedActual_43, SensoresMedActual_44, SensoresMedActual_45, 
-SensoresMedActual_46, SensoresMedActual_47, SensoresMedActual_48, SensoresMedActual_49, SensoresMedActual_50,
-
-SensoresMedErrores_1, SensoresMedErrores_2, SensoresMedErrores_3, SensoresMedErrores_4, SensoresMedErrores_5, 
-SensoresMedErrores_6, SensoresMedErrores_7, SensoresMedErrores_8, SensoresMedErrores_9, SensoresMedErrores_10, 
-SensoresMedErrores_11, SensoresMedErrores_12, SensoresMedErrores_13, SensoresMedErrores_14, SensoresMedErrores_15, 
-SensoresMedErrores_16, SensoresMedErrores_17, SensoresMedErrores_18, SensoresMedErrores_19, SensoresMedErrores_20, 
-SensoresMedErrores_21, SensoresMedErrores_22, SensoresMedErrores_23, SensoresMedErrores_24, SensoresMedErrores_25, 
-SensoresMedErrores_26, SensoresMedErrores_27, SensoresMedErrores_28, SensoresMedErrores_29, SensoresMedErrores_30, 
-SensoresMedErrores_31, SensoresMedErrores_32, SensoresMedErrores_33, SensoresMedErrores_34, SensoresMedErrores_35, 
-SensoresMedErrores_36, SensoresMedErrores_37, SensoresMedErrores_38, SensoresMedErrores_39, SensoresMedErrores_40, 
-SensoresMedErrores_41, SensoresMedErrores_42, SensoresMedErrores_43, SensoresMedErrores_44, SensoresMedErrores_45, 
-SensoresMedErrores_46, SensoresMedErrores_47, SensoresMedErrores_48, SensoresMedErrores_49, SensoresMedErrores_50,
-	
-SensoresErrorActual_1, SensoresErrorActual_2, SensoresErrorActual_3, SensoresErrorActual_4, SensoresErrorActual_5, 
-SensoresErrorActual_6, SensoresErrorActual_7, SensoresErrorActual_8, SensoresErrorActual_9, SensoresErrorActual_10, 
-SensoresErrorActual_11, SensoresErrorActual_12, SensoresErrorActual_13, SensoresErrorActual_14, SensoresErrorActual_15, 
-SensoresErrorActual_16, SensoresErrorActual_17, SensoresErrorActual_18, SensoresErrorActual_19, SensoresErrorActual_20, 
-SensoresErrorActual_21, SensoresErrorActual_22, SensoresErrorActual_23, SensoresErrorActual_24, SensoresErrorActual_25, 
-SensoresErrorActual_26, SensoresErrorActual_27, SensoresErrorActual_28, SensoresErrorActual_29, SensoresErrorActual_30, 
-SensoresErrorActual_31, SensoresErrorActual_32, SensoresErrorActual_33, SensoresErrorActual_34, SensoresErrorActual_35, 
-SensoresErrorActual_36, SensoresErrorActual_37, SensoresErrorActual_38, SensoresErrorActual_39, SensoresErrorActual_40, 
-SensoresErrorActual_41, SensoresErrorActual_42, SensoresErrorActual_43, SensoresErrorActual_44, SensoresErrorActual_45, 
-SensoresErrorActual_46, SensoresErrorActual_47, SensoresErrorActual_48, SensoresErrorActual_49, SensoresErrorActual_50,
-
-SensoresActivo_1, SensoresActivo_2, SensoresActivo_3, SensoresActivo_4, SensoresActivo_5, 
-SensoresActivo_6, SensoresActivo_7, SensoresActivo_8, SensoresActivo_9, SensoresActivo_10, 
-SensoresActivo_11, SensoresActivo_12, SensoresActivo_13, SensoresActivo_14, SensoresActivo_15, 
-SensoresActivo_16, SensoresActivo_17, SensoresActivo_18, SensoresActivo_19, SensoresActivo_20, 
-SensoresActivo_21, SensoresActivo_22, SensoresActivo_23, SensoresActivo_24, SensoresActivo_25, 
-SensoresActivo_26, SensoresActivo_27, SensoresActivo_28, SensoresActivo_29, SensoresActivo_30, 
-SensoresActivo_31, SensoresActivo_32, SensoresActivo_33, SensoresActivo_34, SensoresActivo_35, 
-SensoresActivo_36, SensoresActivo_37, SensoresActivo_38, SensoresActivo_39, SensoresActivo_40, 
-SensoresActivo_41, SensoresActivo_42, SensoresActivo_43, SensoresActivo_44, SensoresActivo_45, 
-SensoresActivo_46, SensoresActivo_47, SensoresActivo_48, SensoresActivo_49, SensoresActivo_50
+".$subquery."
 		
 FROM `telemetria_listado`
 ".$join."
@@ -2482,7 +1838,10 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUnimed,$row );
 }
-
+$arrFinalUnimed = array();
+foreach ($arrUnimed as $sen) {
+	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
+}
 
 $Subicon = array();	
 $Subicon[1] = 'fa fa-truck';
@@ -2515,12 +1874,8 @@ $Subicon[2] = 'fa fa-industry';
 								<tr class="odd">
 									<td>';
 									
-										
-									
 										foreach($arrEquipo as $equip) {
 											
-										
-										
 											//alertas
 											$xx = 0;
 											$xy = 0;
@@ -2540,7 +1895,7 @@ $Subicon[2] = 'fa fa-industry';
 											}
 											
 											//Fuera de linea
-											$diaInicio   = fecha_estandar($equip['LastUpdateFecha']);
+											$diaInicio   = $equip['LastUpdateFecha'];
 											$diaTermino  = fecha_actual();;
 											$tiempo1     = $equip['LastUpdateHora'];
 											$tiempo2     = hora_actual();;
@@ -2589,15 +1944,9 @@ $Subicon[2] = 'fa fa-industry';
 																	for ($i = 1; $i <= $equip['cantSensores']; $i++) { 
 																		//solo sensores activos
 																		if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
-																			$unimed = '';
-																			//unidad de medida
-																			foreach ($arrUnimed as $sen) {
-																				if($equip['SensoresUniMed_'.$i]==$sen['idUniMed']){
-																					$unimed = ' '.$sen['Nombre'];	
-																				}
-																			}
+																			$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
 																			$GPS .= '<strong>'.$equip['SensoresNombre_'.$i].' :</strong>';
-																			if(isset($equip['SensoresMedActual_'.$i])&&$equip['SensoresMedActual_'.$i]!=999){$xdata=Cantidades_decimales_justos($equip['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
+																			if(isset($equip['SensoresMedActual_'.$i])&&$equip['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($equip['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
 																			$GPS .= $xdata.'<br/>';
 																		}
 																	}
@@ -2626,7 +1975,7 @@ $Subicon[2] = 'fa fa-industry';
 	return $GPS;	
 }
 /*******************************************************************************************************************/
-//Muestra el calendario de OT
+//Muestra una tabla con los equipos
 function widget_Resumen_equipo($titulo_cuadro, $seguimiento, $equipo, $enlace, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
 	
 //Variables
@@ -2654,6 +2003,19 @@ if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
 }
 						
+
+//numero sensores equipo
+$N_Maximo_Sensores = 60;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresMedActual_'.$i;
+	$subquery .= ',SensoresGrupo_'.$i;
+	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}
 //Listar los equipos
 $arrEquipo = array();
 $query = "SELECT
@@ -2666,86 +2028,10 @@ telemetria_listado.LastUpdateHora,
 telemetria_listado.LastUpdateFecha, 
 telemetria_listado.cantSensores,
 telemetria_listado.TiempoFueraLinea,
-telemetria_listado.NErrores,
-
-SensoresNombre_1, SensoresNombre_2, SensoresNombre_3, SensoresNombre_4, SensoresNombre_5, 
-SensoresNombre_6, SensoresNombre_7, SensoresNombre_8, SensoresNombre_9, SensoresNombre_10, 
-SensoresNombre_11, SensoresNombre_12, SensoresNombre_13, SensoresNombre_14, SensoresNombre_15, 
-SensoresNombre_16, SensoresNombre_17, SensoresNombre_18, SensoresNombre_19, SensoresNombre_20, 
-SensoresNombre_21, SensoresNombre_22, SensoresNombre_23, SensoresNombre_24, SensoresNombre_25, 
-SensoresNombre_26, SensoresNombre_27, SensoresNombre_28, SensoresNombre_29, SensoresNombre_30, 
-SensoresNombre_31, SensoresNombre_32, SensoresNombre_33, SensoresNombre_34, SensoresNombre_35, 
-SensoresNombre_36, SensoresNombre_37, SensoresNombre_38, SensoresNombre_39, SensoresNombre_40, 
-SensoresNombre_41, SensoresNombre_42, SensoresNombre_43, SensoresNombre_44, SensoresNombre_45, 
-SensoresNombre_46, SensoresNombre_47, SensoresNombre_48, SensoresNombre_49, SensoresNombre_50,
-
-SensoresMedActual_1, SensoresMedActual_2, SensoresMedActual_3, SensoresMedActual_4, SensoresMedActual_5, 
-SensoresMedActual_6, SensoresMedActual_7, SensoresMedActual_8, SensoresMedActual_9, SensoresMedActual_10, 
-SensoresMedActual_11, SensoresMedActual_12, SensoresMedActual_13, SensoresMedActual_14, SensoresMedActual_15, 
-SensoresMedActual_16, SensoresMedActual_17, SensoresMedActual_18, SensoresMedActual_19, SensoresMedActual_20, 
-SensoresMedActual_21, SensoresMedActual_22, SensoresMedActual_23, SensoresMedActual_24, SensoresMedActual_25, 
-SensoresMedActual_26, SensoresMedActual_27, SensoresMedActual_28, SensoresMedActual_29, SensoresMedActual_30, 
-SensoresMedActual_31, SensoresMedActual_32, SensoresMedActual_33, SensoresMedActual_34, SensoresMedActual_35, 
-SensoresMedActual_36, SensoresMedActual_37, SensoresMedActual_38, SensoresMedActual_39, SensoresMedActual_40, 
-SensoresMedActual_41, SensoresMedActual_42, SensoresMedActual_43, SensoresMedActual_44, SensoresMedActual_45, 
-SensoresMedActual_46, SensoresMedActual_47, SensoresMedActual_48, SensoresMedActual_49, SensoresMedActual_50,
-
-SensoresGrupo_1, SensoresGrupo_2, SensoresGrupo_3, SensoresGrupo_4, SensoresGrupo_5, 
-SensoresGrupo_6, SensoresGrupo_7, SensoresGrupo_8, SensoresGrupo_9, SensoresGrupo_10, 
-SensoresGrupo_11, SensoresGrupo_12, SensoresGrupo_13, SensoresGrupo_14, SensoresGrupo_15, 
-SensoresGrupo_16, SensoresGrupo_17, SensoresGrupo_18, SensoresGrupo_19, SensoresGrupo_20, 
-SensoresGrupo_21, SensoresGrupo_22, SensoresGrupo_23, SensoresGrupo_24, SensoresGrupo_25, 
-SensoresGrupo_26, SensoresGrupo_27, SensoresGrupo_28, SensoresGrupo_29, SensoresGrupo_30, 
-SensoresGrupo_31, SensoresGrupo_32, SensoresGrupo_33, SensoresGrupo_34, SensoresGrupo_35, 
-SensoresGrupo_36, SensoresGrupo_37, SensoresGrupo_38, SensoresGrupo_39, SensoresGrupo_40, 
-SensoresGrupo_41, SensoresGrupo_42, SensoresGrupo_43, SensoresGrupo_44, SensoresGrupo_45, 
-SensoresGrupo_46, SensoresGrupo_47, SensoresGrupo_48, SensoresGrupo_49, SensoresGrupo_50,
-
-SensoresUniMed_1, SensoresUniMed_2, SensoresUniMed_3, SensoresUniMed_4, SensoresUniMed_5, 
-SensoresUniMed_6, SensoresUniMed_7, SensoresUniMed_8, SensoresUniMed_9, SensoresUniMed_10, 
-SensoresUniMed_11, SensoresUniMed_12, SensoresUniMed_13, SensoresUniMed_14, SensoresUniMed_15, 
-SensoresUniMed_16, SensoresUniMed_17, SensoresUniMed_18, SensoresUniMed_19, SensoresUniMed_20, 
-SensoresUniMed_21, SensoresUniMed_22, SensoresUniMed_23, SensoresUniMed_24, SensoresUniMed_25, 
-SensoresUniMed_26, SensoresUniMed_27, SensoresUniMed_28, SensoresUniMed_29, SensoresUniMed_30, 
-SensoresUniMed_31, SensoresUniMed_32, SensoresUniMed_33, SensoresUniMed_34, SensoresUniMed_35, 
-SensoresUniMed_36, SensoresUniMed_37, SensoresUniMed_38, SensoresUniMed_39, SensoresUniMed_40, 
-SensoresUniMed_41, SensoresUniMed_42, SensoresUniMed_43, SensoresUniMed_44, SensoresUniMed_45, 
-SensoresUniMed_46, SensoresUniMed_47, SensoresUniMed_48, SensoresUniMed_49, SensoresUniMed_50,
-
-SensoresMedErrores_1, SensoresMedErrores_2, SensoresMedErrores_3, SensoresMedErrores_4, SensoresMedErrores_5, 
-SensoresMedErrores_6, SensoresMedErrores_7, SensoresMedErrores_8, SensoresMedErrores_9, SensoresMedErrores_10, 
-SensoresMedErrores_11, SensoresMedErrores_12, SensoresMedErrores_13, SensoresMedErrores_14, SensoresMedErrores_15, 
-SensoresMedErrores_16, SensoresMedErrores_17, SensoresMedErrores_18, SensoresMedErrores_19, SensoresMedErrores_20, 
-SensoresMedErrores_21, SensoresMedErrores_22, SensoresMedErrores_23, SensoresMedErrores_24, SensoresMedErrores_25, 
-SensoresMedErrores_26, SensoresMedErrores_27, SensoresMedErrores_28, SensoresMedErrores_29, SensoresMedErrores_30, 
-SensoresMedErrores_31, SensoresMedErrores_32, SensoresMedErrores_33, SensoresMedErrores_34, SensoresMedErrores_35, 
-SensoresMedErrores_36, SensoresMedErrores_37, SensoresMedErrores_38, SensoresMedErrores_39, SensoresMedErrores_40, 
-SensoresMedErrores_41, SensoresMedErrores_42, SensoresMedErrores_43, SensoresMedErrores_44, SensoresMedErrores_45, 
-SensoresMedErrores_46, SensoresMedErrores_47, SensoresMedErrores_48, SensoresMedErrores_49, SensoresMedErrores_50,
-	
-SensoresErrorActual_1, SensoresErrorActual_2, SensoresErrorActual_3, SensoresErrorActual_4, SensoresErrorActual_5, 
-SensoresErrorActual_6, SensoresErrorActual_7, SensoresErrorActual_8, SensoresErrorActual_9, SensoresErrorActual_10, 
-SensoresErrorActual_11, SensoresErrorActual_12, SensoresErrorActual_13, SensoresErrorActual_14, SensoresErrorActual_15, 
-SensoresErrorActual_16, SensoresErrorActual_17, SensoresErrorActual_18, SensoresErrorActual_19, SensoresErrorActual_20, 
-SensoresErrorActual_21, SensoresErrorActual_22, SensoresErrorActual_23, SensoresErrorActual_24, SensoresErrorActual_25, 
-SensoresErrorActual_26, SensoresErrorActual_27, SensoresErrorActual_28, SensoresErrorActual_29, SensoresErrorActual_30, 
-SensoresErrorActual_31, SensoresErrorActual_32, SensoresErrorActual_33, SensoresErrorActual_34, SensoresErrorActual_35, 
-SensoresErrorActual_36, SensoresErrorActual_37, SensoresErrorActual_38, SensoresErrorActual_39, SensoresErrorActual_40, 
-SensoresErrorActual_41, SensoresErrorActual_42, SensoresErrorActual_43, SensoresErrorActual_44, SensoresErrorActual_45, 
-SensoresErrorActual_46, SensoresErrorActual_47, SensoresErrorActual_48, SensoresErrorActual_49, SensoresErrorActual_50,
-
-SensoresActivo_1, SensoresActivo_2, SensoresActivo_3, SensoresActivo_4, SensoresActivo_5, 
-SensoresActivo_6, SensoresActivo_7, SensoresActivo_8, SensoresActivo_9, SensoresActivo_10, 
-SensoresActivo_11, SensoresActivo_12, SensoresActivo_13, SensoresActivo_14, SensoresActivo_15, 
-SensoresActivo_16, SensoresActivo_17, SensoresActivo_18, SensoresActivo_19, SensoresActivo_20, 
-SensoresActivo_21, SensoresActivo_22, SensoresActivo_23, SensoresActivo_24, SensoresActivo_25, 
-SensoresActivo_26, SensoresActivo_27, SensoresActivo_28, SensoresActivo_29, SensoresActivo_30, 
-SensoresActivo_31, SensoresActivo_32, SensoresActivo_33, SensoresActivo_34, SensoresActivo_35, 
-SensoresActivo_36, SensoresActivo_37, SensoresActivo_38, SensoresActivo_39, SensoresActivo_40, 
-SensoresActivo_41, SensoresActivo_42, SensoresActivo_43, SensoresActivo_44, SensoresActivo_45, 
-SensoresActivo_46, SensoresActivo_47, SensoresActivo_48, SensoresActivo_49, SensoresActivo_50,
-						
+telemetria_listado.NErrores,					
 core_sistemas.idOpcionesGen_3
+
+".$subquery."
 
 FROM `telemetria_listado`
 LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema
@@ -2769,53 +2055,21 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrEquipo,$row );
 }
 
-//Se traen todas las unidades de medida
 $arrUnimed = array();
-$query = "SELECT idUniMed,Nombre
-FROM `telemetria_listado_unidad_medida`
-ORDER BY idUniMed ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUnimed,$row );
-}
-
-//Se traen todos los grupos
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
+											
 $arrGrupos = array();
-$query = "SELECT idGrupo,Nombre, nColumnas
-FROM `telemetria_listado_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupos,$row );
-}	
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+											
+$arrFinalUnimed = array();
+$arrFinalGrupos = array();
+foreach ($arrUnimed as $sen) { $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre']; }
+foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo']; }
+	
 	
 
 $GPS = '';
-$GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />';
+$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
 
 
 
@@ -2824,14 +2078,14 @@ $GPS .= '
 	<div class="col-sm-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>'.$titulo_cuadro.'</h5>
 				<div class="toolbar"></div>
 				<ul class="nav nav-tabs pull-right">';
 					$xcounter_tel = 1;
 					foreach($arrEquipo as $equip) {	
 						if($xcounter_tel==1){$xactive_tel = 'active';}else{$xactive_tel = '';}
-						if($xcounter_tel==4){$GPS .= '<li class="dropdown"><a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a><ul class="dropdown-menu" role="menu">';} 
+						if($xcounter_tel==4){$GPS .= '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';} 
 						$GPS .= '<li class="'.$xactive_tel.'"><a href="#tel_id_'.$xcounter_tel.'" data-toggle="tab">'.$equip['Nombre'].'</a></li>';
 						$xcounter_tel++;
 					}
@@ -2881,7 +2135,7 @@ $GPS .= '
 														$xz = 0;
 														$dataex = '';
 														
-														$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check"></i></a>';
+														$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 														for ($i = 1; $i <= $equip['cantSensores']; $i++) {
 															$xx = $equip['SensoresMedErrores_'.$i] - $equip['SensoresErrorActual_'.$i];
 															if($xx<0){$xy = 1;$eq_ok = '';}
@@ -2894,7 +2148,7 @@ $GPS .= '
 														
 														/***************************************/
 														//Fuera de linea
-														$diaInicio   = fecha_estandar($equip['LastUpdateFecha']);
+														$diaInicio   = $equip['LastUpdateFecha'];
 														$diaTermino  = $FechaSistema;
 														$tiempo1     = $equip['LastUpdateHora'];
 														$tiempo2     = $HoraSistema;
@@ -2922,8 +2176,8 @@ $GPS .= '
 														
 														/***************************************/
 														//equipos ok
-														if($eq_alertas>0){$eq_ok = '';$xz = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle"></i></a>';}
-														if($eq_fueralinea>0){$eq_ok = '';$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken"></i></a>';}
+														if($eq_alertas>0){$eq_ok = '';$xz = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+														if($eq_fueralinea>0){$eq_ok = '';$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
 														
 														$eq_ok .= $dataex;
 														
@@ -2934,8 +2188,8 @@ $GPS .= '
 														<td><div class="btn-group" >'.$eq_ok.'</div></td>			
 														<td>
 															<div class="btn-group" style="width: 70px;" >
-																<a href="telemetria_gestion_equipos_view_equipo.php?view='.$equip['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
-																<a href="telemetria_gestion_equipos_view_equipo_uso.php?view='.$equip['idTelemetria'].'" title="Ver Uso" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-wrench"></i></a>
+																<a href="telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+																<a href="telemetria_gestion_equipos_view_equipo_uso.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Uso" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-wrench" aria-hidden="true"></i></a>
 															</div>
 														</td>
 													</tr>
@@ -2952,22 +2206,12 @@ $GPS .= '
 														//solo sensores activos
 														if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
 															//Unidad medida
-															$unimed = '';
-															foreach ($arrUnimed as $sen) { 
-																if($equip['SensoresUniMed_'.$i]==$sen['idUniMed']){
-																	$unimed = ' '.$sen['Nombre'];
-																}	
-															}
+															$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
 															//Titulo del cuadro
-															$Titulo = '';
-															foreach ($arrGrupos as $group) { 
-																if($equip['SensoresGrupo_'.$i]==$group['idGrupo']){
-																	$Titulo    = $group['Nombre'];
-																	$nColumnas = $group['nColumnas'];
-																}
-															}	
+															$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
+															$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];	
 															//Verifico que no sea el mismo sensor
-															if(isset($equip['SensoresMedActual_'.$i])&&$equip['SensoresMedActual_'.$i]!=999){$xdata=Cantidades_decimales_justos($equip['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
+															if(isset($equip['SensoresMedActual_'.$i])&&$equip['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($equip['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
 															if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
 																$arrGruposTitulo[$Titulo][$i]['Descripcion'] = '<span style="color:red;">'.$equip['SensoresNombre_'.$i].' : '.$xdata.'</span>';
 															}else{
@@ -3011,8 +2255,8 @@ $GPS .= '
 																	$ndatacol = 1;
 																	//Se guardan los datos
 																	$columna_a .= $datos['Descripcion'].'<br/>';
-																	//Verifico que el dato no sea 999
-																	if(isset($datos['valor'])&&$datos['valor']!=999){
+																	//Verifico que el dato no sea 99900
+																	if(isset($datos['valor'])&&$datos['valor']<99900){
 																		$total_col1 = $total_col1 + $datos['valor'];
 																		$ntotal_col1++;
 																	}
@@ -3025,8 +2269,8 @@ $GPS .= '
 																	//Se guardan los datos
 																	if($y==1){
 																		$columna_a .= $datos['Descripcion'].'<br/>';
-																		//Verifico que el dato no sea 999
-																		if(isset($datos['valor'])&&$datos['valor']!=999){
+																		//Verifico que el dato no sea 99900
+																		if(isset($datos['valor'])&&$datos['valor']<99900){
 																			$total_col1 = $total_col1 + $datos['valor'];
 																			$ntotal_col1++;
 																		}
@@ -3034,8 +2278,8 @@ $GPS .= '
 																		$y=2;
 																	}else{
 																		$columna_b .= $datos['Descripcion'].'<br/>';
-																		//Verifico que el dato no sea 999
-																		if(isset($datos['valor'])&&$datos['valor']!=999){
+																		//Verifico que el dato no sea 99900
+																		if(isset($datos['valor'])&&$datos['valor']<99900){
 																			$total_col2 = $total_col2 + $datos['valor'];
 																			$ntotal_col2++;
 																		}
@@ -3066,10 +2310,10 @@ $GPS .= '
 																<td>Promedio</td>';
 																/***********************/
 																if($ndatacol==1){
-																	if($ntotal_col1!=0){$GPS .= '<td colspan="2">'.Cantidades_decimales_justos($total_col1/$ntotal_col1).$unimed_col1.'</td>';}else{$GPS .= '<td colspan="2">0'.$unimed_col1.'</td>';}
+																	if($ntotal_col1!=0){$GPS .= '<td colspan="2">'.Cantidades(($total_col1/$ntotal_col1), 1).$unimed_col1.'</td>';}else{$GPS .= '<td colspan="2">0'.$unimed_col1.'</td>';}
 																}elseif($ndatacol==2){
-																	if($ntotal_col1!=0){$GPS .= '<td>'.Cantidades_decimales_justos($total_col1/$ntotal_col1).$unimed_col1.'</td>';}else{$GPS .= '<td>0'.$unimed_col1.'</td>';}
-																	if($ntotal_col2!=0){$GPS .= '<td>'.Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2.'</td>';}else{$GPS .= '<td>0'.$unimed_col2.'</td>';}
+																	if($ntotal_col1!=0){$GPS .= '<td>'.Cantidades(($total_col1/$ntotal_col1), 1).$unimed_col1.'</td>';}else{$GPS .= '<td>0'.$unimed_col1.'</td>';}
+																	if($ntotal_col2!=0){$GPS .= '<td>'.Cantidades(($total_col2/$ntotal_col2), 1).$unimed_col2.'</td>';}else{$GPS .= '<td>0'.$unimed_col2.'</td>';}
 																}
 																
 															$GPS .= '
@@ -3094,13 +2338,13 @@ $GPS .= '
 									<div class="row">';
 									if(isset($enlace)&&$enlace!=''&&$enlace!=0){
 										if ($equip['Direccion_img']=='') {
-											$GPS .= '<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="'.DB_SITE.'/Legacy/gestion_modular/img/maquina.jpg">';
+											$GPS .= '<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="'.DB_SITE_REPO.'/Legacy/gestion_modular/img/maquina.jpg">';
 										}else{
 											$GPS .= '<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="'.$enlace.$equip['Direccion_img'].'">';
 										}
 									}else{
 										if ($equip['Direccion_img']=='') {
-											$GPS .= '<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="'.DB_SITE.'/Legacy/gestion_modular/img/maquina.jpg">';
+											$GPS .= '<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="'.DB_SITE_REPO.'/Legacy/gestion_modular/img/maquina.jpg">';
 										}else{
 											$GPS .= '<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/'.$equip['Direccion_img'].'">';
 										}
@@ -3129,7 +2373,7 @@ $GPS .= '
 
 
 $GPS .= '
-<script src="'.DB_SITE.'/LIBS_js/modal/jquery.colorbox.js"></script>
+<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
 
 <script>
 	$(document).ready(function(){
@@ -3157,7 +2401,7 @@ $GPS .= '
 	return $GPS;
 }
 /*******************************************************************************************************************/
-//Muestra el calendario de OT
+//Muestra una lista de quipos gps
 function widget_GPS_equipos_lista($titulo_cuadro, $seguimiento, $equipo, $enlace, 
 								  $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
 	
@@ -3173,10 +2417,8 @@ if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
 	$z .= " AND telemetria_listado.id_Geo = ".$seguimiento;
 }
 //Filtro el sistema al cual pertenece	
-if(isset($idTipoUsuario)&&$idTipoUsuario!=1){
-	if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-		$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
-	}
+if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
 }
 if (isset($equipo)&&$equipo!=''&&$equipo!=0){
 	$z .= " AND telemetria_listado.idTelemetria=".$equipo;
@@ -3187,7 +2429,15 @@ if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
 	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
 }
-						
+
+//numero sensores equipo
+$N_Maximo_Sensores = 60;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+}						
 //Listar los equipos
 $arrEquipo = array();
 $query = "SELECT
@@ -3200,42 +2450,9 @@ telemetria_listado.cantSensores,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NDetenciones,	
 telemetria_listado.GeoErrores,		
-telemetria_listado.NErrores,
+telemetria_listado.NErrores
 
-SensoresNombre_1, SensoresNombre_2, SensoresNombre_3, SensoresNombre_4, SensoresNombre_5, 
-SensoresNombre_6, SensoresNombre_7, SensoresNombre_8, SensoresNombre_9, SensoresNombre_10, 
-SensoresNombre_11, SensoresNombre_12, SensoresNombre_13, SensoresNombre_14, SensoresNombre_15, 
-SensoresNombre_16, SensoresNombre_17, SensoresNombre_18, SensoresNombre_19, SensoresNombre_20, 
-SensoresNombre_21, SensoresNombre_22, SensoresNombre_23, SensoresNombre_24, SensoresNombre_25, 
-SensoresNombre_26, SensoresNombre_27, SensoresNombre_28, SensoresNombre_29, SensoresNombre_30, 
-SensoresNombre_31, SensoresNombre_32, SensoresNombre_33, SensoresNombre_34, SensoresNombre_35, 
-SensoresNombre_36, SensoresNombre_37, SensoresNombre_38, SensoresNombre_39, SensoresNombre_40, 
-SensoresNombre_41, SensoresNombre_42, SensoresNombre_43, SensoresNombre_44, SensoresNombre_45, 
-SensoresNombre_46, SensoresNombre_47, SensoresNombre_48, SensoresNombre_49, SensoresNombre_50,
-
-SensoresMedErrores_1, SensoresMedErrores_2, SensoresMedErrores_3, SensoresMedErrores_4, SensoresMedErrores_5, 
-SensoresMedErrores_6, SensoresMedErrores_7, SensoresMedErrores_8, SensoresMedErrores_9, SensoresMedErrores_10, 
-SensoresMedErrores_11, SensoresMedErrores_12, SensoresMedErrores_13, SensoresMedErrores_14, SensoresMedErrores_15, 
-SensoresMedErrores_16, SensoresMedErrores_17, SensoresMedErrores_18, SensoresMedErrores_19, SensoresMedErrores_20, 
-SensoresMedErrores_21, SensoresMedErrores_22, SensoresMedErrores_23, SensoresMedErrores_24, SensoresMedErrores_25, 
-SensoresMedErrores_26, SensoresMedErrores_27, SensoresMedErrores_28, SensoresMedErrores_29, SensoresMedErrores_30, 
-SensoresMedErrores_31, SensoresMedErrores_32, SensoresMedErrores_33, SensoresMedErrores_34, SensoresMedErrores_35, 
-SensoresMedErrores_36, SensoresMedErrores_37, SensoresMedErrores_38, SensoresMedErrores_39, SensoresMedErrores_40, 
-SensoresMedErrores_41, SensoresMedErrores_42, SensoresMedErrores_43, SensoresMedErrores_44, SensoresMedErrores_45, 
-SensoresMedErrores_46, SensoresMedErrores_47, SensoresMedErrores_48, SensoresMedErrores_49, SensoresMedErrores_50,
-	
-SensoresErrorActual_1, SensoresErrorActual_2, SensoresErrorActual_3, SensoresErrorActual_4, SensoresErrorActual_5, 
-SensoresErrorActual_6, SensoresErrorActual_7, SensoresErrorActual_8, SensoresErrorActual_9, SensoresErrorActual_10, 
-SensoresErrorActual_11, SensoresErrorActual_12, SensoresErrorActual_13, SensoresErrorActual_14, SensoresErrorActual_15, 
-SensoresErrorActual_16, SensoresErrorActual_17, SensoresErrorActual_18, SensoresErrorActual_19, SensoresErrorActual_20, 
-SensoresErrorActual_21, SensoresErrorActual_22, SensoresErrorActual_23, SensoresErrorActual_24, SensoresErrorActual_25, 
-SensoresErrorActual_26, SensoresErrorActual_27, SensoresErrorActual_28, SensoresErrorActual_29, SensoresErrorActual_30, 
-SensoresErrorActual_31, SensoresErrorActual_32, SensoresErrorActual_33, SensoresErrorActual_34, SensoresErrorActual_35, 
-SensoresErrorActual_36, SensoresErrorActual_37, SensoresErrorActual_38, SensoresErrorActual_39, SensoresErrorActual_40, 
-SensoresErrorActual_41, SensoresErrorActual_42, SensoresErrorActual_43, SensoresErrorActual_44, SensoresErrorActual_45, 
-SensoresErrorActual_46, SensoresErrorActual_47, SensoresErrorActual_48, SensoresErrorActual_49, SensoresErrorActual_50
-
-
+".$subquery."
 
 FROM `telemetria_listado`
 LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema
@@ -3262,7 +2479,7 @@ array_push( $arrEquipo,$row );
 
 
 $GPS = '';
-$GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />';
+$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
 
 
 	$GPS .= '	
@@ -3270,7 +2487,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 		<div class="col-sm-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>'.$titulo_cuadro.'</h5>	
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo_cuadro.'</h5>	
 				</header>
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -3309,7 +2526,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 																	
 								/**********************************************/
 								//Fuera de linea
-								$diaInicio   = fecha_estandar($data['LastUpdateFecha']);
+								$diaInicio   = $data['LastUpdateFecha'];
 								$diaTermino  = $FechaSistema;
 								$tiempo1     = $data['LastUpdateHora'];
 								$tiempo2     = $HoraSistema;
@@ -3373,16 +2590,16 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 								/*******************************************************/
 								//se guardan estados
 								$danger = '';
-								if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car"></i></a>';}
-								if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle"></i></a>';}
-								if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow"></i></a>';}
-								if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker"></i></a>';}
-								if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken"></i></a>';}
+								if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+								if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+								if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+								if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+								if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
 															
 								/*******************************************************/
 								//traspasan los estados
 								if($in_eq_ok==1){
-									$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check"></i></a>';
+									$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 								}else{
 									$eq_ok = $dataex;
 								}
@@ -3397,7 +2614,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 										<td><div class="btn-group" >'.$eq_ok.'</div></td>			
 										<td>
 											<div class="btn-group" style="width: 35px;" >
-												<a href="telemetria_gestion_flota_view_equipo_mapa.php?view='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+												<a href="telemetria_gestion_flota_view_equipo_mapa.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 											</div>
 										</td>
 									</tr>';
@@ -3416,7 +2633,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 								$xw = 0;
 								$dataex = '';
 											
-								$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check"></i></a>';
+								$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 								for ($i = 1; $i <= $equip['cantSensores']; $i++) {
 									$xx = $equip['SensoresMedErrores_'.$i] - $equip['SensoresErrorActual_'.$i];
 									if($xx<0){$xy = 1;$eq_ok = '';}
@@ -3424,7 +2641,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 								$eq_alertas = $eq_alertas + $xy;
 											
 								//Fuera de linea
-								$diaInicio   = fecha_estandar($equip['LastUpdateFecha']);
+								$diaInicio   = $equip['LastUpdateFecha'];
 								$diaTermino  = $FechaSistema;
 								$tiempo1     = $equip['LastUpdateHora'];
 								$tiempo2     = $HoraSistema;
@@ -3452,8 +2669,8 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 											
 											
 								//equipos ok
-								if($eq_alertas>0){$eq_ok = '';$xw = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle"></i></a>';}
-								if($eq_fueralinea>0){$eq_ok = '';$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken"></i></a>';}
+								if($eq_alertas>0){$eq_ok = '';$xw = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+								if($eq_fueralinea>0){$eq_ok = '';$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
 											
 								$eq_ok .= $dataex;
 								
@@ -3475,8 +2692,8 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 									<td><div class="btn-group" >'.$eq_ok.'</div></td>			
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<a href="telemetria_gestion_equipos_view_equipo.php?view='.$equip['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
-											<a href="telemetria_gestion_equipos_view_equipo_uso.php?view='.$equip['idTelemetria'].'" title="Ver Uso" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-wrench"></i></a>
+											<a href="telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<a href="telemetria_gestion_equipos_view_equipo_uso.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Uso" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-wrench" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -3504,7 +2721,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 
 
 $GPS .= '
-<script src="'.DB_SITE.'/LIBS_js/modal/jquery.colorbox.js"></script>
+<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
 
 <script>
 	$(document).ready(function(){
@@ -3533,14 +2750,13 @@ $GPS .= '
 }
 
 /*******************************************************************************************************************/
-//Muestra el calendario de OT
+//Muestra una lista de quipos gps
 function widget_GPS_lista($titulo_cuadro, $seguimiento, $equipo, $enlace, 
 						  $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
 	
 //Variables
 $HoraSistema    = hora_actual(); 
 $FechaSistema   = fecha_actual();
-
 
 //Variable
 $z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
@@ -3600,7 +2816,7 @@ array_push( $arrEquipo,$row );
 
 
 $GPS = '';
-$GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />';
+$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
 
 
 	$GPS .= '	
@@ -3608,7 +2824,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 		<div class="col-sm-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>'.$titulo_cuadro.'</h5>	
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo_cuadro.'</h5>	
 				</header>
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -3647,7 +2863,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 																	
 								/**********************************************/
 								//Fuera de linea
-								$diaInicio   = fecha_estandar($data['LastUpdateFecha']);
+								$diaInicio   = $data['LastUpdateFecha'];
 								$diaTermino  = $FechaSistema;
 								$tiempo1     = $data['LastUpdateHora'];
 								$tiempo2     = $HoraSistema;
@@ -3711,16 +2927,16 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 								/*******************************************************/
 								//se guardan estados
 								$danger = '';
-								if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car"></i></a>';}
-								if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle"></i></a>';}
-								if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow"></i></a>';}
-								if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker"></i></a>';}
-								if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken"></i></a>';}
+								if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+								if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+								if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+								if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+								if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
 															
 								/*******************************************************/
 								//traspasan los estados
 								if($in_eq_ok==1){
-									$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check"></i></a>';
+									$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 								}else{
 									$eq_ok = $dataex;
 								}
@@ -3735,7 +2951,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 										<td><div class="btn-group" >'.$eq_ok.'</div></td>			
 										<td>
 											<div class="btn-group" style="width: 35px;" >
-												<a href="telemetria_gestion_flota_view_equipo_mapa.php?view='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+												<a href="telemetria_gestion_flota_view_equipo_mapa.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 											</div>
 										</td>
 									</tr>';
@@ -3766,7 +2982,625 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE.'/LIBS_js/modal/colorbox.css" />
 
 
 $GPS .= '
-<script src="'.DB_SITE.'/LIBS_js/modal/jquery.colorbox.js"></script>
+<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+<script>
+	$(document).ready(function(){
+		//Examples of how to assign the Colorbox event to elements
+		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+		$(".callbacks").colorbox({
+			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+		});
+
+				
+		//Example of preserving a JavaScript event for inline calls.
+		$("#click").click(function(){ 
+			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+			return false;
+		});
+	});
+</script>
+	
+	';
+	
+	return $GPS;
+}
+/*******************************************************************************************************************/
+//Muestra los promedios de los equipos
+function widget_Promedios_equipo($titulo_cuadro, $seguimiento, $equipo, $enlace, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
+	
+//Variables
+$HoraSistema    = hora_actual(); 
+$FechaSistema   = fecha_actual();
+
+//Variable
+$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+//solo los equipos que tengan el seguimiento activado
+if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
+	$z .= " AND telemetria_listado.id_Geo = ".$seguimiento;
+}
+//Filtro el sistema al cual pertenece	
+if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+}
+if (isset($equipo)&&$equipo!=''&&$equipo!=0){
+	$z .= " AND telemetria_listado.idTelemetria=".$equipo;
+}
+//Verifico el tipo de usuario que esta ingresando y el id
+$join = "";	
+if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+}
+						
+
+//numero sensores equipo
+$N_Maximo_Sensores = 60;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresMedActual_'.$i;
+	$subquery .= ',SensoresGrupo_'.$i;
+	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}
+//Listar los equipos
+$arrEquipo = array();
+$query = "SELECT
+telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLongitud,
+telemetria_listado.idTelemetria,
+telemetria_listado.Nombre,
+telemetria_listado.Direccion_img,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.LastUpdateFecha, 
+telemetria_listado.cantSensores,
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.NErrores,					
+core_sistemas.idOpcionesGen_3
+
+".$subquery."
+
+FROM `telemetria_listado`
+LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema
+".$join."
+".$z."
+ORDER BY telemetria_listado.Nombre ASC  ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrEquipo,$row );
+}
+
+$arrUnimed = array();
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
+											
+$arrGrupos = array();
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+											
+$arrFinalUnimed = array();
+$arrFinalGrupos = array();
+foreach ($arrUnimed as $sen) { $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre']; }
+foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo']; }
+
+	
+
+$GPS = '';
+$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
+
+
+
+$GPS .= '
+<div class="row">    
+		
+	<h3 class="supertittle text-primary">'.$titulo_cuadro.'</h3>';
+	
+	foreach($arrEquipo as $equip) {
+		
+		/***************************************/
+		//Fuera de linea
+		$diaInicio   = $equip['LastUpdateFecha'];
+		$diaTermino  = $FechaSistema;
+		$tiempo1     = $equip['LastUpdateHora'];
+		$tiempo2     = $HoraSistema;
+		//calculo diferencia de dias
+		$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+		//calculo del tiempo transcurrido
+		$Tiempo = restahoras($tiempo1, $tiempo2);
+		//Calculo del tiempo transcurrido
+		if($n_dias!=0){
+			if($n_dias>=2){
+				$n_dias = $n_dias-1;
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
+			}
+			if($n_dias==1&&$tiempo1<$tiempo2){
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
+			}
+		}
+		//si esta fuera de linea marca con rojo el recuadro
+		if($Tiempo>$equip['TiempoFueraLinea']&&$equip['TiempoFueraLinea']!='00:00:00'){
+			$wd_color = 'box-red';	
+		//sino con azul normal
+		}else{
+			//verifico si hay alertas
+			$eq_alertas = 0;
+			for ($i = 1; $i <= $equip['cantSensores']; $i++) {
+				if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
+					$eq_alertas++;
+				}
+			}
+			//NErrores
+			if(isset($equip['NErrores'])&&$equip['NErrores']>0){
+				$eq_alertas++;
+			}
+			
+			//verificacion de errores
+			if($eq_alertas!=0){
+				$wd_color = 'box-yellow';
+			}else{
+				$wd_color = 'box-blue';
+			}
+		}
+					
+					
+		$GPS .= '	
+		<div class="col-md-4">
+			<div class="box '.$wd_color.' box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">'.$equip['Nombre'].'</h3>
+					<div class="box-tools pull-right">
+						<a target="_blank" rel="noopener noreferrer" href="principal_telemetria_grupo_alt.php?idTelemetria='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" class="iframe btn btn-xs btn-primary btn-line">Ver Mediciones</a>
+					</div>
+				</div>
+				<div class="box-body">
+					<table id="dataTable" class="table table-bordered table-condensed table-hover dataTable">
+						<tbody role="alert" aria-live="polite" aria-relevant="all">
+							<tr class="odd">		
+								<td colspan="3">Medicion el '.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs</td>		
+							</tr>';
+							
+							//variables							
+							$arrGruposTitulo = array();
+		
+							for ($i = 1; $i <= $equip['cantSensores']; $i++) {
+								//solo sensores activos
+								if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
+									//Unidad medida
+									$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+									//Titulo del cuadro
+									$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
+									$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];	
+									//Guardo el valor correspondiente
+									$arrGruposTitulo[$Titulo][$i]['valor']     = $equip['SensoresMedActual_'.$i];
+									$arrGruposTitulo[$Titulo][$i]['unimed']    = $unimed;
+									$arrGruposTitulo[$Titulo][$i]['nColumnas'] = $nColumnas;
+								}	
+							}
+													
+							//Ordenamiento por titulo de grupo
+							$names = array();
+							foreach ($arrGruposTitulo as $titulo=>$items) {
+								$names[] = $titulo;
+							}
+							array_multisort($names, SORT_ASC, $arrGruposTitulo);
+
+							//se recorre el arreglo
+							foreach($arrGruposTitulo as $titulo=>$items) { 
+								$ndatacol    = 0;
+								$total_col1  = 0;
+								$total_col2  = 0;
+								$ntotal_col1 = 0;
+								$ntotal_col2 = 0;
+								$unimed_col1 = '';
+								$unimed_col2 = '';
+								$y           = 1;
+								
+								foreach($items as $datos) {
+									//si el grupo solo tiene una columna
+									if(isset($datos['nColumnas'])&&$datos['nColumnas']==1){
+										//Especifico el numero de columnas
+										$ndatacol = 1;
+										//Verifico que el dato no sea 99900
+										if(isset($datos['valor'])&&$datos['valor']<99900){
+											$total_col1 = $total_col1 + $datos['valor'];
+											$ntotal_col1++;
+										}
+										$unimed_col1 = $datos['unimed'];
+																	
+										//si el grupo tiene 2 columnas
+									}elseif(isset($datos['nColumnas'])&&$datos['nColumnas']==2){
+										//Especifico el numero de columnas
+										$ndatacol = 2;
+										//Se guardan los datos
+										if($y==1){
+											//Verifico que el dato no sea 99900
+											if(isset($datos['valor'])&&$datos['valor']<99900){
+												$total_col1 = $total_col1 + $datos['valor'];
+												$ntotal_col1++;
+											}
+											$unimed_col1 = $datos['unimed'];
+											$y=2;
+										}else{
+											//Verifico que el dato no sea 99900
+											if(isset($datos['valor'])&&$datos['valor']<99900){
+												$total_col2 = $total_col2 + $datos['valor'];
+												$ntotal_col2++;
+											}
+											$unimed_col2 = $datos['unimed'];
+											$y=1;
+										}
+									}	
+								} 
+								/*************************************************/
+														
+								$GPS .= '
+								<tr class="odd">		
+									<td>'.$titulo.'</td>';
+									/***********************/
+									if($ndatacol==1){
+										if($ntotal_col1!=0){$GPS .= '<td colspan="2">'.Cantidades(($total_col1/$ntotal_col1), 1).$unimed_col1.'</td>';}else{$GPS .= '<td colspan="2">0'.$unimed_col1.'</td>';}
+									}elseif($ndatacol==2){
+										if($ntotal_col1!=0){$GPS .= '<td>'.Cantidades(($total_col1/$ntotal_col1), 1).$unimed_col1.'</td>';}else{$GPS .= '<td>0'.$unimed_col1.'</td>';}
+										if($ntotal_col2!=0){$GPS .= '<td>'.Cantidades(($total_col2/$ntotal_col2), 1).$unimed_col2.'</td>';}else{$GPS .= '<td>0'.$unimed_col2.'</td>';}
+									}
+																
+								$GPS .= '</tr>';
+														
+							}				
+														
+							$GPS .= '       
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+		</div>';
+	}
+	
+	
+		
+$GPS .= '</div> ';
+	
+	
+	
+	
+
+
+
+$GPS .= '
+<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+<script>
+	$(document).ready(function(){
+		//Examples of how to assign the Colorbox event to elements
+		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+		$(".callbacks").colorbox({
+			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+		});
+
+				
+		//Example of preserving a JavaScript event for inline calls.
+		$("#click").click(function(){ 
+			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+			return false;
+		});
+	});
+</script>
+	
+	';
+	
+	return $GPS;
+}
+/*******************************************************************************************************************/
+//Muestra los promedios de los equipos por grupos
+function widget_Promedios_equipo_grupos($titulo_cuadro, $seguimiento, $equipo, $enlace, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
+	
+//Variables
+$HoraSistema    = hora_actual(); 
+$FechaSistema   = fecha_actual();
+
+//Variable
+$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+//solo los equipos que tengan el seguimiento activado
+if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
+	$z .= " AND telemetria_listado.id_Geo = ".$seguimiento;
+}
+//Filtro el sistema al cual pertenece	
+if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+}
+if (isset($equipo)&&$equipo!=''&&$equipo!=0){
+	$z .= " AND telemetria_listado.idTelemetria=".$equipo;
+}
+//Verifico el tipo de usuario que esta ingresando y el id
+$join = "";	
+if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+}
+						
+
+//numero sensores equipo
+$N_Maximo_Sensores = 60;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresMedActual_'.$i;
+	$subquery .= ',SensoresGrupo_'.$i;
+	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}
+//Listar los equipos
+$arrEquipo = array();
+$query = "SELECT
+telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLongitud,
+telemetria_listado.idTelemetria,
+telemetria_listado.Nombre,
+telemetria_listado.Direccion_img,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.LastUpdateFecha, 
+telemetria_listado.cantSensores,
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.NErrores,					
+core_sistemas.idOpcionesGen_3
+
+".$subquery."
+
+FROM `telemetria_listado`
+LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema
+".$join."
+".$z."
+ORDER BY telemetria_listado.Nombre ASC  ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrEquipo,$row );
+}
+
+$arrUnimed = array();
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
+											
+$arrGrupos = array();
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+											
+$arrFinalUnimed = array();
+$arrFinalGrupos = array();
+foreach ($arrUnimed as $sen) { $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre']; }
+foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo']; }
+
+	
+
+$GPS = '';
+$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
+
+
+
+$GPS .= '
+<div class="row">    
+		
+	<h3 class="supertittle text-primary">'.$titulo_cuadro.'</h3>';
+	
+	foreach($arrEquipo as $equip) {
+		
+		/***************************************/
+		//Fuera de linea
+		$diaInicio   = $equip['LastUpdateFecha'];
+		$diaTermino  = $FechaSistema;
+		$tiempo1     = $equip['LastUpdateHora'];
+		$tiempo2     = $HoraSistema;
+		//calculo diferencia de dias
+		$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+		//calculo del tiempo transcurrido
+		$Tiempo = restahoras($tiempo1, $tiempo2);
+		//Calculo del tiempo transcurrido
+		if($n_dias!=0){
+			if($n_dias>=2){
+				$n_dias = $n_dias-1;
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
+			}
+			if($n_dias==1&&$tiempo1<$tiempo2){
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
+			}
+		}
+		//si esta fuera de linea marca con rojo el recuadro
+		if($Tiempo>$equip['TiempoFueraLinea']&&$equip['TiempoFueraLinea']!='00:00:00'){
+			$wd_color = 'box-red';	
+		//sino con azul normal
+		}else{
+			$wd_color = 'box-blue';
+		}			
+					
+		$GPS .= '	
+		<div class="col-md-12">
+			<div class="box '.$wd_color.' box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">'.$equip['Nombre'].'</h3>
+					<div class="box-tools pull-right">
+						<a target="_blank" rel="noopener noreferrer" href="principal_telemetria_grupo_alt.php?idTelemetria='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" class="iframe btn btn-xs btn-primary btn-line">Ver Mediciones</a>
+					</div>
+				</div>
+				<div class="box-body">
+					<h4 class="box-title">Medicion el '.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs</h4>';
+												
+						//variables							
+						$arrGruposTitulo = array();
+						
+						for ($i = 1; $i <= $equip['cantSensores']; $i++) {
+							//solo sensores activos
+							if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
+								//Unidad medida
+								$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+								//Titulo del cuadro
+								$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
+								$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];
+								$s_idGrupo = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['idGrupo'];	
+								//Verificacion de alertas para cambios de color del widget
+								if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
+									$arrGruposTitulo[$Titulo][$i]['Color'] = 'yellow';
+								}else{
+									$arrGruposTitulo[$Titulo][$i]['Color'] = 'blue';
+								}
+															
+								//Guardo el valor correspondiente
+								$arrGruposTitulo[$Titulo][$i]['valor']     = $equip['SensoresMedActual_'.$i];
+								$arrGruposTitulo[$Titulo][$i]['unimed']    = $unimed;
+								$arrGruposTitulo[$Titulo][$i]['nColumnas'] = $nColumnas;
+								$arrGruposTitulo[$Titulo][$i]['idGrupo']   = $s_idGrupo;
+							}	
+						}
+													
+						//Ordenamiento por titulo de grupo
+						$names = array();
+						foreach ($arrGruposTitulo as $titulo=>$items) {
+							$names[] = $titulo;
+						}
+						array_multisort($names, SORT_ASC, $arrGruposTitulo);
+
+						//se recorre el arreglo
+						foreach($arrGruposTitulo as $titulo=>$items) { 
+							
+							//variables	
+							$ndatacol    = 0;
+							$total_col1  = 0;
+							$total_col2  = 0;
+							$ntotal_col1 = 0;
+							$ntotal_col2 = 0;
+							$unimed_col1 = '';
+							$unimed_col2 = '';
+							$xs_idGrupo  = 0;
+							$y           = 1;
+							$xs_Color = 'blue';
+							
+							foreach($items as $datos) {
+								//asigno el grupo
+								$xs_idGrupo  = $datos['idGrupo'];
+								$xs_Color    = $datos['Color'];
+								//si el grupo solo tiene una columna
+								if(isset($datos['nColumnas'])&&$datos['nColumnas']==1){
+									//Especifico el numero de columnas
+									$ndatacol = 1;
+									//Verifico que el dato no sea 99900
+									if(isset($datos['valor'])&&$datos['valor']<99900){
+										$total_col1 = $total_col1 + $datos['valor'];
+										$ntotal_col1++;
+									}
+									$unimed_col1 = $datos['unimed'];
+																	
+								//si el grupo tiene 2 columnas
+								}elseif(isset($datos['nColumnas'])&&$datos['nColumnas']==2){
+									//Especifico el numero de columnas
+									$ndatacol = 2;
+									//Se guardan los datos
+									if($y==1){
+										//Verifico que el dato no sea 99900
+										if(isset($datos['valor'])&&$datos['valor']<99900){
+											$total_col1 = $total_col1 + $datos['valor'];
+											$ntotal_col1++;
+										}
+										$unimed_col1 = $datos['unimed'];
+										$y=2;
+									}else{
+										//Verifico que el dato no sea 99900
+										if(isset($datos['valor'])&&$datos['valor']<99900){
+											$total_col2 = $total_col2 + $datos['valor'];
+											$ntotal_col2++;
+										}
+										$unimed_col2 = $datos['unimed'];
+										$y=1;
+									}
+								}	
+							} 
+														
+							/*************************************************/
+							$GPS .= '
+							<div class="col-md-3">
+								<div class="box box-'.$xs_Color.' box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">Grupo</h3>
+										<div class="box-tools pull-right">
+											<a target="_blank" rel="noopener noreferrer" href="principal_telemetria_grupo_alt_2.php?idTelemetria='.simpleEncode($equip['idTelemetria'], fecha_actual()).'&idGrupo='.simpleEncode($xs_idGrupo, fecha_actual()).'&titulo='.simpleEncode($titulo, fecha_actual()).'" class="iframe btn btn-xs btn-primary btn-line">Ver Mediciones</a>
+										</div>
+									</div>
+									<div class="box-body">
+										<table id="dataTable" class="table table-bordered table-condensed table-hover dataTable">
+											<tbody role="alert" aria-live="polite" aria-relevant="all">';
+												
+												//Titulo
+												$GPS .= '<tr class="odd">';
+												$GPS .= '<td colspan="2">'.$titulo.'</td>';
+												$GPS .= '</tr>';
+												
+												//datos
+												$GPS .= '<tr class="odd">';
+													/***********************/
+													if($ndatacol==1){
+														if($ntotal_col1!=0){$GPS .= '<td colspan="2">'.Cantidades(($total_col1/$ntotal_col1), 1).$unimed_col1.'</td>';}else{$GPS .= '<td colspan="2">0'.$unimed_col1.'</td>';}
+													}elseif($ndatacol==2){
+														if($ntotal_col1!=0){$GPS .= '<td>'.Cantidades(($total_col1/$ntotal_col1), 1).$unimed_col1.'</td>';}else{$GPS .= '<td>0'.$unimed_col1.'</td>';}
+														if($ntotal_col2!=0){$GPS .= '<td>'.Cantidades(($total_col2/$ntotal_col2), 1).$unimed_col2.'</td>';}else{$GPS .= '<td>0'.$unimed_col2.'</td>';}
+													}
+																					
+												$GPS .= '</tr>       
+											</tbody>
+										</table>
+												
+									</div>
+								</div>
+							</div>';
+														
+						}				
+														
+						$GPS .= '       
+
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>';
+	}
+		
+$GPS .= '</div> ';
+
+$GPS .= '
+<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
 
 <script>
 	$(document).ready(function(){
@@ -3816,11 +3650,7 @@ function widget_superadmin($dbConn, $DB_SERVER, $DB_USER, $DB_PASS, $DB_NAME_1, 
 		$b++;
 	}
 	$b = $b-1;
-	
-	
-
 					
-						
 	$widget = '
 
     
@@ -3837,7 +3667,7 @@ function widget_superadmin($dbConn, $DB_SERVER, $DB_USER, $DB_PASS, $DB_NAME_1, 
 					<div class="col-md-8">
 						
 						<div class="chart">				
-							<iframe class="col-sm-12 col-md-12 col-sm-12" frameborder="0" height="400" src="'.DB_SITE.'/EXTERNAL_LIBS/linfo/index.php"></iframe>
+							<iframe class="col-sm-12 col-md-12 col-sm-12" frameborder="0" height="400" src="'.DB_SITE_REPO.'/EXTERNAL_LIBS/linfo/index.php"></iframe>
 						</div>
 									 
 					</div>
@@ -3920,18 +3750,18 @@ function widget_Doc_relacionados($idOcompra,
 		$z3.=" AND bodegas_arriendos_facturacion.idSistema>=0";
 		$z4.=" AND bodegas_servicios_facturacion.idSistema>=0";		
 	}else{
-		$z0="WHERE ocompra_listado.idSistema={$idSistema}";	
-		$z1.=" AND bodegas_insumos_facturacion.idSistema={$idSistema}";
-		$z2.=" AND bodegas_productos_facturacion.idSistema={$idSistema}";
-		$z3.=" AND bodegas_arriendos_facturacion.idSistema={$idSistema}";
-		$z4.=" AND bodegas_servicios_facturacion.idSistema={$idSistema}";
+		$z0="WHERE ocompra_listado.idSistema=".$idSistema;	
+		$z1.=" AND bodegas_insumos_facturacion.idSistema=".$idSistema;	
+		$z2.=" AND bodegas_productos_facturacion.idSistema=".$idSistema;	
+		$z3.=" AND bodegas_arriendos_facturacion.idSistema=".$idSistema;	
+		$z4.=" AND bodegas_servicios_facturacion.idSistema=".$idSistema;	
 	}
 	//filtro por ordenes
-	$z0.=" AND ocompra_listado.idOcompra={$idOcompra}";
-	$z1.=" AND ocompra_listado.idOcompra={$idOcompra}";
-	$z2.=" AND ocompra_listado.idOcompra={$idOcompra}";
-	$z3.=" AND ocompra_listado.idOcompra={$idOcompra}";
-	$z4.=" AND ocompra_listado.idOcompra={$idOcompra}";
+	$z0.=" AND ocompra_listado.idOcompra=".$idOcompra;
+	$z1.=" AND ocompra_listado.idOcompra=".$idOcompra;
+	$z2.=" AND ocompra_listado.idOcompra=".$idOcompra;
+	$z3.=" AND ocompra_listado.idOcompra=".$idOcompra;
+	$z4.=" AND ocompra_listado.idOcompra=".$idOcompra;
 	/******************************************************/
 	//consulta
 	$arrOrdenes = array();
@@ -4118,7 +3948,7 @@ function widget_Doc_relacionados($idOcompra,
 	<div class="col-sm-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Documentos Relacionados</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Documentos Relacionados</h5>
 			</header>
 			<div class="table-responsive">   
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -4145,7 +3975,7 @@ function widget_Doc_relacionados($idOcompra,
 									<td></td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_ocompra.php?view='.$orden['idOcompra'].'" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+											<a href="view_ocompra.php?view='.simpleEncode($orden['idOcompra'], fecha_actual()).'" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -4161,7 +3991,7 @@ function widget_Doc_relacionados($idOcompra,
 									<td>'.$tipo['Estado'].'</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_mov_insumos.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+											<a href="view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -4177,7 +4007,7 @@ function widget_Doc_relacionados($idOcompra,
 									<td>'.$tipo['Estado'].'</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_mov_productos.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+											<a href="view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -4193,7 +4023,7 @@ function widget_Doc_relacionados($idOcompra,
 									<td>'.$tipo['Estado'].'</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_mov_arriendos.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+											<a href="view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -4209,7 +4039,7 @@ function widget_Doc_relacionados($idOcompra,
 									<td>'.$tipo['Estado'].'</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_mov_servicios.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+											<a href="view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -4223,7 +4053,5644 @@ function widget_Doc_relacionados($idOcompra,
 	';
 	return $html;
 }
+/*******************************************************************************************************************/
+//Muestra la gestion de flota
+function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $idUsuario, $SegActual, $dbConn){
+	
+	//Si no existe una ID se utiliza una por defecto
+	if(!isset($IDGoogle) OR $IDGoogle==''){
+		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+	}else{
+		
+		
+		//variables
+		$HoraSistema    = hora_actual(); 
+		$FechaSistema   = fecha_actual();
+		$eq_alertas     = 0; 
+		$eq_fueralinea  = 0; 
+		$eq_fueraruta   = 0;
+		$eq_detenidos   = 0;
+		$eq_gps_fuera   = 0;
+		$eq_ok          = 0;
 
+		$google = $IDGoogle;
+			
+		//Variable
+		$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+		//solo los equipos que tengan el seguimiento activado
+		$z .= " AND telemetria_listado.id_Geo = 1";
+		//enlace para redireccionar
+		$enlace  = "?dd=true";
+		$enlace .= "&idTipoUsuario=".$idTipoUsuario;
+		$enlace .= "&idSistema=".$idSistema;
+		$enlace .= "&idUsuario=".$idUsuario;
+		
+		//Filtro el sistema al cual pertenece	
+		if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+			$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+		}
+		//Verifico el tipo de usuario que esta ingresando y el id
+		$join = "";	
+		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+			$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+			$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+		}
+		
+		//numero sensores equipo
+		$N_Maximo_Sensores = 60;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresMedErrores_'.$i;
+			$subquery .= ',SensoresErrorActual_'.$i;
+			$subquery .= ',SensoresNombre_'.$i;
+			$subquery .= ',SensoresMedActual_'.$i;
+			$subquery .= ',SensoresUniMed_'.$i;
+			$subquery .= ',SensoresActivo_'.$i;
+		}	
+		//Listar los equipos
+		$arrEquipo = array();
+		$query = "SELECT 
+		telemetria_listado.Nombre, 
+		telemetria_listado.Identificador, 
+		telemetria_listado.LastUpdateFecha,
+		telemetria_listado.LastUpdateHora,
+		telemetria_listado.cantSensores,
+		telemetria_listado.GeoLatitud, 
+		telemetria_listado.GeoLongitud, 
+		telemetria_listado.NDetenciones, 
+		telemetria_listado.TiempoFueraLinea,
+		telemetria_listado.GeoErrores,
+		telemetria_listado.NErrores, 
+		telemetria_listado.GeoVelocidad, 
+		telemetria_listado.Patente, 
+		telemetria_listado.id_Sensores
+		
+		".$subquery."
+	
+		FROM `telemetria_listado`
+		".$join."
+		".$z."
+		ORDER BY telemetria_listado.Nombre ASC  ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrEquipo,$row );
+		}
+		
+		/*************************************************************/
+		//Se traen todas las unidades de medida
+		$arrUnimed = array();
+		$query = "SELECT idUniMed,Nombre
+		FROM `telemetria_listado_unidad_medida`
+		ORDER BY idUniMed ASC";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+									
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrUnimed,$row );
+		}
+		//Ordeno las unidades de medida
+		$arrFinalUnimed = array();
+		foreach ($arrUnimed as $data) {
+			$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
+		}	
+		
+		/*************************************************************/
+		//se traen todas las zonas
+		$arrZonas = array();
+		$query = "SELECT idZona, Nombre
+		FROM `vehiculos_zonas` ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrZonas,$row );
+		}
+		//defino la variable temporal de la zona 
+		$_SESSION['usuario']['zona']['idZona']         = 9999;
+		$_SESSION['usuario']['zona']['id_Geo']         = 1;
+		$_SESSION['usuario']['zona']['idTipoUsuario']  = $idTipoUsuario;
+		$_SESSION['usuario']['zona']['idSistema']      = $idSistema;
+		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
+
+
+
+		
+		$GPS = '
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+								
+<div class="row">		
+	<div class="col-sm-12">
+		<div class="box">	
+			<header>		
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
+			</header>
+			<div class="table-responsive">
+				<div class="col-sm-4">
+					<div class="row">
+						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
+							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+								<thead>
+									<tr role="row">
+										<th colspan="3">
+											<div class="field">
+												<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
+													//La opcion todos
+													$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
+													foreach ( $arrZonas as $select ) {
+														$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
+													} 
+												$GPS .= '
+												</select>
+											</div>
+										</th>
+									</tr>';
+									$GPS .= widget_sherlock(1, 3);
+									$GPS .= '
+								</thead>
+								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+									$nicon = 0;
+									foreach ($arrEquipo as $data) {
+										
+										/**********************************************/
+										//Se resetean
+										$in_eq_alertas     = 0;
+										$in_eq_fueralinea  = 0;
+										$in_eq_fueraruta   = 0;
+										$in_eq_detenidos   = 0;
+										$in_eq_gps_fuera   = 0;
+										$in_eq_ok          = 1;
+																			
+										/**********************************************/
+										//Fuera de linea
+										$diaInicio   = $data['LastUpdateFecha'];
+										$diaTermino  = $FechaSistema;
+										$tiempo1     = $data['LastUpdateHora'];
+										$tiempo2     = $HoraSistema;
+										//calculo diferencia de dias
+										$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+										//calculo del tiempo transcurrido
+										$Tiempo = restahoras($tiempo1, $tiempo2);
+										//Calculo del tiempo transcurrido
+										if($n_dias!=0){
+											if($n_dias>=2){
+												$n_dias = $n_dias-1;
+												$horas_trans2 = multHoras('24:00:00',$n_dias);
+												$Tiempo = sumahoras($Tiempo,$horas_trans2);
+											}
+											if($n_dias==1&&$tiempo1<$tiempo2){
+												$horas_trans2 = multHoras('24:00:00',$n_dias);
+												$Tiempo = sumahoras($Tiempo,$horas_trans2);
+											}
+										}	
+										if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+											$in_eq_fueralinea++;
+										}
+										
+										/**********************************************/
+										//GPS con problemas
+										if($data['GeoErrores']>0){
+											$in_eq_gps_fuera++;	
+										}
+										if(isset($data['GeoLatitud'])&&$data['GeoLatitud']==0){
+											$in_eq_gps_fuera++;	
+										}
+										if(isset($data['GeoLongitud'])&&$data['GeoLongitud']==0){
+											$in_eq_gps_fuera++;	
+										}
+
+										/**********************************************/
+										//alertas
+										$xx = 0;
+										for ($i = 1; $i <= $data['cantSensores']; $i++) {
+											$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
+											if($xx<0){
+												$in_eq_alertas++;
+											}
+										}
+
+										/**********************************************/
+										//Equipos Errores
+										if($data['NErrores']>0){
+											$in_eq_alertas++;	
+										}
+										
+										/**********************************************/
+										//Equipos detenidos
+										if($data['NDetenciones']>0){
+											$in_eq_detenidos++;	
+										}
+													
+										/*******************************************************/
+										//rearmo
+										if($in_eq_detenidos>0){  $in_eq_ok = 0;$in_eq_detenidos = 1;}
+										if($in_eq_alertas>0){    $in_eq_ok = 0;$in_eq_alertas = 1;    $in_eq_detenidos = 0;}
+										if($in_eq_fueraruta>0){  $in_eq_ok = 0;$in_eq_fueraruta = 1;  $in_eq_alertas = 0;   $in_eq_detenidos = 0;}
+										if($in_eq_gps_fuera>0){  $in_eq_ok = 0;$in_eq_gps_fuera = 1;  $in_eq_fueraruta = 0; $in_eq_alertas = 0;    $in_eq_detenidos = 0;}
+										if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_gps_fuera = 0; $in_eq_fueraruta = 0;  $in_eq_alertas = 0;  $in_eq_detenidos = 0;}
+										
+										/*******************************************************/
+										//se guardan estados
+										$danger = '';
+										/*if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+										if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+										if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+										if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+										if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+										*/
+										
+										if($in_eq_detenidos>0){  $danger = '';         $dataex = '<a href="#" title="Equipo Detenido"           class="btn btn-success btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+										if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas"        class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+										if($in_eq_fueraruta>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo fuera de ruta"      class="btn btn-warning btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+										if($in_eq_gps_fuera>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo sin cobertura GPS"  class="btn btn-info btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+										if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea"            class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+										
+										/*******************************************************/
+										//Se guardan los valores
+										$eq_alertas     = $eq_alertas + $in_eq_alertas; 
+										$eq_fueralinea  = $eq_fueralinea + $in_eq_fueralinea; 
+										$eq_fueraruta   = $eq_fueraruta + $in_eq_fueraruta; 
+										$eq_detenidos   = $eq_detenidos + $in_eq_detenidos; 
+										$eq_gps_fuera   = $eq_gps_fuera + $in_eq_gps_fuera; 
+										$eq_ok          = $eq_ok + $in_eq_ok; 
+										
+										/*******************************************************/
+										//traspasan los estados
+										if($in_eq_ok==1){
+											$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+										}else{
+											$eq_ok_icon = $dataex;
+										}
+										$GPS .= '
+										<tr class="odd '.$danger.'">
+											<td width="10">
+												<div class="btn-group" style="width: 35px;" >'.$eq_ok_icon.'</div>
+											</td>
+											<td>
+												'.$data['Nombre'].'<br/>
+												'.fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'].'
+											</td>
+											<td width="10">
+												<div class="btn-group" style="width: 35px;" >
+													<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+												</div>
+											</td>
+										</tr>';
+										$nicon++;
+									}
+									$GPS .= '                  
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="row">
+						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+						<div id="consulta"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>	
+	
+<style>
+.my-custom-scrollbar {
+	position: relative;
+	height: 550px;
+	overflow: auto;
+}
+.table-wrapper-scroll-y {
+	display: block;
+}
+</style>		
+	
+<script>
+	
+	var map;
+	var markers = [];
+	//Ubicacion de los distintos dispositivos
+	var locations = [ ';
+		foreach ( $arrEquipo as $data ) {
+			//burbuja
+			if(isset($data['Patente'])&&$data['Patente']!=''){$pate_nte = ' ('.$data['Patente'].')';}else{$pate_nte = '';}
+			$explanation  = '<div class="iw-subTitle">Vehiculo: '.$data['Nombre'].$pate_nte.'</div>';
+			$explanation .= '<p>Velocidad: '.Cantidades($data['GeoVelocidad'], 0).'<br/>';
+			$explanation .= 'Actualizado: '.fecha_estandar($data['LastUpdateFecha']).' - '.$data['LastUpdateHora'].'</p>';
+			//verifico si tiene sensores configurados
+			if(isset($data['id_Sensores'])&&$data['id_Sensores']==1){
+				$explanation .= '<div class="iw-subTitle">Sensores: </div><p>';
+				for ($i = 1; $i <= $data['cantSensores']; $i++) {
+					//verifico que sensor este activo
+					if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+						//Unidad medida
+						$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						//cadena
+						if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
+						$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
+					}
+				}
+				$explanation .= '</p>';
+			}
+			//se arma dato
+			$GPS .= "[";
+				$GPS .= $data['GeoLatitud'];
+				$GPS .= ", ".$data['GeoLongitud'];
+				$GPS .= ", '".$explanation."'";
+			$GPS .= "], ";					
+		}
+	$GPS .= '];
+	
+	/* ************************************************************************** */
+	function chngZona() {
+		idZona = document.getElementById("selectZona").value;
+		$(\'#vehiContent\').load(\'principal_update_zonaList_1.php?idZona=\' + idZona);
+		setMarkers(map, locations, 1);	
+	}
+
+	/* ************************************************************************** */
+	function fncCenterMap(Latitud, Longitud, n_icon){
+		latlon = new google.maps.LatLng(Latitud, Longitud);
+		map.panTo(latlon);
+		//volver todo a normal
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
+		}
+		//colorear el seleccionado
+		markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
+	}
+
+	/* ************************************************************************** */
+	function initialize() {
+		var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+		var myOptions = {
+			zoom: 12,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		
+		//ubicacion inicial
+		setMarkers(map, locations, 1);
+		//actualizacion de posicion
+		transMarker(map, '.$SegActual.');
+
+	}
+	/* ************************************************************************** */
+	function setMarkers(map, locations, optc) {
+
+		var marker, i, last_latitude, last_longitude;
+		
+		for (i = 0; i < locations.length; i++) {
+			
+			//defino ubicacion y datos
+			var latitude   = locations[i][0];
+			var longitude  = locations[i][1];
+			var data       = locations[i][2];
+			
+			//guardo las ultimas ubicaciones
+			last_latitude   = locations[i][0];
+			last_longitude  = locations[i][1];
+			
+			latlngset = new google.maps.LatLng(latitude, longitude);
+			
+			//se crea marcador
+			var marker = new google.maps.Marker({
+				map         : map, 
+				position    : latlngset,
+				icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png"
+			});
+			markers.push(marker);
+
+			//se define contenido
+			var content = 	"<div id=\'iw-container\'>" +
+							"<div class=\'iw-title\'>Datos</div>" +
+							"<div class=\'iw-content\'>" +
+							data +
+							"</div>" +
+							"<div class=\'iw-bottom-gradient\'></div>" +
+							"</div>";
+
+			//se crea infowindow
+			var infowindow = new google.maps.InfoWindow();
+
+			//se agrega funcion de click a infowindow
+			google.maps.event.addListener(marker,\'click\', (function(marker,content,infowindow){ 
+				return function() {
+					infowindow.setContent(content);
+					infowindow.open(map,marker);
+				};
+			})(marker,content,infowindow)); 
+
+		}
+		if(optc==1){
+			latlon = new google.maps.LatLng(last_latitude, last_longitude);
+			map.panTo(latlon);
+		}
+	}
+	/* ************************************************************************** */
+	function transMarker(map, time) {
+		var newTime = time / 2;
+		setInterval(function(){transMarkerTimer(map)},newTime);
+	}
+	/* ************************************************************************** */
+	var mapax = 0;
+	function transMarkerTimer(map) {
+
+		switch(mapax) {
+			//Ejecutar formulario con el recorrido y la ruta
+			case 1:
+				$(\'#consulta\').load(\'principal_update_map_zona_1.php'.$enlace.'\');
+				$(\'#vehiContent\').load(\'principal_update_zonaList_1.php\');
+				break;
+			//se dibujan los iconos 	
+			case 2:
+				//Se ocultan y eliminan los iconos
+				deleteMarkers();
+				setMarkers(map, new_locations, 2);											
+				//actualizo la hora de actualizacion
+				document.getElementById(\'update_text_HoraRefresco\').innerHTML=\'Hora Refresco: \'+HoraRefresco;					
+
+				break;		
+		}
+
+		mapax++;	
+		if(mapax==3){mapax=1}
+	}
+	/* ************************************************************************** */
+	// Sets the map on all markers in the array.
+	function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+    }
+    /* ************************************************************************** */
+	// Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+	/* ************************************************************************** */
+	// Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+    /* ************************************************************************** */
+	// Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+
+
+	
+	
+	
+	
+	
+	/* ************************************************************************** */
+	google.maps.event.addDomListener(window, "load", initialize());
+</script>	
+	
+		
+';
+
+								
+			$GPS .= '
+			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
+			<div class="row">';
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_alertas, 4, 'Vehiculos con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-red', 'fa-truck faa-float animated', $eq_fueralinea, 4, 'Vehiculos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+				$GPS .= widget_Ficha_2('box-orange', 'fa-truck faa-float animated', $eq_fueraruta, 4, 'Vehiculos fuera de ruta', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 3, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-purple', 'fa-truck faa-float animated', $eq_gps_fuera, 4, 'Vehiculos sin cobertura GPS', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+				$GPS .= widget_Ficha_2('box-green', 'fa-truck faa-float animated', ($eq_ok+$eq_detenidos), 4, 'Vehiculos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-success', 1, 2);    
+				
+				$GPS .= '
+			</div>  
+			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+			<script>
+				$(document).ready(function(){
+					//Examples of how to assign the Colorbox event to elements
+					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+					$(".callbacks").colorbox({
+						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+					});
+
+							
+					//Example of preserving a JavaScript event for inline calls.
+					$("#click").click(function(){ 
+						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+						return false;
+					});
+				});
+			</script>';
+		
+		
+		
+		return $GPS;
+								
+
+	}
+}
+/*******************************************************************************************************************/
+//Muestra la gestion de equipos
+function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $idUsuario, $SegActual, $dbConn){
+	
+	//Si no existe una ID se utiliza una por defecto
+	if(!isset($IDGoogle) OR $IDGoogle==''){
+		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+	}else{
+		
+		
+		//variables
+		$HoraSistema    = hora_actual(); 
+		$FechaSistema   = fecha_actual();
+		$eq_alertas     = 0; 
+		$eq_fueralinea  = 0;
+		$eq_ok          = 0;
+
+		$google = $IDGoogle;
+			
+		//Variable
+		$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+		//solo los equipos que tengan el seguimiento desactivado
+		$z .= " AND telemetria_listado.id_Geo = 2";
+		//enlace para redireccionar
+		$enlace  = "?dd=true";
+		$enlace .= "&idTipoUsuario=".$idTipoUsuario;
+		$enlace .= "&idSistema=".$idSistema;
+		$enlace .= "&idUsuario=".$idUsuario;
+		
+		//Filtro el sistema al cual pertenece	
+		if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+			$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+		}
+		//Verifico el tipo de usuario que esta ingresando y el id
+		$join = "";	
+		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+			$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+			$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+		}
+		
+		//numero sensores equipo
+		$N_Maximo_Sensores = 60;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresMedErrores_'.$i;
+			$subquery .= ',SensoresErrorActual_'.$i;
+			$subquery .= ',SensoresNombre_'.$i;
+			$subquery .= ',SensoresMedActual_'.$i;
+			$subquery .= ',SensoresUniMed_'.$i;
+			$subquery .= ',SensoresActivo_'.$i;
+		}	
+		//Listar los equipos
+		$arrEquipo = array();
+		$query = "SELECT 
+		telemetria_listado.Nombre, 
+		telemetria_listado.Identificador, 
+		telemetria_listado.LastUpdateFecha,
+		telemetria_listado.LastUpdateHora,
+		telemetria_listado.cantSensores,
+		telemetria_listado.GeoLatitud, 
+		telemetria_listado.GeoLongitud, 
+		telemetria_listado.TiempoFueraLinea, 
+		telemetria_listado.NErrores, 
+		telemetria_listado.id_Sensores
+		
+		".$subquery."
+	
+		FROM `telemetria_listado`
+		".$join."
+		".$z."
+		ORDER BY telemetria_listado.Nombre ASC  ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrEquipo,$row );
+		}
+		
+		/*************************************************************/
+		//Se traen todas las unidades de medida
+		$arrUnimed = array();
+		$query = "SELECT idUniMed,Nombre
+		FROM `telemetria_listado_unidad_medida`
+		ORDER BY idUniMed ASC";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+									
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrUnimed,$row );
+		}
+		//Ordeno las unidades de medida
+		$arrFinalUnimed = array();
+		foreach ($arrUnimed as $data) {
+			$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
+		}
+		
+		/*************************************************************/
+		//se traen todas las zonas
+		$arrZonas = array();
+		$query = "SELECT idZona, Nombre
+		FROM `telemetria_zonas` ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrZonas,$row );
+		}
+		//defino la variable temporal de la zona 
+		$_SESSION['usuario']['zona']['idZona']         = 9999;
+		$_SESSION['usuario']['zona']['id_Geo']         = 2;
+		$_SESSION['usuario']['zona']['idTipoUsuario']  = $idTipoUsuario;
+		$_SESSION['usuario']['zona']['idSistema']      = $idSistema;
+		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
+
+
+
+		
+		$GPS = '
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+								
+<div class="row">		
+	<div class="col-sm-12">
+		<div class="box">	
+			<header>		
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
+			</header>
+			<div class="table-responsive">
+				<div class="col-sm-4">
+					<div class="row">
+						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
+							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+								<thead>
+									<tr role="row">
+										<th colspan="3">
+											<div class="field">
+												<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
+													//La opcion todos
+													$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
+													foreach ( $arrZonas as $select ) {
+														$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
+													} 
+												$GPS .= '
+												</select>
+											</div>
+										</th>
+									</tr>';
+									$GPS .= widget_sherlock(1, 3);
+									$GPS .= '
+								</thead>
+								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+									$nicon = 0;
+									foreach ($arrEquipo as $data) {
+										
+										/**********************************************/
+										//Se resetean
+										$in_eq_alertas     = 0;
+										$in_eq_fueralinea  = 0;
+										$in_eq_ok          = 1;
+																			
+										/**********************************************/
+										//Fuera de linea
+										$diaInicio   = $data['LastUpdateFecha'];
+										$diaTermino  = $FechaSistema;
+										$tiempo1     = $data['LastUpdateHora'];
+										$tiempo2     = $HoraSistema;
+										//calculo diferencia de dias
+										$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+										//calculo del tiempo transcurrido
+										$Tiempo = restahoras($tiempo1, $tiempo2);
+										//Calculo del tiempo transcurrido
+										if($n_dias!=0){
+											if($n_dias>=2){
+												$n_dias = $n_dias-1;
+												$horas_trans2 = multHoras('24:00:00',$n_dias);
+												$Tiempo = sumahoras($Tiempo,$horas_trans2);
+											}
+											if($n_dias==1&&$tiempo1<$tiempo2){
+												$horas_trans2 = multHoras('24:00:00',$n_dias);
+												$Tiempo = sumahoras($Tiempo,$horas_trans2);
+											}
+										}	
+										if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+											$in_eq_fueralinea++;
+										}
+
+										/**********************************************/
+										//alertas
+										$xx = 0;
+										for ($i = 1; $i <= $data['cantSensores']; $i++) {
+											$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
+											if($xx<0){
+												$in_eq_alertas++;
+											}
+										}
+
+										/**********************************************/
+										//Equipos Errores
+										if($data['NErrores']>0){
+											$in_eq_alertas++;	
+										}
+													
+										/*******************************************************/
+										//rearmo
+										if($in_eq_alertas>0){    $in_eq_ok = 0;$in_eq_alertas = 1;    }
+										if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_alertas = 0;  }
+										
+										/*******************************************************/
+										//se guardan estados
+										$danger = '';
+										if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas"        class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+										if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea"            class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+										
+										/*******************************************************/
+										//Se guardan los valores
+										$eq_alertas     = $eq_alertas + $in_eq_alertas; 
+										$eq_fueralinea  = $eq_fueralinea + $in_eq_fueralinea; 
+										$eq_ok          = $eq_ok + $in_eq_ok; 
+										
+										/*******************************************************/
+										//traspasan los estados
+										if($in_eq_ok==1){
+											$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+										}else{
+											$eq_ok_icon = $dataex;
+										}
+										$GPS .= '
+										<tr class="odd '.$danger.'">
+											<td width="10">
+												<div class="btn-group" style="width: 35px;" >'.$eq_ok_icon.'</div>
+											</td>
+											<td>
+												'.$data['Nombre'].'<br/>
+												'.fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'].'
+											</td>
+											<td width="10">
+												<div class="btn-group" style="width: 35px;" >
+													<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+												</div>
+											</td>
+										</tr>';
+										$nicon++;
+									}
+									$GPS .= '                  
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="row">
+						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+						<div id="consulta"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>	
+	
+<style>
+.my-custom-scrollbar {
+	position: relative;
+	height: 550px;
+	overflow: auto;
+}
+.table-wrapper-scroll-y {
+	display: block;
+}
+</style>		
+	
+<script>
+	
+	var map;
+	var markers = [];
+	//Ubicacion de los distintos dispositivos
+	var locations = [ ';
+		foreach ( $arrEquipo as $data ) {
+			//burbuja
+			$explanation  = '<div class="iw-subTitle">Equipo: '.$data['Nombre'].'</div>';
+			$explanation .= 'Actualizado: '.fecha_estandar($data['LastUpdateFecha']).' - '.$data['LastUpdateHora'].'</p>';
+			//verifico si tiene sensores configurados
+			if(isset($data['id_Sensores'])&&$data['id_Sensores']==1){
+				$explanation .= '<div class="iw-subTitle">Sensores: </div><p>';
+				for ($i = 1; $i <= $data['cantSensores']; $i++) {
+					//verifico que sensor este activo
+					if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+						//Unidad medida
+						$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						//cadena
+						if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
+						$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
+					}
+				}
+				$explanation .= '</p>';
+			}
+			//se arma dato
+			$GPS .= "[";
+				$GPS .= $data['GeoLatitud'];
+				$GPS .= ", ".$data['GeoLongitud'];
+				$GPS .= ", '".$explanation."'";
+			$GPS .= "], ";					
+		}
+	$GPS .= '];
+	/* ************************************************************************** */
+	function chngZona() {
+		idZona = document.getElementById("selectZona").value;
+		$(\'#vehiContent\').load(\'principal_update_zonaList_2.php?idZona=\' + idZona);
+		setMarkers(map, locations, 1);	
+	}
+
+	/* ************************************************************************** */
+	function fncCenterMap(Latitud, Longitud, n_icon){
+		latlon = new google.maps.LatLng(Latitud, Longitud);
+		map.panTo(latlon);
+		//volver todo a normal
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
+		}
+		//colorear el seleccionado
+		markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
+	}
+
+
+	/* ************************************************************************** */
+	function initialize() {
+		var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+		var myOptions = {
+			zoom: 12,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+							
+		
+		
+		//ubicacion inicial
+		setMarkers(map, locations, 1);
+		//actualizacion de posicion
+		transMarker(map, '.$SegActual.');
+
+	}
+	/* ************************************************************************** */
+	function setMarkers(map, locations, optc) {
+
+		var marker, i, last_latitude, last_longitude;
+		
+		for (i = 0; i < locations.length; i++) {
+			
+			//defino ubicacion y datos
+			var latitude   = locations[i][0];
+			var longitude  = locations[i][1];
+			var data       = locations[i][2];
+			
+			//guardo las ultimas ubicaciones
+			last_latitude   = locations[i][0];
+			last_longitude  = locations[i][1];
+			
+			latlngset = new google.maps.LatLng(latitude, longitude);
+			
+			//se crea marcador
+			var marker = new google.maps.Marker({
+				map         : map, 
+				position    : latlngset,
+				icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png"
+			});
+			markers.push(marker);
+
+			//se define contenido
+			var content = 	"<div id=\'iw-container\'>" +
+							"<div class=\'iw-title\'>Datos</div>" +
+							"<div class=\'iw-content\'>" +
+							data +
+							"</div>" +
+							"<div class=\'iw-bottom-gradient\'></div>" +
+							"</div>";
+
+			//se crea infowindow
+			var infowindow = new google.maps.InfoWindow();
+
+			//se agrega funcion de click a infowindow
+			google.maps.event.addListener(marker,\'click\', (function(marker,content,infowindow){ 
+				return function() {
+					infowindow.setContent(content);
+					infowindow.open(map,marker);
+				};
+			})(marker,content,infowindow)); 
+
+		}
+		if(optc==1){
+			latlon = new google.maps.LatLng(last_latitude, last_longitude);
+			map.panTo(latlon);
+		}
+	}
+	/* ************************************************************************** */
+	function transMarker(map, time) {
+		var newTime = time / 2;
+		setInterval(function(){transMarkerTimer(map)},newTime);
+	}
+	/* ************************************************************************** */
+	var mapax = 0;
+	function transMarkerTimer(map) {
+
+		switch(mapax) {
+			//Ejecutar formulario con el recorrido y la ruta
+			case 1:
+				$(\'#consulta\').load(\'principal_update_map_zona_2.php'.$enlace.'\');
+				$(\'#vehiContent\').load(\'principal_update_zonaList_2.php\');
+				break;
+			//se dibujan los iconos 	
+			case 2:
+				//Se ocultan y eliminan los iconos
+				deleteMarkers();
+				setMarkers(map, new_locations, 2);											
+				//actualizo la hora de actualizacion
+				document.getElementById(\'update_text_HoraRefresco\').innerHTML=\'Hora Refresco: \'+HoraRefresco;					
+
+				break;		
+		}
+
+		mapax++;	
+		if(mapax==3){mapax=1}
+	}
+	/* ************************************************************************** */
+	// Sets the map on all markers in the array.
+	function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+    }
+    /* ************************************************************************** */
+	// Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+	/* ************************************************************************** */
+	// Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+    /* ************************************************************************** */
+	// Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+
+	/* ************************************************************************** */
+	google.maps.event.addDomListener(window, "load", initialize());
+</script>	
+	
+		
+';
+
+								
+			$GPS .= '
+			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
+			<div class="row">';
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-industry', $eq_alertas, 4, 'Equipos con alertas', 'Sensores', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, 'Equipos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+				$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, 'Equipos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+				
+				$GPS .= '
+			</div>  
+			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+			<script>
+				$(document).ready(function(){
+					//Examples of how to assign the Colorbox event to elements
+					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+					$(".callbacks").colorbox({
+						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+					});
+
+							
+					//Example of preserving a JavaScript event for inline calls.
+					$("#click").click(function(){ 
+						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+						return false;
+					});
+				});
+			</script>';
+		
+		
+		
+		return $GPS;
+								
+
+	}
+}
+/*******************************************************************************************************************/
+//Muestra la gestion de equipos cross
+function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $idUsuario, $SegActual, $dbConn){
+	
+	//Si no existe una ID se utiliza una por defecto
+	if(!isset($IDGoogle) OR $IDGoogle==''){
+		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+	}else{
+		
+		
+		//variables
+		$HoraSistema    = hora_actual(); 
+		$FechaSistema   = fecha_actual();
+		$eq_alertas     = 0; 
+		$eq_fueralinea  = 0; 
+		$eq_fueraruta   = 0;
+		$eq_detenidos   = 0;
+		$eq_gps_fuera   = 0;
+		$eq_ok          = 0;
+
+		$google = $IDGoogle;
+			
+		//Variable
+		$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+		//solo los equipos que tengan el seguimiento activado
+		$z .= " AND telemetria_listado.id_Geo = 1";
+		//enlace para redireccionar
+		$enlace  = "?dd=true";
+		$enlace .= "&idTipoUsuario=".$idTipoUsuario;
+		$enlace .= "&idSistema=".$idSistema;
+		$enlace .= "&idUsuario=".$idUsuario;
+		
+		//Filtro el sistema al cual pertenece	
+		if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+			$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+		}
+		//Verifico el tipo de usuario que esta ingresando y el id
+		$join = "";	
+		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+			$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+			$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+		}
+		
+		//numero sensores equipo
+		$N_Maximo_Sensores = 60;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresMedErrores_'.$i;
+			$subquery .= ',SensoresErrorActual_'.$i;
+			$subquery .= ',SensoresNombre_'.$i;
+			$subquery .= ',SensoresMedActual_'.$i;
+			$subquery .= ',SensoresUniMed_'.$i;
+			$subquery .= ',SensoresActivo_'.$i;
+		}	
+		//Listar los equipos
+		$arrEquipo = array();
+		$query = "SELECT 
+		telemetria_listado.Nombre, 
+		telemetria_listado.Identificador, 
+		telemetria_listado.LastUpdateFecha,
+		telemetria_listado.LastUpdateHora,
+		telemetria_listado.cantSensores,
+		telemetria_listado.GeoLatitud, 
+		telemetria_listado.GeoLongitud, 
+		telemetria_listado.NDetenciones, 
+		telemetria_listado.TiempoFueraLinea,
+		telemetria_listado.GeoErrores,
+		telemetria_listado.NErrores, 
+		telemetria_listado.GeoVelocidad, 
+		telemetria_listado.Patente, 
+		telemetria_listado.id_Sensores
+		
+		".$subquery."
+	
+		FROM `telemetria_listado`
+		".$join."
+		".$z."
+		ORDER BY telemetria_listado.Nombre ASC  ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrEquipo,$row );
+		}
+		
+		/*************************************************************/
+		//Se traen todas las unidades de medida
+		$arrUnimed = array();
+		$query = "SELECT idUniMed,Nombre
+		FROM `telemetria_listado_unidad_medida`
+		ORDER BY idUniMed ASC";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+									
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrUnimed,$row );
+		}
+		//Ordeno las unidades de medida
+		$arrFinalUnimed = array();
+		foreach ($arrUnimed as $data) {
+			$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
+		}
+		
+		/*************************************************************/
+		//se traen todas las zonas
+		$arrZonas = array();
+		$query = "SELECT idZona, Nombre
+		FROM `vehiculos_zonas` ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrZonas,$row );
+		}
+		//defino la variable temporal de la zona 
+		$_SESSION['usuario']['zona']['idZona']         = 9999;
+		$_SESSION['usuario']['zona']['id_Geo']         = 1;
+		$_SESSION['usuario']['zona']['idTipoUsuario']  = $idTipoUsuario;
+		$_SESSION['usuario']['zona']['idSistema']      = $idSistema;
+		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
+
+
+
+		
+		$GPS = '
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+										
+		<div class="row">		
+			<div class="col-sm-12">
+				<div class="box">	
+					<header>		
+						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
+					</header>
+					<div class="table-responsive">
+						<div class="col-sm-4">
+							<div class="row">
+								<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
+									<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+										<thead>
+											<tr role="row">
+												<th colspan="3">
+													<div class="field">
+														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
+															//La opcion todos
+															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
+															foreach ( $arrZonas as $select ) {
+																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
+															} 
+														$GPS .= '
+														</select>
+													</div>
+												</th>
+											</tr>';
+											$GPS .= widget_sherlock(1, 3);
+											$GPS .= '
+										</thead>
+										<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+											$nicon = 0;
+											foreach ($arrEquipo as $data) {
+												
+												/**********************************************/
+												//Se resetean
+												$in_eq_alertas     = 0;
+												$in_eq_fueralinea  = 0;
+												$in_eq_fueraruta   = 0;
+												$in_eq_detenidos   = 0;
+												$in_eq_gps_fuera   = 0;
+												$in_eq_ok          = 1;
+																					
+												/**********************************************/
+												//Fuera de linea
+												$diaInicio   = $data['LastUpdateFecha'];
+												$diaTermino  = $FechaSistema;
+												$tiempo1     = $data['LastUpdateHora'];
+												$tiempo2     = $HoraSistema;
+												//calculo diferencia de dias
+												$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+												//calculo del tiempo transcurrido
+												$Tiempo = restahoras($tiempo1, $tiempo2);
+												//Calculo del tiempo transcurrido
+												if($n_dias!=0){
+													if($n_dias>=2){
+														$n_dias = $n_dias-1;
+														$horas_trans2 = multHoras('24:00:00',$n_dias);
+														$Tiempo = sumahoras($Tiempo,$horas_trans2);
+													}
+													if($n_dias==1&&$tiempo1<$tiempo2){
+														$horas_trans2 = multHoras('24:00:00',$n_dias);
+														$Tiempo = sumahoras($Tiempo,$horas_trans2);
+													}
+												}	
+												if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+													$in_eq_fueralinea++;
+												}
+												
+												/**********************************************/
+												//GPS con problemas
+												if($data['GeoErrores']>0){
+													$in_eq_gps_fuera++;	
+												}
+												if(isset($data['GeoLatitud'])&&$data['GeoLatitud']==0){
+													$in_eq_gps_fuera++;	
+												}
+												if(isset($data['GeoLongitud'])&&$data['GeoLongitud']==0){
+													$in_eq_gps_fuera++;	
+												}
+
+												/**********************************************/
+												//alertas
+												$xx = 0;
+												for ($i = 1; $i <= $data['cantSensores']; $i++) {
+													$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
+													if($xx<0){
+														$in_eq_alertas++;
+													}
+												}
+
+												/**********************************************/
+												//Equipos Errores
+												if($data['NErrores']>0){
+													$in_eq_alertas++;	
+												}
+												
+												/**********************************************/
+												//Equipos detenidos
+												if($data['NDetenciones']>0){
+													$in_eq_detenidos++;	
+												}
+															
+												/*******************************************************/
+												//rearmo
+												if($in_eq_detenidos>0){  $in_eq_ok = 0;$in_eq_detenidos = 1;}
+												if($in_eq_alertas>0){    $in_eq_ok = 0;$in_eq_alertas = 1;    $in_eq_detenidos = 0;}
+												if($in_eq_fueraruta>0){  $in_eq_ok = 0;$in_eq_fueraruta = 1;  $in_eq_alertas = 0;   $in_eq_detenidos = 0;}
+												if($in_eq_gps_fuera>0){  $in_eq_ok = 0;$in_eq_gps_fuera = 1;  $in_eq_fueraruta = 0; $in_eq_alertas = 0;    $in_eq_detenidos = 0;}
+												if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_gps_fuera = 0; $in_eq_fueraruta = 0;  $in_eq_alertas = 0;  $in_eq_detenidos = 0;}
+												
+												/*******************************************************/
+												//se guardan estados
+												$danger = '';
+												/*if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+												if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+												if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+												if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+												if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+												*/
+												
+												if($in_eq_detenidos>0){  $danger = '';         $dataex = '<a href="#" title="Equipo Detenido"           class="btn btn-success btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+												if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas"        class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+												if($in_eq_fueraruta>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo fuera de ruta"      class="btn btn-warning btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+												if($in_eq_gps_fuera>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo sin cobertura GPS"  class="btn btn-info btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+												if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea"            class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+												
+												/*******************************************************/
+												//Se guardan los valores
+												$eq_alertas     = $eq_alertas + $in_eq_alertas; 
+												$eq_fueralinea  = $eq_fueralinea + $in_eq_fueralinea; 
+												$eq_fueraruta   = $eq_fueraruta + $in_eq_fueraruta; 
+												$eq_detenidos   = $eq_detenidos + $in_eq_detenidos; 
+												$eq_gps_fuera   = $eq_gps_fuera + $in_eq_gps_fuera; 
+												$eq_ok          = $eq_ok + $in_eq_ok; 
+										
+												/*******************************************************/
+												//traspasan los estados
+												if($in_eq_ok==1){
+													$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+												}else{
+													$eq_ok_icon = $dataex;
+												}
+												$GPS .= '
+												<tr class="odd '.$danger.'">
+													<td width="10">
+														<div class="btn-group" style="width: 35px;" >'.$eq_ok_icon.'</div>
+													</td>
+													<td>
+														'.$data['Nombre'].'<br/>
+														'.fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'].'
+													</td>
+													<td width="10">
+														<div class="btn-group" style="width: 35px;" >
+															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+														</div>
+													</td>
+												</tr>';
+												$nicon++;
+											}
+											$GPS .= '                  
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-8">
+							<div class="row">
+								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+								<div id="consulta"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>	
+			
+		<style>
+		.my-custom-scrollbar {
+			position: relative;
+			height: 550px;
+			overflow: auto;
+		}
+		.table-wrapper-scroll-y {
+			display: block;
+		}
+		</style>		
+			
+		<script>
+			
+			var map;
+			var markers = [];
+			//Ubicacion de los distintos dispositivos
+			var locations = [ ';
+				foreach ( $arrEquipo as $data ) {
+					//burbuja
+					if(isset($data['Patente'])&&$data['Patente']!=''){$pate_nte = ' ('.$data['Patente'].')';}else{$pate_nte = '';}
+					$explanation  = '<div class="iw-subTitle">Vehiculo: '.$data['Nombre'].$pate_nte.'</div>';
+					$explanation .= '<p>Velocidad: '.Cantidades($data['GeoVelocidad'], 0).'<br/>';
+					$explanation .= 'Actualizado: '.fecha_estandar($data['LastUpdateFecha']).' - '.$data['LastUpdateHora'].'</p>';
+					//verifico si tiene sensores configurados
+					if(isset($data['id_Sensores'])&&$data['id_Sensores']==1){
+						$explanation .= '<div class="iw-subTitle">Sensores: </div><p>';
+						for ($i = 1; $i <= $data['cantSensores']; $i++) {
+							//verifico que sensor este activo
+							if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+								//Unidad medida
+								$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+								//cadena
+								if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
+								$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
+							}
+						}
+						$explanation .= '</p>';
+					}
+					//se arma dato
+					$GPS .= "[";
+						$GPS .= $data['GeoLatitud'];
+						$GPS .= ", ".$data['GeoLongitud'];
+						$GPS .= ", '".$explanation."'";
+					$GPS .= "], ";					
+				}
+			$GPS .= '];
+			
+			/* ************************************************************************** */
+			function chngZona() {
+				idZona = document.getElementById("selectZona").value;
+				$(\'#vehiContent\').load(\'principal_update_zonaList_1_cross.php?idZona=\' + idZona);
+				setMarkers(map, locations, 1);	
+			}
+
+			/* ************************************************************************** */
+			function fncCenterMap(Latitud, Longitud, n_icon){
+				latlon = new google.maps.LatLng(Latitud, Longitud);
+				map.panTo(latlon);
+				//volver todo a normal
+				for (var i = 0; i < markers.length; i++) {
+					markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
+				}
+				//colorear el seleccionado
+				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
+			}
+			
+			/* ************************************************************************** */
+			function initialize() {
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 12,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				
+				//ubicacion inicial
+				setMarkers(map, locations, 1);
+				//actualizacion de posicion
+				transMarker(map, '.$SegActual.');
+
+			}
+			/* ************************************************************************** */
+			function setMarkers(map, locations, optc) {
+
+				var marker, i, last_latitude, last_longitude;
+				
+				for (i = 0; i < locations.length; i++) {
+					
+					//defino ubicacion y datos
+					var latitude   = locations[i][0];
+					var longitude  = locations[i][1];
+					var data       = locations[i][2];
+					
+					//guardo las ultimas ubicaciones
+					last_latitude   = locations[i][0];
+					last_longitude  = locations[i][1];
+					
+					latlngset = new google.maps.LatLng(latitude, longitude);
+					
+					//se crea marcador
+					var marker = new google.maps.Marker({
+						map         : map, 
+						position    : latlngset,
+						icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png"
+					});
+					markers.push(marker);
+
+					//se define contenido
+					var content = 	"<div id=\'iw-container\'>" +
+									"<div class=\'iw-title\'>Datos</div>" +
+									"<div class=\'iw-content\'>" +
+									data +
+									"</div>" +
+									"<div class=\'iw-bottom-gradient\'></div>" +
+									"</div>";
+
+					//se crea infowindow
+					var infowindow = new google.maps.InfoWindow();
+
+					//se agrega funcion de click a infowindow
+					google.maps.event.addListener(marker,\'click\', (function(marker,content,infowindow){ 
+						return function() {
+							infowindow.setContent(content);
+							infowindow.open(map,marker);
+						};
+					})(marker,content,infowindow)); 
+
+				}
+				if(optc==1){
+					latlon = new google.maps.LatLng(last_latitude, last_longitude);
+					map.panTo(latlon);
+				}
+			}
+			/* ************************************************************************** */
+			function transMarker(map, time) {
+				var newTime = time / 2;
+				setInterval(function(){transMarkerTimer(map)},newTime);
+			}
+			/* ************************************************************************** */
+			var mapax = 0;
+			function transMarkerTimer(map) {
+
+				switch(mapax) {
+					//Ejecutar formulario con el recorrido y la ruta
+					case 1:
+						$(\'#consulta\').load(\'principal_update_map_zona_1_cross.php'.$enlace.'\');
+						$(\'#vehiContent\').load(\'principal_update_zonaList_1_cross.php\');
+						break;
+					//se dibujan los iconos 	
+					case 2:
+						//Se ocultan y eliminan los iconos
+						deleteMarkers();
+						setMarkers(map, new_locations, 2);											
+						//actualizo la hora de actualizacion
+						document.getElementById(\'update_text_HoraRefresco\').innerHTML=\'Hora Refresco: \'+HoraRefresco;					
+
+						break;		
+				}
+
+				mapax++;	
+				if(mapax==3){mapax=1}
+			}
+			/* ************************************************************************** */
+			// Sets the map on all markers in the array.
+			function setMapOnAll(map) {
+				for (var i = 0; i < markers.length; i++) {
+				  markers[i].setMap(map);
+				}
+			}
+			/* ************************************************************************** */
+			// Removes the markers from the map, but keeps them in the array.
+			function clearMarkers() {
+				setMapOnAll(null);
+			}
+			/* ************************************************************************** */
+			// Shows any markers currently in the array.
+			function showMarkers() {
+				setMapOnAll(map);
+			}
+			/* ************************************************************************** */
+			// Deletes all markers in the array by removing references to them.
+			function deleteMarkers() {
+				clearMarkers();
+				markers = [];
+			}
+
+			/* ************************************************************************** */
+			google.maps.event.addDomListener(window, "load", initialize());
+		</script> ';
+
+								
+			$GPS .= '
+			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
+			<div class="row">';
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_alertas, 4, 'Vehiculos con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-red', 'fa-truck faa-float animated', $eq_fueralinea, 4, 'Vehiculos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+				$GPS .= widget_Ficha_2('box-orange', 'fa-truck faa-float animated', $eq_fueraruta, 4, 'Vehiculos fuera de ruta', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 3, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-purple', 'fa-truck faa-float animated', $eq_gps_fuera, 4, 'Vehiculos sin cobertura GPS', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+				$GPS .= widget_Ficha_2('box-green', 'fa-truck faa-float animated', ($eq_ok+$eq_detenidos), 4, 'Vehiculos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-success', 1, 2);    
+				$GPS .= '
+			</div>  
+			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+			<script>
+				$(document).ready(function(){
+					//Examples of how to assign the Colorbox event to elements
+					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+					$(".callbacks").colorbox({
+						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+					});
+
+							
+					//Example of preserving a JavaScript event for inline calls.
+					$("#click").click(function(){ 
+						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+						return false;
+					});
+				});
+			</script>';
+		
+		
+		
+		return $GPS;
+								
+
+	}
+}
+/*******************************************************************************************************************/
+//Muestra la gestion de flota crosstech
+function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoUsuario, $idUsuario, 
+										$SegActual, $idTab, $miniwidget, $dbConn){
+	
+	//Si no existe una ID se utiliza una por defecto
+	if(!isset($IDGoogle) OR $IDGoogle==''){
+		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+	}else{
+		
+		
+		//variables
+		$HoraSistema    = hora_actual(); 
+		$FechaSistema   = fecha_actual();
+		$eq_alertas     = 0; 
+		$eq_fueralinea  = 0; 
+		$eq_fueraruta   = 0;
+		$eq_detenidos   = 0;
+		$eq_gps_fuera   = 0;
+		$eq_ok          = 0;
+
+		$google = $IDGoogle;
+			
+		//Variable
+		$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+		//solo los equipos que tengan el seguimiento activado
+		$z .= " AND telemetria_listado.id_Geo = 1";
+		//Filtro de los tab
+		$z .= " AND telemetria_listado.idTab = ".$idTab;
+		//enlace para redireccionar
+		$enlace  = "?dd=true";
+		$enlace .= "&idTipoUsuario=".$idTipoUsuario;
+		$enlace .= "&idSistema=".$idSistema;
+		$enlace .= "&idUsuario=".$idUsuario;
+		$enlace .= "&idTab=".$idTab;
+		
+		//Filtro el sistema al cual pertenece	
+		if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+			$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+		}
+		//Verifico el tipo de usuario que esta ingresando y el id
+		$join = "";	
+		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+			$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+			$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+		}
+		
+		//numero sensores equipo
+		$N_Maximo_Sensores = 60;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresMedErrores_'.$i;
+			$subquery .= ',SensoresErrorActual_'.$i;
+			$subquery .= ',SensoresNombre_'.$i;
+			$subquery .= ',SensoresMedActual_'.$i;
+			$subquery .= ',SensoresUniMed_'.$i;
+			$subquery .= ',SensoresActivo_'.$i;
+		}	
+		//Listar los equipos
+		$arrEquipo = array();
+		$query = "SELECT 
+		telemetria_listado.Nombre, 
+		telemetria_listado.Identificador, 
+		telemetria_listado.LastUpdateFecha,
+		telemetria_listado.LastUpdateHora,
+		telemetria_listado.cantSensores,
+		telemetria_listado.GeoLatitud, 
+		telemetria_listado.GeoLongitud, 
+		telemetria_listado.NDetenciones, 
+		telemetria_listado.TiempoFueraLinea,
+		telemetria_listado.GeoErrores,
+		telemetria_listado.NErrores, 
+		telemetria_listado.GeoVelocidad, 
+		telemetria_listado.Patente, 
+		telemetria_listado.id_Sensores
+		
+		".$subquery."
+	
+		FROM `telemetria_listado`
+		".$join."
+		".$z."
+		ORDER BY telemetria_listado.Nombre ASC  ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrEquipo,$row );
+		}
+		
+		/*************************************************************/
+		//Se traen todas las unidades de medida
+		$arrUnimed = array();
+		$query = "SELECT idUniMed,Nombre
+		FROM `telemetria_listado_unidad_medida`
+		ORDER BY idUniMed ASC";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+									
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrUnimed,$row );
+		}
+		//Ordeno las unidades de medida
+		$arrFinalUnimed = array();
+		foreach ($arrUnimed as $data) {
+			$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
+		}
+		
+		/*************************************************************/
+		//se traen todas las zonas
+		$arrZonas = array();
+		$query = "SELECT idZona, Nombre
+		FROM `vehiculos_zonas` ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrZonas,$row );
+		}
+		//defino la variable temporal de la zona 
+		$_SESSION['usuario']['zona']['idZona']         = 9999;
+		$_SESSION['usuario']['zona']['id_Geo']         = 1;
+		$_SESSION['usuario']['zona']['idTipoUsuario']  = $idTipoUsuario;
+		$_SESSION['usuario']['zona']['idSistema']      = $idSistema;
+		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
+
+
+
+		
+		$GPS = '
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+										
+		<div class="row">		
+			<div class="col-sm-12">
+				<div class="box">	
+					<header>		
+						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
+					</header>
+					<div class="table-responsive">
+						<div class="col-sm-6">
+							<div class="row">
+								<div id="vehiContent_'.$idTab.'" class="table-wrapper-scroll-y my-custom-scrollbar">
+									<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+										<thead>
+											<tr role="row">
+												<th colspan="7">
+													<div class="field">
+														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
+															//La opcion todos
+															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
+															foreach ( $arrZonas as $select ) {
+																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
+															} 
+														$GPS .= '
+														</select>
+													</div>
+												</th>
+											</tr>';
+											$GPS .= widget_sherlock(1, 7);
+											
+											//Si es crosschecking
+											if(isset($idTab)&&$idTab==1){
+												$GPS .= '
+												<tr role="row">
+													<th></th>
+													<th>Equipo</th>
+													<th>Vel</th>
+													<th>Nivel</th>
+													<th>F. Der</th>
+													<th>F. Izq</th>
+													<th></th>
+												</tr>';
+											}
+											$GPS .= '
+										</thead>
+										<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+											$nicon = 0;
+											foreach ($arrEquipo as $data) {
+												
+												/**********************************************/
+												//Se resetean
+												$in_eq_alertas     = 0;
+												$in_eq_fueralinea  = 0;
+												$in_eq_fueraruta   = 0;
+												$in_eq_detenidos   = 0;
+												$in_eq_gps_fuera   = 0;
+												$in_eq_ok          = 1;
+																					
+												/**********************************************/
+												//Fuera de linea
+												$diaInicio   = $data['LastUpdateFecha'];
+												$diaTermino  = $FechaSistema;
+												$tiempo1     = $data['LastUpdateHora'];
+												$tiempo2     = $HoraSistema;
+												//calculo diferencia de dias
+												$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+												//calculo del tiempo transcurrido
+												$Tiempo = restahoras($tiempo1, $tiempo2);
+												//Calculo del tiempo transcurrido
+												if($n_dias!=0){
+													if($n_dias>=2){
+														$n_dias = $n_dias-1;
+														$horas_trans2 = multHoras('24:00:00',$n_dias);
+														$Tiempo = sumahoras($Tiempo,$horas_trans2);
+													}
+													if($n_dias==1&&$tiempo1<$tiempo2){
+														$horas_trans2 = multHoras('24:00:00',$n_dias);
+														$Tiempo = sumahoras($Tiempo,$horas_trans2);
+													}
+												}	
+												if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+													$in_eq_fueralinea++;
+												}
+												
+												/**********************************************/
+												//GPS con problemas
+												if($data['GeoErrores']>0){
+													$in_eq_gps_fuera++;	
+												}
+												if(isset($data['GeoLatitud'])&&$data['GeoLatitud']==0){
+													$in_eq_gps_fuera++;	
+												}
+												if(isset($data['GeoLongitud'])&&$data['GeoLongitud']==0){
+													$in_eq_gps_fuera++;	
+												}
+
+												/**********************************************/
+												//alertas
+												$xx = 0;
+												for ($i = 1; $i <= $data['cantSensores']; $i++) {
+													$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
+													if($xx<0){
+														$in_eq_alertas++;
+													}
+												}
+
+												/**********************************************/
+												//Equipos Errores
+												if($data['NErrores']>0){
+													$in_eq_alertas++;	
+												}
+												
+												/**********************************************/
+												//Equipos detenidos
+												if($data['NDetenciones']>0){
+													$in_eq_detenidos++;	
+												}
+															
+												/*******************************************************/
+												//rearmo
+												if($in_eq_detenidos>0){  $in_eq_ok = 0;$in_eq_detenidos = 1;}
+												if($in_eq_alertas>0){    $in_eq_ok = 0;$in_eq_alertas = 1;    $in_eq_detenidos = 0;}
+												if($in_eq_fueraruta>0){  $in_eq_ok = 0;$in_eq_fueraruta = 1;  $in_eq_alertas = 0;   $in_eq_detenidos = 0;}
+												if($in_eq_gps_fuera>0){  $in_eq_ok = 0;$in_eq_gps_fuera = 1;  $in_eq_fueraruta = 0; $in_eq_alertas = 0;    $in_eq_detenidos = 0;}
+												if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_gps_fuera = 0; $in_eq_fueraruta = 0;  $in_eq_alertas = 0;  $in_eq_detenidos = 0;}
+												
+												/*******************************************************/
+												//se guardan estados
+												$danger = '';
+												/*if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+												if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+												if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+												if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+												if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+												*/
+												
+												if($in_eq_detenidos>0){  $danger = '';         $dataex = '<a href="#" title="Equipo Detenido"           class="btn btn-success btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+												if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas"        class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+												if($in_eq_fueraruta>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo fuera de ruta"      class="btn btn-warning btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+												if($in_eq_gps_fuera>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo sin cobertura GPS"  class="btn btn-info btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+												if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea"            class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+												
+												/*******************************************************/
+												//Se guardan los valores
+												$eq_alertas     = $eq_alertas + $in_eq_alertas; 
+												$eq_fueralinea  = $eq_fueralinea + $in_eq_fueralinea; 
+												$eq_fueraruta   = $eq_fueraruta + $in_eq_fueraruta; 
+												$eq_detenidos   = $eq_detenidos + $in_eq_detenidos; 
+												$eq_gps_fuera   = $eq_gps_fuera + $in_eq_gps_fuera; 
+												$eq_ok          = $eq_ok + $in_eq_ok; 
+			
+																			
+												/*******************************************************/
+												//traspasan los estados
+												if($in_eq_ok==1){
+													$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+												}else{
+													$eq_ok_icon = $dataex;
+												}
+												
+												
+												/*******************************************************/
+												//cadena
+												if(isset($data['SensoresMedActual_1'])&&$data['SensoresMedActual_1']<99900){$xdata_1 = Cantidades($data['SensoresMedActual_1'], 2);}else{$xdata_1 = 'Sin Datos';}
+												if(isset($data['SensoresMedActual_2'])&&$data['SensoresMedActual_2']<99900){$xdata_2 = Cantidades($data['SensoresMedActual_2'], 2);}else{$xdata_2 = 'Sin Datos';}
+												if(isset($data['SensoresMedActual_3'])&&$data['SensoresMedActual_3']<99900){$xdata_3 = Cantidades($data['SensoresMedActual_3'], 2);}else{$xdata_3 = 'Sin Datos';}
+												
+												
+								
+												$GPS .= '
+												<tr class="odd '.$danger.'">
+													<td width="10">
+														<div class="btn-group" style="width: 35px;" >'.$eq_ok_icon.'</div>
+													</td>';
+													
+													if(isset($idTab)&&$idTab==1){
+														$GPS .= '
+														<td>
+															'.$data['Nombre'].'<br/>
+															'.fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'].'
+														</td>
+														<td>'.Cantidades($data['GeoVelocidad'], 0).' km</td>
+														<td>'.$xdata_3.' %</td>
+														<td>'.$xdata_1.' l/min</td>
+														<td>'.$xdata_2.'l/min</td>';
+													}else{
+														$GPS .= '
+														<td colspan="5">
+															'.$data['Nombre'].'<br/>
+															'.fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'].'
+														</td>';
+													}
+													$GPS .= '
+													<td width="10">
+														<div class="btn-group" style="width: 35px;" >
+															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+														</div>
+													</td>
+												</tr>';
+												$nicon++;
+											}
+											$GPS .= '                  
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="row">
+								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+								<div id="map_content_'.$idTab.'"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>	
+			
+		<style>
+		.my-custom-scrollbar {
+			position: relative;
+			height: 550px;
+			overflow: auto;
+		}
+		.table-wrapper-scroll-y {
+			display: block;
+		}
+		</style>		
+			
+		<script>
+			
+			var map;
+			var markers = [];
+			//Ubicacion de los distintos dispositivos
+			var locations = [ ';
+				foreach ( $arrEquipo as $data ) {
+					//burbuja
+					if(isset($data['Patente'])&&$data['Patente']!=''){$pate_nte = ' ('.$data['Patente'].')';}else{$pate_nte = '';}
+					$explanation  = '<div class="iw-subTitle">Vehiculo: '.$data['Nombre'].$pate_nte.'</div>';
+					$explanation .= '<p>Velocidad: '.Cantidades($data['GeoVelocidad'], 0).'<br/>';
+					$explanation .= 'Actualizado: '.fecha_estandar($data['LastUpdateFecha']).' - '.$data['LastUpdateHora'].'</p>';
+					//verifico si tiene sensores configurados
+					if(isset($data['id_Sensores'])&&$data['id_Sensores']==1){
+						$explanation .= '<div class="iw-subTitle">Sensores: </div><p>';
+						for ($i = 1; $i <= $data['cantSensores']; $i++) {
+							//verifico que sensor este activo
+							if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+								//Unidad medida
+								$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+								//cadena
+								if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
+								$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
+							}
+						}
+						$explanation .= '</p>';
+					}
+					//se arma dato
+					$GPS .= "[";
+						$GPS .= $data['GeoLatitud'];
+						$GPS .= ", ".$data['GeoLongitud'];
+						$GPS .= ", '".$explanation."'";
+					$GPS .= "], ";					
+				}
+			$GPS .= '];
+			
+			/* ************************************************************************** */
+			function chngZona() {
+				idZona = document.getElementById("selectZona").value;
+				$(\'#vehiContent_'.$idTab.'\').load(\'principal_update_zonaList_1_crosstech.php'.$enlace.'&idZona=\' + idZona);
+				setMarkers(map, locations, 1);	
+			}
+
+			/* ************************************************************************** */
+			function fncCenterMap(Latitud, Longitud, n_icon){
+				latlon = new google.maps.LatLng(Latitud, Longitud);
+				map.panTo(latlon);
+				//volver todo a normal
+				for (var i = 0; i < markers.length; i++) {
+					markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
+				}
+				//colorear el seleccionado
+				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
+			}
+
+
+			/* ************************************************************************** */
+			function initialize() {
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 12,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.SATELLITE
+				};
+				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				
+				//ubicacion inicial
+				setMarkers(map, locations, 1);
+				//actualizacion de posicion
+				transMarker(map, '.$SegActual.');
+
+			}
+			/* ************************************************************************** */
+			function setMarkers(map, locations, optc) {
+
+				var marker, i, last_latitude, last_longitude;
+				
+				for (i = 0; i < locations.length; i++) {
+					
+					//defino ubicacion y datos
+					var latitude   = locations[i][0];
+					var longitude  = locations[i][1];
+					var data       = locations[i][2];
+					
+					//guardo las ultimas ubicaciones
+					last_latitude   = locations[i][0];
+					last_longitude  = locations[i][1];
+					
+					latlngset = new google.maps.LatLng(latitude, longitude);
+					
+					//se crea marcador
+					var marker = new google.maps.Marker({
+						map         : map, 
+						position    : latlngset,
+						icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png"
+					});
+					markers.push(marker);
+
+					//se define contenido
+					var content = 	"<div id=\'iw-container\'>" +
+									"<div class=\'iw-title\'>Datos</div>" +
+									"<div class=\'iw-content\'>" +
+									data +
+									"</div>" +
+									"<div class=\'iw-bottom-gradient\'></div>" +
+									"</div>";
+
+					//se crea infowindow
+					var infowindow = new google.maps.InfoWindow();
+
+					//se agrega funcion de click a infowindow
+					google.maps.event.addListener(marker,\'click\', (function(marker,content,infowindow){ 
+						return function() {
+							infowindow.setContent(content);
+							infowindow.open(map,marker);
+						};
+					})(marker,content,infowindow)); 
+
+				}
+				if(optc==1){
+					latlon = new google.maps.LatLng(last_latitude, last_longitude);
+					map.panTo(latlon);
+				}
+			}
+			/* ************************************************************************** */
+			function transMarker(map, time) {
+				var newTime = time / 2;
+				setInterval(function(){transMarkerTimer(map)},newTime);
+			}
+			/* ************************************************************************** */
+			var mapax = 0;
+			function transMarkerTimer(map) {
+
+				switch(mapax) {
+					//Ejecutar formulario con el recorrido y la ruta
+					case 1:
+						$(\'#map_content_'.$idTab.'\').load(\'principal_update_map_zona_1_crosstech.php'.$enlace.'\');
+						$(\'#vehiContent_'.$idTab.'\').load(\'principal_update_zonaList_1_crosstech.php'.$enlace.'\');
+						break;
+					//se dibujan los iconos 	
+					case 2:
+						//Se ocultan y eliminan los iconos
+						deleteMarkers();
+						setMarkers(map, new_locations, 2);											
+						//actualizo la hora de actualizacion
+						document.getElementById(\'update_text_HoraRefresco\').innerHTML=\'Hora Refresco: \'+HoraRefresco;					
+
+						break;		
+				}
+
+				mapax++;	
+				if(mapax==3){mapax=1}
+			}
+			/* ************************************************************************** */
+			// Sets the map on all markers in the array.
+			function setMapOnAll(map) {
+				for (var i = 0; i < markers.length; i++) {
+				  markers[i].setMap(map);
+				}
+			}
+			/* ************************************************************************** */
+			// Removes the markers from the map, but keeps them in the array.
+			function clearMarkers() {
+				setMapOnAll(null);
+			}
+			/* ************************************************************************** */
+			// Shows any markers currently in the array.
+			function showMarkers() {
+				setMapOnAll(map);
+			}
+			/* ************************************************************************** */
+			// Deletes all markers in the array by removing references to them.
+			function deleteMarkers() {
+				clearMarkers();
+				markers = [];
+			}
+
+
+			
+			
+			
+			
+			
+			/* ************************************************************************** */
+			google.maps.event.addDomListener(window, "load", initialize());
+		</script> ';
+		
+		//despliega el resumen
+		if(isset($miniwidget)&&$miniwidget==1){
+			$GPS .= '
+			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
+			<div class="row">';
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_alertas, 4, 'Vehiculos con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-red', 'fa-truck faa-float animated', $eq_fueralinea, 4, 'Vehiculos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+				$GPS .= widget_Ficha_2('box-orange', 'fa-truck faa-float animated', $eq_fueraruta, 4, 'Vehiculos fuera de ruta', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 3, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-purple', 'fa-truck faa-float animated', $eq_gps_fuera, 4, 'Vehiculos sin cobertura GPS', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+				$GPS .= widget_Ficha_2('box-green', 'fa-truck faa-float animated', ($eq_ok+$eq_detenidos), 4, 'Vehiculos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-success', 1, 2);    
+				$GPS .= '
+			</div>  
+			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+			<script>
+				$(document).ready(function(){
+					//Examples of how to assign the Colorbox event to elements
+					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+					$(".callbacks").colorbox({
+						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+					});
+
+							
+					//Example of preserving a JavaScript event for inline calls.
+					$("#click").click(function(){ 
+						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+						return false;
+					});
+				});
+			</script>';
+		}
+
+		return $GPS;
+								
+
+	}
+}
+/*******************************************************************************************************************/
+//Muestra los equipos
+function widget_Equipos_Crosstech($nombreEquipo, $seguimiento, $equipo, $enlace, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
+
+//variables
+$HoraSistema    = hora_actual(); 
+$FechaSistema   = fecha_actual();
+$eq_alertas     = 0; 
+$eq_fueralinea  = 0; 
+$eq_ok          = 0;
+
+//Variable
+$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+//Filtro de los tab
+$z .= " AND telemetria_listado.idTab = 2";//CrossC
+//solo los equipos que tengan el seguimiento activado
+if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
+	$z .= " AND telemetria_listado.id_Geo = ".$seguimiento;
+}
+//Filtro el sistema al cual pertenece	
+if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+}	
+//El equipo a ver
+if (isset($equipo)&&$equipo!=''&&$equipo!=0){
+	$z .= " AND telemetria_listado.idTelemetria=".$equipo;
+}
+//Verifico el tipo de usuario que esta ingresando y el id
+$join = "";	
+if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+}
+
+//numero sensores equipo
+$N_Maximo_Sensores = 60;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+}	
+//Listar los equipos
+$arrEquipo = array();
+$query = "SELECT 
+telemetria_listado.LastUpdateFecha,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.cantSensores,
+telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLongitud, 
+telemetria_listado.NDetenciones,
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.NErrores
+		
+".$subquery."
+
+FROM `telemetria_listado`
+".$join."
+".$z."
+ORDER BY telemetria_listado.Nombre ASC  ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrEquipo,$row );
+}
+
+
+foreach ($arrEquipo as $data) {
+	
+	/**********************************************/
+	//Se resetean
+	$in_eq_alertas     = 0;
+	$in_eq_fueralinea  = 0;
+	$in_eq_ok          = 1;
+										
+	/**********************************************/
+	//Fuera de linea
+	$diaInicio   = $data['LastUpdateFecha'];
+	$diaTermino  = $FechaSistema;
+	$tiempo1     = $data['LastUpdateHora'];
+	$tiempo2     = $HoraSistema;
+	
+	//calculo diferencia de dias
+	$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+	//calculo del tiempo transcurrido
+	$Tiempo = restahoras($tiempo1, $tiempo2);
+	//Calculo del tiempo transcurrido
+	if($n_dias!=0){
+		if($n_dias>=2){
+			$n_dias = $n_dias-1;
+			$horas_trans2 = multHoras('24:00:00',$n_dias);
+			$Tiempo = sumahoras($Tiempo,$horas_trans2);
+		}
+		if($n_dias==1&&$tiempo1<$tiempo2){
+			$horas_trans2 = multHoras('24:00:00',$n_dias);
+			$Tiempo = sumahoras($Tiempo,$horas_trans2);
+		}
+	}	
+	if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+		$in_eq_fueralinea++;
+	}
+
+	/**********************************************/
+	//alertas
+	$xx = 0;
+	for ($i = 1; $i <= $data['cantSensores']; $i++) {
+		$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
+		if($xx<0){
+			$in_eq_alertas++;
+		}
+	}
+	//NErrores
+	if(isset($data['NErrores'])&&$data['NErrores']>0){	
+		$in_eq_alertas++;
+	}
+			
+	/*******************************************************/
+	//rearmo
+	if($in_eq_alertas>0){    $in_eq_ok = 0;$in_eq_alertas = 1;    }
+	if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_alertas = 0;}
+	
+	//Se guardan los valores
+	$eq_alertas     = $eq_alertas + $in_eq_alertas; 
+	$eq_fueralinea  = $eq_fueralinea + $in_eq_fueralinea; 
+	$eq_ok          = $eq_ok + $in_eq_ok; 
+
+}
+
+
+	$GPS = '';
+	$GPS .= '
+	<div class="row">    
+		<h3 class="supertittle text-primary">'.$nombreEquipo.'</h3>';
+		$GPS .= widget_Ficha_2('box-yellow', 'fa-industry', $eq_alertas, 4, $nombreEquipo.' con alertas', 'Sensores', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+		$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, $nombreEquipo.' fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+		$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, $nombreEquipo.' OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+		$GPS .= '
+	</div> 
+	
+	 
+	<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+	<script>
+		$(document).ready(function(){
+			//Examples of how to assign the Colorbox event to elements
+			$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+			$(".callbacks").colorbox({
+				onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+				onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+				onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+				onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+				onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+			});
+
+					
+			//Example of preserving a JavaScript event for inline calls.
+			$("#click").click(function(){ 
+				$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+				return false;
+			});
+		});
+	</script>
+
+	';
+
+return $GPS;						
+}
+/*******************************************************************************************************************/
+//Muestra los promedios de los equipos
+function widget_Promedios_equipo_grupos_Crosstech($titulo_cuadro, $seguimiento, $equipo, $enlace, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
+	
+//Variables
+$HoraSistema    = hora_actual(); 
+$FechaSistema   = fecha_actual();
+
+//Variable
+$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+//Filtro de los tab
+$z .= " AND telemetria_listado.idTab = 2";//CrossC
+//solo los equipos que tengan el seguimiento activado
+if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
+	$z .= " AND telemetria_listado.id_Geo = ".$seguimiento;
+}
+//Filtro el sistema al cual pertenece	
+if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+}
+if (isset($equipo)&&$equipo!=''&&$equipo!=0){
+	$z .= " AND telemetria_listado.idTelemetria=".$equipo;
+}
+//Verifico el tipo de usuario que esta ingresando y el id
+$join = "";	
+if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+}
+						
+
+//numero sensores equipo
+$N_Maximo_Sensores = 60;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresMedActual_'.$i;
+	$subquery .= ',SensoresGrupo_'.$i;
+	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}
+//Listar los equipos
+$arrEquipo = array();
+$query = "SELECT
+telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLongitud,
+telemetria_listado.idTelemetria,
+telemetria_listado.Nombre,
+telemetria_listado.Direccion_img,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.LastUpdateFecha, 
+telemetria_listado.cantSensores,
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.NErrores,					
+core_sistemas.idOpcionesGen_3
+
+".$subquery."
+
+FROM `telemetria_listado`
+LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema
+".$join."
+".$z."
+ORDER BY telemetria_listado.Nombre ASC  ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrEquipo,$row );
+}
+
+$arrUnimed = array();
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
+											
+$arrGrupos = array();
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+											
+$arrFinalUnimed = array();
+$arrFinalGrupos = array();
+foreach ($arrUnimed as $sen) { $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre']; }
+foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo']; }
+
+
+	
+
+$GPS = '';
+$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
+
+
+
+$GPS .= '
+<div class="row">    
+		
+	<h3 class="supertittle text-primary">'.$titulo_cuadro.'</h3>';
+	
+	foreach($arrEquipo as $equip) {
+		
+		/***************************************/
+		//Fuera de linea
+		$diaInicio   = $equip['LastUpdateFecha'];
+		$diaTermino  = $FechaSistema;
+		$tiempo1     = $equip['LastUpdateHora'];
+		$tiempo2     = $HoraSistema;
+		//calculo diferencia de dias
+		$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+		//calculo del tiempo transcurrido
+		$Tiempo = restahoras($tiempo1, $tiempo2);
+		//Calculo del tiempo transcurrido
+		if($n_dias!=0){
+			if($n_dias>=2){
+				$n_dias = $n_dias-1;
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
+			}
+			if($n_dias==1&&$tiempo1<$tiempo2){
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
+			}
+		}
+		//si esta fuera de linea marca con rojo el recuadro
+		if($Tiempo>$equip['TiempoFueraLinea']&&$equip['TiempoFueraLinea']!='00:00:00'){
+			$wd_color = 'box-red';	
+		//sino con azul normal
+		}else{
+			$wd_color = 'box-blue';
+		}			
+					
+		$GPS .= '	
+		<div class="col-md-12">
+			<div class="box '.$wd_color.' box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">'.$equip['Nombre'].'</h3>';
+					//<div class="box-tools pull-right">
+					//	<a target="_blank" rel="noopener noreferrer" href="principal_telemetria_grupo_alt.php?idTelemetria='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" class="iframe btn btn-xs btn-primary btn-line">Ver Mediciones</a>
+					//</div>
+					$GPS .= '
+				</div>
+				<div class="box-body">
+					<div class="col-md-12">
+						<h4 class="box-title">Medicion el '.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs</h4>
+					</div>';
+												
+						//variables							
+						$arrGruposTitulo = array();
+						
+						for ($i = 1; $i <= $equip['cantSensores']; $i++) {
+							//solo sensores activos
+							if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
+								//Unidad medida
+								$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+								//Titulo del cuadro
+								$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
+								$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];
+								$s_idGrupo = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['idGrupo'];
+											
+								//Verificacion de alertas para cambios de color del widget
+								if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
+									$arrGruposTitulo[$Titulo][$i]['Color'] = 1;
+								}else{
+									$arrGruposTitulo[$Titulo][$i]['Color'] = 0;
+								}
+															
+								//Guardo el valor correspondiente
+								$arrGruposTitulo[$Titulo][$i]['valor']     = $equip['SensoresMedActual_'.$i];
+								$arrGruposTitulo[$Titulo][$i]['unimed']    = $unimed;
+								$arrGruposTitulo[$Titulo][$i]['nColumnas'] = $nColumnas;
+								$arrGruposTitulo[$Titulo][$i]['idGrupo']   = $s_idGrupo;
+							}	
+						}
+						
+						//echo '<pre>';
+						//var_dump($arrGruposTitulo);
+						//echo '</pre>';
+													
+						//Ordenamiento por titulo de grupo
+						$names = array();
+						foreach ($arrGruposTitulo as $titulo=>$items) {
+							$names[] = $titulo;
+						}
+						array_multisort($names, SORT_ASC, $arrGruposTitulo);
+
+						//se recorre el arreglo
+						foreach($arrGruposTitulo as $titulo=>$items) { 
+							
+							//variables	
+							$ndatacol    = 0;
+							$total_col1  = 0;
+							$total_col2  = 0;
+							$ntotal_col1 = 0;
+							$ntotal_col2 = 0;
+							$unimed_col1 = '';
+							$unimed_col2 = '';
+							$xs_idGrupo  = 0;
+							$y           = 1;
+							//$xs_Color    = 'blue';
+							$xs_Color    = 0;
+							
+							foreach($items as $datos) {
+								//asigno el grupo
+								$xs_idGrupo  = $datos['idGrupo'];
+								$xs_Color    = $xs_Color + $datos['Color'];
+								
+								//si el grupo solo tiene una columna
+								if(isset($datos['nColumnas'])&&$datos['nColumnas']==1){
+									//Especifico el numero de columnas
+									$ndatacol = 1;
+									//Verifico que el dato no sea 99900
+									if(isset($datos['valor'])&&$datos['valor']<99900){
+										$total_col1 = $total_col1 + $datos['valor'];
+										$ntotal_col1++;
+									}
+									$unimed_col1 = $datos['unimed'];
+																	
+								//si el grupo tiene 2 columnas
+								}elseif(isset($datos['nColumnas'])&&$datos['nColumnas']==2){
+									//Especifico el numero de columnas
+									$ndatacol = 2;
+									//Se guardan los datos
+									if($y==1){
+										//Verifico que el dato no sea 99900
+										if(isset($datos['valor'])&&$datos['valor']<99900){
+											$total_col1 = $total_col1 + $datos['valor'];
+											$ntotal_col1++;
+										}
+										$unimed_col1 = $datos['unimed'];
+										$y=2;
+									}else{
+										//Verifico que el dato no sea 99900
+										if(isset($datos['valor'])&&$datos['valor']<99900){
+											$total_col2 = $total_col2 + $datos['valor'];
+											$ntotal_col2++;
+										}
+										$unimed_col2 = $datos['unimed'];
+										$y=1;
+									}
+								}	
+							} 
+														
+							/*************************************************/
+							if(isset($xs_Color)&&$xs_Color==0){
+								$ss_color = 'blue';
+								$sy_color = 'btn-primary';
+							}else{
+								$ss_color = 'yellow';
+								$sy_color = 'btn-warning';
+							}
+							$GPS .= '
+							<div class="col-md-3">
+								<div class="box box-'.$ss_color.' box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">Grupo</h3>
+										<div class="box-tools pull-right">
+											<a target="_blank" rel="noopener noreferrer" href="principal_telemetria_grupo_alt_2.php?idTelemetria='.simpleEncode($equip['idTelemetria'], fecha_actual()).'&idGrupo='.simpleEncode($xs_idGrupo, fecha_actual()).'&titulo='.simpleEncode($titulo, fecha_actual()).'" class="iframe btn btn-xs '.$sy_color.' btn-line">Ver Mediciones</a>
+										</div>
+									</div>
+									<div class="box-body">
+										<table id="dataTable" class="table table-bordered table-condensed table-hover dataTable">
+											<tbody role="alert" aria-live="polite" aria-relevant="all">';
+												
+												//Titulo
+												$GPS .= '<tr class="odd">';
+												$GPS .= '<td colspan="2">'.TituloMenu($titulo).'</td>';
+												$GPS .= '</tr>';
+												
+												//datos
+												$GPS .= '<tr class="odd">';
+													/***********************/
+													if($ndatacol==1){
+														if($ntotal_col1!=0){$GPS .= '<td colspan="2">'.Cantidades(($total_col1/$ntotal_col1), 1).$unimed_col1.'</td>';}else{$GPS .= '<td colspan="2">0'.$unimed_col1.'</td>';}
+													}elseif($ndatacol==2){
+														if($ntotal_col1!=0){$GPS .= '<td>'.Cantidades(($total_col1/$ntotal_col1), 1).$unimed_col1.'</td>';}else{$GPS .= '<td>0'.$unimed_col1.'</td>';}
+														if($ntotal_col2!=0){$GPS .= '<td>'.Cantidades(($total_col2/$ntotal_col2), 1).$unimed_col2.'</td>';}else{$GPS .= '<td>0'.$unimed_col2.'</td>';}
+													}
+																					
+												$GPS .= '</tr>       
+											</tbody>
+										</table>
+												
+									</div>
+								</div>
+							</div>';
+														
+						}				
+														
+						$GPS .= '       
+
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>';
+	}
+		
+$GPS .= '</div> ';
+
+$GPS .= '
+<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+<script>
+	$(document).ready(function(){
+		//Examples of how to assign the Colorbox event to elements
+		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+		$(".callbacks").colorbox({
+			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+		});
+
+				
+		//Example of preserving a JavaScript event for inline calls.
+		$("#click").click(function(){ 
+			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+			return false;
+		});
+	});
+</script>
+	
+	';
+	
+	return $GPS;
+}
+/*******************************************************************************************************************/
+//Muestra la gestion de equipos
+function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $idUsuario, 
+										  $SegActual, $idTab, $miniwidget, $dbConn){
+	
+	//Si no existe una ID se utiliza una por defecto
+	if(!isset($IDGoogle) OR $IDGoogle==''){
+		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+	}else{
+		
+		
+		//variables
+		$HoraSistema    = hora_actual(); 
+		$FechaSistema   = fecha_actual();
+		$eq_alertas     = 0; 
+		$eq_fueralinea  = 0;
+		$eq_ok          = 0;
+		
+		//datos temporales para los widgets
+		$Gen_Rocio         = 0;
+		$Gen_Temperatura   = 0;
+		$Gen_Humedad       = 0;
+		$Gen_Presion       = 0;
+		$Total_Rocio       = 0;
+		$Total_Temperatura = 0;
+		$Total_Humedad     = 0;
+		$Total_Presion     = 0;
+		$Count_Data        = 0;
+
+		$google = $IDGoogle;
+			
+		//Variable
+		$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+		//solo los equipos que tengan el seguimiento desactivado
+		$z .= " AND telemetria_listado.id_Geo = 2";
+		//Filtro de los tab
+		$z .= " AND telemetria_listado.idTab = ".$idTab;
+		//enlace para redireccionar
+		$enlace  = "?dd=true";
+		$enlace .= "&idTipoUsuario=".$idTipoUsuario;
+		$enlace .= "&idSistema=".$idSistema;
+		$enlace .= "&idUsuario=".$idUsuario;
+		$enlace .= "&idTab=".$idTab;
+		
+		//Filtro el sistema al cual pertenece	
+		if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+			$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+		}
+		//Verifico el tipo de usuario que esta ingresando y el id
+		$join = "";	
+		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+			$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+			$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+		}
+		
+		//numero sensores equipo
+		$N_Maximo_Sensores = 20;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresMedErrores_'.$i;
+			$subquery .= ',SensoresErrorActual_'.$i;
+			$subquery .= ',SensoresNombre_'.$i;
+			$subquery .= ',SensoresMedActual_'.$i;
+			$subquery .= ',SensoresUniMed_'.$i;
+			$subquery .= ',SensoresActivo_'.$i;
+		}	
+		//Listar los equipos
+		$arrEquipo = array();
+		$query = "SELECT 
+		telemetria_listado.idTelemetria, 
+		telemetria_listado.Nombre, 
+		telemetria_listado.Identificador, 
+		telemetria_listado.LastUpdateFecha,
+		telemetria_listado.LastUpdateHora,
+		telemetria_listado.cantSensores,
+		telemetria_listado.GeoLatitud, 
+		telemetria_listado.GeoLongitud, 
+		telemetria_listado.TiempoFueraLinea, 
+		telemetria_listado.NErrores, 
+		telemetria_listado.id_Sensores,
+		telemetria_listado.SensorActivacionID, 
+		telemetria_listado.SensorActivacionValor
+		
+		".$subquery."
+	
+		FROM `telemetria_listado`
+		".$join."
+		".$z."
+		ORDER BY telemetria_listado.Nombre ASC  ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrEquipo,$row );
+		}
+		
+		/*************************************************************/
+		//Se traen todas las unidades de medida
+		$arrUnimed = array();
+		$query = "SELECT idUniMed,Nombre
+		FROM `telemetria_listado_unidad_medida`
+		ORDER BY idUniMed ASC";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+									
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrUnimed,$row );
+		}
+		//Ordeno las unidades de medida
+		$arrFinalUnimed = array();
+		foreach ($arrUnimed as $data) {
+			$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
+		}
+
+		/*************************************************************/
+		//se traen todas las zonas
+		$arrZonas = array();
+		$query = "SELECT idZona, Nombre
+		FROM `vehiculos_zonas` ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrZonas,$row );
+		}
+		//defino la variable temporal de la zona 
+		$_SESSION['usuario']['zona']['idZona']         = 9999;
+		$_SESSION['usuario']['zona']['id_Geo']         = 2;
+		$_SESSION['usuario']['zona']['idTipoUsuario']  = $idTipoUsuario;
+		$_SESSION['usuario']['zona']['idSistema']      = $idSistema;
+		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
+
+		/*************************************************************/
+		//se traen todas las zonas
+		$query = "SELECT Helada, UnidadesFrio, CrossTech_FechaUnidadFrio,
+		HorasSobreGrados, CrossTech_TempMax, CrossTech_FechaTempMax,
+		Dias_acumulado, Dias_anterior, CrossTech_DiasTempMin,
+		CrossTech_FechaDiasTempMin
+
+		FROM `telemetria_listado_aux` 
+		WHERE idSistema=".$idSistema." 
+		ORDER BY idAuxiliar DESC
+		LIMIT 1";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		$rowAux = mysqli_fetch_assoc ($resultado);
+
+
+		
+		$GPS = '
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">google.charts.load(\'current\', {\'packages\':[\'bar\', \'corechart\', \'table\', \'gauge\']});</script>	
+				
+
+												
+<div class="row">		
+	<div class="col-sm-12">
+		<div class="box">	
+			<header>		
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
+			</header>
+			<div class="table-responsive">
+				<div class="col-sm-4">
+					<div class="row">
+						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
+							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+								<thead>
+									<tr role="row">
+										<th colspan="3">
+											<div class="field">
+												<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
+													//La opcion todos
+													$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
+													foreach ( $arrZonas as $select ) {
+														$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
+													} 
+												$GPS .= '
+												</select>
+											</div>
+										</th>
+									</tr>';
+									$GPS .= widget_sherlock(1, 3);
+									$GPS .= '
+								</thead>
+								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+									$nicon = 0;
+									foreach ($arrEquipo as $data) {
+										
+										/**********************************************/
+										//Se resetean
+										$in_eq_alertas     = 0;
+										$in_eq_fueralinea  = 0;
+										$in_eq_ok          = 1;
+																			
+										/**********************************************/
+										//Fuera de linea
+										$diaInicio   = $data['LastUpdateFecha'];
+										$diaTermino  = $FechaSistema;
+										$tiempo1     = $data['LastUpdateHora'];
+										$tiempo2     = $HoraSistema;
+										//calculo diferencia de dias
+										$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+										//calculo del tiempo transcurrido
+										$Tiempo = restahoras($tiempo1, $tiempo2);
+										//Calculo del tiempo transcurrido
+										if($n_dias!=0){
+											if($n_dias>=2){
+												$n_dias = $n_dias-1;
+												$horas_trans2 = multHoras('24:00:00',$n_dias);
+												$Tiempo = sumahoras($Tiempo,$horas_trans2);
+											}
+											if($n_dias==1&&$tiempo1<$tiempo2){
+												$horas_trans2 = multHoras('24:00:00',$n_dias);
+												$Tiempo = sumahoras($Tiempo,$horas_trans2);
+											}
+										}	
+										if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+											$in_eq_fueralinea++;
+										}
+
+										/**********************************************/
+										//alertas
+										$xx = 0;
+										for ($i = 1; $i <= $data['cantSensores']; $i++) {
+											$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
+											if($xx<0){
+												$in_eq_alertas++;
+											}
+										}
+
+										/**********************************************/
+										//Equipos Errores
+										if($data['NErrores']>0){
+											$in_eq_alertas++;	
+										}
+													
+										/*******************************************************/
+										//rearmo
+										if($in_eq_alertas>0){    $in_eq_ok = 0;$in_eq_alertas = 1;    }
+										if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_alertas = 0;  }
+										
+										/*******************************************************/
+										//se guardan estados
+										$danger = '';
+										if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas"        class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+										if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea"            class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+										
+										/*******************************************************/
+										//Se guardan los valores
+										$eq_alertas     = $eq_alertas + $in_eq_alertas; 
+										$eq_fueralinea  = $eq_fueralinea + $in_eq_fueralinea; 
+										$eq_ok          = $eq_ok + $in_eq_ok;
+										
+										/*******************************************************/
+										//Promedios de widgets
+										//verifico que este midiendo
+										if($in_eq_fueralinea==0){
+											$Total_Temperatura = $Total_Temperatura + $data['SensoresMedActual_1'];
+											$Total_Humedad     = $Total_Humedad + $data['SensoresMedActual_2'];
+											$Total_Rocio       = $Total_Rocio + $data['SensoresMedActual_3'];
+											$Total_Presion     = $Total_Presion + $data['SensoresMedActual_4'];
+											$Count_Data++;
+										}
+										/*******************************************************/
+										//Verifico que este activo si la configuracion esta correcta
+										$eq_act_btn = '';
+										$eq_act_med = 70;
+										//verifico la configuracion
+										if(isset($data['SensorActivacionID'])&&$data['SensorActivacionID']!=0){
+											//verifico que sensor de activacion sea superior al valor establecido
+											if(isset($data['SensoresMedActual_'.$data['SensorActivacionID']])&&$data['SensoresMedActual_'.$data['SensorActivacionID']]>=$data['SensorActivacionValor']){
+												$eq_act_btn = '<a href="#" title="Equipo Encendido" class="btn btn-default btn-sm tooltip"><span style="color:#5cb85c;"><i class="fa fa-toggle-on" aria-hidden="true"></i></span></a>';
+												$eq_act_med = 105;
+											//equipo apagado
+											}else{
+												$eq_act_btn = '<a href="#" title="Equipo Apagado"  class="btn btn-default btn-sm tooltip"><span style="color:#d9534f;"><i class="fa fa-toggle-off" aria-hidden="true"></i></span></a>';
+												$eq_act_med = 105;
+											}
+										}
+																	
+										/*******************************************************/
+										//traspasan los estados
+										if($in_eq_ok==1){
+											$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+										}else{
+											$eq_ok_icon = $dataex;
+										}
+										$GPS .= '
+										<tr class="odd '.$danger.'">
+											<td width="10">
+												<div class="btn-group" style="width: 35px;" >'.$eq_ok_icon.'</div>
+											</td>
+											<td>';
+												$GPS .= $data['Nombre'].'<br/>
+												'.fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'].'
+											</td>
+											<td width="10">
+												<div class="btn-group" style="width: '.$eq_act_med.'px;" >
+													'.$eq_act_btn.'
+													<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+													<a href="view_crosstech_tel_data.php?idTelemetria='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-default btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+												</div>
+											</td>
+										</tr>';
+										$nicon++;
+									}
+									$GPS .= '                  
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="row">
+						<div class="col-sm-3"><div class="float_table" id="chart_gauge_2" ></div> <div class="clearfix"></div><a href="view_crosstech_historial.php?Type='.simpleEncode( 1, fecha_actual()).'" class="iframe btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+						<div class="col-sm-3"><div class="float_table" id="chart_gauge_3" ></div> <div class="clearfix"></div><a href="view_crosstech_historial.php?Type='.simpleEncode( 2, fecha_actual()).'" class="iframe btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+						<div class="col-sm-3"><div class="float_table" id="chart_gauge_1" ></div> <div class="clearfix"></div><a href="view_crosstech_historial.php?Type='.simpleEncode( 3, fecha_actual()).'" class="iframe btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+						<div class="col-sm-3"><div class="float_table" id="chart_gauge_4" ></div> <div class="clearfix"></div><a href="view_crosstech_historial.php?Type='.simpleEncode( 4, fecha_actual()).'" class="iframe btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+					</div>';
+					
+					//verifico existencia de datos
+					$Helada                       = 0;
+					$UnidadFrio                   = 0;
+					$CrossTech_FechaUnidadFrio    = 0;
+					$HoraSobre                    = 0;
+					$CrossTech_TempMax            = 0;
+					$CrossTech_FechaTempMax       = 0;
+					$Dias_acumulado               = 0;
+					$Dias_anterior                = 0;
+					$CrossTech_DiasTempMin        = 0;
+					$CrossTech_FechaDiasTempMin   = 0;
+					
+					//declaracion
+					if(isset($rowAux['Helada'])&&$rowAux['Helada']!=''){                                          $Helada                       = $rowAux['Helada'];}
+					if(isset($rowAux['UnidadesFrio'])&&$rowAux['UnidadesFrio']!=''){                              $UnidadFrio                   = $rowAux['UnidadesFrio'];}
+					if(isset($rowAux['CrossTech_FechaUnidadFrio'])&&$rowAux['CrossTech_FechaUnidadFrio']!=''){    $CrossTech_FechaUnidadFrio    = $rowAux['CrossTech_FechaUnidadFrio'];}
+					if(isset($rowAux['HorasSobreGrados'])&&$rowAux['HorasSobreGrados']!=''){                      $HoraSobre                    = $rowAux['HorasSobreGrados'];}
+					if(isset($rowAux['CrossTech_TempMax'])&&$rowAux['CrossTech_TempMax']!=''){                    $CrossTech_TempMax            = cantidades($rowAux['CrossTech_TempMax'], 0);}
+					if(isset($rowAux['CrossTech_FechaTempMax'])&&$rowAux['CrossTech_FechaTempMax']!=''){          $CrossTech_FechaTempMax       = $rowAux['CrossTech_FechaTempMax'];}
+					if(isset($rowAux['Dias_acumulado'])&&$rowAux['Dias_acumulado']!=''){                          $Dias_acumulado               = cantidades($rowAux['Dias_acumulado'], 0);}
+					if(isset($rowAux['Dias_anterior'])&&$rowAux['Dias_anterior']!=''){                            $Dias_anterior                = cantidades($rowAux['Dias_anterior'], 0);}
+					if(isset($rowAux['CrossTech_DiasTempMin'])&&$rowAux['CrossTech_DiasTempMin']!=''){            $CrossTech_DiasTempMin        = cantidades($rowAux['CrossTech_DiasTempMin'], 0);}
+					if(isset($rowAux['CrossTech_FechaDiasTempMin'])&&$rowAux['CrossTech_FechaDiasTempMin']!=''){  $CrossTech_FechaDiasTempMin   = $rowAux['CrossTech_FechaDiasTempMin'];}
+					
+					
+					/*
+					$HoraBajo                = 0;
+					$CrossTech_TempMin       = 0;
+					$CrossTech_FechaTempMin  = 0;
+					if(isset($rowAux['HorasBajoGrados'])&&$rowAux['HorasBajoGrados']!=''){                 $HoraBajo                = $rowAux['HorasBajoGrados'];}
+					if(isset($rowAux['CrossTech_TempMin'])&&$rowAux['CrossTech_TempMin']!=''){             $CrossTech_TempMin       = cantidades($rowAux['CrossTech_TempMin'], 0);}
+					if(isset($rowAux['CrossTech_FechaTempMin'])&&$rowAux['CrossTech_FechaTempMin']!=''){   $CrossTech_FechaTempMin  = $rowAux['CrossTech_FechaTempMin'];}
+					*/
+					
+					//Dependiendo del valor de la helada se cambia el icono y el color
+					if($Helada>3){
+						$helIcon = '<span style="color:#00a65a;"><i class="fa fa-thermometer-full" aria-hidden="true"></i></span>';
+					}elseif($Helada<=2.9&&$Helada>=0.1){
+						$helIcon = '<span style="color:#FFCB19;"><i class="fa fa-thermometer-half" aria-hidden="true"></i></span>';
+					}elseif($Helada<0.1){
+						$helIcon = '<span style="color:#d9534f;"><i class="fa fa-thermometer-empty" aria-hidden="true"></i></span>';
+					}
+					
+					$GPS .= '
+					<div class="row">
+						
+						<div class="col-sm-7">
+							<div class="box box-blue box-solid ">
+								<div class="box-header with-border text-center">
+									<h3 class="box-title">Temperatura Proyectada</h3>
+									<div class="box-tools pull-right">
+										<a target="_blank" rel="noopener noreferrer" href="view_crosstech_historial_helada.php" class="iframe btn btn-xs btn-primary btn-line cboxElement">Ver Mas</a>
+									</div>
+								</div>
+								<div class="box-body">
+									<div class="value">
+										<span id="update_text_Helada_icon">'.$helIcon.'</span>
+										<span id="update_text_Helada">'.cantidades($Helada, 1).'</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-sm-5">
+							<div title="Unidades de frio acumuladas de acuerdo a tabla de unidades de frío de la Universidad de Utah-USA (Modelo del Dr. Richardson) desde la fecha '.fecha_estandar($CrossTech_FechaUnidadFrio).'" class="box box-blue box-solid tooltip">
+								<div class="box-header with-border text-center">
+									<h3 class="box-title">Unidades de Frio</h3>
+								</div>
+								<div class="box-body">
+									<div class="value">
+										<span><i class="fa fa-snowflake-o" aria-hidden="true"></i></span>
+										<span id="update_text_UnidadFrio">'.cantidades($UnidadFrio, 0).'</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="row">
+						
+						<div class="col-sm-4">
+							<div title="Horas acumuladas sobre '.$CrossTech_TempMax.'°C desde la fecha '.fecha_estandar($CrossTech_FechaTempMax).'" class="box box-blue box-solid tooltip">
+								<div class="box-header with-border text-center">
+									<h3 class="box-title">Horas <i class="fa fa-arrow-up" aria-hidden="true"></i> '.$CrossTech_TempMax.'°C</h3>
+								</div>
+								<div class="box-body">
+									<div class="value">
+										<span><i class="fa fa-sun-o" aria-hidden="true"></i></span>
+										<span id="update_text_HoraSobre">'.cantidades($HoraSobre, 2).'</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						
+						
+						<div class="col-sm-8">
+							<div class="box box-blue box-solid">
+								<div class="box-header with-border text-center">
+									<h3 class="box-title">Dias - Grados C°</h3>
+								</div>
+								<div class="box-body">
+									<div title="Horas de temperaturas sobre '.$CrossTech_DiasTempMin.'°C acumuladas desde el '.fecha_estandar($CrossTech_FechaDiasTempMin).' a la fecha." class="col-sm-6 value tooltip tipnoabs">
+										<span><i class="fa fa-area-chart" aria-hidden="true"></i></span>
+										<span id="update_text_Dias_acumulado">'.cantidades($Dias_acumulado, 0).'</span>
+									</div>
+									<div title="Horas de temperaturas sobre '.$CrossTech_DiasTempMin.'°C de las últimas 24 horas" class="col-sm-6 value tooltip tipnoabs">
+										<span><i class="fa fa-pagelines" aria-hidden="true"></i></span>
+										<span id="update_text_Dias_anterior">'.cantidades($Dias_anterior, 0).'</span>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+			
+					</div>
+					<div class="row">
+						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+						<div id="consulta"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>	
+	
+<style>
+.my-custom-scrollbar {
+	position: relative;
+	height: 550px;
+	overflow: auto;
+}
+.table-wrapper-scroll-y {
+	display: block;
+}
+</style>		
+	
+<script>
+	/* ************************************************************************** */
+	//Variables globales
+	var chart_gauge_1                 = "";
+	var chart_gauge_2                 = "";
+	var chart_gauge_3                 = "";
+	var chart_gauge_4                 = "";
+	
+	var data_gauge_1                  = "";
+	var data_gauge_2                  = "";
+	var data_gauge_3                  = "";
+	var data_gauge_4                  = "";
+	
+	var options_gauge_1               = "";
+	var options_gauge_2               = "";
+	var options_gauge_3               = "";
+	var options_gauge_4               = "";
+	
+	//carga de los graficos
+	google.charts.setOnLoadCallback(Chart_correccion_1);
+	google.charts.setOnLoadCallback(Chart_correccion_2);
+	google.charts.setOnLoadCallback(Chart_correccion_3);
+	google.charts.setOnLoadCallback(Chart_correccion_4);
+	';
+	/* ************************************************************************** */
+	//Calculos
+	if($Count_Data!=0){
+		$Gen_Temperatura   = Cantidades(($Total_Temperatura / $Count_Data), 2);
+		$Gen_Humedad       = Cantidades(($Total_Humedad / $Count_Data), 2);
+		$Gen_Rocio         = Cantidades(($Total_Rocio / $Count_Data), 2);
+		$Gen_Presion       = Cantidades(($Total_Presion / $Count_Data), 0);
+	}
+	
+	$GPS .= '
+	/* ************************************************************************** */
+	//Punto Rocio
+	function Chart_correccion_1() {
+		var data_correccion_rows_1 = '.str_replace(",", ".",$Gen_Rocio).';
+		//se llama funcion de dibujo
+		draw_correccion_1(data_correccion_rows_1);
+	}
+	//Temperatura
+	function Chart_correccion_2() {
+		var data_correccion_rows_2 = '.str_replace(",", ".",$Gen_Temperatura).';
+		//se llama funcion de dibujo
+		draw_correccion_2(data_correccion_rows_2);
+	}
+	//Humedad
+	function Chart_correccion_3() {
+		var data_correccion_rows_3 = '.str_replace(",", ".",$Gen_Humedad).';
+		//se llama funcion de dibujo
+		draw_correccion_3(data_correccion_rows_3);
+	}
+	//Presion Atmos
+	function Chart_correccion_4() {
+		var data_correccion_rows_4 = '.str_replace(",", ".",$Gen_Presion).';
+		//se llama funcion de dibujo
+		draw_correccion_4(data_correccion_rows_4);
+	}
+	/********************************************************************/
+	//Punto Rocio
+	function draw_correccion_1(data) {
+		//datos
+		data_gauge_1 = google.visualization.arrayToDataTable([
+			["Label", "Valor"],
+			["Pr", data]
+		]);
+		//opciones
+		options_gauge_1 = {
+			min:-10,
+			max:50,
+			width: 300, 
+			height: 150,
+			majorTicks: ["-10","0","10","20","30","40", "50"],
+			minorTicks: 10
+		};
+		//Formateo
+		var formatRocio = new google.visualization.NumberFormat({
+			suffix: \'°C\',
+			fractionDigits: 1
+		});
+		formatRocio.format(data_gauge_1, 1);
+		//dibujo
+		chart_gauge_1 = new google.visualization.Gauge(document.getElementById("chart_gauge_1"));
+		chart_gauge_1.draw(data_gauge_1, options_gauge_1);
+	}
+	function update_correccion_1(data) {
+		//Formateo
+		var formatRocio = new google.visualization.NumberFormat({
+			suffix: \'°C\',
+			fractionDigits: 1
+		});
+		data_gauge_1.setValue(0, 1, data);
+		formatRocio.format(data_gauge_1, 1);
+		chart_gauge_1.draw(data_gauge_1, options_gauge_1);
+	}
+    /*******************************************************/
+	//Temperatura
+	function draw_correccion_2(data) {
+		//datos
+		data_gauge_2 = google.visualization.arrayToDataTable([
+			["Label", "Valor"],
+			["Temp", data]
+		]);
+		//opciones
+		options_gauge_2 = {
+			min:-20,
+			max:50,
+			width: 300, 
+			height: 150,
+			majorTicks: ["-20","-10","0","10","20","30","40", "50"],
+			minorTicks: 10
+		};
+		//Formateo
+		var formatTemp = new google.visualization.NumberFormat({
+			suffix: \'°C\',
+			fractionDigits: 1
+		});
+		formatTemp.format(data_gauge_2, 1);
+		//dibujo
+		chart_gauge_2 = new google.visualization.Gauge(document.getElementById("chart_gauge_2"));
+		chart_gauge_2.draw(data_gauge_2, options_gauge_2);
+		
+	}
+	function update_correccion_2(data) {
+		//Formateo
+		var formatTemp = new google.visualization.NumberFormat({
+			suffix: \'°C\',
+			fractionDigits: 1
+		});
+		data_gauge_2.setValue(0, 1, data);
+		formatTemp.format(data_gauge_2, 1);
+		chart_gauge_2.draw(data_gauge_2, options_gauge_2);
+	}
+    /*******************************************************/
+	//Humedad
+	function draw_correccion_3(data) {
+		//datos
+		data_gauge_3 = google.visualization.arrayToDataTable([
+			["Label", "Valor"],
+			["Humedad", data]
+		]);
+		//opciones
+		options_gauge_3 = {
+			min:0,
+			max:100,
+			width: 300, 
+			height: 150,
+			majorTicks: ["0","20","40","60","80","100"],
+			minorTicks: 5
+		};
+		//Formateo
+		var formatHumid = new google.visualization.NumberFormat({
+			suffix: \'%\',
+			fractionDigits: 1
+		});
+		formatHumid.format(data_gauge_3, 1);
+		//dibujo
+		chart_gauge_3 = new google.visualization.Gauge(document.getElementById("chart_gauge_3"));
+		chart_gauge_3.draw(data_gauge_3, options_gauge_3);
+	}
+	function update_correccion_3(data) {
+		//Formateo
+		var formatHumid = new google.visualization.NumberFormat({
+			suffix: \'%\',
+			fractionDigits: 1
+		});
+		data_gauge_3.setValue(0, 1, data);
+		formatHumid.format(data_gauge_3, 1);
+		chart_gauge_3.draw(data_gauge_3, options_gauge_3);
+	}
+    /*******************************************************/
+	//Presion Atmos
+	function draw_correccion_4(data) {
+		//datos
+		data_gauge_4 = google.visualization.arrayToDataTable([
+			["Label", "Valor"],
+			["Pb", data]
+		]);
+		//opciones
+		options_gauge_4 = {
+			min:0,
+			max:1400,
+			width: 300, 
+			height: 150,
+			majorTicks: ["0","200","400","600","800", "1000", "1200", "1400"],
+			minorTicks: 5
+		};
+		//Formateo
+		var formatPresion = new google.visualization.NumberFormat({
+			suffix: \'hPa\',
+			fractionDigits: 0
+		});
+		formatPresion.format(data_gauge_4, 1);
+		//dibujo
+		chart_gauge_4 = new google.visualization.Gauge(document.getElementById("chart_gauge_4"));
+		chart_gauge_4.draw(data_gauge_4, options_gauge_4);
+	}
+	function update_correccion_4(data) {
+		//Formateo
+		var formatPresion = new google.visualization.NumberFormat({
+			suffix: \'hPa\',
+			fractionDigits: 0
+		});
+		data_gauge_4.setValue(0, 1, data);
+		formatPresion.format(data_gauge_4, 1);
+		chart_gauge_4.draw(data_gauge_4, options_gauge_4);
+	}
+    
+	
+	/* ************************************************************************** */
+	/* ************************************************************************** */
+	/* ************************************************************************** */
+	
+	var map;
+	var markers = [];
+	
+	/* ************************************************************************** */
+	function chngZona() {
+		idZona = document.getElementById("selectZona").value;
+		$(\'#vehiContent\').load(\'principal_update_zonaList_2_crosstech.php'.$enlace.'&idZona=\' + idZona);
+		setMarkers(map, locations, 1);	
+	}
+
+	/* ************************************************************************** */
+	function fncCenterMap(Latitud, Longitud, n_icon){
+		latlon = new google.maps.LatLng(Latitud, Longitud);
+		map.panTo(latlon);
+		//volver todo a normal
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
+		}
+		//colorear el seleccionado
+		markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
+	}
+
+
+	/* ************************************************************************** */
+	function initialize() {
+		var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+		var myOptions = {
+			zoom: 12,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+							
+		//Ubicacion de los distintos dispositivos
+		var locations = [ ';
+			foreach ( $arrEquipo as $data ) {
+				//burbuja
+				$explanation  = '<div class="iw-subTitle">Equipo: '.$data['Nombre'].'</div>';
+				$explanation .= 'Actualizado: '.fecha_estandar($data['LastUpdateFecha']).' - '.$data['LastUpdateHora'].'</p>';
+				//verifico si tiene sensores configurados
+				if(isset($data['id_Sensores'])&&$data['id_Sensores']==1){
+					$explanation .= '<div class="iw-subTitle">Sensores: </div><p>';
+					for ($i = 1; $i <= $data['cantSensores']; $i++) {
+						//verifico que sensor este activo
+						if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+							//Unidad medida
+							$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+							//cadena
+							if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
+							$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
+						}
+					}
+					$explanation .= '</p>';
+				}
+				//se arma dato
+				$GPS .= "[";
+					$GPS .= $data['GeoLatitud'];
+					$GPS .= ", ".$data['GeoLongitud'];
+					$GPS .= ", '".$explanation."'";
+				$GPS .= "], ";					
+			}
+		$GPS .= '];
+		
+		//ubicacion inicial
+		setMarkers(map, locations, 1);
+		//actualizacion de posicion
+		transMarker(map, '.$SegActual.');
+
+	}
+	/* ************************************************************************** */
+	function setMarkers(map, locations, optc) {
+
+		var marker, i, last_latitude, last_longitude;
+		
+		for (i = 0; i < locations.length; i++) {
+			
+			//defino ubicacion y datos
+			var latitude   = locations[i][0];
+			var longitude  = locations[i][1];
+			var data       = locations[i][2];
+			
+			//guardo las ultimas ubicaciones
+			last_latitude   = locations[i][0];
+			last_longitude  = locations[i][1];
+			
+			latlngset = new google.maps.LatLng(latitude, longitude);
+			
+			//se crea marcador
+			var marker = new google.maps.Marker({
+				map         : map, 
+				position    : latlngset,
+				icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png"
+			});
+			markers.push(marker);
+
+			//se define contenido
+			var content = 	"<div id=\'iw-container\'>" +
+							"<div class=\'iw-title\'>Datos</div>" +
+							"<div class=\'iw-content\'>" +
+							data +
+							"</div>" +
+							"<div class=\'iw-bottom-gradient\'></div>" +
+							"</div>";
+
+			//se crea infowindow
+			var infowindow = new google.maps.InfoWindow();
+
+			//se agrega funcion de click a infowindow
+			google.maps.event.addListener(marker,\'click\', (function(marker,content,infowindow){ 
+				return function() {
+					infowindow.setContent(content);
+					infowindow.open(map,marker);
+				};
+			})(marker,content,infowindow)); 
+
+		}
+		if(optc==1){
+			latlon = new google.maps.LatLng(last_latitude, last_longitude);
+			map.panTo(latlon);
+		}
+	}
+	/* ************************************************************************** */
+	function transMarker(map, time) {
+		var newTime = time / 2;
+		setInterval(function(){transMarkerTimer(map)},newTime);
+	}
+	/* ************************************************************************** */
+	var mapax = 0;
+	function transMarkerTimer(map) {
+
+		switch(mapax) {
+			//Ejecutar formulario con el recorrido y la ruta
+			case 1:
+				$(\'#consulta\').load(\'principal_update_map_zona_2_crosstech.php'.$enlace.'\');
+				$(\'#vehiContent\').load(\'principal_update_zonaList_2_crosstech.php'.$enlace.'\');
+				break;
+			//se dibujan los iconos 	
+			case 2:
+				//Se ocultan y eliminan los iconos
+				deleteMarkers();
+				setMarkers(map, new_locations, 2);											
+				//actualizo la hora de actualizacion
+				document.getElementById(\'update_text_HoraRefresco\').innerHTML=\'Hora Refresco: \'+HoraRefresco;					
+				//Actualizo widget
+				update_correccion_1(Gen_Rocio); //Punto Rocio
+				update_correccion_2(Gen_Temperatura);//Temperatura
+				update_correccion_3(Gen_Humedad);//Humedad
+				update_correccion_4(Gen_Presion);//Presion Atmos
+				//se actualizan los otros widgets
+				document.getElementById(\'update_text_Helada\').innerHTML=Dat_Helada;	
+				//document.getElementById(\'update_text_HoraBajo\').innerHTML=Dat_HoraBajo;					
+				document.getElementById(\'update_text_HoraSobre\').innerHTML=Dat_HoraSobre;					
+				document.getElementById(\'update_text_UnidadFrio\').innerHTML=Dat_UnidadFrio;					
+				document.getElementById(\'update_text_Helada_icon\').innerHTML=helIcon;					
+				document.getElementById(\'update_text_Dias_acumulado\').innerHTML=Dat_Dias_acumulado;					
+				document.getElementById(\'update_text_Dias_anterior\').innerHTML=Dat_Dias_anterior;					
+				
+				
+				break;		
+		}
+
+		mapax++;	
+		if(mapax==3){mapax=1}
+	}
+	/* ************************************************************************** */
+	// Sets the map on all markers in the array.
+	function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+    }
+    /* ************************************************************************** */
+	// Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+	/* ************************************************************************** */
+	// Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+    /* ************************************************************************** */
+	// Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+
+
+	
+	
+	
+	
+	
+	/* ************************************************************************** */
+	google.maps.event.addDomListener(window, "load", initialize());
+</script>	
+	
+		
+';
+
+		//despliega el resumen
+		if(isset($miniwidget)&&$miniwidget==1){						
+			$GPS .= '
+			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
+			<div class="row">';
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-industry', $eq_alertas, 4, 'Equipos con alertas', 'Sensores', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+				$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, 'Equipos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+				$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, 'Equipos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+				$GPS .= '
+			</div>  
+			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+			<script>
+				$(document).ready(function(){
+					//Examples of how to assign the Colorbox event to elements
+					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+					$(".callbacks").colorbox({
+						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+					});
+
+							
+					//Example of preserving a JavaScript event for inline calls.
+					$("#click").click(function(){ 
+						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+						return false;
+					});
+				});
+			</script>';
+		}
+		
+		
+		return $GPS;
+								
+
+	}
+}
+/*******************************************************************************************************************/
+//Muestra la gestion de equipos decrosscrane
+function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $idUsuario, $SegActual, $dbConn){
+	
+	//Si no existe una ID se utiliza una por defecto
+	if(!isset($IDGoogle) OR $IDGoogle==''){
+		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+	}else{
+		
+		
+		//variables
+		$HoraSistema    = hora_actual(); 
+		$FechaSistema   = fecha_actual();
+		$Fecha_inicio   = restarDias(fecha_actual(),1);
+		$Fecha_fin      = fecha_actual();
+		$principioMes   = fecha2Ano($FechaSistema).'-'.fecha2NMes($FechaSistema).'-01';
+		$google         = $IDGoogle;
+			
+		//Variable
+		$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+		//solo los equipos que tengan el seguimiento desactivado
+		$z .= " AND telemetria_listado.id_Geo = 2";
+		//enlace para redireccionar
+		$enlace  = "?dd=true";
+		$enlace .= "&idTipoUsuario=".$idTipoUsuario;
+		$enlace .= "&idSistema=".$idSistema;
+		$enlace .= "&idUsuario=".$idUsuario;
+		
+		//Filtro el sistema al cual pertenece	
+		if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+			$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+		}
+		//Verifico el tipo de usuario que esta ingresando y el id
+		$join = "";	
+		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+			$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+			$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+		}
+		//Solo para plataforma CrossTech
+		$z .= " AND telemetria_listado.idTab=6";//CrossCrane		
+
+		
+		
+		//numero sensores equipo
+		$N_Maximo_Sensores = 72;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresMedErrores_'.$i;
+			$subquery .= ',SensoresErrorActual_'.$i;
+			$subquery .= ',SensoresNombre_'.$i;
+			$subquery .= ',SensoresMedActual_'.$i;
+			$subquery .= ',SensoresUniMed_'.$i;
+			$subquery .= ',SensoresActivo_'.$i;
+		}	
+		//Listar los equipos
+		$arrEquipo = array();
+		$query = "SELECT 
+		telemetria_listado.idTelemetria, 
+		telemetria_listado.Nombre, 
+		telemetria_listado.Identificador, 
+		telemetria_listado.LastUpdateFecha,
+		telemetria_listado.LastUpdateHora,
+		telemetria_listado.cantSensores,
+		telemetria_listado.GeoLatitud, 
+		telemetria_listado.GeoLongitud, 
+		telemetria_listado.TiempoFueraLinea, 
+		telemetria_listado.NErrores,  
+		telemetria_listado.NAlertas, 
+		telemetria_listado.id_Sensores, 
+		telemetria_listado.SensorActivacionID, 
+		telemetria_listado.SensorActivacionValor
+		
+		".$subquery."
+	
+		FROM `telemetria_listado`
+		".$join."
+		".$z."
+		ORDER BY telemetria_listado.Nombre ASC  ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrEquipo,$row );
+		}
+		
+		/*************************************************************/
+		//Se traen todas las unidades de medida
+		$arrUnimed = array();
+		$query = "SELECT idUniMed,Nombre
+		FROM `telemetria_listado_unidad_medida`
+		ORDER BY idUniMed ASC";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+									
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrUnimed,$row );
+		}
+		//Ordeno las unidades de medida
+		$arrFinalUnimed = array();
+		foreach ($arrUnimed as $data) {
+			$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
+		}
+		
+		/*************************************************************/
+		//se traen todas las zonas
+		$arrZonas = array();
+		$query = "SELECT idZona, Nombre
+		FROM `telemetria_zonas` ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrZonas,$row );
+		}
+		//defino la variable temporal de la zona 
+		$_SESSION['usuario']['zona']['idZona']         = 9999;
+		$_SESSION['usuario']['zona']['id_Geo']         = 2;
+		$_SESSION['usuario']['zona']['idTipoUsuario']  = $idTipoUsuario;
+		$_SESSION['usuario']['zona']['idSistema']      = $idSistema;
+		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
+
+
+		$nicon    = 0;
+		$arrGruas = array();
+		
+		//transaccion a verificar
+		$transx = "admin_telemetria_encendido_apagado.php";   //Transaccion de encendido-apagado
+
+		//Seteo la variable a 0
+		$prm_xa = 0;
+		//recorro los permisos
+		if(isset($_SESSION['usuario']['menu'])){
+			foreach($_SESSION['usuario']['menu'] as $menu=>$productos) {
+				foreach($productos as $producto) {
+					//elimino los datos extras
+					$str = str_replace("?pagina=1", "", $producto['TransaccionURL']);
+					//le asigno el valor 1 en caso de que exista
+					if($transx==$str){
+						$prm_xa = 1;
+					}
+				}
+			}
+		}
+													
+		foreach ($arrEquipo as $data) {
+										
+			/**********************************************/
+			//Se resetean
+			$in_eq_alertas     = 0;
+			$in_eq_fueralinea  = 0;
+			$in_eq_ok          = 1;
+			$in_sens_activ     = 0;
+										
+			/**********************************************/
+			//veo si tiene configurado el sensor de activacion y si esta encendido
+			if(isset($data['SensorActivacionID'])&&$data['SensorActivacionID']!=0){
+				if(isset($data['SensoresMedActual_'.$data['SensorActivacionID']])&&$data['SensoresMedActual_'.$data['SensorActivacionID']]==$data['SensorActivacionValor']){
+					$in_sens_activ = 1; //activo encendido
+				}else{
+					$in_sens_activ = 2; //activo apagado
+				}
+			}else{
+				$in_sens_activ = 0; //inactivo
+			}
+																			
+			/**********************************************/
+			//Fuera de linea
+			$diaInicio   = $data['LastUpdateFecha'];
+			$diaTermino  = $FechaSistema;
+			$tiempo1     = $data['LastUpdateHora'];
+			$tiempo2     = $HoraSistema;
+			//calculo diferencia de dias
+			$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+			//calculo del tiempo transcurrido
+			$Tiempo = restahoras($tiempo1, $tiempo2);
+			//Calculo del tiempo transcurrido
+			if($n_dias!=0){
+				if($n_dias>=2){
+					$n_dias        = $n_dias-1;
+					$horas_trans2  = multHoras('24:00:00',$n_dias);
+					$Tiempo        = sumahoras($Tiempo,$horas_trans2);
+				}
+				if($n_dias==1&&$tiempo1<$tiempo2){
+					$horas_trans2 = multHoras('24:00:00',$n_dias);
+					$Tiempo       = sumahoras($Tiempo,$horas_trans2);
+				}
+			}	
+			if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+				$in_eq_fueralinea++;
+			}
+
+			/**********************************************/
+			//alertas
+			$xx = 0;
+			for ($i = 1; $i <= $data['cantSensores']; $i++) {
+				$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
+				if($xx<0){
+					$in_eq_alertas++;
+				}
+			}
+
+			/**********************************************/
+			//Equipos Errores
+			if($data['NErrores']>0){
+				$in_eq_alertas++;	
+			}
+													
+			/*******************************************************/
+			//rearmo
+			if($in_eq_alertas>0){    $in_eq_ok = 0;  $in_eq_alertas    = 1;    }
+			if($in_eq_fueralinea>0){ $in_eq_ok = 0;  $in_eq_fueralinea = 1; $in_eq_alertas = 0;  }
+										
+			/*******************************************************/
+			//se guardan estados
+			$danger = '';
+			$xdanger = 1;
+			if($in_eq_alertas>0){    $danger = 'warning';  $xdanger = 2; $dataex = '<a href="#" title="Equipo con Alertas"        class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+			if($in_eq_fueralinea>0){ $danger = 'danger';   $xdanger = 3; $dataex = '<a href="#" title="Fuera de Linea"            class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+										
+			/*******************************************************/
+			//traspasan los estados
+			if($in_eq_ok==1){
+				$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+			}else{
+				$eq_ok_icon = $dataex;
+			}
+			/*******************************************************/
+			//El icono de estado de encendido apagado
+			$idSensorResp = 38; //sensor que guarda la respuesta del equipo
+			//si tiene los permisos
+			if(isset($data['SensoresMedActual_'.$idSensorResp])&&$data['SensoresMedActual_'.$idSensorResp]!=''){												
+				switch ($data['SensoresMedActual_'.$idSensorResp]) {
+					//inactivo
+					case 0:
+						$status_icon = '';
+						$wid_status = 35;
+						break;
+					//activo encendido
+					case 1:
+						//$status_icon = '<a href="" title="Encendido Remoto" class="btn btn-success btn-sm tooltip"><i class="fa fa-unlock" aria-hidden="true"></i></a>';
+						//$wid_status = 70;
+						$status_icon = '';
+						$wid_status = 35;
+						break;
+					//activo apagado
+					case 2:
+						$status_icon = '<a href="" title="Apagado Remoto" class="btn btn-warning btn-sm tooltip"><i class="fa fa-lock" aria-hidden="true"></i></a>';
+						$wid_status = 70;
+						break;
+				}
+			}else{
+				$status_icon = '';
+				$wid_status = 35;
+			}
+			
+			/*************************************************************************/
+			//Guardo todos los datos
+			$arrGruas[$xdanger][$data['idTelemetria']]['tr_color']     = $danger;
+			$arrGruas[$xdanger][$data['idTelemetria']]['wid_status']   = $wid_status;
+			$arrGruas[$xdanger][$data['idTelemetria']]['eq_ok_icon']   = $eq_ok_icon;
+			$arrGruas[$xdanger][$data['idTelemetria']]['status_icon']  = $status_icon;
+			$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']       = $data['Nombre'];
+			$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']   = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
+			//si tiene los permisos
+			if(isset($prm_xa)&&$prm_xa==1){												
+				switch ($in_sens_activ) {
+					//inactivo
+					case 0:
+						$arrGruas[$xdanger][$data['idTelemetria']]['in_sens_activ'] = '';
+						break;
+					//activo encendido
+					case 1:
+						$arrGruas[$xdanger][$data['idTelemetria']]['in_sens_activ'] = '<a href="view_crosscrane_apagado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Cambiar Estado" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>';
+						break;
+					//activo apagado
+					case 2:
+						$arrGruas[$xdanger][$data['idTelemetria']]['in_sens_activ'] = '<a href="view_crosscrane_apagado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Cambiar Estado" class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-toggle-off" aria-hidden="true"></i></a>';
+						break;
+				}
+			}else{
+				switch ($in_sens_activ) {
+					//inactivo
+					case 0:
+						$arrGruas[$xdanger][$data['idTelemetria']]['in_sens_activ'] = '';
+						break;
+					//activo encendido
+					case 1:
+						$arrGruas[$xdanger][$data['idTelemetria']]['in_sens_activ'] = '<a href="" title="Equipo Encendido" class="btn btn-success btn-sm tooltip"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>';
+						break;
+					//activo apagado
+					case 2:
+						$arrGruas[$xdanger][$data['idTelemetria']]['in_sens_activ'] = '<a href="" title="Equipo Apagado" class="btn btn-danger btn-sm tooltip"><i class="fa fa-toggle-off" aria-hidden="true"></i></a>';
+						break;
+				}
+			}
+			
+			/****************************************************/
+			//busco el tipo de equipo
+			$Nombre_equipo = $data['Identificador'];
+			$buscado       = 'elv-';
+			$s_pos         = strpos($Nombre_equipo, $buscado);
+
+			// Nótese el uso de ===. Puesto que == simple no funcionará como se espera
+			// porque la posición de 'elv-' está en el 1° (primer) caracter.
+			if ($s_pos === false) {
+				$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_crosscrane_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
+			} else {
+				$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_crosscrane_estado_elev.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
+			}
+			
+			/****************************************************/
+			//el resto de los botones
+			$arrGruas[$xdanger][$data['idTelemetria']]['informe_activaciones'] = '<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_activaciones_05.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" title="Uso Grua" class="btn btn-primary btn-sm tooltip"><i class="fa fa-clock-o" aria-hidden="true"></i></a>';
+			$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']            = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+			//boton de alertas pendientes de ver
+			if(isset($data['NAlertas'])&&$data['NAlertas']!=''&&$data['NAlertas']!=0){
+				//Alertas
+				$link_Alertas  = 'informe_telemetria_errores_6.php';
+				$link_Alertas .= '?bla=bla';
+				//$link_Alertas .= '?f_inicio='.$Fecha_inicio;
+				//$link_Alertas .= '&f_termino='.$Fecha_fin;
+				$link_Alertas .= '&idTelemetria='.$data['idTelemetria'];
+				$link_Alertas .= '&idLeido=0';		
+				$link_Alertas .= '&submit_filter=+Filtrar';	
+				//boton
+				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a target="_blank" rel="noopener noreferrer" href="'.$link_Alertas.'" title="Alertas Pendientes de ver" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
+			}else{
+				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '';
+			}
+			
+			$nicon++;
+		}
+
+		//Cuento los totales		
+		$Count_Alerta     = 0;
+		$Count_Ok         = 0;
+		$Count_FueraLinea = 0;
+		$Count_Total      = 0;
+				
+		if($arrGruas[2]){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
+		if($arrGruas[1]){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
+		if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
+		
+		$GPS = '';
+									
+		$GPS .= '
+			<div class="row">';
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-cog', '<span id="updt_Count_Alerta">'.$Count_Alerta.'</span>', 3, 'Con Alertas', '', '', '', '', 1, 1);   
+				$GPS .= widget_Ficha_2('box-red', 'fa-cog', '<span id="updt_Count_FueraLinea">'.$Count_FueraLinea.'</span>', 3, 'Fuera de Linea', '', '', '', '', 1, 1);   
+				$GPS .= widget_Ficha_2('box-green', 'fa-cog', '<span id="updt_Count_Ok">'.$Count_Ok.'</span>', 3, 'Ok', '', '', '', '', 1, 1);   
+				$GPS .= widget_Ficha_2('box-blue', 'fa-cog', '<span id="updt_Count_Total">'.$Count_Total.'</span>', 3, 'Total', '', '', '', '', 1, 1);   
+				$GPS .= '
+			</div>';									
+		
+		
+		$GPS .= '
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+								
+<div class="row">		
+	<div class="col-sm-12">
+		<div class="box">	
+			<header>		
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
+			</header>
+			<div class="table-responsive">
+				<div class="col-sm-6">
+					<div class="row">
+						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
+							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+								<thead>
+									<tr role="row">
+										<th colspan="3">
+											<div class="field">
+												<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
+													//La opcion todos
+													$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
+													foreach ( $arrZonas as $select ) {
+														$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
+													} 
+												$GPS .= '
+												</select>
+											</div>
+										</th>
+									</tr>';
+									$GPS .= widget_sherlock(1, 3);
+									$GPS .= '
+								</thead>
+								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+									
+									if($arrGruas[2]){
+										foreach ( $arrGruas[2] as $categoria=>$grua ) { 
+											$GPS .= '
+											<tr class="odd '.$grua['tr_color'].'">
+												<td width="10">
+													<div class="btn-group" style="width: '.$grua['wid_status'].'px;" >';
+														$GPS .= $grua['eq_ok_icon'];
+														$GPS .= $grua['status_icon'];
+													$GPS .= '</div>
+												</td>
+												<td>
+													'.$grua['Nombre'].'<br/>
+													'.$grua['LastUpdate'].'
+												</td>
+												<td width="10">
+													<div class="btn-group" style="width: 175px;" >';
+														$GPS .= $grua['in_sens_activ'];
+														$GPS .= $grua['NAlertas'];
+														$GPS .= $grua['crosscrane_estado'];
+														$GPS .= $grua['informe_activaciones'];	
+														$GPS .= $grua['CenterMap'];
+														$GPS .= '
+													</div>
+												</td>
+											</tr>';
+										}
+									}
+									
+									if($arrGruas[1]){
+										foreach ( $arrGruas[1] as $categoria=>$grua ) { 
+											$GPS .= '
+											<tr class="odd '.$grua['tr_color'].'">
+												<td width="10">
+													<div class="btn-group" style="width: '.$grua['wid_status'].'px;" >';
+														$GPS .= $grua['eq_ok_icon'];
+														$GPS .= $grua['status_icon'];
+													$GPS .= '</div>
+												</td>
+												<td>
+													'.$grua['Nombre'].'<br/>
+													'.$grua['LastUpdate'].'
+												</td>
+												<td width="10">
+													<div class="btn-group" style="width: 175px;" >';
+														$GPS .= $grua['in_sens_activ'];
+														$GPS .= $grua['NAlertas'];
+														$GPS .= $grua['crosscrane_estado'];
+														$GPS .= $grua['informe_activaciones'];	
+														$GPS .= $grua['CenterMap'];
+														$GPS .= '
+													</div>
+												</td>
+											</tr>';
+										}
+									}
+									
+									if($arrGruas[3]){
+										foreach ( $arrGruas[3] as $categoria=>$grua ) { 
+											$GPS .= '
+											<tr class="odd '.$grua['tr_color'].'">
+												<td width="10">
+													<div class="btn-group" style="width: '.$grua['wid_status'].'px;" >';
+														$GPS .= $grua['eq_ok_icon'];
+														$GPS .= $grua['status_icon'];
+													$GPS .= '</div>
+												</td>
+												<td>
+													'.$grua['Nombre'].'<br/>
+													'.$grua['LastUpdate'].'
+												</td>
+												<td width="10">
+													<div class="btn-group" style="width: 175px;" >';
+														$GPS .= $grua['in_sens_activ'];
+														$GPS .= $grua['NAlertas'];
+														$GPS .= $grua['crosscrane_estado'];
+														$GPS .= $grua['informe_activaciones'];	
+														$GPS .= $grua['CenterMap'];
+														$GPS .= '
+													</div>
+												</td>
+											</tr>';
+										}
+									}				
+											
+										
+									$GPS .= '                  
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="row">
+						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+						<div id="consulta"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>	
+	
+<style>
+.my-custom-scrollbar {
+	position: relative;
+	height: 550px;
+	overflow: auto;
+}
+.table-wrapper-scroll-y {
+	display: block;
+}
+</style>		
+	
+<script>
+	
+	var map;
+	var markers = [];
+	//Ubicacion de los distintos dispositivos
+	var locations = [ ';
+		foreach ( $arrEquipo as $data ) {
+			//burbuja
+			$explanation  = '<div class="iw-subTitle">Equipo: '.$data['Nombre'].'<br/>Identificador: '.$data['Identificador'].'</div>';
+			$explanation .= 'Actualizado: '.fecha_estandar($data['LastUpdateFecha']).' - '.$data['LastUpdateHora'].'</p>';
+			//verifico si tiene sensores configurados
+			if(isset($data['id_Sensores'])&&$data['id_Sensores']==1){
+				$explanation .= '<div class="iw-subTitle">Sensores: </div><p>';
+				for ($i = 1; $i <= $data['cantSensores']; $i++) {
+					//verifico que sensor este activo
+					if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+						//Unidad medida
+						$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						//cadena
+						if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
+						$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
+					}
+				}
+				$explanation .= '</p>';
+			}
+			//se arma dato
+			$GPS .= "[";
+				$GPS .= $data['GeoLatitud'];
+				$GPS .= ", ".$data['GeoLongitud'];
+				$GPS .= ", '".$explanation."'";
+			$GPS .= "], ";					
+		}
+	$GPS .= '];
+	/* ************************************************************************** */
+	function chngZona() {
+		idZona = document.getElementById("selectZona").value;
+		$(\'#vehiContent\').load(\'principal_update_zonaList_2_crosscrane.php?idZona=\' + idZona);
+		setMarkers(map, locations, 1);	
+	}
+
+	/* ************************************************************************** */
+	function fncCenterMap(Latitud, Longitud, n_icon){
+		latlon = new google.maps.LatLng(Latitud, Longitud);
+		map.panTo(latlon);
+		//volver todo a normal
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
+		}
+		//colorear el seleccionado
+		markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
+	}
+
+
+	/* ************************************************************************** */
+	function initialize() {
+		var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+		var myOptions = {
+			zoom: 12,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+							
+		
+		
+		//ubicacion inicial
+		setMarkers(map, locations, 1);
+		//actualizacion de posicion
+		transMarker(map, '.$SegActual.');
+
+	}
+	/* ************************************************************************** */
+	function setMarkers(map, locations, optc) {
+
+		var marker, i, last_latitude, last_longitude;
+		
+		for (i = 0; i < locations.length; i++) {
+			
+			//defino ubicacion y datos
+			var latitude   = locations[i][0];
+			var longitude  = locations[i][1];
+			var data       = locations[i][2];
+			
+			//guardo las ultimas ubicaciones
+			last_latitude   = locations[i][0];
+			last_longitude  = locations[i][1];
+			
+			latlngset = new google.maps.LatLng(latitude, longitude);
+			
+			//se crea marcador
+			var marker = new google.maps.Marker({
+				map         : map, 
+				position    : latlngset,
+				icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png"
+			});
+			markers.push(marker);
+
+			//se define contenido
+			var content = 	"<div id=\'iw-container\'>" +
+							"<div class=\'iw-title\'>Datos</div>" +
+							"<div class=\'iw-content\'>" +
+							data +
+							"</div>" +
+							"<div class=\'iw-bottom-gradient\'></div>" +
+							"</div>";
+
+			//se crea infowindow
+			var infowindow = new google.maps.InfoWindow();
+
+			//se agrega funcion de click a infowindow
+			google.maps.event.addListener(marker,\'click\', (function(marker,content,infowindow){ 
+				return function() {
+					infowindow.setContent(content);
+					infowindow.open(map,marker);
+				};
+			})(marker,content,infowindow)); 
+
+		}
+		if(optc==1){
+			latlon = new google.maps.LatLng(last_latitude, last_longitude);
+			map.panTo(latlon);
+		}
+	}
+	/* ************************************************************************** */
+	function transMarker(map, time) {
+		var newTime = time / 2;
+		setInterval(function(){transMarkerTimer(map)},newTime);
+	}
+	/* ************************************************************************** */
+	var mapax = 0;
+	function transMarkerTimer(map) {
+
+		switch(mapax) {
+			//Ejecutar formulario con el recorrido y la ruta
+			case 1:
+				$(\'#consulta\').load(\'principal_update_map_zona_2_crosscrane.php'.$enlace.'\');
+				$(\'#vehiContent\').load(\'principal_update_zonaList_2_crosscrane.php\');
+				break;
+			//se dibujan los iconos 	
+			case 2:
+				//Se ocultan y eliminan los iconos
+				deleteMarkers();
+				setMarkers(map, new_locations, 2);											
+				//actualizo la hora de actualizacion
+				document.getElementById(\'update_text_HoraRefresco\').innerHTML=\'Hora Refresco: \'+HoraRefresco;					
+
+				break;		
+		}
+
+		mapax++;	
+		if(mapax==3){mapax=1}
+	}
+	/* ************************************************************************** */
+	// Sets the map on all markers in the array.
+	function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+    }
+    /* ************************************************************************** */
+	// Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+	/* ************************************************************************** */
+	// Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+    /* ************************************************************************** */
+	// Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+
+
+	
+	
+	
+	
+	
+	/* ************************************************************************** */
+	google.maps.event.addDomListener(window, "load", initialize());
+</script>	
+	
+		
+';
+
+								
+			$GPS .= '
+			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
+			 
+			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+			<script>
+				$(document).ready(function(){
+					//Examples of how to assign the Colorbox event to elements
+					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+					$(".callbacks").colorbox({
+						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+					});
+
+							
+					//Example of preserving a JavaScript event for inline calls.
+					$("#click").click(function(){ 
+						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+						return false;
+					});
+				});
+			</script>';
+		
+		
+		
+		return $GPS;
+								
+
+	}
+}
+/*******************************************************************************************************************/
+//Muestra los widget de los equipos externos
+function widget_Equipos_external($dbConn){
+
+//variables
+$HoraSistema    = hora_actual(); 
+$FechaSistema   = fecha_actual();
+$eq_alertas     = 0; 
+$eq_fueralinea  = 0; 
+$eq_ok          = 0;
+
+//Variable
+$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}	
+//Listar los equipos
+$arrEquipo = array();
+$query = "SELECT 
+telemetria_listado.LastUpdateFecha,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.cantSensores,
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.NErrores
+		
+".$subquery."
+
+FROM `telemetria_listado`
+".$z."
+ORDER BY telemetria_listado.Nombre ASC  ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrEquipo,$row );
+}
+
+
+foreach ($arrEquipo as $data) {
+	
+	/**********************************************/
+	//Se resetean
+	$in_eq_alertas     = 0;
+	$in_eq_fueralinea  = 0;
+	$in_eq_ok          = 1;
+										
+	/**********************************************/
+	//Fuera de linea
+	$diaInicio   = $data['LastUpdateFecha'];
+	$diaTermino  = $FechaSistema;
+	$tiempo1     = $data['LastUpdateHora'];
+	$tiempo2     = $HoraSistema;
+	//calculo diferencia de dias
+	$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+	//calculo del tiempo transcurrido
+	$Tiempo = restahoras($tiempo1, $tiempo2);
+	//Calculo del tiempo transcurrido
+	if($n_dias!=0){
+		if($n_dias>=2){
+			$n_dias = $n_dias-1;
+			$horas_trans2 = multHoras('24:00:00',$n_dias);
+			$Tiempo = sumahoras($Tiempo,$horas_trans2);
+		}
+		if($n_dias==1&&$tiempo1<$tiempo2){
+			$horas_trans2 = multHoras('24:00:00',$n_dias);
+			$Tiempo = sumahoras($Tiempo,$horas_trans2);
+		}
+	}	
+	if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+		$in_eq_fueralinea++;
+	}
+
+	/**********************************************/
+	//alertas
+	$xx = 0;
+	for ($i = 1; $i <= $data['cantSensores']; $i++) {
+		if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+			$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
+			if($xx<0){
+				$in_eq_alertas++;
+			}
+		}
+	}
+	//NErrores
+	if(isset($data['NErrores'])&&$data['NErrores']>0){	
+		$in_eq_alertas++;
+	}
+			
+	/*******************************************************/
+	//rearmo
+	if($in_eq_alertas>0){    $in_eq_ok = 0;$in_eq_alertas = 1;    }
+	if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_alertas = 0;}
+	
+	//Se guardan los valores
+	$eq_alertas     = $eq_alertas + $in_eq_alertas; 
+	$eq_fueralinea  = $eq_fueralinea + $in_eq_fueralinea; 
+	$eq_ok          = $eq_ok + $in_eq_ok; 
+
+}
+
+
+	$GPS = '';
+	$GPS .= '
+	<div class="row">';
+		$GPS .= widget_Ficha_2('box-yellow', 'fa-bell-o', $eq_alertas, 4, 'Equipos con alertas', 'Sensores', 'principal_gps_view_external.php?dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
+		$GPS .= widget_Ficha_2('box-red', 'fa-exclamation-triangle', $eq_fueralinea, 4, 'Equipos fuera de linea', 'Equipos', 'principal_gps_view_external.php?dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
+		$GPS .= widget_Ficha_2('box-blue', 'fa-check-circle', $eq_ok, 4, 'Equipos OK', 'Equipos', 'principal_gps_view_external.php?dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
+		$GPS .= '
+	</div> 
+	
+
+	';
+
+return $GPS;						
+}
+
+/*******************************************************************************************************************/
+//Muestra los widget sociales
+function widget_Social( $Social_facebook,
+						$Social_twitter,
+						$Social_instagram,
+						$Social_linkedin,
+						$Social_rss,
+						$Social_youtube,
+						$Social_tumblr){
+
+
+
+	$GPS = '<div class="col-sm-12 ">';
+	$GPS .= '<div class="row">';
+										
+	$GPS .= '									
+	<script>
+		function whenNoTrackingProtection() {
+			if (!whenNoTrackingProtection.promise) {
+				whenNoTrackingProtection.promise = new Promise(function(resolve, reject) {
+					var time = Date.now();
+					var img = new Image();
+					img.onload = resolve;
+					img.onerror = function() {
+						if ((Date.now() - time) < 50) {
+							reject(new Error("Rejected."));
+						} else {
+							resolve(new Error("Takes too long."));
+						}
+					};
+					img.src = "//www.facebook.com/tr/";
+				}).then((result) => {
+				  console.log("Tracking OK");
+				}).catch(e => {
+				  console.log("Tracking KAO");
+				  console.log(e);
+				  alert("Su navegador bloquea los sitios con cockies de seguimiento, algunos widget sociales no se mostraran");
+				});
+			}
+		}
+		whenNoTrackingProtection();
+	</script>';
+									
+	/********************************************************/
+	//si existe el dato
+	if(isset($Social_facebook)&&$Social_facebook!=''){
+		//$GPS .= '<div class="clearfix" ></div>';
+		$GPS .= '<div class="col-sm-6">';
+		$GPS .= '<div class="box"><header><div class="icons"><i class="fa fa-facebook" aria-hidden="true"></i></div><h5>Facebook</h5></header><div class="">';
+		$GPS .= '<div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v9.0&appId='.$Social_facebook.'&autoLogAppEvents=1" nonce="gEy7ooj1"></script>';
+		$GPS .= '<div class="fb-page" data-href="https://www.facebook.com/facebook" data-tabs="timeline" data-width="600" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/facebook" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div>';
+		$GPS .= '</div></div>';
+		$GPS .= '</div>';
+	}								
+	/********************************************************/
+	//si existe el dato
+	if(isset($Social_twitter)&&$Social_twitter!=''){
+		$GPS .= '<div class="col-sm-6">';
+		$GPS .= '<div class="box"><header><div class="icons"><i class="fa fa-twitter" aria-hidden="true"></i></div><h5>Twitter</h5></header><div class="external_page">';
+		$GPS .= '<a class="twitter-timeline" href="'.$Social_twitter.'?ref_src=twsrc%5Etfw">Tweets by Google</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ';
+		$GPS .= '</div></div>';
+		$GPS .= '</div>';
+	}
+	/********************************************************/
+	//si existe el dato
+	if(isset($Social_instagram)&&$Social_instagram!=''){
+		$GPS .= '';
+	}
+	/********************************************************/
+	//si existe el dato
+	if(isset($Social_linkedin)&&$Social_linkedin!=''){
+		$GPS .= '<div class="col-sm-6">';
+		$GPS .= '<div class="box"><header><div class="icons"><i class="fa fa-linkedin" aria-hidden="true"></i></div><h5>Linkedin</h5></header><div class="external_page">';
+		$GPS .= '<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>';
+		$GPS .= '<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="es_ES" data-type="vertical" data-theme="light" data-vanity="'.$Social_linkedin.'"><a class="LI-simple-link" href="https://cl.linkedin.com/in/'.$Social_linkedin.'?trk=profile-badge">Linkedin</a></div>';
+		$GPS .= '</div></div>';
+		$GPS .= '</div>';
+		$GPS .= '<style>
+		.LI-badge-container.vertical.light {width: 100%;}
+		.LI-badge-container.vertical.light .LI-profile-pic {position: relative;}
+		.LI-badge-container.vertical.light .LI-profile-pic {margin-left: auto;margin-right: auto;left: 0px;}
+		</style>';
+		
+	}
+	/********************************************************/
+	//si existe el dato
+	if(isset($Social_rss)&&$Social_rss!=''){
+		$GPS .= '<div class="col-sm-6">';
+		$GPS .= '<div class="box"><header><div class="icons"><i class="fa fa-rss" aria-hidden="true"></i></div><h5>RSS</h5></header><div class="">';
+		$GPS .= widget_feed($Social_rss, 10, 500, 'true', 'true');
+		$GPS .= '</div></div>';
+		$GPS .= '</div>';
+	}						
+	/********************************************************/
+	//si existe el dato
+	if(isset($Social_youtube)&&$Social_youtube!=''){
+		$GPS .= '';
+	}
+	/********************************************************/
+	//si existe el dato
+	if(isset($Social_tumblr)&&$Social_tumblr!=''){
+		$GPS .= '<iframe src="https://tumblrwidget.com/#/embed/costcopizzablog/true/true/true/56847b/133d43/" width="600" height="600"></iframe>';
+	}
+	
+
+
+	$GPS .= '</div>';
+	$GPS .= '</div>';
+
+	return $GPS;						
+}	
+/*******************************************************************************************************************/
+//Muestra los widget sociales
+function widget_Ficha_1($bg_color, $icon, $porcentaje, 
+						$titulo, $subtitulo, 
+						$enlace, $texto_enlace, $new_tab, $iframe){
+	
+	/********************************************************/
+	//Definicion de errores
+	$errorn = 0;
+	//se definen las opciones disponibles
+	$requerido = array(1, 2);
+	//verifico si el dato ingresado existe dentro de las opciones
+	if (!in_array($new_tab, $requerido)) {
+		alert_post_data(4,1,1, 'La configuracion $new_tab ('.$new_tab.') no esta dentro de las opciones');
+		$errorn++;
+	}
+	//verifico si el dato ingresado existe dentro de las opciones
+	if (!in_array($iframe, $requerido)) {
+		alert_post_data(4,1,1, 'La configuracion $iframe ('.$iframe.') no esta dentro de las opciones');
+		$errorn++;
+	}
+	//se verifica si es un numero lo que se recibe
+	if (!validarNumero($porcentaje)&&$porcentaje!=''){ 
+		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero');
+		$errorn++;
+	}
+	//Verifica si el numero recibido es un entero
+	if (!validaEntero($porcentaje)&&$porcentaje!=''){ 
+		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero entero');
+		$errorn++;
+	}
+	/********************************************************/
+	//Ejecucion si no hay errores
+	if($errorn==0){
+		
+		//se crean las opciones
+		switch ($new_tab) {
+			case 1: $tab = ''; break;
+			case 2: $tab = 'target="_blank" rel="noopener noreferrer"'; break;
+		}
+		
+		//se crean las opciones
+		switch ($iframe) {
+			case 1: $frame = ''; break;
+			case 2: $frame = 'iframe '; break;
+		}
+		
+		//se crea el widget
+		$widget = '
+		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+			<div class="info-box '.$bg_color.'">
+				<span class="info-box-icon"><i class="fa '.$icon.'" aria-hidden="true"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">'.$titulo.'</span>
+					<span class="info-box-number">'.$subtitulo.'</span>
+					<div class="progress">
+						<div class="progress-bar" style="width: '.$porcentaje.'%"></div>
+					</div>
+					<span class="progress-description">';
+						if(isset($enlace)){
+							$widget .= '
+							<a class="'.$frame.'faa-parent animated-hover" href="'.$enlace.'" '.$tab.'>
+								'.$texto_enlace.'
+								<i class="fa fa-arrow-circle-right faa-passing" aria-hidden="true"></i>
+							</a>';
+						}
+						$widget .= '
+					</span>
+				</div>
+			</div>
+		</div>
+		';
+		
+		//se devuelve el widget
+		return $widget;
+	}
+}
+/*******************************************************************************************************************/
+//Muestra los widget sociales
+function widget_Ficha_2($bg_color, $icon, $number, $width, 
+						$titulo, $subtitulo, 
+						$enlace, $texto_enlace, $color_enlace, $new_tab, $iframe){
+	
+	/********************************************************/
+	//Definicion de errores
+	$errorn = 0;
+	//se definen las opciones disponibles
+	$requerido = array(1, 2);
+	//verifico si el dato ingresado existe dentro de las opciones
+	if (!in_array($new_tab, $requerido)) {
+		alert_post_data(4,1,1, 'La configuracion $new_tab ('.$new_tab.') no esta dentro de las opciones');
+		$errorn++;
+	}
+	//verifico si el dato ingresado existe dentro de las opciones
+	if (!in_array($iframe, $requerido)) {
+		alert_post_data(4,1,1, 'La configuracion $iframe ('.$iframe.') no esta dentro de las opciones');
+		$errorn++;
+	}
+	/********************************************************/
+	//Ejecucion si no hay errores
+	if($errorn==0){
+		
+		//se crean las opciones
+		switch ($new_tab) {
+			case 1: $tab = ''; break;
+			case 2: $tab = 'target="_blank" rel="noopener noreferrer"'; break;
+		}
+		
+		//se crean las opciones
+		switch ($iframe) {
+			case 1: $frame = ''; break;
+			case 2: $frame = 'iframe '; break;
+		}
+		
+		//se crea el widget
+		$widget = '
+		<div class="col-lg-'.$width.' col-md-'.$width.' col-sm-6 col-xs-12">
+			<div class="box '.$bg_color.' box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">'.$titulo.'</h3>';
+					if(isset($enlace)){
+						$widget .= '
+						<div class="box-tools pull-right">
+							<a class="'.$frame.'btn btn-xs '.$color_enlace.' btn-line" href="'.$enlace.'" '.$tab.'>'.$texto_enlace.'</a>
+						</div>';
+					}
+					$widget .= '
+				</div>
+				<div class="box-body">
+					<div class="value">';
+						if(isset($icon)){      $widget .= '<span><i class="fa '.$icon.'" aria-hidden="true"></i></span>';}
+						if(isset($number)){    $widget .= '<span>'.$number.'</span>';}
+						if(isset($subtitulo)){ $widget .= $subtitulo;}
+						
+						$widget .= '
+					</div>
+				</div>
+			</div>
+		</div>';
+		
+		
+		
+		//se devuelve el widget
+		return $widget;
+	}
+}
+/*******************************************************************************************************************/
+//Muestra los widget sociales
+function widget_Ficha_3($bg_color, $icon, $number, 
+						$titulo, 
+						$enlace, $texto_enlace, $new_tab, $iframe){
+	
+	/********************************************************/
+	//Definicion de errores
+	$errorn = 0;
+	//se definen las opciones disponibles
+	$requerido = array(1, 2);
+	//verifico si el dato ingresado existe dentro de las opciones
+	if (!in_array($new_tab, $requerido)) {
+		alert_post_data(4,1,1, 'La configuracion $new_tab ('.$new_tab.') no esta dentro de las opciones');
+		$errorn++;
+	}
+	//verifico si el dato ingresado existe dentro de las opciones
+	if (!in_array($iframe, $requerido)) {
+		alert_post_data(4,1,1, 'La configuracion $iframe ('.$iframe.') no esta dentro de las opciones');
+		$errorn++;
+	}
+	//se verifica si es un numero lo que se recibe
+	if (!validarNumero($number)&&$number!=''){ 
+		alert_post_data(4,1,1, 'El valor ingresado en $number ('.$number.') no es un numero');
+		$errorn++;
+	}
+	//Verifica si el numero recibido es un entero
+	if (!validaEntero($number)&&$number!=''){ 
+		alert_post_data(4,1,1, 'El valor ingresado en $number ('.$number.') no es un numero entero');
+		$errorn++;
+	}
+	/********************************************************/
+	//Ejecucion si no hay errores
+	if($errorn==0){
+		
+		//se crean las opciones
+		switch ($new_tab) {
+			case 1: $tab = ''; break;
+			case 2: $tab = 'target="_blank" rel="noopener noreferrer"'; break;
+		}
+		
+		//se crean las opciones
+		switch ($iframe) {
+			case 1: $frame = ''; break;
+			case 2: $frame = 'iframe '; break;
+		}
+		
+		//se crea el widget
+		$widget = '
+		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+			<div class="small-box '.$bg_color.'">
+				<div class="innerbox">
+					<h3>'.$number.'</h3>
+					<p>'.$titulo.'</p>
+				</div>
+				<div class="icon">
+					<i class="fa '.$icon.'" aria-hidden="true"></i>
+				</div>
+				<a '.$tab.' href="'.$enlace.'" class="'.$frame.'small-box-footer faa-parent animated-hover">
+					'.$texto_enlace.' <i class="fa fa-arrow-circle-right faa-passing" aria-hidden="true"></i>
+				</a>
+			</div>
+		</div>
+		';
+		
+		//se devuelve el widget
+		return $widget;
+	}
+}
+/*******************************************************************************************************************/
+//Muestra los widget sociales
+function widget_title($bg_color, $icon, $porcentaje, $titulo, $subtitulo_1, $subtitulo_2){
+	
+	/********************************************************/
+	//Definicion de errores
+	$errorn = 0;
+	//se verifica si es un numero lo que se recibe
+	if (!validarNumero($porcentaje)&&$porcentaje!=''){ 
+		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero');
+		$errorn++;
+	}
+	//Verifica si el numero recibido es un entero
+	if (!validaEntero($porcentaje)&&$porcentaje!=''){ 
+		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero entero');
+		$errorn++;
+	}
+	/********************************************************/
+	//Ejecucion si no hay errores
+	if($errorn==0){
+		
+		//se crea el widget
+		$widget = '
+		<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
+			<div class="info-box '.$bg_color.'">
+				<span class="info-box-icon"><i class="fa '.$icon.' faa-spin animated " aria-hidden="true"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">'.$titulo.'</span>
+					<span class="info-box-number">'.$subtitulo_1.'</span>
+					<div class="progress"><div class="progress-bar" style="width: '.$porcentaje.'%"></div></div>
+					<span class="progress-description">'.$subtitulo_2.'</span>
+				</div>
+			</div>
+		</div>
+		';
+		
+		//se devuelve el widget
+		return $widget;
+	}
+}
+/*******************************************************************************************************************/
+//Muestra la gestion de equipos decrosscrane
+function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $idUsuario, $SegActual, $dbConn){
+	
+	//Si no existe una ID se utiliza una por defecto
+	if(!isset($IDGoogle) OR $IDGoogle==''){
+		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+	}else{
+		
+		
+		//variables
+		$HoraSistema    = hora_actual(); 
+		$FechaSistema   = fecha_actual();
+		$Fecha_inicio   = restarDias(fecha_actual(),1);
+		$Fecha_fin      = fecha_actual();
+		$google         = $IDGoogle;
+			
+		//Variable
+		$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+		//solo los equipos que tengan el seguimiento desactivado
+		$z .= " AND telemetria_listado.id_Geo = 2";
+		//enlace para redireccionar
+		$enlace  = "?dd=true";
+		$enlace .= "&idTipoUsuario=".$idTipoUsuario;
+		$enlace .= "&idSistema=".$idSistema;
+		$enlace .= "&idUsuario=".$idUsuario;
+		
+		//Filtro el sistema al cual pertenece	
+		if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+			$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+		}
+		//Verifico el tipo de usuario que esta ingresando y el id
+		$join = "";	
+		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+			$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+			$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+		}
+		//Solo para plataforma CrossTech
+		$z .= " AND telemetria_listado.idTab=9";//CrossEnergy
+
+		
+		
+		//numero sensores equipo
+		$N_Maximo_Sensores = 72;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresMedErrores_'.$i;
+			$subquery .= ',SensoresErrorActual_'.$i;
+			$subquery .= ',SensoresNombre_'.$i;
+			$subquery .= ',SensoresMedActual_'.$i;
+			$subquery .= ',SensoresUniMed_'.$i;
+			$subquery .= ',SensoresActivo_'.$i;
+		}	
+		//Listar los equipos
+		$arrEquipo = array();
+		$query = "SELECT 
+		telemetria_listado.idTelemetria, 
+		telemetria_listado.Nombre, 
+		telemetria_listado.Identificador, 
+		telemetria_listado.LastUpdateFecha,
+		telemetria_listado.LastUpdateHora,
+		telemetria_listado.cantSensores,
+		telemetria_listado.GeoLatitud, 
+		telemetria_listado.GeoLongitud, 
+		telemetria_listado.TiempoFueraLinea, 
+		telemetria_listado.NErrores,  
+		telemetria_listado.NAlertas, 
+		telemetria_listado.id_Sensores
+		
+		".$subquery."
+	
+		FROM `telemetria_listado`
+		".$join."
+		".$z."
+		ORDER BY telemetria_listado.Nombre ASC  ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrEquipo,$row );
+		}
+		
+		/*************************************************************/
+		//Se traen todas las unidades de medida
+		$arrUnimed = array();
+		$query = "SELECT idUniMed,Nombre
+		FROM `telemetria_listado_unidad_medida`
+		ORDER BY idUniMed ASC";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+									
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrUnimed,$row );
+		}
+		//Ordeno las unidades de medida
+		$arrFinalUnimed = array();
+		foreach ($arrUnimed as $data) {
+			$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
+		}
+		
+		/*************************************************************/
+		//se traen todas las zonas
+		$arrZonas = array();
+		$query = "SELECT idZona, Nombre
+		FROM `telemetria_zonas` ";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+		//Si ejecuto correctamente la consulta
+		if(!$resultado){
+			//Genero numero aleatorio
+			$vardata = genera_password(8,'alfanumerico');
+							
+			//Guardo el error en una variable temporal
+			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+		}
+		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		array_push( $arrZonas,$row );
+		}
+		//defino la variable temporal de la zona 
+		$_SESSION['usuario']['zona']['idZona']         = 9999;
+		$_SESSION['usuario']['zona']['id_Geo']         = 2;
+		$_SESSION['usuario']['zona']['idTipoUsuario']  = $idTipoUsuario;
+		$_SESSION['usuario']['zona']['idSistema']      = $idSistema;
+		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
+
+
+		$nicon    = 0;
+		$arrGruas = array();
+													
+		foreach ($arrEquipo as $data) {
+										
+			/**********************************************/
+			//Se resetean
+			$in_eq_alertas     = 0;
+			$in_eq_fueralinea  = 0;
+			$in_eq_ok          = 1;
+																			
+			/**********************************************/
+			//Fuera de linea
+			$diaInicio   = $data['LastUpdateFecha'];
+			$diaTermino  = $FechaSistema;
+			$tiempo1     = $data['LastUpdateHora'];
+			$tiempo2     = $HoraSistema;
+			//calculo diferencia de dias
+			$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+			//calculo del tiempo transcurrido
+			$Tiempo = restahoras($tiempo1, $tiempo2);
+			//Calculo del tiempo transcurrido
+			if($n_dias!=0){
+				if($n_dias>=2){
+					$n_dias        = $n_dias-1;
+					$horas_trans2  = multHoras('24:00:00',$n_dias);
+					$Tiempo        = sumahoras($Tiempo,$horas_trans2);
+				}
+				if($n_dias==1&&$tiempo1<$tiempo2){
+					$horas_trans2 = multHoras('24:00:00',$n_dias);
+					$Tiempo       = sumahoras($Tiempo,$horas_trans2);
+				}
+			}	
+			if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+				$in_eq_fueralinea++;
+			}
+
+			/**********************************************/
+			//alertas
+			$xx = 0;
+			for ($i = 1; $i <= $data['cantSensores']; $i++) {
+				$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
+				if($xx<0){
+					$in_eq_alertas++;
+				}
+			}
+
+			/**********************************************/
+			//Equipos Errores
+			if($data['NErrores']>0){
+				$in_eq_alertas++;	
+			}
+													
+			/*******************************************************/
+			//rearmo
+			if($in_eq_alertas>0){    $in_eq_ok = 0;  $in_eq_alertas    = 1;    }
+			if($in_eq_fueralinea>0){ $in_eq_ok = 0;  $in_eq_fueralinea = 1; $in_eq_alertas = 0;  }
+										
+			/*******************************************************/
+			//se guardan estados
+			$danger = '';
+			$xdanger = 1;
+			if($in_eq_alertas>0){    $danger = 'warning';  $xdanger = 2; $dataex = '<a href="#" title="Equipo con Alertas"        class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+			if($in_eq_fueralinea>0){ $danger = 'danger';   $xdanger = 3; $dataex = '<a href="#" title="Fuera de Linea"            class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+										
+			/*******************************************************/
+			//traspasan los estados
+			if($in_eq_ok==1){
+				$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+			}else{
+				$eq_ok_icon = $dataex;
+			}
+			
+			
+			/*************************************************************************/
+			//Guardo todos los datos
+			$arrGruas[$xdanger][$data['idTelemetria']]['tr_color']           = $danger;
+			$arrGruas[$xdanger][$data['idTelemetria']]['eq_ok_icon']         = $eq_ok_icon;
+			$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']             = $data['Nombre'];
+			$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']         = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
+			$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']  = '<a href="view_crossenergy_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
+			
+			/****************************************************/
+			//el resto de los botones
+			$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']            = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+			//boton de alertas pendientes de ver
+			if(isset($data['NAlertas'])&&$data['NAlertas']!=''&&$data['NAlertas']!=0){
+				//Alertas
+				$link_Alertas  = 'informe_telemetria_errores_7.php';
+				$link_Alertas .= '?bla=bla';
+				//$link_Alertas .= '?f_inicio='.$Fecha_inicio;
+				//$link_Alertas .= '&f_termino='.$Fecha_fin;
+				$link_Alertas .= '&idTelemetria='.$data['idTelemetria'];
+				$link_Alertas .= '&idLeido=0';		
+				$link_Alertas .= '&submit_filter=+Filtrar';	
+				//boton
+				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a target="_blank" rel="noopener noreferrer" href="'.$link_Alertas.'" title="Alertas Pendientes de ver" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
+			}else{
+				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '';
+			}
+			
+			$nicon++;
+		}
+
+		//Cuento los totales		
+		$Count_Alerta     = 0;
+		$Count_Ok         = 0;
+		$Count_FueraLinea = 0;
+		$Count_Total      = 0;
+				
+		if($arrGruas[2]){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
+		if($arrGruas[1]){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
+		if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
+		
+		$GPS = '';
+									
+		$GPS .= '
+			<div class="row">';
+				$GPS .= widget_Ficha_2('box-yellow', 'fa-cog', '<span id="updt_Count_Alerta">'.$Count_Alerta.'</span>', 3, 'Con Alertas', '', '', '', '', 1, 1);   
+				$GPS .= widget_Ficha_2('box-red', 'fa-cog', '<span id="updt_Count_FueraLinea">'.$Count_FueraLinea.'</span>', 3, 'Fuera de Linea', '', '', '', '', 1, 1);   
+				$GPS .= widget_Ficha_2('box-green', 'fa-cog', '<span id="updt_Count_Ok">'.$Count_Ok.'</span>', 3, 'Ok', '', '', '', '', 1, 1);   
+				$GPS .= widget_Ficha_2('box-blue', 'fa-cog', '<span id="updt_Count_Total">'.$Count_Total.'</span>', 3, 'Total', '', '', '', '', 1, 1);   
+				$GPS .= '
+			</div>';									
+		
+		
+		$GPS .= '
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+								
+<div class="row">		
+	<div class="col-sm-12">
+		<div class="box">	
+			<header>		
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
+			</header>
+			<div class="table-responsive">
+				<div class="col-sm-6">
+					<div class="row">
+						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
+							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+								<thead>
+									<tr role="row">
+										<th colspan="3">
+											<div class="field">
+												<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
+													//La opcion todos
+													$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
+													foreach ( $arrZonas as $select ) {
+														$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
+													} 
+												$GPS .= '
+												</select>
+											</div>
+										</th>
+									</tr>';
+									$GPS .= widget_sherlock(1, 3);
+									$GPS .= '
+								</thead>
+								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+									
+									if($arrGruas[2]){
+										foreach ( $arrGruas[2] as $categoria=>$grua ) { 
+											$GPS .= '
+											<tr class="odd '.$grua['tr_color'].'">
+												<td width="10">
+													<div class="btn-group" style="width: 35px;" >';
+														$GPS .= $grua['eq_ok_icon'];
+													$GPS .= '</div>
+												</td>
+												<td>
+													'.$grua['Nombre'].'<br/>
+													'.$grua['LastUpdate'].'
+												</td>
+												<td width="10">
+													<div class="btn-group" style="width: 105px;" >';
+														$GPS .= $grua['NAlertas'];
+														$GPS .= $grua['crosscrane_estado'];
+														$GPS .= $grua['CenterMap'];
+														$GPS .= '
+													</div>
+												</td>
+											</tr>';
+										}
+									}
+									
+									if($arrGruas[1]){
+										foreach ( $arrGruas[1] as $categoria=>$grua ) { 
+											$GPS .= '
+											<tr class="odd '.$grua['tr_color'].'">
+												<td width="10">
+													<div class="btn-group" style="width: 35px;" >';
+														$GPS .= $grua['eq_ok_icon'];
+													$GPS .= '</div>
+												</td>
+												<td>
+													'.$grua['Nombre'].'<br/>
+													'.$grua['LastUpdate'].'
+												</td>
+												<td width="10">
+													<div class="btn-group" style="width: 105px;" >';
+														$GPS .= $grua['NAlertas'];
+														$GPS .= $grua['crosscrane_estado'];
+														$GPS .= $grua['CenterMap'];
+														$GPS .= '
+													</div>
+												</td>
+											</tr>';
+										}
+									}
+									
+									if($arrGruas[3]){
+										foreach ( $arrGruas[3] as $categoria=>$grua ) { 
+											$GPS .= '
+											<tr class="odd '.$grua['tr_color'].'">
+												<td width="10">
+													<div class="btn-group" style="width: 35px;" >';
+														$GPS .= $grua['eq_ok_icon'];
+													$GPS .= '</div>
+												</td>
+												<td>
+													'.$grua['Nombre'].'<br/>
+													'.$grua['LastUpdate'].'
+												</td>
+												<td width="10">
+													<div class="btn-group" style="width: 105px;" >';
+														$GPS .= $grua['NAlertas'];
+														$GPS .= $grua['crosscrane_estado'];
+														$GPS .= $grua['CenterMap'];
+														$GPS .= '
+													</div>
+												</td>
+											</tr>';
+										}
+									}				
+											
+										
+									$GPS .= '                  
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="row">
+						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+						<div id="consulta"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>	
+	
+<style>
+.my-custom-scrollbar {
+	position: relative;
+	height: 550px;
+	overflow: auto;
+}
+.table-wrapper-scroll-y {
+	display: block;
+}
+</style>		
+	
+<script>
+	
+	var map;
+	var markers = [];
+	//Ubicacion de los distintos dispositivos
+	var locations = [ ';
+		foreach ( $arrEquipo as $data ) {
+			//burbuja
+			$explanation  = '<div class="iw-subTitle">Equipo: '.$data['Nombre'].'<br/>Identificador: '.$data['Identificador'].'</div>';
+			$explanation .= 'Actualizado: '.fecha_estandar($data['LastUpdateFecha']).' - '.$data['LastUpdateHora'].'</p>';
+			//verifico si tiene sensores configurados
+			if(isset($data['id_Sensores'])&&$data['id_Sensores']==1){
+				$explanation .= '<div class="iw-subTitle">Sensores: </div><p>';
+				for ($i = 1; $i <= $data['cantSensores']; $i++) {
+					//verifico que sensor este activo
+					if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+						//Unidad medida
+						$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						//cadena
+						if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
+						$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
+					}
+				}
+				$explanation .= '</p>';
+			}
+			//se arma dato
+			$GPS .= "[";
+				$GPS .= $data['GeoLatitud'];
+				$GPS .= ", ".$data['GeoLongitud'];
+				$GPS .= ", '".$explanation."'";
+			$GPS .= "], ";					
+		}
+	$GPS .= '];
+	/* ************************************************************************** */
+	function chngZona() {
+		idZona = document.getElementById("selectZona").value;
+		$(\'#vehiContent\').load(\'principal_update_zonaList_2_crossenergy.php?idZona=\' + idZona);
+		setMarkers(map, locations, 1);	
+	}
+
+	/* ************************************************************************** */
+	function fncCenterMap(Latitud, Longitud, n_icon){
+		latlon = new google.maps.LatLng(Latitud, Longitud);
+		map.panTo(latlon);
+		//volver todo a normal
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
+		}
+		//colorear el seleccionado
+		markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
+	}
+
+
+	/* ************************************************************************** */
+	function initialize() {
+		var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+		var myOptions = {
+			zoom: 12,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+							
+		
+		
+		//ubicacion inicial
+		setMarkers(map, locations, 1);
+		//actualizacion de posicion
+		transMarker(map, '.$SegActual.');
+
+	}
+	/* ************************************************************************** */
+	function setMarkers(map, locations, optc) {
+
+		var marker, i, last_latitude, last_longitude;
+		
+		for (i = 0; i < locations.length; i++) {
+			
+			//defino ubicacion y datos
+			var latitude   = locations[i][0];
+			var longitude  = locations[i][1];
+			var data       = locations[i][2];
+			
+			//guardo las ultimas ubicaciones
+			last_latitude   = locations[i][0];
+			last_longitude  = locations[i][1];
+			
+			latlngset = new google.maps.LatLng(latitude, longitude);
+			
+			//se crea marcador
+			var marker = new google.maps.Marker({
+				map         : map, 
+				position    : latlngset,
+				icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png"
+			});
+			markers.push(marker);
+
+			//se define contenido
+			var content = 	"<div id=\'iw-container\'>" +
+							"<div class=\'iw-title\'>Datos</div>" +
+							"<div class=\'iw-content\'>" +
+							data +
+							"</div>" +
+							"<div class=\'iw-bottom-gradient\'></div>" +
+							"</div>";
+
+			//se crea infowindow
+			var infowindow = new google.maps.InfoWindow();
+
+			//se agrega funcion de click a infowindow
+			google.maps.event.addListener(marker,\'click\', (function(marker,content,infowindow){ 
+				return function() {
+					infowindow.setContent(content);
+					infowindow.open(map,marker);
+				};
+			})(marker,content,infowindow)); 
+
+		}
+		if(optc==1){
+			latlon = new google.maps.LatLng(last_latitude, last_longitude);
+			map.panTo(latlon);
+		}
+	}
+	/* ************************************************************************** */
+	function transMarker(map, time) {
+		var newTime = time / 2;
+		setInterval(function(){transMarkerTimer(map)},newTime);
+	}
+	/* ************************************************************************** */
+	var mapax = 0;
+	function transMarkerTimer(map) {
+
+		switch(mapax) {
+			//Ejecutar formulario con el recorrido y la ruta
+			case 1:
+				$(\'#consulta\').load(\'principal_update_map_zona_2_crossenergy.php'.$enlace.'\');
+				$(\'#vehiContent\').load(\'principal_update_zonaList_2_crossenergy.php\');
+				break;
+			//se dibujan los iconos 	
+			case 2:
+				//Se ocultan y eliminan los iconos
+				deleteMarkers();
+				setMarkers(map, new_locations, 2);											
+				//actualizo la hora de actualizacion
+				document.getElementById(\'update_text_HoraRefresco\').innerHTML=\'Hora Refresco: \'+HoraRefresco;					
+
+				break;		
+		}
+
+		mapax++;	
+		if(mapax==3){mapax=1}
+	}
+	/* ************************************************************************** */
+	// Sets the map on all markers in the array.
+	function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+    }
+    /* ************************************************************************** */
+	// Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+	/* ************************************************************************** */
+	// Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+    /* ************************************************************************** */
+	// Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+
+
+	
+	
+	
+	
+	
+	/* ************************************************************************** */
+	google.maps.event.addDomListener(window, "load", initialize());
+</script>	
+	
+		
+';
+
+								
+			$GPS .= '
+			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
+			 
+			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
+
+			<script>
+				$(document).ready(function(){
+					//Examples of how to assign the Colorbox event to elements
+					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+					$(".callbacks").colorbox({
+						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
+						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
+						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
+						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
+						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+					});
+
+							
+					//Example of preserving a JavaScript event for inline calls.
+					$("#click").click(function(){ 
+						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+						return false;
+					});
+				});
+			</script>';
+		
+		
+		
+		return $GPS;
+								
+
+	}
+}
 
 
 ?>

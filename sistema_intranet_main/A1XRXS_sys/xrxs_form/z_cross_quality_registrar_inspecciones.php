@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -62,11 +66,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idAnalisis':         if(empty($idAnalisis)){         $error['idAnalisis']         = 'error/No ha ingresado el id';}break;
 			case 'idSistema':          if(empty($idSistema)){          $error['idSistema']          = 'error/No ha seleccionado el sistema';}break;
 			case 'idUsuario':          if(empty($idUsuario)){          $error['idUsuario']          = 'error/No ha seleccionado a un usuario';}break;
@@ -108,7 +112,15 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	
 		}
-	}	
+	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones']  = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	if(isset($Resolucion_1)&&contar_palabras_censuradas($Resolucion_1)!=0){    $error['Resolucion_1']   = 'error/Edita Resolucion 1, contiene palabras no permitidas'; }	
+	if(isset($Resolucion_2)&&contar_palabras_censuradas($Resolucion_2)!=0){    $error['Resolucion_2']   = 'error/Edita Resolucion 2, contiene palabras no permitidas'; }	
+	if(isset($Resolucion_3)&&contar_palabras_censuradas($Resolucion_3)!=0){    $error['Resolucion_3']   = 'error/Edita Resolucion 3, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -132,7 +144,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			/*$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -169,220 +181,52 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************/
 				// Se trae el tipo de planilla
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `core_cross_quality_analisis_calidad`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoPlanilla = mysqli_fetch_assoc ($resultado);	
+					$rowTipoPlanilla = db_select_data (false, 'Nombre', 'core_cross_quality_analisis_calidad', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la categoria del producto
 				if(isset($idCategoria)&&$idCategoria!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_variedades_categorias`
-					WHERE idCategoria = ".$idCategoria;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCategoria = mysqli_fetch_assoc ($resultado);	 
+					$rowCategoria = db_select_data (false, 'Nombre', 'sistema_variedades_categorias', '', 'idCategoria = '.$idCategoria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion del producto
 				if(isset($idProducto)&&$idProducto!=''){
-					$query = "SELECT 
-					variedades_listado.Nombre
-					FROM `variedades_listado`
-					WHERE idProducto = ".$idProducto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProducto = mysqli_fetch_assoc ($resultado);				
+					$rowProducto = db_select_data (false, 'Nombre', 'variedades_listado', '', 'idProducto = '.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}			
 				/*********************************************/
 				// Se trae la informacion de la ubicacion
 				if(isset($idUbicacion)&&$idUbicacion!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado`
-					WHERE idUbicacion = ".$idUbicacion;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacion = mysqli_fetch_assoc ($resultado);
+					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado', '', 'idUbicacion = '.$idUbicacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_1)&&$idUbicacion_lvl_1!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_1`
-					WHERE idLevel_1 = ".$idUbicacion_lvl_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_1 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_1 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_1', '', 'idLevel_1 = '.$idUbicacion_lvl_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_2)&&$idUbicacion_lvl_2!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_2`
-					WHERE idLevel_2 = ".$idUbicacion_lvl_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_2 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_2 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_2', '', 'idLevel_2 = '.$idUbicacion_lvl_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_3)&&$idUbicacion_lvl_3!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_3`
-					WHERE idLevel_3 = ".$idUbicacion_lvl_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_3 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_3 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_3', '', 'idLevel_3 = '.$idUbicacion_lvl_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_4)&&$idUbicacion_lvl_4!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_4`
-					WHERE idLevel_4 = ".$idUbicacion_lvl_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_4 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_4 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_4', '', 'idLevel_4 = '.$idUbicacion_lvl_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_5)&&$idUbicacion_lvl_5!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_5`
-					WHERE idLevel_5 = ".$idUbicacion_lvl_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_5 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_5 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_5', '', 'idLevel_5 = '.$idUbicacion_lvl_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion del producto
 				if(isset($idCategoria)&&$idCategoria!=''&&isset($idTipo)&&$idTipo!=''&&isset($idSistema)&&$idSistema!=''){
-					$query = "SELECT 
-					cross_quality_calidad_matriz.cantPuntos,
-					sistema_variedades_categorias_matriz_calidad.idMatriz
-
-					FROM `sistema_variedades_categorias_matriz_calidad`
-					LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz
-					WHERE sistema_variedades_categorias_matriz_calidad.idCategoria = ".$idCategoria."
-					AND sistema_variedades_categorias_matriz_calidad.idProceso = ".$idTipo."
-					AND sistema_variedades_categorias_matriz_calidad.idSistema = ".$idSistema."
-					";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-														
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-														
-					}
-					$rowMatrizCali = mysqli_fetch_assoc ($resultado);
+					$rowMatrizCali = db_select_data (false, 'cross_quality_calidad_matriz.cantPuntos, sistema_variedades_categorias_matriz_calidad.idMatriz', 'sistema_variedades_categorias_matriz_calidad', 'LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz', 'sistema_variedades_categorias_matriz_calidad.idCategoria = '.$idCategoria.' AND sistema_variedades_categorias_matriz_calidad.idProceso = '.$idTipo.' AND sistema_variedades_categorias_matriz_calidad.idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*********************************************/
@@ -400,16 +244,16 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['cross_quality_reg_insp_basicos']['idTipo']          = $idTipo;
-				$_SESSION['cross_quality_reg_insp_basicos']['Temporada']       = $Temporada;
-				$_SESSION['cross_quality_reg_insp_basicos']['idCategoria']     = $idCategoria;
-				$_SESSION['cross_quality_reg_insp_basicos']['idProducto']      = $idProducto;
-				$_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']     = $idUbicacion;
-				$_SESSION['cross_quality_reg_insp_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['cross_quality_reg_insp_basicos']['idSistema']       = $idSistema;
-				$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']      = $fecha_auto;
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['cross_quality_reg_insp_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['cross_quality_reg_insp_basicos']['idTipo']          = '';}
+				if(isset($Temporada)&&$Temporada!=''){            $_SESSION['cross_quality_reg_insp_basicos']['Temporada']       = $Temporada;       }else{$_SESSION['cross_quality_reg_insp_basicos']['Temporada']       = '';}
+				if(isset($idCategoria)&&$idCategoria!=''){        $_SESSION['cross_quality_reg_insp_basicos']['idCategoria']     = $idCategoria;     }else{$_SESSION['cross_quality_reg_insp_basicos']['idCategoria']     = '';}
+				if(isset($idProducto)&&$idProducto!=''){          $_SESSION['cross_quality_reg_insp_basicos']['idProducto']      = $idProducto;      }else{$_SESSION['cross_quality_reg_insp_basicos']['idProducto']      = '';}
+				if(isset($idUbicacion)&&$idUbicacion!=''){        $_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']     = $idUbicacion;     }else{$_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']     = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['cross_quality_reg_insp_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['cross_quality_reg_insp_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['cross_quality_reg_insp_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['cross_quality_reg_insp_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']       = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']      = '';}
 				
 				if(isset($idUbicacion_lvl_1)&&$idUbicacion_lvl_1!=''){$_SESSION['cross_quality_reg_insp_basicos']['idUbicacion_lvl_1']    = $idUbicacion_lvl_1;}
 				if(isset($idUbicacion_lvl_2)&&$idUbicacion_lvl_2!=''){$_SESSION['cross_quality_reg_insp_basicos']['idUbicacion_lvl_2']    = $idUbicacion_lvl_2;}
@@ -467,7 +311,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			/*$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -488,220 +332,52 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************/
 				// Se trae el tipo de planilla
 				if(isset($idTipo)&&$idTipo!=''){
-					$query = "SELECT Nombre
-					FROM `core_cross_quality_analisis_calidad`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoPlanilla = mysqli_fetch_assoc ($resultado);	
+					$rowTipoPlanilla = db_select_data (false, 'Nombre', 'core_cross_quality_analisis_calidad', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la categoria del producto
 				if(isset($idCategoria)&&$idCategoria!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_variedades_categorias`
-					WHERE idCategoria = ".$idCategoria;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCategoria = mysqli_fetch_assoc ($resultado);	 
+					$rowCategoria = db_select_data (false, 'Nombre', 'sistema_variedades_categorias', '', 'idCategoria = '.$idCategoria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion del producto
 				if(isset($idProducto)&&$idProducto!=''){
-					$query = "SELECT 
-					variedades_listado.Nombre
-					FROM `variedades_listado`
-					WHERE idProducto = ".$idProducto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProducto = mysqli_fetch_assoc ($resultado);				
+					$rowProducto = db_select_data (false, 'Nombre', 'variedades_listado', '', 'idProducto = '.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}			
 				/*********************************************/
 				// Se trae la informacion de la ubicacion
 				if(isset($idUbicacion)&&$idUbicacion!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado`
-					WHERE idUbicacion = ".$idUbicacion;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacion = mysqli_fetch_assoc ($resultado);
+					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado', '', 'idUbicacion = '.$idUbicacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_1)&&$idUbicacion_lvl_1!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_1`
-					WHERE idLevel_1 = ".$idUbicacion_lvl_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_1 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_1 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_1', '', 'idLevel_1 = '.$idUbicacion_lvl_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_2)&&$idUbicacion_lvl_2!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_2`
-					WHERE idLevel_2 = ".$idUbicacion_lvl_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_2 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_2 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_2', '', 'idLevel_2 = '.$idUbicacion_lvl_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_3)&&$idUbicacion_lvl_3!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_3`
-					WHERE idLevel_3 = ".$idUbicacion_lvl_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_3 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_3 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_3', '', 'idLevel_3 = '.$idUbicacion_lvl_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_4)&&$idUbicacion_lvl_4!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_4`
-					WHERE idLevel_4 = ".$idUbicacion_lvl_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_4 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_4 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_4', '', 'idLevel_4 = '.$idUbicacion_lvl_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_5)&&$idUbicacion_lvl_5!=''){
-					$query = "SELECT Nombre
-					FROM `ubicacion_listado_level_5`
-					WHERE idLevel_5 = ".$idUbicacion_lvl_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUbicacionLVL_5 = mysqli_fetch_assoc ($resultado);
+					$rowUbicacionLVL_5 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_5', '', 'idLevel_5 = '.$idUbicacion_lvl_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
 				// Se trae la informacion del producto
 				if(isset($idCategoria)&&$idCategoria!=''&&isset($idTipo)&&$idTipo!=''&&isset($idSistema)&&$idSistema!=''){
-					$query = "SELECT 
-					cross_quality_calidad_matriz.cantPuntos,
-					sistema_variedades_categorias_matriz_calidad.idMatriz
-
-					FROM `sistema_variedades_categorias_matriz_calidad`
-					LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz
-					WHERE sistema_variedades_categorias_matriz_calidad.idCategoria = ".$idCategoria."
-					AND sistema_variedades_categorias_matriz_calidad.idProceso = ".$idTipo."
-					AND sistema_variedades_categorias_matriz_calidad.idSistema = ".$idSistema."
-					";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-														
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-														
-					}
-					$rowMatrizCali = mysqli_fetch_assoc ($resultado);
+					$rowMatrizCali = db_select_data (false, 'cross_quality_calidad_matriz.cantPuntos, sistema_variedades_categorias_matriz_calidad.idMatriz', 'sistema_variedades_categorias_matriz_calidad', 'LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz', 'sistema_variedades_categorias_matriz_calidad.idCategoria = '.$idCategoria.' AND sistema_variedades_categorias_matriz_calidad.idProceso = '.$idTipo.' AND sistema_variedades_categorias_matriz_calidad.idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*********************************************/
@@ -719,16 +395,16 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['cross_quality_reg_insp_basicos']['idTipo']          = $idTipo;
-				$_SESSION['cross_quality_reg_insp_basicos']['Temporada']       = $Temporada;
-				$_SESSION['cross_quality_reg_insp_basicos']['idCategoria']     = $idCategoria;
-				$_SESSION['cross_quality_reg_insp_basicos']['idProducto']      = $idProducto;
-				$_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']     = $idUbicacion;
-				$_SESSION['cross_quality_reg_insp_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['cross_quality_reg_insp_basicos']['idSistema']       = $idSistema;
-				$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']      = $fecha_auto;
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['cross_quality_reg_insp_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['cross_quality_reg_insp_basicos']['idTipo']          = '';}
+				if(isset($Temporada)&&$Temporada!=''){            $_SESSION['cross_quality_reg_insp_basicos']['Temporada']       = $Temporada;       }else{$_SESSION['cross_quality_reg_insp_basicos']['Temporada']       = '';}
+				if(isset($idCategoria)&&$idCategoria!=''){        $_SESSION['cross_quality_reg_insp_basicos']['idCategoria']     = $idCategoria;     }else{$_SESSION['cross_quality_reg_insp_basicos']['idCategoria']     = '';}
+				if(isset($idProducto)&&$idProducto!=''){          $_SESSION['cross_quality_reg_insp_basicos']['idProducto']      = $idProducto;      }else{$_SESSION['cross_quality_reg_insp_basicos']['idProducto']      = '';}
+				if(isset($idUbicacion)&&$idUbicacion!=''){        $_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']     = $idUbicacion;     }else{$_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']     = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['cross_quality_reg_insp_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['cross_quality_reg_insp_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['cross_quality_reg_insp_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['cross_quality_reg_insp_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']       = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']      = '';}
 				
 				if(isset($idUbicacion_lvl_1)&&$idUbicacion_lvl_1!=''){$_SESSION['cross_quality_reg_insp_basicos']['idUbicacion_lvl_1']    = $idUbicacion_lvl_1;}
 				if(isset($idUbicacion_lvl_2)&&$idUbicacion_lvl_2!=''){$_SESSION['cross_quality_reg_insp_basicos']['idUbicacion_lvl_2']    = $idUbicacion_lvl_2;}
@@ -749,24 +425,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se trae un listado con todos los trabajadores
-			$query = "SELECT Nombre, ApellidoPat, ApellidoMat, Cargo, Rut
-			FROM `trabajadores_listado`
-			WHERE idTrabajador = {$idTrabajador}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-								
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-			}
-			$rowTrabajadores = mysqli_fetch_assoc ($resultado);
-		
+			$rowTrabajadores = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat, Cargo, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//Se guarda el trabajador asignado
 			$_SESSION['cross_quality_reg_insp_trabajadores'][$idTrabajador]['idTrabajador']  = $idTrabajador;
@@ -798,24 +457,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se trae un listado con todos los trabajadores
-			$query = "SELECT Codigo, Nombre
-			FROM `maquinas_listado`
-			WHERE idMaquina = {$idMaquina}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-								
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-			}
-			$rowMaquina = mysqli_fetch_assoc ($resultado);
-		
+			$rowMaquina = db_select_data (false, 'Codigo, Nombre', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//Se guarda el trabajador asignado
 			$_SESSION['cross_quality_reg_insp_maquinas'][$idMaquina]['idMaquina']     = $idMaquina;
@@ -835,39 +477,6 @@ if( ! defined('XMBCXRXSKGC')) {
 			unset($_SESSION['cross_quality_reg_insp_maquinas'][$_GET['del_maq']]);
 			
 			header( 'Location: '.$location.'&view=true' );
-			die;
-
-		break;		
-/*******************************************************************************************************************/		
-		case 'add_obs_ing':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['cross_quality_reg_insp_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['cross_quality_reg_insp_temporal'] = $_SESSION['cross_quality_reg_insp_basicos']['Observaciones'];
-			$_SESSION['cross_quality_reg_insp_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
 			die;
 
 		break;
@@ -893,7 +502,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -1084,30 +693,11 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 			}
 			
-		
-			
-			
 			if ( empty($error) ) {
 				
 				// tomo los datos del usuario
-				$query = "SELECT Nombre
-				FROM `productores_listado`
-				WHERE idProductor = {$idProductor}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProductor = mysqli_fetch_assoc ($resultado);
-
+				$rowProductor = db_select_data (false, 'Nombre', 'productores_listado', '', 'idProductor ='.$idProductor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				$idInterno = $idInterno+1;
 				$_SESSION['cross_quality_reg_insp_muestras'][$idInterno]['idMuestra']       = $idInterno;
 				$_SESSION['cross_quality_reg_insp_muestras'][$idInterno]['idProductor']     = $idProductor;
@@ -1230,24 +820,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// tomo los datos del usuario
-				$query = "SELECT Nombre
-				FROM `productores_listado`
-				WHERE idProductor = {$idProductor}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProductor = mysqli_fetch_assoc ($resultado);
-
+				$rowProductor = db_select_data (false, 'Nombre', 'productores_listado', '', 'idProductor ='.$idProductor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				$_SESSION['cross_quality_reg_insp_muestras'][$oldidProducto]['idMuestra']         = $oldidProducto;
 				$_SESSION['cross_quality_reg_insp_muestras'][$oldidProducto]['idProductor']       = $idProductor;
@@ -1305,16 +878,16 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['cross_quality_reg_insp_basicos'])){
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) or $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idTipo']) or $_SESSION['cross_quality_reg_insp_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Temporada']) or $_SESSION['cross_quality_reg_insp_basicos']['Temporada']=='' ){           $error['Temporada']        = 'error/No ha seleccionado la Temporada';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idCategoria']) or $_SESSION['cross_quality_reg_insp_basicos']['idCategoria']=='' ){       $error['idCategoria']      = 'error/No ha seleccionado la categoria del producto';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idProducto']) or $_SESSION['cross_quality_reg_insp_basicos']['idProducto']=='' ){         $error['idProducto']       = 'error/No ha seleccionado el producto';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']) or $_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']=='' ){       $error['idUbicacion']      = 'error/No ha seleccionado la ubicacion';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Observaciones']) or $_SESSION['cross_quality_reg_insp_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) or $_SESSION['cross_quality_reg_insp_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) or $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) or $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idTipo']) OR $_SESSION['cross_quality_reg_insp_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Temporada']) OR $_SESSION['cross_quality_reg_insp_basicos']['Temporada']=='' ){           $error['Temporada']        = 'error/No ha seleccionado la Temporada';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idCategoria']) OR $_SESSION['cross_quality_reg_insp_basicos']['idCategoria']=='' ){       $error['idCategoria']      = 'error/No ha seleccionado la categoria del producto';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idProducto']) OR $_SESSION['cross_quality_reg_insp_basicos']['idProducto']=='' ){         $error['idProducto']       = 'error/No ha seleccionado el producto';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']) OR $_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']=='' ){       $error['idUbicacion']      = 'error/No ha seleccionado la ubicacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Observaciones']) OR $_SESSION['cross_quality_reg_insp_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) OR $_SESSION['cross_quality_reg_insp_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) OR $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) OR $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creacion';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de datos';
 			}
@@ -1388,7 +961,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, 
 				idUbicacion_lvl_4, idUbicacion_lvl_5, Observaciones
 				) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1443,7 +1016,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, 
 							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
 							idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idTrabajador) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1498,7 +1071,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, 
 							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
 							idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idMaquina) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1546,7 +1119,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							n_folio_pallet, idTipo, lote, f_embalaje, f_cosecha, H_inspeccion, cantidad, peso,
 							Resolucion_1, Resolucion_2, Resolucion_3
 							".$zz." ) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1600,7 +1173,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, 
 							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
 							idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1733,7 +1306,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			/*$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -1808,7 +1381,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idAnalisis)&&isset($idTrabajador)){
-				$ndata_1 = db_select_nrows ('idTrabajador', 'cross_quality_registrar_inspecciones_trabajador', '', "idAnalisis='".$idAnalisis."' AND idTrabajador='".$idTrabajador."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idTrabajador', 'cross_quality_registrar_inspecciones_trabajador', '', "idAnalisis='".$idAnalisis."' AND idTrabajador='".$idTrabajador."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Trabajador que esta tratando de ingresar ya fue ingresado';}
@@ -1849,7 +1422,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo,
 				Temporada, idCategoria, idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idTrabajador ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1878,27 +1451,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `cross_quality_registrar_inspecciones_trabajador` WHERE idTrabajadores = {$_GET['del_trab']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_trab']) OR !validaEntero($_GET['del_trab']))&&$_GET['del_trab']!=''){
+				$indice = simpleDecode($_GET['del_trab'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_trab'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'cross_quality_registrar_inspecciones_trabajador', 'idTrabajadores = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;			
 /*******************************************************************************************************************/		
@@ -1912,7 +1505,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idAnalisis)&&isset($idMaquina)){
-				$ndata_1 = db_select_nrows ('idMaquina', 'cross_quality_registrar_inspecciones_maquina', '', "idAnalisis='".$idAnalisis."' AND idMaquina='".$idMaquina."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idMaquina', 'cross_quality_registrar_inspecciones_maquina', '', "idAnalisis='".$idAnalisis."' AND idMaquina='".$idMaquina."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La Maquina que esta tratando de ingresar ya fue ingresado';}
@@ -1955,7 +1548,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo,
 				Temporada, idCategoria, idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idMaquina ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1984,27 +1577,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `cross_quality_registrar_inspecciones_maquina` WHERE idMaquinas = {$_GET['del_maq']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_maq']) OR !validaEntero($_GET['del_maq']))&&$_GET['del_maq']!=''){
+				$indice = simpleDecode($_GET['del_maq'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_maq'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'cross_quality_registrar_inspecciones_maquina', 'idMaquinas = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;		
 /*******************************************************************************************************************/		
@@ -2020,7 +1633,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -2094,7 +1707,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo,
 									Temporada, idCategoria, idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 									idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, Nombre ) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 				
@@ -2123,49 +1736,63 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			// Se obtiene el nombre del logo
-			$query = "SELECT Nombre
-			FROM `cross_quality_registrar_inspecciones_archivo`
-			WHERE idArchivo = {$_GET['del_file']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `cross_quality_registrar_inspecciones_archivo` WHERE idArchivo = {$_GET['del_file']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//se elimina el archivo
-				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['Nombre'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['Nombre']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//Redirijo			
-				header( 'Location: '.$location );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_file']) OR !validaEntero($_GET['del_file']))&&$_GET['del_file']!=''){
+				$indice = simpleDecode($_GET['del_file'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_file'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'Nombre', 'cross_quality_registrar_inspecciones_archivo', '', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
+				//se borran los datos
+				$resultado = db_delete_data (false, 'cross_quality_registrar_inspecciones_archivo', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina el archivo
+					if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['Nombre'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['Nombre']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;		
 /*******************************************************************************************************************/		
@@ -2203,7 +1830,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				n_folio_pallet, idTipo, lote, f_embalaje, f_cosecha, H_inspeccion, cantidad, peso,
 				Resolucion_1, Resolucion_2, Resolucion_3
 				".$zz." ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2286,28 +1913,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `cross_quality_registrar_inspecciones_muestras` WHERE idMuestras = {$_GET['del_muestra']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_muestra']) OR !validaEntero($_GET['del_muestra']))&&$_GET['del_muestra']!=''){
+				$indice = simpleDecode($_GET['del_muestra'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_muestra'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
-
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'cross_quality_registrar_inspecciones_muestras', 'idMuestras = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;	
 
@@ -2325,16 +1971,16 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['cross_quality_reg_insp_basicos'])){
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) or $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idTipo']) or $_SESSION['cross_quality_reg_insp_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Temporada']) or $_SESSION['cross_quality_reg_insp_basicos']['Temporada']=='' ){           $error['Temporada']        = 'error/No ha seleccionado la Temporada';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idCategoria']) or $_SESSION['cross_quality_reg_insp_basicos']['idCategoria']=='' ){       $error['idCategoria']      = 'error/No ha seleccionado la categoria del producto';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idProducto']) or $_SESSION['cross_quality_reg_insp_basicos']['idProducto']=='' ){         $error['idProducto']       = 'error/No ha seleccionado el producto';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']) or $_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']=='' ){       $error['idUbicacion']      = 'error/No ha seleccionado la ubicacion';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Observaciones']) or $_SESSION['cross_quality_reg_insp_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) or $_SESSION['cross_quality_reg_insp_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) or $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) or $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idTipo']) OR $_SESSION['cross_quality_reg_insp_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Temporada']) OR $_SESSION['cross_quality_reg_insp_basicos']['Temporada']=='' ){           $error['Temporada']        = 'error/No ha seleccionado la Temporada';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idCategoria']) OR $_SESSION['cross_quality_reg_insp_basicos']['idCategoria']=='' ){       $error['idCategoria']      = 'error/No ha seleccionado la categoria del producto';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idProducto']) OR $_SESSION['cross_quality_reg_insp_basicos']['idProducto']=='' ){         $error['idProducto']       = 'error/No ha seleccionado el producto';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']) OR $_SESSION['cross_quality_reg_insp_basicos']['idUbicacion']=='' ){       $error['idUbicacion']      = 'error/No ha seleccionado la ubicacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Observaciones']) OR $_SESSION['cross_quality_reg_insp_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) OR $_SESSION['cross_quality_reg_insp_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) OR $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) OR $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creacion';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de datos';
 			}
@@ -2408,7 +2054,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, 
 				idUbicacion_lvl_4, idUbicacion_lvl_5, Observaciones
 				) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2463,7 +2109,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, 
 							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
 							idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idTrabajador) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2518,7 +2164,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, 
 							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
 							idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idMaquina) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2562,7 +2208,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `cross_quality_registrar_inspecciones_muestras` (idAnalisis,idProductor,
 							n_folio_pallet, idTipo, lote, f_embalaje, f_cosecha, H_inspeccion, cantidad, peso
 							".$zz." ) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2616,7 +2262,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, 
 							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
 							idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta

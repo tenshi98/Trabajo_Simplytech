@@ -36,7 +36,7 @@ $where_3 = " AND bodegas_arriendos_facturacion_existencias.".$x1." AND usuarios_
 /**********************************************************/
 // Se trae un listado con los valores de las existencias actuales
 $año_pasado = ano_actual()-1;
-$z = "WHERE idSistema='{$_SESSION['usuario']['basic_data']['idSistema']}'";
+$z = "WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
 $z.= " AND Creacion_ano >= ".$año_pasado;
 //se consulta
 $arrExistencias = array();
@@ -119,15 +119,15 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Bodega de Arriendos</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#tab_arr_1" data-toggle="tab">Resumen</a></li>
-				<li class=""><a href="#tab_arr_2" data-toggle="tab">Compras</a></li>
+				<li class="active"><a href="#tab_arr_1" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="#tab_arr_2" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Compras</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if($s_Ventas=='true'){ ?>            <li class=""><a href="#tab_arr_3" data-toggle="tab">Ventas</a></li><?php } ?>
+						<?php if($s_Ventas=='true'){ ?>            <li class=""><a href="#tab_arr_3" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ventas</a></li><?php } ?>
 					</ul>
                 </li>           
 			</ul>	

@@ -1,6 +1,6 @@
 <?php
 /**************************************************************************/
-if($n_permisos['idOpcionesGen_9']=='1' or $idTipoUsuario==1) { ?>
+if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1) { ?>
 	
 	<div class="tab-pane fade" id="Menu_tab_5">
 		<div class="">
@@ -15,7 +15,7 @@ if($n_permisos['idOpcionesGen_9']=='1' or $idTipoUsuario==1) { ?>
  
 	<?php 
 	//Se dibuja el explorador de archivos
-	echo file_explorer(1, 'connector_repositorio', DB_EMPRESA_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
+	echo file_explorer(1, 'connector_repositorio', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
 		</div>
 	</div>
 	

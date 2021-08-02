@@ -58,13 +58,10 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Aprobador borrado c
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
-
 //Obtengo los datos de una observacion
 $query = "SELECT idUsuario, idSistema
 FROM `sistema_aprobador_cross`
-WHERE idAprobador = {$_GET['edit']}";
+WHERE idAprobador = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -80,13 +77,18 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado); 
 
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 
- ?>
+?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Editar Aprobador</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -97,18 +99,22 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idUsuario)) {     $x1  = $idUsuario;   }else{$x1  = $rowdata['idUsuario'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_join_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+					$Form_Inputs->form_select_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);	
+				}else{
+					$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				}
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idAprobador', $_GET['edit'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idAprobador', $_GET['edit'], 2);
 				
 				?>
 				
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -117,16 +123,21 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { 
+}elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); 
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
-
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Agregar Aprobador</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -137,17 +148,21 @@ $usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idS
 				if(isset($idUsuario)) {     $x1  = $idUsuario;   }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_join_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+					$Form_Inputs->form_select_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);	
+				}else{
+					$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				}
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 				
 
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_new">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -161,7 +176,7 @@ $usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idS
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre
 FROM `core_sistemas`
-WHERE idSistema = {$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -184,7 +199,7 @@ sistema_aprobador_cross.idAprobador,
 usuarios_listado.Nombre AS nombre_usuario
 FROM `sistema_aprobador_cross`
 LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = sistema_aprobador_cross.idUsuario
-WHERE sistema_aprobador_cross.idSistema = {$_SESSION['usuario']['basic_data']['idSistema']}
+WHERE sistema_aprobador_cross.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
 ORDER BY usuarios_listado.Nombre ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -305,21 +320,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 }
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Sistema</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Aprobador Cross Shipping</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Aprobador Cross Shipping');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<a href="<?php echo $new_location.'?new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Aprobador</a>
 	</div>
@@ -330,36 +331,37 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'admin_datos.php';?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'admin_datos_datos.php';?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'admin_datos_datos_contacto.php';?>" >Datos Contacto</a></li>
+				<li class=""><a href="<?php echo 'admin_datos.php';?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'admin_datos_datos.php';?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'admin_datos_datos_contacto.php';?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'admin_datos_datos_contrato.php';?>" >Datos Contrato</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_configuracion.php';?>" >Configuracion</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_temas.php';?>" >Temas</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_facturacion.php';?>" >Datos Facturacion</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_contrato.php';?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_configuracion.php';?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_temas.php';?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_facturacion.php';?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
 						<?php if(isset($Count_OT)&&$Count_OT!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_ot.php';?>" >OT</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_ot.php';?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'admin_datos_datos_imagen.php';?>" >Logo</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_imagen.php';?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
 						<?php if(isset($Count_OC)&&$Count_OC!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_oc.php';?>" >Aprobador OC</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_oc.php';?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<?php } ?>
 						<?php if(isset($Count_productos)&&$Count_productos!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_productos.php';?>" >Productos Usados</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_productos.php';?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_insumos)&&$Count_insumos!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_insumos.php';?>" >Insumos Usados</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_insumos.php';?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_especies.php';?>" >Especies</a></li>
-							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_nombres.php';?>" >Variedades</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_especies.php';?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_nombres.php';?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){?>
-							<li class="active"><a href="<?php echo 'admin_datos_datos_cross.php';?>" >Aprobador Cross Shipping</a></li>
+							<li class="active"><a href="<?php echo 'admin_datos_datos_cross.php';?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
 						<?php } ?>
+						<li class=""><a href="<?php echo 'admin_datos_datos_social.php'; ?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 					</ul>
                 </li>           
 			</ul>	
@@ -378,11 +380,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<td><?php echo $apro['nombre_usuario']; ?></td>	
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo $new_location.'?edit='.$apro['idAprobador']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $new_location.'?edit='.$apro['idAprobador']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php 
-								$ubicacion = $new_location.'?del='.$apro['idAprobador'];
+								$ubicacion = $new_location.'?del='.simpleEncode($apro['idAprobador'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar al aprobador '.$apro['nombre_usuario'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 							</div>
 						</td>	
 					</tr>

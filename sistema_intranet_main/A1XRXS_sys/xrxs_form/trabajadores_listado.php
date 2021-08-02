@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -50,6 +54,18 @@ if( ! defined('XMBCXRXSKGC')) {
 	if ( !empty($_POST['idTipoTrabajador']) )            $idTipoTrabajador             = $_POST['idTipoTrabajador'];
 	if ( !empty($_POST['idContratista']) )               $idContratista                = $_POST['idContratista'];
 	if ( !empty($_POST['File_RHTM_Fecha']) )             $File_RHTM_Fecha              = $_POST['File_RHTM_Fecha'];
+	if ( !empty($_POST['idCentroCosto']) )               $idCentroCosto                = $_POST['idCentroCosto'];
+	if ( !empty($_POST['idLevel_1']) )                   $idLevel_1                    = $_POST['idLevel_1'];
+	if ( !empty($_POST['idLevel_2']) )                   $idLevel_2                    = $_POST['idLevel_2'];
+	if ( !empty($_POST['idLevel_3']) )                   $idLevel_3                    = $_POST['idLevel_3'];
+	if ( !empty($_POST['idLevel_4']) )                   $idLevel_4                    = $_POST['idLevel_4'];
+	if ( !empty($_POST['idLevel_5']) )                   $idLevel_5                    = $_POST['idLevel_5'];
+	if ( !empty($_POST['idTipoTrabajo']) )               $idTipoTrabajo                = $_POST['idTipoTrabajo'];
+	if ( !empty($_POST['PorcentajeTrabajoPesado']) )     $PorcentajeTrabajoPesado      = $_POST['PorcentajeTrabajoPesado'];
+	if ( !empty($_POST['idMutual']) )                    $idMutual                     = $_POST['idMutual'];
+	if ( !empty($_POST['idCotizacionSaludExtra']) )      $idCotizacionSaludExtra       = $_POST['idCotizacionSaludExtra'];
+	if ( !empty($_POST['PorcCotSaludExtra']) )           $PorcCotSaludExtra            = $_POST['PorcCotSaludExtra'];
+	if ( !empty($_POST['MontoCotSaludExtra']) )          $MontoCotSaludExtra           = $_POST['MontoCotSaludExtra'];
 	
 	
 /*******************************************************************************************************************/
@@ -58,11 +74,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idTrabajador':                if(empty($idTrabajador)){                 $error['idTrabajador']                 = 'error/No ha ingresado el id';}break;
 			case 'idSistema':                   if(empty($idSistema)){                    $error['idSistema']                    = 'error/No ha seleccionado el sistema al cual pertenece';}break;
 			case 'idEstado':                    if(empty($idEstado)){                     $error['idEstado']                     = 'error/No ha seleccionado el estado';}break;
@@ -103,9 +119,34 @@ if( ! defined('XMBCXRXSKGC')) {
 			case 'idTipoTrabajador':            if(empty($idTipoTrabajador)){             $error['idTipoTrabajador']             = 'error/No ha seleccionado el tipo de trabajador';}break;
 			case 'idContratista':               if(empty($idContratista)){                $error['idContratista']                = 'error/No ha seleccionado el Contratista';}break;
 			case 'File_RHTM_Fecha':             if(empty($File_RHTM_Fecha)){              $error['File_RHTM_Fecha']              = 'error/No ha ingresado una fecha de termino de RHTM';}break;
+			case 'idCentroCosto':               if(empty($idCentroCosto)){                $error['idCentroCosto']                = 'error/No ha seleccionado un centro de costo';}break;
+			case 'idLevel_1':                   if(empty($idLevel_1)){                    $error['idLevel_1']                    = 'error/No ha seleccionado un centro de costo nivel 1';}break;
+			case 'idLevel_2':                   if(empty($idLevel_2)){                    $error['idLevel_2']                    = 'error/No ha seleccionado un centro de costo nivel 2';}break;
+			case 'idLevel_3':                   if(empty($idLevel_3)){                    $error['idLevel_3']                    = 'error/No ha seleccionado un centro de costo nivel 3';}break;
+			case 'idLevel_4':                   if(empty($idLevel_4)){                    $error['idLevel_4']                    = 'error/No ha seleccionado un centro de costo nivel 4';}break;
+			case 'idLevel_5':                   if(empty($idLevel_5)){                    $error['idLevel_5']                    = 'error/No ha seleccionado un centro de costo nivel 5';}break;
+			case 'idTipoTrabajo':               if(empty($idTipoTrabajo)){                $error['idTipoTrabajo']                = 'error/No ha seleccionado el tipo de trabajo';}break;
+			case 'PorcentajeTrabajoPesado':     if(empty($PorcentajeTrabajoPesado)){      $error['PorcentajeTrabajoPesado']      = 'error/No ha ingresado el porcentaje de trabajo pesado';}break;
+			case 'idMutual':                    if(empty($idMutual)){                     $error['idMutual']                     = 'error/No ha seleccionado la mutual de seguridad';}break;
+			case 'idCotizacionSaludExtra':      if(empty($idCotizacionSaludExtra)){       $error['idCotizacionSaludExtra']       = 'error/No ha seleccionado la opcion de cotizacion extra';}break;
+			case 'PorcCotSaludExtra':           if(empty($PorcCotSaludExtra)){            $error['PorcCotSaludExtra']            = 'error/No ha ingresado el porcentaje de cotizacion extra';}break;
+			case 'MontoCotSaludExtra':          if(empty($MontoCotSaludExtra)){           $error['MontoCotSaludExtra']           = 'error/No ha ingresado el porcentaje de cotizacion extra';}break;
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                    $error['Nombre']          = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){          $error['ApellidoPat']     = 'error/Edita Apellido Pat, contiene palabras no permitidas'; }	
+	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){          $error['ApellidoMat']     = 'error/Edita Apellido Mat, contiene palabras no permitidas'; }	
+	if(isset($Cargo)&&contar_palabras_censuradas($Cargo)!=0){                      $error['Cargo']           = 'error/Edita Cargo, contiene palabras no permitidas'; }	
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){              $error['Direccion']       = 'error/Edita la Direccion, contiene palabras no permitidas'; }	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){      $error['Observaciones']   = 'error/Edita la Observacion, contiene palabras no permitidas'; }	
+	if(isset($ContactoPersona)&&contar_palabras_censuradas($ContactoPersona)!=0){  $error['ContactoPersona'] = 'error/Edita Contacto Persona, contiene palabras no permitidas'; }	
+	if(isset($ContactoFono)&&contar_palabras_censuradas($ContactoFono)!=0){        $error['ContactoFono']    = 'error/Edita Contacto Fono, contiene palabras no permitidas'; }	
+	if(isset($email)&&contar_palabras_censuradas($email)!=0){                      $error['email']           = 'error/Edita email, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -131,10 +172,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'trabajadores_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'trabajadores_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Rut)&&isset($idSistema)){
-				$ndata_2 = db_select_nrows ('Rut', 'trabajadores_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'Rut', 'trabajadores_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El trabajador que intenta ingresar ya existe en el sistema';}
@@ -182,6 +223,18 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($Gratificacion) && $Gratificacion != ''){                              $a .= ",'".$Gratificacion."'" ;                }else{$a .= ",''";}
 				if(isset($idTipoTrabajador) && $idTipoTrabajador != ''){                        $a .= ",'".$idTipoTrabajador."'" ;             }else{$a .= ",''";}
 				if(isset($idContratista) && $idContratista != ''){                              $a .= ",'".$idContratista."'" ;                }else{$a .= ",''";}
+				if(isset($idCentroCosto) && $idCentroCosto != ''){                              $a .= ",'".$idCentroCosto."'" ;                }else{$a .= ",''";}
+				if(isset($idLevel_1) && $idLevel_1 != ''){                                      $a .= ",'".$idLevel_1."'" ;                    }else{$a .= ",''";}
+				if(isset($idLevel_2) && $idLevel_2 != ''){                                      $a .= ",'".$idLevel_2."'" ;                    }else{$a .= ",''";}
+				if(isset($idLevel_3) && $idLevel_3 != ''){                                      $a .= ",'".$idLevel_3."'" ;                    }else{$a .= ",''";}
+				if(isset($idLevel_4) && $idLevel_4 != ''){                                      $a .= ",'".$idLevel_4."'" ;                    }else{$a .= ",''";}
+				if(isset($idLevel_5) && $idLevel_5 != ''){                                      $a .= ",'".$idLevel_5."'" ;                    }else{$a .= ",''";}
+				if(isset($idTipoTrabajo) && $idTipoTrabajo != ''){                              $a .= ",'".$idTipoTrabajo."'" ;                }else{$a .= ",''";}
+				if(isset($PorcentajeTrabajoPesado) && $PorcentajeTrabajoPesado != ''){          $a .= ",'".$PorcentajeTrabajoPesado."'" ;      }else{$a .= ",''";}
+				if(isset($idMutual) && $idMutual != ''){                                        $a .= ",'".$idMutual."'" ;                     }else{$a .= ",''";}
+				if(isset($idCotizacionSaludExtra) && $idCotizacionSaludExtra != ''){            $a .= ",'".$idCotizacionSaludExtra."'" ;       }else{$a .= ",''";}
+				if(isset($PorcCotSaludExtra) && $PorcCotSaludExtra != ''){                      $a .= ",'".$PorcCotSaludExtra."'" ;            }else{$a .= ",''";}
+				if(isset($MontoCotSaludExtra) && $MontoCotSaludExtra != ''){                    $a .= ",'".$MontoCotSaludExtra."'" ;           }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `trabajadores_listado` (idSistema, idEstado, Nombre, ApellidoPat, 
@@ -190,8 +243,10 @@ if( ! defined('XMBCXRXSKGC')) {
 				idTipoLicencia,CA_Licencia,LicenciaFechaControl,LicenciaFechaControlUltimo,ContactoPersona,
 				ContactoFono, idSexo, FNacimiento, idEstadoCivil, SueldoLiquido, SueldoDia, SueldoHora,
 				idTransporte, idTipoContratoTrab, horas_pactadas, Gratificacion, idTipoTrabajador,
-				idContratista) 
-				VALUES ({$a} )";
+				idContratista, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5,
+				idTipoTrabajo, PorcentajeTrabajoPesado, idMutual, idCotizacionSaludExtra, PorcCotSaludExtra,
+				MontoCotSaludExtra) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -229,10 +284,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idSistema)&&isset($idTrabajador)){
-				$ndata_1 = db_select_nrows ('Nombre', 'trabajadores_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."' AND idTrabajador!='".$idTrabajador."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'trabajadores_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."' AND idTrabajador!='".$idTrabajador."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Rut)&&isset($idSistema)&&isset($idTrabajador)){
-				$ndata_2 = db_select_nrows ('Rut', 'trabajadores_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idTrabajador!='".$idTrabajador."'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'Rut', 'trabajadores_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idTrabajador!='".$idTrabajador."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El trabajador que intenta ingresar ya existe en el sistema';}
@@ -280,6 +335,18 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($Gratificacion) && $Gratificacion != ''){                              $a .= ",Gratificacion='".$Gratificacion."'" ;}
 				if(isset($idTipoTrabajador) && $idTipoTrabajador != ''){                        $a .= ",idTipoTrabajador='".$idTipoTrabajador."'" ;}
 				if(isset($idContratista) && $idContratista != ''){                              $a .= ",idContratista='".$idContratista."'" ;}
+				if(isset($idCentroCosto) && $idCentroCosto != ''){                              $a .= ",idCentroCosto='".$idCentroCosto."'" ;}
+				if(isset($idLevel_1) && $idLevel_1 != ''){                                      $a .= ",idLevel_1='".$idLevel_1."'" ;}
+				if(isset($idLevel_2) && $idLevel_2 != ''){                                      $a .= ",idLevel_2='".$idLevel_2."'" ;}
+				if(isset($idLevel_3) && $idLevel_3 != ''){                                      $a .= ",idLevel_3='".$idLevel_3."'" ;}
+				if(isset($idLevel_4) && $idLevel_4 != ''){                                      $a .= ",idLevel_4='".$idLevel_4."'" ;}
+				if(isset($idLevel_5) && $idLevel_5 != ''){                                      $a .= ",idLevel_5='".$idLevel_5."'" ;}
+				if(isset($idTipoTrabajo) && $idTipoTrabajo != ''){                              $a .= ",idTipoTrabajo='".$idTipoTrabajo."'" ;}
+				if(isset($PorcentajeTrabajoPesado) && $PorcentajeTrabajoPesado != ''){          $a .= ",PorcentajeTrabajoPesado='".$PorcentajeTrabajoPesado."'" ;}
+				if(isset($idMutual) && $idMutual != ''){                                        $a .= ",idMutual='".$idMutual."'" ;}
+				if(isset($idCotizacionSaludExtra) && $idCotizacionSaludExtra != ''){            $a .= ",idCotizacionSaludExtra='".$idCotizacionSaludExtra."'" ;}
+				if(isset($PorcCotSaludExtra) && $PorcCotSaludExtra != ''){                      $a .= ",PorcCotSaludExtra='".$PorcCotSaludExtra."'" ;}
+				if(isset($MontoCotSaludExtra) && $MontoCotSaludExtra != ''){                    $a .= ",MontoCotSaludExtra='".$MontoCotSaludExtra."'" ;}
 				
 				// inserto los datos de registro en la db
 				$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
@@ -313,128 +380,135 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			// Se obtiene el nombre del logo
-			$query = "SELECT Direccion_img, File_Curriculum, File_Antecedentes, File_Carnet, 
-			File_Contrato, File_Licencia, File_RHTM
-			FROM `trabajadores_listado`
-			WHERE idTrabajador = {$_GET['del']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `trabajadores_listado` WHERE idTrabajador = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//se elimina la foto
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//se elimina el curriculum
-				if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['File_Curriculum'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['File_Curriculum']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//se elimina los antecedentes
-				if(isset($rowdata['File_Antecedentes'])&&$rowdata['File_Antecedentes']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['File_Antecedentes'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['File_Antecedentes']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//se elimina el carnet de identidad
-				if(isset($rowdata['File_Carnet'])&&$rowdata['File_Carnet']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['File_Carnet'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['File_Carnet']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//se elimina el contrato
-				if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['File_Contrato'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['File_Contrato']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//se elimina el contrato
-				if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['File_Licencia'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['File_Licencia']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//se elimina el contrato
-				if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['File_RHTM'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['File_RHTM']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
-
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'Direccion_img, File_Curriculum, File_Antecedentes, File_Carnet, File_Contrato, File_Licencia, File_RHTM', 'trabajadores_listado', '', 'idTrabajador = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+				//se borran los datos
+				$resultado = db_delete_data (false, 'trabajadores_listado', 'idTrabajador = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina la foto
+					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['Direccion_img']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					//se elimina el curriculum
+					if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['File_Curriculum'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['File_Curriculum']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					//se elimina los antecedentes
+					if(isset($rowdata['File_Antecedentes'])&&$rowdata['File_Antecedentes']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['File_Antecedentes'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['File_Antecedentes']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					//se elimina el carnet de identidad
+					if(isset($rowdata['File_Carnet'])&&$rowdata['File_Carnet']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['File_Carnet'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['File_Carnet']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					//se elimina el contrato
+					if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['File_Contrato'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['File_Contrato']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					//se elimina el contrato
+					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['File_Licencia'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['File_Licencia']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					//se elimina el contrato
+					if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['File_RHTM'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['File_RHTM']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 		break;	
 /*******************************************************************************************************************/
 		//Cambio el estado de activo a inactivo
@@ -444,9 +518,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idTrabajador  = $_GET['id'];
-			$idEstado      = $_GET['estado'];
-			$query  = "UPDATE trabajadores_listado SET idEstado = '$idEstado'	
-			WHERE idTrabajador    = '$idTrabajador'";
+			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
+			$query  = "UPDATE trabajadores_listado SET idEstado = '".$idEstado."'	
+			WHERE idTrabajador = '".$idTrabajador."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -477,7 +551,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["Direccion_img"]["error"] > 0){ 
-				$error['Direccion_img']     = 'error/Ha ocurrido un error'; 
+				$error['Direccion_img'] = 'error/'.uploadPHPError($_FILES["Direccion_img"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
@@ -603,17 +677,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idTrabajador = $_GET['del_img'];
 			// Se obtiene el nombre del logo
-			$query = "SELECT Direccion_img
-			FROM `trabajadores_listado`
-			WHERE idTrabajador = {$idTrabajador}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
+			$rowdata = db_select_data (false, 'Direccion_img', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET Direccion_img='' WHERE idTrabajador = '{$idTrabajador}'";
+			$query  = "UPDATE `trabajadores_listado` SET Direccion_img='' WHERE idTrabajador = '".$_GET['del_img']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -658,7 +726,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["File_Curriculum"]["error"] > 0){ 
-				$error['File_Curriculum']     = 'error/Ha ocurrido un error'; 
+				$error['File_Curriculum'] = 'error/'.uploadPHPError($_FILES["File_Curriculum"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/msword",
@@ -738,17 +806,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idTrabajador = $_GET['del_File_Curriculum'];
 			// Se obtiene el nombre del logo
-			$query = "SELECT File_Curriculum
-			FROM `trabajadores_listado`
-			WHERE idTrabajador = {$idTrabajador}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'File_Curriculum', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Curriculum='' WHERE idTrabajador = '{$idTrabajador}'";
+			$query  = "UPDATE `trabajadores_listado` SET File_Curriculum='' WHERE idTrabajador = '".$_GET['del_File_Curriculum']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -793,7 +855,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["File_Antecedentes"]["error"] > 0){ 
-				$error['File_Antecedentes']     = 'error/Ha ocurrido un error'; 
+				$error['File_Antecedentes'] = 'error/'.uploadPHPError($_FILES["File_Antecedentes"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/msword",
@@ -873,17 +935,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idTrabajador = $_GET['del_File_Antecedentes'];
 			// Se obtiene el nombre del logo
-			$query = "SELECT File_Antecedentes
-			FROM `trabajadores_listado`
-			WHERE idTrabajador = {$idTrabajador}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'File_Antecedentes', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Antecedentes'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Antecedentes='' WHERE idTrabajador = '{$idTrabajador}'";
+			$query  = "UPDATE `trabajadores_listado` SET File_Antecedentes='' WHERE idTrabajador = '".$_GET['del_File_Antecedentes']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -927,7 +983,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["File_Carnet"]["error"] > 0){ 
-				$error['File_Carnet']     = 'error/Ha ocurrido un error'; 
+				$error['File_Carnet'] = 'error/'.uploadPHPError($_FILES["File_Carnet"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/msword",
@@ -1007,17 +1063,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idTrabajador = $_GET['del_File_Carnet'];
 			// Se obtiene el nombre del logo
-			$query = "SELECT File_Carnet
-			FROM `trabajadores_listado`
-			WHERE idTrabajador = {$idTrabajador}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'File_Carnet', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Carnet'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Carnet='' WHERE idTrabajador = '{$idTrabajador}'";
+			$query  = "UPDATE `trabajadores_listado` SET File_Carnet='' WHERE idTrabajador = '".$_GET['del_File_Carnet']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -1062,7 +1112,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["File_Contrato"]["error"] > 0){ 
-				$error['File_Contrato']     = 'error/Ha ocurrido un error'; 
+				$error['File_Contrato'] = 'error/'.uploadPHPError($_FILES["File_Contrato"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/msword",
@@ -1141,17 +1191,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idTrabajador = $_GET['del_File_Contrato'];
 			// Se obtiene el nombre del logo
-			$query = "SELECT File_Contrato
-			FROM `trabajadores_listado`
-			WHERE idTrabajador = {$idTrabajador}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'File_Contrato', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Contrato='' WHERE idTrabajador = '{$idTrabajador}'";
+			$query  = "UPDATE `trabajadores_listado` SET File_Contrato='' WHERE idTrabajador = '".$_GET['del_File_Contrato']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -1213,7 +1257,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 			
 				if ($_FILES["File_Licencia"]["error"] > 0){ 
-					$error['File_Licencia']     = 'error/Ha ocurrido un error'; 
+					$error['File_Licencia'] = 'error/'.uploadPHPError($_FILES["File_Licencia"]["error"]); 
 				} else {
 					//Se verifican las extensiones de los archivos
 					$permitidos = array("application/msword",
@@ -1293,17 +1337,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idTrabajador = $_GET['del_File_Licencia'];
 			// Se obtiene el nombre del logo
-			$query = "SELECT File_Licencia
-			FROM `trabajadores_listado`
-			WHERE idTrabajador = {$idTrabajador}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'File_Licencia', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Licencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Licencia='' WHERE idTrabajador = '{$idTrabajador}'";
+			$query  = "UPDATE `trabajadores_listado` SET File_Licencia='' WHERE idTrabajador = '".$_GET['del_File_Licencia']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -1348,7 +1386,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["File_RHTM"]["error"] > 0){ 
-				$error['File_RHTM']     = 'error/Ha ocurrido un error'; 
+				$error['File_RHTM'] = 'error/'.uploadPHPError($_FILES["File_RHTM"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/msword",
@@ -1429,17 +1467,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idTrabajador = $_GET['del_File_RHTM'];
 			// Se obtiene el nombre del logo
-			$query = "SELECT File_RHTM
-			FROM `trabajadores_listado`
-			WHERE idTrabajador = {$idTrabajador}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'File_RHTM', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_RHTM'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_RHTM='', File_RHTM_Fecha='' WHERE idTrabajador = '{$idTrabajador}'";
+			$query  = "UPDATE `trabajadores_listado` SET File_RHTM='', File_RHTM_Fecha='' WHERE idTrabajador = '".$_GET['del_File_RHTM']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta

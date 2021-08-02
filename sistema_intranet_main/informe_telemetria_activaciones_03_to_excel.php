@@ -25,29 +25,8 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$query = "SELECT Nombre	
-FROM `core_sistemas` 
-WHERE idSistema = '{$_GET['idSistema']}'  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
-	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
-}
-$rowEmpresa = mysqli_fetch_array ($resultado);
 
 /**********************************************************/
 //Variable de busqueda
@@ -59,7 +38,7 @@ if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){       $z.=" AND
 if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino'] != ''){ 
 	$z.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
 }elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''){ 
-	$z.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '{$_GET['F_inicio']}' AND '{$_GET['F_termino']}'";
+	$z.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /**********************************************************/
 //se consulta
@@ -98,15 +77,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrConsulta,$row );
@@ -212,7 +184,11 @@ foreach($arrConsulta as $categoria=>$permisos){
 				$Tiempo = restahoras($TiempoMuertoTemp ,$con['EquipoHora']);
 				//verifico que sea superior a la microparadas
 				if($Tiempo>=$con['EquipoMicroparada']){
-					$TiempoMuerto = sumahoras($TiempoMuerto,$Tiempo);
+					$TiempoMuerto1 = sumahoras($TiempoMuerto,$Tiempo);
+					//validacion
+					if($TiempoMuerto1!='El dato ingresado no es una hora'){
+						$TiempoMuerto = $TiempoMuerto1;
+					}
 					//le resto el tiempo de colacion solo si el tiempo muerto es igual o superior
 					if($TiempoMuerto>=$TiempoColacionTot){
 						$TiempoMuerto = restahoras($TiempoColacionTot ,$TiempoMuerto);

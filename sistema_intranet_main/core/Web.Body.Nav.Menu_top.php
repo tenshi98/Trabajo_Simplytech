@@ -13,48 +13,104 @@ if(isset($_SESSION['menu'])&&$_SESSION['menu']!=''){
 
 //Creacion del menu
 echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
-		<li><a href="principal.php">Principal</a></li>
-		<li><a href="principal_datos.php">Mis Datos</a></li>';
+		<li><a href="principal.php"><i class="fa fa-home" aria-hidden="true"></i> Principal</a></li>
+		<li><a href="principal_datos.php"><i class="fa fa-address-card-o" aria-hidden="true"></i> Mis Datos</a></li>';
 	
 	//Si esta activa la opcion de correo Interno
 	if($_SESSION['usuario']['basic_data']['CorreoInterno']==1){
-		echo '<li><a href="principal_correos.php">Correo</a></li>';
+		echo '<li><a href="principal_correos.php"><i class="fa fa-envelope-o" aria-hidden="true"></i> Correo</a></li>';
 	}
 
-	//Se recorren los permisos
+	//Veo si existe el menu
 	if(isset($_SESSION['usuario']['menu'])){
-		foreach($_SESSION['usuario']['menu'] as $menu=>$productos) {
-			echo '<li class="dropdown">';
-			echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">'.TituloMenu($menu).'<b class="caret"></b></a>';
-			echo '<ul class="dropdown-menu">';
-					
-			// recorremos los productos
-			foreach($productos as $producto) {
-				// imprimimos producto y precio
-				echo '<li><a href="'.$producto['TransaccionURL'].'">'.TituloMenu($producto['TransaccionNombre']).'</a></li>';
+		//recorro el menu
+		foreach($_SESSION['usuario']['menu'] as $menu=>$menuCat) {
+			
+			//si la transaccion actual es igual a la categoria
+			if(isset($original)&&isset($_SESSION['usuario']['Permisos'][$original]['CategoriaNombre'])&&$menu==$_SESSION['usuario']['Permisos'][$original]['CategoriaNombre']){ 
+				$menu_class='active';
+			}else{
+				$menu_class='';
 			}
-		echo '</ul>';  
-		echo '</li>';    
+		
+			//se le asigna color al icono
+			if(isset($menuCat[0]['CategoriaIconoColor'])&&$menuCat[0]['CategoriaIconoColor']!=''){
+				$Bgicolor = 'style="color: '.$menuCat[0]['CategoriaIconoColor'].';"';
+			}else{
+				$Bgicolor = '';
+			}
+		
+			//Se crea la categoria
+			echo '<li class="dropdown">';
+				echo '<a href="#" class="dropdown-toggle '.$menu_class.'" data-toggle="dropdown">';
+					echo '<i class="'.$menuCat[0]['CategoriaIcono'].'" aria-hidden="true" '.$Bgicolor.'></i>';
+					echo '<span class="link-title"> '.TituloMenu($menu).'</span>';
+					echo '<i class="fa fa-angle-down fright margin_width" aria-hidden="true"></i>';
+				echo '</a>';
+				echo '<ul class="dropdown-menu">';
+					//se crea la transaccion
+					foreach($menuCat as $menuList) {
+						echo '<li><a href="'.$menuList['TransaccionURL'].'"><i class="'.$menuList['CategoriaIcono'].'" '.$Bgicolor.'></i> '.TituloMenu($menuList['TransaccionNombre']).'</a></li>';
+					}
+				echo '</ul>';  
+			echo '</li>';    
 		}
 	}
 	//Se crea el menu del super usuario
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		echo '<li class="dropdown ">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Core<b class="caret"></b></a> 
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Core - Sistema <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
 			<ul class="dropdown-menu">
-				<li><a href="core_sistemas.php?pagina=1">             <i class="fa fa-cogs"></i>Sistemas</a></li>
-				<li><a href="core_permisos_categorias.php?pagina=1">  <i class="fa fa-cogs"></i>Permisos - Categorias</a></li>
-				<li><a href="core_permisos_listado.php?pagina=1">     <i class="fa fa-cogs"></i>Permisos - Listado</a></li>
-				<li><a href="core_usr_admin.php?pagina=1">            <i class="fa fa-cogs"></i>Listado de Administradores</a></li>
-				<li><a href="core_info_sistema.php">                  <i class="fa fa-cogs"></i>Informacion del servidor</a></li>
-				<li><a href="core_log_cambios.php?pagina=1">          <i class="fa fa-cogs"></i>Cambios en el Sistema</a></li>
-				<li><a href="core_mantenciones.php?pagina=1">         <i class="fa fa-cogs"></i>Mantenciones al sistema</a></li>
-				<li><a href="core_email.php">                         <i class="fa fa-cogs"></i>Configuracion Correo Interno</a></li>
-				<li><a href="core_comparacion_base.php">              <i class="fa fa-cogs"></i>Comparacion Base Datos</a></li>
-				<li><a href="core_cambio_usuario.php">                <i class="fa fa-cogs"></i>Cambio de Usuario</a></li>
-				<li><a href="core_testing_code.php">                  <i class="fa fa-cogs"></i>Testeo de codigo</a></li>
+				<li><a href="core_sistemas.php?pagina=1">                    <i class="fa fa-cogs" aria-hidden="true"></i> Sistemas</a></li>
+				<li><a href="core_usr_admin.php?pagina=1">                   <i class="fa fa-cogs" aria-hidden="true"></i> Listado de Administradores</a></li>
+				
 			</ul>
 		</li>'; 
+		echo '<li class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Core - Configuracion <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
+			<ul class="dropdown-menu">
+				<li><a href="core_email.php">                                <i class="fa fa-cogs" aria-hidden="true"></i> Configuracion Correo Interno</a></li>
+				<li><a href="core_comparacion_base.php">                     <i class="fa fa-cogs" aria-hidden="true"></i> Comparacion Base Datos</a></li>
+				
+			</ul>
+		</li>';
+		echo '<li class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Core - Estado <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
+			<ul class="dropdown-menu">
+				<li><a href="core_info_sistema.php">                         <i class="fa fa-cogs" aria-hidden="true"></i> Informacion del servidor</a></li>
+				<li><a href="core_log_cambios.php?pagina=1">                 <i class="fa fa-cogs" aria-hidden="true"></i> Cambios en el Sistema</a></li>
+				<li><a href="core_mantenciones.php?pagina=1">                <i class="fa fa-cogs" aria-hidden="true"></i> Mantenciones al sistema</a></li>
+				<li><a href="core_info_logs.php">                            <i class="fa fa-cogs" aria-hidden="true"></i> Logs de errores</a></li>
+				
+			</ul>
+		</li>';
+		echo '<li class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Core - Permisos <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
+			<ul class="dropdown-menu">
+				<li><a href="core_permisos_categorias.php?pagina=1">         <i class="fa fa-cogs" aria-hidden="true"></i> Permisos - Categorias</a></li>
+				<li><a href="core_permisos_listado.php?pagina=1">            <i class="fa fa-cogs" aria-hidden="true"></i> Permisos - Listado</a></li>
+				
+			</ul>
+		</li>';
+		echo '<li class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Core - Pruebas <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
+			<ul class="dropdown-menu">
+				<li><a href="core_cambio_usuario.php">                       <i class="fa fa-cogs" aria-hidden="true"></i> Cambio de Usuario</a></li>
+				<li><a href="core_testing_code.php">                         <i class="fa fa-cogs" aria-hidden="true"></i> Testeo de codigo</a></li>
+				<li><a href="core_test_email.php">                           <i class="fa fa-cogs" aria-hidden="true"></i> Testeo de correos</a></li>
+				
+			</ul>
+		</li>';
+		echo '<li class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Core - Seguridad <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
+			<ul class="dropdown-menu">
+				<li><a href="core_gestion_tickets_cerrar.php?pagina=1">      <i class="fa fa-cogs" aria-hidden="true"></i> Tickets Abiertos</a></li>
+				<li><a href="core_sistema_seguridad_bloqueo.php?pagina=1">   <i class="fa fa-cogs" aria-hidden="true"></i> Seguridad - IP Bloqueadas</a></li>
+				<li><a href="core_sistema_seguridad_ip_list.php">            <i class="fa fa-cogs" aria-hidden="true"></i> Seguridad - IP Relacionadas</a></li>
+				<li><a href="core_sistema_seguridad_intento_hackeo.php">     <i class="fa fa-cogs" aria-hidden="true"></i> Seguridad - Intento Hackeo</a></li>
+				
+			</ul>
+		</li>';
 	}                          
 	echo '</ul>'; 
               

@@ -118,7 +118,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -143,7 +143,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Materia Prima</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -156,9 +156,9 @@ foreach ($arrPermisos as $prod) {
 	
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter($x_column_producto_nombre_sing,'idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Number', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter($x_column_producto_nombre_sing,'idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
@@ -167,7 +167,7 @@ foreach ($arrPermisos as $prod) {
 					</div>
 				</div>';
 				
-				$Form_Imputs->form_input_hidden('idProducto', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 				
 				//Imprimo las variables
 				$arrTipo = array();
@@ -215,7 +215,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_newprod"> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -235,7 +235,7 @@ sistema_productos_uml.Nombre AS Unimed
 FROM `productos_recetas`
 LEFT JOIN `productos_listado`      ON productos_listado.idProducto   = productos_recetas.idProductoRel
 LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml    = productos_listado.idUml
-WHERE productos_recetas.idReceta='{$_GET['edit']}'";
+WHERE productos_recetas.idReceta='".$_GET['edit']."'";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -256,7 +256,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -281,7 +281,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar <?php echo $x_column_producto_nombre_plur; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -293,9 +293,9 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Number)) {           $x2  = $Number;          }else{$x2  = Cantidades_decimales_justos($row_data['Cantidad']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter($x_column_producto_nombre_sing,'idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Number', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter($x_column_producto_nombre_sing,'idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
@@ -304,8 +304,8 @@ foreach ($arrPermisos as $prod) {
 					</div>
 				</div>';
 				
-				$Form_Imputs->form_input_hidden('idReceta', $_GET['edit'], 2);
-				$Form_Imputs->form_input_hidden('idProducto', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idReceta', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 				
 				//Imprimo las variables
 				$arrTipo = array();
@@ -353,7 +353,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -368,7 +368,7 @@ foreach ($arrPermisos as $prod) {
 $query = "SELECT  sistema_productos_uml.Nombre AS Unimed
 FROM `productos_listado`
 LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-WHERE productos_listado.idProducto='{$_SESSION['receta_productos'][$_GET['editProd']]['idProducto']}'";
+WHERE productos_listado.idProducto='".$_SESSION['receta_productos'][$_GET['editProd']]['idProducto']."'";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -390,7 +390,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -415,7 +415,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar <?php echo $x_column_producto_nombre_plur; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -427,9 +427,9 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Number)) {           $x2  = $Number;          }else{$x2  = $_SESSION['receta_productos'][$_GET['editProd']]['Number'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter($x_column_producto_nombre_sing,'idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Number', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter($x_column_producto_nombre_sing,'idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
@@ -486,7 +486,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new2=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new2=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -502,7 +502,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -527,7 +527,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar <?php echo $x_column_producto_nombre_plur; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -540,9 +540,9 @@ foreach ($arrPermisos as $prod) {
 	
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter($x_column_producto_nombre_sing,'idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Number', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter($x_column_producto_nombre_sing,'idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
@@ -599,7 +599,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new2=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new2=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -616,7 +616,7 @@ sistema_productos_uml.Nombre AS Unidad
 FROM `productos_listado`
 LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = productos_listado.idUml
 
-WHERE productos_listado.idProducto = {$_SESSION['receta']['idProducto']}";
+WHERE productos_listado.idProducto = ".$_SESSION['receta']['idProducto'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -662,7 +662,7 @@ array_push( $arrProductos,$row );
 	<div class="col-sm-8 fleft">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Paso 2: Seleccion de <?php echo $x_column_producto_nombre_plur; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Paso 2: Seleccion de <?php echo $x_column_producto_nombre_plur; ?></h5>
 			</header>
 			<div class="table-responsive">    
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -684,9 +684,9 @@ array_push( $arrProductos,$row );
 	<div class="col-sm-12">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de <?php echo $x_column_producto_nombre_plur; ?> a utilizar (Calculo para 1 <?php echo $rowdata['Unidad']; ?>)</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de <?php echo $x_column_producto_nombre_plur; ?> a utilizar (Calculo para 1 <?php echo $rowdata['Unidad']; ?>)</h5>
 				<div class="toolbar">
-					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&addProd=true' ?>" class="btn btn-xs btn-primary">Agregar <?php echo $x_column_producto_nombre_plur; ?></a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&addProd=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Agregar <?php echo $x_column_producto_nombre_plur; ?></a>
 				</div>
 			</header>
 			<div class="table-responsive">    
@@ -719,11 +719,11 @@ array_push( $arrProductos,$row );
 											</td>
 											<td>
 												<div class="btn-group" style="width: 70px;" >
-													<a href="<?php echo $new_location.'&id='.$_GET['id'].'&editProd='.$producto['idProducto']; ?>" title="Editar Cantidad" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+													<a href="<?php echo $new_location.'&id='.$_GET['id'].'&editProd='.$producto['idProducto']; ?>" title="Editar Cantidad" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 													<?php 
 													$ubicacion = $new_location.'&id='.$_GET['id'].'&del_prod='.$producto['idProducto'];
 													$dialogo   = '¿Realmente deseas eliminar el '.$x_column_producto_nombre_sing.' '.str_replace('"','',$prod['Nombre']).'?';?>
-													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Dato" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Dato" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 												</div>
 											</td>
 										</tr> 
@@ -747,7 +747,7 @@ array_push( $arrProductos,$row );
 </div>	
 
 <div class="clearfix"></div>	
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 
 	<?php if($_SESSION['receta']['medida']==$total){ ?>
 		<?php 		
@@ -756,18 +756,20 @@ array_push( $arrProductos,$row );
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
 	<?php } ?>
 	
-	<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+	<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<div class="clearfix"></div>
 </div> 
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { ?>
+}elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Paso 1: Ingresar Medida del producto terminado</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -778,15 +780,15 @@ array_push( $arrProductos,$row );
 				if(isset($medida)) {     $x1  = $medida;    }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_number('Medida','medida', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_number('Medida','medida', $x1, 2);
 				
-				$Form_Imputs->form_input_hidden('idProducto', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf178; Siguiente" name="submit_1">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -807,7 +809,7 @@ productos_listado.idOpciones_1,
 productos_listado.idOpciones_2
 FROM `productos_listado`
 LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml
-WHERE idProducto = {$_GET['id']}";
+WHERE idProducto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -833,7 +835,7 @@ sistema_productos_uml.Nombre AS UnidadMedida
 FROM `productos_recetas`
 LEFT JOIN `productos_listado`        ON productos_listado.idProducto     = productos_recetas.idProductoRel
 LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml
-WHERE productos_recetas.idProducto = {$_GET['id']}";
+WHERE productos_recetas.idProducto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -854,21 +856,7 @@ array_push( $arrRecetas,$row );
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text"><?php echo $x_column_producto_nombre_plur; ?></span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Receta</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_producto_nombre_plur, $rowdata['Nombre'], 'Editar Receta');?>
 	<?php
 	$nvar  = 0;
 	$total = 0;
@@ -895,28 +883,28 @@ array_push( $arrRecetas,$row );
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'productos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'productos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'productos_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Descripcion</a></li>
+				<li class=""><a href="<?php echo 'productos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'productos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'productos_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'productos_listado_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Opciones</a></li>
-						<li class=""><a href="<?php echo 'productos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Comerciales</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Opciones</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==1){ ?>
-							<li class="active"><a href="<?php echo 'productos_listado_datos_receta_01.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Receta</a></li>
+							<li class="active"><a href="<?php echo 'productos_listado_datos_receta_01.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
 						<?php }elseif(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==2){ ?>
-							<li class=""><a href="<?php echo 'productos_listado_datos_receta_02.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Receta</a></li>
+							<li class=""><a href="<?php echo 'productos_listado_datos_receta_02.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'productos_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'productos_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Imagen</a></li>
-						<li class=""><a href="<?php echo 'productos_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Ficha</a></li>
-						<li class=""><a href="<?php echo 'productos_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >HDS</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
 						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
-							<li class=""><a href="<?php echo 'productos_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Sistema Mantenlubric</a></li>
+							<li class=""><a href="<?php echo 'productos_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema Mantenlubric</a></li>
 						<?php } ?>
 						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
-							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Sistema CROSS</a></li>
+							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema CROSS</a></li>
 						<?php } ?>
 						
 					</ul>
@@ -939,11 +927,11 @@ array_push( $arrRecetas,$row );
 						<td><?php echo Cantidades_decimales_justos($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>			
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$receta['idReceta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$receta['idReceta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=3){
-									$ubicacion = $new_location.'&id='.$_GET['id'].'&del_receta='.$receta['idReceta'];
+									$ubicacion = $new_location.'&id='.$_GET['id'].'&del_receta='.simpleEncode($receta['idReceta'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el producto '.$receta['NombreProd'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	
@@ -962,8 +950,8 @@ array_push( $arrRecetas,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

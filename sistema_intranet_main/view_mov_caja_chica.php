@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 caja_chica_facturacion.idTipo,
@@ -76,7 +89,7 @@ LEFT JOIN `trabajadores_listado`     trab_soli  ON trab_soli.idTrabajador       
 LEFT JOIN `trabajadores_listado`     trab_revi  ON trab_revi.idTrabajador               = caja_chica_facturacion.idRevisado
 LEFT JOIN `trabajadores_listado`     trab_apro  ON trab_apro.idTrabajador               = caja_chica_facturacion.idAprobado
 
-WHERE caja_chica_facturacion.idFacturacion = {$_GET['view']} ";
+WHERE caja_chica_facturacion.idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -87,15 +100,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 				
@@ -108,7 +114,7 @@ caja_chica_facturacion_existencias.Valor
 
 FROM `caja_chica_facturacion_existencias` 
 LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = caja_chica_facturacion_existencias.idDocPago
-WHERE idFacturacion = {$_GET['view']} ";
+WHERE idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -119,15 +125,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrDocumentos,$row );
@@ -138,7 +137,7 @@ $arrRendiciones = array();
 $query = "SELECT Item, Valor
 
 FROM `caja_chica_facturacion_rendiciones` 
-WHERE idFacturacion = {$_GET['view']} ";
+WHERE idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -149,15 +148,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrRendiciones,$row );
@@ -168,7 +160,7 @@ array_push( $arrRendiciones,$row );
 $arrArchivo = array();
 $query = "SELECT Nombre
 FROM `caja_chica_facturacion_archivos` 
-WHERE idFacturacion = {$_GET['view']} ";
+WHERE idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -179,15 +171,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivo,$row );
@@ -206,7 +191,7 @@ usuarios_listado.Nombre AS Usuario
 FROM `caja_chica_facturacion_historial` 
 LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = caja_chica_facturacion_historial.idTipo
 LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = caja_chica_facturacion_historial.idUsuario
-WHERE caja_chica_facturacion_historial.idFacturacion = {$_GET['view']} 
+WHERE caja_chica_facturacion_historial.idFacturacion = ".$X_Puntero." 
 ORDER BY caja_chica_facturacion_historial.idHistorial ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -218,15 +203,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrHistorial,$row );
@@ -242,8 +220,8 @@ array_push( $arrHistorial,$row );
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> <?php echo $row_data['CajaTipo']?>.
-				<small class="pull-right">Numero Documento: <?php echo n_doc($_GET['view'], 8) ?></small>
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['CajaTipo']?>.
+				<small class="pull-right">Numero Documento: <?php echo n_doc($X_Puntero, 8) ?></small>
 			</h2>
 		</div>   
 	</div>
@@ -259,12 +237,12 @@ array_push( $arrHistorial,$row );
 				<div class="col-sm-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br>
-						Sistema: '.$row_data['CajaSistema'].'<br>
-						Usuario: '.$row_data['Usuario'].'<br>
-						Estado Ingreso: '.$row_data['CajaEstado'].'<br>
-						Fecha Real Ingreso: '.Fecha_estandar($row_data['fecha_auto']).'<br>
-						Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br>
+						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br/>
+						Sistema: '.$row_data['CajaSistema'].'<br/>
+						Usuario: '.$row_data['Usuario'].'<br/>
+						Estado Ingreso: '.$row_data['CajaEstado'].'<br/>
+						Fecha Real Ingreso: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
+						Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 				
@@ -281,22 +259,22 @@ array_push( $arrHistorial,$row );
 				<div class="col-sm-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br>
-						Sistema: '.$row_data['CajaSistema'].'<br>
-						Usuario: '.$row_data['Usuario'].'<br>
-						Estado Egreso: '.$row_data['CajaEstado'].'<br>
-						Fecha Real Egreso: '.Fecha_estandar($row_data['fecha_auto']).'<br>
-						Fecha Egreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br>
+						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br/>
+						Sistema: '.$row_data['CajaSistema'].'<br/>
+						Usuario: '.$row_data['Usuario'].'<br/>
+						Estado Egreso: '.$row_data['CajaEstado'].'<br/>
+						Fecha Real Egreso: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
+						Fecha Egreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 				
 				<div class="col-sm-6 invoice-col">
 					Trabajador
 					<address>
-						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br>
-						Rut: '.$row_data['TrabajadorRut'].'<br>
-						Cargo: '.$row_data['TrabajadorCargo'].'<br>
-						Fono: '.$row_data['TrabajadorFono'].'<br>
+						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
+						Rut: '.$row_data['TrabajadorRut'].'<br/>
+						Cargo: '.$row_data['TrabajadorCargo'].'<br/>
+						Fono: '.$row_data['TrabajadorFono'].'<br/>
 					</address>
 				</div>';
 				
@@ -309,24 +287,24 @@ array_push( $arrHistorial,$row );
 				<div class="col-sm-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br>
-						Sistema: '.$row_data['CajaSistema'].'<br>
-						Usuario: '.$row_data['Usuario'].'<br>
-						Estado Rendicion: '.$row_data['CajaEstado'].'<br>
-						Fecha Real Rendicion: '.Fecha_estandar($row_data['fecha_auto']).'<br>
-						Fecha Rendicion: '.Fecha_estandar($row_data['Creacion_fecha']).'<br>
+						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br/>
+						Sistema: '.$row_data['CajaSistema'].'<br/>
+						Usuario: '.$row_data['Usuario'].'<br/>
+						Estado Rendicion: '.$row_data['CajaEstado'].'<br/>
+						Fecha Real Rendicion: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
+						Fecha Rendicion: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 				
 				<div class="col-sm-6 invoice-col">
 					Documento Relacionado
 					<address>
-						<strong>Doc N°'.$row_data['idFacturacionRelacionada'].'</strong><br>
-						Valor: '.Valores($row_data['RelValor'], 0).'<br>
-						Trabajador: '.$row_data['TrabRelNombre'].' '.$row_data['TrabRelApellidoPat'].' '.$row_data['TrabRelApellidoMat'].'<br>
-						Rut: '.$row_data['TrabRelRut'].'<br>
-						Cargo: '.$row_data['TrabRelCargo'].'<br>
-						Fono: '.$row_data['TrabRelFono'].'<br>
+						<strong>Doc N°'.$row_data['idFacturacionRelacionada'].'</strong><br/>
+						Valor: '.Valores($row_data['RelValor'], 0).'<br/>
+						Trabajador: '.$row_data['TrabRelNombre'].' '.$row_data['TrabRelApellidoPat'].' '.$row_data['TrabRelApellidoMat'].'<br/>
+						Rut: '.$row_data['TrabRelRut'].'<br/>
+						Cargo: '.$row_data['TrabRelCargo'].'<br/>
+						Fono: '.$row_data['TrabRelFono'].'<br/>
 					</address>
 				</div>';
 				
@@ -439,17 +417,17 @@ array_push( $arrHistorial,$row );
 	
 
 <?php
-	$zz  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
 	?>
 	<div class="row no-print">
 		<div class="col-xs-12">
 			<a target="new" href="view_mov_caja_chica_to_print.php<?php echo $zz ?>" class="btn btn-default">
-				<i class="fa fa-print"></i> Imprimir
+				<i class="fa fa-print" aria-hidden="true"></i> Imprimir
 			</a>
 
 			<a target="new" href="view_mov_caja_chica_to_pdf.php<?php echo $zz ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
-				<i class="fa fa-file-pdf-o"></i> Exportar a PDF
+				<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF
 			</a>
 		</div>
 	</div>
@@ -491,8 +469,8 @@ array_push( $arrHistorial,$row );
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?return=true&path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-								<a href="1download.php?dir=upload&file=<?php echo $producto['Nombre']; ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -503,13 +481,31 @@ array_push( $arrHistorial,$row );
     
 </div>
  
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

@@ -57,7 +57,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // Se traen todos los datos del producto
 $query = "SELECT Nombre,Direccion_img,idTipoImagen
 FROM `variedades_listado`
-WHERE idProducto = {$_GET['id']}";
+WHERE idProducto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -75,21 +75,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Variedades</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Imagen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Variedades', $rowdata['Nombre'], 'Editar Imagen');?>
 </div>
 <div class="clearfix"></div>
 
@@ -98,30 +84,31 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'variedades_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'variedades_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'variedades_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Descripcion</a></li>
+				<li class=""><a href="<?php echo 'variedades_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'variedades_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'variedades_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'variedades_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class="active"><a href="<?php echo 'variedades_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Imagen</a></li>
-						<li class=""><a href="<?php echo 'variedades_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Ficha</a></li>
-						<li class=""><a href="<?php echo 'variedades_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >HDS</a></li>
+						<li class=""><a href="<?php echo 'variedades_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class="active"><a href="<?php echo 'variedades_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
+						<li class=""><a href="<?php echo 'variedades_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha</a></li>
+						<li class=""><a href="<?php echo 'variedades_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
 						
 					</ul>
                 </li>           
 			</ul>	
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
+			<div class="col-sm-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 				
 				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
         
 					<div class="col-sm-10 fcenter">
-						<?php echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE, DB_EMPRESA_PATH, 'upload', $rowdata['Direccion_img']); ?>
+						<?php echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']); ?>
+						<br/>
+						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_img='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					</div> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_img='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					<div class="clearfix"></div>
 					
 				<?php }else{?>
@@ -130,14 +117,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					
 						<?php 
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
 						
 						if(isset($idTipoImagen)) {  $x1  = $idTipoImagen;  }else{$x1  = '';}
 						
-						$Form_Imputs->form_select('Tipo Imagen','idTipoImagen', $x1, 2, 'idTipoImagen', 'Nombre', 'core_tipo_producto_imagen', 0, '', $dbConn);
+						$Form_Inputs->form_select('Tipo Imagen','idTipoImagen', $x1, 2, 'idTipoImagen', 'Nombre', 'core_tipo_producto_imagen', 0, '', $dbConn);
 						
-						$Form_Imputs->form_input_hidden('idProducto', $_GET['id'], 2);
+						$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 						?> 
 
 						<div class="form-group">
@@ -156,8 +143,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

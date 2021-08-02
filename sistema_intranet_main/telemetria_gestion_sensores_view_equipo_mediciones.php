@@ -29,7 +29,7 @@ for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
 $query = "SELECT GeoLatitud, GeoLongitud, LastUpdateFecha, LastUpdateHora,Nombre,id_Geo
 ".$aa."
 FROM `telemetria_listado`
-WHERE idTelemetria = {$_GET['view']}";
+WHERE idTelemetria = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -66,13 +66,16 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUnimed,$row );
 }
-
+$arrFinalUnimed = array();
+foreach ($arrUnimed as $sen) {
+	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
+}
 ?>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['Nombre']; ?></h5>
 				
 		</header>
@@ -82,18 +85,14 @@ array_push( $arrUnimed,$row );
 			for ($i = 1; $i <= $_GET['cantSensores']; $i++) { 
 				//solo sensores activos
 				if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){ 
-					if(isset($rowdata['SensoresMedActual_'.$i])&&$rowdata['SensoresMedActual_'.$i]!=999){$xdata=Cantidades_decimales_justos($rowdata['SensoresMedActual_'.$i]);}else{$xdata='Sin Datos';}
+					if(isset($rowdata['SensoresMedActual_'.$i])&&$rowdata['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowdata['SensoresMedActual_'.$i]);}else{$xdata='Sin Datos';}
 					$explanation .= '<strong>'.$rowdata['SensoresNombre_'.$i].': </strong>'.$xdata;
-					foreach ($arrUnimed as $sen) {
-						if($rowdata['SensoresUniMed_'.$i]==$sen['idUniMed']){
-							$explanation .= ' '.$sen['Nombre'];	
-						}
-					}
+					$explanation .= ' '.$arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];
 					$explanation .= '<br/>';
 				}
 			}
 								
-			echo mapa1($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'])?>
+			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
 			
 
         </div>	
@@ -105,8 +104,8 @@ array_push( $arrUnimed,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

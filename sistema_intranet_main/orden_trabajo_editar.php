@@ -15,7 +15,7 @@ $original = "orden_trabajo_editar.php";
 $location = $original;
 //Se agregan ubicaciones
 $location .='?view='.$_GET['view'];
-if(isset($_GET['ter']) && $_GET['ter'] != ''){    $location .= "&ter=".$_GET['ter'] ; 	}
+if(isset($_GET['ter']) && $_GET['ter'] != ''){    $location .= "&ter=".$_GET['ter']; 	}
 
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
@@ -188,7 +188,7 @@ if ( ! empty($_GET['editobservacion_row']) ) {
 //Se traen los datos de la ot
 $query = "SELECT Observacion
 FROM `orden_trabajo_listado_trabajos`
-WHERE idTrabajoOT = {$_GET['idInterno']}";
+WHERE idTrabajoOT = ".$_GET['idInterno'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -208,7 +208,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Observacion del trabajo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -219,16 +219,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Observacion)) {    $x1  = $Observacion;    }else{$x1  = $rowdata['Observacion'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Observaciones','Observacion', $x1, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x1, 2, 160);
 				
-				$Form_Imputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
-				$Form_Imputs->form_input_hidden('idOT', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
+				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editTrabajo"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -241,7 +241,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 //Se traen los datos de la ot
 $query = "SELECT idAnalisis
 FROM `orden_trabajo_listado_trabajos`
-WHERE idTrabajoOT = {$_GET['idInterno']}";
+WHERE idTrabajoOT = ".$_GET['idInterno'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -261,7 +261,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar analisis del trabajo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -272,15 +272,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idAnalisis)) {    $x1  = $idAnalisis;    }else{$x1  = $rowdata['idAnalisis'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_number('N° Analisis','idAnalisis', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_number('N° Analisis','idAnalisis', $x1, 2);
 				
-				$Form_Imputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
+				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editTrabajo"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -296,7 +296,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -321,7 +321,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Productos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -338,22 +338,22 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idUml_fake)) {           $x7 = $idUml_fake;             }else{$x7 = $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Unimed'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Tareas Relacionadas','idSubTipo', $x1, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Tareas Relacionadas','idSubTipo', $x1, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, 0,
 										 'Producto utilizado','idProducto', $x2, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_number('Grasa inicial','Grasa_inicial', $x3, 2);
-				$Form_Imputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x4, 2);
-				$Form_Imputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);		
-				$Form_Imputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);				
-				$Form_Imputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);
+				$Form_Inputs->form_input_number('Grasa inicial','Grasa_inicial', $x3, 2);
+				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x4, 2);
+				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);		
+				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);				
+				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);
 				
 					
 					
-				$Form_Imputs->form_input_hidden('tabla', $_GET['tabla'], 2);
-				$Form_Imputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
-				$Form_Imputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
-				$Form_Imputs->form_input_hidden('idUml', $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idUml'], 2);
+				$Form_Inputs->form_input_hidden('tabla', $_GET['tabla'], 2);
+				$Form_Inputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
+				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
+				$Form_Inputs->form_input_hidden('idUml', $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idUml'], 2);
 				
 				/***********************************************************************/
 				//Imprimo las variables
@@ -550,7 +550,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -565,7 +565,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Itemizado</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -578,20 +578,20 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Nombre)) {               $x1  = $Nombre;                 }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Itemizado','idItemizado', $x1, 1, 'idLevel_'.$tablamad, 'Nombre', 'licitacion_listado_level_'.$tablamad, 'idLevel_'.$_GET['addItemizado'].'='.$_GET['lvl'], '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Itemizado','idItemizado', $x1, 1, 'idLevel_'.$tablamad, 'Nombre', 'licitacion_listado_level_'.$tablamad, 'idLevel_'.$_GET['addItemizado'].'='.$_GET['lvl'], '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('tabla', $_GET['tabla'], 2);
-				$Form_Imputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
-				$Form_Imputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
-				$Form_Imputs->form_input_hidden('tablaitem', $tablamad, 2);
+				$Form_Inputs->form_input_hidden('tabla', $_GET['tabla'], 2);
+				$Form_Inputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
+				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
+				$Form_Inputs->form_input_hidden('tablaitem', $tablamad, 2);
 				
 				
 				?> 
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_itemizado"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -605,7 +605,7 @@ foreach ($arrPermisos as $prod) {
 //Se traen los datos de la ot
 $query = "SELECT idMaquina
 FROM `orden_trabajo_listado`
-WHERE idOT = {$_GET['view']}";
+WHERE idOT = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -627,7 +627,7 @@ $z="idMaquina={$rowdata['idMaquina']}";
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Tarea</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -662,8 +662,8 @@ $z="idMaquina={$rowdata['idMaquina']}";
 				if(isset($idLevel_25)) {       $x25  = $idLevel_25;      }else{$x25  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend25('Nivel 1','idLevel_1',$x1 ,1,'idLevel_1','Nombre','maquinas_listado_level_1',$z,0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend25('Nivel 1','idLevel_1',$x1 ,1,'idLevel_1','Nombre','maquinas_listado_level_1',$z,0,
 										  'Nivel 2','idLevel_2',$x2 ,1,'idLevel_2','Nombre','maquinas_listado_level_2',0,0,
 										  'Nivel 3','idLevel_3',$x3 ,1,'idLevel_3','Nombre','maquinas_listado_level_3',0,0,
 										  'Nivel 4','idLevel_4',$x4 ,1,'idLevel_4','Nombre','maquinas_listado_level_4',0,0,
@@ -695,7 +695,7 @@ $z="idMaquina={$rowdata['idMaquina']}";
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -717,7 +717,7 @@ orden_trabajo_listado_trabajos.idUml,
 sistema_productos_uml.Nombre AS Unimed
 FROM `orden_trabajo_listado_trabajos`
 LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = orden_trabajo_listado_trabajos.idUml
-WHERE idTrabajoOT = {$_GET['idInterno']}";
+WHERE idTrabajoOT = ".$_GET['idInterno'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -739,7 +739,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -764,7 +764,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Productos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -781,35 +781,35 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idUml_fake)) {           $x7 = $idUml_fake;             }else{$x7 = $rowdata['Unimed'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Producto utilizado','idProducto', $x2, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Producto utilizado','idProducto', $x2, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				
 				//Se ejecuta si se hace un cambio en el tipo de tarea
 				switch ($rowdata['idSubTipo']) {
 					case 1: //Grasa
-						$Form_Imputs->form_input_number('Grasa inicial','Grasa_inicial', $x3, 2);
-						$Form_Imputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x4, 2);	
+						$Form_Inputs->form_input_number('Grasa inicial','Grasa_inicial', $x3, 2);
+						$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x4, 2);	
 					break;
 							
 					case 2: //Aceite
-						$Form_Imputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);
+						$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);
 					break;
 							
 					case 3: //Normal
-						$Form_Imputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);
+						$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);
 					break;
 							
 					case 4: //Otro
-						$Form_Imputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);   
+						$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);   
 					break;
 				}
-				$Form_Imputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);
 				
 					
-				$Form_Imputs->form_input_hidden('tabla', $_GET['tabla'], 2);
-				$Form_Imputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
-				$Form_Imputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
-				$Form_Imputs->form_input_hidden('idUml', $rowdata['idUml'], 2);
+				$Form_Inputs->form_input_hidden('tabla', $_GET['tabla'], 2);
+				$Form_Inputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
+				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
+				$Form_Inputs->form_input_hidden('idUml', $rowdata['idUml'], 2);
 				
 				/***********************************************************************/
 				//Imprimo las variables
@@ -876,7 +876,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto_row"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -890,7 +890,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Itemizado</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -903,20 +903,20 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Nombre)) {               $x1  = $Nombre;                 }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Itemizado','idItemizado', $x1, 1, 'idLevel_'.$tablamad, 'Nombre', 'licitacion_listado_level_'.$tablamad, 'idLevel_'.$_GET['addItemizado_row'].'='.$_GET['lvl'], '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Itemizado','idItemizado', $x1, 1, 'idLevel_'.$tablamad, 'Nombre', 'licitacion_listado_level_'.$tablamad, 'idLevel_'.$_GET['addItemizado_row'].'='.$_GET['lvl'], '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('tabla', $_GET['tabla'], 2);
-				$Form_Imputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
-				$Form_Imputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
-				$Form_Imputs->form_input_hidden('tablaitem', $tablamad, 2);
+				$Form_Inputs->form_input_hidden('tabla', $_GET['tabla'], 2);
+				$Form_Inputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
+				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
+				$Form_Inputs->form_input_hidden('tablaitem', $tablamad, 2);
 				
 				
 				?> 
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_itemizado_row"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -930,7 +930,7 @@ foreach ($arrPermisos as $prod) {
 //Se traen los datos de la ot
 $query = "SELECT idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion
 FROM `orden_trabajo_listado`
-WHERE idOT = {$_GET['view']}";
+WHERE idOT = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -951,7 +951,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -976,7 +976,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Productos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -988,9 +988,9 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
@@ -999,15 +999,15 @@ foreach ($arrPermisos as $prod) {
 					</div>
 				</div>';
 				
-				$Form_Imputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-				$Form_Imputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
-				$Form_Imputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
+				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 					
 				//Imprimo las variables
 				$arrTipo = array();
@@ -1055,7 +1055,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Agregar" name="submit_prod"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1073,7 +1073,7 @@ sistema_productos_uml.Nombre AS Unidad
 FROM `orden_trabajo_listado_productos`
 LEFT JOIN `productos_listado`         ON productos_listado.idProducto  = orden_trabajo_listado_productos.idProducto
 LEFT JOIN `sistema_productos_uml`     ON sistema_productos_uml.idUml   = productos_listado.idUml
-WHERE idProductos = {$_GET['edit_prod']}";
+WHERE idProductos = ".$_GET['edit_prod'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1094,7 +1094,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1119,7 +1119,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Productos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1131,9 +1131,9 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
@@ -1142,8 +1142,8 @@ foreach ($arrPermisos as $prod) {
 					</div>
 				</div>';
 				
-				$Form_Imputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idProductos', $_GET['edit_prod'], 2);
+				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idProductos', $_GET['edit_prod'], 2);
 					
 				//Imprimo las variables
 				$arrTipo = array();
@@ -1191,7 +1191,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Editar" name="submit_editprod"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1204,7 +1204,7 @@ foreach ($arrPermisos as $prod) {
 //Se traen los datos de la ot
 $query = "SELECT idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion
 FROM `orden_trabajo_listado`
-WHERE idOT = {$_GET['view']}";
+WHERE idOT = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1225,7 +1225,7 @@ $zx2 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_insumos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1251,7 +1251,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Insumos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1263,9 +1263,9 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
@@ -1274,15 +1274,15 @@ foreach ($arrPermisos as $prod) {
 					</div>
 				</div>';
 				
-				$Form_Imputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-				$Form_Imputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
-				$Form_Imputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
+				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 				
 				
 					
@@ -1332,7 +1332,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Agregar" name="submit_ins"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1350,7 +1350,7 @@ sistema_productos_uml.Nombre AS Unidad
 FROM `orden_trabajo_listado_insumos`
 LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto  = orden_trabajo_listado_insumos.idProducto
 LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml = insumos_listado.idUml
-WHERE idInsumos = {$_GET['edit_ins']}";
+WHERE idInsumos = ".$_GET['edit_ins'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1371,7 +1371,7 @@ $zx2 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_insumos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1397,7 +1397,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Insumos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1409,9 +1409,9 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
@@ -1420,8 +1420,8 @@ foreach ($arrPermisos as $prod) {
 					</div>
 				</div>';
 				
-				$Form_Imputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idInsumos', $_GET['edit_ins'], 2);
+				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idInsumos', $_GET['edit_ins'], 2);
 				
 					
 				//Imprimo las variables
@@ -1470,7 +1470,7 @@ foreach ($arrPermisos as $prod) {
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Editar" name="submit_editins"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1481,11 +1481,11 @@ foreach ($arrPermisos as $prod) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addTrab']) ) { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 //Se traen los datos de la ot
 $query = "SELECT idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion
 FROM `orden_trabajo_listado`
-WHERE idOT = {$_GET['view']}";
+WHERE idOT = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1505,7 +1505,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Trabajador</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1517,23 +1517,23 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
-				$Form_Imputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-				$Form_Imputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
-				$Form_Imputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
+				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 				?>
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Agregar" name="submit_trab"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1545,11 +1545,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['edit_trab']) ) { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 //Se traen los datos de la ot
 $query = "SELECT idTrabajador
 FROM `orden_trabajo_listado_responsable`
-WHERE idResponsable = {$_GET['edit_trab']}";
+WHERE idResponsable = ".$_GET['edit_trab'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1569,7 +1569,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Trabajador</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1580,16 +1580,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idTrabajador)) {     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Imputs->form_input_hidden('idResponsable', $_GET['edit_trab'], 2);
+				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idResponsable', $_GET['edit_trab'], 2);
 				?>
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Editar" name="submit_edittrab"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1602,7 +1602,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 //Se traen los datos de la ot
 $query = "SELECT Observaciones
 FROM `orden_trabajo_listado`
-WHERE idOT = {$_GET['view']}";
+WHERE idOT = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1622,7 +1622,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1633,15 +1633,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Observaciones)) {    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Observacion','Observaciones', $x1, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Observacion','Observaciones', $x1, 1, 160);
 				
-				$Form_Imputs->form_input_hidden('idOT', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editObs"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1652,12 +1652,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 //Se traen los datos de la ot
 $query = "SELECT idEstado, idPrioridad, idTipo, f_programacion, idSistema,f_termino,horaInicio,
 horaTermino,horaProg, idSupervisor
 FROM `orden_trabajo_listado`
-WHERE idOT = {$_GET['view']}";
+WHERE idOT = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1678,7 +1678,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1698,37 +1698,37 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Prioridad','idPrioridad', $x1, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tipo de Trabajo','idTipo', $x2, 2, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Programada','f_programacion', $x3, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Prioridad','idPrioridad', $x1, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x2, 2, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x3, 2);
 				
 				//Si la OT solo esta programada
 				if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){
 					if(isset($_GET['ter'])&&$_GET['ter']!=''&&$_GET['ter']=='true'){
-						$Form_Imputs->form_date('Fecha Termino','f_termino', $x4, 2);
-						$Form_Imputs->form_select_filter('Supervisor','idSupervisor', $x9, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-						$Form_Imputs->form_time('Hora inicio','horaInicio', $x5, 2, 1);
-						$Form_Imputs->form_time('Hora termino','horaTermino', $x6, 2, 1);
-						//$Form_Imputs->form_time('Tiempo Programado','horaProg', $x7, 2, 1);
+						$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 2);
+						$Form_Inputs->form_select_filter('Supervisor','idSupervisor', $x9, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
+						$Form_Inputs->form_time('Hora inicio','horaInicio', $x5, 2, 1);
+						$Form_Inputs->form_time('Hora termino','horaTermino', $x6, 2, 1);
+						//$Form_Inputs->form_time('Tiempo Programado','horaProg', $x7, 2, 1);
 					}
 				//Si la OT esta terminada			
 				}elseif(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==2){
-					$Form_Imputs->form_date('Fecha Termino','f_termino', $x4, 2);
-					$Form_Imputs->form_select_filter('Supervisor','idSupervisor', $x9, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-					$Form_Imputs->form_time('Hora inicio','horaInicio', $x5, 2, 1);
-					$Form_Imputs->form_time('Hora termino','horaTermino', $x6, 2, 1);
-					$Form_Imputs->form_time('Tiempo Programado','horaProg', $x7, 2, 1);
+					$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 2);
+					$Form_Inputs->form_select_filter('Supervisor','idSupervisor', $x9, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
+					$Form_Inputs->form_time('Hora inicio','horaInicio', $x5, 2, 1);
+					$Form_Inputs->form_time('Hora termino','horaTermino', $x6, 2, 1);
+					$Form_Inputs->form_time('Tiempo Programado','horaProg', $x7, 2, 1);
 				}			
 							
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idOT', $_GET['view'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				
 				?>
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editBase"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1766,7 +1766,7 @@ LEFT JOIN `core_ot_tipos`              ON core_ot_tipos.idTipo                  
 LEFT JOIN `trabajadores_listado`       ON trabajadores_listado.idTrabajador     = orden_trabajo_listado.idSupervisor
 LEFT JOIN `clientes_listado`           ON clientes_listado.idCliente            = orden_trabajo_listado.idCliente
 
-WHERE orden_trabajo_listado.idOT = {$_GET['view']}";
+WHERE orden_trabajo_listado.idOT = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -1794,7 +1794,7 @@ trabajadores_listado.Rut
 
 FROM `orden_trabajo_listado_responsable`
 LEFT JOIN `trabajadores_listado`   ON trabajadores_listado.idTrabajador     = orden_trabajo_listado_responsable.idTrabajador
-WHERE orden_trabajo_listado_responsable.idOT = {$_GET['view']}
+WHERE orden_trabajo_listado_responsable.idOT = ".$_GET['view']."
 ORDER BY trabajadores_listado.ApellidoPat ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -1827,7 +1827,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	FROM `orden_trabajo_listado_insumos`
 	LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto    = orden_trabajo_listado_insumos.idProducto
 	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = insumos_listado.idUml
-	WHERE orden_trabajo_listado_insumos.idOT = {$_GET['view']}
+	WHERE orden_trabajo_listado_insumos.idOT = ".$_GET['view']."
 	ORDER BY insumos_listado.Nombre ASC ";
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
@@ -1857,7 +1857,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	FROM `orden_trabajo_listado_productos`
 	LEFT JOIN `productos_listado`       ON productos_listado.idProducto    = orden_trabajo_listado_productos.idProducto
 	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml     = productos_listado.idUml
-	WHERE orden_trabajo_listado_productos.idOT = {$_GET['view']}
+	WHERE orden_trabajo_listado_productos.idOT = ".$_GET['view']."
 	ORDER BY productos_listado.Nombre ASC ";
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
@@ -1891,7 +1891,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	LEFT JOIN `insumos_listado`            ON insumos_listado.idProducto           = bodegas_insumos_facturacion_existencias.idProducto
 	LEFT JOIN `sistema_productos_uml`      ON sistema_productos_uml.idUml          = insumos_listado.idUml
 	LEFT JOIN `bodegas_insumos_listado`    ON bodegas_insumos_listado.idBodega     = bodegas_insumos_facturacion_existencias.idBodega
-	WHERE bodegas_insumos_facturacion_existencias.idOT = {$_GET['view']} ";
+	WHERE bodegas_insumos_facturacion_existencias.idOT = ".$_GET['view'];
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
 	//Si ejecuto correctamente la consulta
@@ -1921,7 +1921,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	LEFT JOIN `productos_listado`            ON productos_listado.idProducto           = bodegas_productos_facturacion_existencias.idProducto
 	LEFT JOIN `sistema_productos_uml`        ON sistema_productos_uml.idUml            = productos_listado.idUml
 	LEFT JOIN `bodegas_productos_listado`    ON bodegas_productos_listado.idBodega     = bodegas_productos_facturacion_existencias.idBodega
-	WHERE bodegas_productos_facturacion_existencias.idOT = {$_GET['view']} ";
+	WHERE bodegas_productos_facturacion_existencias.idOT = ".$_GET['view'];
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
 	//Si ejecuto correctamente la consulta
@@ -1966,7 +1966,7 @@ FROM `orden_trabajo_listado_trabajos`
 LEFT JOIN `productos_listado`      ON productos_listado.idProducto      = orden_trabajo_listado_trabajos.idProducto
 LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml  = orden_trabajo_listado_trabajos.idUml
 
-WHERE idOT = {$_GET['view']}
+WHERE idOT = ".$_GET['view']."
 ORDER BY NombreComponente ASC, NombreTrabajo ASC, idTrabajoOT ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -1993,7 +1993,7 @@ array_push( $arrTrabajo,$row );
 
 
 <?php if(isset($_GET['ter'])&&$_GET['ter']!=''){ ?>
-	<div class="col-sm-12 fcenter" >
+	<div class="col-sm-12" >
 
 		<?php 
 		$ubicacion = $location.'&cerrar_ot=true';
@@ -2013,7 +2013,7 @@ array_push( $arrTrabajo,$row );
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<?php if(isset($rowdata['NombreCliente'])&&$rowdata['NombreCliente']!=''){?>
 						<tr>
@@ -2121,7 +2121,7 @@ array_push( $arrTrabajo,$row );
 						<td>
 							<?php //Si la OT solo esta programada
 							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
-								<a href="<?php echo $location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus"></i> Agregar Trabajadores</a>
+								<a href="<?php echo $location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajadores</a>
 							<?php } ?>
 						</td>
 					</tr>
@@ -2132,11 +2132,11 @@ array_push( $arrTrabajo,$row );
 							<td class="item-name"><?php echo $trab['Cargo'];?></td> 
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo $location.'&edit_trab='.$trab['idResponsable']; ?>" title="Editar Trabajador" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+									<a href="<?php echo $location.'&edit_trab='.$trab['idResponsable']; ?>" title="Editar Trabajador" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php 
-									$ubicacion = $location.'&del_trab='.$trab['idResponsable'];
+									$ubicacion = $location.'&del_trab='.simpleEncode($trab['idResponsable'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
 						</tr> 
@@ -2148,7 +2148,7 @@ array_push( $arrTrabajo,$row );
 						<td>
 							<?php //Si la OT solo esta programada
 							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
-								<a href="<?php echo $location.'&addIns=true' ?>" title="Agregar Insumos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus"></i> Agregar Insumos</a>
+								<a href="<?php echo $location.'&addIns=true' ?>" title="Agregar Insumos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumos</a>
 							<?php } ?>
 						</td>
 					</tr>
@@ -2161,11 +2161,11 @@ array_push( $arrTrabajo,$row );
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada
 										if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
-											<a href="<?php echo $location.'&edit_ins='.$insumos['idMain']; ?>" title="Editar Insumos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+											<a href="<?php echo $location.'&edit_ins='.$insumos['idMain']; ?>" title="Editar Insumos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 											<?php 
-											$ubicacion = $location.'&del_ins='.$insumos['idMain'];
+											$ubicacion = $location.'&del_ins='.simpleEncode($insumos['idMain'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar el insumo '.$insumos['NombreProducto'].'?';?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 										<?php } ?>
 									</div>
 								</td>
@@ -2180,7 +2180,7 @@ array_push( $arrTrabajo,$row );
 						<td>
 							<?php //Si la OT solo esta programada
 							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
-								<a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Productos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus"></i> Agregar Productos</a>
+								<a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Productos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a>
 							<?php } ?>
 						</td>
 					</tr>
@@ -2193,11 +2193,11 @@ array_push( $arrTrabajo,$row );
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada
 										if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
-											<a href="<?php echo $location.'&edit_prod='.$prod['idMain']; ?>" title="Editar Productos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+											<a href="<?php echo $location.'&edit_prod='.$prod['idMain']; ?>" title="Editar Productos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 											<?php 
-											$ubicacion = $location.'&del_prod='.$prod['idMain'];
+											$ubicacion = $location.'&del_prod='.simpleEncode($prod['idMain'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['NombreProducto'].'?';?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 										<?php } ?>
 									</div>
 								</td>
@@ -2212,7 +2212,7 @@ array_push( $arrTrabajo,$row );
 						<td>
 							<?php //Si la OT solo esta programada
 							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
-								<a href="<?php echo $location.'&addtrabajo=true' ?>" title="Agregar Tareas" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus"></i> Agregar Tarea</a>
+								<a href="<?php echo $location.'&addtrabajo=true' ?>" title="Agregar Tareas" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Tarea</a>
 							<?php } ?>
 						</td>
 					</tr>
@@ -2267,22 +2267,22 @@ array_push( $arrTrabajo,$row );
 									
 									$dialogo = 'Deseas borrar '.$trab['NombreTrabajo'];
 									//Boton para cambiar itemizado para todos los items
-									echo '<a href="'.$ubicacion.'&addItemizado_row='.$trab['item_m_tabla'].'&lvl='.$trab['item_m_tabla_id'].'" title="Editar Itemizado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-cogs"></i></a>';
+									echo '<a href="'.$ubicacion.'&addItemizado_row='.$trab['item_m_tabla'].'&lvl='.$trab['item_m_tabla_id'].'" title="Editar Itemizado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-cogs" aria-hidden="true"></i></a>';
 									//Se muestra el boton editar productos unicamente si el componente consume productos
 									if(isset($trab['idTrabajo'])&&$trab['idTrabajo']!=''&&$trab['idTrabajo']==2){
-										echo '<a href="'.$ubicacion.'&editproducto_row=true" title="Editar Producto" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>';
+										echo '<a href="'.$ubicacion.'&editproducto_row=true" title="Editar Producto" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
 									}
 									if(isset($_GET['ter'])&&$_GET['ter']!=''){
 										//Analisis
 										if(isset($trab['idTrabajo'])&&$trab['idTrabajo']!=''&&$trab['idTrabajo']==1){
-											echo '<a href="'.$ubicacion.'&editanalisis_row=true" title="Editar Analisis" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>';
+											echo '<a href="'.$ubicacion.'&editanalisis_row=true" title="Editar Analisis" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
 										}
 										//Observacion
 										if(isset($trab['idTrabajo'])&&$trab['idTrabajo']!=''&&$trab['idTrabajo']==3){
-											echo '<a href="'.$ubicacion.'&editobservacion_row=true" title="Editar Observacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>';
+											echo '<a href="'.$ubicacion.'&editobservacion_row=true" title="Editar Observacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
 										}
 									}
-									echo '<a onClick="dialogBox(\''.$ubicacion.'&del_tarea_row=true\', \''.$dialogo.'\')" title="Borrar Trabajo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>';	
+									echo '<a onClick="dialogBox(\''.$ubicacion.'&del_tarea_row=true\', \''.$dialogo.'\')" title="Borrar Trabajo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';	
 									?>		
 								</div>
 							</td>		
@@ -2358,14 +2358,14 @@ array_push( $arrTrabajo,$row );
 												<div class="btn-group" style="width: 70px;" >';
 													//Se muestra el de trabajo boton unicamente cuando no se tiene asignado uno
 													if(isset($x_idInterno['Item_Nombre'])&&$x_idInterno['Item_Nombre']==''){
-														echo '<a href="'.$ubicacion.'&addItemizado='.$x_idInterno['tabla_m'].'&lvl='.$x_idInterno['tabla_m_value'].'" title="Agregar Itemizado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-cogs"></i></a>';
+														echo '<a href="'.$ubicacion.'&addItemizado='.$x_idInterno['tabla_m'].'&lvl='.$x_idInterno['tabla_m_value'].'" title="Agregar Itemizado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-cogs" aria-hidden="true"></i></a>';
 													}else{
 														//Se muestra el boton editar productos unicamente si el componente consume productos
 														if(isset($x_idInterno['idTrabajo'])&&$x_idInterno['idTrabajo']!=''&&$x_idInterno['idTrabajo']==2){
-															echo '<a href="'.$ubicacion.'&editproducto=true" title="Editar Producto" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>';
+															echo '<a href="'.$ubicacion.'&editproducto=true" title="Editar Producto" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
 														}
 													}
-													echo '<a onClick="dialogBox(\''.$ubicacion.'&del_tarea=true\', \''.$dialogo.'\')" title="Borrar Trabajo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+													echo '<a onClick="dialogBox(\''.$ubicacion.'&del_tarea=true\', \''.$dialogo.'\')" title="Borrar Trabajo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>';
@@ -2384,7 +2384,7 @@ array_push( $arrTrabajo,$row );
 					<td colspan="5" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td>
 					<td class="blank">
 						<div class="btn-group" style="width: 35px;" >
-							<a href="<?php echo $location.'&edit_obs=true'; ?>" title="Editar Observacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+							<a href="<?php echo $location.'&edit_obs=true'; ?>" title="Editar Observacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 						</div>
 					</td>
 				</tr>

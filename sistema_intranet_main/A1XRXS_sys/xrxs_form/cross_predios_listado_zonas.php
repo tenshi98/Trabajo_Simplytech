@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -32,11 +36,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idZona':             if(empty($idZona)){             $error['idZona']              = 'error/No ha ingresado el id';}break;
 			case 'idPredio':           if(empty($idPredio)){           $error['idPredio']            = 'error/No ha seleccionado el predio';}break;
 			case 'Nombre':             if(empty($Nombre)){             $error['Nombre']              = 'error/No ha ingresado el nombre';}break;
@@ -54,7 +58,12 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){  $error['Codigo'] = 'error/Edita Codigo, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -72,7 +81,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idPredio)){
-				$ndata_1 = db_select_nrows ('Nombre', 'cross_predios_listado_zonas', '', "Nombre='".$Nombre."' AND idPredio='".$idPredio."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'cross_predios_listado_zonas', '', "Nombre='".$Nombre."' AND idPredio='".$idPredio."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
@@ -99,7 +108,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `cross_predios_listado_zonas` (idPredio, Nombre, idEstado, Codigo, idCategoria,
 				idProducto, AnoPlantacion, Hectareas, Hileras, Plantas, idEstadoProd, DistanciaPlant, DistanciaHileras) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -134,7 +143,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idPredio)&&isset($idZona)){
-				$ndata_1 = db_select_nrows ('Nombre', 'cross_predios_listado_zonas', '', "Nombre='".$Nombre."' AND idPredio='".$idPredio."' AND idZona!='".$idZona."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'cross_predios_listado_zonas', '', "Nombre='".$Nombre."' AND idPredio='".$idPredio."' AND idZona!='".$idZona."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
@@ -190,42 +199,49 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			$query  = "DELETE FROM `cross_predios_listado_zonas` WHERE idZona = {$_GET['del_zona']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_zona']) OR !validaEntero($_GET['del_zona']))&&$_GET['del_zona']!=''){
+				$indice = simpleDecode($_GET['del_zona'], fecha_actual());
+			}else{
+				$indice = $_GET['del_zona'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
-			//se borran los datos
-			$query  = "DELETE FROM `cross_predios_listado_zonas_ubicaciones` WHERE idZona = {$_GET['del_zona']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
 			}
 			
-		
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			if($errorn==0){
+				//se borran los datos
+				$resultado_1 = db_delete_data (false, 'cross_predios_listado_zonas', 'idZona = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'cross_predios_listado_zonas_ubicaciones', 'idZona = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
+			
 
 		break;							
 					

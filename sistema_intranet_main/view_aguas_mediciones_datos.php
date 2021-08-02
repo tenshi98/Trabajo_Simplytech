@@ -1,0 +1,256 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Views.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Views.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
+// Se traen todos los datos de la subida
+$query = "SELECT 
+aguas_mediciones_datos.idDatos,
+aguas_mediciones_datos.fCreacion,
+aguas_mediciones_datos.Fecha,
+aguas_mediciones_datos.Nombre AS NombreArchivo,
+aguas_mediciones_datos.Observaciones,
+usuarios_listado.Nombre AS NombreUsuario,
+core_sistemas.Nombre AS Sistema,
+
+aguas_mediciones_datos.idTipo,
+aguas_mediciones_datos.ConsumoMedidor,
+aguas_mediciones_datos_tipo_medicion.Nombre AS MedidorTipoMed,
+aguas_marcadores_listado.Nombre AS MarcadorNombre,
+aguas_mediciones_datos.idMarcadoresUsado AS ID,
+(SELECT Identificador FROM `aguas_clientes_listado` WHERE idMarcadores = ID AND idFacturable = 3 LIMIT 1)AS ClienteIdentificador,
+(SELECT Nombre FROM `aguas_clientes_listado` WHERE idMarcadores = ID AND idFacturable = 3 LIMIT 1)AS ClienteNombre
+
+FROM `aguas_mediciones_datos`
+LEFT JOIN `core_sistemas`                          ON core_sistemas.idSistema                               = aguas_mediciones_datos.idSistema
+LEFT JOIN `usuarios_listado`                       ON usuarios_listado.idUsuario                            = aguas_mediciones_datos.idUsuario
+LEFT JOIN `aguas_mediciones_datos_tipo_medicion`   ON aguas_mediciones_datos_tipo_medicion.idTipoMedicion   = aguas_mediciones_datos.idTipoMedicion
+LEFT JOIN `aguas_marcadores_listado`               ON aguas_marcadores_listado.idMarcadores                 = aguas_mediciones_datos.idMarcadoresUsado
+WHERE aguas_mediciones_datos.idDatos = ".$X_Puntero;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);	
+
+// Se trae un listado con todos los datos subidos correctamente
+$arrDatosCorrectos = array();
+$query = "SELECT 
+aguas_mediciones_datos_detalle.idDatosDetalle,
+aguas_clientes_listado.Nombre,
+aguas_clientes_listado.Direccion,
+aguas_clientes_listado.Identificador,
+aguas_clientes_listado.UnidadHabitacional,
+aguas_mediciones_datos_detalle.Consumo,
+
+aguas_marcadores_listado.Nombre AS Marcadores,
+aguas_marcadores_remarcadores.Nombre AS Remarcadores
+
+FROM `aguas_mediciones_datos_detalle` 
+
+LEFT JOIN `aguas_clientes_listado`         ON aguas_clientes_listado.idCliente               = aguas_mediciones_datos_detalle.idCliente
+LEFT JOIN `aguas_marcadores_listado`       ON aguas_marcadores_listado.idMarcadores          = aguas_mediciones_datos_detalle.idMarcadores
+LEFT JOIN `aguas_marcadores_remarcadores`  ON aguas_marcadores_remarcadores.idRemarcadores   = aguas_mediciones_datos_detalle.idRemarcadores
+
+WHERE aguas_mediciones_datos_detalle.idDatos = ".$X_Puntero."
+ORDER BY aguas_mediciones_datos_detalle.idDatosDetalle ASC";
+//consulto
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrDatosCorrectos,$row );
+}
+
+
+?>
+
+
+<div class="col-sm-12">
+
+	<div id="page-wrap">
+		<div id="header"> Ingreso Medidores N°<?php echo n_doc($rowdata['idDatos'], 7); ?> </div>
+		<div id="customer">
+			<table id="meta" class="fleft otdata">
+				<tbody>
+					<tr>
+						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
+						<td class="meta-head"></td>
+					</tr>
+					<tr>
+						<td class="meta-head">Creador</td>
+						<td><?php echo $rowdata['NombreUsuario']?></td>
+					</tr>
+					<tr>
+						<td class="meta-head">Nombre del Archivo</td>
+						<td><?php echo $rowdata['NombreArchivo']?></td>
+					</tr>
+					<tr>
+						<td class="meta-head">Sistema</td>
+						<td><?php echo $rowdata['Sistema']?></td>
+					</tr>
+					
+					<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==2){ ?>
+						
+						<tr>
+							<td class="meta-head">Cliente</td>
+							<td><?php echo $rowdata['ClienteIdentificador'].' '.$rowdata['ClienteNombre']; ?></td>
+						</tr>
+						<tr>
+							<td class="meta-head">Medidor Cliente</td>
+							<td><?php echo $rowdata['MarcadorNombre']; ?></td>
+						</tr>
+						<tr>
+							<td class="meta-head">Medicion del periodo</td>
+							<td><?php echo cantidades_decimales_justos($rowdata['ConsumoMedidor']).' Metros Cubicos'; ?></td>
+						</tr>
+						<tr>
+							<td class="meta-head">Distribucion de diferencia</td>
+							<td><?php echo $rowdata['MedidorTipoMed']; ?></td>
+						</tr>
+					
+					<?php } ?>
+				</tbody>
+			</table>
+			<table id="meta" class="otdata2">
+				<tbody>
+					<tr>
+						<td class="meta-head">Fecha Creacion</td>
+						<td><?php echo Fecha_estandar($rowdata['fCreacion']); ?></td>
+					</tr>
+					<tr>
+						<td class="meta-head">Fecha Facturacion</td>
+						<td><?php echo Fecha_estandar($rowdata['Fecha']);?></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<table id="items">
+			<tbody>
+				<tr><th colspan="6">Detalle</th></tr>		  
+				
+				<?php if($arrDatosCorrectos) { ?>
+					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
+						<td><strong>Identificador</strong></td>
+						<td><strong>Cliente</strong></td>
+						<td width="15px"><strong>Medidor</strong></td>
+						<td width="15px"><strong>Remarcador</strong></td>
+						<td><strong>Direccion</strong></td>
+						<td width="15px"><strong>Consumo</strong></td>
+					</tr>
+					<?php foreach ($arrDatosCorrectos as $datos) { ?>
+						<tr class="item-row linea_punteada">
+							<td><?php echo $datos['Identificador']; ?></td>
+							<td><?php echo $datos['Nombre']; ?></td>
+							<td><?php echo $datos['Marcadores']; ?></td>
+							<td><?php echo $datos['Remarcadores']; ?></td>
+							<td><?php echo $datos['Direccion']; ?></td>
+							<td><?php echo cantidades_decimales_justos($datos['Consumo']); ?></td>
+						</tr> 
+					<?php } ?>
+					<tr id="hiderow"><td colspan="6"></td></tr>
+				<?php } ?>
+
+				<tr>
+					<td colspan="6" class="blank"> 
+						<p>
+							<?php 
+							if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){
+								echo $rowdata['Observaciones'];
+							}else{
+								echo 'Sin Observaciones';
+							}?>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6" class="blank"><p>Observaciones</p></td> 
+				</tr>
+			</tbody>
+		</table>
+    	<div class="clearfix"></div>
+    </div>
+</div>
+	
+
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
+
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Views.php';
+?>

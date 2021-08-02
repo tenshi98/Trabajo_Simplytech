@@ -36,7 +36,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Listado de Usuarios</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -47,8 +47,8 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 				if(isset($idUsuario)) {   $x1  = $idUsuario;   }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'idEstado=1 AND idTipoUsuario!=1', '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'idEstado=1 AND idTipoUsuario!=1', '', $dbConn);
 				?>
 								
 				<div class="form-group">	

@@ -34,14 +34,14 @@ require_once 'core/Web.Header.Views.php';
 		<div class="col-sm-4 invoice-col">
 			Indicadores
 			<address>
-				<strong>UF</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['UF'], 0); ?></span><br>
-				<strong>UTM</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['UTM'], 0); ?></span><br>
-				<strong>Renta Minima</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['IMM'], 0); ?></span><br>
-				<strong>Tope Imponible AFP</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeImpAFP'], 0); ?></span><br>
-				<strong>Tope Imponible IPS</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeImpIPS'], 0); ?></span><br>
-				<strong>Tope Seguro Cesantia</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeSegCesantia'], 0); ?></span><br>
-				<strong>Tope APV Mensual</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeAPVMensual'], 0); ?></span><br>
-				<strong>Tope Deposito Convenido</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeDepConv'], 0); ?></span><br>
+				<strong>UF</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['UF'], 0); ?></span><br/>
+				<strong>UTM</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['UTM'], 0); ?></span><br/>
+				<strong>Renta Minima</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['IMM'], 0); ?></span><br/>
+				<strong>Tope Imponible AFP</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeImpAFP'], 0); ?></span><br/>
+				<strong>Tope Imponible IPS</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeImpIPS'], 0); ?></span><br/>
+				<strong>Tope Seguro Cesantia</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeSegCesantia'], 0); ?></span><br/>
+				<strong>Tope APV Mensual</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeAPVMensual'], 0); ?></span><br/>
+				<strong>Tope Deposito Convenido</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeDepConv'], 0); ?></span><br/>
 			</address>
 		</div>
 		
@@ -49,9 +49,9 @@ require_once 'core/Web.Header.Views.php';
 			Pago Empresa
 			<address>
 				<?php
-				if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_SIS'])){echo '<strong>AFP SIS</strong>: <span class="pull-right">'.Valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_SIS'], 0).'</span> <br>';}
-				if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SegCesantia_Empleador'])){echo '<strong>Seg Cesantia Empleador</strong>: <span class="pull-right">'.Valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SegCesantia_Empleador'], 0).'</span> <br>';}
-				
+				if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_SIS'])){echo '<strong>AFP Seguro de Invalidez y Sobrevivencia</strong>: <span class="pull-right">'.Valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_SIS'], 0).'</span> <br/>';}
+				if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SegCesantia_Empleador'])){echo '<strong>Seg Cesantia Empleador</strong>: <span class="pull-right">'.Valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SegCesantia_Empleador'], 0).'</span> <br/>';}
+				if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Mutual_Valor'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Mutual_Valor']!=''){echo '<strong>'.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Mutual_Nombre'].' ('.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Mutual_Porcentaje'].'%)</strong>: <span class="pull-right">'.valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Mutual_Valor'], 0).'</span> <br/>';}
 				?>
 			</address>
 		</div>
@@ -74,7 +74,7 @@ require_once 'core/Web.Header.Views.php';
     		<div class="row">
     			<div class="col-sm-12">
     				<address>
-						<strong>Empresa:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SistemaNombre']; ?><br>
+						<strong>Empresa:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SistemaNombre']; ?><br/>
 						<strong>Rut:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SistemaRut']; ?>
     				</address>
     			</div>
@@ -83,18 +83,19 @@ require_once 'core/Web.Header.Views.php';
     		<div class="row">
     			<div class="col-sm-6">
     				<address>
-						<strong>Trabajador Sr(a):</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorNombre']; ?><br>
-						<strong>R.U.T.:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorRut']; ?><br>
-    					<strong>Fecha Contrato:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorContrato']; ?><br>
-    					<strong>Cargo:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorCargo']; ?><br>
+						<strong>Trabajador Sr(a):</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorNombre']; ?><br/>
+						<strong>R.U.T.:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorRut']; ?><br/>
+    					<strong>Fecha Contrato:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorContrato']; ?><br/>
+    					<strong>Cargo:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorCargo']; ?><br/>
+    					<strong>Centro de Costo:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['CentroCosto']; ?><br/>
     				</address>
     			</div>
     			<div class="col-sm-6">
     				<address>
 						<?php
-							if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['DiasPactados'])){echo '<strong>Dias Pactados</strong>: '.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['DiasPactados'].' Dias<br>';}
-							if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['diasLicencias'])){echo '<strong>Licencias</strong>: '.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['diasLicencias'].' Dias<br>';}
-							if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['diasInasistencia'])){echo '<strong>Dias Inasistencias</strong>: '.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['diasInasistencia'].' Dias<br>';}
+							if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['DiasPactados'])){echo '<strong>Dias Pactados</strong>: '.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['DiasPactados'].' Dias<br/>';}
+							if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['diasLicencias'])){echo '<strong>Licencias</strong>: '.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['diasLicencias'].' Dias<br/>';}
+							if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['diasInasistencia'])){echo '<strong>Dias Inasistencias</strong>: '.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['diasInasistencia'].' Dias<br/>';}
 						?>
 					</address>
     			</div>
@@ -280,6 +281,12 @@ require_once 'core/Web.Header.Views.php';
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_Total'], 0); ?></td>
 									</tr>
 								<?php }
+								if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_idCotizacion'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_idCotizacion']==1){ ?>
+									<tr>
+										<td colspan="3"><?php echo 'Cotizacion Adicional Voluntaria ('.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_CotizacionPorcentaje'].'%)'; ?></td>
+										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_CotizacionValor'], 0); ?></td>
+									</tr>
+								<?php }
 								for ($x = 0; $x <= 100; $x++) {
 									//verifico si existe y si esta afecto a descuentos
 									if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['DescuentoFijo'][$x]['DescuentoMonto'])){ ?>
@@ -376,16 +383,31 @@ require_once 'core/Web.Header.Views.php';
 
 
 
-
-
-
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

@@ -25,47 +25,51 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Inicia variable
-$z="WHERE telemetria_listado_errores.idErrores>0"; 
-$z.=" AND telemetria_listado_errores.idTipo='999'";
+$z="WHERE telemetria_listado_errores_999.idErrores>0"; 
+$z.=" AND telemetria_listado_errores_999.idTipo='999'";
 $z.=" AND telemetria_listado.id_Geo='2'";
+$z.=" AND telemetria_listado_errores_999.idSistema=".$_GET['idSistema'];
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND telemetria_listado_errores.Fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+	$z.=" AND telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z.=" AND telemetria_listado_errores.idTelemetria='{$_GET['idTelemetria']}'";
+	$z.=" AND telemetria_listado_errores_999.idTelemetria='".$_GET['idTelemetria']."'";
 }
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND telemetria_listado_errores.idSistema={$_GET['idSistema']}";	
+if($_GET['idTipoUsuario']==1){
+	$join = "";	
+}else{
+	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores_999.idTelemetria ";
+	$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+}
+	
 
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresUniMed_'.$i;
+}
 // Se trae un listado con todos los usuarios
 $arrErrores = array();
 $query = "SELECT 
-telemetria_listado_errores.idErrores,
-telemetria_listado_errores.Descripcion, 
-telemetria_listado_errores.Fecha, 
-telemetria_listado_errores.Hora,
-telemetria_listado_errores.Sensor, 
-telemetria_listado_errores.Valor,
-telemetria_listado_errores.Valor_min,
-telemetria_listado_errores.Valor_max,
+telemetria_listado_errores_999.idErrores,
+telemetria_listado_errores_999.Descripcion, 
+telemetria_listado_errores_999.Fecha, 
+telemetria_listado_errores_999.Hora,
+telemetria_listado_errores_999.Sensor, 
+telemetria_listado_errores_999.Valor,
+telemetria_listado_errores_999.Valor_min,
+telemetria_listado_errores_999.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.id_Geo,
-SensoresUniMed_1, SensoresUniMed_2, SensoresUniMed_3, SensoresUniMed_4, SensoresUniMed_5, 
-SensoresUniMed_6, SensoresUniMed_7, SensoresUniMed_8, SensoresUniMed_9, SensoresUniMed_10, 
-SensoresUniMed_11, SensoresUniMed_12, SensoresUniMed_13, SensoresUniMed_14, SensoresUniMed_15, 
-SensoresUniMed_16, SensoresUniMed_17, SensoresUniMed_18, SensoresUniMed_19, SensoresUniMed_20, 
-SensoresUniMed_21, SensoresUniMed_22, SensoresUniMed_23, SensoresUniMed_24, SensoresUniMed_25, 
-SensoresUniMed_26, SensoresUniMed_27, SensoresUniMed_28, SensoresUniMed_29, SensoresUniMed_30, 
-SensoresUniMed_31, SensoresUniMed_32, SensoresUniMed_33, SensoresUniMed_34, SensoresUniMed_35, 
-SensoresUniMed_36, SensoresUniMed_37, SensoresUniMed_38, SensoresUniMed_39, SensoresUniMed_40, 
-SensoresUniMed_41, SensoresUniMed_42, SensoresUniMed_43, SensoresUniMed_44, SensoresUniMed_45, 
-SensoresUniMed_46, SensoresUniMed_47, SensoresUniMed_48, SensoresUniMed_49, SensoresUniMed_50
+telemetria_listado.id_Geo
+".$subquery."
 
-
-FROM `telemetria_listado_errores`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria
+FROM `telemetria_listado_errores_999`
+LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores_999.idTelemetria
+".$join."
 ".$z."
 ORDER BY idErrores DESC ";
 //Consulta
@@ -77,15 +81,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrErrores,$row );
@@ -105,18 +102,15 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUnimed,$row );
+}
+$arrFinalUnimed = array();
+foreach ($arrUnimed as $sen) {
+	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
 }
 
 // Create new PHPExcel object
@@ -150,23 +144,18 @@ $objPHPExcel->setActiveSheetIndex(0)
 $nn=2;
 foreach ($arrErrores as $error) { 
 	//Guardo la unidad de medida
-	$unimed = '';
-	foreach ($arrUnimed as $sen) {
-		if($error['SensoresUniMed_'.$error['Sensor']]==$sen['idUniMed']){
-			$unimed = ' '.$sen['Nombre'];	
-		}
-	}
+	$unimed = ' '.$arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];
 						
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A'.$nn, $error['NombreEquipo'])
-            ->setCellValue('B'.$nn, $error['Descripcion'])
-            ->setCellValue('C'.$nn, $error['Fecha'])
-            ->setCellValue('D'.$nn, $error['Hora'])
-            ->setCellValue('E'.$nn, $error['Valor'])
-            ->setCellValue('F'.$nn, $error['Valor_min'])
-            ->setCellValue('G'.$nn, $error['Valor_max'])
-            ->setCellValue('G'.$nn, $unimed);
- $nn++;           
+	$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('A'.$nn, $error['NombreEquipo'])
+				->setCellValue('B'.$nn, $error['Descripcion'])
+				->setCellValue('C'.$nn, $error['Fecha'])
+				->setCellValue('D'.$nn, $error['Hora'])
+				->setCellValue('E'.$nn, $error['Valor'])
+				->setCellValue('F'.$nn, $error['Valor_min'])
+				->setCellValue('G'.$nn, $error['Valor_max'])
+				->setCellValue('G'.$nn, $unimed);
+	$nn++;           
    
 } 
 

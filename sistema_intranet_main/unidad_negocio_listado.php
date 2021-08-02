@@ -68,7 +68,7 @@ if ( ! empty($_GET['clone_idMaquina']) ) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Maquina <?php echo $_GET['nombre_maquina']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -79,15 +79,15 @@ if ( ! empty($_GET['clone_idMaquina']) ) {
 				if(isset($Nombre)) {           $x1  = $Nombre;           }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
-				$Form_Imputs->form_input_hidden('idMaquina', $_GET['clone_idMaquina'], 2);
+				$Form_Inputs->form_input_hidden('idMaquina', $_GET['clone_idMaquina'], 2);
 				?>  
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c5; Clonar" name="clone_Maquina">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -99,9 +99,8 @@ if ( ! empty($_GET['clone_idMaquina']) ) {
 	
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['id']) ) { 
-
-             
-  
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //se traen los datos basicos de la licitacion
 $query = "SELECT 
 maquinas_listado.Codigo, 
@@ -142,7 +141,7 @@ LEFT JOIN `ubicacion_listado_level_4`     ON ubicacion_listado_level_4.idLevel_4
 LEFT JOIN `ubicacion_listado_level_5`     ON ubicacion_listado_level_5.idLevel_5   = maquinas_listado.idUbicacion_lvl_5
 LEFT JOIN `clientes_listado`              ON clientes_listado.idCliente            = maquinas_listado.idCliente
 
-WHERE maquinas_listado.idMaquina={$_GET['id']} ";
+WHERE maquinas_listado.idMaquina=".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -242,7 +241,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	}
 	/*********************************************************************/
 	//Verifico el tipo de usuario que esta ingresando
-	$z="WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+	$z="WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 	//Se crea el arreglo
 	$Trabajo = array();
 	//Creo el arreglo para saber los datos de las licitaciones
@@ -572,7 +571,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			if (isset($value['Nombre'])) {
 				echo '<li><div class="blum">';
 					echo '<div class="pull-left">';
-						if(isset($value['Imagen'])&&$value['Imagen']!=''){echo '<div class="btn-group" style="width: 35px;" ><a href="#" title="Click Preview Imagen" class="btn btn-primary btn-sm tooltip pop" src="upload/'.$value['Imagen'].'"><i class="fa fa-picture-o"></i></a></div>';}
+						if(isset($value['Imagen'])&&$value['Imagen']!=''){echo '<div class="btn-group" style="width: 35px;" ><a href="#" title="Click Preview Imagen" class="btn btn-primary btn-sm tooltip pop" src="upload/'.$value['Imagen'].'"><i class="fa fa-picture-o" aria-hidden="true"></i></a></div>';}
 						echo '<strong>'.$TipoMaq[$value['Tipo']]['Nombre'].':</strong> ';
 						if(isset($value['Codigo'])&&$value['Codigo']!=''){echo ' '.$value['Codigo'].' - ';}
 						echo $value['Nombre'];
@@ -606,21 +605,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text"><?php echo $x_column_maquina_plur; ?></span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_maquina_plur, $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -629,23 +614,23 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'unidad_negocio_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'unidad_negocio_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'unidad_negocio_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Configuracion</a></li>
+				<li class="active"><a href="<?php echo 'unidad_negocio_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'unidad_negocio_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'unidad_negocio_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Ubicacion</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Ficha Tecnica</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >HDS</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Imagen</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Descripcion</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 						<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
-							<li class=""><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Componentes</a></li>
+							<li class=""><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
 						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
-							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" >Matriz Analisis</a></li>
+							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 						
 					</ul>
@@ -658,7 +643,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 				<div class="wmd-panel">
 					<div class="col-sm-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/maquina.jpg">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
@@ -703,8 +688,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 											<td>Ficha Tecnica</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['FichaTecnica'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['FichaTecnica'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -717,8 +702,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 											<td>Hoja de seguridad</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['HDS'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['HDS'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -784,22 +769,26 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-	<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+	<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
 </div>
 
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) {  
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //verifico que sea un administrador
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	 
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear <?php echo $x_column_maquina_sing;?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -812,22 +801,22 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($Nombre)) {     $x3  = $Nombre;      }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter($x_column_cliente_sing,'idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x2, 1); 
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x3, 2); 
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter($x_column_cliente_sing,'idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2); 
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
-				$Form_Imputs->form_input_hidden('idConfig_1', 2, 2);
-				$Form_Imputs->form_input_hidden('idConfig_2', 2, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idConfig_1', 2, 2);
+				$Form_Inputs->form_input_hidden('idConfig_2', 2, 2);
 				?>        
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_Maquina"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -874,9 +863,9 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-$y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-$z="WHERE maquinas_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+$z="WHERE maquinas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){  $z .= " AND maquinas_listado.idCliente=".$_GET['idCliente'];}
@@ -941,7 +930,7 @@ array_push( $arrMaquina,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -963,13 +952,13 @@ array_push( $arrMaquina,$row );
 				if(isset($Nombre)) {     $x2  = $Nombre;      }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter($x_column_cliente_sing,'idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x1, 1); 
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x2, 1); 
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter($x_column_cliente_sing,'idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1); 
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -987,7 +976,7 @@ array_push( $arrMaquina,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5><?php echo $x_column_maquina_plur; ?></h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $x_column_maquina_plur; ?></h5>	
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -1001,29 +990,29 @@ array_push( $arrMaquina,$row );
 						<th>
 							<div class="pull-left"><?php echo $x_column_cliente_sing; ?></div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=cliente_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=cliente_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=cliente_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=cliente_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="160">
 							<div class="pull-left">Codigo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=codigo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=codigo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=codigo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=codigo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -1040,13 +1029,13 @@ array_push( $arrMaquina,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['sistema']; ?></td><?php } ?>		
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_maquinas.php?view='.$maq['idMaquina']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.$maq['idMaquina']; ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$maq['idMaquina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_maquinas.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.$maq['idMaquina']; ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$maq['idMaquina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$maq['idMaquina'];
+									$ubicacion = $location.'&del='.simpleEncode($maq['idMaquina'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro '.$maq['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	

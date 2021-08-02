@@ -28,7 +28,7 @@ $z = "WHERE telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabl
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $z .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
 if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $z .= " AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$z.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '{$_GET['fecha_desde']}' AND '{$_GET['fecha_hasta']}'";
+	$z.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
 /**********************************************************/
 //Numero del sensor
@@ -51,9 +51,15 @@ LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria    
 
 ".$z."
 
+GROUP BY cross_predios_listado_zonas.idPredio, 
+telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona,
+telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
+
 ORDER BY cross_predios_listado_zonas.idPredio ASC, 
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona ASC,
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria ASC
+
+LIMIT 10000
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -76,7 +82,7 @@ array_push( $arrMediciones,$row );
 $arrPuntos = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud
 FROM `cross_predios_listado_zonas_ubicaciones`
-WHERE idZona = {$_GET['idZona']}
+WHERE idZona = ".$_GET['idZona']."
 ORDER BY idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -102,7 +108,7 @@ array_push( $arrPuntos,$row );
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> Resumen Mediciones.
+				<i class="fa fa-globe" aria-hidden="true"></i> Resumen Mediciones.
 			</h2>
 		</div>   
 	</div>
@@ -112,9 +118,9 @@ array_push( $arrPuntos,$row );
 			<div class="col-sm-4 invoice-col">
 				<strong>Identificacion</strong>
 				<address>
-					Equipo: '.$arrMediciones[0]['EquipoNombre'].'<br>
-					Predio: '.$arrMediciones[0]['PredioNombre'].'<br>
-					Cuartel: '.$arrMediciones[0]['CuartelNombre'].'<br>
+					Equipo: '.$arrMediciones[0]['EquipoNombre'].'<br/>
+					Predio: '.$arrMediciones[0]['PredioNombre'].'<br/>
+					Cuartel: '.$arrMediciones[0]['CuartelNombre'].'<br/>
 				</address>
 			</div>';
 		?>					
@@ -125,10 +131,11 @@ array_push( $arrPuntos,$row );
 			<?php
 			//Si no existe una ID se utiliza una por defecto
 			if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-				echo '<p>No ha ingresado Una API de Google Maps</p>';
+				$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+				alert_post_data(4,2,2, $Alert_Text);
 			}else{
 				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-				<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
+				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
 											
 				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 				
@@ -206,8 +213,8 @@ array_push( $arrPuntos,$row );
 
 <?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
 	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div>
 <?php } ?>

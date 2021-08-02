@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -36,12 +40,12 @@ if( ! defined('XMBCXRXSKGC')) {
 /*******************************************************************************************************************/
 
 	//limpio y separo los datos de la cadena de comprobacion
-	$form_obligatorios = str_replace(' ', '', $form_obligatorios);
-	$piezas = explode(",", $form_obligatorios);
+	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idFacturacion':          if(empty($idFacturacion)){            $error['idFacturacion']          = 'error/No ha ingresado el id';}break;
 			case 'idSistema':              if(empty($idSistema)){                $error['idSistema']              = 'error/No ha ingresado el sistema';}break;
 			case 'idUsuario':              if(empty($idUsuario)){                $error['idUsuario']              = 'error/No ha ingresado el usuario creador';}break;
@@ -65,6 +69,11 @@ if( ! defined('XMBCXRXSKGC')) {
 		}
 	}
 /*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	
+/*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
@@ -82,7 +91,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if(isset($idSistema)&&isset($Fecha)){
 				$idMes = fecha2NMes($Fecha); 
 				$Ano = fecha2Ano($Fecha);
-				$ndata_1 = db_select_nrows ('idFacturacion', 'vehiculos_facturacion_listado', '', "idSistema='".$idSistema."' AND idMes='".$idMes."' AND Ano='".$Ano."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'vehiculos_facturacion_listado', '', "idSistema='".$idSistema."' AND idMes='".$idMes."' AND Ano='".$Ano."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La facturacion ya existe en el sistema';}
@@ -105,23 +114,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `usuarios_listado`
-					WHERE idUsuario = ".$idUsuario;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUsuario = mysqli_fetch_assoc ($resultado);
+					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['vehiculos_basicos']['Usuario'] = $rowUsuario['Nombre'];
 				}else{
@@ -130,23 +123,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idSistema) && $idSistema != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_sistemas`
-					WHERE idSistema = ".$idSistema;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSistema = mysqli_fetch_assoc ($resultado);
+					$rowSistema = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['vehiculos_basicos']['Sistema'] = $rowSistema['Nombre'];
 				}else{
@@ -186,7 +163,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if(isset($idSistema)&&isset($Fecha)){
 				$idMes = fecha2NMes($Fecha); 
 				$Ano = fecha2Ano($Fecha);
-				$ndata_1 = db_select_nrows ('idFacturacion', 'vehiculos_facturacion_listado', '', "idSistema='".$idSistema."' AND idMes='".$idMes."' AND Ano='".$Ano."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'vehiculos_facturacion_listado', '', "idSistema='".$idSistema."' AND idMes='".$idMes."' AND Ano='".$Ano."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La facturacion ya existe en el sistema';}
@@ -199,27 +176,13 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($Fecha)){          $_SESSION['vehiculos_basicos']['Fecha'] = $Fecha;                   }else{$_SESSION['vehiculos_basicos']['Fecha'] = '';}
 				if(isset($Observaciones)){  $_SESSION['vehiculos_basicos']['Observaciones'] = $Observaciones;   }else{$_SESSION['vehiculos_basicos']['Observaciones'] = 'Sin Observaciones';}
 				if(isset($idSistema)){      $_SESSION['vehiculos_basicos']['idSistema'] = $idSistema;           }else{$_SESSION['vehiculos_basicos']['idSistema'] = '';}
+				if(isset($idUsuario)){      $_SESSION['vehiculos_basicos']['idUsuario'] = $idUsuario;           }else{$_SESSION['vehiculos_basicos']['idUsuario'] = '';}
+				if(isset($fCreacion)){      $_SESSION['vehiculos_basicos']['fCreacion'] = $fCreacion;           }else{$_SESSION['vehiculos_basicos']['fCreacion'] = '';}
 				
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `usuarios_listado`
-					WHERE idUsuario = ".$idUsuario;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUsuario = mysqli_fetch_assoc ($resultado);
+					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['vehiculos_basicos']['Usuario'] = $rowUsuario['Nombre'];
 				}else{
@@ -228,23 +191,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idSistema) && $idSistema != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_sistemas`
-					WHERE idSistema = ".$idSistema;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSistema = mysqli_fetch_assoc ($resultado);
+					$rowSistema = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['vehiculos_basicos']['Sistema'] = $rowSistema['Nombre'];
 				}else{
@@ -274,8 +221,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$SIS_idSistema           = $_SESSION['vehiculos_basicos']['idSistema'];
 			
 				//traigo todos los apoderados con hijos
-				$arrHijos = array();
-				$query = "SELECT
+				$SIS_query = '
 				apoderados_listado_hijos.idHijos,
 				apoderados_listado_hijos.idApoderado,
 
@@ -288,22 +234,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				apoderados_listado.ApellidoMat AS ApoderadoApellidoMat,
 
 				vehiculos_listado.Nombre AS VehiculoNombre,
-				vehiculos_listado.Patente AS VehiculoPatente
-
-				FROM `apoderados_listado_hijos`
+				vehiculos_listado.Patente AS VehiculoPatente';
+				$SIS_join  = '
 				LEFT JOIN `apoderados_listado`  ON apoderados_listado.idApoderado  = apoderados_listado_hijos.idApoderado
-				LEFT JOIN `vehiculos_listado`   ON vehiculos_listado.idVehiculo    = apoderados_listado_hijos.idVehiculo
-				WHERE apoderados_listado.idSistema = '{$SIS_idSistema}' 
-				AND apoderados_listado.idEstado = 1
-				AND apoderados_listado_hijos.idVehiculo!=0
-				GROUP BY apoderados_listado_hijos.idHijos
-				ORDER BY apoderados_listado.idApoderado, apoderados_listado_hijos.Nombre ASC ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrHijos,$row );
-				}
+				LEFT JOIN `vehiculos_listado`   ON vehiculos_listado.idVehiculo    = apoderados_listado_hijos.idVehiculo';
+				$SIS_where = 'apoderados_listado.idSistema = "'.$SIS_idSistema.'" AND apoderados_listado.idEstado = 1 AND apoderados_listado_hijos.idVehiculo!=0 GROUP BY apoderados_listado_hijos.idHijos';
+				$SIS_order = 'BY apoderados_listado.idApoderado, apoderados_listado_hijos.Nombre ASC';
+				$arrHijos = array();
+				$arrHijos = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-
 				foreach ($arrHijos as $hijo) {
 					$_SESSION['vehiculos_hijos'][$hijo['idHijos']]['idHijos']           = $hijo['idHijos'];
 					$_SESSION['vehiculos_hijos'][$hijo['idHijos']]['idApoderado']       = $hijo['idApoderado'];
@@ -344,11 +283,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			//Datos basicos
 			if (isset($_SESSION['vehiculos_basicos'])){
-				if(!isset($_SESSION['vehiculos_basicos']['idSistema']) or $_SESSION['vehiculos_basicos']['idSistema']=='' ){           $error['idSistema']    = 'error/No ha ingresado el id del sistema';}
-				if(!isset($_SESSION['vehiculos_basicos']['idUsuario']) or $_SESSION['vehiculos_basicos']['idUsuario']=='' ){           $error['idUsuario']    = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['vehiculos_basicos']['Fecha']) or $_SESSION['vehiculos_basicos']['Fecha']=='' ){                   $error['Fecha']        = 'error/No ha ingresado una fecha';}
-				if(!isset($_SESSION['vehiculos_basicos']['Observaciones']) or $_SESSION['vehiculos_basicos']['Observaciones']=='' ){   $error['idUsuario']    = 'error/No ha ingresado una observacion';}
-				if(!isset($_SESSION['vehiculos_basicos']['fCreacion']) or $_SESSION['vehiculos_basicos']['fCreacion']=='' ){           $error['fCreacion']    = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['vehiculos_basicos']['idSistema']) OR $_SESSION['vehiculos_basicos']['idSistema']=='' ){           $error['idSistema']    = 'error/No ha ingresado el id del sistema';}
+				if(!isset($_SESSION['vehiculos_basicos']['idUsuario']) OR $_SESSION['vehiculos_basicos']['idUsuario']=='' ){           $error['idUsuario']    = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['vehiculos_basicos']['Fecha']) OR $_SESSION['vehiculos_basicos']['Fecha']=='' ){                   $error['Fecha']        = 'error/No ha ingresado una fecha';}
+				if(!isset($_SESSION['vehiculos_basicos']['Observaciones']) OR $_SESSION['vehiculos_basicos']['Observaciones']=='' ){   $error['idUsuario']    = 'error/No ha ingresado una observacion';}
+				if(!isset($_SESSION['vehiculos_basicos']['fCreacion']) OR $_SESSION['vehiculos_basicos']['fCreacion']=='' ){           $error['fCreacion']    = 'error/No ha ingresado una fecha de creacion';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la facturacion';
 			}
@@ -373,29 +312,21 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 				
 				//traigo todos los apoderados con hijos
-				$arrHijos = array();
-				$query = "SELECT
+				$SIS_query = '
 				apoderados_listado_hijos.idHijos,
 				apoderados_listado_hijos.idApoderado,
 				apoderados_listado_hijos.idVehiculo,
 				sistema_planes.Valor,
-				(SELECT MontoTotal FROM `vehiculos_facturacion_listado_detalle` WHERE idApoderado = apoderados_listado_hijos.idApoderado AND idMes='".$SIS_Fecha_Mes_anterior."' AND Ano='".$SIS_Fecha_Ano."' LIMIT 1) AS AnteriorPactado,
-				(SELECT montoPago FROM `vehiculos_facturacion_listado_detalle` WHERE idApoderado = apoderados_listado_hijos.idApoderado AND idMes='".$SIS_Fecha_Mes_anterior."' AND Ano='".$SIS_Fecha_Ano."' LIMIT 1) AS AnteriorPagado
-
-				FROM `apoderados_listado_hijos`
+				(SELECT MontoTotal FROM `vehiculos_facturacion_listado_detalle` WHERE idApoderado = apoderados_listado_hijos.idApoderado AND idMes="'.$SIS_Fecha_Mes_anterior.'" AND Ano="'.$SIS_Fecha_Ano.'" LIMIT 1) AS AnteriorPactado,
+				(SELECT montoPago FROM `vehiculos_facturacion_listado_detalle` WHERE idApoderado = apoderados_listado_hijos.idApoderado AND idMes="'.$SIS_Fecha_Mes_anterior.'" AND Ano="'.$SIS_Fecha_Ano.'" LIMIT 1) AS AnteriorPagado';
+				$SIS_join  = '
 				LEFT JOIN `apoderados_listado`    ON apoderados_listado.idApoderado   = apoderados_listado_hijos.idApoderado
-				LEFT JOIN `sistema_planes`        ON sistema_planes.idPlan            = apoderados_listado_hijos.idPlan
-				WHERE apoderados_listado.idSistema = '{$SIS_idSistema}' 
-				AND apoderados_listado.idEstado = 1
-				AND apoderados_listado_hijos.idVehiculo!=0
-				GROUP BY apoderados_listado_hijos.idHijos
-				ORDER BY apoderados_listado_hijos.idApoderado ASC, apoderados_listado_hijos.Nombre ASC ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrHijos,$row );
-				}
-			
-
+				LEFT JOIN `sistema_planes`        ON sistema_planes.idPlan            = apoderados_listado_hijos.idPlan';
+				$SIS_where = 'apoderados_listado.idSistema = "'.$SIS_idSistema.'" AND apoderados_listado.idEstado = 1 AND apoderados_listado_hijos.idVehiculo!=0 GROUP BY apoderados_listado_hijos.idHijos';
+				$SIS_order = 'apoderados_listado_hijos.idApoderado ASC, apoderados_listado_hijos.Nombre ASC';
+				$arrHijos = array();
+				$arrHijos = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/************************************************************************************************************************/
 				//Se insertan los datos principales
 
@@ -415,7 +346,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `vehiculos_facturacion_listado` (idSistema, idUsuario, Fecha, idMes, Ano, Observaciones, fCreacion) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -511,7 +442,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						Monto_1, Monto_2, Monto_3, Monto_4, Monto_5,
 						MontoSubTotal, MontoAtraso, MontoAdelanto, MontoTotal,
 						idEstado) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -576,7 +507,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `vehiculos_facturacion_pago` (idTipoPago, nDocPago, fechaPago, DiaPago, idMesPago, AnoPago, montoPago, idUsuarioPago,
 				idApoderado, idFacturacionDetalle ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -594,25 +525,10 @@ if( ! defined('XMBCXRXSKGC')) {
 					$ultimo_id = mysqli_insert_id($dbConn);
 					/****************************************************************************************************/
 					//Se revisa si ya hay un pago anterior en el mismo id
-					$arrFacturaciones = array();
-					$query = "SELECT montoPago FROM `vehiculos_facturacion_listado_detalle` WHERE idFacturacionDetalle = '{$idFacturacionDetalle}'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
-					$rowdataold = mysqli_fetch_assoc ($resultado);
+					$rowdataold = db_select_data (false, 'montoPago', 'vehiculos_facturacion_listado_detalle', '', 'idFacturacionDetalle = '.$idFacturacionDetalle, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 					//actualizo el estado de la ultima facturacion
-					$a = "idFacturacionDetalle = '{$idFacturacionDetalle}' ";
+					$a = "idFacturacionDetalle = '".$idFacturacionDetalle."' ";
 					//verifico que el saldo haya alcanzado para pagar
 					if($montoPactado>$montoPago){
 						$a .= ",idEstado='1'";
@@ -620,7 +536,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						$a .= ",idEstado='2'";
 						
 						//actualizo todos los pagos
-						$query  = "UPDATE `vehiculos_facturacion_listado_detalle` SET idEstado='2' WHERE idApoderado = '{$idApoderado}' AND idEstado='1'";
+						$query  = "UPDATE `vehiculos_facturacion_listado_detalle` SET idEstado='2' WHERE idApoderado = '".$idApoderado."' AND idEstado='1'";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -658,7 +574,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $a .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
 					if(isset($ultimo_id) && $ultimo_id != ''){          $a .= ",idPago='".$ultimo_id."'" ;}
 								
-					$query  = "UPDATE `vehiculos_facturacion_listado_detalle` SET ".$a." WHERE idFacturacionDetalle = '{$idFacturacionDetalle}'";
+					$query  = "UPDATE `vehiculos_facturacion_listado_detalle` SET ".$a." WHERE idFacturacionDetalle = '".$idFacturacionDetalle."'";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta

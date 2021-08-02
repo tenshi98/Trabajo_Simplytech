@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de la detencion
 $query = "SELECT
 telemetria_listado_error_detenciones.idTelemetria,
@@ -35,7 +48,7 @@ telemetria_listado.cantSensores
 
 FROM `telemetria_listado_error_detenciones`
 LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria
-WHERE idDetencion = {$_GET['view']}";
+WHERE idDetencion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -46,15 +59,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
@@ -71,7 +77,7 @@ $query = "SELECT idTabla
 
 FROM `telemetria_listado_tablarelacionada_".$rowdata['idTelemetria']."`
 LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_".$rowdata['idTelemetria'].".idTelemetria
-WHERE telemetria_listado_tablarelacionada_".$rowdata['idTelemetria'].".idTabla = '{$rowdata['idTabla']}'";
+WHERE telemetria_listado_tablarelacionada_".$rowdata['idTelemetria'].".idTabla = '".$rowdata['idTabla']."'";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -82,15 +88,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowMedicion = mysqli_fetch_assoc ($resultado);
 
@@ -109,26 +108,22 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUnimed,$row );
 }
-
+$arrFinalUnimed = array();
+foreach ($arrUnimed as $sen) {
+	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
+}
 ?>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>	
 		</header>
 		<div class="tab-content">
@@ -145,17 +140,13 @@ array_push( $arrUnimed,$row );
 				if($ndata!=0){
 					$explanation .= '<strong>Medicion Sensores: </strong><br/>';
 					for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
-						if(isset($rowMedicion['Sensor_'.$i])&&$rowMedicion['Sensor_'.$i]!=999){$xdata=Cantidades_decimales_justos($rowMedicion['Sensor_'.$i]);}else{$xdata='Sin Datos';}
+						if(isset($rowMedicion['Sensor_'.$i])&&$rowMedicion['Sensor_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowMedicion['Sensor_'.$i]);}else{$xdata='Sin Datos';}
 						$explanation .= '<strong>'.$rowMedicion['SensoresNombre_'.$i].': </strong>';
-						foreach ($arrUnimed as $sen) {
-							if($rowMedicion['SensoresUniMed_'.$i]==$sen['idUniMed']){
-								$explanation .= ' '.$sen['Nombre'];	
-							}
-						}
+						$explanation .= ' '.$arrFinalUnimed[$rowMedicion['SensoresUniMed_'.$i]];
 						$explanation .= '<br/>';
 					}
 				}		
-				echo mapa1($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'])?>
+				echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
 					
 			</div>	
 		</div>
@@ -165,13 +156,31 @@ array_push( $arrUnimed,$row );
 </div>
 
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 
 <?php

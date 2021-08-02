@@ -56,9 +56,11 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/'.$x_column_product
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 productos_listado.Nombre,
@@ -105,7 +107,7 @@ LEFT JOIN `cross_quality_calidad_matriz`     ON cross_quality_calidad_matriz.idM
 LEFT JOIN `core_sistemas_opciones` ops1      ON ops1.idOpciones                                  = productos_listado.idOpciones_1
 LEFT JOIN `core_sistemas_opciones` ops2      ON ops2.idOpciones                                  = productos_listado.idOpciones_2
 
-WHERE productos_listado.idProducto = {$_GET['id']}";
+WHERE productos_listado.idProducto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -132,7 +134,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 	FROM `productos_recetas`
 	LEFT JOIN `productos_listado`        ON productos_listado.idProducto     = productos_recetas.idProductoRel
 	LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml
-	WHERE productos_recetas.idProducto = {$_GET['id']}";
+	WHERE productos_recetas.idProducto = ".$_GET['id'];
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
 	//Si ejecuto correctamente la consulta
@@ -152,21 +154,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 }
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text"><?php echo $x_column_producto_nombre_plur; ?></span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_producto_nombre_plur, $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
@@ -174,28 +162,28 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'productos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'productos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'productos_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Descripcion</a></li>
+				<li class="active"><a href="<?php echo 'productos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'productos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'productos_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'productos_listado_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Opciones</a></li>
-						<li class=""><a href="<?php echo 'productos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Comerciales</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Opciones</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==1){ ?>
-							<li class=""><a href="<?php echo 'productos_listado_datos_receta_01.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Receta</a></li>
+							<li class=""><a href="<?php echo 'productos_listado_datos_receta_01.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
 						<?php }elseif(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==2){ ?>
-							<li class=""><a href="<?php echo 'productos_listado_datos_receta_02.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Receta</a></li>
+							<li class=""><a href="<?php echo 'productos_listado_datos_receta_02.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'productos_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'productos_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Imagen</a></li>
-						<li class=""><a href="<?php echo 'productos_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Ficha</a></li>
-						<li class=""><a href="<?php echo 'productos_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >HDS</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha</a></li>
+						<li class=""><a href="<?php echo 'productos_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
 						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
-							<li class=""><a href="<?php echo 'productos_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Sistema Mantenlubric</a></li>
+							<li class=""><a href="<?php echo 'productos_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema Mantenlubric</a></li>
 						<?php } ?>
 						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
-							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Sistema CROSS</a></li>
+							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema CROSS</a></li>
 						<?php } ?>
 						
 					</ul>
@@ -209,9 +197,9 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 
 					<div class="col-sm-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/productos.jpg">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 						<?php }else{
-							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE, DB_EMPRESA_PATH, 'upload', $rowdata['Direccion_img']);
+							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);
 						}?>
 					</div>
 					<div class="col-sm-8">
@@ -227,12 +215,13 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							
 							<strong>Ingredientes Activos : </strong><br/><?php echo $rowdata['IngredienteActivo']; ?><br/>
-							<strong>Carencia : </strong><?php echo $rowdata['Carencia']; ?><br/>
+							
 							<strong>Dosis Recomendada : </strong><?php echo Cantidades_decimales_justos($rowdata['DosisRecomendada']); ?><br/>
-							<strong>Efecto Residual : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoResidual']); ?><br/>
-							<strong>Efecto Retroactivo : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoRetroactivo']); ?><br/>
-							<strong>Carencia Exportador : </strong><?php echo Cantidades_decimales_justos($rowdata['CarenciaExportador']); ?><br/>
-
+							<strong>Carencia Etiqueta : </strong><?php echo Cantidades_decimales_justos($rowdata['CarenciaExportador']); ?><br/>
+							<strong>Carencia ASOEX : </strong><?php echo $rowdata['Carencia']; ?><br/>
+							<strong>Carencia TESCO : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoResidual']); ?><br/>
+							<strong>Tiempo Re-Ingreso : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoRetroactivo']); ?><br/>
+							
 						</p>
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
@@ -292,8 +281,8 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 											<td>Ficha Tecnica</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['FichaTecnica'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['FichaTecnica'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -306,8 +295,8 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 											<td>Hoja de seguridad</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['HDS'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['HDS'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -332,17 +321,20 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear <?php echo $x_column_producto_nombre_sing; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -360,19 +352,19 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 				if(isset($idSubTipo)) {      $x8  = $idSubTipo;        }else{$x8  = '';}
 					
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_select_filter($x_column_producto_tipo_sing,'idTipo', $x2, 2, 'idTipo', 'Nombre', 'sistema_productos_tipo', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter($x_column_producto_cat_sing,'idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Marca', 'Marca', $x4, 1);
-				$Form_Imputs->form_select_filter('Unidad de Medida','idUml', $x5, 2, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tipo Producto','idTipoProducto', $x6, 2, 'idTipoProducto', 'Nombre', 'core_tipo_producto', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tipo de Receta','idTipoReceta', $x7, 1, 'idTipoReceta', 'Nombre', 'core_tipo_receta', 0, '', $dbConn);
-				//$Form_Imputs->form_select('Tareas Relacionadas','idSubTipo', $x8, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_select_filter($x_column_producto_tipo_sing,'idTipo', $x2, 2, 'idTipo', 'Nombre', 'sistema_productos_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter($x_column_producto_cat_sing,'idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Marca', 'Marca', $x4, 1);
+				$Form_Inputs->form_select_filter('Unidad de Medida','idUml', $x5, 2, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Producto','idTipoProducto', $x6, 2, 'idTipoProducto', 'Nombre', 'core_tipo_producto', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo de Receta','idTipoReceta', $x7, 1, 'idTipoReceta', 'Nombre', 'core_tipo_receta', 0, '', $dbConn);
+				//$Form_Inputs->form_select('Tareas Relacionadas','idSubTipo', $x8, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
 					
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
-				$Form_Imputs->form_input_hidden('idOpciones_1', 2, 2);
-				$Form_Imputs->form_input_hidden('idOpciones_2', 2, 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idOpciones_1', 2, 2);
+				$Form_Inputs->form_input_hidden('idOpciones_2', 2, 2);
 				?>
 				
 				
@@ -432,7 +424,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -558,7 +550,7 @@ array_push( $arrProductos,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -586,19 +578,19 @@ array_push( $arrProductos,$row );
 				if(isset($idEstado)) {       $x9  = $idEstado;         }else{$x9  = '';}
 					
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 1);
-				$Form_Imputs->form_select_filter($x_column_producto_tipo_sing,'idTipo', $x2, 1, 'idTipo', 'Nombre', 'sistema_productos_tipo', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter($x_column_producto_cat_sing,'idCategoria', $x3, 1, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Marca', 'Marca', $x4, 1);
-				$Form_Imputs->form_select_filter('Unidad de Medida','idUml', $x5, 1, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tipo Producto','idTipoProducto', $x6, 1, 'idTipoProducto', 'Nombre', 'core_tipo_producto', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tipo de Receta','idTipoReceta', $x7, 1, 'idTipoReceta', 'Nombre', 'core_tipo_receta', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tareas Relacionadas','idSubTipo', $x8, 1, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x9, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
+				$Form_Inputs->form_select_filter($x_column_producto_tipo_sing,'idTipo', $x2, 1, 'idTipo', 'Nombre', 'sistema_productos_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter($x_column_producto_cat_sing,'idCategoria', $x3, 1, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Marca', 'Marca', $x4, 1);
+				$Form_Inputs->form_select_filter('Unidad de Medida','idUml', $x5, 1, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Producto','idTipoProducto', $x6, 1, 'idTipoProducto', 'Nombre', 'core_tipo_producto', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo de Receta','idTipoReceta', $x7, 1, 'idTipoReceta', 'Nombre', 'core_tipo_receta', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tareas Relacionadas','idSubTipo', $x8, 1, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x9, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -617,7 +609,7 @@ array_push( $arrProductos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de <?php echo $x_column_producto_nombre_plur; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de <?php echo $x_column_producto_nombre_plur; ?></h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -632,43 +624,43 @@ array_push( $arrProductos,$row );
 						<th>
 							<div class="pull-left"><?php echo $x_column_producto_cat_sing; ?></div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=categoria_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=categoria_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=categoria_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=categoria_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left"><?php echo $x_column_producto_tipo_sing; ?></div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Tipo Prod</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=tipoprod_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=tipoprod_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=tipoprod_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=tipoprod_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Unidad Medida</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=unidad_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=unidad_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=unidad_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=unidad_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -679,7 +671,7 @@ array_push( $arrProductos,$row );
 					<tr class="odd">
 						<td>
 							<?php if ($prod['Direccion_img']=='') { ?>
-								<img class="img-round" src="<?php echo DB_SITE ?>/LIB_assets/img/productos.jpg" style="height:30px; width:50px;">
+								<img class="img-round" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg" style="height:30px; width:50px;">
 							<?php }else{
 								//se selecciona el tipo de imagen
 								switch ($prod['idTipoImagen']) {
@@ -709,7 +701,7 @@ array_push( $arrProductos,$row );
 									case 16:
 									case 17:
 									case 18:
-										echo '<img class="img-round" src="'.DB_SITE.'/LIB_assets/img/3dcube.jpg" style="height:30px; width:50px;">';
+										echo '<img class="img-round" src="'.DB_SITE_REPO.'/LIB_assets/img/3dcube.jpg" style="height:30px; width:50px;">';
 										break;
 										
 								}
@@ -724,12 +716,12 @@ array_push( $arrProductos,$row );
 						<td><label class="label <?php if(isset($prod['idEstado'])&&$prod['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $prod['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_productos.php?view='.$prod['idProducto']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prod['idProducto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_productos.php?view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prod['idProducto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$prod['idProducto'];
+									$ubicacion = $location.'&del='.simpleEncode($prod['idProducto'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el '.$x_column_producto_nombre_sing.' '.$prod['NombreProd'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

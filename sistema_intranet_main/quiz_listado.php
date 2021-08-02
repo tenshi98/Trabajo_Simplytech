@@ -15,7 +15,7 @@ $original = "quiz_listado.php";
 $location = $original;
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
-if(isset($_GET['search']) && $_GET['search'] != ''){                       $location .= "&search=".$_GET['search'] ; 	}
+if(isset($_GET['search']) && $_GET['search'] != ''){                       $location .= "&search=".$_GET['search']; 	}
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -86,7 +86,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 $query = "SELECT Nombre,Header_texto, Header_fecha, Footer_texto, Texto_Inicio, idSistema,
 idEscala, Porcentaje_apro, Tiempo, idEstado, idTipoEvaluacion, idLimiteTiempo, idTipoQuiz
 FROM `quiz_listado`
-WHERE idQuiz = {$_GET['id_quiz']}";
+WHERE idQuiz = ".$_GET['id_quiz'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -106,7 +106,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Editar Cuestionario</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -128,38 +128,38 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idEstado)) {          $x12 = $idEstado;           }else{$x12 = $rowdata['idEstado'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Basicos</h3>';
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
 				
-				$Form_Imputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
-				$Form_Imputs->form_select('Escala','idEscala', $x3, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
-				$Form_Imputs->form_select('% Aprobacion','Porcentaje_apro', $x4, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Escala','idEscala', $x3, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
+				$Form_Inputs->form_select('% Aprobacion','Porcentaje_apro', $x4, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
 				
-				$Form_Imputs->form_select('Tiempo Limite','idLimiteTiempo', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				$Form_Imputs->form_time_popover('Tiempo Limite','Tiempo', $x6, 1, 1, 6);
+				$Form_Inputs->form_select('Tiempo Limite','idLimiteTiempo', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_time_popover('Tiempo Limite','Tiempo', $x6, 1, 1, 6);
 				
-				$Form_Imputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x7, 2, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x7, 2, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
 				
-				echo '<h3>Header</h3>';
-				$Form_Imputs->form_input_text( 'Texto Cabecera', 'Header_texto', $x8, 1); 
-				$Form_Imputs->form_date('F Inicio','Header_fecha', $x9, 1);
+				$Form_Inputs->form_tittle(3, 'Header');
+				$Form_Inputs->form_input_text('Texto Cabecera', 'Header_texto', $x8, 1); 
+				$Form_Inputs->form_date('F Inicio','Header_fecha', $x9, 1);
 				
-				echo '<h3>Contenido</h3>';
-				$Form_Imputs->form_ckeditor('Indicaciones','Texto_Inicio', $x10, 1,2);
+				$Form_Inputs->form_tittle(3, 'Contenido');
+				$Form_Inputs->form_ckeditor('Indicaciones','Texto_Inicio', $x10, 1,2);
 				
-				echo '<h3>Footer</h3>';
-				$Form_Imputs->form_input_text( 'Texto Pie', 'Footer_texto', $x11, 1); 
+				$Form_Inputs->form_tittle(3, 'Footer');
+				$Form_Inputs->form_input_text('Texto Pie', 'Footer_texto', $x11, 1); 
 				
-				echo '<h3>Estado</h3>';
-				$Form_Imputs->form_select('Estado','idEstado', $x12, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
-				
+				$Form_Inputs->form_tittle(3, 'Estado');
+				$Form_Inputs->form_select('Estado','idEstado', $x12, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
+				
+				
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
 				
 				?>
 				
@@ -213,7 +213,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					}
 					/************************************************************/		
 					$(document).ready(function(){ 
-						//Tipo Puntuacion
+						//Tipo Evaluacion
 						$("#idTipoEvaluacion").on("change", function(){
 							TipoEvaluacion= $("#idTipoEvaluacion").val();
 							
@@ -242,7 +242,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							}
 						}); 
 						
-						//Tipo Puntuacion
+						//Limite Tiempo
 						$("#idLimiteTiempo").on("change", function(){
 							LimiteTiempo= $("#idLimiteTiempo").val();
 							
@@ -260,11 +260,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							}
 						}); 
 					}); 
-					</script>
+				</script>
 								
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="edit_quiz">	
-					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?> 
@@ -279,7 +279,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Pregunta</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -300,23 +300,23 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'quiz_categorias', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Pregunta', 'Nombre', $x2, 2); 
-				$Form_Imputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'quiz_tipo', 'idTipo!=2', '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'quiz_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2); 
+				$Form_Inputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'quiz_tipo', 'idTipo!=2', '', $dbConn);
 				
-				$Form_Imputs->form_input_text( 'Opcion 1', 'Opcion_1', $x4, 1);
-				$Form_Imputs->form_input_text( 'Opcion 2', 'Opcion_2', $x5, 1);
-				$Form_Imputs->form_input_text( 'Opcion 3', 'Opcion_3', $x6, 1);
-				$Form_Imputs->form_input_text( 'Opcion 4', 'Opcion_4', $x7, 1);
-				$Form_Imputs->form_input_text( 'Opcion 5', 'Opcion_5', $x8, 1);
-				$Form_Imputs->form_input_text( 'Opcion 6', 'Opcion_6', $x9, 1);
-				$Form_Imputs->form_select_n_auto('Opcion Correcta','OpcionCorrecta', $x10, 1, 1, 6);
-				$Form_Imputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
+				$Form_Inputs->form_input_text('Opcion 1', 'Opcion_1', $x4, 1);
+				$Form_Inputs->form_input_text('Opcion 2', 'Opcion_2', $x5, 1);
+				$Form_Inputs->form_input_text('Opcion 3', 'Opcion_3', $x6, 1);
+				$Form_Inputs->form_input_text('Opcion 4', 'Opcion_4', $x7, 1);
+				$Form_Inputs->form_input_text('Opcion 5', 'Opcion_5', $x8, 1);
+				$Form_Inputs->form_input_text('Opcion 6', 'Opcion_6', $x9, 1);
+				$Form_Inputs->form_select_n_auto('Opcion Correcta','OpcionCorrecta', $x10, 1, 1, 6);
+				$Form_Inputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
 
 				?>
 				
-				<script src="<?php echo DB_SITE ?>/LIB_assets/lib/jquery/jquery.min.js"></script>
+				<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/jquery/jquery.min.js"></script>
 				
 				<script>
 					document.getElementById('div_Opcion_1').style.display = 'none';
@@ -423,7 +423,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_pregunta">	
-					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?> 
@@ -437,7 +437,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $query = "SELECT Nombre, idTipo, Opcion_1, Opcion_2, Opcion_3, Opcion_4, Opcion_5, Opcion_6,
 OpcionCorrecta, idCategoria
 FROM `quiz_listado_preguntas`
-WHERE idPregunta = {$_GET['editPreg']}";
+WHERE idPregunta = ".$_GET['editPreg'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -458,7 +458,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Editar Pregunta</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -479,25 +479,25 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'quiz_categorias', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Pregunta', 'Nombre', $x2, 2); 
-				$Form_Imputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'quiz_tipo', 'idTipo!=2', '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'quiz_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2); 
+				$Form_Inputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'quiz_tipo', 'idTipo!=2', '', $dbConn);
 				
-				$Form_Imputs->form_input_text( 'Opcion 1', 'Opcion_1', $x4, 1);
-				$Form_Imputs->form_input_text( 'Opcion 2', 'Opcion_2', $x5, 1);
-				$Form_Imputs->form_input_text( 'Opcion 3', 'Opcion_3', $x6, 1);
-				$Form_Imputs->form_input_text( 'Opcion 4', 'Opcion_4', $x7, 1);
-				$Form_Imputs->form_input_text( 'Opcion 5', 'Opcion_5', $x8, 1);
-				$Form_Imputs->form_input_text( 'Opcion 6', 'Opcion_6', $x9, 1);
-				$Form_Imputs->form_select_n_auto('Opcion Correcta','OpcionCorrecta', $x10, 1, 1, 6);
+				$Form_Inputs->form_input_text('Opcion 1', 'Opcion_1', $x4, 1);
+				$Form_Inputs->form_input_text('Opcion 2', 'Opcion_2', $x5, 1);
+				$Form_Inputs->form_input_text('Opcion 3', 'Opcion_3', $x6, 1);
+				$Form_Inputs->form_input_text('Opcion 4', 'Opcion_4', $x7, 1);
+				$Form_Inputs->form_input_text('Opcion 5', 'Opcion_5', $x8, 1);
+				$Form_Inputs->form_input_text('Opcion 6', 'Opcion_6', $x9, 1);
+				$Form_Inputs->form_select_n_auto('Opcion Correcta','OpcionCorrecta', $x10, 1, 1, 6);
 				
-				$Form_Imputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
-				$Form_Imputs->form_input_hidden('idPregunta', $_GET['editPreg'], 2);
+				$Form_Inputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
+				$Form_Inputs->form_input_hidden('idPregunta', $_GET['editPreg'], 2);
 
 				?>
 				
-				<script src="<?php echo DB_SITE ?>/LIB_assets/lib/jquery/jquery.min.js"></script>
+				<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/jquery/jquery.min.js"></script>
 				
 				<script>
 					document.getElementById('div_Opcion_1').style.display = 'none';
@@ -660,7 +660,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="edit_pregunta">	
-					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?> 
@@ -697,7 +697,7 @@ LEFT JOIN `quiz_escala`  esc_2      ON esc_2.idEscala                           
 LEFT JOIN `quiz_tipo_evaluacion`    ON quiz_tipo_evaluacion.idTipoEvaluacion     = quiz_listado.idTipoEvaluacion
 LEFT JOIN `quiz_tipo_quiz`          ON quiz_tipo_quiz.idTipoQuiz                 = quiz_listado.idTipoQuiz
 
-WHERE quiz_listado.idQuiz = {$_GET['id_quiz']}";
+WHERE quiz_listado.idQuiz = ".$_GET['id_quiz'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -732,7 +732,7 @@ quiz_categorias.Nombre AS Categoria
 FROM `quiz_listado_preguntas`
 LEFT JOIN `quiz_tipo`        ON quiz_tipo.idTipo              = quiz_listado_preguntas.idTipo
 LEFT JOIN `quiz_categorias`  ON quiz_categorias.idCategoria   = quiz_listado_preguntas.idCategoria
-WHERE quiz_listado_preguntas.idQuiz = {$_GET['id_quiz']}
+WHERE quiz_listado_preguntas.idQuiz = ".$_GET['id_quiz']."
 ORDER BY quiz_listado_preguntas.idCategoria ASC
 ";
 //Consulta
@@ -761,8 +761,11 @@ foreach ($arrPreguntas as $preg) {
 ?>
 <?php if(isset($count)&&$count==0){ ?>
 	<div class="row">	
-		<div class="col-sm-12">
-			<div class="alert alert-danger" role="alert" style="margin-top:20px;">No tiene preguntas asignadas al Cuestionario</div>
+		<div class="col-sm-12" style="margin-top:20px;">
+			<?php
+			$Alert_Text  = 'No tiene preguntas asignadas al Cuestionario';
+			alert_post_data(4,1,1, $Alert_Text);
+			?>
 		</div>
 	</div>
 	<div class="clearfix"></div>
@@ -770,9 +773,7 @@ foreach ($arrPreguntas as $preg) {
  
 <div class="row">
 	<div class="col-sm-12">
-		<a target="new" href="quiz_listado_to_word_1.php?id_quiz=<?php echo $_GET['id_quiz'] ?>" class="btn btn-info pull-right" >
-			<i class="fa fa-file-word-o"></i> Exportar a Word
-		</a>
+		<a target="new" href="quiz_listado_to_word_1.php?id_quiz=<?php echo $_GET['id_quiz'] ?>" class="btn btn-info pull-right" ><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar a Word</a>
 	</div>
 </div>
 <div class="clearfix"></div> 
@@ -783,9 +784,9 @@ foreach ($arrPreguntas as $preg) {
 	<div class="col-sm-12">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Datos Basicos</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Basicos</h5>
 				<div class="toolbar">
-					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&modBase=true' ?>" class="btn btn-xs btn-primary">Modificar</a>
+					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&modBase=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a>
 				</div>
 			</header>
 			<div class="table-responsive">    
@@ -868,12 +869,12 @@ foreach ($arrPreguntas as $preg) {
 	<div class="col-sm-12">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Preguntas</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Preguntas</h5>
 				<div class="toolbar">
 					<?php 
 					//Mientras el total de preguntas sea igual o inferio a 15 se permite crear mas preguntas
 					if(isset($count)&&$count<=100){ ?>
-						<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&addPreg=true' ?>" class="btn btn-xs btn-primary">Agregar Pregunta</a>
+						<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&addPreg=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Pregunta</a>
 					<?php } ?>
 				</div>
 			</header>
@@ -903,11 +904,11 @@ foreach ($arrPreguntas as $preg) {
 									</td>			
 									<td width="120" >
 										<div class="btn-group" style="width: 70px;" >
-											<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&editPreg='.$preg['idPregunta']; ?>" title="Editar Pregunta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+											<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&editPreg='.$preg['idPregunta']; ?>" title="Editar Pregunta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 											<?php 
-											$ubicacion = $location.'&id_quiz='.$_GET['id_quiz'].'&del_pregunta='.$preg['idPregunta'];
+											$ubicacion = $location.'&id_quiz='.$_GET['id_quiz'].'&del_pregunta='.simpleEncode($preg['idPregunta'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar '.str_replace('"','',$preg['Pregunta']).'?';?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Pregunta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Pregunta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 										</div>
 									</td>
 								</tr>
@@ -931,17 +932,20 @@ foreach ($arrPreguntas as $preg) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px; margin-top:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Cuestionario</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -962,35 +966,35 @@ foreach ($arrPreguntas as $preg) {
 				if(isset($Footer_texto)) {      $x11 = $Footer_texto;       }else{$x11 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Basicos</h3>';
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
 				
-				$Form_Imputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
-				$Form_Imputs->form_select('Escala','idEscala', $x3, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
-				$Form_Imputs->form_select('% Aprobacion','Porcentaje_apro', $x4, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Escala','idEscala', $x3, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
+				$Form_Inputs->form_select('% Aprobacion','Porcentaje_apro', $x4, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
 				
-				$Form_Imputs->form_select('Tiempo Limite','idLimiteTiempo', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				$Form_Imputs->form_time_popover('Tiempo Limite','Tiempo', $x6, 1, 1, 6);
+				$Form_Inputs->form_select('Tiempo Limite','idLimiteTiempo', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_time_popover('Tiempo Limite','Tiempo', $x6, 1, 1, 6);
 				
-				$Form_Imputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x7, 2, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x7, 2, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
 				
-				echo '<h3>Header</h3>';
-				$Form_Imputs->form_input_text( 'Texto Cabecera', 'Header_texto', $x8, 1); 
-				$Form_Imputs->form_date('F Inicio','Header_fecha', $x9, 1);
+				$Form_Inputs->form_tittle(3, 'Header');
+				$Form_Inputs->form_input_text('Texto Cabecera', 'Header_texto', $x8, 1); 
+				$Form_Inputs->form_date('F Inicio','Header_fecha', $x9, 1);
 				
-				echo '<h3>Contenido</h3>';
-				$Form_Imputs->form_ckeditor('Indicaciones','Texto_Inicio', $x10, 1,2);
+				$Form_Inputs->form_tittle(3, 'Contenido');
+				$Form_Inputs->form_ckeditor('Indicaciones','Texto_Inicio', $x10, 1,2);
 				
-				echo '<h3>Footer</h3>';
-				$Form_Imputs->form_input_text( 'Texto Pie', 'Footer_texto', $x11, 1); 
-				
-				
+				$Form_Inputs->form_tittle(3, 'Footer');
+				$Form_Inputs->form_input_text('Texto Pie', 'Footer_texto', $x11, 1); 
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
+				
+				
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>
 				
 				<script>
@@ -1050,12 +1054,12 @@ foreach ($arrPreguntas as $preg) {
 							}
 						}); 
 					}); 
-					</script>
+				</script>
 					
 								
 				<div class="form-group">	
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_quiz">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?> 
@@ -1152,7 +1156,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -1172,10 +1176,10 @@ array_push( $arrUsers,$row );
 				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -1194,7 +1198,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Cuestionario</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Cuestionario</h5>	
 			<div class="toolbar">
 				<?php 
 				if (isset($_GET['search'])) {  $search ='&search='.$_GET['search']; } else { $search='';}
@@ -1219,12 +1223,12 @@ array_push( $arrUsers,$row );
 						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group widthtd120" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_quiz.php?view='.$usuarios['idQuiz']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id_quiz='.$usuarios['idQuiz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_quiz.php?view='.simpleEncode($usuarios['idQuiz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id_quiz='.$usuarios['idQuiz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del_quiz='.$usuarios['idQuiz'];
+									$ubicacion = $location.'&del_quiz='.simpleEncode($usuarios['idQuiz'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el Punto '.$usuarios['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	

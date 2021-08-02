@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -20,11 +24,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idBono':         if(empty($idBono)){        $error['idBono']         = 'error/No ha ingresado el id';}break;
 			case 'idTrabajador':   if(empty($idTrabajador)){  $error['idTrabajador']   = 'error/No ha seleccionado el trabajador';}break;
 			case 'Fecha_ingreso':  if(empty($Fecha_ingreso)){ $error['Fecha_ingreso']  = 'error/No ha ingresado la fecha del anexo';}break;
@@ -45,7 +49,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["Documento"]["error"] > 0){ 
-				$error['Documento']     = 'error/Ha ocurrido un error'; 
+				$error['Documento'] = 'error/'.uploadPHPError($_FILES["Documento"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/msword",
@@ -89,7 +93,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `trabajadores_listado_anexos` (Documento, idTrabajador, Fecha_ingreso) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -129,48 +133,62 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			// Se obtiene el nombre del logo
-			$query = "SELECT Documento
-			FROM `trabajadores_listado_anexos`
-			WHERE idAnexo = {$_GET['del_Documento']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `trabajadores_listado_anexos` WHERE idAnexo = {$_GET['del_Documento']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//se elimina el archivo
-				if(isset($rowdata['Documento'])&&$rowdata['Documento']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['Documento'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['Documento']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//Redirijo			
-				header( 'Location: '.$location.'&id_img=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_Documento']) OR !validaEntero($_GET['del_Documento']))&&$_GET['del_Documento']!=''){
+				$indice = simpleDecode($_GET['del_Documento'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_Documento'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'Documento', 'trabajadores_listado_anexos', '', 'idAnexo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+				//se borran los datos
+				$resultado = db_delete_data (false, 'trabajadores_listado_anexos', 'idAnexo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina el archivo
+					if(isset($rowdata['Documento'])&&$rowdata['Documento']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['Documento'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['Documento']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&id_img=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 
 		break;				

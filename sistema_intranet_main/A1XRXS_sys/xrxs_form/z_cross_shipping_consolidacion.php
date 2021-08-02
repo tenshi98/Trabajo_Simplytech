@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -70,11 +74,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idConsolidacion':         if(empty($idConsolidacion)){        $error['idConsolidacion']         = 'error/No ha ingresado el id';}break;
 			case 'CTNNombreCompañia':       if(empty($CTNNombreCompañia)){      $error['CTNNombreCompañia']       = 'error/No ha seleccionado';}break;
 			case 'NInforme':                if(empty($NInforme)){               $error['NInforme']                = 'error/No ha seleccionado';}break;
@@ -127,6 +131,17 @@ if( ! defined('XMBCXRXSKGC')) {
 		}
 	}	
 /*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($CTNNombreCompañia)&&contar_palabras_censuradas($CTNNombreCompañia)!=0){  $error['CTNNombreCompañia'] = 'error/Edita CTN Nombre Compañia, contiene palabras no permitidas'; }	
+	if(isset($ChoferNombreRut)&&contar_palabras_censuradas($ChoferNombreRut)!=0){      $error['ChoferNombreRut']   = 'error/Edita Chofer Nombre Rut, contiene palabras no permitidas'; }	
+	if(isset($PatenteCamion)&&contar_palabras_censuradas($PatenteCamion)!=0){          $error['PatenteCamion']     = 'error/Edita Patente Camion, contiene palabras no permitidas'; }	
+	if(isset($PatenteCarro)&&contar_palabras_censuradas($PatenteCarro)!=0){            $error['PatenteCarro']      = 'error/Edita Patente Carro, contiene palabras no permitidas'; }	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){          $error['Observaciones']     = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	if(isset($NPallet)&&contar_palabras_censuradas($NPallet)!=0){                      $error['NPallet']           = 'error/Edita N Pallet, contiene palabras no permitidas'; }	
+	if(isset($NSerieSensor)&&contar_palabras_censuradas($NSerieSensor)!=0){            $error['NSerieSensor']      = 'error/Edita N Serie Sensor, contiene palabras no permitidas'; }	
+	
+/*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
@@ -149,7 +164,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			/*$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -164,310 +179,72 @@ if( ! defined('XMBCXRXSKGC')) {
 				/************************************************************/
 				// Se trae la categoria del producto
 				if(isset($idCategoria)&&$idCategoria!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_variedades_categorias`
-					WHERE idCategoria = ".$idCategoria;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCategoria = mysqli_fetch_assoc ($resultado);
+					$rowCategoria = db_select_data (false, 'Nombre', 'sistema_variedades_categorias', '', 'idCategoria = "'.$idCategoria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				// Se trae la informacion del producto
 				if(isset($idProducto)&&$idProducto!=''){
-					$query = "SELECT Nombre
-					FROM `variedades_listado`
-					WHERE idProducto = ".$idProducto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProd = mysqli_fetch_assoc ($resultado);
+					$rowProd = db_select_data (false, 'Nombre', 'variedades_listado', '', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				//Condicion CTN
 				if(isset($idCondicion)&&$idCondicion!=''){
-					// Se trae la Condicion
-					$query = "SELECT Nombre
-					FROM `core_cross_shipping_consolidacion_condicion`
-					WHERE idCondicion = ".$idCondicion;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCondicionCTN = mysqli_fetch_assoc ($resultado);
-				}
-										
+					$rowCondicionCTN = db_select_data (false, 'Nombre', 'core_cross_shipping_consolidacion_condicion', '', 'idCondicion = "'.$idCondicion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				}					
 				/************************************************************/
 				//Sellado Piso
 				if(isset($idSellado)&&$idSellado!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Nombre
-					FROM `core_sistemas_opciones`
-					WHERE idOpciones = ".$idSellado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSellado = mysqli_fetch_assoc ($resultado);
-				}
-													
+					$rowSellado = db_select_data (false, 'Nombre', 'core_sistemas_opciones', '', 'idOpciones = "'.$idSellado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				}									
 				/************************************************************/
 				//Inspector
 				if(isset($idInspector)&&$idInspector!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Nombre, ApellidoPat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idInspector;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = "'.$idInspector.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				//Planta Despacho
 				if(isset($idPlantaDespacho)&&$idPlantaDespacho!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_plantas`
-					WHERE idPlantaDespacho = ".$idPlantaDespacho;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPlantaDespacho = mysqli_fetch_assoc ($resultado);
+					$rowPlantaDespacho = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_plantas', '', 'idPlantaDespacho = "'.$idPlantaDespacho.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				//Instructivo
 				if(isset($idInstructivo)&&$idInstructivo!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_instructivo`
-					WHERE idInstructivo = ".$idInstructivo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowInstructivo = mysqli_fetch_assoc ($resultado);
+					$rowInstructivo = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_instructivo', '', 'idInstructivo = "'.$idInstructivo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//Naviera
 				if(isset($idNaviera)&&$idNaviera!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_naviera`
-					WHERE idNaviera = ".$idNaviera;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowNaviera = mysqli_fetch_assoc ($resultado);
+					$rowNaviera = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_naviera', '', 'idNaviera = "'.$idNaviera.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//PuertoEmbarque
 				if(isset($idPuertoEmbarque)&&$idPuertoEmbarque!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_puerto_embarque`
-					WHERE idPuertoEmbarque = ".$idPuertoEmbarque;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPuertoEmbarque = mysqli_fetch_assoc ($resultado);
+					$rowPuertoEmbarque = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_puerto_embarque', '', 'idPuertoEmbarque = "'.$idPuertoEmbarque.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//Mercado
 				if(isset($idMercado)&&$idMercado!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_mercado`
-					WHERE idMercado = ".$idMercado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowMercado = mysqli_fetch_assoc ($resultado);
+					$rowMercado = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_mercado', '', 'idMercado = "'.$idMercado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//Pais
 				if(isset($idPais)&&$idPais!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Nombre
-					FROM `core_paises`
-					WHERE idPais = ".$idPais;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPais = mysqli_fetch_assoc ($resultado);
+					$rowPais = db_select_data (false, 'Nombre', 'core_paises', '', 'idPais = "'.$idPais.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//EmpresaTransporte
 				if(isset($idEmpresaTransporte)&&$idEmpresaTransporte!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_empresa_transporte`
-					WHERE idEmpresaTransporte = ".$idEmpresaTransporte;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowEmpresaTransporte = mysqli_fetch_assoc ($resultado);
+					$rowEmpresaTransporte = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_empresa_transporte', '', 'idEmpresaTransporte = "'.$idEmpresaTransporte.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				//PuertoDestino
 				if(isset($idPuertoDestino)&&$idPuertoDestino!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_puerto_destino`
-					WHERE idPuertoDestino = ".$idPuertoDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPuertoDestino = mysqli_fetch_assoc ($resultado);
+					$rowPuertoDestino = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_puerto_destino', '', 'idPuertoDestino = "'.$idPuertoDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//Recibidor
 				if(isset($idRecibidor)&&$idRecibidor!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_recibidores`
-					WHERE idRecibidor = ".$idRecibidor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowRecibidor = mysqli_fetch_assoc ($resultado);
+					$rowRecibidor = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_recibidores', '', 'idRecibidor = "'.$idRecibidor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}				
 				
 				
@@ -478,15 +255,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 				if (isset($_SESSION['cross_shipping_consolidacion_archivos'][$randompass])){
-					foreach ($_SESSION['cross_shipping_consolidacion_archivos'][$randompass] as $key => $producto){
-						try {
-							if(!is_writable('upload/'.$producto['Nombre'])){
-								//throw new Exception('File not writable');
-							}else{
-								unlink('upload/'.$producto['Nombre']);
+					foreach ($_SESSION['cross_shipping_consolidacion_archivos'][$randompass] as $key => $productos){
+						foreach ($productos as $producto) {
+							if(isset($producto['idFile'])&&$producto['idFile']!=0){
+								try {
+									if(!is_writable('upload/'.$producto['Nombre'])){
+										//throw new Exception('File not writable');
+									}else{
+										unlink('upload/'.$producto['Nombre']);
+									}
+								}catch(Exception $e) { 
+									//guardar el dato en un archivo log
+								}
 							}
-						}catch(Exception $e) { 
-							//guardar el dato en un archivo log
 						}
 					}
 				}
@@ -567,15 +348,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 			//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 			if (isset($_SESSION['cross_shipping_consolidacion_archivos'][$randompass])){
-				foreach ($_SESSION['cross_shipping_consolidacion_archivos'][$randompass] as $key => $producto){
-					try {
-						if(!is_writable('upload/'.$producto['Nombre'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$producto['Nombre']);
+				foreach ($_SESSION['cross_shipping_consolidacion_archivos'][$randompass] as $key => $productos){
+					foreach ($productos as $producto) {
+						if(isset($producto['idFile'])&&$producto['idFile']!=0){
+							try {
+								if(!is_writable('upload/'.$producto['Nombre'])){
+									//throw new Exception('File not writable');
+								}else{
+									unlink('upload/'.$producto['Nombre']);
+								}
+							}catch(Exception $e) { 
+								//guardar el dato en un archivo log
+							}
 						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
 					}
 				}
 			}
@@ -596,7 +381,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			/*$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -613,310 +398,72 @@ if( ! defined('XMBCXRXSKGC')) {
 				/************************************************************/
 				// Se trae la categoria del producto
 				if(isset($idCategoria)&&$idCategoria!=''){
-					$query = "SELECT Nombre
-					FROM `sistema_variedades_categorias`
-					WHERE idCategoria = ".$idCategoria;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCategoria = mysqli_fetch_assoc ($resultado);
+					$rowCategoria = db_select_data (false, 'Nombre', 'sistema_variedades_categorias', '', 'idCategoria = "'.$idCategoria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				// Se trae la informacion del producto
 				if(isset($idProducto)&&$idProducto!=''){
-					$query = "SELECT Nombre
-					FROM `variedades_listado`
-					WHERE idProducto = ".$idProducto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProd = mysqli_fetch_assoc ($resultado);
+					$rowProd = db_select_data (false, 'Nombre', 'variedades_listado', '', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				//Condicion CTN
 				if(isset($idCondicion)&&$idCondicion!=''){
-					// Se trae la Condicion
-					$query = "SELECT Nombre
-					FROM `core_cross_shipping_consolidacion_condicion`
-					WHERE idCondicion = ".$idCondicion;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCondicionCTN = mysqli_fetch_assoc ($resultado);
-				}
-										
+					$rowCondicionCTN = db_select_data (false, 'Nombre', 'core_cross_shipping_consolidacion_condicion', '', 'idCondicion = "'.$idCondicion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				}					
 				/************************************************************/
 				//Sellado Piso
 				if(isset($idSellado)&&$idSellado!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Nombre
-					FROM `core_sistemas_opciones`
-					WHERE idOpciones = ".$idSellado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSellado = mysqli_fetch_assoc ($resultado);
-				}
-													
+					$rowSellado = db_select_data (false, 'Nombre', 'core_sistemas_opciones', '', 'idOpciones = "'.$idSellado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				}									
 				/************************************************************/
 				//Inspector
 				if(isset($idInspector)&&$idInspector!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Nombre, ApellidoPat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idInspector;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				//Planta Despacho
 				if(isset($idPlantaDespacho)&&$idPlantaDespacho!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_plantas`
-					WHERE idPlantaDespacho = ".$idPlantaDespacho;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPlantaDespacho = mysqli_fetch_assoc ($resultado);
+					$rowPlantaDespacho = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_plantas', '', 'idPlantaDespacho = "'.$idPlantaDespacho.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				//Instructivo
 				if(isset($idInstructivo)&&$idInstructivo!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_instructivo`
-					WHERE idInstructivo = ".$idInstructivo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowInstructivo = mysqli_fetch_assoc ($resultado);
+					$rowInstructivo = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_instructivo', '', 'idInstructivo = "'.$idInstructivo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//Naviera
 				if(isset($idNaviera)&&$idNaviera!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_naviera`
-					WHERE idNaviera = ".$idNaviera;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowNaviera = mysqli_fetch_assoc ($resultado);
+					$rowNaviera = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_naviera', '', 'idNaviera = "'.$idNaviera.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//PuertoEmbarque
 				if(isset($idPuertoEmbarque)&&$idPuertoEmbarque!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_puerto_embarque`
-					WHERE idPuertoEmbarque = ".$idPuertoEmbarque;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPuertoEmbarque = mysqli_fetch_assoc ($resultado);
+					$rowPuertoEmbarque = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_puerto_embarque', '', 'idPuertoEmbarque = "'.$idPuertoEmbarque.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//Mercado
 				if(isset($idMercado)&&$idMercado!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_mercado`
-					WHERE idMercado = ".$idMercado;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowMercado = mysqli_fetch_assoc ($resultado);
+					$rowMercado = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_mercado', '', 'idMercado = "'.$idMercado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//Pais
 				if(isset($idPais)&&$idPais!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Nombre
-					FROM `core_paises`
-					WHERE idPais = ".$idPais;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPais = mysqli_fetch_assoc ($resultado);
+					$rowPais = db_select_data (false, 'Nombre', 'core_paises', '', 'idPais = "'.$idPais.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//EmpresaTransporte
 				if(isset($idEmpresaTransporte)&&$idEmpresaTransporte!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_empresa_transporte`
-					WHERE idEmpresaTransporte = ".$idEmpresaTransporte;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowEmpresaTransporte = mysqli_fetch_assoc ($resultado);
+					$rowEmpresaTransporte = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_empresa_transporte', '', 'idEmpresaTransporte = "'.$idEmpresaTransporte.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
 				//PuertoDestino
 				if(isset($idPuertoDestino)&&$idPuertoDestino!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_puerto_destino`
-					WHERE idPuertoDestino = ".$idPuertoDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPuertoDestino = mysqli_fetch_assoc ($resultado);
+					$rowPuertoDestino = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_puerto_destino', '', 'idPuertoDestino = "'.$idPuertoDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}	
 				/************************************************************/
 				//Recibidor
 				if(isset($idRecibidor)&&$idRecibidor!=''){
-					// Se trae el Sellado Piso
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_recibidores`
-					WHERE idRecibidor = ".$idRecibidor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowRecibidor = mysqli_fetch_assoc ($resultado);
+					$rowRecibidor = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_recibidores', '', 'idRecibidor = "'.$idRecibidor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/************************************************************/
@@ -1068,7 +615,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Verifico errores en los archivos
 			foreach($_FILES["exFile"]["tmp_name"] as $key=>$tmp_name){
 				if ($_FILES["exFile"]["error"][$key] > 0){ 
-					$error['exFile']     = 'error/Ha ocurrido un error'; 
+					$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"][$key]); 
 				}
 				if (in_array($_FILES['exFile']['type'][$key], $permitidos) && $_FILES['exFile']['size'][$key] <= $limite_kb * 1024){
 					//Se especifica carpeta de destino
@@ -1088,28 +635,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/***************************************************/
 				// Se trae el tipo de archivo
-				$query = "SELECT Nombre
-				FROM `core_cross_shipping_archivos_tipos`
-				WHERE idArchivoTipo = {$idArchivoTipo}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-														
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-														
-				}
-				$rowTipoArchivo = mysqli_fetch_assoc ($resultado);
+				$rowTipoArchivo = db_select_data (false, 'Nombre', 'core_cross_shipping_archivos_tipos', '', 'idArchivoTipo = "'.$idArchivoTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									
 				//Verifico errores en los archivos
 				foreach($_FILES["exFile"]["tmp_name"] as $key=>$tmp_name){
 					if ($_FILES["exFile"]["error"][$key] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"][$key]); 
 					}
 					if (in_array($_FILES['exFile']['type'][$key], $permitidos) && $_FILES['exFile']['size'][$key] <= $limite_kb * 1024){
 						//Se especifica carpeta de destino
@@ -1202,107 +733,27 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*************************************/
 				// tomo los datos de la Estiba
 				if(isset($idEstiba)&&$idEstiba!=''){
-					$query = "SELECT Nombre
-					FROM `core_estibas`
-					WHERE idEstiba = {$idEstiba}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowEstiba = mysqli_fetch_assoc ($resultado);
+					$rowEstiba = db_select_data (false, 'Nombre', 'core_estibas', '', 'idEstiba = "'.$idEstiba.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
 				// tomo los datos de la Estiba Ubicacion
 				if(isset($idEstibaUbicacion)&&$idEstibaUbicacion!=''){
-					$query = "SELECT Nombre
-					FROM `core_estibas_ubicacion`
-					WHERE idEstibaUbicacion = {$idEstibaUbicacion}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowEstibaUbicacion = mysqli_fetch_assoc ($resultado);
+					$rowEstibaUbicacion = db_select_data (false, 'Nombre', 'core_estibas_ubicacion', '', 'idEstibaUbicacion = "'.$idEstibaUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
 				// tomo los datos de la posicion
 				if(isset($idPosicion)&&$idPosicion!=''){
-					$query = "SELECT Nombre
-					FROM `core_cross_shipping_consolidacion_posicion`
-					WHERE idPosicion = {$idPosicion}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPosicion = mysqli_fetch_assoc ($resultado);
+					$rowPosicion = db_select_data (false, 'Nombre', 'core_cross_shipping_consolidacion_posicion', '', 'idPosicion = "'.$idPosicion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
 				// tomo los datos de Envase
 				if(isset($idEnvase)&&$idEnvase!=''){
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_envase`
-					WHERE idEnvase = {$idEnvase}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowEnvase = mysqli_fetch_assoc ($resultado);
+					$rowEnvase = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_envase', '', 'idEnvase = "'.$idEnvase.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
 				// tomo los datos de Termografo
 				if(isset($idTermografo)&&$idTermografo!=''){
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_termografo`
-					WHERE idTermografo = {$idTermografo}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTermografo = mysqli_fetch_assoc ($resultado);
+					$rowTermografo = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_termografo', '', 'idTermografo = "'.$idTermografo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				
@@ -1352,107 +803,27 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*************************************/
 				// tomo los datos de la Estiba
 				if(isset($idEstiba)&&$idEstiba!=''){
-					$query = "SELECT Nombre
-					FROM `core_estibas`
-					WHERE idEstiba = {$idEstiba}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowEstiba = mysqli_fetch_assoc ($resultado);
+					$rowEstiba = db_select_data (false, 'Nombre', 'core_estibas', '', 'idEstiba = "'.$idEstiba.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
 				// tomo los datos de la Estiba Ubicacion
 				if(isset($idEstibaUbicacion)&&$idEstibaUbicacion!=''){
-					$query = "SELECT Nombre
-					FROM `core_estibas_ubicacion`
-					WHERE idEstibaUbicacion = {$idEstibaUbicacion}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowEstibaUbicacion = mysqli_fetch_assoc ($resultado);
+					$rowEstibaUbicacion = db_select_data (false, 'Nombre', 'core_estibas_ubicacion', '', 'idEstibaUbicacion = "'.$idEstibaUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
 				// tomo los datos de la posicion
 				if(isset($idPosicion)&&$idPosicion!=''){
-					$query = "SELECT Nombre
-					FROM `core_cross_shipping_consolidacion_posicion`
-					WHERE idPosicion = {$idPosicion}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPosicion = mysqli_fetch_assoc ($resultado);
+					$rowPosicion = db_select_data (false, 'Nombre', 'core_cross_shipping_consolidacion_posicion', '', 'idPosicion = "'.$idPosicion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
 				// tomo los datos de Envase
 				if(isset($idEnvase)&&$idEnvase!=''){
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_envase`
-					WHERE idEnvase = {$idEnvase}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowEnvase = mysqli_fetch_assoc ($resultado);
+					$rowEnvase = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_envase', '', 'idEnvase = "'.$idEnvase.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
 				// tomo los datos de Termografo
 				if(isset($idTermografo)&&$idTermografo!=''){
-					$query = "SELECT Codigo, Nombre
-					FROM `cross_shipping_termografo`
-					WHERE idTermografo = {$idTermografo}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTermografo = mysqli_fetch_assoc ($resultado);
+					$rowTermografo = db_select_data (false, 'Codigo, Nombre', 'cross_shipping_termografo', '', 'idTermografo = "'.$idTermografo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				//if(isset($idInterno)&&$idInterno!=''){                  $_SESSION['cross_shipping_consolidacion_estibas'][$randompass][$oldidProducto]['idInterno']           = $oldidProducto;      }else{$_SESSION['cross_shipping_consolidacion_estibas'][$randompass][$oldidProducto]['idInterno']          = '';}
@@ -1515,32 +886,32 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Datos basicos
 			if (isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass])){
 
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia']=='Sin Datos' ){         $error['CTNNombreCompañia']      = 'error/No ha ingresado el Contenedor Nro.';}
-				//if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme']=='Sin Datos' ){                         $error['NInforme']               = 'error/No ha ingresado el Nro. Del Informe';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']=='0000-00-00' ){              $error['Creacion_fecha']         = 'error/No ha ingresado la Fecha del informe';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque']=='0000-00-00' ){    $error['FechaInicioEmbarque']    = 'error/No ha ingresado la Fecha Inicio del Embarque';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga']=='Sin Datos' ){             $error['HoraInicioCarga']        = 'error/No ha ingresado la Hora Inicio Carga';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque']=='0000-00-00' ){  $error['FechaTerminoEmbarque']   = 'error/No ha ingresado la Fecha Termino del Embarque';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga']=='Sin Datos' ){           $error['HoraTerminoCarga']       = 'error/No ha ingresado la Hora Termino Carga';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']=='Sin Datos' ){           $error['idPlantaDespacho']       = 'error/No ha seleccionado el Planta Despachadora';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']=='Sin Datos' ){                     $error['idCategoria']            = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']=='Sin Datos' ){                       $error['idProducto']             = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']=='Sin Datos' ){                 $error['CantidadCajas']          = 'error/No ha ingresado la Cantidad de Cajas';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']=='Sin Datos' ){                 $error['idInstructivo']          = 'error/No ha seleccionado el N° Instructivo';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']=='Sin Datos' ){                         $error['idNaviera']              = 'error/No ha seleccionado la Naviera';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque']=='Sin Datos' ){           $error['idPuertoEmbarque']       = 'error/No ha seleccionado el Puerto Embarque';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino']=='Sin Datos' ){             $error['idPuertoDestino']        = 'error/No ha seleccionado el Puerto Destino';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']=='Sin Datos' ){                         $error['idMercado']              = 'error/No ha seleccionado el Mercado';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte']=='Sin Datos' ){     $error['idEmpresaTransporte']    = 'error/No ha seleccionado la Empresa Transporte';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']=='Sin Datos' ){             $error['ChoferNombreRut']        = 'error/No ha ingresado el Conductor';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']=='Sin Datos' ){                 $error['PatenteCamion']          = 'error/No ha ingresado la Patente Camion';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']=='Sin Datos' ){                   $error['PatenteCarro']           = 'error/No ha ingresado la Patente Carro';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']=='Sin Datos' ){                     $error['idCondicion']            = 'error/No ha seleccionado la Condicion CTN';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']=='Sin Datos' ){                         $error['idSellado']              = 'error/No ha seleccionado el Sellado Piso';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']=='Sin Datos' ){                         $error['TSetPoint']              = 'error/No ha ingresado la T° Set Point';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']=='Sin Datos' ){                         $error['TAmbiente']              = 'error/No ha ingresado la T° Ambiente';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello']=='Sin Datos' ){                     $error['NumeroSello']            = 'error/No ha ingresado el Numero de sello';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector']) or $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector']=='Sin Datos' ){                     $error['idInspector']            = 'error/No ha seleccionado el Inspector';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia']=='Sin Datos' ){         $error['CTNNombreCompañia']      = 'error/No ha ingresado el Contenedor Nro.';}
+				//if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme']=='Sin Datos' ){                         $error['NInforme']               = 'error/No ha ingresado el Nro. Del Informe';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']=='0000-00-00' ){              $error['Creacion_fecha']         = 'error/No ha ingresado la Fecha del informe';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque']=='0000-00-00' ){    $error['FechaInicioEmbarque']    = 'error/No ha ingresado la Fecha Inicio del Embarque';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga']=='Sin Datos' ){             $error['HoraInicioCarga']        = 'error/No ha ingresado la Hora Inicio Carga';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque']=='0000-00-00' ){  $error['FechaTerminoEmbarque']   = 'error/No ha ingresado la Fecha Termino del Embarque';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga']=='Sin Datos' ){           $error['HoraTerminoCarga']       = 'error/No ha ingresado la Hora Termino Carga';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']=='Sin Datos' ){           $error['idPlantaDespacho']       = 'error/No ha seleccionado el Planta Despachadora';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']=='Sin Datos' ){                     $error['idCategoria']            = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']=='Sin Datos' ){                       $error['idProducto']             = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']=='Sin Datos' ){                 $error['CantidadCajas']          = 'error/No ha ingresado la Cantidad de Cajas';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']=='Sin Datos' ){                 $error['idInstructivo']          = 'error/No ha seleccionado el N° Instructivo';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']=='Sin Datos' ){                         $error['idNaviera']              = 'error/No ha seleccionado la Naviera';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque']=='Sin Datos' ){           $error['idPuertoEmbarque']       = 'error/No ha seleccionado el Puerto Embarque';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino']=='Sin Datos' ){             $error['idPuertoDestino']        = 'error/No ha seleccionado el Puerto Destino';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']=='Sin Datos' ){                         $error['idMercado']              = 'error/No ha seleccionado el Mercado';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte']=='Sin Datos' ){     $error['idEmpresaTransporte']    = 'error/No ha seleccionado la Empresa Transporte';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']=='Sin Datos' ){             $error['ChoferNombreRut']        = 'error/No ha ingresado el Conductor';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']=='Sin Datos' ){                 $error['PatenteCamion']          = 'error/No ha ingresado la Patente Camion';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']=='Sin Datos' ){                   $error['PatenteCarro']           = 'error/No ha ingresado la Patente Carro';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']=='Sin Datos' ){                     $error['idCondicion']            = 'error/No ha seleccionado la Condicion CTN';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']=='Sin Datos' ){                         $error['idSellado']              = 'error/No ha seleccionado el Sellado Piso';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']=='Sin Datos' ){                         $error['TSetPoint']              = 'error/No ha ingresado la T° Set Point';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']=='Sin Datos' ){                         $error['TAmbiente']              = 'error/No ha ingresado la T° Ambiente';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello']=='Sin Datos' ){                     $error['NumeroSello']            = 'error/No ha ingresado el Numero de sello';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector']=='Sin Datos' ){                     $error['idInspector']            = 'error/No ha seleccionado el Inspector';}
 
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de datos';
@@ -1569,14 +940,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 			/******************************************/
 			//Consulto el ultimo NInforme
-			$query = "SELECT NInforme
-			FROM `cross_shipping_consolidacion`
-			WHERE idSistema = ".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']."
-			ORDER BY NInforme DESC
-			LIMIT 1";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			$rowNInforme = mysqli_fetch_assoc ($resultado);	
+			$rowNInforme = db_select_data (false, 'NInforme', 'cross_shipping_consolidacion', '', 'idSistema = '.$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema'].' ORDER BY NInforme DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			
 			//Verifico la existencia
 			if(isset($rowNInforme['NInforme'])&&$rowNInforme['NInforme']!=''){
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme'] = $rowNInforme['NInforme'] + 1;
@@ -1641,7 +1006,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				idCategoria, idProducto, CantidadCajas, idInstructivo, idNaviera, idPuertoEmbarque, idPuertoDestino, 
 				idMercado,idPais, idRecibidor, idEmpresaTransporte, ChoferNombreRut, PatenteCamion, PatenteCarro, idCondicion, 
 				idSellado,TSetPoint, TVentilacion, TAmbiente, NumeroSello, idInspector, Observaciones, idEstado ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1678,7 +1043,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `cross_shipping_consolidacion_estibas` (idConsolidacion,idEstiba,
 							idEstibaUbicacion, idPosicion, idEnvase, NPallet, Temperatura, idTermografo, NSerieSensor) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1707,7 +1072,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									
 									// inserto los datos de registro en la db
 									$query  = "INSERT INTO `cross_shipping_consolidacion_archivo` (idConsolidacion, idArchivoTipo,Nombre) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -1729,187 +1094,19 @@ if( ! defined('XMBCXRXSKGC')) {
 					/***********************************************************************************************/
 					//envio correos
 					$arrCorreos = array();
-					$query = "SELECT 
-					usuarios_listado.usuario AS UsuarioNick,
-					usuarios_listado.email AS UsuarioNombre,
-					usuarios_listado.Nombre AS UsuarioEmail,
-					core_sistemas.Nombre AS SistemaNombre,
-					core_sistemas.Contacto_Email AS SistemaEmail
-
-					FROM `sistema_aprobador_cross`
-					LEFT JOIN `usuarios_listado`    ON usuarios_listado.idUsuario   = sistema_aprobador_cross.idUsuario
-					LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema      = sistema_aprobador_cross.idSistema
-					WHERE sistema_aprobador_cross.idSistema=".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']."
-					";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrCorreos,$row );
-					}
+					$arrCorreos = db_select_array (false, 'usuarios_listado.usuario AS UsuarioNick, usuarios_listado.email AS UsuarioEmail, usuarios_listado.Nombre AS UsuarioNombre, core_sistemas.Nombre AS SistemaNombre, core_sistemas.Contacto_Email AS SistemaEmail, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'sistema_aprobador_cross', 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = sistema_aprobador_cross.idUsuario LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = sistema_aprobador_cross.idSistema', 'sistema_aprobador_cross.idSistema='.$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema'], 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-					/************************************************************/
-					//Planta Despacho
-					if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho'])&&$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']!=''){
-						// Se trae el Sellado Piso
-						$query = "SELECT Codigo, Nombre
-						FROM `cross_shipping_plantas`
-						WHERE idPlantaDespacho = {$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']}";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-											
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-						}
-						$rowPlantaDespacho = mysqli_fetch_assoc ($resultado);
-					}
+					//Declaracion de variables
+					$ProdMuestra         = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ProdMuestra'];     
+					$Instructivo         = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Instructivo'];  
+					$Pais                = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Pais'];  
+					$Mercado             = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Mercado'];
+					$Naviera             = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Naviera'];
+					$PlantaDespacho      = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PlantaDespacho'];
+					$Creacion_fecha      = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'];
+					$NInforme            = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme'];
+					$CTNNombreCompañia   = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia'];
 					
-					/************************************************************/
-					//Naviera
-					if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera'])&&$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']!=''){
-						// Se trae el Sellado Piso
-						$query = "SELECT Codigo, Nombre
-						FROM `cross_shipping_naviera`
-						WHERE idNaviera = {$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']}";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-											
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-						}
-						$rowNaviera = mysqli_fetch_assoc ($resultado);
-					}
-					/************************************************************/
-					//Mercado
-					if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado'])&&$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']!=''){
-						// Se trae el Sellado Piso
-						$query = "SELECT Codigo, Nombre
-						FROM `cross_shipping_mercado`
-						WHERE idMercado = {$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']}";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-											
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-						}
-						$rowMercado = mysqli_fetch_assoc ($resultado);
-					}
-					/************************************************************/
-					//Pais
-					if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPais'])&&$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPais']!=''){
-						// Se trae el Sellado Piso
-						$query = "SELECT Nombre
-						FROM `core_paises`
-						WHERE idPais = {$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPais']}";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-											
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-						}
-						$rowPais = mysqli_fetch_assoc ($resultado);
-					}
-					/************************************************************/
-					//Instructivo
-					if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo'])&&$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']!=''){
-						// Se trae el Sellado Piso
-						$query = "SELECT Codigo, Nombre
-						FROM `cross_shipping_instructivo`
-						WHERE idInstructivo = {$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']}";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-											
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-						}
-						$rowInstructivo = mysqli_fetch_assoc ($resultado);
-					}
-					// Se trae la categoria del producto
-					$query = "SELECT Nombre
-					FROM `sistema_variedades_categorias`
-					WHERE idCategoria = {$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCategoria = mysqli_fetch_assoc ($resultado);	 
-
-					/************************************************************/
-					// Se trae la informacion del producto
-					$query = "SELECT 
-					variedades_listado.Nombre
-
-					FROM `variedades_listado`
-					WHERE variedades_listado.idProducto = {$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProducto = mysqli_fetch_assoc ($resultado);	
-
 
 					foreach ($arrCorreos as $correo) {
 						/*******************/
@@ -1917,39 +1114,30 @@ if( ! defined('XMBCXRXSKGC')) {
 						$xbody = '
 						<h3>Notificacion creacion de Consolidacion</h3>
 						<p>Una nueva consolidacion ha sido creada, esta queda en espera de aprobacion</p>
-						<p><strong>Planta Consolidacion :</strong>'.$rowPlantaDespacho['Codigo'].' - '.$rowPlantaDespacho['Nombre'].'</p>
-						<p><strong>Fecha del informe :</strong>'.fecha_estandar($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']).'</p>
-						<p><strong>Numero del Informe :</strong>'.$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme'].'</p>
-						<p><strong>Contenedor Nro. :</strong>'.$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia'].'</p>
-						<p><strong>Naviera :</strong>'.$rowNaviera['Codigo'].' - '.$rowNaviera['Nombre'].'</p>
-						<p><strong>Instructivo :</strong>'.$rowInstructivo['Codigo'].' - '.$rowInstructivo['Nombre'].'</p>
-						<p><strong>Mercado :</strong>'.$rowMercado['Codigo'].' - '.$rowMercado['Nombre'].'</p>
-						<p><strong>Pais :</strong>'.$rowPais['Codigo'].' - '.$rowPais['Nombre'].'</p>
-						<p><strong>Especie/Variedad :</strong>'.$rowCategoria['Nombre'].' - '.$rowProducto['Nombre'].'</p>
-						<a href="http://agropraxis.exilon360.com/view_cross_shipping_consolidacion.php?view='.$ultimo_id.'">Ver Aqui</a> 
-						
+						<p><strong>Planta Consolidacion :</strong>'.$PlantaDespacho.'</p>
+						<p><strong>Fecha del informe :</strong>'.fecha_estandar($Creacion_fecha).'</p>
+						<p><strong>Numero del Informe :</strong>'.$NInforme.'</p>
+						<p><strong>Contenedor Nro. :</strong>'.$CTNNombreCompañia.'</p>
+						<p><strong>Naviera :</strong>'.$Naviera.'</p>
+						<p><strong>Instructivo :</strong>'.$Instructivo.'</p>
+						<p><strong>Mercado :</strong>'.$Mercado.'</p>
+						<p><strong>Pais :</strong>'.$Pais.'</p>
+						<p><strong>Especie/Variedad :</strong>'.$ProdMuestra.'</p>
+						<a href="'.DB_SITE_MAIN.'/view_cross_shipping_consolidacion.php?view='.simpleEncode($ultimo_id, fecha_actual()).'">Ver Aqui</a> 
 						';
-						/*******************/
-						//Carga de la libreria de envio de correos
-						require_once '../LIBS_php/PHPMailer/PHPMailerAutoload.php';	
-						//Instanciacion
-						$mail = new PHPMailer;
-						//Quien envia el correo
-						$mail->setFrom($correo['SistemaEmail'], $correo['SistemaNombre']);
-						//A quien responder el correo
-						$mail->addReplyTo($correo['SistemaEmail'], $correo['SistemaNombre']);
-						//Destinatarios
-						$mail->addAddress($correo['UsuarioEmail'], $correo['UsuarioNombre']);
-						//Asunto
-						$mail->Subject = 'Notificacion creacion de Consolidacion';
-						//Cuerpo del mensaje
-						$mail->msgHTML($xbody);
-						//Envio del mensaje
-						if (!$mail->send()) {
-							//echo "Mailer Error: " . $mail->ErrorInfo;
-						} else {
-							//echo "Message sent!";
-						}
+						
+						//Envio de correo
+						$rmail = tareas_envio_correo($correo['SistemaEmail'], $correo['SistemaNombre'], 
+													 $correo['UsuarioEmail'], $correo['UsuarioNombre'], 
+													 '', '', 
+													 'Notificacion creacion de Consolidacion', 
+													 $xbody,'', 
+													 '', 
+													 1, 
+													 $correo['Gmail_Usuario'], 
+													 $correo['Gmail_Password']);
+						//se guarda el log
+						log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificacion creacion de Consolidacion)');	
 					}
 					
 					/*********************************************************************/
@@ -2075,7 +1263,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idConsolidacion)&&$idConsolidacion!=''&&isset($idUsuario)&&$idUsuario!=''){
-				$ndata_1 = db_select_nrows ('idConsolidacion', 'cross_shipping_consolidacion_aprobaciones', '', "idConsolidacion='".$idConsolidacion."' AND idUsuario='".$idUsuario."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idConsolidacion', 'cross_shipping_consolidacion_aprobaciones', '', "idConsolidacion='".$idConsolidacion."' AND idUsuario='".$idUsuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La aprobacion ya fue realizada';}
@@ -2093,7 +1281,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `cross_shipping_consolidacion_aprobaciones` (idConsolidacion, Creacion_fecha, Creacion_hora, idUsuario) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2111,19 +1299,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/**********************************************************/
 				//Reviso si las aprobaciones igualan a los aprobadores
 				$arrAprobado = array();
-				$query = "SELECT 
-				sistema_aprobador_cross.idUsuario,
-				cross_shipping_consolidacion.idConsolidacion,
-				(SELECT COUNT(idAprobaciones) FROM `cross_shipping_consolidacion_aprobaciones` WHERE idConsolidacion=cross_shipping_consolidacion.idConsolidacion AND idUsuario=sistema_aprobador_cross.idUsuario  LIMIT 1) AS C_apro
-
-				FROM `cross_shipping_consolidacion` 
-				LEFT JOIN `sistema_aprobador_cross`  ON sistema_aprobador_cross.idSistema   = cross_shipping_consolidacion.idSistema
-				
-				WHERE cross_shipping_consolidacion.idConsolidacion = {$idConsolidacion} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrAprobado,$row );
-				}
+				$arrAprobado = db_select_array (false, 'sistema_aprobador_cross.idUsuario, cross_shipping_consolidacion.idConsolidacion, (SELECT COUNT(idAprobaciones) FROM `cross_shipping_consolidacion_aprobaciones` WHERE idConsolidacion=cross_shipping_consolidacion.idConsolidacion AND idUsuario=sistema_aprobador_cross.idUsuario  LIMIT 1) AS C_apro', 'cross_shipping_consolidacion', 'LEFT JOIN `sistema_aprobador_cross`  ON sistema_aprobador_cross.idSistema   = cross_shipping_consolidacion.idSistema', 'cross_shipping_consolidacion.idConsolidacion = '.$idConsolidacion, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 				//variables
 				$napro_list = 0;
 				$napro_true = 0;
@@ -2160,34 +1337,11 @@ if( ! defined('XMBCXRXSKGC')) {
 					/*********************************************************************/
 					//envio correos
 					$arrCorreos = array();
-					$query = "SELECT 
-					sistema_cross_email_aprobados.email AS Email, 
-					core_sistemas.Nombre AS SistemaNombre,
-					core_sistemas.Contacto_Email AS SistemaEmail
-
-					FROM `sistema_cross_email_aprobados`
-					LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema      = sistema_cross_email_aprobados.idSistema
-					WHERE sistema_cross_email_aprobados.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."
-					";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrCorreos,$row );
-					}
+					$arrCorreos = db_select_array (false, 'sistema_cross_email_aprobados.email AS Email, core_sistemas.Nombre AS SistemaNombre, core_sistemas.Contacto_Email AS SistemaEmail, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'sistema_cross_email_aprobados', 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = sistema_cross_email_aprobados.idSistema', 'sistema_cross_email_aprobados.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 					/************************************************************/
 					// Se trae la informacion del producto
-					$query = "SELECT 
+					$SIS_query = '
 					cross_shipping_plantas.Nombre AS PlantaNombre,
 					cross_shipping_plantas.Codigo AS PlantaCodigo,
 					cross_shipping_consolidacion.Creacion_fecha,
@@ -2201,10 +1355,8 @@ if( ! defined('XMBCXRXSKGC')) {
 					cross_shipping_instructivo.Codigo AS InstructivoCodigo,
 					core_paises.Nombre AS PaisesNombre,
 					sistema_variedades_categorias.Nombre AS Especie,
-					variedades_listado.Nombre AS Variedad
-					
-
-					FROM `cross_shipping_consolidacion`
+					variedades_listado.Nombre AS Variedad';
+					$SIS_join  = '
 					LEFT JOIN `cross_shipping_plantas`          ON cross_shipping_plantas.idPlantaDespacho      = cross_shipping_consolidacion.idPlantaDespacho
 					LEFT JOIN `cross_shipping_naviera`          ON cross_shipping_naviera.idNaviera             = cross_shipping_consolidacion.idNaviera
 					LEFT JOIN `cross_shipping_mercado`          ON cross_shipping_mercado.idMercado             = cross_shipping_consolidacion.idMercado
@@ -2212,23 +1364,11 @@ if( ! defined('XMBCXRXSKGC')) {
 					LEFT JOIN `sistema_variedades_categorias`   ON sistema_variedades_categorias.idCategoria    = cross_shipping_consolidacion.idCategoria
 					LEFT JOIN `variedades_listado`              ON variedades_listado.idProducto                = cross_shipping_consolidacion.idProducto
 					LEFT JOIN `cross_shipping_instructivo`      ON cross_shipping_instructivo.idInstructivo     = cross_shipping_consolidacion.idInstructivo
+					';
+					$SIS_where = 'cross_shipping_consolidacion.idConsolidacion ='.$idConsolidacion;
+					$rowConso = db_select_data (false, $SIS_query, 'cross_shipping_consolidacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-					WHERE cross_shipping_consolidacion.idConsolidacion = {$idConsolidacion}";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowConso = mysqli_fetch_assoc ($resultado);
-					
+				
 					foreach ($arrCorreos as $correo) {
 						/*******************/
 						//Mensaje
@@ -2244,27 +1384,25 @@ if( ! defined('XMBCXRXSKGC')) {
 						<p><strong>Mercado :</strong>'.$rowConso['MercadoCodigo'].' - '.$rowConso['MercadoNombre'].'</p>
 						<p><strong>Pais :</strong>'.$rowConso['PaisesNombre'].'</p>
 						<p><strong>Especie/Variedad :</strong>'.$rowConso['Especie'].' - '.$rowConso['Variedad'].'</p>
-						<a href="http://agropraxis.exilon360.com/view_cross_shipping_consolidacion.php?view='.$idConsolidacion.'">Ver Aqui</a> 
-						
+						<a href="'.DB_SITE_MAIN.'/view_cross_shipping_consolidacion.php?view='.simpleEncode($idConsolidacion, fecha_actual()).'">Ver Aqui</a> 
 						';
 						/*******************/
-						//Carga de la libreria de envio de correos
-						require_once '../LIBS_php/PHPMailer/PHPMailerAutoload.php';	
-						//Instanciacion
-						$mail = new PHPMailer;
-						//Quien envia el correo
-						$mail->setFrom($correo['SistemaEmail'], $correo['SistemaNombre']);
-						//A quien responder el correo
-						$mail->addReplyTo($correo['SistemaEmail'], $correo['SistemaNombre']);
-						//Destinatarios
-						$mail->addAddress($correo['Email'], $correo['Email']);
-						//Asunto
-						$mail->Subject = 'Notificacion aprobacion de Consolidacion';
-						//Cuerpo del mensaje
-						$mail->msgHTML($xbody);
-						//Envio del mensaje
-						if (!$mail->send()) {
-							//echo "Mailer Error: " . $mail->ErrorInfo;
+						//Envio de correo
+						$rmail = tareas_envio_correo($correo['SistemaEmail'], $correo['SistemaNombre'], 
+													 $correo['Email'], $correo['Email'], 
+													 '', '', 
+													 'Notificacion aprobacion de Consolidacion', 
+													 $xbody,'', 
+													 '', 
+													 1, 
+													 $correo['Gmail_Usuario'], 
+													 $correo['Gmail_Password']);
+                        //se guarda el log
+						log_response(1, $rmail, $correo['Email'].' (Asunto:Notificacion aprobacion de Consolidacion)');
+						                 
+                        //Envio del mensaje
+						if ($rmail!=1) {
+							//echo "Mailer Error: " . $rmail;
 						} else {
 							//echo "Message sent!";
 						}
@@ -2470,7 +1608,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `cross_shipping_consolidacion_estibas` (idConsolidacion, idEstiba, idEstibaUbicacion,
 				idPosicion, idEnvase, NPallet, Temperatura, idTermografo, NSerieSensor ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2547,29 +1685,46 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `cross_shipping_consolidacion_estibas` WHERE idEstibaListado = {$_GET['del_estiba']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_estiba']) OR !validaEntero($_GET['del_estiba']))&&$_GET['del_estiba']!=''){
+				$indice = simpleDecode($_GET['del_estiba'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_estiba'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
-						
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'cross_shipping_consolidacion_estibas', 'idEstibaListado = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 
 		break;	
@@ -2616,7 +1771,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Verifico errores en los archivos
 			foreach($_FILES["exFile"]["tmp_name"] as $key=>$tmp_name){
 				if ($_FILES["exFile"]["error"][$key] > 0){ 
-					$error['exFile']     = 'error/Ha ocurrido un error'; 
+					$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"][$key]); 
 				}
 				if (in_array($_FILES['exFile']['type'][$key], $permitidos) && $_FILES['exFile']['size'][$key] <= $limite_kb * 1024){
 					//Se especifica carpeta de destino
@@ -2637,7 +1792,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Verifico errores en los archivos
 				foreach($_FILES["exFile"]["tmp_name"] as $key=>$tmp_name){
 					if ($_FILES["exFile"]["error"][$key] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"][$key]); 
 					}
 					if (in_array($_FILES['exFile']['type'][$key], $permitidos) && $_FILES['exFile']['size'][$key] <= $limite_kb * 1024){
 						//Se especifica carpeta de destino
@@ -2658,7 +1813,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 								// inserto los datos de registro en la db
 								$query  = "INSERT INTO `cross_shipping_consolidacion_archivo` (idConsolidacion, idArchivoTipo, Nombre ) 
-								VALUES ({$a} )";
+								VALUES (".$a.")";
 								//Consulta
 								$resultado = mysqli_query ($dbConn, $query);
 								//Si no ejecuto correctamente la consulta
@@ -2699,51 +1854,63 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			// Se obtiene el nombre del logo
-			$query = "SELECT Nombre
-			FROM `cross_shipping_consolidacion_archivo`
-			WHERE idArchivo = {$_GET['del_file']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `cross_shipping_consolidacion_archivo` WHERE idArchivo = {$_GET['del_file']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//se elimina el archivo
-				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['Nombre'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['Nombre']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//Redirijo			
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_file']) OR !validaEntero($_GET['del_file']))&&$_GET['del_file']!=''){
+				$indice = simpleDecode($_GET['del_file'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_file'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
-
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'Nombre', 'cross_shipping_consolidacion_archivo', '', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				//se borran los datos
+				$resultado = db_delete_data (false, 'cross_shipping_consolidacion_archivo', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina el archivo
+					if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['Nombre'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['Nombre']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 		break;	
 /*******************************************************************************************************************/
 		case 'modEdit':	
@@ -2781,33 +1948,52 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se reversa
-			$query  = "UPDATE `cross_shipping_consolidacion` SET idEstado=1 WHERE idConsolidacion = '".$_GET['reversar']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			//Variable
+			$errorn = 0;
 			
-			//se borran las aprobaciones
-			$query  = "DELETE FROM `cross_shipping_consolidacion_aprobaciones` WHERE idConsolidacion = '".$_GET['reversar']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&edited=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['reversar']) OR !validaEntero($_GET['reversar']))&&$_GET['reversar']!=''){
+				$indice = simpleDecode($_GET['reversar'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['reversar'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se reversa
+				$query  = "UPDATE `cross_shipping_consolidacion` SET idEstado=1 WHERE idConsolidacion = '".$indice."'";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				
+				//se borran los datos
+				$resultado = db_delete_data (false, 'cross_shipping_consolidacion_aprobaciones', 'idConsolidacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 		
 		break;
 /*******************************************************************************************************************/

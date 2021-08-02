@@ -67,7 +67,7 @@ if ( ! empty($_GET['edit']) ) {
 //Obtengo los datos de una observacion
 $query = "SELECT Observacion
 FROM `usuarios_observaciones`
-WHERE idObservacion = {$_GET['edit']}";
+WHERE idObservacion = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -88,7 +88,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Editar Observacion</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -99,15 +99,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Observacion)) {     $x1  = $Observacion;    }else{$x1  = $rowdata['Observacion'];}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
 				
-				$Form_Imputs->form_input_hidden('idObservacion', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('idObservacion', $_GET['edit'], 2);
 				?>
 				
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -116,12 +116,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { ?>
+}elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Observacion</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -132,17 +134,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Observacion)) {     $x1  = $Observacion;    }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
 				
-				$Form_Imputs->form_input_hidden('idUsuario_observado', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('Fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idUsuario_observado', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
 				?>
 
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -162,7 +164,7 @@ usuarios_observaciones.Observacion
 FROM `usuarios_observaciones`
 LEFT JOIN `usuarios_listado` usuario_observado  ON usuario_observado.idUsuario     = usuarios_observaciones.idUsuario_observado
 LEFT JOIN `usuarios_listado` usuario_evaluador  ON usuario_evaluador.idUsuario     = usuarios_observaciones.idUsuario
-WHERE usuarios_observaciones.idObservacion = {$_GET['view']}
+WHERE usuarios_observaciones.idObservacion = ".$_GET['view']."
 ORDER BY usuarios_observaciones.idObservacion ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -193,15 +195,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);
             </p>
                       
             <h2 class="text-primary">Observacion</h2>
-            <p class="text-muted word_break " ><strong>Observacion : </strong><?php echo $rowdata['Observacion']; ?></p>
+            <p class="text-muted word_break">
+				<div class="text-muted well well-sm no-shadow">
+					<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+					<div class="clearfix"></div>
+				</div>
+			</p>
             
         	
         </div>
 	</div>
 </div>
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
@@ -210,7 +217,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 // tomo los datos del usuario
 $query = "SELECT Nombre
 FROM `usuarios_listado`
-WHERE idUsuario = {$_GET['id']}";
+WHERE idUsuario = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -237,7 +244,7 @@ usuarios_observaciones.Observacion
 FROM `usuarios_observaciones`
 LEFT JOIN `usuarios_listado` usuario_observado  ON usuario_observado.idUsuario     = usuarios_observaciones.idUsuario_observado
 LEFT JOIN `usuarios_listado` usuario_evaluador  ON usuario_evaluador.idUsuario     = usuarios_observaciones.idUsuario
-WHERE usuarios_observaciones.idUsuario_observado = {$_GET['id']}
+WHERE usuarios_observaciones.idUsuario_observado = ".$_GET['id']."
 ORDER BY usuarios_observaciones.idObservacion ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -347,13 +354,13 @@ $x_nperm++; $trans[$x_nperm] = "unidad_negocio_listado.php";                    
 $x_nperm++; $trans[$x_nperm] = "pago_masivo_cliente.php";                              //44 - Pago Documentos Clientes
 $x_nperm++; $trans[$x_nperm] = "pago_masivo_proveedor.php";                            //45 - Pago Documentos Proveedores
 $x_nperm++; $trans[$x_nperm] = "pago_masivo_cliente_reversa.php";                      //46 - Reversar Pago Clientes
-$x_nperm++; $trans[$x_nperm] = "pago_masivo_proveedor_reversa.php";                    //47- Reversar Pago Proveedores
+$x_nperm++; $trans[$x_nperm] = "pago_masivo_proveedor_reversa.php";                    //47 - Reversar Pago Proveedores
 $x_nperm++; $trans[$x_nperm] = "pago_boletas_cliente.php";                             //48 - Pago Boletas Honorarios Clientes
 $x_nperm++; $trans[$x_nperm] = "pago_boletas_proveedor.php";                           //49 - Pago Boletas Honorarios Empresas
 $x_nperm++; $trans[$x_nperm] = "pago_boletas_trabajador.php";                          //50 - Pago Boletas Honorarios Trabajadores
-$x_nperm++; $trans[$x_nperm] = "pago_boletas_cliente_reversa.php";                     //51
-$x_nperm++; $trans[$x_nperm] = "pago_boletas_proveedor_reversa.php";                   //52
-$x_nperm++; $trans[$x_nperm] = "pago_boletas_trabajador_reversa.php";                  //53
+$x_nperm++; $trans[$x_nperm] = "pago_boletas_cliente_reversa.php";                     //51 - Reversar Pago Clientes
+$x_nperm++; $trans[$x_nperm] = "pago_boletas_proveedor_reversa.php";                   //52 - Reversar Pago Proveedores
+$x_nperm++; $trans[$x_nperm] = "pago_boletas_trabajador_reversa.php";                  //53 - Reversar Pago Trabajadores BH
 
 //Accesos a caja chica
 $x_nperm++; $trans[$x_nperm] = "caja_chica_listado.php";                               //54 - Administrar Caja Chica
@@ -365,6 +372,14 @@ $x_nperm++; $trans[$x_nperm] = "caja_chica_rendida.php";                        
 //Accesos las camaras de seguridad
 $x_nperm++; $trans[$x_nperm] = "seguridad_camaras_listado.php";                        //59 - Administrar Camaras Seguridad
 $x_nperm++; $trans[$x_nperm] = "seguridad_camaras_vista.php";                          //60 - Ver Camaras Seguridad
+
+//Accesos a los los contratos
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_cambiar_estado.php";              //61 - Orden de Trabajo - Cambiar Estado
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_canceladas.php";                  //62 - Orden de Trabajo - Canceladas
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_crear.php";                       //63 - Orden de Trabajo - Crear
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_ejecutar.php";                    //64 - Orden de Trabajo - Ejecutar
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_finalizadas.php";                 //65 - Orden de Trabajo - Finalizadas
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_terminar.php";                    //66 - Orden de Trabajo - Forzar Cierre
 
 
 
@@ -388,7 +403,7 @@ $productos    = $prm_x[22] + $prm_x[23] + $prm_x[24] + $prm_x[25] + $prm_x[26] +
 
 $x_permisos_1 = $insumos + $productos + $arriendos;
 $x_permisos_2 = $prm_x[36] + $prm_x[37];
-$x_permisos_3 = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41] + $prm_x[42] + $prm_x[43];
+$x_permisos_3 = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41] + $prm_x[42] + $prm_x[43] + $prm_x[61] + $prm_x[62] + $prm_x[63] + $prm_x[64] + $prm_x[65] + $prm_x[66];
 $x_permisos_4 = $prm_x[54] + $prm_x[55] + $prm_x[56] + $prm_x[57] + $prm_x[58];
 $x_permisos_5 = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49] + $prm_x[50] + $prm_x[51] + $prm_x[52] + $prm_x[53];
 $x_permisos_6 = $prm_x[59] + $prm_x[60];
@@ -398,22 +413,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Usuario</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Observaciones</span>
-			</div>
-		</div>
-	</div>
-	
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Observaciones');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Observacion</a><?php }?>
 	</div>	
@@ -424,34 +424,34 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'usuarios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'usuarios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos</a></li>
-				<li class=""><a href="<?php echo 'usuarios_listado_permisos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Permisos</a></li>
+				<li class=""><a href="<?php echo 'usuarios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'usuarios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'usuarios_listado_permisos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Permisos</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'usuarios_listado_sistemas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Acceso Sistemas</a></li>
-						<li class=""><a href="<?php echo 'usuarios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'usuarios_listado_tipo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Tipo</a></li>
-						<li class=""><a href="<?php echo 'usuarios_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Contraseña</a></li>
-						<li class="active"><a href="<?php echo 'usuarios_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class=""><a href="<?php echo 'usuarios_listado_sistemas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Acceso Sistemas</a></li>
+						<li class=""><a href="<?php echo 'usuarios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'usuarios_listado_tipo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-adjust" aria-hidden="true"></i> Tipo</a></li>
+						<li class=""><a href="<?php echo 'usuarios_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
+						<li class="active"><a href="<?php echo 'usuarios_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<?php if($x_permisos_1 > 0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_bodegas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Bodegas</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_bodegas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-database" aria-hidden="true"></i> Bodegas</a></li>
 						<?php } ?>
 						<?php if($x_permisos_2 > 0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_equipos_telemetria.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Equipos telemetria</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_equipos_telemetria.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Equipos telemetria</a></li>
 						<?php } ?>
 						<?php if($x_permisos_3 > 0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Contratos</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
 						<?php } ?>
 						<?php if($x_permisos_4 > 0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_cajas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Caja Chica</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_cajas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Caja Chica</a></li>
 						<?php } ?>
 						<?php if($x_permisos_5>0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_documentos_pago.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Documentos Pago</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_documentos_pago.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Documentos Pago</a></li>
 						<?php } ?>
 						<?php if($x_permisos_6>0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_camaras.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Camaras de Seguridad</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_camaras.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-video-camera" aria-hidden="true"></i> Camaras de Seguridad</a></li>
 						<?php } ?>
 					</ul>
                 </li>           
@@ -475,12 +475,12 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 						<td><?php echo cortar($observaciones['Observacion'], 70); ?></td>		
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&view='.$observaciones['idObservacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$observaciones['idObservacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&view='.$observaciones['idObservacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$observaciones['idObservacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.$observaciones['idObservacion'];
+									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($observaciones['idObservacion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$observaciones['nombre_usuario'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	
@@ -493,8 +493,8 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

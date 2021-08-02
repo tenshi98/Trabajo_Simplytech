@@ -44,7 +44,7 @@ if ( ! empty($_GET['addInsumo']) ) { ?>
  } elseif ( ! empty($_GET['submit_filter']) ) { 
 
 //Verifico el tipo de usuario que esta ingresando
-$z="WHERE orden_trabajo_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z="WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 $z .= " AND orden_trabajo_listado.idEstado = 1";
 //Verifico si la variable de busqueda existe
 //if (isset($_GET['idCliente']) && $_GET['idCliente'] != ''){       $z .= " AND orden_trabajo_listado.idCliente=".$_GET['idCliente'];}
@@ -52,7 +52,7 @@ if (isset($_GET['idMaquina']) && $_GET['idMaquina'] != ''){       $z .= " AND or
 if (isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){   $z .= " AND orden_trabajo_listado.idPrioridad = '".$_GET['idPrioridad']."'";}
 if (isset($_GET['idTipo']) && $_GET['idTipo'] != ''){             $z .= " AND orden_trabajo_listado.idTipo = '".$_GET['idTipo']."'";}
 if(isset($_GET['f_programacion_inicio'])&&$_GET['f_programacion_inicio']!=''&&isset($_GET['f_programacion_termino'])&&$_GET['f_programacion_termino']!=''){
-	$z.=" AND orden_trabajo_listado.f_programacion BETWEEN '{$_GET['f_programacion_inicio']}' AND '{$_GET['f_programacion_termino']}'";
+	$z.=" AND orden_trabajo_listado.f_programacion BETWEEN '".$_GET['f_programacion_inicio']."' AND '".$_GET['f_programacion_termino']."'";
 }
 					
 // Se trae un listado con todos los usuarios
@@ -95,7 +95,7 @@ array_push( $arrOTS,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Ordenes de Trabajo</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Ordenes de Trabajo</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -121,8 +121,8 @@ array_push( $arrOTS,$row );
 						<td><?php echo $ot['Observaciones']; ?></td>		
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_orden_trabajo.php?view='.$ot['idOT']; ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'orden_trabajo_editar.php?view='.$ot['idOT'].'&ter=true'; ?>" title="Editar Orden de Trabajo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>								
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_orden_trabajo.php?view='.simpleEncode($ot['idOT'], fecha_actual()); ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'orden_trabajo_editar.php?view='.$ot['idOT'].'&ter=true'; ?>" title="Editar Orden de Trabajo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>								
 							</div>
 						</td>	
 					</tr>
@@ -137,12 +137,12 @@ array_push( $arrOTS,$row );
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idConfig_1=1 AND idEstado=1";
-$y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";?>
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_1=1 AND idEstado=1";
+$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -158,18 +158,18 @@ $y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($f_programacion_termino)) {   $x5  = $f_programacion_termino;  }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Imputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
+					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
 											 $x_column_maquina_sing,'idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Imputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
+					$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
 				}
-				$Form_Imputs->form_select('Prioridad','idPrioridad', $x2, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tipo','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Programacion Desde','f_programacion_inicio', $x4, 1);
-				$Form_Imputs->form_date('Fecha Programacion Hasta','f_programacion_termino', $x5, 1);
+				$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Programacion Desde','f_programacion_inicio', $x4, 1);
+				$Form_Inputs->form_date('Fecha Programacion Hasta','f_programacion_termino', $x5, 1);
 				?> 
 
 				<div class="form-group">

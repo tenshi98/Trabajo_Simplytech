@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -22,11 +26,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idDescuento':     if(empty($idDescuento)){      $error['idDescuento']     = 'error/No ha ingresado el id';}break;
 			case 'idTrabajador':    if(empty($idTrabajador)){     $error['idTrabajador']    = 'error/No ha seleccionado el trabajador';}break;
 			case 'idDescuentoFijo': if(empty($idDescuentoFijo)){  $error['idDescuentoFijo'] = 'error/No ha seleccionado el descuento';}break;
@@ -52,7 +56,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idDescuentoFijo)&&isset($idTrabajador)){
-				$ndata_1 = db_select_nrows ('idDescuentoFijo', 'trabajadores_listado_descuentos_fijos', '', "idDescuentoFijo='".$idDescuentoFijo."' AND idTrabajador='".$idTrabajador."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idDescuentoFijo', 'trabajadores_listado_descuentos_fijos', '', "idDescuentoFijo='".$idDescuentoFijo."' AND idTrabajador='".$idTrabajador."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El descuento ya existe en el sistema';}
@@ -69,7 +73,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `trabajadores_listado_descuentos_fijos` (idTrabajador, idDescuentoFijo, idAFP, Monto) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -104,7 +108,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idDescuentoFijo)&&isset($idTrabajador)&&isset($idDescuento)){
-				$ndata_1 = db_select_nrows ('idDescuentoFijo', 'trabajadores_listado_descuentos_fijos', '', "idDescuentoFijo='".$idDescuentoFijo."' AND idTrabajador='".$idTrabajador."' AND idDescuento!='".$idDescuento."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idDescuentoFijo', 'trabajadores_listado_descuentos_fijos', '', "idDescuentoFijo='".$idDescuentoFijo."' AND idTrabajador='".$idTrabajador."' AND idDescuento!='".$idDescuento."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Bono ya existe en el sistema';}
@@ -150,29 +154,46 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `trabajadores_listado_descuentos_fijos` WHERE idDescuento = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
-						
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'trabajadores_listado_descuentos_fijos', 'idDescuento = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 
 		break;				

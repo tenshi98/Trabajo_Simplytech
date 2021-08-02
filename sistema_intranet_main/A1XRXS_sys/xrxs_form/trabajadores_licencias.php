@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -28,11 +32,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idLicencia':            if(empty($idLicencia)){            $error['idLicencia']            = 'error/No ha ingresado el id';}break;
 			case 'idSistema':             if(empty($idSistema)){             $error['idSistema']             = 'error/No ha seleccionado el sistema';}break;
 			case 'idTrabajador':          if(empty($idTrabajador)){          $error['idTrabajador']          = 'error/No ha seleccionado el trabajador';}break;
@@ -46,6 +50,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita la Observacion, contiene palabras no permitidas'; }	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -63,7 +71,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Fecha_inicio)&&isset($idTrabajador)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Fecha_inicio', 'trabajadores_licencias', '', "Fecha_inicio='".$Fecha_inicio."' AND idTrabajador='".$idTrabajador."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Fecha_inicio', 'trabajadores_licencias', '', "Fecha_inicio='".$Fecha_inicio."' AND idTrabajador='".$idTrabajador."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La licencia ya existe en el sistema';}
@@ -81,7 +89,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				if (!empty($_FILES['File_Licencia']['name'])){
 						
 					if ($_FILES["File_Licencia"]["error"] > 0){ 
-						$error['File_Licencia']     = 'error/Ha ocurrido un error'; 
+						$error['File_Licencia'] = 'error/'.uploadPHPError($_FILES["File_Licencia"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -130,7 +138,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									// inserto los datos de registro en la db
 									$query  = "INSERT INTO `trabajadores_licencias` (idSistema, idTrabajador, idUsuario,
 									Fecha_ingreso, Fecha_inicio, Fecha_termino, N_Dias, Observacion, idUso,File_Licencia) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -177,7 +185,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `trabajadores_licencias` (idSistema, idTrabajador, idUsuario,
 					Fecha_ingreso, Fecha_inicio, Fecha_termino, N_Dias, Observacion, idUso) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -215,7 +223,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Fecha_inicio)&&isset($idTrabajador)&&isset($idLicencia)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Fecha_inicio', 'trabajadores_licencias', '', "Fecha_inicio='".$Fecha_inicio."' AND idTrabajador='".$idTrabajador."' AND idSistema='".$idSistema."' AND idLicencia!='".$idLicencia."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Fecha_inicio', 'trabajadores_licencias', '', "Fecha_inicio='".$Fecha_inicio."' AND idTrabajador='".$idTrabajador."' AND idSistema='".$idSistema."' AND idLicencia!='".$idLicencia."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La licencia ya existe en el sistema';}
@@ -233,7 +241,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				if (!empty($_FILES['File_Licencia']['name'])){
 						
 					if ($_FILES["File_Licencia"]["error"] > 0){ 
-						$error['File_Licencia']     = 'error/Ha ocurrido un error'; 
+						$error['File_Licencia'] = 'error/'.uploadPHPError($_FILES["File_Licencia"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -363,47 +371,62 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			// Se obtiene el nombre del logo
-			$query = "SELECT File_Licencia
-			FROM `trabajadores_licencias`
-			WHERE idLicencia = {$_GET['del']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `trabajadores_licencias` WHERE idLicencia = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//se elimina la foto
-				if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['File_Licencia'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['File_Licencia']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'File_Licencia', 'trabajadores_licencias', '', 'idLicencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+				//se borran los datos
+				$resultado = db_delete_data (false, 'trabajadores_licencias', 'idLicencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina la foto
+					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['File_Licencia'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['File_Licencia']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 			
 
@@ -414,17 +437,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idLicencia = $_GET['del_file'];
 			// Se obtiene el nombre del logo
-			$query = "SELECT File_Licencia
-			FROM `trabajadores_licencias`
-			WHERE idLicencia = {$idLicencia}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'File_Licencia', 'trabajadores_licencias', '', 'idLicencia = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_licencias` SET File_Licencia='' WHERE idLicencia = '{$idLicencia}'";
+			$query  = "UPDATE `trabajadores_licencias` SET File_Licencia='' WHERE idLicencia = '".$_GET['del_file']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta

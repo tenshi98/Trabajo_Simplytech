@@ -40,7 +40,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // Se traen todos los datos de mi usuario
 $query = "SELECT email, Nombre, Rut, fNacimiento, Direccion, Fono, idCiudad, idComuna
 FROM `usuarios_listado`
-WHERE idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";
+WHERE idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -84,21 +84,7 @@ for ($i = 1; $i <= 4; $i++) {
 $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Perfil</span>
-				<span class="info-box-number"><?php echo $_SESSION['usuario']['basic_data']['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos Personales</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Perfil', $_SESSION['usuario']['basic_data']['Nombre'], 'Editar Datos Personales');?>
 </div>
 <div class="clearfix"></div>
 
@@ -106,15 +92,15 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'principal_datos.php';?>" >Resumen</a></li>
-				<li class="active"><a href="<?php echo 'principal_datos_datos.php';?>" >Datos Personales</a></li>
-				<li class=""><a href="<?php echo 'principal_datos_imagen.php';?>" >Cambiar Imagen</a></li>
+				<li class=""><a href="<?php echo 'principal_datos.php';?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class="active"><a href="<?php echo 'principal_datos_datos.php';?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Personales</a></li>
+				<li class=""><a href="<?php echo 'principal_datos_imagen.php';?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Cambiar Imagen</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'principal_datos_password.php';?>" >Cambiar Contraseña</a></li>
+						<li class=""><a href="<?php echo 'principal_datos_password.php';?>" ><i class="fa fa-key" aria-hidden="true"></i> Cambiar Contraseña</a></li>
 						<?php if($Count_pagos!=0){ ?>
-							<li class=""><a href="<?php echo 'principal_datos_documentos_pago.php'?>" >Documentos Pago</a></li>
+							<li class=""><a href="<?php echo 'principal_datos_documentos_pago.php'?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Documentos Pago</a></li>
 						<?php } ?>
 					</ul>
                 </li>           
@@ -136,17 +122,17 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 					if(isset($Direccion)) {     $x12 = $Direccion;    }else{$x12 = $rowdata['Direccion'];}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x5, 2); 
-					$Form_Imputs->form_input_phone('Fono','Fono', $x6, 1);
-					$Form_Imputs->form_input_icon( 'Email', 'email', $x7, 2,'fa fa-envelope-o');
-					$Form_Imputs->form_input_rut('Rut', 'Rut', $x8, 2);
-					$Form_Imputs->form_date('Fecha de Nacimiento','fNacimiento', $x9, 2); 
-					$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x5, 2); 
+					$Form_Inputs->form_input_phone('Fono','Fono', $x6, 1);
+					$Form_Inputs->form_input_icon('Email', 'email', $x7, 2,'fa fa-envelope-o');
+					$Form_Inputs->form_input_rut('Rut', 'Rut', $x8, 2);
+					$Form_Inputs->form_date('Fecha de Nacimiento','fNacimiento', $x9, 2); 
+					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
-					$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x12, 1,'fa fa-map');
-					$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x12, 1,'fa fa-map');
+					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 						
 					?> 
 					

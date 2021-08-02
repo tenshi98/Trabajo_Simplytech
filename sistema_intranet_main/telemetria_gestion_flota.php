@@ -41,7 +41,7 @@ if(isset($_GET['idRuta'])&&$_GET['idRuta']!=''){
 	
 	$query = "SELECT idUbicaciones, Latitud, Longitud, direccion
 	FROM `telemetria_rutas_ubicaciones`
-	WHERE idRuta = {$_GET['idRuta']}
+	WHERE idRuta = ".$_GET['idRuta']."
 	ORDER BY idUbicaciones ASC";
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
@@ -67,56 +67,32 @@ $z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
 $z .= " AND telemetria_listado.id_Geo = 1";//solo los equipos que tengan el seguimiento activado
 $enlace = "?dd=true";
 //verifico que sea un administrador
-$z .= " AND telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 $enlace .= "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 if (isset($_GET['idRuta'])&&$_GET['idRuta']!=''){
-	$z .= " AND telemetria_listado.idRuta={$_GET['idRuta']}";
+	$z .= " AND telemetria_listado.idRuta=".$_GET['idRuta'];
 	$enlace .= "&idRuta=".$_GET['idRuta'];	
 }
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z .= " AND telemetria_listado.idTelemetria={$_GET['idTelemetria']}";
+	$z .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
 	$enlace .= "&idTelemetria=".$_GET['idTelemetria'];	
 }
-				
+
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}				
 //Listar los equipos
 $arrUsers = array();
 $query = "SELECT 
-GeoLatitud, GeoLongitud,idTelemetria,Nombre,
-LastUpdateHora,cantSensores,TiempoFueraLinea,NDetenciones,
-
-SensoresMedErrores_1, SensoresMedErrores_2, SensoresMedErrores_3, SensoresMedErrores_4, SensoresMedErrores_5, 
-SensoresMedErrores_6, SensoresMedErrores_7, SensoresMedErrores_8, SensoresMedErrores_9, SensoresMedErrores_10, 
-SensoresMedErrores_11, SensoresMedErrores_12, SensoresMedErrores_13, SensoresMedErrores_14, SensoresMedErrores_15, 
-SensoresMedErrores_16, SensoresMedErrores_17, SensoresMedErrores_18, SensoresMedErrores_19, SensoresMedErrores_20, 
-SensoresMedErrores_21, SensoresMedErrores_22, SensoresMedErrores_23, SensoresMedErrores_24, SensoresMedErrores_25, 
-SensoresMedErrores_26, SensoresMedErrores_27, SensoresMedErrores_28, SensoresMedErrores_29, SensoresMedErrores_30, 
-SensoresMedErrores_31, SensoresMedErrores_32, SensoresMedErrores_33, SensoresMedErrores_34, SensoresMedErrores_35, 
-SensoresMedErrores_36, SensoresMedErrores_37, SensoresMedErrores_38, SensoresMedErrores_39, SensoresMedErrores_40, 
-SensoresMedErrores_41, SensoresMedErrores_42, SensoresMedErrores_43, SensoresMedErrores_44, SensoresMedErrores_45, 
-SensoresMedErrores_46, SensoresMedErrores_47, SensoresMedErrores_48, SensoresMedErrores_49, SensoresMedErrores_50,
-	
-SensoresErrorActual_1, SensoresErrorActual_2, SensoresErrorActual_3, SensoresErrorActual_4, SensoresErrorActual_5, 
-SensoresErrorActual_6, SensoresErrorActual_7, SensoresErrorActual_8, SensoresErrorActual_9, SensoresErrorActual_10, 
-SensoresErrorActual_11, SensoresErrorActual_12, SensoresErrorActual_13, SensoresErrorActual_14, SensoresErrorActual_15, 
-SensoresErrorActual_16, SensoresErrorActual_17, SensoresErrorActual_18, SensoresErrorActual_19, SensoresErrorActual_20, 
-SensoresErrorActual_21, SensoresErrorActual_22, SensoresErrorActual_23, SensoresErrorActual_24, SensoresErrorActual_25, 
-SensoresErrorActual_26, SensoresErrorActual_27, SensoresErrorActual_28, SensoresErrorActual_29, SensoresErrorActual_30, 
-SensoresErrorActual_31, SensoresErrorActual_32, SensoresErrorActual_33, SensoresErrorActual_34, SensoresErrorActual_35, 
-SensoresErrorActual_36, SensoresErrorActual_37, SensoresErrorActual_38, SensoresErrorActual_39, SensoresErrorActual_40, 
-SensoresErrorActual_41, SensoresErrorActual_42, SensoresErrorActual_43, SensoresErrorActual_44, SensoresErrorActual_45, 
-SensoresErrorActual_46, SensoresErrorActual_47, SensoresErrorActual_48, SensoresErrorActual_49, SensoresErrorActual_50,
-
-SensoresActivo_1, SensoresActivo_2, SensoresActivo_3, SensoresActivo_4, SensoresActivo_5, 
-SensoresActivo_6, SensoresActivo_7, SensoresActivo_8, SensoresActivo_9, SensoresActivo_10, 
-SensoresActivo_11, SensoresActivo_12, SensoresActivo_13, SensoresActivo_14, SensoresActivo_15, 
-SensoresActivo_16, SensoresActivo_17, SensoresActivo_18, SensoresActivo_19, SensoresActivo_20, 
-SensoresActivo_21, SensoresActivo_22, SensoresActivo_23, SensoresActivo_24, SensoresActivo_25, 
-SensoresActivo_26, SensoresActivo_27, SensoresActivo_28, SensoresActivo_29, SensoresActivo_30, 
-SensoresActivo_31, SensoresActivo_32, SensoresActivo_33, SensoresActivo_34, SensoresActivo_35, 
-SensoresActivo_36, SensoresActivo_37, SensoresActivo_38, SensoresActivo_39, SensoresActivo_40, 
-SensoresActivo_41, SensoresActivo_42, SensoresActivo_43, SensoresActivo_44, SensoresActivo_45, 
-SensoresActivo_46, SensoresActivo_47, SensoresActivo_48, SensoresActivo_49, SensoresActivo_50
+GeoLatitud, GeoLongitud,idTelemetria,Nombre,LastUpdateFecha,
+LastUpdateHora,cantSensores,TiempoFueraLinea,NDetenciones
+".$subquery."
 
 FROM `telemetria_listado`
 ".$z."
@@ -142,7 +118,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Gestion de Flota en Tiempo Real</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Gestion de Flota en Tiempo Real</h5>	
 		</header>
         <div class="table-responsive">
 			
@@ -165,7 +141,7 @@ array_push( $arrUsers,$row );
 									$xy = 0;
 									$xz = 0;
 									$dataex = '';
-									$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check"></i></a>';
+									$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 									for ($i = 1; $i <= $data['cantSensores']; $i++) {
 										//solo sensores activos
 										if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
@@ -208,9 +184,9 @@ array_push( $arrUsers,$row );
 									}
 									
 									//equipos ok
-									if($eq_alertas>0){$xz = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle"></i></a>';}
-									if($eq_fueralinea>0){$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken"></i></a>';}
-									if($eq_detenidos>0){$xz = 1;$dataex .= '<a href="#" title="Vehiculo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-hand-paper-o"></i></a>';}
+									if($eq_alertas>0){$xz = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+									if($eq_fueralinea>0){$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+									if($eq_detenidos>0){$xz = 1;$dataex .= '<a href="#" title="Vehiculo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></a>';}
 									
 									$eq_ok .= $dataex;
 									
@@ -220,7 +196,7 @@ array_push( $arrUsers,$row );
 									<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>			
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="<?php echo 'telemetria_gestion_flota_view_equipo.php?view='.$data['idTelemetria']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>						
+											<a href="<?php echo 'telemetria_gestion_flota_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 										</div>
 									</td>
 								</tr>
@@ -236,10 +212,11 @@ array_push( $arrUsers,$row );
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						
 						<script>
@@ -525,15 +502,15 @@ array_push( $arrUsers,$row );
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema>=0 AND id_Geo=1";	
+	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=1";	
 }else{
 	//filtro
 	$z = "idTelemetria=0";
@@ -541,7 +518,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$arrPermisos = array();
 	$query = "SELECT idTelemetria
 	FROM `usuarios_equipos_telemetria`
-	WHERE idUsuario={$_SESSION['usuario']['basic_data']['idUsuario']}";
+	WHERE idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
 	//Si ejecuto correctamente la consulta
@@ -559,9 +536,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	array_push( $arrPermisos,$row );
 	}
 	foreach ($arrPermisos as $prod) {
-		$z .= " OR (idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1 AND id_Geo=2 AND idTelemetria={$prod['idTelemetria']})";
+		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria={$prod['idTelemetria']})";
 	}
-	//$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND id_Geo=1";	
+	//$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=1";	
 }	 
 ?>
 
@@ -569,7 +546,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 <div class="col-sm-8 fcenter">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		
@@ -583,8 +560,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						if(isset($idTelemetria)) {   $x1  = $idTelemetria;    }else{$x1  = '';}
 						
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 						
 						?>
 						<div class="form-group">

@@ -40,9 +40,9 @@ require_once 'core/Web.Header.Main.php';
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos de mi Cliente
-$query = "SELECT Nombre, PersonaContacto, PersonaContacto_Fono, PersonaContacto_email 
+$query = "SELECT Nombre, PersonaContacto, PersonaContacto_Fono, PersonaContacto_email, PersonaContacto_Cargo 
 FROM `productores_listado`
-WHERE idProductor = {$_GET['id']}";
+WHERE idProductor = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -59,21 +59,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Productor</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Persona de contacto</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowdata['Nombre'], 'Editar Persona de contacto');?>
 </div>
 <div class="clearfix"></div>
 
@@ -81,16 +67,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'productores_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'productores_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'productores_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contacto</a></li>
+				<li class=""><a href="<?php echo 'productores_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'productores_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'productores_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class="active"><a href="<?php echo 'productores_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Persona Contacto</a></li>
-						<li class=""><a href="<?php echo 'productores_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Comerciales</a></li>
-						<li class=""><a href="<?php echo 'productores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'productores_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class="active"><a href="<?php echo 'productores_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
+						<li class=""><a href="<?php echo 'productores_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
+						<li class=""><a href="<?php echo 'productores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'productores_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 					</ul>
                 </li>           
 			</ul>	
@@ -102,18 +88,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					<?php 
 					//Se verifican si existen los datos
 					if(isset($PersonaContacto)) {         $x1 = $PersonaContacto;         }else{$x1 = $rowdata['PersonaContacto'];}
-					if(isset($PersonaContacto_Fono)) {    $x2 = $PersonaContacto_Fono;    }else{$x2 = $rowdata['PersonaContacto_Fono'];}
-					if(isset($PersonaContacto_email)) {   $x3 = $PersonaContacto_email;   }else{$x3 = $rowdata['PersonaContacto_email'];}
+					if(isset($PersonaContacto_Cargo)) {   $x2 = $PersonaContacto_Cargo;   }else{$x2 = $rowdata['PersonaContacto_Cargo'];}
+					if(isset($PersonaContacto_Fono)) {    $x3 = $PersonaContacto_Fono;    }else{$x3 = $rowdata['PersonaContacto_Fono'];}
+					if(isset($PersonaContacto_email)) {   $x4 = $PersonaContacto_email;   }else{$x4 = $rowdata['PersonaContacto_email'];}
 					
-
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_input_icon( 'Persona de Contacto', 'PersonaContacto', $x1, 1,'fa fa-user-secret');
-					$Form_Imputs->form_input_phone('Telefono', 'PersonaContacto_Fono', $x2, 1);
-					$Form_Imputs->form_input_icon( 'Email', 'PersonaContacto_email', $x3, 1,'fa fa-envelope-o');
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_input_icon('Persona de Contacto', 'PersonaContacto', $x1, 1,'fa fa-user-secret');
+					$Form_Inputs->form_input_icon('Cargo', 'PersonaContacto_Cargo', $x2, 1,'fa fa-university');
+					$Form_Inputs->form_input_phone('Telefono', 'PersonaContacto_Fono', $x3, 1);
+					$Form_Inputs->form_input_icon('Email', 'PersonaContacto_email', $x4, 1,'fa fa-envelope-o');
 					
 	
-					$Form_Imputs->form_input_hidden('idProductor', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idProductor', $_GET['id'], 2);
 
 					?>
 
@@ -128,8 +115,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

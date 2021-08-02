@@ -15,28 +15,12 @@ $original = "informe_pagos_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo={$_GET['idTipo']}";}
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor={$_GET['idProveedor']}";}
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){         $search .="&idCliente={$_GET['idCliente']}";}
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){   $search .="&idTrabajador={$_GET['idTrabajador']}";}
-if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){   $search .="&idDocumentos={$_GET['idDocumentos']}";}
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){                 $search .="&N_Doc={$_GET['N_Doc']}";}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){           $search .="&idEstado={$_GET['idEstado']}";}
-if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){         $search .="&idDocPago={$_GET['idDocPago']}";}
-if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){         $search .="&N_DocPago={$_GET['N_DocPago']}";}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){                 $search .="&N_Doc=".$_GET['N_Doc'];}
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
-	$search .="&f_creacion_inicio={$_GET['f_creacion_inicio']}";
-	$search .="&f_creacion_termino={$_GET['f_creacion_termino']}";
+	$search .="&f_creacion_inicio=".$_GET['f_creacion_inicio'];
+	$search .="&f_creacion_termino=".$_GET['f_creacion_termino'];
 }
-if(isset($_GET['f_pago_inicio'])&&$_GET['f_pago_inicio']!=''&&isset($_GET['f_pago_termino'])&&$_GET['f_pago_termino']!=''){
-	$search .="&f_pago_inicio={$_GET['f_pago_inicio']}";
-	$search .="&f_pago_termino={$_GET['f_pago_termino']}";
-}
-if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
-	$search .="&f_inicio_p={$_GET['f_inicio_p']}";
-	$search .="&f_termino_p={$_GET['f_termino_p']}";
-}
-
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -55,34 +39,39 @@ $z2 = "WHERE bodegas_insumos_facturacion.idEstado=1";
 $z3 = "WHERE bodegas_productos_facturacion.idEstado=1";
 $z4 = "WHERE bodegas_servicios_facturacion.idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
-$z1.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-$z2.=" AND bodegas_insumos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-$z3.=" AND bodegas_productos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-$z4.=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+//Verifico que sean solo compras
+$z1.=" AND (bodegas_arriendos_facturacion.idTipo=1 OR bodegas_arriendos_facturacion.idTipo=10)";
+$z2.=" AND (bodegas_insumos_facturacion.idTipo=1 OR bodegas_insumos_facturacion.idTipo=10)";
+$z3.=" AND (bodegas_productos_facturacion.idTipo=1 OR bodegas_productos_facturacion.idTipo=10)";
+$z4.=" AND (bodegas_servicios_facturacion.idTipo=1 OR bodegas_servicios_facturacion.idTipo=10)";	
 
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   
-	$z1.=" AND bodegas_arriendos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z2.=" AND bodegas_insumos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z3.=" AND bodegas_productos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z4.=" AND bodegas_servicios_facturacion.idProveedor={$_GET['idProveedor']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z2.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z3.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z4.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['idProveedor'];
 }
 if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idDocumentos={$_GET['idDocumentos']}";
-	$z2.=" AND bodegas_insumos_facturacion.idDocumentos={$_GET['idDocumentos']}";
-	$z3.=" AND bodegas_productos_facturacion.idDocumentos={$_GET['idDocumentos']}";
-	$z4.=" AND bodegas_servicios_facturacion.idDocumentos={$_GET['idDocumentos']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idDocumentos=".$_GET['idDocumentos'];
+	$z2.=" AND bodegas_insumos_facturacion.idDocumentos=".$_GET['idDocumentos'];
+	$z3.=" AND bodegas_productos_facturacion.idDocumentos=".$_GET['idDocumentos'];
+	$z4.=" AND bodegas_servicios_facturacion.idDocumentos=".$_GET['idDocumentos'];
 }
 if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               
-	$z1.=" AND bodegas_arriendos_facturacion.N_Doc={$_GET['N_Doc']}";
-	$z2.=" AND bodegas_insumos_facturacion.N_Doc={$_GET['N_Doc']}";
-	$z3.=" AND bodegas_productos_facturacion.N_Doc={$_GET['N_Doc']}";
-	$z4.=" AND bodegas_servicios_facturacion.N_Doc={$_GET['N_Doc']}";
+	$z1.=" AND bodegas_arriendos_facturacion.N_Doc=".$_GET['N_Doc'];
+	$z2.=" AND bodegas_insumos_facturacion.N_Doc=".$_GET['N_Doc'];
+	$z3.=" AND bodegas_productos_facturacion.N_Doc=".$_GET['N_Doc'];
+	$z4.=" AND bodegas_servicios_facturacion.N_Doc=".$_GET['N_Doc'];
 }
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
-	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_creacion_inicio']}' AND '{$_GET['f_creacion_termino']}'";
-	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_creacion_inicio']}' AND '{$_GET['f_creacion_termino']}'";
-	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_creacion_inicio']}' AND '{$_GET['f_creacion_termino']}'";
-	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '{$_GET['f_creacion_inicio']}' AND '{$_GET['f_creacion_termino']}'";
+	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
+	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
+	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
+	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 }
 
 /*************************************************************************************/
@@ -233,7 +222,7 @@ array_push( $arrTipo4,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Documentos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Documentos</h5>
 		</header>
 		<div class="table-responsive">   
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -257,12 +246,12 @@ array_push( $arrTipo4,$row );
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
 							<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
 							<td><?php echo Fecha_estandar($tipo['Pago_fecha']); ?></td>
-							<td><?php echo Valores($tipo['ValorTotal'], 0); ?></td>
-							<td><?php echo Valores($tipo['MontoPagado'], 0); ?></td>
+							<td align="right"><?php echo Valores($tipo['ValorTotal'], 0); ?></td>
+							<td align="right"><?php echo Valores($tipo['MontoPagado'], 0); ?></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_mov_arriendos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -274,12 +263,12 @@ array_push( $arrTipo4,$row );
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
 							<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
 							<td><?php echo Fecha_estandar($tipo['Pago_fecha']); ?></td>
-							<td><?php echo Valores($tipo['ValorTotal'], 0); ?></td>
-							<td><?php echo Valores($tipo['MontoPagado'], 0); ?></td>
+							<td align="right"><?php echo Valores($tipo['ValorTotal'], 0); ?></td>
+							<td align="right"><?php echo Valores($tipo['MontoPagado'], 0); ?></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_mov_insumos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -291,12 +280,12 @@ array_push( $arrTipo4,$row );
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
 							<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
 							<td><?php echo Fecha_estandar($tipo['Pago_fecha']); ?></td>
-							<td><?php echo Valores($tipo['ValorTotal'], 0); ?></td>
-							<td><?php echo Valores($tipo['MontoPagado'], 0); ?></td>
+							<td align="right"><?php echo Valores($tipo['ValorTotal'], 0); ?></td>
+							<td align="right"><?php echo Valores($tipo['MontoPagado'], 0); ?></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_mov_productos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -308,12 +297,12 @@ array_push( $arrTipo4,$row );
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
 							<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
 							<td><?php echo Fecha_estandar($tipo['Pago_fecha']); ?></td>
-							<td><?php echo Valores($tipo['ValorTotal'], 0); ?></td>
-							<td><?php echo Valores($tipo['MontoPagado'], 0); ?></td>
+							<td align="right"><?php echo Valores($tipo['ValorTotal'], 0); ?></td>
+							<td align="right"><?php echo Valores($tipo['MontoPagado'], 0); ?></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_mov_servicios.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -326,20 +315,20 @@ array_push( $arrTipo4,$row );
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -354,13 +343,13 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($f_creacion_termino)) {   $x5  = $f_creacion_termino;  }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Emision</h3>';
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select('Tipo Documento','idDocumentos', $x2, 2, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos=2 OR idDocumentos=4 OR idDocumentos=5', '', $dbConn);
-				$Form_Imputs->form_input_number('N° Documento', 'N_Doc', $x3, 1);
-				$Form_Imputs->form_date('Fecha Creacion Desde','f_creacion_inicio', $x4, 1);
-				$Form_Imputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x5, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Emision');
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Documento','idDocumentos', $x2, 2, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos=2 OR idDocumentos=4 OR idDocumentos=5', '', $dbConn);
+				$Form_Inputs->form_input_number('N° Documento', 'N_Doc', $x3, 1);
+				$Form_Inputs->form_date('Fecha Creacion Desde','f_creacion_inicio', $x4, 1);
+				$Form_Inputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x5, 1);
 						
 				?> 
 

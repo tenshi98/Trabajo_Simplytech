@@ -26,7 +26,7 @@ require_once 'core/Web.Header.Main.php';
 if ( ! empty($_GET['submit_filter']) ) { 
 // Se trae un listado con los valores de las existencias actuales	
 $año_pasado = ano_actual()-1;
-$z = "WHERE bodegas_insumos_facturacion_existencias.idSistema='{$_SESSION['usuario']['basic_data']['idSistema']}'";
+$z = "WHERE bodegas_insumos_facturacion_existencias.idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
 $z.= " AND bodegas_insumos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
 
 $z.= " AND bodegas_insumos_facturacion_existencias.idTipo = 6";
@@ -156,7 +156,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 	<div class="col-sm-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Traspasos <?php echo $concepto.' de la bodega '.$rowBodega['Nombre']; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Traspasos <?php echo $concepto.' de la bodega '.$rowBodega['Nombre']; ?></h5>
 			</header>
 			<div class="table-responsive"> 
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -218,7 +218,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 /**********************************************************/
 // Se trae un listado con los valores de las existencias actuales	
 $año_pasado = ano_actual()-1;
-$z = "WHERE bodegas_insumos_facturacion_existencias.idSistema='{$_SESSION['usuario']['basic_data']['idSistema']}'";
+$z = "WHERE bodegas_insumos_facturacion_existencias.idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
 $z.= " AND bodegas_insumos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
 
 $z.= " AND bodegas_insumos_facturacion_existencias.idTipo = 6";
@@ -363,7 +363,7 @@ foreach ($arrBodegas as $bod) {
 		<div class="col-sm-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>Traspasos <?php echo $concepto.' a la Bodega '.$bod['Nombre']; ?></h5>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Traspasos <?php echo $concepto.' a la Bodega '.$bod['Nombre']; ?></h5>
 				</header>
 				<div class="table-responsive"> 
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -425,24 +425,23 @@ foreach ($arrBodegas as $bod) {
 <?php } ?>	
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$z1 = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z1="bodegas_insumos_listado.idSistema>=0";
-}else{
-	$z1="bodegas_insumos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_insumos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";	
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z1 .= " AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -453,8 +452,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idBodegaOrigen)) {       $x1  = $idBodegaOrigen;        }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z1, $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z1, $dbConn);
 				
 				?>        
 	   

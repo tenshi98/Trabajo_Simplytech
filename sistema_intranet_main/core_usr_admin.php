@@ -50,13 +50,13 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Usuario creado corr
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Usuario editado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Usuario borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 // Se traen todos los datos de mi usuario
 $query = "SELECT usuario,  email, Nombre, Rut, fNacimiento, Direccion, Fono, idCiudad, idComuna
 FROM `usuarios_listado`
-WHERE idUsuario = {$_GET['id']}";
+WHERE idUsuario = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -75,7 +75,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion datos del Usuario <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -93,23 +93,23 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Direccion)) {       $x8  = $Direccion;     }else{$x8  = $rowdata['Direccion'];}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_phone('Fono', 'Fono', $x2, 1);
-				$Form_Imputs->form_input_icon( 'Email', 'email', $x3, 1,'fa fa-envelope-o');
-				$Form_Imputs->form_input_rut('Rut', 'Rut', $x4, 1);
-				$Form_Imputs->form_date('Fecha de Nacimiento','fNacimiento', $x5, 1);
-				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_phone('Fono', 'Fono', $x2, 1);
+				$Form_Inputs->form_input_icon('Email', 'email', $x3, 1,'fa fa-envelope-o');
+				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
+				$Form_Inputs->form_date('Fecha de Nacimiento','fNacimiento', $x5, 1);
+				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');	
-				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x8, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');
 				
-				$Form_Imputs->form_input_hidden('idUsuario', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -122,11 +122,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) {  ?>
+	 
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Usuario</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -147,27 +148,27 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Direccion)) {       $x11 = $Direccion;     }else{$x11 = '';}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_icon( 'Usuario', 'usuario', $x1, 2,'fa fa-user');
-				$Form_Imputs->form_input_password('Password', 'password', $x2, 2);
-				$Form_Imputs->form_input_password('Repetir Password', 'repassword', $x3, 2);
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x4, 2);
-				$Form_Imputs->form_input_phone('Fono', 'Fono', $x5, 1);
-				$Form_Imputs->form_input_icon( 'Email', 'email', $x6, 1,'fa fa-envelope-o');
-				$Form_Imputs->form_input_rut('Rut', 'Rut', $x7, 1);
-				$Form_Imputs->form_date('Fecha de Nacimiento','fNacimiento', $x8, 1);
-				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_icon('Usuario', 'usuario', $x1, 2,'fa fa-user');
+				$Form_Inputs->form_input_password('Password', 'password', $x2, 2);
+				$Form_Inputs->form_input_password('Repetir Password', 'repassword', $x3, 2);
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x4, 2);
+				$Form_Inputs->form_input_phone('Fono', 'Fono', $x5, 1);
+				$Form_Inputs->form_input_icon('Email', 'email', $x6, 1,'fa fa-envelope-o');
+				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
+				$Form_Inputs->form_date('Fecha de Nacimiento','fNacimiento', $x8, 1);
+				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');	
-				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x8, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');
 				
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
-				$Form_Imputs->form_input_hidden('idTipoUsuario', 1, 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idTipoUsuario', 1, 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -196,7 +197,7 @@ FROM `usuarios_listado`
 LEFT JOIN `usuarios_estado`          ON usuarios_estado.idEstado          = usuarios_listado.idEstado
 LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = usuarios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usuarios_listado.idComuna
-WHERE idUsuario = {$_GET['view']}";
+WHERE idUsuario = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -215,7 +216,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $arrAccess = array();
 $query = "SELECT  Fecha, Hora
 FROM `usuarios_accesos`
-WHERE idUsuario = {$_GET['view']}
+WHERE idUsuario = ".$_GET['view']."
 ORDER BY idAcceso DESC
 LIMIT 13 ";
 //Consulta
@@ -238,11 +239,11 @@ array_push( $arrAccess,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab">Datos</a></li>
-				<li class=""><a href="#ingresos" data-toggle="tab">Ingresos</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="#ingresos" data-toggle="tab"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingresos</a></li>
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -252,7 +253,7 @@ array_push( $arrAccess,$row );
 					
 					<div class="col-sm-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/usr.png">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
@@ -316,8 +317,8 @@ array_push( $arrAccess,$row );
 
             
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
@@ -400,7 +401,7 @@ $search='';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Usuarios</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Usuarios</h5>
 			<div class="toolbar">
 				<?php 
 				//paginacion
@@ -427,12 +428,12 @@ $search='';
 						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo $location.'&view='.$usuarios['idUsuario']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
-								<a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $location.'&view='.$usuarios['idUsuario']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php 
-								$ubicacion = $location.'&del='.$usuarios['idUsuario'];
+								$ubicacion = $location.'&del='.simpleEncode($usuarios['idUsuario'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro '.$usuarios['Nombre'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 							</div>
 						</td>
 					</tr>

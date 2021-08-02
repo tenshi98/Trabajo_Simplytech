@@ -15,19 +15,19 @@ $original = "informe_busqueda_ot_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){         $search .="&idMaquina={$_GET['idMaquina']}";}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){           $search .="&idEstado={$_GET['idEstado']}";}
-if(isset($_GET['idPrioridad'])&&$_GET['idPrioridad']!=''){     $search .="&idPrioridad={$_GET['idPrioridad']}";}
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo={$_GET['idTipo']}";}
-if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){   $search .="&idLicitacion={$_GET['idLicitacion']}";}
-if(isset($_GET['idOT'])&&$_GET['idOT']!=''){                   $search .="&idOT={$_GET['idOT']}";}
+if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){         $search .="&idMaquina=".$_GET['idMaquina'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){           $search .="&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idPrioridad'])&&$_GET['idPrioridad']!=''){     $search .="&idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){   $search .="&idLicitacion=".$_GET['idLicitacion'];}
+if(isset($_GET['idOT'])&&$_GET['idOT']!=''){                   $search .="&idOT=".$_GET['idOT'];}
 if(isset($_GET['f_programacion_inicio'])&&$_GET['f_programacion_inicio']!=''&&isset($_GET['f_programacion_termino'])&&$_GET['f_programacion_termino']!=''){
-	$search .="&f_programacion_inicio={$_GET['f_programacion_inicio']}";
-	$search .="&f_programacion_termino={$_GET['f_programacion_termino']}";
+	$search .="&f_programacion_inicio=".$_GET['f_programacion_inicio'];
+	$search .="&f_programacion_termino=".$_GET['f_programacion_termino'];
 }
 if(isset($_GET['f_termino_inicio'])&&$_GET['f_termino_inicio']!=''&&isset($_GET['f_termino_termino'])&&$_GET['f_termino_termino']!=''){
-	$search .="&f_termino_inicio={$_GET['f_termino_inicio']}";
-	$search .="&f_termino_termino={$_GET['f_termino_termino']}";
+	$search .="&f_termino_inicio=".$_GET['f_termino_inicio'];
+	$search .="&f_termino_termino=".$_GET['f_termino_termino'];
 }	
 						
 //Verifico los permisos del usuario sobre la transaccion
@@ -83,18 +83,18 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE orden_trabajo_listado.idOT>=0";
 //Verifico el tipo de usuario que esta ingresando
-$z .= " AND orden_trabajo_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){        $z.=" AND orden_trabajo_listado.idMaquina={$_GET['idMaquina']}";}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){          $z.=" AND orden_trabajo_listado.idEstado={$_GET['idEstado']}";}
-if(isset($_GET['idPrioridad'])&&$_GET['idPrioridad']!=''){    $z.=" AND orden_trabajo_listado.idPrioridad={$_GET['idPrioridad']}";}
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){              $z.=" AND orden_trabajo_listado.idTipo={$_GET['idTipo']}";}
-if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){  $z.=" AND orden_trabajo_listado.idLicitacion={$_GET['idLicitacion']}";}
-if(isset($_GET['idOT'])&&$_GET['idOT']!=''){                  $z.=" AND orden_trabajo_listado.idOT={$_GET['idOT']}";}
+$z .= " AND orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){        $z.=" AND orden_trabajo_listado.idMaquina=".$_GET['idMaquina'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){          $z.=" AND orden_trabajo_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idPrioridad'])&&$_GET['idPrioridad']!=''){    $z.=" AND orden_trabajo_listado.idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){              $z.=" AND orden_trabajo_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){  $z.=" AND orden_trabajo_listado.idLicitacion=".$_GET['idLicitacion'];}
+if(isset($_GET['idOT'])&&$_GET['idOT']!=''){                  $z.=" AND orden_trabajo_listado.idOT=".$_GET['idOT'];}
 if(isset($_GET['f_programacion_inicio'])&&$_GET['f_programacion_inicio']!=''&&isset($_GET['f_programacion_termino'])&&$_GET['f_programacion_termino']!=''){
-	$z.=" AND orden_trabajo_listado.f_programacion BETWEEN '{$_GET['f_programacion_inicio']}' AND '{$_GET['f_programacion_termino']}'";
+	$z.=" AND orden_trabajo_listado.f_programacion BETWEEN '".$_GET['f_programacion_inicio']."' AND '".$_GET['f_programacion_termino']."'";
 }
 if(isset($_GET['f_termino_inicio'])&&$_GET['f_termino_inicio']!=''&&isset($_GET['f_termino_termino'])&&$_GET['f_termino_termino']!=''){
-	$z.=" AND orden_trabajo_listado.f_termino BETWEEN '{$_GET['f_termino_inicio']}' AND '{$_GET['f_termino_termino']}'";
+	$z.=" AND orden_trabajo_listado.f_termino BETWEEN '".$_GET['f_termino_inicio']."' AND '".$_GET['f_termino_termino']."'";
 }
 
 /**********************************************************/
@@ -165,7 +165,7 @@ array_push( $arrOTS,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Ordenes de Trabajo</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Ordenes de Trabajo</h5>
 			<div class="toolbar">
 				<?php 
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
@@ -178,43 +178,43 @@ array_push( $arrOTS,$row );
 						<th>
 							<div class="pull-left">#</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=id_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=id_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=id_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=id_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">F Prog</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fprog_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fprog_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fprog_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fprog_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left"><?php echo $x_column_maquina_sing; ?></div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Prioridad</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=prioridad_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=prioridad_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=prioridad_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=prioridad_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Tipo Trabajo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipotrab_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipotrab_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipotrab_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=tipotrab_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Observaciones</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=obs_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=obs_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=obs_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=obs_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -231,13 +231,13 @@ array_push( $arrOTS,$row );
 						<td><?php echo $ot['Observaciones']; ?></td>		
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_orden_trabajo.php?view='.$ot['idOT']; ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'orden_trabajo_editar.php?view='.$ot['idOT']; ?>" title="Editar Orden de Trabajo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&clone='.$ot['idOT']; ?>" title="Duplicar Orden de Trabajo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_orden_trabajo.php?view='.simpleEncode($ot['idOT'], fecha_actual()); ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'orden_trabajo_editar.php?view='.$ot['idOT']; ?>" title="Editar Orden de Trabajo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&clone='.$ot['idOT']; ?>" title="Duplicar Orden de Trabajo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del_ot='.$ot['idOT'];
+									$ubicacion = $location.'&del_ot='.simpleEncode($ot['idOT'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro de la OT  '.n_doc($ot['idOT'], 5).'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	
@@ -254,20 +254,20 @@ array_push( $arrOTS,$row );
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -287,17 +287,17 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($idOT)) {                    $x10 = $idOT;                       }else{$x10 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Programacion Desde','f_programacion_inicio', $x1, 1);
-				$Form_Imputs->form_date('Fecha Programacion Hasta','f_programacion_termino', $x2, 1);
-				$Form_Imputs->form_date('Fecha Termino Desde','f_termino_inicio', $x3, 1);
-				$Form_Imputs->form_date('Fecha Termino Hasta','f_termino_termino', $x4, 1);
-				$Form_Imputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x5, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_ot', 0, '', $dbConn);
-				$Form_Imputs->form_select('Prioridad','idPrioridad', $x7, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tipo','idTipo', $x8, 1, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Contrato','idLicitacion', $x9, 1, 'idLicitacion', 'Nombre', 'licitacion_listado', $z, '', $dbConn);	
-				$Form_Imputs->form_input_number('N° OT', 'idOT', $x10, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Programacion Desde','f_programacion_inicio', $x1, 1);
+				$Form_Inputs->form_date('Fecha Programacion Hasta','f_programacion_termino', $x2, 1);
+				$Form_Inputs->form_date('Fecha Termino Desde','f_termino_inicio', $x3, 1);
+				$Form_Inputs->form_date('Fecha Termino Hasta','f_termino_termino', $x4, 1);
+				$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x5, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_ot', 0, '', $dbConn);
+				$Form_Inputs->form_select('Prioridad','idPrioridad', $x7, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo','idTipo', $x8, 1, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Contrato','idLicitacion', $x9, 1, 'idLicitacion', 'Nombre', 'licitacion_listado', $z, '', $dbConn);	
+				$Form_Inputs->form_input_number('N° OT', 'idOT', $x10, 1);
 				?> 
 
 				<div class="form-group">

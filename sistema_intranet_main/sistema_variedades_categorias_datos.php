@@ -47,7 +47,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre, Temp_optima_min, Temp_optima_max, Temp_optima_margen_critico
 FROM `sistema_variedades_categorias`
-WHERE idCategoria = {$_GET['id']}";
+WHERE idCategoria = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -64,21 +64,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Especie</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos Basicos</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
@@ -86,11 +72,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'sistema_variedades_categorias.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class="active"><a href="<?php echo 'sistema_variedades_categorias_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'sistema_variedades_categorias.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class="active"><a href="<?php echo 'sistema_variedades_categorias_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'sistema_variedades_categorias_matriz_calidad.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Matriz Calidad</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'sistema_variedades_categorias_matriz_proceso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Matriz Proceso</a></li>
 						<li class=""><a href="<?php echo 'sistema_variedades_categorias_tipo_embalaje.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Tipo Embalaje</a></li>
@@ -110,17 +96,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($Temp_optima_margen_critico)) {  $x4  = $Temp_optima_margen_critico;  }else{$x4  = Cantidades_decimales_justos($rowdata['Temp_optima_margen_critico']);}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					echo '<h3>Datos Basicos</h3>';
-					$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_tittle(3, 'Datos Basicos');
+					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 					
-					echo '<h3>Temperaturas Optimas</h3>';
-					$Form_Imputs->form_input_number('Temp. Optima Min', 'Temp_optima_min', $x2, 1);
-					$Form_Imputs->form_input_number('Temp. Optima Max', 'Temp_optima_max', $x3, 1);
-					$Form_Imputs->form_input_number('Temp. Margen Critico', 'Temp_optima_margen_critico', $x4, 1);
+					$Form_Inputs->form_tittle(3, 'Temperaturas Optimas');
+					$Form_Inputs->form_input_number('Temp. Optima Min', 'Temp_optima_min', $x2, 1);
+					$Form_Inputs->form_input_number('Temp. Optima Max', 'Temp_optima_max', $x3, 1);
+					$Form_Inputs->form_input_number('Temp. Margen Critico', 'Temp_optima_margen_critico', $x4, 1);
 				
 					
-					$Form_Imputs->form_input_hidden('idCategoria', $_GET['id'], 2);	
+					$Form_Inputs->form_input_hidden('idCategoria', $_GET['id'], 2);	
 					?>
 
 					<div class="form-group">		
@@ -134,8 +120,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -6,18 +6,22 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';					
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
 	if ( !empty($_POST['idCurso']) )      $idCurso       = $_POST['idCurso'];
 	if ( !empty($_POST['idSistema']) )    $idSistema     = $_POST['idSistema'];
-	if ( !empty($_POST['idCliente']) )    $idCliente     = $_POST['idCliente'];
 	if ( !empty($_POST['Nombre']) )       $Nombre        = $_POST['Nombre'];
 	if ( !empty($_POST['Semanas']) )      $Semanas       = $_POST['Semanas'];
 	if ( !empty($_POST['F_inicio']) )     $F_inicio      = $_POST['F_inicio'];
 	if ( !empty($_POST['F_termino']) )    $F_termino     = $_POST['F_termino'];
 	if ( !empty($_POST['idEstado']) )     $idEstado      = $_POST['idEstado'];
+	if ( !empty($_POST['idElearning']) )  $idElearning   = $_POST['idElearning'];
 	
 	
 /*******************************************************************************************************************/
@@ -26,22 +30,26 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idCurso':      if(empty($idCurso)){      $error['idCurso']     = 'error/No ha ingresado el id';}break;
 			case 'idSistema':    if(empty($idSistema)){    $error['idSistema']   = 'error/No ha seleccionado el sistema';}break;
-			case 'idCliente':    if(empty($idCliente)){    $error['idCliente']   = 'error/No ha seleccionado el cliente';}break;
 			case 'Nombre':       if(empty($Nombre)){       $error['Nombre']      = 'error/No ha ingresado el nombre';}break;
 			case 'Semanas':      if(empty($Semanas)){      $error['Semanas']     = 'error/No ha ingresado la semana';}break;
 			case 'F_inicio':     if(empty($F_inicio)){     $error['F_inicio']    = 'error/No ha ingresado la fecha de inicio';}break;
 			case 'F_termino':    if(empty($F_termino)){    $error['F_termino']   = 'error/No ha ingresado la fecha de termino';}break;
 			case 'idEstado':     if(empty($idEstado)){     $error['idEstado']    = 'error/No ha seleccionado el estado';}break;
+			case 'idElearning':  if(empty($idElearning)){  $error['idElearning'] = 'error/No ha seleccionado el Elearning';}break;
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -59,20 +67,17 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)){
-				$ndata_1 = db_select_nrows ('Nombre', 'alumnos_cursos', '', 'Nombre="'.$Nombre.'"', $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'alumnos_cursos', '', 'Nombre="'.$Nombre.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			
 			
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
 				//filtros
 				if(isset($idSistema) && $idSistema != ''){  $a  = "'".$idSistema."'" ;   }else{$a  ="''";}
-				if(isset($idCliente) && $idCliente != ''){  $a .= ",'".$idCliente."'" ;  }else{$a .=",''";}
 				if(isset($Nombre) && $Nombre != ''){        $a .= ",'".$Nombre."'" ;     }else{$a .=",''";}
 				if(isset($Semanas) && $Semanas != ''){      $a .= ",'".$Semanas."'" ;    }else{$a .=",''";}
 				if(isset($F_inicio) && $F_inicio != ''){    $a .= ",'".$F_inicio."'" ;   }else{$a .=",''";}
@@ -80,9 +85,9 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($idEstado) && $idEstado != ''){    $a .= ",'".$idEstado."'" ;   }else{$a .=",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `alumnos_cursos` (idSistema, idCliente, Nombre, Semanas, F_inicio, 
+				$query  = "INSERT INTO `alumnos_cursos` (idSistema, Nombre, Semanas, F_inicio, 
 				F_termino, idEstado) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -119,7 +124,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idCurso)){
-				$ndata_1 = db_select_nrows ('Nombre', 'alumnos_cursos', '', "Nombre='".$Nombre."' AND idCurso!='".$idCurso."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'alumnos_cursos', '', "Nombre='".$Nombre."' AND idCurso!='".$idCurso."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
@@ -130,7 +135,6 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Filtros
 				$a = "idCurso='".$idCurso."'" ;
 				if(isset($idSistema) && $idSistema != ''){  $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idCliente) && $idCliente != ''){  $a .= ",idCliente='".$idCliente."'" ;}
 				if(isset($Nombre) && $Nombre != ''){        $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Semanas) && $Semanas != ''){      $a .= ",Semanas='".$Semanas."'" ;}
 				if(isset($F_inicio) && $F_inicio != ''){    $a .= ",F_inicio='".$F_inicio."'" ;}
@@ -169,26 +173,75 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `alumnos_cursos` WHERE idCurso = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*************************************************************/
+				// Se trae un listado con todos los archivos
+				$SIS_query = 'File';
+				$SIS_join  = '';
+				$SIS_where = 'idCurso = '.$indice;
+				$SIS_order = 0;
+				$arrArchivos = array();
+				$arrArchivos = db_select_array (false, $SIS_query, 'alumnos_cursos_documentacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				/*************************************************************/
+				//se borran los datos
+				$resultado_1 = db_delete_data (false, 'alumnos_cursos', 'idCurso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'alumnos_cursos_elearning', 'idCurso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_3 = db_delete_data (false, 'alumnos_cursos_documentacion', 'idCurso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true OR $resultado_3==true){
+					
+					//se eliminan los archivos
+					foreach ($arrArchivos as $arch) {
+						//se elimina el archivo
+						if(isset($arch['File'])&&$arch['File']!=''){
+							try {
+								if(!is_writable('upload/'.$arch['File'])){
+									//throw new Exception('File not writable');
+								}else{
+									unlink('upload/'.$arch['File']);
+								}
+							}catch(Exception $e) { 
+								//guardar el dato en un archivo log
+							}
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;							
 
@@ -200,9 +253,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idCurso    = $_GET['id'];
-			$idEstado   = $_GET['estado'];
-			$query  = "UPDATE alumnos_cursos SET idEstado = '$idEstado'	
-			WHERE idCurso    = '$idCurso'";
+			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
+			$query  = "UPDATE alumnos_cursos SET idEstado = '".$idEstado."'	
+			WHERE idCurso = '".$idCurso."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -231,28 +284,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			$idCurso     = $_GET['id'];
-			$idElearning = $_GET['ele_add'];
-
-			$query  = "INSERT INTO `alumnos_cursos_elearning` (idCurso, idElearning) 
-			VALUES ('$idCurso','$idElearning')";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			//Se verifica si el dato existe
+			if(isset($idElearning)&&isset($idCurso)){
+				$ndata_1 = db_select_nrows (false, 'idElearning', 'alumnos_cursos_elearning', '', 'idElearning="'.$idElearning.'" AND idCurso="'.$idCurso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			}
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Elearning ya fue asignado a esta asignatura';}
+			/*******************************************************************/
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
 				
-				header( 'Location: '.$location );
-				die; 
+				//filtros
+				if(isset($idCurso) && $idCurso != ''){          $a  = "'".$idCurso."'" ;       }else{$a  ="''";}
+				if(isset($idElearning) && $idElearning != ''){  $a .= ",'".$idElearning."'" ;  }else{$a .=",''";}
 				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `alumnos_cursos_elearning` (idCurso,idElearning) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+						
+					header( 'Location: '.$location.'&created=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+				}
 				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 			}
  
 
@@ -264,25 +336,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			$query  = "DELETE FROM `alumnos_cursos_elearning` WHERE idRelacionados = {$_GET['ele_del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location );
-				die; 
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'alumnos_cursos_elearning', 'idRelacionados = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 			
 
 		break;	

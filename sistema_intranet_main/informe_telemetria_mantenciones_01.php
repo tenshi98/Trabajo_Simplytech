@@ -13,6 +13,8 @@ require_once 'core/Load.Utils.Web.php';
 //Cargamos la ubicacion 
 $original = "informe_telemetria_mantenciones_01.php";
 $location = $original;
+//Se agregan ubicaciones
+$location .='?bla=bla';
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /********************************************************************/
@@ -21,6 +23,8 @@ $search ='&submit_filter=Filtrar';
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
 if(isset($_GET['Fecha_ini']) && $_GET['Fecha_ini'] != ''){        $location .= "&Fecha_ini=".$_GET['Fecha_ini'];        $search .= "&Fecha_ini=".$_GET['Fecha_ini'];}
 if(isset($_GET['Fecha_ter']) && $_GET['Fecha_ter'] != ''){        $location .= "&Fecha_ter=".$_GET['Fecha_ter'];        $search .= "&Fecha_ter=".$_GET['Fecha_ter'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){        $location .= "&idUsuario=".$_GET['idUsuario'];        $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){        $location .= "&idSistema=".$_GET['idSistema'];        $search .= "&idSistema=".$_GET['idSistema'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -30,9 +34,6 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
-
-             
-  
 
 //paginador de resultados
 if(isset($_GET["pagina"])){
@@ -53,12 +54,16 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':     $order_by = 'ORDER BY telemetria_historial_mantencion.Fecha ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':    $order_by = 'ORDER BY telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'usuario_asc':   $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
-		case 'usuario_desc':  $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'equipo_asc':    $order_by = 'ORDER BY telemetria_listado.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Equipo Ascendente'; break;
-		case 'equipo_desc':   $order_by = 'ORDER BY telemetria_listado.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
+		case 'fecha_asc':     $order_by = 'ORDER BY telemetria_historial_mantencion.Fecha ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':    $order_by = 'ORDER BY telemetria_historial_mantencion.Fecha DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'usuario_asc':   $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
+		case 'usuario_desc':  $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'equipo_asc':    $order_by = 'ORDER BY telemetria_listado.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Equipo Ascendente'; break;
+		case 'equipo_desc':   $order_by = 'ORDER BY telemetria_listado.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
+		case 'sistema_asc':   $order_by = 'ORDER BY core_sistemas.Nombre ASC ';                       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Sistema Ascendente'; break;
+		case 'sistema_desc':  $order_by = 'ORDER BY core_sistemas.Nombre DESC ';                      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Sistema Descendente';break;
+		case 'servicio_asc':  $order_by = 'ORDER BY core_telemetria_servicio_tecnico.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Servicio Ascendente'; break;
+		case 'servicio_desc': $order_by = 'ORDER BY core_telemetria_servicio_tecnico.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Servicio Descendente';break;
 		
 		default: $order_by = 'ORDER BY telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
@@ -70,10 +75,17 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $z = "WHERE telemetria_historial_mantencion.idMantencion!=0";
 /**********************************************************/
 //Se aplican los filtros
+if(isset($_GET['idServicio']) && $_GET['idServicio'] != ''){     $z .= " AND telemetria_historial_mantencion.idServicio=".$_GET['idServicio'];}
+if(isset($_GET['idOpciones_1']) && $_GET['idOpciones_1'] != ''){ $z .= " AND telemetria_historial_mantencion.idOpciones_1=".$_GET['idOpciones_1'];}
+if(isset($_GET['idOpciones_2']) && $_GET['idOpciones_2'] != ''){ $z .= " AND telemetria_historial_mantencion.idOpciones_2=".$_GET['idOpciones_2'];}
+if(isset($_GET['idOpciones_3']) && $_GET['idOpciones_3'] != ''){ $z .= " AND telemetria_historial_mantencion.idOpciones_3=".$_GET['idOpciones_3'];}
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){ $z .= " AND telemetria_historial_mantencion.idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){       $z .= " AND telemetria_historial_mantencion.idUsuario='".$_GET['idUsuario']."'";}
+if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){       $z .= " AND telemetria_historial_mantencion.idSistema='".$_GET['idSistema']."'";}
 if(isset($_GET['Fecha_ini']) && $_GET['Fecha_ini'] != ''&&isset($_GET['Fecha_ter']) && $_GET['Fecha_ter'] != ''){ 
-	$z .= " AND telemetria_historial_mantencion.Fecha BETWEEN '{$_GET['Fecha_ini']}' AND '{$_GET['Fecha_ter']}'" ;
-}/**********************************************************/
+	$z .= " AND telemetria_historial_mantencion.Fecha BETWEEN '".$_GET['Fecha_ini']."' AND '".$_GET['Fecha_ter']."'" ;
+}
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $query = "SELECT idMantencion FROM `telemetria_historial_mantencion` ".$z;
 //Consulta
@@ -96,13 +108,20 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 $arrMantenciones = array();
 $query = "SELECT 
 telemetria_historial_mantencion.idMantencion,
+telemetria_historial_mantencion.idOpciones_1,
+telemetria_historial_mantencion.idOpciones_2,
+telemetria_historial_mantencion.idOpciones_3,
 telemetria_historial_mantencion.Fecha,
 usuarios_listado.Nombre AS Usuario,
-telemetria_listado.Nombre AS Equipo
+telemetria_listado.Nombre AS Equipo,
+core_sistemas.Nombre AS sistema,
+core_telemetria_servicio_tecnico.Nombre AS Servicio
 
 FROM `telemetria_historial_mantencion`
-LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria   = telemetria_historial_mantencion.idTelemetria
-LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario        = telemetria_historial_mantencion.idUsuario
+LEFT JOIN `telemetria_listado`               ON telemetria_listado.idTelemetria              = telemetria_historial_mantencion.idTelemetria
+LEFT JOIN `usuarios_listado`                 ON usuarios_listado.idUsuario                   = telemetria_historial_mantencion.idUsuario
+LEFT JOIN `core_sistemas`                    ON core_sistemas.idSistema                      = telemetria_listado.idSistema
+LEFT JOIN `core_telemetria_servicio_tecnico` ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio
 ".$z."
 ".$order_by."
 LIMIT $comienzo, $cant_reg ";
@@ -121,11 +140,39 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrMantenciones,$row );
-}?>
+}
+/**********************************/				
+$arrOpciones = array();
+$query = "SELECT idOpciones, Nombre
+FROM `core_telemetria_servicio_tecnico_opciones`
+ORDER BY Nombre ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrOpciones,$row );
+}
+/**********************************/
+$arrOpcionesDisplay = array();
+foreach ($arrOpciones as $mant) {
+	$arrOpcionesDisplay[$mant['idOpciones']]['Nombre'] = $mant['Nombre'];
+}
+
+?>
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>	
 	</ul>
 
@@ -137,7 +184,7 @@ array_push( $arrMantenciones,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Mantenciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Mantenciones</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -149,24 +196,45 @@ array_push( $arrMantenciones,$row );
 				<thead>
 					<tr role="row">
 						<th>
+							<div class="pull-left">Servicio</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=servicio_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=servicio_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Opcion</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=opcion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=opcion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Tecnico</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Equipo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=equipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=equipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=equipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=equipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Sistema</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=sistema_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=sistema_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -175,12 +243,22 @@ array_push( $arrMantenciones,$row );
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrMantenciones as $mant) { ?>
 					<tr class="odd">
-						<td><?php echo $mant['Fecha']; ?></td>
+						<td><?php echo $mant['Servicio']; ?></td>
+						<td>
+							<?php 
+							$ntot = 0;
+							if(isset($mant['idOpciones_1'])&&$mant['idOpciones_1']!=0){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
+							if(isset($mant['idOpciones_2'])&&$mant['idOpciones_2']!=0){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
+							if(isset($mant['idOpciones_3'])&&$mant['idOpciones_3']!=0){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[3]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[3]['Nombre'];$ntot++;}}
+							?>
+						</td>
+						<td><?php echo fecha_estandar($mant['Fecha']); ?></td>
 						<td><?php echo $mant['Usuario']; ?></td>
 						<td><?php echo $mant['Equipo']; ?></td>
+						<td><?php echo $mant['sistema']; ?></td>		
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_mantencion.php?view='.$mant['idMantencion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_mantencion.php?view='.simpleEncode($mant['idMantencion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
@@ -199,23 +277,29 @@ array_push( $arrMantenciones,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$w = "telemetria_listado.idSistema>=0";
-}else{
-	$w = "telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_equipos_telemetria.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']} ";		
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+}
+//Verifico el tipo de usuario que esta ingresando
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -223,24 +307,33 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTelemetria)) {    $x1  = $idTelemetria;    }else{$x1  = '';}
-				if(isset($Fecha_ini)) {       $x2  = $Fecha_ini;       }else{$x2  = '';}
-				if(isset($Fecha_ter)) {       $x3  = $Fecha_ter;       }else{$x3  = '';}
+				if(isset($idServicio)) {      $x1  = $idServicio;         }else{$x1  = '';}
+				if(isset($idOpciones_1)) {    $x2  = $idOpciones_1;       }else{$x2  = '';}
+				if(isset($idOpciones_2)) {    $x2 .= ','.$idOpciones_2;   }else{$x2 .= '';}
+				if(isset($idOpciones_3)) {    $x2 .= ','.$idOpciones_3;   }else{$x2 .= '';}
+				if(isset($idTelemetria)) {    $x3  = $idTelemetria;       }else{$x3  = '';}
+				if(isset($Fecha_ini)) {       $x4  = $Fecha_ini;          }else{$x4  = '';}
+				if(isset($Fecha_ter)) {       $x5  = $Fecha_ter;          }else{$x5  = '';}
+				if(isset($idUsuario)) {       $x6  = $idUsuario;          }else{$x6  = '';}
+				if(isset($idSistema)) {       $x7  = $idSistema;          }else{$x7  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo de Servicio','idServicio', $x1, 1, 'idServicio', 'Nombre', 'core_telemetria_servicio_tecnico', 0, '', $dbConn);
+				$Form_Inputs->form_checkbox_active('Selecciona una Opcion','idOpciones', $x2, 1, 'idOpciones', 'Nombre', 'core_telemetria_servicio_tecnico_opciones', 0, $dbConn);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Imputs->form_select_filter('Equipo','idTelemetria', $x1, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
 				}else{
-					$Form_Imputs->form_select_join_filter('Equipo','idTelemetria', $x1, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
-				
+					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
-				$Form_Imputs->form_date('Fecha Mantencion Inicio','Fecha_ini', $x2, 1);
-				$Form_Imputs->form_date('Fecha Mantencion Termino','Fecha_ter', $x3, 1);
+				$Form_Inputs->form_date('Fecha Mantencion Inicio','Fecha_ini', $x4, 1);
+				$Form_Inputs->form_date('Fecha Mantencion Termino','Fecha_ter', $x5, 1);
+				$Form_Inputs->form_select_join_filter('Tecnico','idUsuario', $x6, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select('Sistema','idSistema', $x7, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', 1, 2);
+				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				
 				?>        
 	   

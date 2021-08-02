@@ -38,13 +38,14 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Carga Familiar Modi
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Carga Familiar borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
-?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT Tramo,Valor_Desde,Valor_Hasta,Valor_Pago
 FROM `sistema_rrhh_tabla_carga_familiar`
-WHERE idTablaCarga = {$_GET['id']}";
+WHERE idTablaCarga = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -63,7 +64,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de la Carga Familiar</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -77,18 +78,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Valor_Pago)) {    $x4  = $Valor_Pago;      }else{$x4  = $rowdata['Valor_Pago'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Tramo', 'Tramo', $x1, 2);
-				$Form_Imputs->form_values('Valor Desde', 'Valor_Desde', $x2, 1);
-				$Form_Imputs->form_values('Valor Hasta', 'Valor_Hasta', $x3, 2);
-				$Form_Imputs->form_values('Valor Pago', 'Valor_Pago', $x4, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Tramo', 'Tramo', $x1, 2);
+				$Form_Inputs->form_values('Valor Desde', 'Valor_Desde', $x2, 1);
+				$Form_Inputs->form_values('Valor Hasta', 'Valor_Hasta', $x3, 2);
+				$Form_Inputs->form_values('Valor Pago', 'Valor_Pago', $x4, 1);
 					
-				$Form_Imputs->form_input_hidden('idTablaCarga', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idTablaCarga', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -126,7 +127,7 @@ array_push( $arrAmonestacion,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Tramos Cargas Familiares</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Tramos Cargas Familiares</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -143,12 +144,12 @@ array_push( $arrAmonestacion,$row );
 				<?php foreach ($arrAmonestacion as $amon) { ?>
 					<tr class="odd">
 						<td><?php echo $amon['Tramo']; ?></td>
-						<td><?php echo valores($amon['Valor_Desde'], 0); ?></td>
-						<td><?php echo valores($amon['Valor_Hasta'], 0); ?></td>
-						<td><?php echo valores($amon['Valor_Pago'], 0); ?></td>
+						<td align="right"><?php echo valores($amon['Valor_Desde'], 0); ?></td>
+						<td align="right"><?php echo valores($amon['Valor_Hasta'], 0); ?></td>
+						<td align="right"><?php echo valores($amon['Valor_Pago'], 0); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'?id='.$amon['idTablaCarga']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'?id='.$amon['idTablaCarga']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

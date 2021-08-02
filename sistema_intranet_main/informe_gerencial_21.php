@@ -33,37 +33,37 @@ $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
 $z3 = "WHERE bodegas_productos_facturacion.idTipo=1"; //solo ventas
 $z4 = "WHERE bodegas_servicios_facturacion.idTipo=1"; //solo ventas
 //sololas del mismo sistema
-$z1.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z2.=" AND bodegas_insumos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z3.=" AND bodegas_productos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z4.=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //variable
 $search = '';
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z2.=" AND bodegas_insumos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z3.=" AND bodegas_productos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z4.=" AND bodegas_servicios_facturacion.idProveedor={$_GET['idProveedor']}";
-	$location .="&idProveedor={$_GET['idProveedor']}";
-	$search .="&idProveedor={$_GET['idProveedor']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z2.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z3.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z4.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['idProveedor'];
+	$location .="&idProveedor=".$_GET['idProveedor'];
+	$search .="&idProveedor=".$_GET['idProveedor'];
 }
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idEstado={$_GET['idEstado']}";
-	$z2.=" AND bodegas_insumos_facturacion.idEstado={$_GET['idEstado']}";
-	$z3.=" AND bodegas_productos_facturacion.idEstado={$_GET['idEstado']}";
-	$z4.=" AND bodegas_servicios_facturacion.idEstado={$_GET['idEstado']}";
-	$location .="&idEstado={$_GET['idEstado']}";
-	$search .="&idEstado={$_GET['idEstado']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idEstado=".$_GET['idEstado'];
+	$z2.=" AND bodegas_insumos_facturacion.idEstado=".$_GET['idEstado'];
+	$z3.=" AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado'];
+	$z4.=" AND bodegas_servicios_facturacion.idEstado=".$_GET['idEstado'];
+	$location .="&idEstado=".$_GET['idEstado'];
+	$search .="&idEstado=".$_GET['idEstado'];
 }
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$location .="&f_inicio={$_GET['f_inicio']}";
-	$location .="&f_termino={$_GET['f_termino']}";
-	$search .="&f_inicio={$_GET['f_inicio']}";
-	$search .="&f_termino={$_GET['f_termino']}";
+	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$location .="&f_inicio=".$_GET['f_inicio'];
+	$location .="&f_termino=".$_GET['f_termino'];
+	$search .="&f_inicio=".$_GET['f_inicio'];
+	$search .="&f_termino=".$_GET['f_termino'];
 }
 
 
@@ -266,20 +266,20 @@ array_push( $arrTemporal_4,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -293,11 +293,11 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($f_termino)) {    $x4  = $f_termino;    }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select_filter('Estado de Pago','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 0, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x3, 1);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x4, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Estado de Pago','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x3, 1);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 1);
 						
 				?> 
 

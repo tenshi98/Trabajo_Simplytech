@@ -1,0 +1,236 @@
+<?php
+/*******************************************************************************************************************/
+/*                                              Bloque de seguridReportesad                                                */
+/*******************************************************************************************************************/
+if( ! defined('XMBCXRXSKGC')) {
+    die('No tienes acceso a esta carpeta o archivo.');
+}
+/*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+
+/*******************************************************************************************************************/
+/*                                            Se ejecutan las instrucciones                                        */
+/*******************************************************************************************************************/
+	//ejecuto segun la funcion
+	switch ($form_trabajo) {
+/*******************************************************************************************************************/		
+		case 'validate':
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+									
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				/******************************************************************/
+				//variables
+				$idTipo          = $_GET['idTipofil'];
+				$idComentario    = $_GET['idComentario'];
+				$idEventoPeligro = $_GET['idEventoPeligro'];
+				$idValidado      = 2;
+				$idRevisado      = 2;
+				
+				/******************************************************************/
+				//actualizo el comentario
+				//peligro
+				if(isset($idTipo)&&$idTipo==1){
+					//Filtros
+					$a = "idComentario='".$idComentario."'" ;
+					if(isset($idValidado) && $idValidado != ''){  $a .= ",idValidado='".$idValidado."'" ;}
+					
+					// inserto los datos de registro en la db
+					$query  = "UPDATE `seg_vecinal_peligros_listado_comentarios` SET ".$a." WHERE idComentario = '".$idComentario."'";
+					$resultado = mysqli_query($dbConn, $query);
+				//evento	
+				}elseif(isset($idTipo)&&$idTipo==2){
+					//Filtros
+					$a = "idComentario='".$idComentario."'" ;
+					if(isset($idValidado) && $idValidado != ''){  $a .= ",idValidado='".$idValidado."'" ;}
+					
+					// inserto los datos de registro en la db
+					$query  = "UPDATE `seg_vecinal_eventos_listado_comentarios` SET ".$a." WHERE idComentario = '".$idComentario."'";
+					$resultado = mysqli_query($dbConn, $query);
+				}
+					
+				/******************************************************************/
+				//descarto los reportes
+				$a = "idRevisado='".$idRevisado."'" ;
+					
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `seg_vecinal_reportes_comment_listado` SET ".$a." WHERE idEventoPeligro = '".$idEventoPeligro."' AND idTipo = '".$idTipo."' AND idComentario = '".$idComentario."'";
+				$resultado = mysqli_query($dbConn, $query);
+				
+				/******************************************************************/
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+				}
+			}
+			
+		break;	
+/*******************************************************************************************************************/		
+		case 'disabled':
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+									
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				/******************************************************************/
+				//variables
+				$idTipo          = $_GET['idTipofil'];
+				$idComentario    = $_GET['idComentario'];
+				$idEventoPeligro = $_GET['idEventoPeligro'];
+				$idCliente       = $_GET['idCreador'];
+				$idEstado        = 2;
+				$idRevisado      = 2;
+				
+				/******************************************************************/
+				//desactivo al usuario creador del post
+				$a = "idEstado='".$idEstado."'" ;
+					
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `seg_vecinal_clientes_listado` SET ".$a." WHERE idCliente = '".$idCliente."' ";
+				$resultado = mysqli_query($dbConn, $query);
+					
+				/******************************************************************/
+				//descarto los reportes
+				$a = "idRevisado='".$idRevisado."'" ;
+					
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `seg_vecinal_reportes_comment_listado` SET ".$a." WHERE idEventoPeligro = '".$idEventoPeligro."' AND idTipo = '".$idTipo."' AND idComentario = '".$idComentario."'";
+				$resultado = mysqli_query($dbConn, $query);
+				
+				/******************************************************************/
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+				}
+			}
+			
+		break;					
+/*******************************************************************************************************************/		
+		case 'banned':
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+									
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				/******************************************************************/
+				//variables
+				$idTipo          = $_GET['idTipofil'];
+				$idComentario    = $_GET['idComentario'];
+				$idEventoPeligro = $_GET['idEventoPeligro'];
+				$idCliente       = $_GET['idCreador'];
+				$idEstado        = 2;
+				$idRevisado      = 2;
+				$Fecha           = fecha_actual();
+				$Hora            = hora_actual();
+				
+				/******************************************************************/
+				//desactivo al usuario creador del comentario
+				$a = "idEstado='".$idEstado."'" ;
+					
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `seg_vecinal_clientes_listado` SET ".$a." WHERE idCliente = '".$idCliente."' ";
+				$resultado = mysqli_query($dbConn, $query);
+				
+				/****************************************/
+				// Se trae un listado con todas las ip
+				$SIS_query = 'seg_vecinal_clientes_listado_ip.IP_Client, seg_vecinal_clientes_listado.Nombre AS Vecino';
+				$SIS_join  = 'LEFT JOIN `seg_vecinal_clientes_listado` ON seg_vecinal_clientes_listado.idCliente = seg_vecinal_clientes_listado_ip.idCliente';
+				$SIS_where = 'seg_vecinal_clientes_listado_ip.idCliente='.$idCliente;
+				$SIS_order = 0;
+				$arrIPClient = array();
+				$arrIPClient = db_select_array (false, $SIS_query, 'seg_vecinal_clientes_listado_ip', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				/****************************************/
+				//baneo todas las ip relacionadas
+				foreach ($arrIPClient as $ipc) {
+					//busca si la ip del usuario ya existe
+					$n_ip = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', "IP_Client='".$ipc['IP_Client']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
+					//si la ip no existe la guarda
+					if(isset($n_ip)&&$n_ip==0){
+						
+						//Variables
+						$Motivo = 'Baneo del usuario '.$ipc['Vecino'];
+						
+						//filtros
+						if(isset($Fecha) && $Fecha != ''){                        $a  = "'".$Fecha."'" ;              }else{$a  ="''";}
+						if(isset($Hora) && $Hora != ''){                          $a .= ",'".$Hora."'" ;              }else{$a .=",''";}
+						if(isset($ipc['IP_Client']) && $ipc['IP_Client'] != ''){  $a .= ",'".$ipc['IP_Client']."'" ;  }else{$a .=",''";}
+						if(isset($Motivo) && $Motivo != ''){                      $a .= ",'".$Motivo."'" ;            }else{$a .=",''";}
+						
+						// inserto los datos de registro en la db
+						$query  = "INSERT INTO `sistema_seguridad_bloqueo_ip` (Fecha,Hora, IP_Client, Motivo) 
+						VALUES (".$a.")";
+						//Consulta
+						$resultado = mysqli_query ($dbConn, $query);
+				
+					}
+				}	
+					
+				/******************************************************************/
+				//descarto los reportes
+				$a = "idRevisado='".$idRevisado."'" ;
+					
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `seg_vecinal_reportes_comment_listado` SET ".$a." WHERE idEventoPeligro = '".$idEventoPeligro."' AND idTipo = '".$idTipo."' AND idComentario = '".$idComentario."'";
+				$resultado = mysqli_query($dbConn, $query);
+				
+				/******************************************************************/
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+				}
+			}
+			
+		break;			
+/*******************************************************************************************************************/
+	}
+?>

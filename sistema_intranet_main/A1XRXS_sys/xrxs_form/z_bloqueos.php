@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -29,33 +33,26 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			$filter = 'WHERE idAcceso!=0';
+			$filter = 'idAcceso!=0';
 			if(isset($Fecha)&&$Fecha!=''){          $filter .= " AND Fecha = '".$Fecha."'";}
 			if(isset($usuario)&&$usuario!=''){      $filter .= " AND usuario = '".$usuario."'";}
 			if(isset($email)&&$email!=''){          $filter .= " AND email = '".$email."'";}
 			if(isset($IP_Client)&&$IP_Client!=''){  $filter .= " AND IP_Client = '".$IP_Client."'";}
 			
 			//Condiciono el borrado
-			if($filter!='WHERE idAcceso!=0'){
-				//se borra la mantencion
-				$query  = "DELETE FROM `alumnos_checkbrute` ".$filter;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+			if($filter!='idAcceso!=0'){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'alumnos_checkbrute', $filter, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
+				if($resultado==true){
 					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
 					
 				}
 			}
 		
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
 
 		break;
 /*******************************************************************************************************************/
@@ -64,33 +61,26 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			$filter = 'WHERE idAcceso!=0';
+			$filter = 'idAcceso!=0';
 			if(isset($Fecha)&&$Fecha!=''){          $filter .= " AND Fecha = '".$Fecha."'";}
 			if(isset($usuario)&&$usuario!=''){      $filter .= " AND usuario = '".$usuario."'";}
 			if(isset($email)&&$email!=''){          $filter .= " AND email = '".$email."'";}
 			if(isset($IP_Client)&&$IP_Client!=''){  $filter .= " AND IP_Client = '".$IP_Client."'";}
 			
 			//Condiciono el borrado
-			if($filter!='WHERE idAcceso!=0'){
-				//se borra la mantencion
-				$query  = "DELETE FROM `clientes_checkbrute` ".$filter;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+			if($filter!='idAcceso!=0'){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'clientes_checkbrute', $filter, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
+				if($resultado==true){
 					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
 					
 				}
 			}
 		
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
 
 		break;
 /*******************************************************************************************************************/
@@ -99,33 +89,26 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			$filter = 'WHERE idAcceso!=0';
+			$filter = 'idAcceso!=0';
 			if(isset($Fecha)&&$Fecha!=''){          $filter .= " AND Fecha = '".$Fecha."'";}
 			if(isset($usuario)&&$usuario!=''){      $filter .= " AND usuario = '".$usuario."'";}
 			if(isset($email)&&$email!=''){          $filter .= " AND email = '".$email."'";}
 			if(isset($IP_Client)&&$IP_Client!=''){  $filter .= " AND IP_Client = '".$IP_Client."'";}
 			
 			//Condiciono el borrado
-			if($filter!='WHERE idAcceso!=0'){
-				//se borra la mantencion
-				$query  = "DELETE FROM `transportes_checkbrute` ".$filter;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+			if($filter!='idAcceso!=0'){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'transportes_checkbrute', $filter, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
+				if($resultado==true){
 					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
 					
 				}
 			}
 		
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
 
 		break;
 /*******************************************************************************************************************/
@@ -134,33 +117,25 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			$filter = 'WHERE idAcceso!=0';
+			$filter = 'idAcceso!=0';
 			if(isset($Fecha)&&$Fecha!=''){          $filter .= " AND Fecha = '".$Fecha."'";}
 			if(isset($usuario)&&$usuario!=''){      $filter .= " AND usuario = '".$usuario."'";}
 			if(isset($email)&&$email!=''){          $filter .= " AND email = '".$email."'";}
 			if(isset($IP_Client)&&$IP_Client!=''){  $filter .= " AND IP_Client = '".$IP_Client."'";}
 			
 			//Condiciono el borrado
-			if($filter!='WHERE idAcceso!=0'){
-				//se borra la mantencion
-				$query  = "DELETE FROM `usuarios_checkbrute` ".$filter;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+			if($filter!='idAcceso!=0'){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'usuarios_checkbrute', $filter, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
+				if($resultado==true){
 					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
 					
 				}
 			}
-		
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
 
 		break;																	
 /*******************************************************************************************************************/

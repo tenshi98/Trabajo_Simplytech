@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -34,11 +38,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idNotificaciones': if(empty($idNotificaciones)){  $error['idNotificaciones']  = 'error/No ha ingresado el id';}break;
 			case 'idSistema':        if(empty($idSistema)){         $error['idSistema']         = 'error/No ha ingresado el sistema';}break;
 			case 'idUsuario':        if(empty($idUsuario)){         $error['idUsuario']         = 'error/No ha ingresado el usuario creador';}break;
@@ -56,6 +60,14 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Titulo)&&contar_palabras_censuradas($Titulo)!=0){              $error['Titulo']       = 'error/Edita Titulo, contiene palabras no permitidas'; }	
+	if(isset($Notificacion)&&contar_palabras_censuradas($Notificacion)!=0){  $error['Notificacion'] = 'error/Edita Notificacion, contiene palabras no permitidas'; }	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){              $error['Nombre']       = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){        $error['Direccion']    = 'error/Edita Direccion, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -114,7 +126,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `principal_notificaciones_listado` (idSistema,idUsuario,Titulo,Notificacion,Fecha) VALUES ({$a} )";
+				$query  = "INSERT INTO `principal_notificaciones_listado` (idSistema,idUsuario,Titulo,Notificacion,Fecha) VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -124,31 +136,27 @@ if( ! defined('XMBCXRXSKGC')) {
 					$ultimo_id = mysqli_insert_id($dbConn);
 					
 					//variables para armar el mensaje
-					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.$ultimo_id.'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a></div>';
+					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
 					$Estado = '1';
 					
 					//busco a todos los usuarios del sistema
 					$arrUsuarios = array();
-					$query = "SELECT idUsuario
-					FROM usuarios_listado 
-					WHERE idSistema = '{$idSistema}' AND idEstado=1 ";
-					$resultado = mysqli_query($dbConn, $query);
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrUsuarios,$row );
-					}
-
+					$arrUsuarios = db_select_array (false, 'usuarios_listado.idUsuario', 'usuarios_listado', 'LEFT JOIN `usuarios_sistemas` ON usuarios_sistemas.idUsuario = usuarios_listado.idUsuario', 'usuarios_sistemas.idSistema = "'.$idSistema.'" AND usuarios_listado.idEstado=1 GROUP BY usuarios_listado.idUsuario', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Inserto el mensaje de entrega de materiales
 					foreach($arrUsuarios as $users) {
 						if(isset($idSistema) && $idSistema != ''){                     $a  = "'".$idSistema."'" ;               }else{$a  ="''";}
-						if(isset($users['idUsuario']) && $users['idUsuario'] != ''){   $a .= ",'".$users['idUsuario']."'" ;   }else{$a .=",''";}
+						if(isset($users['idUsuario']) && $users['idUsuario'] != ''){   $a .= ",'".$users['idUsuario']."'" ;     }else{$a .=",''";}
 						if(isset($Notificacion) && $Notificacion != ''){               $a .= ",'".$Notificacion."'" ;           }else{$a .=",''";}
 						if(isset($Fecha) && $Fecha != ''){                             $a .= ",'".$Fecha."'" ;                  }else{$a .=",''";}
 						if(isset($Estado) && $Estado != ''){                           $a .= ",'".$Estado."'" ;                 }else{$a .=",''";}
 						if(isset($ultimo_id) && $ultimo_id != ''){                     $a .= ",'".$ultimo_id."'" ;              }else{$a .=",''";}
+						$a .= ",'".hora_actual()."'" ;
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones) VALUES ({$a} )";
+						$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora) 
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -163,7 +171,8 @@ if( ! defined('XMBCXRXSKGC')) {
 							
 						}
 					}
-						
+					
+					//redirijo	
 					header( 'Location: '.$location.'&created=true' );
 					die;
 					
@@ -201,7 +210,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `principal_notificaciones_listado` (idSistema,idUsuario,Titulo,Notificacion,Fecha) VALUES ({$a} )";
+				$query  = "INSERT INTO `principal_notificaciones_listado` (idSistema,idUsuario,Titulo,Notificacion,Fecha) VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -211,7 +220,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					$ultimo_id = mysqli_insert_id($dbConn);
 					
 					//variables para armar el mensaje
-					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.$ultimo_id.'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a></div>';
+					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
 					$Estado = '1';
 					
@@ -221,9 +230,11 @@ if( ! defined('XMBCXRXSKGC')) {
 					if(isset($Fecha) && $Fecha != ''){                    $a .= ",'".$Fecha."'" ;             }else{$a .=",''";}
 					if(isset($Estado) && $Estado != ''){                  $a .= ",'".$Estado."'" ;            }else{$a .=",''";}
 					if(isset($ultimo_id) && $ultimo_id != ''){            $a .= ",'".$ultimo_id."'" ;         }else{$a .=",''";}
+					$a .= ",'".hora_actual()."'" ;
 						
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones) VALUES ({$a} )";
+					$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora) 
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -295,7 +306,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `principal_notificaciones_listado` (idSistema,idUsuario,Titulo,Notificacion,Fecha) VALUES ({$a} )";
+				$query  = "INSERT INTO `principal_notificaciones_listado` (idSistema,idUsuario,Titulo,Notificacion,Fecha) VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -305,30 +316,25 @@ if( ! defined('XMBCXRXSKGC')) {
 					$ultimo_id = mysqli_insert_id($dbConn);
 					
 					//variables para armar el mensaje
-					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.$ultimo_id.'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a></div>';
+					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
-					$Estado = '1';
+					$Estado        = '1';
 					
 					//busco a todos los usuarios del sistema
-					$z = 'WHERE idEstado = 1';
-					if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){  $z .= " AND idTipoUsuario = '{$_GET['idTipoUsuario']}'";}
-					if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $z .= " AND Nombre LIKE '%{$_GET['Nombre']}%' " ;}
-					if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $w .= " AND idCiudad = '{$_GET['idCiudad']}'" ;}
-					if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $w .= " AND idComuna = '{$_GET['idComuna']}'" ;}
-					if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $z .= " AND Direccion LIKE '%{$_GET['Direccion']}%'" ;}
-					if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $z .= " AND idSistema = '".$_GET['idSistema']."'" ;}
+					$z = 'usuarios_listado.idEstado = 1';
+					if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){  $z .= " AND usuarios_listado.idTipoUsuario = '".$_GET['idTipoUsuario']."'";}
+					if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $z .= " AND usuarios_listado.Nombre LIKE '%".$_GET['Nombre']."%' " ;}
+					if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $w .= " AND usuarios_listado.idCiudad = '".$_GET['idCiudad']."'" ;}
+					if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $w .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'" ;}
+					if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $z .= " AND usuarios_listado.Direccion LIKE '%".$_GET['Direccion']."%'" ;}
+					if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $z .= " AND usuarios_sistemas.idSistema = '".$_GET['idSistema']."'" ;}
 					if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''&&isset($_GET['rango_b']) && $_GET['rango_b'] != ''){ 
-						$z .= " AND fNacimiento BETWEEN '{$_GET['rango_a']}' AND '{$_GET['rango_b']}'" ;
+						$z .= " AND usuarios_listado.fNacimiento BETWEEN '".$_GET['rango_a']."' AND '".$_GET['rango_b']."'" ;
 					}
+					
 					$arrPermiso = array();
-					$query = "SELECT idUsuario
-					FROM usuarios_listado 
-					".$z;
-					$resultado = mysqli_query($dbConn, $query);
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrPermiso,$row );
-					}
-
+					$arrPermiso = db_select_array (false, 'usuarios_listado.idUsuario', 'usuarios_listado', 'LEFT JOIN `usuarios_sistemas` ON usuarios_sistemas.idUsuario = usuarios_listado.idUsuario', $z.' GROUP BY usuarios_listado.idUsuario', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Inserto el mensaje de entrega de materiales
 					foreach($arrPermiso as $permiso) {
 						if(isset($idSistema) && $idSistema != ''){                         $a  = "'".$idSistema."'" ;               }else{$a  ="''";}
@@ -337,9 +343,11 @@ if( ! defined('XMBCXRXSKGC')) {
 						if(isset($Fecha) && $Fecha != ''){                                 $a .= ",'".$Fecha."'" ;                  }else{$a .=",''";}
 						if(isset($Estado) && $Estado != ''){                               $a .= ",'".$Estado."'" ;                 }else{$a .=",''";}
 						if(isset($ultimo_id) && $ultimo_id != ''){                         $a .= ",'".$ultimo_id."'" ;              }else{$a .=",''";}
+						$a .= ",'".hora_actual()."'" ;
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones) VALUES ({$a} )";
+						$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora) 
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -380,40 +388,48 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Se borra la notificacion
-			$query  = "DELETE FROM `principal_notificaciones_listado` WHERE idNotificaciones = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
 			}
 			
-			//se borran todas las notificaciones enviadas a los usuarios
-			$query  = "DELETE FROM `principal_notificaciones_ver` WHERE idNotificaciones = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
 			}
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado_1 = db_delete_data (false, 'principal_notificaciones_listado', 'idNotificaciones = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'principal_notificaciones_ver', 'idNotificaciones = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;	
 /*******************************************************************************************************************/

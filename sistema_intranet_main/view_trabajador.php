@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos del trabajador
 $query = "SELECT 
 trabajadores_listado.Direccion_img,
@@ -74,7 +87,14 @@ trabajadores_listado.File_RHTM_Fecha,
 
 trabajadores_listado.idTipoContratoTrab,
 
-contratista_listado.Nombre AS Contratista
+contratista_listado.Nombre AS Contratista,
+
+centrocosto_listado.Nombre AS CentroCosto_Nombre,
+centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
+centrocosto_listado_level_2.Nombre AS CentroCosto_Level_2,
+centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
+centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
+centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5
 
 FROM `trabajadores_listado`
 LEFT JOIN `core_estados`                     ON core_estados.idEstado                               = trabajadores_listado.idEstado
@@ -91,8 +111,14 @@ LEFT JOIN `core_estado_civil`                ON core_estado_civil.idEstadoCivil 
 LEFT JOIN `core_tipos_contrato_trabajador`   ON core_tipos_contrato_trabajador.idTipoContratoTrab   = trabajadores_listado.idTipoContratoTrab
 LEFT JOIN `core_tipos_trabajadores`          ON core_tipos_trabajadores.idTipoTrabajador            = trabajadores_listado.idTipoTrabajador
 LEFT JOIN `contratista_listado`              ON contratista_listado.idContratista                   = trabajadores_listado.idContratista
+LEFT JOIN `centrocosto_listado`              ON centrocosto_listado.idCentroCosto                   = trabajadores_listado.idCentroCosto
+LEFT JOIN `centrocosto_listado_level_1`      ON centrocosto_listado_level_1.idLevel_1               = trabajadores_listado.idLevel_1
+LEFT JOIN `centrocosto_listado_level_2`      ON centrocosto_listado_level_2.idLevel_2               = trabajadores_listado.idLevel_2
+LEFT JOIN `centrocosto_listado_level_3`      ON centrocosto_listado_level_3.idLevel_3               = trabajadores_listado.idLevel_3
+LEFT JOIN `centrocosto_listado_level_4`      ON centrocosto_listado_level_4.idLevel_4               = trabajadores_listado.idLevel_4
+LEFT JOIN `centrocosto_listado_level_5`      ON centrocosto_listado_level_5.idLevel_5               = trabajadores_listado.idLevel_5
 
-WHERE trabajadores_listado.idTrabajador = {$_GET['view']}";
+WHERE trabajadores_listado.idTrabajador = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -103,15 +129,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
@@ -119,7 +138,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $arrCargas = array();
 $query = "SELECT  Nombre, ApellidoPat, ApellidoMat
 FROM `trabajadores_listado_cargas`
-WHERE idTrabajador = {$_GET['view']}
+WHERE idTrabajador = ".$X_Puntero."
 ORDER BY idCarga ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -131,15 +150,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrCargas,$row );
@@ -153,7 +165,7 @@ sistema_bonos_fijos.Nombre AS Bono,
 trabajadores_listado_bonos_fijos.Monto
 FROM `trabajadores_listado_bonos_fijos`
 LEFT JOIN `sistema_bonos_fijos`   ON sistema_bonos_fijos.idBonoFijo     = trabajadores_listado_bonos_fijos.idBonoFijo
-WHERE trabajadores_listado_bonos_fijos.idTrabajador = {$_GET['view']}
+WHERE trabajadores_listado_bonos_fijos.idTrabajador = ".$X_Puntero."
 ORDER BY sistema_bonos_fijos.Nombre  ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -165,15 +177,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrBonos,$row );
@@ -183,7 +188,7 @@ array_push( $arrBonos,$row );
 $arrAnexos = array();
 $query = "SELECT  idAnexo,Documento, Fecha_ingreso
 FROM `trabajadores_listado_anexos`
-WHERE idTrabajador = {$_GET['view']}
+WHERE idTrabajador = ".$X_Puntero."
 ORDER BY Fecha_ingreso DESC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -195,15 +200,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrAnexos,$row );
@@ -226,7 +224,7 @@ LEFT JOIN `insumos_listado`                 ON insumos_listado.idProducto       
 LEFT JOIN `sistema_productos_categorias`    ON sistema_productos_categorias.idCategoria   = insumos_listado.idCategoria
 LEFT JOIN `sistema_productos_uml`           ON sistema_productos_uml.idUml                = insumos_listado.idUml
 
-WHERE bodegas_insumos_facturacion_existencias.idTrabajador = {$_GET['view']}
+WHERE bodegas_insumos_facturacion_existencias.idTrabajador = ".$X_Puntero."
 ORDER BY bodegas_insumos_facturacion_existencias.Creacion_fecha DESC
 LIMIT 20";
 //Consulta
@@ -239,15 +237,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrActivos,$row );
@@ -263,7 +254,7 @@ sistema_afp.Nombre AS AFP
 FROM `trabajadores_listado_descuentos_fijos`
 LEFT JOIN `sistema_descuentos_fijos`   ON sistema_descuentos_fijos.idDescuentoFijo     = trabajadores_listado_descuentos_fijos.idDescuentoFijo
 LEFT JOIN `sistema_afp`                ON sistema_afp.idAFP                            = trabajadores_listado_descuentos_fijos.idAFP
-WHERE trabajadores_listado_descuentos_fijos.idTrabajador = {$_GET['view']}
+WHERE trabajadores_listado_descuentos_fijos.idTrabajador = ".$X_Puntero."
 ORDER BY sistema_descuentos_fijos.Nombre  ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -274,15 +265,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrDescuentos,$row );
@@ -293,11 +277,11 @@ array_push( $arrDescuentos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Ver Datos del Trabajador</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab">Datos Basicos</a></li>
-				<li class=""><a href="#ot" data-toggle="tab">Ordenes de Trabajo</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="#ot" data-toggle="tab"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Ordenes de Trabajo</a></li>
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -308,7 +292,7 @@ array_push( $arrDescuentos,$row );
 					
 					<div class="col-sm-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/usr.png">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
@@ -416,10 +400,24 @@ array_push( $arrDescuentos,$row );
 								echo 'Trabajador sin Bonos Fijos Asignados';
 							}
 							?>
-						
+							<?php
+							if(isset($rowdata['CentroCosto_Nombre'])&&$rowdata['CentroCosto_Nombre']!=''){ 
+								echo '<br/><strong>Centro de Costo : </strong>'.$rowdata['CentroCosto_Nombre'];
+								if(isset($rowdata['CentroCosto_Level_1'])&&$rowdata['CentroCosto_Level_1']!=''){echo ' - '.$rowdata['CentroCosto_Level_1']; }
+								if(isset($rowdata['CentroCosto_Level_2'])&&$rowdata['CentroCosto_Level_2']!=''){echo ' - '.$rowdata['CentroCosto_Level_2']; }
+								if(isset($rowdata['CentroCosto_Level_3'])&&$rowdata['CentroCosto_Level_3']!=''){echo ' - '.$rowdata['CentroCosto_Level_3']; }
+								if(isset($rowdata['CentroCosto_Level_4'])&&$rowdata['CentroCosto_Level_4']!=''){echo ' - '.$rowdata['CentroCosto_Level_4']; }
+								if(isset($rowdata['CentroCosto_Level_5'])&&$rowdata['CentroCosto_Level_5']!=''){echo ' - '.$rowdata['CentroCosto_Level_5']; }
+								echo '<br/>';
+							}
+							?>
 							
 							<br/><span class="text-danger"><strong>Observaciones</strong></span><br/>
-							<?php echo $rowdata['Observaciones']; ?>
+							<div class="text-muted well well-sm no-shadow">
+								<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){echo $rowdata['Observaciones'];}else{echo 'Sin Observaciones';} ?>
+								<div class="clearfix"></div>
+							</div>
+								
 						</p>
 						
 							
@@ -442,8 +440,8 @@ array_push( $arrDescuentos,$row );
 											<td>Contrato de Trabajo</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Contrato'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Contrato'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -456,8 +454,8 @@ array_push( $arrDescuentos,$row );
 											<td>Anexo del '.fecha_estandar($tipo['Fecha_ingreso']).' :'.$tipo['Documento'].'</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$tipo['Documento'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$tipo['Documento'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Documento'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Documento'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -470,8 +468,8 @@ array_push( $arrDescuentos,$row );
 											<td>Curriculum</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Curriculum'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Curriculum'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Curriculum'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Curriculum'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -484,8 +482,8 @@ array_push( $arrDescuentos,$row );
 											<td>Papel de Antecedentes Penales</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Antecedentes'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Antecedentes'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Antecedentes'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Antecedentes'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -498,8 +496,8 @@ array_push( $arrDescuentos,$row );
 											<td>Carnet de Identidad</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Carnet'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Carnet'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Carnet'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Carnet'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -512,8 +510,8 @@ array_push( $arrDescuentos,$row );
 											<td>Licencia de Conducir</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Licencia'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Licencia'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Licencia'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Licencia'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -526,8 +524,8 @@ array_push( $arrDescuentos,$row );
 											<td>RHTM Revisado el '.fecha_estandar($rowdata['File_RHTM_Fecha']).'</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_RHTM'].'&return=true" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_RHTM'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_RHTM'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_RHTM'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -537,9 +535,7 @@ array_push( $arrDescuentos,$row );
 								?>
 							</tbody>
 						</table>
-					
 						
-
 										
 					</div>	
 					<div class="clearfix"></div>
@@ -590,7 +586,7 @@ array_push( $arrDescuentos,$row );
 	<div class="col-sm-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Insumos entregados</h5>
 				<ul class="nav nav-tabs pull-right">
 					<?php 
@@ -628,7 +624,7 @@ array_push( $arrDescuentos,$row );
 											<td><?php echo $producto['Fecha']; ?></td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo 'view_mov_insumos.php?view='.$producto['idFacturacion'].'&return=true'; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+													<a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($producto['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 												<?php echo cantidades($producto['Cantidad'], 0).' '.$producto['Uml'].' de '.$producto['Producto']; ?>
 												
@@ -652,13 +648,31 @@ array_push( $arrDescuentos,$row );
 	</div>
 <?php } ?>             
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

@@ -28,7 +28,7 @@ if(isset($_SESSION['pagos_boletas_empresas'][$_GET['idFacturacion']]['idFacturac
 	FROM `boleta_honorarios_facturacion`
 	LEFT JOIN `proveedor_listado` ON proveedor_listado.idProveedor = boleta_honorarios_facturacion.idProveedor
 		
-	WHERE boleta_honorarios_facturacion.idFacturacion={$_GET['idFacturacion']} ";
+	WHERE boleta_honorarios_facturacion.idFacturacion=".$_GET['idFacturacion'];
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
 	//Si ejecuto correctamente la consulta

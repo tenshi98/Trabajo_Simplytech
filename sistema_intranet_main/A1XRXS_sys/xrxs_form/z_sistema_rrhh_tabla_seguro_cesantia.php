@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -21,15 +25,15 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
-			case 'idTablaSeguro':     if(empty($idTablaSeguro)){     $error['idTablaSeguro']     = 'error/No ha ingresado el id';}break;
-			case 'idTipoContrato':    if(empty($idTipoContrato)){    $error['idTipoContrato']    = 'error/No ha seleccionado el tipo de contrato';}break;
-			case 'Porc_Empleador':    if(empty($Porc_Empleador)){    $error['Porc_Empleador']    = 'error/No ha ingresado el porcentaje del empleador';}break;
-			case 'Porc_Trabajador':   if(empty($Porc_Trabajador)){   $error['Porc_Trabajador']   = 'error/No ha ingresado el porcentaje del trabajador';}break;
+		switch ($INT_valor) {
+			case 'idTablaSeguro':     if(empty($idTablaSeguro)){      $error['idTablaSeguro']     = 'error/No ha ingresado el id';}break;
+			case 'idTipoContrato':    if(empty($idTipoContrato)){     $error['idTipoContrato']    = 'error/No ha seleccionado el tipo de contrato';}break;
+			case 'Porc_Empleador':    if(!isset($Porc_Empleador)){    $error['Porc_Empleador']    = 'error/No ha ingresado el porcentaje del empleador';}break;
+			case 'Porc_Trabajador':   if(!isset($Porc_Trabajador)){   $error['Porc_Trabajador']   = 'error/No ha ingresado el porcentaje del trabajador';}break;
 			
 		}
 	}
@@ -50,7 +54,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idTipoContrato)&&isset($idTablaSeguro)){
-				$ndata_1 = db_select_nrows ('idTipoContrato', 'sistema_rrhh_tabla_seguro_cesantia', '', "idTipoContrato='".$idTipoContrato."' AND idTablaSeguro!='".$idTablaSeguro."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idTipoContrato', 'sistema_rrhh_tabla_seguro_cesantia', '', "idTipoContrato='".$idTipoContrato."' AND idTablaSeguro!='".$idTablaSeguro."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}

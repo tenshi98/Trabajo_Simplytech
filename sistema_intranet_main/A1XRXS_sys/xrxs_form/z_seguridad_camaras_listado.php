@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -27,6 +31,7 @@ if( ! defined('XMBCXRXSKGC')) {
 	if ( !empty($_POST['Config_Puerto']) )        $Config_Puerto        = $_POST['Config_Puerto'];
 	if ( !empty($_POST['Config_Web']) )           $Config_Web           = $_POST['Config_Web'];
 	if ( !empty($_POST['idCanal']) )              $idCanal              = $_POST['idCanal'];
+	if ( !empty($_POST['Chanel']) )               $Chanel               = $_POST['Chanel'];
 	
 	
 /*******************************************************************************************************************/
@@ -35,11 +40,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idCamara':            if(empty($idCamara)){            $error['idCamara']             = 'error/No ha ingresado el id';}break;
 			case 'idSistema':           if(empty($idSistema)){           $error['idSistema']            = 'error/No ha seleccionado el sistema';}break;
 			case 'idEstado':            if(empty($idEstado)){            $error['idEstado']             = 'error/No ha seleccionado el estado';}break;
@@ -57,10 +62,21 @@ if( ! defined('XMBCXRXSKGC')) {
 			case 'Config_Puerto':       if(empty($Config_Puerto)){       $error['Config_Puerto']        = 'error/No ha ingresado el puerto de comunicacion';}break;
 			case 'Config_Web':          if(empty($Config_Web)){          $error['Config_Web']           = 'error/No ha ingresado la pagina de acceso directo';}break;
 			case 'idCanal':             if(empty($idCanal)){             $error['idCanal']              = 'error/No ha seleccionado la camara';}break;
+			case 'Chanel':              if(empty($Chanel)){              $error['Chanel']               = 'error/No ha seleccionado el canal';}break;
 			
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                    $error['Nombre']          = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){              $error['Direccion']       = 'error/Edita Direccion, contiene palabras no permitidas'; }	
+	if(isset($Config_usuario)&&contar_palabras_censuradas($Config_usuario)!=0){    $error['Config_usuario']  = 'error/Edita Config usuario, contiene palabras no permitidas'; }	
+	if(isset($Config_Password)&&contar_palabras_censuradas($Config_Password)!=0){  $error['Config_Password'] = 'error/Edita Config Password, contiene palabras no permitidas'; }	
+	if(isset($Config_IP)&&contar_palabras_censuradas($Config_IP)!=0){              $error['Config_IP']       = 'error/Edita Config IP, contiene palabras no permitidas'; }	
+	if(isset($Config_Puerto)&&contar_palabras_censuradas($Config_Puerto)!=0){      $error['Config_Puerto']   = 'error/Edita Config Puerto, contiene palabras no permitidas'; }	
+	if(isset($Config_Web)&&contar_palabras_censuradas($Config_Web)!=0){            $error['Config_Web']      = 'error/Edita Config Web, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -78,7 +94,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'seguridad_camaras_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'seguridad_camaras_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
@@ -108,7 +124,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `seguridad_camaras_listado` (idSistema, idEstado, Nombre, idPais,
 				idCiudad, idComuna, Direccion, N_Camaras, idSubconfiguracion, idTipoCamara,
 				Config_usuario, Config_Password, Config_IP, Config_Puerto, Config_Web) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -127,7 +143,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `seguridad_camaras_listado_canales` (idCamara, idEstado, Nombre) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 					}
@@ -162,7 +178,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)&&isset($idCamara)){
-				$ndata_1 = db_select_nrows ('Nombre', 'seguridad_camaras_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idCamara!='".$idCamara."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'seguridad_camaras_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idCamara!='".$idCamara."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
@@ -220,42 +236,48 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			$query  = "DELETE FROM `seguridad_camaras_listado` WHERE idCamara = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
-			//se borran los datos
-			$query  = "DELETE FROM `seguridad_camaras_listado_canales` WHERE idCamara = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado_1 = db_delete_data (false, 'seguridad_camaras_listado', 'idCamara = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'seguridad_camaras_listado_canales', 'idCamara = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
 			}
 			
 			
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
 
 		break;								
 /*******************************************************************************************************************/
@@ -265,9 +287,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idCamara   = $_GET['id'];
-			$estado     = $_GET['estado'];
-			$query  = "UPDATE seguridad_camaras_listado SET idEstado = '$estado'	
-			WHERE idCamara    = '$idCamara'";
+			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
+			$query  = "UPDATE seguridad_camaras_listado SET idEstado = '".$idEstado."'	
+			WHERE idCamara = '".$idCamara."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -301,7 +323,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idCamara)){
-				$ndata_1 = db_select_nrows ('Nombre', 'seguridad_camaras_listado_canales', '', "Nombre='".$Nombre."' AND idCamara='".$idCamara."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'seguridad_camaras_listado_canales', '', "Nombre='".$Nombre."' AND idCamara='".$idCamara."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
@@ -320,11 +342,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($Config_IP) && $Config_IP != ''){              $a .= ",'".$Config_IP."'" ;           }else{$a .=",''";}
 				if(isset($Config_Puerto) && $Config_Puerto != ''){      $a .= ",'".$Config_Puerto."'" ;       }else{$a .=",''";}
 				if(isset($Config_Web) && $Config_Web != ''){            $a .= ",'".$Config_Web."'" ;          }else{$a .=",''";}
+				if(isset($Chanel) && $Chanel != ''){                    $a .= ",'".$Chanel."'" ;              }else{$a .=",''";}
 				
 				// inserto los datos de registro en la db
-				echo $query  = "INSERT INTO `seguridad_camaras_listado_canales` (idCamara, idEstado, Nombre,idTipoCamara,
-				Config_usuario, Config_Password, Config_IP, Config_Puerto, Config_Web) 
-				VALUES ({$a} )";
+				$query  = "INSERT INTO `seguridad_camaras_listado_canales` (idCamara, idEstado, Nombre,idTipoCamara,
+				Config_usuario, Config_Password, Config_IP, Config_Puerto, Config_Web, Chanel) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -357,7 +380,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idCamara)&&isset($idCanal)){
-				$ndata_1 = db_select_nrows ('Nombre', 'seguridad_camaras_listado_canales', '', "Nombre='".$Nombre."' AND idCamara='".$idCamara."' AND idCanal!='".$idCanal."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'seguridad_camaras_listado_canales', '', "Nombre='".$Nombre."' AND idCamara='".$idCamara."' AND idCanal!='".$idCanal."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
@@ -376,6 +399,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($Config_IP) && $Config_IP != ''){              $a .= ",Config_IP='".$Config_IP."'" ;}
 				if(isset($Config_Puerto) && $Config_Puerto != ''){      $a .= ",Config_Puerto='".$Config_Puerto."'" ;}
 				if(isset($Config_Web) && $Config_Web != ''){            $a .= ",Config_Web='".$Config_Web."'" ;}
+				if(isset($Chanel) && $Chanel != ''){                    $a .= ",Chanel='".$Chanel."'" ;}
 				
 				// inserto los datos de registro en la db
 				$query  = "UPDATE `seguridad_camaras_listado_canales` SET ".$a." WHERE idCanal = '$idCanal'";
@@ -407,25 +431,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			$query  = "DELETE FROM `seguridad_camaras_listado_canales` WHERE idCanal = {$_GET['del_camara']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_camara']) OR !validaEntero($_GET['del_camara']))&&$_GET['del_camara']!=''){
+				$indice = simpleDecode($_GET['del_camara'], fecha_actual());
+			}else{
+				$indice = $_GET['del_camara'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
 			
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'seguridad_camaras_listado_canales', 'idCanal = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 			
 		break;					
 /*******************************************************************************************************************/

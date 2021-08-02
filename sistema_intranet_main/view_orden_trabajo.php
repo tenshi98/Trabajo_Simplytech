@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se trae un listado con todos los usuarios
 $query = "SELECT 
 orden_trabajo_listado.idOT,
@@ -50,7 +63,7 @@ LEFT JOIN `core_ot_tipos`              ON core_ot_tipos.idTipo                  
 LEFT JOIN `trabajadores_listado`       ON trabajadores_listado.idTrabajador     = orden_trabajo_listado.idSupervisor
 LEFT JOIN `clientes_listado`           ON clientes_listado.idCliente            = maquinas_listado.idCliente
 
-WHERE orden_trabajo_listado.idOT = {$_GET['view']}";
+WHERE orden_trabajo_listado.idOT = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -61,15 +74,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
@@ -84,7 +90,7 @@ trabajadores_listado.Rut
 
 FROM `orden_trabajo_listado_responsable`
 LEFT JOIN `trabajadores_listado`   ON trabajadores_listado.idTrabajador     = orden_trabajo_listado_responsable.idTrabajador
-WHERE orden_trabajo_listado_responsable.idOT = {$_GET['view']}
+WHERE orden_trabajo_listado_responsable.idOT = ".$X_Puntero."
 ORDER BY trabajadores_listado.ApellidoPat ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -96,15 +102,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTrabajadores,$row );
@@ -123,7 +122,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	FROM `orden_trabajo_listado_insumos`
 	LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto    = orden_trabajo_listado_insumos.idProducto
 	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = insumos_listado.idUml
-	WHERE orden_trabajo_listado_insumos.idOT = {$_GET['view']}
+	WHERE orden_trabajo_listado_insumos.idOT = ".$X_Puntero."
 	ORDER BY insumos_listado.Nombre ASC ";
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
@@ -135,15 +134,8 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrInsumos,$row );
@@ -159,7 +151,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	FROM `orden_trabajo_listado_productos`
 	LEFT JOIN `productos_listado`       ON productos_listado.idProducto    = orden_trabajo_listado_productos.idProducto
 	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml     = productos_listado.idUml
-	WHERE orden_trabajo_listado_productos.idOT = {$_GET['view']}
+	WHERE orden_trabajo_listado_productos.idOT = ".$X_Puntero."
 	ORDER BY productos_listado.Nombre ASC ";
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
@@ -171,15 +163,8 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrProductos,$row );
@@ -200,7 +185,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	LEFT JOIN `insumos_listado`            ON insumos_listado.idProducto           = bodegas_insumos_facturacion_existencias.idProducto
 	LEFT JOIN `sistema_productos_uml`      ON sistema_productos_uml.idUml          = insumos_listado.idUml
 	LEFT JOIN `bodegas_insumos_listado`    ON bodegas_insumos_listado.idBodega     = bodegas_insumos_facturacion_existencias.idBodega
-	WHERE bodegas_insumos_facturacion_existencias.idOT = {$_GET['view']} ";
+	WHERE bodegas_insumos_facturacion_existencias.idOT = ".$X_Puntero;
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
 	//Si ejecuto correctamente la consulta
@@ -211,15 +196,8 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrInsumos,$row );
@@ -237,7 +215,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	LEFT JOIN `productos_listado`            ON productos_listado.idProducto           = bodegas_productos_facturacion_existencias.idProducto
 	LEFT JOIN `sistema_productos_uml`        ON sistema_productos_uml.idUml            = productos_listado.idUml
 	LEFT JOIN `bodegas_productos_listado`    ON bodegas_productos_listado.idBodega     = bodegas_productos_facturacion_existencias.idBodega
-	WHERE bodegas_productos_facturacion_existencias.idOT = {$_GET['view']} ";
+	WHERE bodegas_productos_facturacion_existencias.idOT = ".$X_Puntero;
 	//Consulta
 	$resultado = mysqli_query ($dbConn, $query);
 	//Si ejecuto correctamente la consulta
@@ -248,15 +226,8 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrProductos,$row );
@@ -284,7 +255,7 @@ FROM `orden_trabajo_listado_trabajos`
 LEFT JOIN `productos_listado`      ON productos_listado.idProducto      = orden_trabajo_listado_trabajos.idProducto
 LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml  = orden_trabajo_listado_trabajos.idUml
 
-WHERE idOT = {$_GET['view']}
+WHERE idOT = ".$X_Puntero."
 ORDER BY NombreComponente ASC, NombreTrabajo ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -296,15 +267,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTrabajo,$row );
@@ -318,212 +282,214 @@ array_push( $arrTrabajo,$row );
 
 
 <?php
-$zz  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 $zz .= '&view='.$_GET['view'];
 ?>
-<div class="row no-print">
-	<div class="col-xs-12">
-		<a target="new" href="view_orden_trabajo_to_print.php<?php echo $zz ?>" class="btn btn-default pull-right" style="margin-right: 5px;">
-			<i class="fa fa-print"></i> Imprimir
-		</a>
-		<a target="new" href="view_orden_trabajo_to_pdf.php<?php echo $zz ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
-			<i class="fa fa-file-pdf-o"></i> Exportar a PDF
-		</a>
-	</div>
-</div>
-	
-	
-
-
-<div class="col-sm-11 fcenter table-responsive">
-	<div id="page-wrap">
-		<div id="header"> ORDEN DE TRABAJO N° <?php echo $_GET['view'];?></div>
-	
-		<div id="customer">
-			
-			<table id="meta" class="fleft otdata">
-				<tbody>
-					<tr>
-						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"></td>
-					</tr>
-					<?php if(isset($rowdata['ClienteNombre'])&&$rowdata['ClienteNombre']!=''){?>
-						<tr>
-							<td class="meta-head"><?php echo $x_column_cliente_sing; ?></td>
-							<td><?php echo $rowdata['ClienteNombre'] ?></td>
-						</tr>
-					<?php }?>
-					<tr>
-						<td class="meta-head"><?php echo $x_column_maquina_sing; ?></td>
-						<td><?php echo $rowdata['NombreMaquina']?></td>
-					</tr>
-					<tr>
-						<td class="meta-head">Prioridad</td>
-						<td><?php echo $rowdata['NombrePrioridad']?></td>
-					</tr>
-					<tr>
-						<td class="meta-head">Tipo de Trabajo</td>
-						<td><?php echo $rowdata['NombreTipo']?></td>
-					</tr>
-					<tr>
-						<td class="meta-head">Estado</td>
-						<td><?php echo $rowdata['NombreEstado']?></td>
-					</tr>
-					
-					<?php if(isset($rowdata['idSupervisor'])&&$rowdata['idSupervisor']!=''&&$rowdata['idSupervisor']!=0){?>
-						<tr>
-							<td class="meta-head">Supervisor</td>
-							<td><?php echo $rowdata['NombreTrab'].' '.$rowdata['ApellidoPat']?></td>
-						</tr>
-					<?php }?>
-					
-	
-				</tbody>
-			</table>
-			<table id="meta" class="otdata2">
-				<tbody>
-					
-					<?php if($rowdata['f_creacion']!='0000-00-00'){?>
-						<tr>
-							<td class="meta-head">Fecha creacion</td>
-							<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);}?></td>
-						</tr>
-					<?php }?>
-					
-					<?php if($rowdata['f_programacion']!='0000-00-00'){?>
-						<tr>
-							<td class="meta-head">Fecha programada</td>
-							<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);}?></td>
-						</tr>
-					<?php }?>
-					<?php if($rowdata['f_termino']!='0000-00-00'){?>
-						<tr>
-							<td class="meta-head">Fecha termino</td>
-							<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);}?></td>
-						</tr>
-					<?php }?>
-					
-					<?php if($rowdata['horaInicio']!='00:00:00'){?>
-						<tr>
-							<td class="meta-head">Hora inicio</td>
-							<td><?php if($rowdata['horaInicio']!='00:00:00'){echo $rowdata['horaInicio'];}?></td>
-						</tr>
-					<?php }?>
-					
-					<?php if($rowdata['horaTermino']!='00:00:00'){?>
-						<tr>
-							<td class="meta-head">Hora termino</td>
-							<td><?php if($rowdata['horaTermino']!='00:00:00'){echo $rowdata['horaTermino'];}?></td>
-						</tr>
-					<?php }?>
-					
-					<?php if($rowdata['horaProg']!='00:00:00'){?>
-						<tr>
-							<td class="meta-head">Tiempo Programado</td>
-							<td><?php if($rowdata['horaProg']!='00:00:00'){echo $rowdata['horaProg'];}?></td>
-						</tr>
-					<?php }?>
-
-				</tbody>
-			</table>
+<div class="col-xs-12">
+	<div class="row no-print">
+		<div class="col-xs-12">
+			<a target="new" href="view_orden_trabajo_to_print.php<?php echo $zz ?>" class="btn btn-default pull-right" style="margin-right: 5px;">
+				<i class="fa fa-print" aria-hidden="true"></i> Imprimir
+			</a>
+			<a target="new" href="view_orden_trabajo_to_pdf.php<?php echo $zz ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
+				<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF
+			</a>
 		</div>
-		<table id="items">
-			<tbody>
-				
-				<tr><th colspan="6">Detalle</th></tr>		  
-				
+	</div>
+		
+		
 
-				<?php /**********************************************************************************/ 
-				if(!empty($arrTrabajadores)) { ?>
-					<tr class="item-row fact_tittle"><td colspan="6">Trabajadores</td></tr>
-					<?php foreach ($arrTrabajadores as $trab) {  ?>
-						<tr class="item-row linea_punteada">
-							<td class="item-name"><?php echo $trab['Rut'];?></td>
-							<td class="item-name" colspan="4"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'];?></td>
-							<td class="item-name"><?php echo $trab['Cargo'];?></td> 
-						</tr> 
-					<?php }?>	
-					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php } 
-				/**********************************************************************************/ 
-				if(!empty($arrInsumos)) { ?>
-					<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
-					<?php foreach ($arrInsumos as $insumos) {
-						if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
+
+	<div class="col-sm-11 fcenter table-responsive">
+		<div id="page-wrap">
+			<div id="header"> ORDEN DE TRABAJO N° <?php echo n_doc($X_Puntero, 8);?></div>
+		
+			<div id="customer">
+				
+				<table id="meta" class="fleft otdata">
+					<tbody>
+						<tr>
+							<td class="meta-head"><strong>DATOS BASICOS</strong></td>
+							<td class="meta-head"></td>
+						</tr>
+						<?php if(isset($rowdata['ClienteNombre'])&&$rowdata['ClienteNombre']!=''){?>
+							<tr>
+								<td class="meta-head"><?php echo $x_column_cliente_sing; ?></td>
+								<td><?php echo $rowdata['ClienteNombre'] ?></td>
+							</tr>
+						<?php }?>
+						<tr>
+							<td class="meta-head"><?php echo $x_column_maquina_sing; ?></td>
+							<td><?php echo $rowdata['NombreMaquina']?></td>
+						</tr>
+						<tr>
+							<td class="meta-head">Prioridad</td>
+							<td><?php echo $rowdata['NombrePrioridad']?></td>
+						</tr>
+						<tr>
+							<td class="meta-head">Tipo de Trabajo</td>
+							<td><?php echo $rowdata['NombreTipo']?></td>
+						</tr>
+						<tr>
+							<td class="meta-head">Estado</td>
+							<td><?php echo $rowdata['NombreEstado']?></td>
+						</tr>
+						
+						<?php if(isset($rowdata['idSupervisor'])&&$rowdata['idSupervisor']!=''&&$rowdata['idSupervisor']!=0){?>
+							<tr>
+								<td class="meta-head">Supervisor</td>
+								<td><?php echo $rowdata['NombreTrab'].' '.$rowdata['ApellidoPat']?></td>
+							</tr>
+						<?php }?>
+						
+		
+					</tbody>
+				</table>
+				<table id="meta" class="otdata2">
+					<tbody>
+						
+						<?php if($rowdata['f_creacion']!='0000-00-00'){?>
+							<tr>
+								<td class="meta-head">Fecha creacion</td>
+								<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);}?></td>
+							</tr>
+						<?php }?>
+						
+						<?php if($rowdata['f_programacion']!='0000-00-00'){?>
+							<tr>
+								<td class="meta-head">Fecha programada</td>
+								<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);}?></td>
+							</tr>
+						<?php }?>
+						<?php if($rowdata['f_termino']!='0000-00-00'){?>
+							<tr>
+								<td class="meta-head">Fecha termino</td>
+								<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);}?></td>
+							</tr>
+						<?php }?>
+						
+						<?php if($rowdata['horaInicio']!='00:00:00'){?>
+							<tr>
+								<td class="meta-head">Hora inicio</td>
+								<td><?php if($rowdata['horaInicio']!='00:00:00'){echo $rowdata['horaInicio'];}?></td>
+							</tr>
+						<?php }?>
+						
+						<?php if($rowdata['horaTermino']!='00:00:00'){?>
+							<tr>
+								<td class="meta-head">Hora termino</td>
+								<td><?php if($rowdata['horaTermino']!='00:00:00'){echo $rowdata['horaTermino'];}?></td>
+							</tr>
+						<?php }?>
+						
+						<?php if($rowdata['horaProg']!='00:00:00'){?>
+							<tr>
+								<td class="meta-head">Tiempo Programado</td>
+								<td><?php if($rowdata['horaProg']!='00:00:00'){echo $rowdata['horaProg'];}?></td>
+							</tr>
+						<?php }?>
+
+					</tbody>
+				</table>
+			</div>
+			<table id="items">
+				<tbody>
+					
+					<tr><th colspan="6">Detalle</th></tr>		  
+					
+
+					<?php /**********************************************************************************/ 
+					if(!empty($arrTrabajadores)) { ?>
+						<tr class="item-row fact_tittle"><td colspan="6">Trabajadores</td></tr>
+						<?php foreach ($arrTrabajadores as $trab) {  ?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name" colspan="5"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>	
+								<td class="item-name"><?php echo $trab['Rut'];?></td>
+								<td class="item-name" colspan="4"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'];?></td>
+								<td class="item-name"><?php echo $trab['Cargo'];?></td> 
 							</tr> 
-						<?php
-						} 
-					} ?>
-					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php } 
-				/**********************************************************************************/ 
-				if(!empty($arrProductos)) { ?>
-					<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
-					<?php foreach ($arrProductos as $prod) { 
-						if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
-							<tr class="item-row linea_punteada">
-								<td class="item-name" colspan="5"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida']; ?></td>	
-							</tr> 
-						<?php 
-						}
-					} ?>
-					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php } 
-				/**********************************************************************************/ 
-				if(!empty($arrTrabajo)) { ?>
-					<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td></tr>
-					<?php foreach ($arrTrabajo as $trab) {  ?>
-						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="2"><?php echo $trab['NombreComponente'];?></td>
-							<td class="item-name" colspan="2"><?php echo $trab['NombreTrabajo'];?></td>
-							<td class="item-name" colspan="2">
+						<?php }?>	
+						<tr id="hiderow"><td colspan="6"></td></tr>
+					<?php } 
+					/**********************************************************************************/ 
+					if(!empty($arrInsumos)) { ?>
+						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
+						<?php foreach ($arrInsumos as $insumos) {
+							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
+								<tr class="item-row linea_punteada">
+									<td class="item-name" colspan="5"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+									<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>	
+								</tr> 
 							<?php
-							//Se verifica el tipo de trabajo a realizar
-							switch ($trab['idTrabajo']) {
-								case 1: //Analisis
-									echo '<strong>Analisis N°: </strong>'.n_doc($trab['idAnalisis'], 6);
-									break;
-								case 2: //Consumo de Productos
-									//El tipo de maquina que es
-									switch ($trab['idSubTipo']) {
-										case 1: //Grasa
-											if(isset($trab['Grasa_inicial'])&&$trab['Grasa_inicial']!=0){             echo Cantidades_decimales_justos($trab['Grasa_inicial']);}
-											if(isset($trab['Grasa_relubricacion'])&&$trab['Grasa_relubricacion']!=0){ echo Cantidades_decimales_justos($trab['Grasa_relubricacion']);}
-											break;
-										case 2: //Aceite
-											echo Cantidades_decimales_justos($trab['Aceite']);
-											break;
-										case 3: //Normal
-											echo Cantidades_decimales_justos($trab['Cantidad']);
-											break;
-										case 4: //Otro
-											
-											break;
-									}
-									echo ' '.$trab['NombreUnidad'].' de '.$trab['NombreProducto'];
-									break;
-								case 3: //Observacion
-									echo '<strong>Obs: </strong>'.$trab['Observacion'];
-									break;
-							}?>
-							</td>	
-						</tr> 
-					<?php } ?>
-					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php } 
-				/**********************************************************************************/ ?>
+							} 
+						} ?>
+						<tr id="hiderow"><td colspan="6"></td></tr>
+					<?php } 
+					/**********************************************************************************/ 
+					if(!empty($arrProductos)) { ?>
+						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
+						<?php foreach ($arrProductos as $prod) { 
+							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
+								<tr class="item-row linea_punteada">
+									<td class="item-name" colspan="5"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+									<td class="item-name"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida']; ?></td>	
+								</tr> 
+							<?php 
+							}
+						} ?>
+						<tr id="hiderow"><td colspan="6"></td></tr>
+					<?php } 
+					/**********************************************************************************/ 
+					if(!empty($arrTrabajo)) { ?>
+						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td></tr>
+						<?php foreach ($arrTrabajo as $trab) {  ?>
+							<tr class="item-row linea_punteada">
+								<td class="item-name" colspan="2"><?php echo $trab['NombreComponente'];?></td>
+								<td class="item-name" colspan="2"><?php echo $trab['NombreTrabajo'];?></td>
+								<td class="item-name" colspan="2">
+								<?php
+								//Se verifica el tipo de trabajo a realizar
+								switch ($trab['idTrabajo']) {
+									case 1: //Analisis
+										echo '<strong>Analisis N°: </strong>'.n_doc($trab['idAnalisis'], 6);
+										break;
+									case 2: //Consumo de Productos
+										//El tipo de maquina que es
+										switch ($trab['idSubTipo']) {
+											case 1: //Grasa
+												if(isset($trab['Grasa_inicial'])&&$trab['Grasa_inicial']!=0){             echo Cantidades_decimales_justos($trab['Grasa_inicial']);}
+												if(isset($trab['Grasa_relubricacion'])&&$trab['Grasa_relubricacion']!=0){ echo Cantidades_decimales_justos($trab['Grasa_relubricacion']);}
+												break;
+											case 2: //Aceite
+												echo Cantidades_decimales_justos($trab['Aceite']);
+												break;
+											case 3: //Normal
+												echo Cantidades_decimales_justos($trab['Cantidad']);
+												break;
+											case 4: //Otro
+												
+												break;
+										}
+										echo ' '.$trab['NombreUnidad'].' de '.$trab['NombreProducto'];
+										break;
+									case 3: //Observacion
+										echo '<strong>Obs: </strong>'.$trab['Observacion'];
+										break;
+								}?>
+								</td>	
+							</tr> 
+						<?php } ?>
+						<tr id="hiderow"><td colspan="6"></td></tr>
+					<?php } 
+					/**********************************************************************************/ ?>
 
-				
-				<tr><td colspan="6" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td></tr>
-				<tr><td colspan="6" class="blank"><p>Observacion</p></td></tr>
-				
-			</tbody>
-		</table>
-		<div class="clearfix"></div>	
+					
+					<tr><td colspan="6" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td></tr>
+					<tr><td colspan="6" class="blank"><p>Observacion</p></td></tr>
+					
+				</tbody>
+			</table>
+			<div class="clearfix"></div>	
+		</div>
 	</div>
 </div>
 
@@ -531,16 +497,31 @@ $zz .= '&view='.$_GET['view'];
 
 
 
-
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
-
-
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

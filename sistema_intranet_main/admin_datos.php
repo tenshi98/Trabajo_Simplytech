@@ -51,16 +51,26 @@ core_sistemas.Config_IDGoogle,
 core_theme_colors.Nombre AS Tema,
 bodegas_productos_listado.Nombre AS BodegaProd,
 bodegas_insumos_listado.Nombre AS BodegaIns,
-core_sistemas.Rubro
+core_sistemas.Rubro,
+socialUso.Nombre AS SocialUso,
+core_sistemas.Social_idUso,
+core_sistemas.Social_facebook,
+core_sistemas.Social_twitter,
+core_sistemas.Social_instagram,
+core_sistemas.Social_linkedin,
+core_sistemas.Social_rss,
+core_sistemas.Social_youtube,
+core_sistemas.Social_tumblr
 
 FROM `core_sistemas`
-LEFT JOIN `core_theme_colors`              ON core_theme_colors.idTheme            = core_sistemas.Config_idTheme
-LEFT JOIN `core_ubicacion_ciudad`          ON core_ubicacion_ciudad.idCiudad       = core_sistemas.idCiudad
-LEFT JOIN `core_ubicacion_comunas`         ON core_ubicacion_comunas.idComuna      = core_sistemas.idComuna
-LEFT JOIN `bodegas_productos_listado`      ON bodegas_productos_listado.idBodega   = core_sistemas.OT_idBodegaProd
-LEFT JOIN `bodegas_insumos_listado`        ON bodegas_insumos_listado.idBodega     = core_sistemas.OT_idBodegaIns
+LEFT JOIN `core_theme_colors`                  ON core_theme_colors.idTheme            = core_sistemas.Config_idTheme
+LEFT JOIN `core_ubicacion_ciudad`              ON core_ubicacion_ciudad.idCiudad       = core_sistemas.idCiudad
+LEFT JOIN `core_ubicacion_comunas`             ON core_ubicacion_comunas.idComuna      = core_sistemas.idComuna
+LEFT JOIN `bodegas_productos_listado`          ON bodegas_productos_listado.idBodega   = core_sistemas.OT_idBodegaProd
+LEFT JOIN `bodegas_insumos_listado`            ON bodegas_insumos_listado.idBodega     = core_sistemas.OT_idBodegaIns
+LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                 = core_sistemas.Social_idUso
 
-WHERE core_sistemas.idSistema = {$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE core_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -181,21 +191,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Sistema</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
@@ -203,36 +199,38 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'admin_datos.php';?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'admin_datos_datos.php';?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'admin_datos_datos_contacto.php';?>" >Datos Contacto</a></li>
+				<li class="active"><a href="<?php echo 'admin_datos.php';?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'admin_datos_datos.php';?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'admin_datos_datos_contacto.php';?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'admin_datos_datos_contrato.php';?>" >Datos Contrato</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_configuracion.php';?>" >Configuracion</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_temas.php';?>" >Temas</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_facturacion.php';?>" >Datos Facturacion</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_contrato.php';?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_configuracion.php';?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_temas.php';?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_facturacion.php';?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
 						<?php if(isset($Count_OT)&&$Count_OT!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_ot.php';?>" >OT</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_ot.php';?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'admin_datos_datos_imagen.php';?>" >Logo</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_imagen.php';?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
 						<?php if(isset($Count_OC)&&$Count_OC!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_oc.php';?>" >Aprobador OC</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_oc.php';?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<?php } ?>
 						<?php if(isset($Count_productos)&&$Count_productos!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_productos.php';?>" >Productos Usados</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_productos.php';?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_insumos)&&$Count_insumos!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_insumos.php';?>" >Insumos Usados</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_insumos.php';?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_especies.php';?>" >Especies</a></li>
-							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_nombres.php';?>" >Variedades</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_especies.php';?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_nombres.php';?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_cross.php';?>" >Aprobador Cross Shipping</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_cross.php';?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
 						<?php } ?>
+						<li class=""><a href="<?php echo 'admin_datos_datos_social.php'; ?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
+						
 					</ul>
                 </li>           
 			</ul>	
@@ -240,73 +238,86 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
         <div id="div-3" class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="wmd-panel">
-					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-						<thead>
-							<tr role="row">
-								<th width="50%" class="word_break">Datos</th>
-								<th width="50%">Mapa</th>
-							</tr>
-						</thead>					  
-						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<tr class="odd">
-								<td class="word_break">
-									
-									<h2 class="text-primary">Datos Basicos</h2>
-									<p class="text-muted">
-										<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-										<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-										<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-										<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-										<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
-										<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?>
-									</p>
+				<div class="col-sm-6">
+					<div class="row" style="border-right: 1px solid #333;">
+						<div class="col-sm-12">
+							<h2 class="text-primary">Datos Basicos</h2>
+							<p class="text-muted word_break">
+								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
+								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
+								<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
+								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?>
+							</p>
 									
 									
-									<h2 class="text-primary">Datos de contacto</h2>
-									<p class="text-muted">
-										<strong>Nombre Contacto : </strong><?php echo $rowdata['Contacto_Nombre']; ?><br/>
-										<strong>Fono 1: </strong><?php echo $rowdata['Contacto_Fono1']; ?><br/>
-										<strong>Fono 2: </strong><?php echo $rowdata['Contacto_Fono2']; ?><br/>
-										<strong>Fax : </strong><?php echo $rowdata['Contacto_Fax']; ?><br/>
-										<strong>Web : </strong><?php echo $rowdata['Contacto_Web']; ?><br/>
-										<strong>Email : </strong><?php echo $rowdata['email_principal']; ?>
-									</p>
+							<h2 class="text-primary">Datos de contacto</h2>
+							<p class="text-muted word_break">
+								<strong>Nombre Contacto : </strong><?php echo $rowdata['Contacto_Nombre']; ?><br/>
+								<strong>Fono 1: </strong><?php echo $rowdata['Contacto_Fono1']; ?><br/>
+								<strong>Fono 2: </strong><?php echo $rowdata['Contacto_Fono2']; ?><br/>
+								<strong>Fax : </strong><?php echo $rowdata['Contacto_Fax']; ?><br/>
+								<strong>Web : </strong><?php echo $rowdata['Contacto_Web']; ?><br/>
+								<strong>Email : </strong><?php echo $rowdata['email_principal']; ?>
+							</p>
 
-									<h2 class="text-primary">Contrato</h2>
-									<p class="text-muted">
-										<strong>Nombre Contrato : </strong><?php echo $rowdata['Contrato_Nombre']; ?><br/>
-										<strong>Numero de Contrato : </strong><?php echo $rowdata['Contrato_Numero']; ?><br/>
-										<strong>Fecha inicio Contrato : </strong><?php echo $rowdata['Contrato_Fecha']; ?><br/>
-										<strong>Duracion Contrato(Meses) : </strong><?php echo $rowdata['Contrato_Duracion']; ?>
-									</p>
+							<h2 class="text-primary">Contrato</h2>
+							<p class="text-muted word_break">
+								<strong>Nombre Contrato : </strong><?php echo $rowdata['Contrato_Nombre']; ?><br/>
+								<strong>Numero de Contrato : </strong><?php echo $rowdata['Contrato_Numero']; ?><br/>
+								<strong>Fecha inicio Contrato : </strong><?php echo $rowdata['Contrato_Fecha']; ?><br/>
+								<strong>Duracion Contrato(Meses) : </strong><?php echo $rowdata['Contrato_Duracion']; ?>
+							</p>
 								
-									<h2 class="text-primary">Configuracion</h2>
-									<p class="text-muted">
-										<strong>Tema : </strong><?php echo $rowdata['Tema']; ?><br/>
-										<strong>ID Google : </strong><?php echo $rowdata['Config_IDGoogle']; ?><br/>
-									</p>
+							<h2 class="text-primary">Configuracion</h2>
+							<p class="text-muted word_break">
+								<strong>Tema : </strong><?php echo $rowdata['Tema']; ?><br/>
+								<strong>ID Google : </strong><?php echo $rowdata['Config_IDGoogle']; ?><br/>
+							</p>
 									
-									<h2 class="text-primary">Bodegas OT</h2>
-									<p class="text-muted">
-										<strong>Bodega Productos : </strong><?php echo $rowdata['BodegaProd']; ?><br/>
-										<strong>Bodega Insumos : </strong><?php echo $rowdata['BodegaIns']; ?><br/>
-									</p>
+							<h2 class="text-primary">Bodegas OT</h2>
+							<p class="text-muted word_break">
+								<strong>Bodega Productos : </strong><?php echo $rowdata['BodegaProd']; ?><br/>
+								<strong>Bodega Insumos : </strong><?php echo $rowdata['BodegaIns']; ?><br/>
+							</p>
 									
-								</td>
-								<td>
-									<?php 
-									$direccion = "";
-									if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
-									if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
-									if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
-									echo mapa2($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle']);
-									?>
-								</td>
-							</tr>                  
-						</tbody>
-					</table>
+							<h2 class="text-primary">Social</h2>
+							<p class="text-muted word_break">
+								<strong>Uso de widget Sociales : </strong><?php echo $rowdata['SocialUso']; ?><br/>
+								<?php if(isset($rowdata['Social_idUso'])&&$rowdata['Social_idUso']==1){ ?>
+									<strong>Facebook : </strong><?php echo $rowdata['Social_facebook']; ?><br/>
+									<strong>Twitter : </strong><?php echo $rowdata['Social_twitter']; ?><br/>
+									<strong>Instagram : </strong><?php echo $rowdata['Social_instagram']; ?><br/>
+									<strong>Linkedin : </strong><?php echo $rowdata['Social_linkedin']; ?><br/>
+									<strong>Rss : </strong><?php echo $rowdata['Social_rss']; ?><br/>
+									<strong>Youtube : </strong><?php echo $rowdata['Social_youtube']; ?><br/>
+									<strong>Tumblr : </strong><?php echo $rowdata['Social_tumblr']; ?><br/>
+								<?php } ?>
+							</p>
+						</div>
+					</div>
 				</div>
+				<div class="col-sm-6">
+					<div class="row">
+						<?php 
+							//se arma la direccion
+							$direccion = "";
+							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
+							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
+							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
+							//se despliega mensaje en caso de no existir direccion
+							if($direccion!=''){
+								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
+							}else{
+								$Alert_Text = '<strong>No tiene una direccion definida</strong>';
+								alert_post_data(4,2,2, $Alert_Text);
+							}
+						?>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				
 			</div>
         </div>	
 	</div>

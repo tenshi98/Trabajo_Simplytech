@@ -56,9 +56,7 @@ $meses=array(1=>"Enero",
 				"Diciembre"
 			);
 //todas las empresas
-$z = " AND pagos_facturas_proveedores.idSistema>=0";	
-//sololas del mismo sistema
-$z.=" AND pagos_facturas_proveedores.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z = " AND pagos_facturas_proveedores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //verifico el tipo de usuario
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$join = "";
@@ -85,7 +83,7 @@ LEFT JOIN `core_sistemas`                     ON core_sistemas.idSistema        
 LEFT JOIN `proveedor_listado`                 ON proveedor_listado.idProveedor                = pagos_facturas_proveedores.idProveedor
 LEFT JOIN `pagos_facturas_proveedores_tipo`   ON pagos_facturas_proveedores_tipo.idTipo       = pagos_facturas_proveedores.idTipo
 ".$join." 
-WHERE pagos_facturas_proveedores.F_Pago_ano='{$Ano}' AND pagos_facturas_proveedores.F_Pago_mes='{$Mes}' 
+WHERE pagos_facturas_proveedores.F_Pago_ano='".$Ano."' AND pagos_facturas_proveedores.F_Pago_mes='".$Mes."' 
 ".$z." 
 ORDER BY sistema_documentos_pago.Nombre ASC, pagos_facturas_proveedores.F_Pago ASC, proveedor_listado.Nombre ASC  ";
 //Consulta
@@ -161,7 +159,7 @@ array_push( $arrCheques,$row );
 						foreach ($permisos as $cheques) {  ?>
 							<tr class="odd">		
 								<td><?php echo ' N°'.$cheques['N_DocPago']; ?></td>		
-								<td><?php echo valores($cheques['MontoPagado'], 0);$subtotal = $subtotal + $cheques['MontoPagado'];$total = $total + $cheques['MontoPagado']; ?></td>		
+								<td align="right"><?php echo valores($cheques['MontoPagado'], 0);$subtotal = $subtotal + $cheques['MontoPagado'];$total = $total + $cheques['MontoPagado']; ?></td>		
 								<td><?php echo fecha_estandar($cheques['F_Pago']); ?></td>		
 								<td><?php echo $cheques['Proveedor']; ?></td>		
 								<td><?php echo $cheques['TipoDoc']; ?></td>		
@@ -172,22 +170,22 @@ array_push( $arrCheques,$row );
 										switch ($cheques['idTipo']) {
 											//Factura Insumos
 											case 1:
-												$ver = 'view_mov_insumos.php?view='.$cheques['idFacturacion'];
+												$ver = 'view_mov_insumos.php?view='.simpleEncode($cheques['idFacturacion'], fecha_actual());
 											break;
 											//Factura Productos
 											case 2:
-												$ver = 'view_mov_productos.php?view='.$cheques['idFacturacion'];
+												$ver = 'view_mov_productos.php?view='.simpleEncode($cheques['idFacturacion'], fecha_actual());
 											break;
 											//Factura Servicios
 											case 3:
-												$ver = 'view_mov_servicios.php?view='.$cheques['idFacturacion'];
+												$ver = 'view_mov_servicios.php?view='.simpleEncode($cheques['idFacturacion'], fecha_actual());
 											break;
 											//Factura Arriendos
 											case 4:
-												$ver = 'view_mov_arriendos.php?view='.$cheques['idFacturacion'];
+												$ver = 'view_mov_arriendos.php?view='.simpleEncode($cheques['idFacturacion'], fecha_actual());
 											break;
 										}
-										echo '<a href="'.$ver.'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+										echo '<a href="'.$ver.'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											
 										?>
 										
@@ -198,14 +196,14 @@ array_push( $arrCheques,$row );
 						echo '
 						<tr class="odd" >
 							<td style="background-color:#DDD"><strong>Subtotal</strong></td>
-							<td style="background-color:#DDD"><strong>'.valores($subtotal, 0).'</strong></td>
+							<td align="right" style="background-color:#DDD"><strong>'.valores($subtotal, 0).'</strong></td>
 							<td colspan="5"  style="background-color:#DDD"></td>
 						</tr>';
 					}
 					echo '
 					<tr class="odd" >
 						<td style="background-color:#DDD"><strong>Total</strong></td>
-						<td style="background-color:#DDD"><strong>'.valores($total, 0).'</strong></td>
+						<td align="right" style="background-color:#DDD"><strong>'.valores($total, 0).'</strong></td>
 						<td colspan="5"  style="background-color:#DDD"></td>
 					</tr>'; ?>                  
 				</tbody>

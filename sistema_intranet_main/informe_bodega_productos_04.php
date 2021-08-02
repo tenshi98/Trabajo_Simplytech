@@ -25,14 +25,19 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 //Se limitan los permisos a las bodegas asignadas
 $x1 ="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$x2 ="idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+//se verifica el tipo de usuario
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+	$x2 = "idUsuario>=0";		
+}else{
+	$x2 = "idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+}
 //Variables
 $join_1  = "INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion_existencias.idBodega";
 $where_1 = " AND bodegas_productos_facturacion_existencias.".$x1." AND usuarios_bodegas_productos.".$x2;
 /**********************************************************/
 // Se trae un listado con los valores de las existencias actuales
 $año_pasado = ano_actual()-1;
-$z = "WHERE idSistema='{$_SESSION['usuario']['basic_data']['idSistema']}'";
+$z = "WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
 $z.= " AND Creacion_ano >= ".$año_pasado;
 //se consulta
 $arrExistencias = array();
@@ -182,22 +187,22 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Bodega de Productos</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#tab1" data-toggle="tab">Resumen</a></li>
-				<li class=""><a href="#tab2" data-toggle="tab">Compras</a></li>
+				<li class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="#tab2" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Compras</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if($s_Ventas=='true'){ ?>            <li class=""><a href="#tab3" data-toggle="tab">Ventas</a></li><?php } ?>
-						<?php if($s_Gastos=='true'){ ?>            <li class=""><a href="#tab4" data-toggle="tab">Gastos</a></li><?php } ?>
-						<?php if($s_Traspasos=='true'){ ?>         <li class=""><a href="#tab5" data-toggle="tab">Traspasos</a></li><?php } ?>
-						<?php if($s_Transformacion=='true'){ ?>    <li class=""><a href="#tab6" data-toggle="tab">Transformacion</a></li><?php } ?>
-						<?php if($s_Traspaso_empresa=='true'){ ?>  <li class=""><a href="#tab7" data-toggle="tab">Traspaso otra empresa</a></li><?php } ?>
-						<?php if($s_Gasto_OT=='true'){ ?>          <li class=""><a href="#tab8" data-toggle="tab">Gasto OT</a></li><?php } ?>
-						<?php if($s_Traspaso_Manual=='true'){ ?>   <li class=""><a href="#tab9" data-toggle="tab">Traspaso manual otra empresa</a></li><?php } ?>
-						<?php if($s_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab10" data-toggle="tab">Ingreso Manual</a></li><?php } ?>
+						<?php if($s_Ventas=='true'){ ?>            <li class=""><a href="#tab3"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ventas</a></li><?php } ?>
+						<?php if($s_Gastos=='true'){ ?>            <li class=""><a href="#tab4"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Gastos</a></li><?php } ?>
+						<?php if($s_Traspasos=='true'){ ?>         <li class=""><a href="#tab5"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspasos</a></li><?php } ?>
+						<?php if($s_Transformacion=='true'){ ?>    <li class=""><a href="#tab6"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Transformacion</a></li><?php } ?>
+						<?php if($s_Traspaso_empresa=='true'){ ?>  <li class=""><a href="#tab7"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspaso otra empresa</a></li><?php } ?>
+						<?php if($s_Gasto_OT=='true'){ ?>          <li class=""><a href="#tab8"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Gasto OT</a></li><?php } ?>
+						<?php if($s_Traspaso_Manual=='true'){ ?>   <li class=""><a href="#tab9"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspaso manual otra empresa</a></li><?php } ?>
+						<?php if($s_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab10" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ingreso Manual</a></li><?php } ?>
 						
 					</ul>
                 </li>           

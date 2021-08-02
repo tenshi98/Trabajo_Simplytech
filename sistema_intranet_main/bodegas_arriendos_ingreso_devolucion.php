@@ -50,13 +50,13 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Compra Realizada co
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Compra Modificada correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Compra borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['id']) ) { ?>
  <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingresar Devolucion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -67,18 +67,18 @@ if ( ! empty($_GET['id']) ) { ?>
 				if(isset($FechaDevolucionReal)) {  $x1  = $FechaDevolucionReal;  }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Devolucion','FechaDevolucionReal', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Devolucion','FechaDevolucionReal', $x1, 2);
 				
-				$Form_Imputs->form_input_hidden('idFacturacion', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('idEstadoDevolucion', 2, 2);
-				$Form_Imputs->form_input_hidden('idUsuarioDevolucion', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idFacturacion', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idEstadoDevolucion', 2, 2);
+				$Form_Inputs->form_input_hidden('idUsuarioDevolucion', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Ingresar Devolucion" name="submit_devolucion">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -121,20 +121,20 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	$order_by = 'ORDER BY bodegas_arriendos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
+//filtro
+$y = "bodegas_arriendos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+	
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$y = "bodegas_arriendos_listado.idSistema>=0";
-	$w = "idSistema>=0 AND idEstado=1";
-}else{
-	$y = "bodegas_arriendos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_arriendos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";		
-	$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$y .= " AND usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
 }
 /**********************************************************/
 //Variable con la ubicacion
 $z ="WHERE bodegas_arriendos_facturacion.idTipo=1";//Solo ingresos
 $z.=" AND bodegas_arriendos_facturacion.idEstadoDevolucion=1";//solo los que no tengan devolucion
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Se aplican los filtros
@@ -201,7 +201,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -225,17 +225,17 @@ array_push( $arrTipo,$row );
 				if(isset($Observaciones)) {      $x7  = $Observaciones;    }else{$x7  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
-				$Form_Imputs->form_select('Tipo Documento','idDocumentos', $x2, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos!=3 AND idDocumentos!=4', '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x3, 1);
-				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x4, 1);
-				$Form_Imputs->form_date('F Devolucion Estimada','Devolucion_fecha', $x5, 1);
-				$Form_Imputs->form_select_join_filter('Bodega destino','idBodega', $x6, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $y, $dbConn);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x7, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Documento','idDocumentos', $x2, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos!=3 AND idDocumentos!=4', '', $dbConn);
+				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x3, 1);
+				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x4, 1);
+				$Form_Inputs->form_date('F Devolucion Estimada','Devolucion_fecha', $x5, 1);
+				$Form_Inputs->form_select_join_filter('Bodega destino','idBodega', $x6, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $y, $dbConn);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x7, 1, 160);
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -253,7 +253,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Arriendos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Arriendos</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -267,22 +267,22 @@ array_push( $arrTipo,$row );
 						<th>
 							<div class="pull-left">Proveedor</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=proveedor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=proveedor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=proveedor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=proveedor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Documento</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=doc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=doc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=doc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=doc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fecha de Compra</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -299,7 +299,7 @@ array_push( $arrTipo,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

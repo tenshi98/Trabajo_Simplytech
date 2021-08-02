@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT  
 prospectos_listado.email, 
@@ -35,6 +48,7 @@ prospectos_listado.Fax,
 prospectos_listado.PersonaContacto,
 prospectos_listado.PersonaContacto_Fono,
 prospectos_listado.PersonaContacto_email,
+prospectos_listado.PersonaContacto_Cargo,
 prospectos_listado.Web,
 prospectos_listado.Giro,
 core_ubicacion_ciudad.Nombre AS nombre_region,
@@ -46,20 +60,28 @@ core_rubros.Nombre AS Rubro,
 usuarios_listado.Nombre AS prospectoVendedor,
 prospectos_estado_fidelizacion.Nombre AS prospectoEstado,
 prospectos_listado.F_Ingreso AS prospectoFecha,
-prospectos_etapa.Nombre AS prospectoEtapa
+prospectos_etapa.Nombre AS prospectoEtapa,
+prospectos_listado.idTab_1,
+prospectos_listado.idTab_2,
+prospectos_listado.idTab_3,
+prospectos_listado.idTab_4,
+prospectos_listado.idTab_5,
+prospectos_listado.idTab_6,
+prospectos_listado.idTab_7,
+prospectos_listado.idTab_8
 
 FROM `prospectos_listado`
-LEFT JOIN `core_estados`                    ON core_estados.idEstado                                = prospectos_listado.idEstado
-LEFT JOIN `core_ubicacion_ciudad`           ON core_ubicacion_ciudad.idCiudad                       = prospectos_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`          ON core_ubicacion_comunas.idComuna                      = prospectos_listado.idComuna
-LEFT JOIN `core_sistemas`                   ON core_sistemas.idSistema                              = prospectos_listado.idSistema
-LEFT JOIN `prospectos_tipos`                ON prospectos_tipos.idTipo                              = prospectos_listado.idTipo
-LEFT JOIN `core_rubros`                     ON core_rubros.idRubro                                  = prospectos_listado.idRubro
-LEFT JOIN `usuarios_listado`                ON usuarios_listado.idUsuario                           = prospectos_listado.idUsuario
-LEFT JOIN `prospectos_estado_fidelizacion`  ON prospectos_estado_fidelizacion.idEstadoFidelizacion  = prospectos_listado.idEstadoFidelizacion
-LEFT JOIN `prospectos_etapa`                ON prospectos_etapa.idEtapa                             = prospectos_listado.idEtapa
+LEFT JOIN `core_estados`                      ON core_estados.idEstado                                = prospectos_listado.idEstado
+LEFT JOIN `core_ubicacion_ciudad`             ON core_ubicacion_ciudad.idCiudad                       = prospectos_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`            ON core_ubicacion_comunas.idComuna                      = prospectos_listado.idComuna
+LEFT JOIN `core_sistemas`                     ON core_sistemas.idSistema                              = prospectos_listado.idSistema
+LEFT JOIN `prospectos_tipos`                  ON prospectos_tipos.idTipo                              = prospectos_listado.idTipo
+LEFT JOIN `core_rubros`                       ON core_rubros.idRubro                                  = prospectos_listado.idRubro
+LEFT JOIN `usuarios_listado`                  ON usuarios_listado.idUsuario                           = prospectos_listado.idUsuario
+LEFT JOIN `prospectos_estado_fidelizacion`    ON prospectos_estado_fidelizacion.idEstadoFidelizacion  = prospectos_listado.idEstadoFidelizacion
+LEFT JOIN `prospectos_etapa`                  ON prospectos_etapa.idEtapa                             = prospectos_listado.idEtapa
 
-WHERE prospectos_listado.idProspecto = {$_GET['view']}";
+WHERE prospectos_listado.idProspecto = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -70,17 +92,35 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	
+
+/*******************************************/
+//Listado con los tabs
+$arrTabs = array();
+$query = "SELECT idTab, Nombre FROM `core_telemetria_tabs` ORDER BY idTab ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrTabs,$row );
+}
+//recorro
+$arrTabsSorter = array();
+foreach ($arrTabs as $tab) {
+	$arrTabsSorter[$tab['idTab']] = $tab['Nombre'];
+}
 
 /**********************************************************/
 // Se trae un listado con todas las observaciones el Prospecto
@@ -91,7 +131,7 @@ prospectos_observaciones.Fecha,
 prospectos_observaciones.Observacion
 FROM `prospectos_observaciones`
 LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = prospectos_observaciones.idUsuario
-WHERE prospectos_observaciones.idProspecto = {$_GET['view']}
+WHERE prospectos_observaciones.idProspecto = ".$X_Puntero."
 ORDER BY prospectos_observaciones.idObservacion ASC 
 LIMIT 15 ";
 //Consulta
@@ -104,15 +144,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrObservaciones,$row );
@@ -130,7 +163,7 @@ FROM `prospectos_etapa_fidelizacion`
 LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario         = prospectos_etapa_fidelizacion.idUsuario
 LEFT JOIN `prospectos_etapa`     ON prospectos_etapa.idEtapa           = prospectos_etapa_fidelizacion.idEtapa
 
-WHERE prospectos_etapa_fidelizacion.idProspecto = {$_GET['view']}
+WHERE prospectos_etapa_fidelizacion.idProspecto = ".$X_Puntero."
 ORDER BY prospectos_etapa.Nombre DESC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -141,15 +174,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrEtapa,$row );
@@ -166,93 +192,107 @@ array_push( $arrEtapa,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Prospecto</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab">Datos</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<?php if(!empty($arrObservaciones)){ ?>
-					<li class=""><a href="#observaciones" data-toggle="tab">Observaciones</a></li>
+					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
 				<?php if(!empty($arrEtapa)){ ?>
-					<li class=""><a href="#etapas" data-toggle="tab">Etapas</a></li>
+					<li class=""><a href="#etapas" data-toggle="tab"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i> Etapas</a></li>
 				<?php } ?>
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="wmd-panel">
-					<div class="table-responsive">
-					
-						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-							<thead>
-								<tr role="row">
-									<th width="50%" class="word_break">Datos</th>
-									<th width="50%">Mapa</th>
-								</tr>
-							</thead>
-											  
-							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<tr class="odd">
-									<td class="word_break">
-										<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Prospecto</h2>
-										<p class="text-muted">
-											<strong>Vendedor : </strong><?php echo $rowdata['prospectoVendedor']; ?><br/>
-											<strong>Fecha de Registrado : </strong><?php echo Fecha_completa($rowdata['prospectoFecha']); ?><br/>
-											<strong>Estado Fidelizacion: </strong><?php echo $rowdata['prospectoEstado']; ?><br/>
-											<strong>Etapa Fidelizacion: </strong><?php echo $rowdata['prospectoEtapa']; ?>
-										</p>
+				<div class="col-sm-6">
+					<div class="row" style="border-right: 1px solid #333;">
+						<div class="col-sm-12">
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Prospecto</h2>
+							<p class="text-muted word_break">
+								<strong>Vendedor : </strong><?php echo $rowdata['prospectoVendedor']; ?><br/>
+								<strong>Fecha de Registrado : </strong><?php echo Fecha_completa($rowdata['prospectoFecha']); ?><br/>
+								<strong>Estado Fidelizacion: </strong><?php echo $rowdata['prospectoEstado']; ?><br/>
+								<strong>Etapa Fidelizacion: </strong><?php echo $rowdata['prospectoEtapa']; ?>
+							</p>
 									
-										<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
-										<p class="text-muted">
-											<strong>Tipo de Prospecto : </strong><?php echo $rowdata['tipoProspecto']; ?><br/>
-											<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
-											<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-											<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
-											<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-											<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
-											<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-											<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
-										</p>
-										
-										<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
-										<p class="text-muted">
-											<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-											<strong>Razon Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
-											<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
-											<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
-										</p>
-											
-										<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
-										<p class="text-muted">
-											<strong>Telefono Fijo : </strong><?php echo $rowdata['Fono1']; ?><br/>
-											<strong>Telefono Movil : </strong><?php echo $rowdata['Fono2']; ?><br/>
-											<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
-											<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-											<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="http://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
-										</p>
-										
-										<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
-										<p class="text-muted">
-											<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
-											<strong>Telefono : </strong><?php echo $rowdata['PersonaContacto_Fono']; ?><br/>
-											<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
-										</p>
-										
-									</td>
-									<td>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+							<p class="text-muted word_break">
+								<strong>Tipo de Prospecto : </strong><?php echo $rowdata['tipoProspecto']; ?><br/>
+								<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
+								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
+								<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
+								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
+							</p>
+							
+							<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){?>
+								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Unidades de Negocio</h2>
+								<p class="text-muted word_break">
 									<?php 
-									$direccion = "";
-									if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
-									if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
-									if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
-									echo mapa2($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle']) ?>
-									</td>
-								</tr>                  
-							</tbody>
-						</table>
+										if(isset($rowdata['idTab_1'])&&$rowdata['idTab_1']==2&&isset($arrTabsSorter[1])){ echo ' - '.$arrTabsSorter[1].'<br/>';}
+										if(isset($rowdata['idTab_2'])&&$rowdata['idTab_2']==2&&isset($arrTabsSorter[2])){ echo ' - '.$arrTabsSorter[2].'<br/>';}
+										if(isset($rowdata['idTab_3'])&&$rowdata['idTab_3']==2&&isset($arrTabsSorter[3])){ echo ' - '.$arrTabsSorter[3].'<br/>';}
+										if(isset($rowdata['idTab_4'])&&$rowdata['idTab_4']==2&&isset($arrTabsSorter[4])){ echo ' - '.$arrTabsSorter[4].'<br/>';}
+										if(isset($rowdata['idTab_5'])&&$rowdata['idTab_5']==2&&isset($arrTabsSorter[5])){ echo ' - '.$arrTabsSorter[5].'<br/>';}
+										if(isset($rowdata['idTab_6'])&&$rowdata['idTab_6']==2&&isset($arrTabsSorter[6])){ echo ' - '.$arrTabsSorter[6].'<br/>';}
+										if(isset($rowdata['idTab_7'])&&$rowdata['idTab_7']==2&&isset($arrTabsSorter[7])){ echo ' - '.$arrTabsSorter[7].'<br/>';}
+										if(isset($rowdata['idTab_8'])&&$rowdata['idTab_8']==2&&isset($arrTabsSorter[8])){ echo ' - '.$arrTabsSorter[8].'<br/>';} 
+									?>
+								</p>			
+							<?php } ?>
+										
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
+							<p class="text-muted word_break">
+								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
+								<strong>Razon Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
+								<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
+								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
+							</p>
+											
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
+							<p class="text-muted word_break">
+								<strong>Telefono Fijo : </strong><?php echo $rowdata['Fono1']; ?><br/>
+								<strong>Telefono Movil : </strong><?php echo $rowdata['Fono2']; ?><br/>
+								<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
+								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
+							</p>
+										
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
+							<p class="text-muted word_break">
+								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
+								<strong>Cargo Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto_Cargo']; ?><br/>
+								<strong>Telefono : </strong><?php echo $rowdata['PersonaContacto_Fono']; ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
+							</p>
+						</div>
 					</div>
 				</div>
+				<div class="col-sm-6">
+					<div class="row">
+						<?php 
+							//se arma la direccion
+							$direccion = "";
+							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
+							if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
+							if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
+							//se despliega mensaje en caso de no existir direccion
+							if($direccion!=''){
+								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); 
+							}else{
+								$Alert_Text  = 'No tiene una direccion definida';
+								alert_post_data(4,2,2, $Alert_Text);
+							}
+						?>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				
 			</div>
 			
 			<?php if(!empty($arrObservaciones)){ ?>
@@ -303,7 +343,7 @@ array_push( $arrEtapa,$row );
 											<td><?php echo $etapa['Etapa']; ?></td>	
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo 'view_prospecto_etapa.php?view='.$etapa['idEtapaFide'].'&return=true'; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+													<a href="<?php echo 'view_prospecto_etapa.php?view='.simpleEncode($etapa['idEtapaFide'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>	
 										</tr>
@@ -320,13 +360,31 @@ array_push( $arrEtapa,$row );
 </div>
 
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

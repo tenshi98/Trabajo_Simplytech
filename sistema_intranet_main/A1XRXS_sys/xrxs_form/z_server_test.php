@@ -6,13 +6,19 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['email']) )           $email            = $_POST['email'];
-	if ( !empty($_POST['texto']) )           $texto            = $_POST['texto'];
-	if ( !empty($_POST['email_principal']) ) $email_principal  = $_POST['email_principal'];
+	if ( !empty($_POST['email']) )                    $email                     = $_POST['email'];
+	if ( !empty($_POST['texto']) )                    $texto                     = $_POST['texto'];
+	if ( !empty($_POST['email_principal']) )          $email_principal           = $_POST['email_principal'];
+	if ( !empty($_POST['GmailUsuario']) )     $GmailUsuario      = $_POST['GmailUsuario'];
+	if ( !empty($_POST['GmailPassword']) )    $GmailPassword     = $_POST['GmailPassword'];
 	
 
 /*******************************************************************************************************************/
@@ -21,17 +27,27 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
-			case 'email':           if(empty($email)){            $error['email']             = 'error/No ha ingresado el email';}break;
-			case 'texto':           if(empty($texto)){            $error['texto']             = 'error/No ha ingresado el texto de prueba';}break;
-			case 'email_principal': if(empty($email_principal)){  $error['email_principal']   = 'error/No ha ingresado el email';}break;
+		switch ($INT_valor) {
+			case 'email':            if(empty($email)){             $error['email']              = 'error/No ha ingresado el email';}break;
+			case 'texto':            if(empty($texto)){             $error['texto']              = 'error/No ha ingresado el texto de prueba';}break;
+			case 'email_principal':  if(empty($email_principal)){   $error['email_principal']    = 'error/No ha ingresado el email_principal';}break;
+			case 'GmailUsuario':     if(empty($GmailUsuario)){      $error['GmailUsuario']       = 'error/No ha ingresado el GmailUsuario';}break;
+			case 'GmailPassword':    if(empty($GmailPassword)){     $error['GmailPassword']      = 'error/No ha ingresado el GmailPassword';}break;
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($email)&&contar_palabras_censuradas($email)!=0){                      $error['email']           = 'error/Edita email, contiene palabras no permitidas'; }	
+	if(isset($texto)&&contar_palabras_censuradas($texto)!=0){                      $error['texto']           = 'error/Edita texto, contiene palabras no permitidas'; }	
+	if(isset($email_principal)&&contar_palabras_censuradas($email_principal)!=0){  $error['email_principal'] = 'error/Edita email principal, contiene palabras no permitidas'; }	
+	if(isset($GmailUsuario)&&contar_palabras_censuradas($GmailUsuario)!=0){        $error['GmailUsuario']    = 'error/Edita Gmail Usuario, contiene palabras no permitidas'; }	
+	if(isset($GmailPassword)&&contar_palabras_censuradas($GmailPassword)!=0){      $error['GmailPassword']   = 'error/Edita Gmail Password, contiene palabras no permitidas'; }	
 					
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -45,27 +61,27 @@ if( ! defined('XMBCXRXSKGC')) {
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
 		case 'send_mail':	
-
-			//Carga de la libreria de envio de correos
-			require_once '../LIBS_php/PHPMailer/PHPMailerAutoload.php';	
-			//Instanciacion
-			$mail = new PHPMailer;
-			//Quien envia el correo
-			$mail->setFrom($email_principal, 'Exilon360');
-			//A quien responder el correo
-			$mail->addReplyTo($email_principal, 'Exilon360');
-			//Destinatarios
-			$mail->addAddress($email, 'Receptor');
-			//Asunto
-			$mail->Subject = 'Notificacion';
-			//Cuerpo del mensaje
-			$mail->msgHTML($texto);
-			//Datos Adjuntos
-			//$mail->addAttachment('images/phpmailer_mini.png');
-			//Envio del mensaje
-			if (!$mail->send()) {
-				header( 'Location: '.$location.'?error='.$mail->ErrorInfo );
-				die;
+			//Envio de correo
+			$rmail = tareas_envio_correo($email_principal, DB_EMPRESA_NAME, 
+                                         $email, 'Receptor', 
+                                         '', '', 
+                                         'Notificacion', 
+                                         $texto,'', 
+                                         '', 
+                                         1,
+										 $GmailUsuario,
+										 $GmailPassword);
+            //se guarda el log
+			log_response(1, $rmail, $email.' (Asunto:Notificacion)');
+		         
+            //Envio del mensaje
+			if ($rmail!=1) {
+				echo '<pre>';
+					var_dump($rmail);
+					//echo (extension_loaded('openssl')?'SSL loaded':'SSL not loaded')."\n";
+				echo '</pre>';
+				//header( 'Location: '.$location.'?error='.$rmail );
+				//die;
 			} else {
 				$error['texto']    = 'sucess/Email enviado correctamente';
 				header( 'Location: '.$location.'?send=true' );
@@ -74,36 +90,118 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;	
 /*******************************************************************************************************************/
+		case 'send_mail_img':
+			
+			//Se agrega el header
+			$Body  = '<img src="https://ci5.googleusercontent.com/proxy/uvRum7CA9Vi7WvNJjqf_y54g4AUlv-IhOZjDs6FB7pxptaprx772Cvql1rIGozXC3JOgoRZm3uleuzyFN1KnFodh6PtcRSeJJGW-pgR6DBg=s0-d-e1-ft#https://parquedelrecuerdo.cl/app/images/portal-email_head.jpg" class="CToWUd a6T" tabindex="0" width="800">';
+			$Body .= '<br/><br/><br/>';
+			$Body .= $texto;
+			
+			//Envio de correo
+			$rmail = tareas_envio_correo($email_principal, 'Exilon360', 
+                                         $email, 'Receptor', 
+                                         '', '', 
+                                         'Notificacion', 
+                                         $Body,'', 
+                                         '', 
+                                         1, 
+										 '', 
+										 '');
+            //se guarda el log
+			log_response(1, $rmail, $email.' (Asunto:Notificacion)');
+		         
+            //Envio del mensaje
+			if ($rmail!=1) {
+				header( 'Location: '.$location.'?error='.$rmail );
+				die;
+			} else {
+				$error['texto']    = 'sucess/Email enviado correctamente';
+				header( 'Location: '.$location.'?send=true' );
+				die;
+			}
+
+		break;
+/*******************************************************************************************************************/
 		case 'del_error':	
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `error_log` WHERE idErrorLog = {$_GET['del_error']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_error']) OR !validaEntero($_GET['del_error']))&&$_GET['del_error']!=''){
+				$indice = simpleDecode($_GET['del_error'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+				$indice = $_GET['del_error'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
-			}	
-						
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'error_log', 'idErrorLog = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 
-		break;		
+		break;
+/*******************************************************************************************************************/
+		case 'send_mail_google':
+		
+			//Envio de correo
+			$rmail = tareas_envio_correo_google($GmailUsuario, 'Exilon360', 
+												$email, 'Receptor', 
+												'', '', 
+												'Notificacion', 
+												$texto,'', 
+												'', 
+												1,
+												$GmailUsuario,
+												$GmailPassword);
+            //se guarda el log
+			log_response(1, $rmail, $email.' (Asunto:Notificacion)');
+		         
+            //Envio del mensaje
+			if ($rmail!=1) {
+				echo '<pre>';
+					var_dump($rmail);
+					echo (extension_loaded('openssl')?'SSL loaded':'SSL not loaded')."\n";
+				echo '</pre>';
+				
+				//header( 'Location: '.$location.'?error='.$rmail );
+				//die;
+			} else {
+				$error['texto']    = 'sucess/Email enviado correctamente';
+				header( 'Location: '.$location.'?send=true' );
+				die;
+			}
+
+		break;			
 /*******************************************************************************************************************/
 	}
 ?>

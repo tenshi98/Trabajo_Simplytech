@@ -17,6 +17,19 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 caja_chica_facturacion.idTipo,
@@ -55,7 +68,7 @@ LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabaj
 LEFT JOIN `caja_chica_facturacion`   fact_rel   ON fact_rel.idFacturacion               = caja_chica_facturacion.idFacturacionRelacionada
 LEFT JOIN `trabajadores_listado`     trab_rel   ON trab_rel.idTrabajador                = fact_rel.idTrabajador
 
-WHERE caja_chica_facturacion.idFacturacion = {$_GET['view']} ";
+WHERE caja_chica_facturacion.idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -66,15 +79,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
@@ -89,7 +95,7 @@ caja_chica_facturacion_existencias.Valor
 
 FROM `caja_chica_facturacion_existencias` 
 LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = caja_chica_facturacion_existencias.idDocPago
-WHERE idFacturacion = {$_GET['view']} ";
+WHERE idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -100,15 +106,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrDocumentos,$row );
@@ -119,7 +118,7 @@ $arrRendiciones = array();
 $query = "SELECT Item, Valor
 
 FROM `caja_chica_facturacion_rendiciones` 
-WHERE idFacturacion = {$_GET['view']} ";
+WHERE idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -130,15 +129,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrRendiciones,$row );
@@ -156,7 +148,7 @@ $html = '
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> '.$row_data['CajaTipo'].'
+				<i class="fa fa-globe" aria-hidden="true"></i> '.$row_data['CajaTipo'].'
 				<small class="pull-right">Numero Documento: '.n_doc($_GET['view'], 8).'</small>
 			</h2>
 		</div>   
@@ -173,12 +165,12 @@ $html = '
 				<div class="col-sm-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						<strong>'.$row_data['CajaNombre'].'</strong><br>
-						Sistema: '.$row_data['CajaSistema'].'<br>
-						Usuario: '.$row_data['Usuario'].'<br>
-						Estado: '.$row_data['CajaEstado'].'<br>
-						Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br>
-						Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br>
+						<strong>'.$row_data['CajaNombre'].'</strong><br/>
+						Sistema: '.$row_data['CajaSistema'].'<br/>
+						Usuario: '.$row_data['Usuario'].'<br/>
+						Estado: '.$row_data['CajaEstado'].'<br/>
+						Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
+						Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 				
@@ -193,22 +185,22 @@ $html = '
 				<div class="col-sm-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						<strong>'.$row_data['CajaNombre'].'</strong><br>
-						Sistema: '.$row_data['CajaSistema'].'<br>
-						Usuario: '.$row_data['Usuario'].'<br>
-						Estado: '.$row_data['CajaEstado'].'<br>
-						Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br>
-						Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br>
+						<strong>'.$row_data['CajaNombre'].'</strong><br/>
+						Sistema: '.$row_data['CajaSistema'].'<br/>
+						Usuario: '.$row_data['Usuario'].'<br/>
+						Estado: '.$row_data['CajaEstado'].'<br/>
+						Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
+						Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 				
 				<div class="col-sm-6 invoice-col">
 					Trabajador
 					<address>
-						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br>
-						Rut: '.$row_data['TrabajadorRut'].'<br>
-						Cargo: '.$row_data['TrabajadorCargo'].'<br>
-						Fono: '.$row_data['TrabajadorFono'].'<br>
+						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
+						Rut: '.$row_data['TrabajadorRut'].'<br/>
+						Cargo: '.$row_data['TrabajadorCargo'].'<br/>
+						Fono: '.$row_data['TrabajadorFono'].'<br/>
 					</address>
 				</div>';
 				

@@ -57,9 +57,11 @@ array_push( $arrGruposRev,$row );
 }
 /*******************************************************/
 //Se arma la query con los datos justos recibidos
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
 $subquery = '';
 $arrNombres = array(); 
-for ($i = 1; $i <= 50; $i++) {
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresNombre_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
 	$subquery .= ',SensoresRevision_'.$i;
@@ -69,7 +71,7 @@ for ($i = 1; $i <= 50; $i++) {
 //Se traen todos los datos de la maquina
 $query = "SELECT Nombre, cantSensores ".$subquery."
 FROM `telemetria_listado`
-WHERE idTelemetria=".$_GET['idTelemetria']."";
+WHERE idTelemetria=".$_GET['idTelemetria'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -139,7 +141,7 @@ $query = "SELECT Fecha AS FechaConsultada
 ".$subquery."
 FROM `telemetria_listado_historial_activaciones`
 WHERE idTelemetria=".$_GET['idTelemetria']."
-AND Fecha BETWEEN '{$_GET['F_inicio']}' AND '{$_GET['F_termino']}'
+AND Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'
 GROUP BY Fecha
 ORDER BY Fecha ASC";
 //Consulta
@@ -160,15 +162,19 @@ array_push( $arrMediciones,$row );
 }
 /*******************************************************/
 ?>
-<div class="col-sm-12">
-	<a target="new" href="<?php echo 'informe_telemetria_activaciones_04_to_excel.php?bla=bla'.$search.'&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-2 fright margin_width"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-	<a target="new" href="<?php echo 'informe_telemetria_activaciones_04_to_pdf.php?bla=bla'.$search.'&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-3 fright margin_width"><i class="fa fa-file-pdf-o"></i> Exportar a PDF</a>
+<div class="col-sm-12 clearfix">
+	<?php
+	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+	?>			
+	<a target="new" href="<?php echo 'informe_telemetria_activaciones_04_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+	<a target="new" href="<?php echo 'informe_telemetria_activaciones_04_to_pdf.php?bla=bla'.$search ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 </div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Amperaje del equipo <?php echo $rowMaquina['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Amperaje del equipo <?php echo $rowMaquina['Nombre']; ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -222,25 +228,24 @@ array_push( $arrMediciones,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+ } else  {
+$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	  
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$w = "telemetria_listado.idSistema>=0";
-}else{
-	$w = "telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_equipos_telemetria.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']} ";		
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
 }
 
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -256,20 +261,20 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($Amp)) {           $x6  = $Amp;           }else{$x6  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Imputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
 				}else{
-					$Form_Imputs->form_select_join_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
-				$Form_Imputs->form_date('Fecha Inicio','F_inicio', $x2, 2);
-				//$Form_Imputs->form_time('Hora Inicio','H_inicio', $x3, 1, 2);
-				$Form_Imputs->form_date('Fecha Termino','F_termino', $x4, 2);
-				//$Form_Imputs->form_time('Hora Termino','H_termino', $x5, 1, 1);
-				$Form_Imputs->form_input_number('Amperes a revisar', 'Amp', $x6, 1);
+				$Form_Inputs->form_date('Fecha Inicio','F_inicio', $x2, 2);
+				//$Form_Inputs->form_time('Hora Inicio','H_inicio', $x3, 1, 2);
+				$Form_Inputs->form_date('Fecha Termino','F_termino', $x4, 2);
+				//$Form_Inputs->form_time('Hora Termino','H_termino', $x5, 1, 1);
+				$Form_Inputs->form_input_number('Amperes a revisar', 'Amp', $x6, 1);
 				
-				$Form_Imputs->form_input_hidden('pagina', 1, 2);
+				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				
 
 				?>        

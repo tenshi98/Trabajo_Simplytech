@@ -15,11 +15,11 @@ require_once 'core/Load.Utils.Excel.php';
 if(isset($_POST["image"])){
 	
 	//Se obtiene la imagen
-	$data = $_POST["image"];
-	$image_array_1 = explode(";", $data);
-	$image_array_2 = explode(",", $image_array_1[1]);
-	$data = base64_decode($image_array_2[1]);
-	
+	$img  = $_POST['image']; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
+	$img  = str_replace('data:image/png;base64,', '', $img);
+	$img  = str_replace(' ', '+', $img);
+	$data = base64_decode($img);
+
 	$idUsuario  = $_SESSION['usuario']['basic_data']['idUsuario'];
 	$imageName  = 'usr_img_'.$idUsuario.'_'.time().'.png';
 	$ruta       = "upload/".$imageName;

@@ -17,62 +17,36 @@ $eq_alertas     = 0;
 $eq_fueralinea  = 0; 
 $eq_fueraruta   = 0;
 $eq_detenidos   = 0;
-$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check"></i></a>';								
+$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';								
 //Variable
 $z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
 $z .= " AND telemetria_listado.id_Geo = 1";//solo los equipos que tengan el seguimiento activado
 //verifico que sea un administrador
 if (isset($_GET['idSistema'])&&$_GET['idSistema']!=''){
-	if ($_GET['idSistema']==99999){
-		$z .= " AND telemetria_listado.idSistema>=0";	
-	}else{
-		$z .= " AND telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-	}
+	$z .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 if (isset($_GET['idRuta'])&&$_GET['idRuta']!=''){
-	$z .= " AND telemetria_listado.idRuta={$_GET['idRuta']}";
+	$z .= " AND telemetria_listado.idRuta=".$_GET['idRuta'];
 }
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z .= " AND telemetria_listado.idTelemetria={$_GET['idTelemetria']}";
+	$z .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
+}
+
+
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
 }
 // Se trae un listado de todos los buses del recorrido
 $arrPosiciones = array();
 $query = "SELECT  
-GeoLatitud, GeoLongitud,idTelemetria,Nombre,
-LastUpdateHora,cantSensores,TiempoFueraLinea,NDetenciones,
-
-SensoresMedErrores_1, SensoresMedErrores_2, SensoresMedErrores_3, SensoresMedErrores_4, SensoresMedErrores_5, 
-SensoresMedErrores_6, SensoresMedErrores_7, SensoresMedErrores_8, SensoresMedErrores_9, SensoresMedErrores_10, 
-SensoresMedErrores_11, SensoresMedErrores_12, SensoresMedErrores_13, SensoresMedErrores_14, SensoresMedErrores_15, 
-SensoresMedErrores_16, SensoresMedErrores_17, SensoresMedErrores_18, SensoresMedErrores_19, SensoresMedErrores_20, 
-SensoresMedErrores_21, SensoresMedErrores_22, SensoresMedErrores_23, SensoresMedErrores_24, SensoresMedErrores_25, 
-SensoresMedErrores_26, SensoresMedErrores_27, SensoresMedErrores_28, SensoresMedErrores_29, SensoresMedErrores_30, 
-SensoresMedErrores_31, SensoresMedErrores_32, SensoresMedErrores_33, SensoresMedErrores_34, SensoresMedErrores_35, 
-SensoresMedErrores_36, SensoresMedErrores_37, SensoresMedErrores_38, SensoresMedErrores_39, SensoresMedErrores_40, 
-SensoresMedErrores_41, SensoresMedErrores_42, SensoresMedErrores_43, SensoresMedErrores_44, SensoresMedErrores_45, 
-SensoresMedErrores_46, SensoresMedErrores_47, SensoresMedErrores_48, SensoresMedErrores_49, SensoresMedErrores_50,
-	
-SensoresErrorActual_1, SensoresErrorActual_2, SensoresErrorActual_3, SensoresErrorActual_4, SensoresErrorActual_5, 
-SensoresErrorActual_6, SensoresErrorActual_7, SensoresErrorActual_8, SensoresErrorActual_9, SensoresErrorActual_10, 
-SensoresErrorActual_11, SensoresErrorActual_12, SensoresErrorActual_13, SensoresErrorActual_14, SensoresErrorActual_15, 
-SensoresErrorActual_16, SensoresErrorActual_17, SensoresErrorActual_18, SensoresErrorActual_19, SensoresErrorActual_20, 
-SensoresErrorActual_21, SensoresErrorActual_22, SensoresErrorActual_23, SensoresErrorActual_24, SensoresErrorActual_25, 
-SensoresErrorActual_26, SensoresErrorActual_27, SensoresErrorActual_28, SensoresErrorActual_29, SensoresErrorActual_30, 
-SensoresErrorActual_31, SensoresErrorActual_32, SensoresErrorActual_33, SensoresErrorActual_34, SensoresErrorActual_35, 
-SensoresErrorActual_36, SensoresErrorActual_37, SensoresErrorActual_38, SensoresErrorActual_39, SensoresErrorActual_40, 
-SensoresErrorActual_41, SensoresErrorActual_42, SensoresErrorActual_43, SensoresErrorActual_44, SensoresErrorActual_45, 
-SensoresErrorActual_46, SensoresErrorActual_47, SensoresErrorActual_48, SensoresErrorActual_49, SensoresErrorActual_50,
-
-SensoresActivo_1, SensoresActivo_2, SensoresActivo_3, SensoresActivo_4, SensoresActivo_5, 
-SensoresActivo_6, SensoresActivo_7, SensoresActivo_8, SensoresActivo_9, SensoresActivo_10, 
-SensoresActivo_11, SensoresActivo_12, SensoresActivo_13, SensoresActivo_14, SensoresActivo_15, 
-SensoresActivo_16, SensoresActivo_17, SensoresActivo_18, SensoresActivo_19, SensoresActivo_20, 
-SensoresActivo_21, SensoresActivo_22, SensoresActivo_23, SensoresActivo_24, SensoresActivo_25, 
-SensoresActivo_26, SensoresActivo_27, SensoresActivo_28, SensoresActivo_29, SensoresActivo_30, 
-SensoresActivo_31, SensoresActivo_32, SensoresActivo_33, SensoresActivo_34, SensoresActivo_35, 
-SensoresActivo_36, SensoresActivo_37, SensoresActivo_38, SensoresActivo_39, SensoresActivo_40, 
-SensoresActivo_41, SensoresActivo_42, SensoresActivo_43, SensoresActivo_44, SensoresActivo_45, 
-SensoresActivo_46, SensoresActivo_47, SensoresActivo_48, SensoresActivo_49, SensoresActivo_50
+GeoLatitud, GeoLongitud,idTelemetria,Nombre,LastUpdateFecha,
+LastUpdateHora,cantSensores,TiempoFueraLinea,NDetenciones
+".$subquery."
 
 FROM `telemetria_listado`
 ".$z."
@@ -154,9 +128,9 @@ array_push( $arrPosiciones,$row );
 			}
 			
 			//equipos ok
-			if($eq_alertas>0){$xz = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle"></i></a>';}
-			if($eq_fueralinea>0){$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken"></i></a>';}
-			if($eq_detenidos>0){$xz = 1;$dataex .= '<a href="#" title="Vehiculo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-hand-paper-o"></i></a>';}
+			if($eq_alertas>0){$xz = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+			if($eq_fueralinea>0){$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+			if($eq_detenidos>0){$xz = 1;$dataex .= '<a href="#" title="Vehiculo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></a>';}
 									
 			$eq_ok .= $dataex;
 
@@ -166,7 +140,7 @@ array_push( $arrPosiciones,$row );
 				<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>			
 				<td>
 					<div class="btn-group" style="width: 35px;" >
-						<a href="<?php echo 'telemetria_gestion_flota_view_equipo.php?view='.$data['idTelemetria']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>						
+						<a href="<?php echo 'telemetria_gestion_flota_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 					</div>
 				</td>
 			</tr>

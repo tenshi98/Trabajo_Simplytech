@@ -52,19 +52,6 @@ if ( !empty($_GET['del_trab']) )     {
 	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_sueldos_facturacion.php';	
 }
 /**********************************************/
-//se borra un dato
-if ( !empty($_GET['add_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'add_obs';
-	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_sueldos_facturacion.php';	
-}
-//se borra un dato
-if ( !empty($_GET['del_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'del_obs';
-	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_sueldos_facturacion.php';	
-}
-/**********************************************/
 //formulario para crear
 if ( !empty($_POST['submit_file']) )  { 
 	//Llamamos al formulario
@@ -102,7 +89,7 @@ if ( ! empty($_GET['details']) ) {
 $query = "SELECT  fecha_auto, Creacion_fecha, Fecha_desde, Fecha_hasta, Observaciones, 
 UF, UTM, IMM, TopeImpAFP, TopeImpIPS, TopeSegCesantia, TopeAPVMensual, TopeDepConv
 FROM `rrhh_sueldos_facturacion`
-WHERE idFacturacion = {$_GET['details']}";
+WHERE idFacturacion = ".$_GET['details'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -119,9 +106,10 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	
 // Se trae un listado con todos los trabajadores
 $arrTrabajador = array();
-$query = "SELECT idFactTrab, TrabajadorNombre,TrabajadorRut,TotalHaberes,TotalDescuentos,TotalAPagar 
+$query = "SELECT  idFactTrab, TrabajadorNombre, TrabajadorRut, TotalHaberes,
+TotalDescuentos, TotalAPagar, CentroCosto
 FROM `rrhh_sueldos_facturacion_trabajadores`
-WHERE idFacturacion = {$_GET['details']}";
+WHERE idFacturacion = ".$_GET['details'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -142,7 +130,7 @@ array_push( $arrTrabajador,$row );
 $arrArchivos = array();
 $query = "SELECT Nombre
 FROM `rrhh_sueldos_facturacion_archivos`
-WHERE idFacturacion = {$_GET['details']}";
+WHERE idFacturacion = ".$_GET['details'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -160,7 +148,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivos,$row );
 }	
 ?>
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 	<div id="page-wrap">
 		<div id="header"> Facturacion Sueldos</div>
@@ -252,27 +240,26 @@ array_push( $arrArchivos,$row );
 					</tr>
 					<?php foreach ($arrTrabajador as $producto){ ?>	
 						<tr>
-							<td class="blank"><?php echo $producto['TrabajadorNombre'];?></td>
+							<td class="blank">
+								<?php 
+								echo $producto['TrabajadorNombre'];
+								if(isset($producto['CentroCosto'])&&$producto['CentroCosto']!=''){
+									echo '<br/><strong>Centro de Costo: </strong>'.$producto['CentroCosto'];
+								}
+								?>
+							</td>
 							<td class="blank"><?php echo $producto['TrabajadorRut'];?></td>
-							<td class="blank"><?php echo valores($producto['TotalHaberes'], 0);?></td>
-							<td class="blank"><?php echo valores($producto['TotalDescuentos'], 0);?></td>
-							<td class="blank"><?php echo valores($producto['TotalAPagar'], 0);?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalHaberes'], 0);?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalDescuentos'], 0);?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalAPagar'], 0);?></td>
 							<td class="blank">
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_rrhh_sueldos.php?idFactTrab='.$producto['idFactTrab']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+									<a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($producto['idFactTrab'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						<tr>
 					<?php } ?>
 					
-					<tr>
-						<td colspan="6" class="blank word_break"> 
-							<?php echo $rowdata['Observaciones'];?>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="6" class="blank"><p>Observaciones</p></td> 
-					</tr>
 
 				</tbody>
 			</table>
@@ -280,6 +267,13 @@ array_push( $arrArchivos,$row );
 		
     </div>
     
+    <div class="row">
+		<div class="col-xs-12">
+			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones'];?></p>
+		</div>
+	</div>
+	
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
             
@@ -293,7 +287,7 @@ array_push( $arrArchivos,$row );
 					<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+							<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 						</div>
 					</td>
 				</tr>
@@ -310,8 +304,8 @@ array_push( $arrArchivos,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
@@ -322,7 +316,7 @@ array_push( $arrArchivos,$row );
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -330,14 +324,14 @@ array_push( $arrArchivos,$row );
 			
 				<?php           
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 					
 				?> 
 
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -356,7 +350,7 @@ array_push( $arrArchivos,$row );
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos del Ingreso</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -374,35 +368,37 @@ array_push( $arrArchivos,$row );
 				if(isset($TopeSegCesantia)) { $x9  = $TopeSegCesantia;    }else{$x9  = $_SESSION['fact_sueldos_basicos']['TopeSegCesantia'];}
 				if(isset($TopeAPVMensual)) {  $x10 = $TopeAPVMensual;     }else{$x10 = $_SESSION['fact_sueldos_basicos']['TopeAPVMensual'];}
 				if(isset($TopeDepConv)) {     $x11 = $TopeDepConv;        }else{$x11 = $_SESSION['fact_sueldos_basicos']['TopeDepConv'];}
+				if(isset($Observaciones)) {   $x12 = $Observaciones;      }else{$x12 = $_SESSION['fact_sueldos_basicos']['Observaciones'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Facturacion</h3>';
-				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
-				$Form_Imputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
-				$Form_Imputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Facturacion');
+				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
+				$Form_Inputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
+				$Form_Inputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
 				
-				echo '<h3>Indicadores</h3>';
-				$Form_Imputs->form_input_number('UF', 'UF', $x4, 2);
-				$Form_Imputs->form_input_number('UTM', 'UTM', $x5, 2);
-				$Form_Imputs->form_input_number('Renta Minima', 'IMM', $x6, 2);
+				$Form_Inputs->form_tittle(3, 'Indicadores');
+				$Form_Inputs->form_input_number('UF', 'UF', $x4, 2);
+				$Form_Inputs->form_input_number('UTM', 'UTM', $x5, 2);
+				$Form_Inputs->form_input_number('Renta Minima', 'IMM', $x6, 2);
 				
-				echo '<h3>Topes Legales</h3>';
-				$Form_Imputs->form_input_number('Tope Imponible AFP', 'TopeImpAFP', $x7, 2);
-				$Form_Imputs->form_input_number('Tope Imponible IPS', 'TopeImpIPS', $x8, 2);
-				$Form_Imputs->form_input_number('Tope Seguro Cesantia', 'TopeSegCesantia', $x9, 2);
-				$Form_Imputs->form_input_number('Tope APV Mensual', 'TopeAPVMensual', $x10, 2);
-				$Form_Imputs->form_input_number('Tope Deposito Convenido', 'TopeDepConv', $x11, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x7, 1, 160);
+				$Form_Inputs->form_tittle(3, 'Topes Legales');
+				$Form_Inputs->form_input_number('Tope Imponible AFP', 'TopeImpAFP', $x7, 2);
+				$Form_Inputs->form_input_number('Tope Imponible IPS', 'TopeImpIPS', $x8, 2);
+				$Form_Inputs->form_input_number('Tope Seguro Cesantia', 'TopeSegCesantia', $x9, 2);
+				$Form_Inputs->form_input_number('Tope APV Mensual', 'TopeAPVMensual', $x10, 2);
+				$Form_Inputs->form_input_number('Tope Deposito Convenido', 'TopeDepConv', $x11, 2);
+				
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?> 
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -411,18 +407,16 @@ array_push( $arrArchivos,$row );
 	</div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['view']) ) { 
-$Form_Imputs = new Inputs();
-?>
+ } elseif ( ! empty($_GET['view']) ) { ?>
  
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 
 	<?php 		
 	$ubicacion = $location.'&view=true&ing_sueldo=true';
 	$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
 	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
 
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<?php 
 	$ubicacion = $location.'&clear_all=true';
@@ -432,7 +426,7 @@ $Form_Imputs = new Inputs();
 	<div class="clearfix"></div>
 </div> 
 
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 	<div id="page-wrap">
 		<div id="header"> Facturacion Sueldos</div>
@@ -444,7 +438,7 @@ $Form_Imputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Desde</td>
@@ -486,72 +480,37 @@ $Form_Imputs = new Inputs();
 					</tr>
 					<?php foreach ($_SESSION['fact_sueldos_sueldos'] as $key => $producto){ ?>	
 						<tr>
-							<td class="blank"><?php echo $producto['TrabajadorNombre'];?></td>
+							<td class="blank">
+								<?php 
+								echo $producto['TrabajadorNombre'];
+								if(isset($producto['CentroCosto'])&&$producto['CentroCosto']!=''){echo '<br/><strong>Centro de Costo: </strong>'.$producto['CentroCosto'];}
+								?>
+							</td>
 							<td class="blank"><?php echo $producto['TrabajadorRut'];?></td>
-							<td class="blank"><?php echo valores($producto['TotalHaberes'], 0);?></td>
-							<td class="blank"><?php echo valores($producto['TotalDescuentos'], 0);?></td>
-							<td class="blank"><?php echo valores($producto['TotalAPagar'], 0);?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalHaberes'], 0);?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalDescuentos'], 0);?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalAPagar'], 0);?></td>
 							<td class="blank">
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo 'view_rrhh_sueldos_pre.php?idTrabajador='.$producto['idTrabajador']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+									<a href="<?php echo 'view_rrhh_sueldos_pre.php?idTrabajador='.$producto['idTrabajador']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 									<?php 
 									$ubicacion = $location.'&view=true&del_trab='.$producto['idTrabajador'];
 									$dialogo   = '¿Realmente deseas eliminar la facturacion de '.$producto['TrabajadorNombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
 						<tr>
 					<?php } ?>
-					
-					<tr>
-						<?php if(isset($_SESSION['fact_sueldos_basicos']['Observaciones'])&&$_SESSION['fact_sueldos_basicos']['Observaciones']!=''){ ?>
-						
-							<td colspan="5" class="blank word_break"> 
-								<?php echo $_SESSION['fact_sueldos_basicos']['Observaciones'];?>
-							</td>
-							<td class="blank">
-								<div class="btn-group" style="width: 70px;" >
-									<?php 
-									$ubicacion = $location.'&view=true&del_obs=true';
-									$dialogo   = '¿Realmente deseas eliminar la observacion?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
-								</div>
-							</td>
-						
-						<?php }else{?>
-							<td colspan="5" class="blank"> 
-								<?php 
-								$non = '';
-								if(isset($_SESSION['fact_sueldos_temporal'])&&$_SESSION['fact_sueldos_temporal']!=''){
-									$non = $_SESSION['fact_sueldos_temporal'];
-								}	
-									
-								$Form_Imputs->input_textarea_obs('Observaciones','Observaciones', 1,'width:100%; height: 200px;', $non);?>
-							</td>
-							<td class="blank">
-								<div class="btn-group" style="width: 35px;" >
-									<?php $ubicacion=$location.'&view=true&add_obs=true';?>			
-									<a onclick="add_obs('<?php echo $ubicacion ?>')" title="Agregar Observacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
-								</div>
-							</td>
-							
-						<?php }?>	
-						
-						
-					</tr>
-					<tr>
-						<td colspan="6" class="blank"><p>Observaciones</p></td> 
-					</tr>
-					
-					
-								
-								
-					
-				</tbody>
-			</table>
-		
-		
+			</tbody>
+		</table>
     </div>
+    
+    <div class="row">
+		<div class="col-xs-12">
+			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['fact_sueldos_basicos']['Observaciones'];?></p>
+		</div>
+	</div>
     
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
@@ -570,11 +529,11 @@ $Form_Imputs = new Inputs();
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 								<?php 
 								$ubicacion = $location.'&del_file='.$producto['idFile'];
 								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
 					</tr>
@@ -594,7 +553,10 @@ $Form_Imputs = new Inputs();
 <div class="clearfix"></div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
 <div class="col-sm-12">
 	<a target="_blank" rel="noopener noreferrer" href="https://www.previred.com/web/previred/indicadores-previsionales" class="btn btn-default fright margin_width" ><i class="fa fa-search" aria-hidden="true"></i> Indicadores Previsionales</a>
 </div>  
@@ -604,7 +566,7 @@ $Form_Imputs = new Inputs();
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Facturacion Sueldos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -626,39 +588,39 @@ $Form_Imputs = new Inputs();
 				if(isset($Observaciones)) {   $x12 = $Observaciones;      }else{$x12 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Facturacion</h3>';
-				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
-				$Form_Imputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
-				$Form_Imputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Facturacion');
+				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
+				$Form_Inputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
+				$Form_Inputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
 				
-				echo '<h3>Indicadores</h3>';
-				$Form_Imputs->form_input_number('UF', 'UF', $x4, 2);
-				$Form_Imputs->form_input_number('UTM', 'UTM', $x5, 2);
-				$Form_Imputs->form_input_number('Renta Minima', 'IMM', $x6, 2);
+				$Form_Inputs->form_tittle(3, 'Indicadores');
+				$Form_Inputs->form_input_number('UF', 'UF', $x4, 2);
+				$Form_Inputs->form_input_number('UTM', 'UTM', $x5, 2);
+				$Form_Inputs->form_input_number('Renta Minima', 'IMM', $x6, 2);
 				
-				echo '<h3>Topes Legales</h3>';
-				$Form_Imputs->form_input_number('Tope Imponible AFP', 'TopeImpAFP', $x7, 2);
-				$Form_Imputs->form_input_number('Tope Imponible IPS', 'TopeImpIPS', $x8, 2);
-				$Form_Imputs->form_input_number('Tope Seguro Cesantia', 'TopeSegCesantia', $x9, 2);
-				$Form_Imputs->form_input_number('Tope APV Mensual', 'TopeAPVMensual', $x10, 2);
-				$Form_Imputs->form_input_number('Tope Deposito Convenido', 'TopeDepConv', $x11, 2);
+				$Form_Inputs->form_tittle(3, 'Topes Legales');
+				$Form_Inputs->form_input_number('Tope Imponible AFP', 'TopeImpAFP', $x7, 2);
+				$Form_Inputs->form_input_number('Tope Imponible IPS', 'TopeImpIPS', $x8, 2);
+				$Form_Inputs->form_input_number('Tope Seguro Cesantia', 'TopeSegCesantia', $x9, 2);
+				$Form_Inputs->form_input_number('Tope APV Mensual', 'TopeAPVMensual', $x10, 2);
+				$Form_Inputs->form_input_number('Tope Deposito Convenido', 'TopeDepConv', $x11, 2);
 				
 				
 				
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 
 						
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -704,8 +666,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable con la ubicacion
 $z="WHERE rrhh_sueldos_facturacion.idFacturacion!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND rrhh_sueldos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z.=" AND rrhh_sueldos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND rrhh_sueldos_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
@@ -767,7 +729,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -800,13 +762,13 @@ array_push( $arrTipo,$row );
 				if(isset($Creacion_ano)) {       $x3  = $Creacion_ano;     }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x1, 1);
-				$Form_Imputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
-				$Form_Imputs->form_select_n_auto('Año','Creacion_ano', $x3, 1, 2016, ano_actual());
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x1, 1);
+				$Form_Inputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_n_auto('Año','Creacion_ano', $x3, 1, 2016, ano_actual());
 						
 			
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -824,7 +786,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Ingreso Horas Extras</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ingreso Horas Extras</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -838,15 +800,15 @@ array_push( $arrTipo,$row );
 						<th>
 							<div class="pull-left">Periodo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=periodo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=periodo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=periodo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=periodo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fechas</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fechas_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fechas_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fechas_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fechas_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -858,11 +820,11 @@ array_push( $arrTipo,$row );
 					<?php foreach ($arrTipo as $tipo) { ?>
 						<tr class="odd">
 							<td><?php echo numero_a_mes($tipo['Creacion_mes']).' '.$tipo['Creacion_ano'].'('.Fecha_estandar($tipo['Creacion_fecha']).')'  ; ?></td>
-							<td><?php echo Fecha_estandar($tipo['Fecha_desde']).' - '.Fecha_estandar($tipo['Fecha_hasta']); ?></td>
+							<td><?php echo Fecha_estandar($tipo['Fecha_desde']).' al '.Fecha_estandar($tipo['Fecha_hasta']); ?></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details='.$tipo['idFacturacion']; ?>" title="Ver Facturacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details='.$tipo['idFacturacion']; ?>" title="Ver Facturacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

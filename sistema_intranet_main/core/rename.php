@@ -277,6 +277,156 @@ if(isset($_SESSION['usuario']['basic_data']['idSistema'])){
 			$x_column_puntomed_alerta = 'Alerta';
 			$x_column_puntomed_condenatorio = 'Condenatorio';
 			break;
+			
+		//Valores Sistema 12
+		case 12:
+			$x_column_maquina_sing = 'Maquina';
+			$x_column_maquina_plur = 'Maquinas';
+			$x_column_lubricacion  = 'Operaciones x Contrato';
+			$x_column_cliente_sing = 'Cliente';
+			$x_column_cliente_plur = 'Clientes';
+			$x_column_producto_cat_sing = 'Categoria';
+			$x_column_producto_cat_plur = 'Categorias';
+			$x_column_producto_tipo_sing = 'Tipo de Producto';
+			$x_column_producto_tipo_plur = 'Tipos de Productos';
+			$x_column_producto_nombre_sing = 'Producto';
+			$x_column_producto_nombre_plur = 'Productos';
+			$x_column_ubicacion  = 'Ubicacion';
+			$x_column_ubicacion_item  = 'Itemizado';
+			$x_column_ubicacion_lvl_1  = 'Nivel 1';
+			$x_column_ubicacion_lvl_2  = 'Nivel 2';
+			$x_column_ubicacion_lvl_3  = 'Nivel 3';
+			$x_column_ubicacion_lvl_4  = 'Nivel 4';
+			$x_column_ubicacion_lvl_5  = 'Nivel 5';
+			$x_column_puntomed_aceptable = 'Aceptable';
+			$x_column_puntomed_alerta = 'Alerta';
+			$x_column_puntomed_condenatorio = 'Condenatorio';
+			break;
+			
+		//Valores Sistema 13
+		case 13:
+			$x_column_maquina_sing = 'Maquina';
+			$x_column_maquina_plur = 'Maquinas';
+			$x_column_lubricacion  = 'Operaciones x Contrato';
+			$x_column_cliente_sing = 'Cliente';
+			$x_column_cliente_plur = 'Clientes';
+			$x_column_producto_cat_sing = 'Categoria';
+			$x_column_producto_cat_plur = 'Categorias';
+			$x_column_producto_tipo_sing = 'Tipo de Producto';
+			$x_column_producto_tipo_plur = 'Tipos de Productos';
+			$x_column_producto_nombre_sing = 'Producto';
+			$x_column_producto_nombre_plur = 'Productos';
+			$x_column_ubicacion  = 'Ubicacion';
+			$x_column_ubicacion_item  = 'Itemizado';
+			$x_column_ubicacion_lvl_1  = 'Nivel 1';
+			$x_column_ubicacion_lvl_2  = 'Nivel 2';
+			$x_column_ubicacion_lvl_3  = 'Nivel 3';
+			$x_column_ubicacion_lvl_4  = 'Nivel 4';
+			$x_column_ubicacion_lvl_5  = 'Nivel 5';
+			$x_column_puntomed_aceptable = 'Aceptable';
+			$x_column_puntomed_alerta = 'Alerta';
+			$x_column_puntomed_condenatorio = 'Condenatorio';
+			break;
+			
+		//Valores Sistema 14
+		case 14:
+			$x_column_maquina_sing = 'Maquina';
+			$x_column_maquina_plur = 'Maquinas';
+			$x_column_lubricacion  = 'Operaciones x Contrato';
+			$x_column_cliente_sing = 'Cliente';
+			$x_column_cliente_plur = 'Clientes';
+			$x_column_producto_cat_sing = 'Categoria';
+			$x_column_producto_cat_plur = 'Categorias';
+			$x_column_producto_tipo_sing = 'Tipo de Producto';
+			$x_column_producto_tipo_plur = 'Tipos de Productos';
+			$x_column_producto_nombre_sing = 'Producto';
+			$x_column_producto_nombre_plur = 'Productos';
+			$x_column_ubicacion  = 'Ubicacion';
+			$x_column_ubicacion_item  = 'Itemizado';
+			$x_column_ubicacion_lvl_1  = 'Nivel 1';
+			$x_column_ubicacion_lvl_2  = 'Nivel 2';
+			$x_column_ubicacion_lvl_3  = 'Nivel 3';
+			$x_column_ubicacion_lvl_4  = 'Nivel 4';
+			$x_column_ubicacion_lvl_5  = 'Nivel 5';
+			$x_column_puntomed_aceptable = 'Aceptable';
+			$x_column_puntomed_alerta = 'Alerta';
+			$x_column_puntomed_condenatorio = 'Condenatorio';
+			break;
+			
+		//Valores Sistema 15
+		case 15:
+			$x_column_maquina_sing = 'Maquina';
+			$x_column_maquina_plur = 'Maquinas';
+			$x_column_lubricacion  = 'Operaciones x Contrato';
+			$x_column_cliente_sing = 'Cliente';
+			$x_column_cliente_plur = 'Clientes';
+			$x_column_producto_cat_sing = 'Categoria';
+			$x_column_producto_cat_plur = 'Categorias';
+			$x_column_producto_tipo_sing = 'Tipo de Producto';
+			$x_column_producto_tipo_plur = 'Tipos de Productos';
+			$x_column_producto_nombre_sing = 'Producto';
+			$x_column_producto_nombre_plur = 'Productos';
+			$x_column_ubicacion  = 'Ubicacion';
+			$x_column_ubicacion_item  = 'Itemizado';
+			$x_column_ubicacion_lvl_1  = 'Nivel 1';
+			$x_column_ubicacion_lvl_2  = 'Nivel 2';
+			$x_column_ubicacion_lvl_3  = 'Nivel 3';
+			$x_column_ubicacion_lvl_4  = 'Nivel 4';
+			$x_column_ubicacion_lvl_5  = 'Nivel 5';
+			$x_column_puntomed_aceptable = 'Aceptable';
+			$x_column_puntomed_alerta = 'Alerta';
+			$x_column_puntomed_condenatorio = 'Condenatorio';
+			break;
+			
+		//Valores Sistema 16
+		case 16:
+			$x_column_maquina_sing = 'Maquina';
+			$x_column_maquina_plur = 'Maquinas';
+			$x_column_lubricacion  = 'Operaciones x Contrato';
+			$x_column_cliente_sing = 'Cliente';
+			$x_column_cliente_plur = 'Clientes';
+			$x_column_producto_cat_sing = 'Categoria';
+			$x_column_producto_cat_plur = 'Categorias';
+			$x_column_producto_tipo_sing = 'Tipo de Producto';
+			$x_column_producto_tipo_plur = 'Tipos de Productos';
+			$x_column_producto_nombre_sing = 'Producto';
+			$x_column_producto_nombre_plur = 'Productos';
+			$x_column_ubicacion  = 'Ubicacion';
+			$x_column_ubicacion_item  = 'Itemizado';
+			$x_column_ubicacion_lvl_1  = 'Nivel 1';
+			$x_column_ubicacion_lvl_2  = 'Nivel 2';
+			$x_column_ubicacion_lvl_3  = 'Nivel 3';
+			$x_column_ubicacion_lvl_4  = 'Nivel 4';
+			$x_column_ubicacion_lvl_5  = 'Nivel 5';
+			$x_column_puntomed_aceptable = 'Aceptable';
+			$x_column_puntomed_alerta = 'Alerta';
+			$x_column_puntomed_condenatorio = 'Condenatorio';
+			break;
+
+		//Valores Sistema 17
+		case 17:
+			$x_column_maquina_sing = 'Maquina';
+			$x_column_maquina_plur = 'Maquinas';
+			$x_column_lubricacion  = 'Operaciones x Contrato';
+			$x_column_cliente_sing = 'Cliente';
+			$x_column_cliente_plur = 'Clientes';
+			$x_column_producto_cat_sing = 'Categoria';
+			$x_column_producto_cat_plur = 'Categorias';
+			$x_column_producto_tipo_sing = 'Tipo de Producto';
+			$x_column_producto_tipo_plur = 'Tipos de Productos';
+			$x_column_producto_nombre_sing = 'Producto';
+			$x_column_producto_nombre_plur = 'Productos';
+			$x_column_ubicacion  = 'Ubicacion';
+			$x_column_ubicacion_item  = 'Itemizado';
+			$x_column_ubicacion_lvl_1  = 'Nivel 1';
+			$x_column_ubicacion_lvl_2  = 'Nivel 2';
+			$x_column_ubicacion_lvl_3  = 'Nivel 3';
+			$x_column_ubicacion_lvl_4  = 'Nivel 4';
+			$x_column_ubicacion_lvl_5  = 'Nivel 5';
+			$x_column_puntomed_aceptable = 'Aceptable';
+			$x_column_puntomed_alerta = 'Alerta';
+			$x_column_puntomed_condenatorio = 'Condenatorio';
+			break;
 		
 
 		   

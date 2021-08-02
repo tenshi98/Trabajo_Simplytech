@@ -59,15 +59,17 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Costo Creado correc
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Costo Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Costo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos de mi usuario
 $query = "SELECT idTipo,idVehiculo,Creacion_fecha,Valor,Observaciones
 FROM `vehiculos_costos`
-WHERE idCosto = {$_GET['id']}";
+WHERE idCosto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -86,7 +88,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Costo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -101,20 +103,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Observaciones)) {      $x5  = $Observaciones;     }else{$x5  = $rowdata['Observaciones'];}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo de Costo','idTipo', $x1, 2, 'idTipo', 'Nombre', 'vehiculos_costos_tipo', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Vehiculo','idVehiculo', $x2, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha','Creacion_fecha', $x3, 2);
-				$Form_Imputs->form_values('Valor', 'Valor', $x4, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo de Costo','idTipo', $x1, 2, 'idTipo', 'Nombre', 'vehiculos_costos_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x2, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha','Creacion_fecha', $x3, 2);
+				$Form_Inputs->form_values('Valor', 'Valor', $x4, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
 				
-				$Form_Imputs->form_input_hidden('idCosto', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idCosto', $_GET['id'], 2);
 				?>
 				
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -125,12 +127,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";?>
- <div class="col-sm-8 fcenter">
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Costo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -145,19 +151,19 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 				if(isset($Observaciones)) {      $x5  = $Observaciones;     }else{$x5  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo de Costo','idTipo', $x1, 2, 'idTipo', 'Nombre', 'vehiculos_costos_tipo', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Vehiculo','idVehiculo', $x2, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha','Creacion_fecha', $x3, 2);
-				$Form_Imputs->form_values('Valor', 'Valor', $x4, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo de Costo','idTipo', $x1, 2, 'idTipo', 'Nombre', 'vehiculos_costos_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x2, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha','Creacion_fecha', $x3, 2);
+				$Form_Inputs->form_values('Valor', 'Valor', $x4, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
 				
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -205,7 +211,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 /**********************************************************/
 //Variable de busqueda
 $z = "WHERE vehiculos_costos.idCosto!=0";
@@ -271,7 +277,7 @@ array_push( $arrCategorias,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -295,14 +301,14 @@ array_push( $arrCategorias,$row );
 				if(isset($Observaciones)) {      $x5  = $Observaciones;     }else{$x5  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo de Costo','idTipo', $x1, 1, 'idTipo', 'Nombre', 'vehiculos_costos_tipo', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Vehiculo','idVehiculo', $x2, 1, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha','Creacion_fecha', $x3, 1);
-				$Form_Imputs->form_values('Valor', 'Valor', $x4, 1);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo de Costo','idTipo', $x1, 1, 'idTipo', 'Nombre', 'vehiculos_costos_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x2, 1, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha','Creacion_fecha', $x3, 1);
+				$Form_Inputs->form_values('Valor', 'Valor', $x4, 1);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -321,7 +327,7 @@ array_push( $arrCategorias,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Costos Asociados</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Costos Asociados</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -335,29 +341,29 @@ array_push( $arrCategorias,$row );
 						<th width="120">
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Tipo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Vehiculo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=vehiculo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=vehiculo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=vehiculo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=vehiculo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Valor</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=valor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=valor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=valor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=valor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -369,15 +375,15 @@ array_push( $arrCategorias,$row );
 						<td><?php echo fecha_estandar($cat['Creacion_fecha']); ?></td>
 						<td><?php echo $cat['Tipo']; ?></td>
 						<td><?php echo $cat['VehiculoNombre'].' Patente '.$cat['VehiculoPatente']; ?></td>
-						<td><?php echo valores($cat['Valor'], 0); ?></td>
+						<td align="right"><?php echo valores($cat['Valor'], 0); ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_vehiculos_costos.php?view='.$cat['idCosto']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idCosto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_vehiculos_costos.php?view='.simpleEncode($cat['idCosto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idCosto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$cat['idCosto'];
+									$ubicacion = $location.'&del='.simpleEncode($cat['idCosto'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la zona '.$cat['VehiculoNombre'].' Patente '.$cat['VehiculoPatente'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>	
 							</div>
 						</td>

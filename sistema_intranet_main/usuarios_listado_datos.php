@@ -47,7 +47,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // tomo los datos del usuario
 $query = "SELECT Nombre, Fono, email, Rut, fNacimiento, idCiudad, idComuna, Direccion, Direccion_img
 FROM `usuarios_listado`
-WHERE idUsuario = {$_GET['id']}";
+WHERE idUsuario = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -154,13 +154,13 @@ $x_nperm++; $trans[$x_nperm] = "unidad_negocio_listado.php";                    
 $x_nperm++; $trans[$x_nperm] = "pago_masivo_cliente.php";                              //44 - Pago Documentos Clientes
 $x_nperm++; $trans[$x_nperm] = "pago_masivo_proveedor.php";                            //45 - Pago Documentos Proveedores
 $x_nperm++; $trans[$x_nperm] = "pago_masivo_cliente_reversa.php";                      //46 - Reversar Pago Clientes
-$x_nperm++; $trans[$x_nperm] = "pago_masivo_proveedor_reversa.php";                    //47- Reversar Pago Proveedores
+$x_nperm++; $trans[$x_nperm] = "pago_masivo_proveedor_reversa.php";                    //47 - Reversar Pago Proveedores
 $x_nperm++; $trans[$x_nperm] = "pago_boletas_cliente.php";                             //48 - Pago Boletas Honorarios Clientes
 $x_nperm++; $trans[$x_nperm] = "pago_boletas_proveedor.php";                           //49 - Pago Boletas Honorarios Empresas
 $x_nperm++; $trans[$x_nperm] = "pago_boletas_trabajador.php";                          //50 - Pago Boletas Honorarios Trabajadores
-$x_nperm++; $trans[$x_nperm] = "pago_boletas_cliente_reversa.php";                     //51
-$x_nperm++; $trans[$x_nperm] = "pago_boletas_proveedor_reversa.php";                   //52
-$x_nperm++; $trans[$x_nperm] = "pago_boletas_trabajador_reversa.php";                  //53
+$x_nperm++; $trans[$x_nperm] = "pago_boletas_cliente_reversa.php";                     //51 - Reversar Pago Clientes
+$x_nperm++; $trans[$x_nperm] = "pago_boletas_proveedor_reversa.php";                   //52 - Reversar Pago Proveedores
+$x_nperm++; $trans[$x_nperm] = "pago_boletas_trabajador_reversa.php";                  //53 - Reversar Pago Trabajadores BH
 
 //Accesos a caja chica
 $x_nperm++; $trans[$x_nperm] = "caja_chica_listado.php";                               //54 - Administrar Caja Chica
@@ -172,6 +172,14 @@ $x_nperm++; $trans[$x_nperm] = "caja_chica_rendida.php";                        
 //Accesos las camaras de seguridad
 $x_nperm++; $trans[$x_nperm] = "seguridad_camaras_listado.php";                        //59 - Administrar Camaras Seguridad
 $x_nperm++; $trans[$x_nperm] = "seguridad_camaras_vista.php";                          //60 - Ver Camaras Seguridad
+
+//Accesos a los los contratos
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_cambiar_estado.php";              //61 - Orden de Trabajo - Cambiar Estado
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_canceladas.php";                  //62 - Orden de Trabajo - Canceladas
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_crear.php";                       //63 - Orden de Trabajo - Crear
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_ejecutar.php";                    //64 - Orden de Trabajo - Ejecutar
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_finalizadas.php";                 //65 - Orden de Trabajo - Finalizadas
+$x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_terminar.php";                    //66 - Orden de Trabajo - Forzar Cierre
 
 
 
@@ -195,7 +203,7 @@ $productos    = $prm_x[22] + $prm_x[23] + $prm_x[24] + $prm_x[25] + $prm_x[26] +
 
 $x_permisos_1 = $insumos + $productos + $arriendos;
 $x_permisos_2 = $prm_x[36] + $prm_x[37];
-$x_permisos_3 = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41] + $prm_x[42] + $prm_x[43];
+$x_permisos_3 = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41] + $prm_x[42] + $prm_x[43] + $prm_x[61] + $prm_x[62] + $prm_x[63] + $prm_x[64] + $prm_x[65] + $prm_x[66];
 $x_permisos_4 = $prm_x[54] + $prm_x[55] + $prm_x[56] + $prm_x[57] + $prm_x[58];
 $x_permisos_5 = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49] + $prm_x[50] + $prm_x[51] + $prm_x[52] + $prm_x[53];
 $x_permisos_6 = $prm_x[59] + $prm_x[60];
@@ -204,21 +212,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Usuario</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos Personales</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Datos Personales');?>
 </div>
 <div class="clearfix"></div>
 
@@ -226,34 +220,34 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'usuarios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class="active"><a href="<?php echo 'usuarios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos</a></li>
-				<li class=""><a href="<?php echo 'usuarios_listado_permisos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Permisos</a></li>
+				<li class=""><a href="<?php echo 'usuarios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class="active"><a href="<?php echo 'usuarios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'usuarios_listado_permisos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Permisos</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'usuarios_listado_sistemas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Acceso Sistemas</a></li>
-						<li class=""><a href="<?php echo 'usuarios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'usuarios_listado_tipo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Tipo</a></li>
-						<li class=""><a href="<?php echo 'usuarios_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Contraseña</a></li>
-						<li class=""><a href="<?php echo 'usuarios_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class=""><a href="<?php echo 'usuarios_listado_sistemas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Acceso Sistemas</a></li>
+						<li class=""><a href="<?php echo 'usuarios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'usuarios_listado_tipo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-adjust" aria-hidden="true"></i> Tipo</a></li>
+						<li class=""><a href="<?php echo 'usuarios_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
+						<li class=""><a href="<?php echo 'usuarios_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<?php if($x_permisos_1 > 0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_bodegas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Bodegas</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_bodegas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-database" aria-hidden="true"></i> Bodegas</a></li>
 						<?php } ?>
 						<?php if($x_permisos_2 > 0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_equipos_telemetria.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Equipos telemetria</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_equipos_telemetria.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Equipos telemetria</a></li>
 						<?php } ?>
 						<?php if($x_permisos_3 > 0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Contratos</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
 						<?php } ?>
 						<?php if($x_permisos_4 > 0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_cajas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Caja Chica</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_cajas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Caja Chica</a></li>
 						<?php } ?>
 						<?php if($x_permisos_5>0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_documentos_pago.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Documentos Pago</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_documentos_pago.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Documentos Pago</a></li>
 						<?php } ?>
 						<?php if($x_permisos_6>0){ ?>
-							<li class=""><a href="<?php echo 'usuarios_listado_camaras.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Camaras de Seguridad</a></li>
+							<li class=""><a href="<?php echo 'usuarios_listado_camaras.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-video-camera" aria-hidden="true"></i> Camaras de Seguridad</a></li>
 						<?php } ?>
 					</ul>
                 </li>           
@@ -275,20 +269,20 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 					if(isset($Direccion)) {      $x8  = $Direccion;      }else{$x8  = $rowdata['Direccion'];}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-					$Form_Imputs->form_input_phone('Fono', 'Fono', $x2, 1);
-					$Form_Imputs->form_input_icon( 'Email', 'email', $x3, 2,'fa fa-envelope-o');
-					$Form_Imputs->form_input_rut('Rut', 'Rut', $x4, 1);
-					$Form_Imputs->form_date('F Nacimiento','fNacimiento', $x5, 1);
-					$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+					$Form_Inputs->form_input_phone('Fono', 'Fono', $x2, 1);
+					$Form_Inputs->form_input_icon('Email', 'email', $x3, 2,'fa fa-envelope-o');
+					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
+					$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x5, 1);
+					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										     'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										     $dbConn, 'form1');	
-					$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x8, 1,'fa fa-map');
+					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');
 					
 					
-					$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-					$Form_Imputs->form_input_hidden('idUsuario', $_GET['id'], 2);
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_hidden('idUsuario', $_GET['id'], 2);
 					?>
 
 					<div class="form-group">		
@@ -302,8 +296,8 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

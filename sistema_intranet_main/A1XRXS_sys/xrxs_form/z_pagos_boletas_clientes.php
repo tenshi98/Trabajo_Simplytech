@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -27,11 +31,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idCliente':      if(empty($idCliente)){       $error['idCliente']      = 'error/No ha ingresado el id';}break;
 			case 'idDocPago':      if(empty($idDocPago)){       $error['idDocPago']      = 'error/No ha seleccionado el documento de pago';}break;
 			case 'N_DocPago':      if(empty($N_DocPago)){       $error['N_DocPago']      = 'error/No ha ingresado numero de documento de pago';}break;
@@ -78,23 +82,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				
 				//Verifico el documento de pago
-				$query = "SELECT Nombre
-				FROM `sistema_documentos_pago`
-				WHERE idDocPago=".$idDocPago."";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowDoc = mysqli_fetch_assoc ($resultado);
+				$rowDoc = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				////////////////////////////////////////////////////////////////////////////////////////////////
 				//recorro todos los existentes y les doy pago
@@ -158,7 +146,7 @@ if( ! defined('XMBCXRXSKGC')) {
 											
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `boleta_honorarios_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -200,7 +188,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `pagos_boletas_clientes` (idFacturacion, idDocPago, N_DocPago, F_Pago,
 						F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idCliente) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta

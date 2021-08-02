@@ -42,7 +42,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre,Contacto_Nombre,Contacto_Fono1,Contacto_Fono2,Contacto_Fax,Contacto_Web,Contacto_Email
 FROM `core_sistemas`
-WHERE idSistema = {$_GET['id']}";
+WHERE idSistema = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -162,21 +162,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Sistema</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos de Contacto</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos de Contacto');?>
 </div>
 <div class="clearfix"></div>
 
@@ -184,35 +170,35 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'sistema_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'sistema_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class="active"><a href="<?php echo 'sistema_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contacto</a></li>
+				<li class=""><a href="<?php echo 'sistema_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'sistema_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="<?php echo 'sistema_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'sistema_listado_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Datos Contrato</a></li>
-						<li class=""><a href="<?php echo 'sistema_listado_datos_temas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Temas</a></li>
-						<li class=""><a href="<?php echo 'sistema_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Estado</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_temas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<?php if(isset($Count_OT)&&$Count_OT!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >OT</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'sistema_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Logo</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
 						<?php if(isset($Count_OC)&&$Count_OC!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Aprobador OC</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<?php } ?>
 						<?php if(isset($Count_productos)&&$Count_productos!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_productos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Productos Usados</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_productos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_insumos)&&$Count_insumos!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_insumos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Insumos Usados</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_insumos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_especies.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Especies</a></li>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_nombres.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Variedades</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_especies.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_nombres.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Aprobador Cross Shipping</a></li>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_cross_aprobadas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" >Cross Shipping Correos Aprobados</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_cross_aprobadas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Cross Shipping Correos Aprobados</a></li>
 						<?php } ?>
 					</ul>
                 </li>           
@@ -232,16 +218,16 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					if(isset($Contacto_Email)) {     $x6 = $Contacto_Email;    }else{$x6 = $rowdata['Contacto_Email'];}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_input_icon( 'Nombre Contacto', 'Contacto_Nombre', $x1, 1,'fa fa-address-card-o');
-					$Form_Imputs->form_input_phone('Fono 1', 'Contacto_Fono1', $x2, 1);
-					$Form_Imputs->form_input_phone('Fono 2', 'Contacto_Fono2', $x3, 1);
-					$Form_Imputs->form_input_fax('Fax', 'Contacto_Fax', $x4, 1);
-					$Form_Imputs->form_input_icon( 'Web', 'Contacto_Web', $x5, 1,'fa fa-internet-explorer');
-					$Form_Imputs->form_input_icon( 'Email', 'Contacto_Email', $x6, 1,'fa fa-envelope-o');
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_input_icon('Nombre Contacto', 'Contacto_Nombre', $x1, 1,'fa fa-address-card-o');
+					$Form_Inputs->form_input_phone('Fono 1', 'Contacto_Fono1', $x2, 1);
+					$Form_Inputs->form_input_phone('Fono 2', 'Contacto_Fono2', $x3, 1);
+					$Form_Inputs->form_input_fax('Fax', 'Contacto_Fax', $x4, 1);
+					$Form_Inputs->form_input_icon('Web', 'Contacto_Web', $x5, 1,'fa fa-internet-explorer');
+					$Form_Inputs->form_input_icon('Email', 'Contacto_Email', $x6, 1,'fa fa-envelope-o');
 					
 					
-					$Form_Imputs->form_input_hidden('idSistema', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					?>
 					
 					
@@ -257,8 +243,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

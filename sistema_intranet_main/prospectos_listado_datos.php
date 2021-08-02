@@ -44,9 +44,11 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Prospecto borrado c
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos de mi usuario
-$query = "SELECT idTipo, Nombre, fNacimiento, idCiudad, idComuna, Direccion, idSistema
+$query = "SELECT idTipo, Nombre, fNacimiento, idCiudad, idComuna, Direccion, idSistema,
+idTab_1, idTab_2, idTab_3, idTab_4, idTab_5, idTab_6, idTab_7, idTab_8, idTab_8, idTab_9, 
+idTab_10, idTab_11, idTab_12, idTab_13, idTab_14, idTab_15
 FROM `prospectos_listado`
-WHERE idProspecto = {$_GET['id']}";
+WHERE idProspecto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -63,21 +65,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Prospecto</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos Basicos</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
@@ -85,18 +73,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'prospectos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class="active"><a href="<?php echo 'prospectos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'prospectos_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contacto</a></li>
+				<li class=""><a href="<?php echo 'prospectos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class="active"><a href="<?php echo 'prospectos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'prospectos_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'prospectos_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Persona Contacto</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Comerciales</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_fidelizacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado Fidelizacion</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_etapas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Etapa Fidelizacion</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_fidelizacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Estado Fidelizacion</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_etapas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sort-amount-asc" aria-hidden="true"></i> Etapa Fidelizacion</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_crear_cliente.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Crear Cliente</a></li>
 					</ul>
                 </li>           
 			</ul>	
@@ -113,22 +102,44 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($idCiudad)) {         $x4  = $idCiudad;          }else{$x4  = $rowdata['idCiudad'];}
 					if(isset($idComuna)) {         $x5  = $idComuna;          }else{$x5  = $rowdata['idComuna'];}
 					if(isset($Direccion)) {        $x6  = $Direccion;         }else{$x6  = $rowdata['Direccion'];}
+					if(isset($idTab_1)) {          $x7  = $idTab_1;           }else{$x7  = $rowdata['idTab_1'];}
+					if(isset($idTab_2)) {          $x7 .= ','.$idTab_2;       }else{$x7 .= ','.$rowdata['idTab_2'];}
+					if(isset($idTab_3)) {          $x7 .= ','.$idTab_3;       }else{$x7 .= ','.$rowdata['idTab_3'];}
+					if(isset($idTab_4)) {          $x7 .= ','.$idTab_4;       }else{$x7 .= ','.$rowdata['idTab_4'];}
+					if(isset($idTab_5)) {          $x7 .= ','.$idTab_5;       }else{$x7 .= ','.$rowdata['idTab_5'];}
+					if(isset($idTab_6)) {          $x7 .= ','.$idTab_6;       }else{$x7 .= ','.$rowdata['idTab_6'];}
+					if(isset($idTab_7)) {          $x7 .= ','.$idTab_7;       }else{$x7 .= ','.$rowdata['idTab_7'];}
+					if(isset($idTab_8)) {          $x7 .= ','.$idTab_8;       }else{$x7 .= ','.$rowdata['idTab_8'];}
+					if(isset($idTab_9)) {          $x7 .= ','.$idTab_9;       }else{$x7 .= ','.$rowdata['idTab_9'];}
+					if(isset($idTab_10)) {         $x7 .= ','.$idTab_10;      }else{$x7 .= ','.$rowdata['idTab_10'];}
+					if(isset($idTab_11)) {         $x7 .= ','.$idTab_11;      }else{$x7 .= ','.$rowdata['idTab_11'];}
+					if(isset($idTab_12)) {         $x7 .= ','.$idTab_12;      }else{$x7 .= ','.$rowdata['idTab_12'];}
+					if(isset($idTab_13)) {         $x7 .= ','.$idTab_13;      }else{$x7 .= ','.$rowdata['idTab_13'];}
+					if(isset($idTab_14)) {         $x7 .= ','.$idTab_14;      }else{$x7 .= ','.$rowdata['idTab_14'];}
+					if(isset($idTab_15)) {         $x7 .= ','.$idTab_15;      }else{$x7 .= ','.$rowdata['idTab_15'];}
 					
-
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_select('Tipo de Prospecto','idTipo', $x1, 2, 'idTipo', 'Nombre', 'prospectos_tipos', 0, '', $dbConn);
-					$Form_Imputs->form_input_text( 'Nombre Fantasia', 'Nombre', $x2, 2);
-					$Form_Imputs->form_date('F Ingreso Sistema','fNacimiento', $x3, 1);
-					$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_tittle(3, 'Datos Basicos');
+					$Form_Inputs->form_select('Tipo de Prospecto','idTipo', $x1, 2, 'idTipo', 'Nombre', 'prospectos_tipos', 0, '', $dbConn);
+					$Form_Inputs->form_input_text('Nombre Fantasia', 'Nombre', $x2, 2);
+					$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x3, 1);
+					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x5, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
-					$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x6, 1,'fa fa-map');	 
+					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x6, 1,'fa fa-map');	 
+					//Solo para plataforma Intranet
+					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
+						$Form_Inputs->form_tittle(3, 'Unidades de Negocio');
+						$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x7, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+					}
 					
-					
-					$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-					$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-					$Form_Imputs->form_input_hidden('idProspecto', $_GET['id'], 2);		
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idProspecto', $_GET['id'], 2);		
+					$Form_Inputs->form_input_hidden('FModificacion', fecha_actual(), 2);
+					$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);
+					$Form_Inputs->form_input_hidden('idUsuarioMod', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					?>
 
 					<div class="form-group">		
@@ -142,8 +153,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

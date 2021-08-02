@@ -11,33 +11,31 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                Carga del documento HTML                                                        */
 /**********************************************************************************************************************************/
 /**********************************************************************************************************************************/
+
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresUniMed_'.$i;
+}
 // Se traen todos los datos de mi usuario
 $query = "SELECT
-telemetria_listado_errores.Descripcion, 
-telemetria_listado_errores.Fecha, 
-telemetria_listado_errores.Hora, 
-telemetria_listado_errores.Sensor, 
-telemetria_listado_errores.Valor,
-telemetria_listado_errores.Valor_min,
-telemetria_listado_errores.Valor_max,
-telemetria_listado_errores.GeoLatitud,
-telemetria_listado_errores.GeoLongitud,
-telemetria_listado.Nombre AS NombreEquipo,
-SensoresUniMed_1, SensoresUniMed_2, SensoresUniMed_3, SensoresUniMed_4, SensoresUniMed_5, 
-SensoresUniMed_6, SensoresUniMed_7, SensoresUniMed_8, SensoresUniMed_9, SensoresUniMed_10, 
-SensoresUniMed_11, SensoresUniMed_12, SensoresUniMed_13, SensoresUniMed_14, SensoresUniMed_15, 
-SensoresUniMed_16, SensoresUniMed_17, SensoresUniMed_18, SensoresUniMed_19, SensoresUniMed_20, 
-SensoresUniMed_21, SensoresUniMed_22, SensoresUniMed_23, SensoresUniMed_24, SensoresUniMed_25, 
-SensoresUniMed_26, SensoresUniMed_27, SensoresUniMed_28, SensoresUniMed_29, SensoresUniMed_30, 
-SensoresUniMed_31, SensoresUniMed_32, SensoresUniMed_33, SensoresUniMed_34, SensoresUniMed_35, 
-SensoresUniMed_36, SensoresUniMed_37, SensoresUniMed_38, SensoresUniMed_39, SensoresUniMed_40, 
-SensoresUniMed_41, SensoresUniMed_42, SensoresUniMed_43, SensoresUniMed_44, SensoresUniMed_45, 
-SensoresUniMed_46, SensoresUniMed_47, SensoresUniMed_48, SensoresUniMed_49, SensoresUniMed_50
+telemetria_listado_errores_999.Descripcion, 
+telemetria_listado_errores_999.Fecha, 
+telemetria_listado_errores_999.Hora, 
+telemetria_listado_errores_999.Sensor, 
+telemetria_listado_errores_999.Valor,
+telemetria_listado_errores_999.Valor_min,
+telemetria_listado_errores_999.Valor_max,
+telemetria_listado_errores_999.GeoLatitud,
+telemetria_listado_errores_999.GeoLongitud,
+telemetria_listado.Nombre AS NombreEquipo
+".$subquery."
 
-FROM `telemetria_listado_errores`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria
-WHERE telemetria_listado_errores.idErrores = {$_GET['view']}
-AND telemetria_listado_errores.idTipo='999'
+FROM `telemetria_listado_errores_999`
+LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores_999.idTelemetria
+WHERE telemetria_listado_errores_999.idErrores = ".simpleDecode($_GET['view'], fecha_actual())."
+AND telemetria_listado_errores_999.idTipo='999'
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -76,6 +74,10 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUnimed,$row );
 }
+$arrFinalUnimed = array();
+foreach ($arrUnimed as $sen) {
+	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
+}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -90,25 +92,20 @@ require_once 'core/Web.Header.Views.php';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>	
 		</header>
 		<div class="table-responsive">
 			<?php 
 			//Guardo la unidad de medida
-			$unimed = '';
-			foreach ($arrUnimed as $sen) {
-				if($rowdata['SensoresUniMed_'.$rowdata['Sensor']]==$sen['idUniMed']){
-					$unimed = ' '.$sen['Nombre'];	
-				}
-			}
+			$unimed = ' '.$arrFinalUnimed[$rowdata['SensoresUniMed_'.$rowdata['Sensor']]];
 			$explanation  = '<strong>'.fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].'</strong><br/>';
 			$explanation .= $rowdata['Descripcion'].'<br/>';
 			$explanation .= '<strong>Medida: </strong>'.Cantidades_decimales_justos($rowdata['Valor']).$unimed.'<br/>';
 			$explanation .= '<strong>Min: </strong>'.Cantidades_decimales_justos($rowdata['Valor_min']).$unimed.'<br/>';
 			$explanation .= '<strong>Max: </strong>'.Cantidades_decimales_justos($rowdata['Valor_max']).$unimed.'<br/>';
 							
-			echo mapa1($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'])?>
+			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
 				
 		</div>	
 	</div>

@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -103,11 +107,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idMaquina':           if(empty($idMaquina)){            $error['idMaquina']             = 'error/No ha seleccionado la licitacion';}break;
 			case 'idSistema':           if(empty($idSistema)){            $error['idSistema']             = 'error/No ha seleccionado el sistema';}break;
 			case 'idEstado':            if(empty($idEstado)){             $error['idEstado']              = 'error/No ha seleccionado el estado';}break;
@@ -130,13 +134,13 @@ if( ! defined('XMBCXRXSKGC')) {
 			case 'idCliente':           if(empty($idCliente)){            $error['idCliente']             = 'error/No ha seleccionado el cliente';}break;
 			
 			case 'idUtilizable':        if(empty($idUtilizable)){         $error['idUtilizable']          = 'error/No ha seleccionado si es utilizable';}break;
-			case 'Marca':               if(empty($Marca)){                $error['Marca']                 = 'error/No ha ingresado la marca';}break;
-			case 'AnoFab':              if(empty($AnoFab)){               $error['AnoFab']                = 'error/No ha ingresado el año de fabricacion';}break;
-			case 'idSubTipo':           if(empty($idSubTipo)){            $error['idSubTipo']             = 'error/No ha seleccionado el tipo';}break;
-			case 'Grasa_inicial':       if(empty($Grasa_inicial)){        $error['Grasa_inicial']         = 'error/No ha ingresado la grasa inicial';}break;
-			case 'Grasa_relubricacion': if(empty($Grasa_relubricacion)){  $error['Grasa_relubricacion']   = 'error/No ha ingresado la grasa de relubricacion';}break;
-			case 'Aceite':              if(empty($Aceite)){               $error['Aceite']                = 'error/No ha ingresado el aceite';}break;
-			case 'Cantidad':            if(empty($Cantidad)){             $error['Cantidad']              = 'error/No ha ingresado la cantidad';}break;
+			case 'Marca':               if(!isset($Marca)){                $error['Marca']                 = 'error/No ha ingresado la marca';}break;
+			case 'AnoFab':              if(!isset($AnoFab)){               $error['AnoFab']                = 'error/No ha ingresado el año de fabricacion';}break;
+			case 'idSubTipo':           if(!isset($idSubTipo)){            $error['idSubTipo']             = 'error/No ha seleccionado el tipo';}break;
+			case 'Grasa_inicial':       if(!isset($Grasa_inicial)){        $error['Grasa_inicial']         = 'error/No ha ingresado la grasa inicial';}break;
+			case 'Grasa_relubricacion': if(!isset($Grasa_relubricacion)){  $error['Grasa_relubricacion']   = 'error/No ha ingresado la grasa de relubricacion';}break;
+			case 'Aceite':              if(!isset($Aceite)){               $error['Aceite']                = 'error/No ha ingresado el aceite';}break;
+			case 'Cantidad':            if(!isset($Cantidad)){             $error['Cantidad']              = 'error/No ha ingresado la cantidad';}break;
 			case 'idUml':               if(empty($idUml)){                $error['idUml']                 = 'error/No ha seleccionado la unidad de medida';}break;
 			case 'Frecuencia':          if(empty($Frecuencia)){           $error['Frecuencia']            = 'error/No ha ingresado la frecuencia';}break;
 			case 'idFrecuencia':        if(empty($idFrecuencia)){         $error['idFrecuencia']          = 'error/No ha seleccionado la frecuencia';}break;
@@ -187,7 +191,20 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){             $error['Codigo']      = 'error/Edita Codigo, contiene palabras no permitidas'; }	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){             $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Modelo)&&contar_palabras_censuradas($Modelo)!=0){             $error['Modelo']      = 'error/Edita Modelo, contiene palabras no permitidas'; }	
+	if(isset($Serie)&&contar_palabras_censuradas($Serie)!=0){               $error['Serie']       = 'error/Edita Serie, contiene palabras no permitidas'; }	
+	if(isset($Fabricante)&&contar_palabras_censuradas($Fabricante)!=0){     $error['Fabricante']  = 'error/Edita Fabricante, contiene palabras no permitidas'; }	
+	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){   $error['Descripcion'] = 'error/Edita Descripcion, contiene palabras no permitidas'; }	
+	if(isset($Marca)&&contar_palabras_censuradas($Marca)!=0){               $error['Marca']       = 'error/Edita Marca, contiene palabras no permitidas'; }	
+	if(isset($Frecuencia)&&contar_palabras_censuradas($Frecuencia)!=0){     $error['Frecuencia']  = 'error/Edita Frecuencia, contiene palabras no permitidas'; }	
+	if(isset($Saf)&&contar_palabras_censuradas($Saf)!=0){                   $error['Saf']         = 'error/Edita Saf, contiene palabras no permitidas'; }	
+	if(isset($Numero)&&contar_palabras_censuradas($Numero)!=0){             $error['Numero']      = 'error/Edita Numero, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -204,7 +221,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre de la maquina ya existe en el sistema';}
@@ -238,7 +255,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `maquinas_listado` (idSistema, idEstado, Codigo, Nombre, Modelo, Serie, Fabricante,
 				fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -278,7 +295,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)&&isset($idMaquina)){
-				$ndata_1 = db_select_nrows ('Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idMaquina!='".$idMaquina."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idMaquina!='".$idMaquina."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre de la licitacion ya existe en el sistema';}
@@ -352,92 +369,91 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//maximo de registros
-			$nmax = 25;
-			// Se obtiene el nombre del logo
-			$query = "SELECT Direccion_img, FichaTecnica, HDS
-			FROM `maquinas_listado`
-			WHERE idMaquina = {$_GET['del']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `maquinas_listado` WHERE idMaquina = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
-			//Se elimina la imagen
-			if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
-				try {
-					if(!is_writable('upload/'.$rowdata['Direccion_img'])){
-						//throw new Exception('File not writable');
-					}else{
-						unlink('upload/'.$rowdata['Direccion_img']);
-					}
-				}catch(Exception $e) { 
-					//guardar el dato en un archivo log
-				}
-			}
-			//Se elimina el archivo adjunto
-			if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
-				try {
-					if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
-						//throw new Exception('File not writable');
-					}else{
-						unlink('upload/'.$rowdata['FichaTecnica']);
-					}
-				}catch(Exception $e) { 
-					//guardar el dato en un archivo log
-				}
 			}
 			
-			//Se elimina el archivo adjunto
-			if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
-				try {
-					if(!is_writable('upload/'.$rowdata['HDS'])){
-						//throw new Exception('File not writable');
-					}else{
-						unlink('upload/'.$rowdata['HDS']);
-					}
-				}catch(Exception $e) { 
-					//guardar el dato en un archivo log
-				}
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
 			}
 			
-			
-			
-			//se borran los datos relacionados
-			for ($i = 1; $i <= $nmax; $i++) {
-				$query  = "DELETE FROM `maquinas_listado_level_".$i."` WHERE idMaquina = {$_GET['del']}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-			}
+			if($errorn==0){
+				//maximo de registros
+				$nmax = 25;
 				
-			//redirijo			
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'Direccion_img, FichaTecnica, HDS', 'maquinas_listado', '', 'idMaquina = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+				//se borran los datos
+				$resultado = db_delete_data (false, 'maquinas_listado', 'idMaquina = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				//Se elimina la imagen
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['Direccion_img']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				//Se elimina el archivo adjunto
+				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['FichaTecnica']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//Se elimina el archivo adjunto
+				if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['HDS'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['HDS']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//se borran los datos relacionados
+				for ($i = 1; $i <= $nmax; $i++) {
+					$resultado = db_delete_data (false, 'maquinas_listado_level_'.$i, 'idMaquina = "'.$_GET['del'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				}
+					
+				//redirijo			
+				header( 'Location: '.$location.'&deleted=true' );
+				die;
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 
 		break;	
 /*******************************************************************************************************************/
@@ -447,7 +463,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["Direccion_img"]["error"] > 0){
-				$error['Direccion_img']       = 'error/Ha ocurrido un error';
+				$error['Direccion_img'] = 'error/'.uploadPHPError($_FILES["Direccion_img"]["error"]);
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
@@ -574,7 +590,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["FichaTecnica"]["error"] > 0){
-				$error['FichaTecnica']       = 'error/Ha ocurrido un error';
+				$error['FichaTecnica'] = 'error/'.uploadPHPError($_FILES["FichaTecnica"]["error"]);
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/pdf", "application/octet-stream", "application/x-real", "application/vnd.adobe.xfdf", "application/vnd.fdf", "binary/octet-stream");
@@ -636,7 +652,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["HDS"]["error"] > 0){
-				$error['HDS']       = 'error/Ha ocurrido un error';
+				$error['HDS'] = 'error/'.uploadPHPError($_FILES["HDS"]["error"]);
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/pdf", "application/octet-stream", "application/x-real", "application/vnd.adobe.xfdf", "application/vnd.fdf", "binary/octet-stream");
@@ -697,14 +713,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se obtiene el nombre del logo
-			$query = "SELECT Direccion_img
-			FROM `maquinas_listado`
-			WHERE idMaquina = {$_GET['del_img']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
+			$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado', '', 'idMaquina = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `maquinas_listado` SET Direccion_img='' WHERE idMaquina = '{$_GET['del_img']}'";
+			$query  = "UPDATE `maquinas_listado` SET Direccion_img='' WHERE idMaquina = '".$_GET['del_img']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -751,14 +763,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se obtiene el nombre del logo
-			$query = "SELECT FichaTecnica
-			FROM `maquinas_listado`
-			WHERE idMaquina = {$_GET['del_file']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
+			$rowdata = db_select_data (false, 'FichaTecnica', 'maquinas_listado', '', 'idMaquina = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `maquinas_listado` SET FichaTecnica='' WHERE idMaquina = '{$_GET['del_file']}'";
+			$query  = "UPDATE `maquinas_listado` SET FichaTecnica='' WHERE idMaquina = '".$_GET['del_file']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -803,14 +811,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se obtiene el nombre del logo
-			$query = "SELECT HDS
-			FROM `maquinas_listado`
-			WHERE idMaquina = {$_GET['del_hds']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
+			$rowdata = db_select_data (false, 'HDS', 'maquinas_listado', '', 'idMaquina = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `maquinas_listado` SET HDS='' WHERE idMaquina = '{$_GET['del_hds']}'";
+			$query  = "UPDATE `maquinas_listado` SET HDS='' WHERE idMaquina = '".$_GET['del_hds']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -860,7 +864,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			/*$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($lvl)&&isset($Nombre)&&isset($idMaquina)&&isset($idSistema)&&isset($Codigo)){
-				$ndata_1 = db_select_nrows ('Nombre', 'maquinas_listado_level_', '', "Nombre='".$Nombre."' AND idMaquina='".$idMaquina."' AND idSistema='".$idSistema."' AND Codigo='".$Codigo."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'maquinas_listado_level_', '', "Nombre='".$Nombre."' AND idMaquina='".$idMaquina."' AND idSistema='".$idSistema."' AND Codigo='".$Codigo."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El dato ya existe';}
@@ -911,7 +915,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				Codigo, Nombre, Marca, Modelo, AnoFab, Serie, Direccion_img, idSubTipo, Grasa_inicial,
 				Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia,idProducto,Saf , Numero 
 				".$xbla." ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1001,49 +1005,62 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			for ($i = $_GET['lvl']; $i <= $_GET['nmax']; $i++) {
-				
-				// Se obtiene el nombre del logo
-				$query = "SELECT Direccion_img
-				FROM `maquinas_listado_level_".$i."`
-				WHERE idLevel_".$_GET['lvl']." = {$_GET['del_idLevel']}";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			
-				$query  = "DELETE FROM `maquinas_listado_level_".$i."` WHERE idLevel_".$_GET['lvl']." = {$_GET['del_idLevel']}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_idLevel']) OR !validaEntero($_GET['del_idLevel']))&&$_GET['del_idLevel']!=''){
+				$indice = simpleDecode($_GET['del_idLevel'], fecha_actual());
+			}else{
+				$indice = $_GET['del_idLevel'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
-				//Se elimina la imagen
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				for ($i = $_GET['lvl']; $i <= $_GET['nmax']; $i++) {
+					
+					// Se obtiene el nombre del logo
+					$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado_level_'.$i, '', 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+					//se borran los datos
+					$resultado = db_delete_data (false, 'maquinas_listado_level_'.$i, 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+					//Se elimina la imagen
+					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['Direccion_img']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
 						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
 					}
 				}
+					
+				//redirijo			
+				header( 'Location: '.$location.'&deleted=true' );
+				die;
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
 			}
-				
-			//redirijo			
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			
 
 		break;							
 /*******************************************************************************************************************/
@@ -1053,9 +1070,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idMaquina  = $_GET['id'];
-			$estado     = $_GET['estado'];
-			$query  = "UPDATE maquinas_listado SET idEstado = '$estado'	
-			WHERE idMaquina    = '$idMaquina'";
+			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
+			$query  = "UPDATE maquinas_listado SET idEstado = '".$idEstado."'	
+			WHERE idMaquina = '".$idMaquina."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -1157,7 +1174,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idMaquina)){
-				$ndata_1 = db_select_nrows ('Nombre', 'maquinas_listado_matriz', '', "Nombre='".$Nombre."' AND idMaquina='".$idMaquina."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'maquinas_listado_matriz', '', "Nombre='".$Nombre."' AND idMaquina='".$idMaquina."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La matriz ya existe en el sistema';}
@@ -1174,7 +1191,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `maquinas_listado_matriz` (idMaquina, Nombre, cantPuntos, idEstado) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1252,24 +1269,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `maquinas_listado_matriz` WHERE idMatriz = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
 			}
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'maquinas_listado_matriz', 'idMatriz = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;
 /*******************************************************************************************************************/
@@ -1279,18 +1319,14 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			//obtengo los datos de la maquina previamente seleccionada
-			$query = "SELECT idSistema
-			FROM `maquinas_listado`
-			WHERE idMaquina = {$idMaquina}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
+			$rowdata = db_select_data (false, 'idSistema', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($rowdata['idSistema'])){
-				$ndata_1 = db_select_nrows ('Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$rowdata['idSistema']."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$rowdata['idSistema']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre de la maquina ya existe en el sistema';}
@@ -1302,12 +1338,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/*******************************************************************/
 				// Se traen todos los datos de la maquina
-				$query = "SELECT idSistema, Codigo, Modelo, Serie, Fabricante, fincorporacion, Descripcion,
-				idConfig_1, idConfig_2, idConfig_3, idCliente
-				FROM `maquinas_listado`
-				WHERE idMaquina = {$idMaquina}";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata = mysqli_fetch_assoc ($resultado);
+				$rowdata = db_select_data (false, 'idSistema, Codigo, Modelo, Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idCliente', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Se crea la maquina
 				$a  = "'".$rowdata['idSistema']."'" ; 
@@ -1328,7 +1359,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `maquinas_listado` (idSistema, idEstado, Codigo, Nombre, Modelo, 
 				Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idCliente) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1345,415 +1376,56 @@ if( ! defined('XMBCXRXSKGC')) {
 				$maquina_id = mysqli_insert_id($dbConn);
 				/*******************************************************************/
 				$arrLVL_1 = array();
-				$query = "SELECT 
-				idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_1`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_1,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_1 = db_select_array (false, 'idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_1', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_2 = array();
-				$query = "SELECT 
-				idLevel_2, idLevel_1,
-				
-				idSistema, idMaquina, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_2`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_2,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_2 = db_select_array (false, 'idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_2', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_3 = array();
-				$query = "SELECT 
-				idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idMaquina, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_3`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_3,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_3 = db_select_array (false, 'idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_3', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_4 = array();
-				$query = "SELECT 
-				idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_4`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_4,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_4 = db_select_array (false, 'idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_4', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_5 = array();
-				$query = "SELECT 
-				idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_5`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_5,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_5 = db_select_array (false, 'idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_5', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_6 = array();
-				$query = "SELECT 
-				idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_6`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_6,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_6 = db_select_array (false, 'idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_6', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_7 = array();
-				$query = "SELECT 
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_7`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_7,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_7 = db_select_array (false, 'idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_7', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_8 = array();
-				$query = "SELECT 
-				idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_8`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_8,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_8 = db_select_array (false, 'idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_8', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_9 = array();
-				$query = "SELECT 
-				idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_9`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_9,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_9 = db_select_array (false, 'idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_9', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_10 = array();
-				$query = "SELECT 
-				idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_10`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_10,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_10 = db_select_array (false, 'idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_10', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_11 = array();
-				$query = "SELECT 
-				idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_11`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_11,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_11 = db_select_array (false, 'idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_11', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_12 = array();
-				$query = "SELECT 
-				idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_12`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_12,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_12 = db_select_array (false, 'idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_12', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_13 = array();
-				$query = "SELECT 
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_13`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_13,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_13 = db_select_array (false, 'idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_13', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_14 = array();
-				$query = "SELECT 
-				idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_14`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_14,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_14 = db_select_array (false, 'idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_14', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrLVL_15 = array();
-				$query = "SELECT 
-				idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_15`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_15,$row );
-				}
-				/*******************************************************************/
+				$arrLVL_15 = db_select_array (false, 'idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_15', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				/*$arrLVL_16 = array();
-				$query = "SELECT 
-				idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_16`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_16,$row );
-				}
-				/*******************************************************************/
-				/*$arrLVL_17 = array();
-				$query = "SELECT 
-				idLevel_17, idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_17`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_17,$row );
-				}
-				/*******************************************************************/
-				/*$arrLVL_18 = array();
-				$query = "SELECT 
-				idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_18`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_18,$row );
-				}
-				/*******************************************************************/
-				/*$arrLVL_19 = array();
-				$query = "SELECT 
-				idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_19`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_19,$row );
-				}
-				/*******************************************************************/
-				/*$arrLVL_20 = array();
-				$query = "SELECT 
-				idLevel_20,
-				idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_20`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_20,$row );
-				}
-				/*******************************************************************/
-				/*$arrLVL_21 = array();
-				$query = "SELECT 
-				idLevel_21, idLevel_20,
-				idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_21`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_21,$row );
-				}
-				/*******************************************************************/
-				/*$arrLVL_22 = array();
-				$query = "SELECT 
-				idLevel_22, idLevel_21, idLevel_20,
-				idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_22`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_22,$row );
-				}
-				/*******************************************************************/
-				/*$arrLVL_23 = array();
-				$query = "SELECT 
-				idLevel_23, idLevel_22, idLevel_21, idLevel_20,
-				idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_23`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_23,$row );
-				}
-				/*******************************************************************/
-				/*$arrLVL_24 = array();
-				$query = "SELECT 
-				idLevel_24, idLevel_23, idLevel_22, idLevel_21, idLevel_20,
-				idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_24`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_24,$row );
-				}
-				/*******************************************************************/
-				/*$arrLVL_25 = array();
-				$query = "SELECT 
-				idLevel_25, idLevel_24, idLevel_23, idLevel_22, idLevel_21, idLevel_20,
-				idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14,
-				idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8,
-				idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1,
-				
-				idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-				tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero
-				
-				FROM `maquinas_listado_level_25`
-				WHERE idMaquina = {$idMaquina} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrLVL_25,$row );
-				}
+				$arrLVL_16 = db_select_array (false, 'idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_16', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrLVL_17 = array();
+				$arrLVL_17 = db_select_array (false, 'idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_17', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrLVL_18 = array();
+				$arrLVL_18 = db_select_array (false, 'idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_18', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrLVL_19 = array();
+				$arrLVL_19 = db_select_array (false, 'idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_19', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrLVL_20 = array();
+				$arrLVL_20 = db_select_array (false, 'idLevel_20,idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_20', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrLVL_21 = array();
+				$arrLVL_21 = db_select_array (false, 'idLevel_21, idLevel_20,idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_21', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrLVL_22 = array();
+				$arrLVL_22 = db_select_array (false, 'idLevel_22, idLevel_21, idLevel_20,idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_22', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrLVL_23 = array();
+				$arrLVL_23 = db_select_array (false, 'idLevel_23, idLevel_22, idLevel_21, idLevel_20,idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_23', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrLVL_24 = array();
+				$arrLVL_24 = db_select_array (false, 'idLevel_24, idLevel_23, idLevel_22, idLevel_21, idLevel_20,idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_24', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrLVL_25 = array();
+				$arrLVL_25 = db_select_array (false, 'idLevel_25, idLevel_24, idLevel_23, idLevel_22, idLevel_21, idLevel_20,idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_25', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 				/*******************************************************************/
 				
 				
@@ -1790,7 +1462,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -1843,7 +1515,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1897,7 +1569,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -1952,7 +1624,7 @@ if( ! defined('XMBCXRXSKGC')) {
 											Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-											VALUES ({$a} )";
+											VALUES (".$a.")";
 											//Consulta
 											$resultado = mysqli_query ($dbConn, $query);
 											//Si ejecuto correctamente la consulta
@@ -2008,7 +1680,7 @@ if( ! defined('XMBCXRXSKGC')) {
 													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-													VALUES ({$a} )";
+													VALUES (".$a.")";
 													//Consulta
 													$resultado = mysqli_query ($dbConn, $query);
 													//Si ejecuto correctamente la consulta
@@ -2065,7 +1737,7 @@ if( ! defined('XMBCXRXSKGC')) {
 															Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-															VALUES ({$a} )";
+															VALUES (".$a.")";
 															//Consulta
 															$resultado = mysqli_query ($dbConn, $query);
 															//Si ejecuto correctamente la consulta
@@ -2124,7 +1796,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																	Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																	VALUES ({$a} )";
+																	VALUES (".$a.")";
 																	//Consulta
 																	$resultado = mysqli_query ($dbConn, $query);
 																	//Si ejecuto correctamente la consulta
@@ -2184,7 +1856,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																			VALUES ({$a} )";
+																			VALUES (".$a.")";
 																			//Consulta
 																			$resultado = mysqli_query ($dbConn, $query);
 																			//Si ejecuto correctamente la consulta
@@ -2245,7 +1917,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																					VALUES ({$a} )";
+																					VALUES (".$a.")";
 																					//Consulta
 																					$resultado = mysqli_query ($dbConn, $query);
 																					//Si ejecuto correctamente la consulta
@@ -2307,7 +1979,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																							VALUES ({$a} )";
+																							VALUES (".$a.")";
 																							//Consulta
 																							$resultado = mysqli_query ($dbConn, $query);
 																							//Si ejecuto correctamente la consulta
@@ -2370,7 +2042,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																									VALUES ({$a} )";
+																									VALUES (".$a.")";
 																									//Consulta
 																									$resultado = mysqli_query ($dbConn, $query);
 																									//Si ejecuto correctamente la consulta
@@ -2434,7 +2106,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																											Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																											VALUES ({$a} )";
+																											VALUES (".$a.")";
 																											//Consulta
 																											$resultado = mysqli_query ($dbConn, $query);
 																											//Si ejecuto correctamente la consulta
@@ -2499,7 +2171,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																													VALUES ({$a} )";
+																													VALUES (".$a.")";
 																													//Consulta
 																													$resultado = mysqli_query ($dbConn, $query);
 																													//Si ejecuto correctamente la consulta
@@ -2565,7 +2237,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																															Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																															VALUES ({$a} )";
+																															VALUES (".$a.")";
 																															//Consulta
 																															$resultado = mysqli_query ($dbConn, $query);
 																															//Si ejecuto correctamente la consulta
@@ -2633,7 +2305,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																	Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																	VALUES ({$a} )";
+																																	VALUES (".$a.")";
 																																	//Consulta
 																																	$resultado = mysqli_query ($dbConn, $query);
 																																	//Si ejecuto correctamente la consulta
@@ -2702,7 +2374,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																			VALUES ({$a} )";
+																																			VALUES (".$a.")";
 																																			$result = mysqli_query($dbConn, $query);
 																																			$id_lvl_16 = mysqli_insert_id($dbConn);
 																																			
@@ -2760,7 +2432,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																					VALUES ({$a} )";
+																																					VALUES (".$a.")";
 																																					$result = mysqli_query($dbConn, $query);
 																																					$id_lvl_17 = mysqli_insert_id($dbConn);
 																																					
@@ -2819,7 +2491,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																							VALUES ({$a} )";
+																																							VALUES (".$a.")";
 																																							$result = mysqli_query($dbConn, $query);
 																																							$id_lvl_18 = mysqli_insert_id($dbConn);
 																																							
@@ -2879,7 +2551,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																									VALUES ({$a} )";
+																																									VALUES (".$a.")";
 																																									$result = mysqli_query($dbConn, $query);
 																																									$id_lvl_19 = mysqli_insert_id($dbConn);
 																																									
@@ -2940,7 +2612,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																											Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																											VALUES ({$a} )";
+																																											VALUES (".$a.")";
 																																											$result = mysqli_query($dbConn, $query);
 																																											$id_lvl_20 = mysqli_insert_id($dbConn);
 																																											
@@ -3002,7 +2674,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																													VALUES ({$a} )";
+																																													VALUES (".$a.")";
 																																													$result = mysqli_query($dbConn, $query);
 																																													$id_lvl_21 = mysqli_insert_id($dbConn);
 																																													
@@ -3065,7 +2737,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																															Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																															VALUES ({$a} )";
+																																															VALUES (".$a.")";
 																																															$result = mysqli_query($dbConn, $query);
 																																															$id_lvl_22 = mysqli_insert_id($dbConn);
 																																															
@@ -3130,7 +2802,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																	Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																																	VALUES ({$a} )";
+																																																	VALUES (".$a.")";
 																																																	$result = mysqli_query($dbConn, $query);
 																																																	$id_lvl_23 = mysqli_insert_id($dbConn);
 																																																	
@@ -3196,7 +2868,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																																			VALUES ({$a} )";
+																																																			VALUES (".$a.")";
 																																																			$result = mysqli_query($dbConn, $query);
 																																																			$id_lvl_24 = mysqli_insert_id($dbConn);
 																																																			
@@ -3263,7 +2935,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																																					VALUES ({$a} )";
+																																																					VALUES (".$a.")";
 																																																					$result = mysqli_query($dbConn, $query);
 																																																					
 																																																					
@@ -3377,17 +3049,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$cadena .= ',idLevel_'.$x;
 			}
 			$arrLVL[$i] = array();
-			$query = "SELECT 
-			idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, 
-			tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-			Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero, idMaquina
-			".$cadena."		
-			FROM `maquinas_listado_level_".$i."`
-			WHERE idLevel_".$lvl." = {$idLevel} ";
-			$resultado = mysqli_query($dbConn, $query);
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrLVL[$i],$row );
-			}
+			$arrLVL[$i] = db_select_array (false, 'idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero, idMaquina '.$cadena, 'maquinas_listado_level_'.$i, '', 'idLevel_'.$lvl.' = '.$idLevel, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 		}
 		
@@ -3490,7 +3152,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 				Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 				idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3603,7 +3265,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -3716,7 +3378,7 @@ if( ! defined('XMBCXRXSKGC')) {
 										Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 										Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 										idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-										VALUES ({$a} )";
+										VALUES (".$a.")";
 										//Consulta
 										$resultado = mysqli_query ($dbConn, $query);
 										//Si ejecuto correctamente la consulta
@@ -3828,7 +3490,7 @@ if( ! defined('XMBCXRXSKGC')) {
 													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-													VALUES ({$a} )";
+													VALUES (".$a.")";
 													//Consulta
 													$resultado = mysqli_query ($dbConn, $query);
 													//Si ejecuto correctamente la consulta
@@ -3936,7 +3598,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																VALUES ({$a} )";
+																VALUES (".$a.")";
 																//Consulta
 																$resultado = mysqli_query ($dbConn, $query);
 																//Si ejecuto correctamente la consulta
@@ -4044,7 +3706,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																			VALUES ({$a} )";
+																			VALUES (".$a.")";
 																			//Consulta
 																			$resultado = mysqli_query ($dbConn, $query);
 																			//Si ejecuto correctamente la consulta
@@ -4152,7 +3814,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																						Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																						Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																						idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																						VALUES ({$a} )";
+																						VALUES (".$a.")";
 																						//Consulta
 																						$resultado = mysqli_query ($dbConn, $query);
 																						//Si ejecuto correctamente la consulta
@@ -4261,7 +3923,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																									VALUES ({$a} )";
+																									VALUES (".$a.")";
 																									//Consulta
 																									$resultado = mysqli_query ($dbConn, $query);
 																									//Si ejecuto correctamente la consulta
@@ -4370,7 +4032,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																												Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																												Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																												idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																												VALUES ({$a} )";
+																												VALUES (".$a.")";
 																												//Consulta
 																												$resultado = mysqli_query ($dbConn, $query);
 																												//Si ejecuto correctamente la consulta
@@ -4479,7 +4141,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																															Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																															VALUES ({$a} )";
+																															VALUES (".$a.")";
 																															//Consulta
 																															$resultado = mysqli_query ($dbConn, $query);
 																															//Si ejecuto correctamente la consulta
@@ -4588,7 +4250,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																		Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																		Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																		idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																		VALUES ({$a} )";
+																																		VALUES (".$a.")";
 																																		//Consulta
 																																		$resultado = mysqli_query ($dbConn, $query);
 																																		//Si ejecuto correctamente la consulta
@@ -4697,7 +4359,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																					VALUES ({$a} )";
+																																					VALUES (".$a.")";
 																																					//Consulta
 																																					$resultado = mysqli_query ($dbConn, $query);
 																																					//Si ejecuto correctamente la consulta
@@ -4806,7 +4468,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																								Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																								Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																								idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																								VALUES ({$a} )";
+																																								VALUES (".$a.")";
 																																								//Consulta
 																																								$resultado = mysqli_query ($dbConn, $query);
 																																								//Si ejecuto correctamente la consulta
@@ -4915,7 +4577,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																											Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																											VALUES ({$a} )";
+																																											VALUES (".$a.")";
 																																											//Consulta
 																																											$resultado = mysqli_query ($dbConn, $query);
 																																											//Si ejecuto correctamente la consulta
@@ -5024,7 +4686,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																														Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																														Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																														idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																														VALUES ({$a} )";
+																																														VALUES (".$a.")";
 																																														//Consulta
 																																														$resultado = mysqli_query ($dbConn, $query);
 																																														//Si ejecuto correctamente la consulta
@@ -5089,7 +4751,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																	Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																	VALUES ({$a} )";
+																																																	VALUES (".$a.")";
 																																																	$result = mysqli_query($dbConn, $query);
 																																																	$id_lvl[$dis_16] = mysqli_insert_id($dbConn);
 																																																	
@@ -5142,7 +4804,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																				Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																				Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																				idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																				VALUES ({$a} )";
+																																																				VALUES (".$a.")";
 																																																				$result = mysqli_query($dbConn, $query);
 																																																				$id_lvl[$dis_17] = mysqli_insert_id($dbConn);
 																																																				
@@ -5195,7 +4857,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																							VALUES ({$a} )";
+																																																							VALUES (".$a.")";
 																																																							$result = mysqli_query($dbConn, $query);
 																																																							$id_lvl[$dis_18] = mysqli_insert_id($dbConn);
 																																																							
@@ -5248,7 +4910,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																										Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																										Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																										idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																										VALUES ({$a} )";
+																																																										VALUES (".$a.")";
 																																																										$result = mysqli_query($dbConn, $query);
 																																																										$id_lvl[$dis_19] = mysqli_insert_id($dbConn);
 																																																										
@@ -5301,7 +4963,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																													VALUES ({$a} )";
+																																																													VALUES (".$a.")";
 																																																													$result = mysqli_query($dbConn, $query);
 																																																													$id_lvl[$dis_20] = mysqli_insert_id($dbConn);
 																																																													
@@ -5354,7 +5016,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																																Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																																Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																																idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																																VALUES ({$a} )";
+																																																																VALUES (".$a.")";
 																																																																$result = mysqli_query($dbConn, $query);
 																																																																$id_lvl[$dis_21] = mysqli_insert_id($dbConn);
 																																																																
@@ -5407,7 +5069,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																																			VALUES ({$a} )";
+																																																																			VALUES (".$a.")";
 																																																																			$result = mysqli_query($dbConn, $query);
 																																																																			$id_lvl[$dis_22] = mysqli_insert_id($dbConn);
 																																																																			
@@ -5460,7 +5122,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																																						Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																																						Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																																						idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																																						VALUES ({$a} )";
+																																																																						VALUES (".$a.")";
 																																																																						$result = mysqli_query($dbConn, $query);
 																																																																						$id_lvl[$dis_23] = mysqli_insert_id($dbConn);
 																																																																						
@@ -5513,7 +5175,7 @@ if( ! defined('XMBCXRXSKGC')) {
 																																																																									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																																																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
 																																																																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																																									VALUES ({$a} )";
+																																																																									VALUES (".$a.")";
 																																																																									$result = mysqli_query($dbConn, $query);
 																																																																									$id_lvl[$dis_24] = mysqli_insert_id($dbConn);
 																																																																									
@@ -5629,7 +5291,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)){
-				$ndata_1 = db_select_nrows ('Nombre', 'maquinas_listado_matriz', '', "Nombre='".$Nombre."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'maquinas_listado_matriz', '', "Nombre='".$Nombre."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre de la matriz ya existe en el sistema';}
@@ -5655,14 +5317,8 @@ if( ! defined('XMBCXRXSKGC')) {
 
 				/*******************************************************************/
 				// Se traen todos los datos de la maquina
-				$query = "SELECT 
-				idMaquina, cantPuntos, idEstado
-				".$qry."
-				FROM `maquinas_listado_matriz`
-				WHERE idMatriz = {$idMatriz}";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata = mysqli_fetch_assoc ($resultado);
-
+				$rowdata = db_select_data (false, 'idMaquina, cantPuntos, idEstado'.$qry , 'maquinas_listado_matriz', '', 'idMatriz ='.$idMatriz, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*******************************************************************/
 				//filtros
 				if(isset($rowdata['idMaquina']) && $rowdata['idMaquina'] != ''){     $a  = "'".$rowdata['idMaquina']."'" ;     }else{$a  ="''";}
@@ -5686,7 +5342,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `maquinas_listado_matriz` (idMaquina,cantPuntos,idEstado, Nombre
 				".$qry.") 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -5720,7 +5376,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre de la maquina ya existe en el sistema';}
@@ -5754,7 +5410,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `maquinas_listado` (idSistema, idEstado, Codigo, Nombre, Modelo, Serie, Fabricante,
 				fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -5788,10 +5444,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idMaquina  = $_GET['status'];
-			$estado     = $_GET['estado'];
+			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			
-			$query  = "UPDATE maquinas_listado SET idEstado = '$estado'	
-			WHERE idMaquina    = '$idMaquina'";
+			$query  = "UPDATE maquinas_listado SET idEstado = '".$idEstado."'	
+			WHERE idMaquina    = '".$idMaquina."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -5820,7 +5476,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["Direccion_img"]["error"] > 0){
-				$error['Direccion_img']       = 'error/Ha ocurrido un error';
+				$error['Direccion_img'] = 'error/'.uploadPHPError($_FILES["Direccion_img"]["error"]);
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
@@ -5883,14 +5539,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se obtiene el nombre del logo
-			$query = "SELECT Direccion_img
-			FROM `maquinas_listado_level_".$_GET['lvl']."`
-			WHERE idLevel_".$_GET['lvl']." = {$_GET['del_img']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
+			$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado_level_'.$_GET['lvl'], '', 'idLevel_'.$_GET['lvl'].' = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 			// inserto los datos de registro en la db
-			$query  = "UPDATE `maquinas_listado_level_".$_GET['lvl']."` SET Direccion_img='' WHERE idLevel_".$_GET['lvl']." = {$_GET['del_img']}";
+			$query  = "UPDATE `maquinas_listado_level_".$_GET['lvl']."` SET Direccion_img='' WHERE idLevel_".$_GET['lvl']." = ".$_GET['del_img'];
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta

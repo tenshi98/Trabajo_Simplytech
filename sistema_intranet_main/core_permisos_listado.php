@@ -50,14 +50,14 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Permiso creado corr
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Permiso editado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Permiso borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 // Se traen todos los datos de mi usuario
 $query = "SELECT id_pmcat, Direccionweb, Direccionbase, Nombre, visualizacion, Version, 
 Descripcion, Level_Limit, Habilita, Principal
 FROM `core_permisos_listado`
-WHERE idAdmpm = {$_GET['id']}";
+WHERE idAdmpm = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -78,7 +78,7 @@ mysqli_free_result($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de Permiso</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -98,21 +98,21 @@ mysqli_free_result($resultado);
 				if(isset($Level_Limit)) {      $x10 = $Level_Limit;    }else{$x10 = $rowdata['Level_Limit'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Categorias','id_pmcat', $x1, 2, 'id_pmcat', 'Nombre', 'core_permisos_categorias', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x2, 2);
-				$Form_Imputs->form_input_icon( 'Direccion base', 'Direccionbase', $x3, 2,'fa fa-internet-explorer');
-				$Form_Imputs->form_input_icon( 'Direccion web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
-				$Form_Imputs->form_visualizacion('Visualizacion','visualizacion', $x5, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, $dbConn);
-				$Form_Imputs->form_input_number('Version del Archivo', 'Version', $x6, 2);
-				$Form_Imputs->form_textarea('Descripcion','Descripcion', $x7, 2, 160);
-				$Form_Imputs->form_textarea('Habilitacion de tabs Usuario','Habilita', $x8, 1, 160);
-				$Form_Imputs->form_textarea('Habilitacion de tabs Principal','Principal', $x9, 1, 160);
-				$Form_Imputs->form_select_n_auto('Limite Nivel','Level_Limit', $x10, 2, 1, 4);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Categorias','id_pmcat', $x1, 2, 'id_pmcat', 'Nombre', 'core_permisos_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
+				$Form_Inputs->form_input_icon('Direccion base', 'Direccionbase', $x3, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_input_icon('Direccion web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_visualizacion('Visualizacion','visualizacion', $x5, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, $dbConn);
+				$Form_Inputs->form_input_number('Version del Archivo', 'Version', $x6, 2);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x7, 2, 160);
+				$Form_Inputs->form_textarea('Habilitacion de tabs Usuario','Habilita', $x8, 1, 160);
+				$Form_Inputs->form_textarea('Habilitacion de tabs Principal','Principal', $x9, 1, 160);
+				$Form_Inputs->form_select_n_auto('Limite Nivel','Level_Limit', $x10, 2, 1, 4);
 				
-				$Form_Imputs->form_input_hidden('idAdmpm', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('fake_id_pmcat', $rowdata['id_pmcat'], 2);
-				$Form_Imputs->form_input_hidden('fake_Nombre', $rowdata['Nombre'], 2);
+				$Form_Inputs->form_input_hidden('idAdmpm', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('fake_id_pmcat', $rowdata['id_pmcat'], 2);
+				$Form_Inputs->form_input_hidden('fake_Nombre', $rowdata['Nombre'], 2);
 				
 				
 				?>
@@ -122,7 +122,7 @@ mysqli_free_result($resultado);
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -136,10 +136,11 @@ mysqli_free_result($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) {  ?>
- <div class="col-sm-8 fcenter">
+	 
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Permiso</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -159,24 +160,24 @@ mysqli_free_result($resultado);
 				if(isset($Level_Limit)) {      $x10 = $Level_Limit;    }else{$x10 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Categorias','id_pmcat', $x1, 2, 'id_pmcat', 'Nombre', 'core_permisos_categorias', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x2, 2);
-				$Form_Imputs->form_input_icon( 'Direccion base', 'Direccionbase', $x3, 2,'fa fa-internet-explorer');
-				$Form_Imputs->form_input_icon( 'Direccion web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
-				$Form_Imputs->form_visualizacion('Visualizacion','visualizacion', $x5, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, $dbConn);
-				$Form_Imputs->form_input_number('Version del Archivo', 'Version', $x6, 2);
-				$Form_Imputs->form_textarea('Descripcion','Descripcion', $x7, 2, 160);
-				$Form_Imputs->form_textarea('Habilitacion de tabs','Habilita', $x8, 1, 160);
-				$Form_Imputs->form_textarea('Habilitacion de tabs Principal','Principal', $x9, 1, 160);
-				$Form_Imputs->form_select_n_auto('Limite Nivel','Level_Limit', $x10, 2, 1, 4);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Categorias','id_pmcat', $x1, 2, 'id_pmcat', 'Nombre', 'core_permisos_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
+				$Form_Inputs->form_input_icon('Direccion base', 'Direccionbase', $x3, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_input_icon('Direccion web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_visualizacion('Visualizacion','visualizacion', $x5, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, $dbConn);
+				$Form_Inputs->form_input_number('Version del Archivo', 'Version', $x6, 2);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x7, 2, 160);
+				$Form_Inputs->form_textarea('Habilitacion de tabs','Habilita', $x8, 1, 160);
+				$Form_Inputs->form_textarea('Habilitacion de tabs Principal','Principal', $x9, 1, 160);
+				$Form_Inputs->form_select_n_auto('Limite Nivel','Level_Limit', $x10, 2, 1, 4);
 				?>
 			   
 			 
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -230,7 +231,7 @@ array_push( $arrPermisos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Permisos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Permisos</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -244,8 +245,6 @@ array_push( $arrPermisos,$row );
 						<th width="10">Acciones</th>
 					</tr>
 					<?php echo widget_sherlock(1, 6);?>
-					
-				
 				</thead>				  
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php
@@ -270,11 +269,11 @@ array_push( $arrPermisos,$row );
 							</td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo $location.'&id='.$subcategorias['idAdmpm']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+									<a href="<?php echo $location.'&id='.$subcategorias['idAdmpm']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php 
-										$ubicacion = $location.'&del='.$subcategorias['idAdmpm'];
+										$ubicacion = $location.'&del='.simpleEncode($subcategorias['idAdmpm'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el permiso '.$subcategorias['Nombre'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								</div>
 							</td>   
 						</tr> 

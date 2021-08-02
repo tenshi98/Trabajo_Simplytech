@@ -14,8 +14,8 @@ require_once 'core/Load.Utils.Web.php';
 $original = "principal_calendario.php";
 $location = $original;
 //Se agregan ubicaciones
-if(isset($_GET['Mes']) && $_GET['Mes'] != ''){  $location .= "?Mes=".$_GET['Mes'] ; } else { $location .= "?Mes=".mes_actual(); }
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){  $location .= "&Ano=".$_GET['Ano'] ; } else { $location .= "&Ano=".ano_actual(); }
+if(isset($_GET['Mes']) && $_GET['Mes'] != ''){  $location .= "?Mes=".$_GET['Mes']; } else { $location .= "?Mes=".mes_actual(); }
+if(isset($_GET['Ano']) && $_GET['Ano'] != ''){  $location .= "&Ano=".$_GET['Ano']; } else { $location .= "&Ano=".ano_actual(); }
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
@@ -28,7 +28,7 @@ if ( !empty($_POST['submit']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit']) )  { 
 	//Se agregan ubicaciones
-	$location .= "&view=".$_GET['id'] ; 
+	$location .= "&view=".$_GET['id']; 
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/principal_calendario_listado.php';
@@ -57,8 +57,8 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 include '1include_principal_calendario.php';?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px; margin-top:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
+<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

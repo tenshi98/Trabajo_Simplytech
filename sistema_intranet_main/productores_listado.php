@@ -57,9 +57,11 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Productor creado co
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Productor editado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Productor borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT  
 productores_listado.email, 
@@ -75,6 +77,7 @@ productores_listado.Fax,
 productores_listado.PersonaContacto,
 productores_listado.PersonaContacto_Fono,
 productores_listado.PersonaContacto_email,
+productores_listado.PersonaContacto_Cargo,
 productores_listado.Web,
 productores_listado.Giro,
 core_ubicacion_ciudad.Nombre AS nombre_region,
@@ -91,7 +94,7 @@ LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna        
 LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                  = productores_listado.idSistema
 LEFT JOIN `productores_tipos`         ON productores_tipos.idTipo                 = productores_listado.idTipo
 LEFT JOIN `core_rubros`               ON core_rubros.idRubro                      = productores_listado.idRubro
-WHERE productores_listado.idProductor = {$_GET['id']}";
+WHERE productores_listado.idProductor = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -110,21 +113,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Productor</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -132,16 +121,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'productores_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'productores_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'productores_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contacto</a></li>
+				<li class="active"><a href="<?php echo 'productores_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'productores_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'productores_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'productores_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Persona Contacto</a></li>
-						<li class=""><a href="<?php echo 'productores_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Comerciales</a></li>
-						<li class=""><a href="<?php echo 'productores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'productores_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
+						<li class=""><a href="<?php echo 'productores_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
+						<li class=""><a href="<?php echo 'productores_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
+						<li class=""><a href="<?php echo 'productores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'productores_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 					</ul>
                 </li>           
 			</ul>	
@@ -149,84 +138,89 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div id="div-3" class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="wmd-panel">
-					<table id="dataTable" class="table table-bordered table-condensed table-striped dataTable">
-						<thead>
-							<tr role="row">
-								<th width="50%" class="word_break">Datos</th>
-								<th width="50%">Mapa</th>
-							</tr>
-						</thead>					  
-						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<tr class="odd">
-								<td class="word_break">
-									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
-									<p class="text-muted">
-										<strong>Tipo de Productor : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
-										<strong>Codigo: </strong><?php echo $rowdata['Codigo']; ?><br/>
-										<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
-										<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-										<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
-										<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-										<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
-										<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-										<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
-									</p>
+				<div class="col-sm-6">
+					<div class="row" style="border-right: 1px solid #333;">
+						<div class="col-sm-12">
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+							<p class="text-muted word_break">
+								<strong>Tipo de Productor : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
+								<strong>Codigo: </strong><?php echo $rowdata['Codigo']; ?><br/>
+								<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
+								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
+								<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
+								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
+							</p>
 									
-									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
-									<p class="text-muted">
-										<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-										<strong>Razon Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
-										<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
-										<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
-									</p>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
+							<p class="text-muted word_break">
+								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
+								<strong>Razon Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
+								<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
+								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
+							</p>
 										
-									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
-									<p class="text-muted">
-										<strong>Telefono Fijo : </strong><?php echo $rowdata['Fono1']; ?><br/>
-										<strong>Telefono Movil : </strong><?php echo $rowdata['Fono2']; ?><br/>
-										<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
-										<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-										<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="http://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
-									</p>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
+							<p class="text-muted word_break">
+								<strong>Telefono Fijo : </strong><?php echo $rowdata['Fono1']; ?><br/>
+								<strong>Telefono Movil : </strong><?php echo $rowdata['Fono2']; ?><br/>
+								<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
+								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
+							</p>
 									
-									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
-									<p class="text-muted">
-										<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
-										<strong>Telefono : </strong><?php echo $rowdata['PersonaContacto_Fono']; ?><br/>
-										<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
-									</p>
-
-								</td>
-								<td>
-									<?php 
-									$direccion = "";
-									if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
-									if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
-									if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
-									echo mapa2($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle']) ?>
-								</td>
-							</tr>                  
-						</tbody>
-					</table>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
+							<p class="text-muted word_break">
+								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
+								<strong>Cargo Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto_Cargo']; ?><br/>
+								<strong>Telefono : </strong><?php echo $rowdata['PersonaContacto_Fono']; ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
+							</p>
+						</div>
+					</div>
 				</div>
+				<div class="col-sm-6">
+					<div class="row">
+						<?php 
+							//se arma la direccion
+							$direccion = "";
+							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
+							if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
+							if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
+							//se despliega mensaje en caso de no existir direccion
+							if($direccion!=''){
+								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); 
+							}else{
+								$Alert_Text  = 'No tiene una direccion definida';
+								alert_post_data(4,2,2, $Alert_Text);
+							}
+						?>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			
 			</div>
         </div>	
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Productor</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -245,28 +239,28 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Giro)) {             $x9  = $Giro;              }else{$x9  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Basicos</h3>';
-				$Form_Imputs->form_select('Tipo de Productor','idTipo', $x1, 2, 'idTipo', 'Nombre', 'productores_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x2, 2);
-				$Form_Imputs->form_input_text( 'Nombre Fantasia', 'Nombre', $x3, 2);
-				$Form_Imputs->form_input_rut('Rut', 'Rut', $x4, 1);
-				$Form_Imputs->form_date('F Ingreso Sistema','fNacimiento', $x5, 1);
-				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_select('Tipo de Productor','idTipo', $x1, 2, 'idTipo', 'Nombre', 'productores_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 2);
+				$Form_Inputs->form_input_text('Nombre Fantasia', 'Nombre', $x3, 2);
+				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
+				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x5, 1);
+				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x8, 1,'fa fa-map');	 
-				$Form_Imputs->form_input_icon( 'Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
-				$Form_Imputs->form_input_hidden('password', 1234, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('password', 1234, 2);
 				?>
 								
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?>
@@ -310,7 +304,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE productores_listado.idProductor!=0";
 //verifico que sea un administrador
-$z.=" AND productores_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND productores_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){             $z .= " AND productores_listado.idTipo=".$_GET['idTipo'];}
@@ -379,7 +373,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -407,19 +401,19 @@ array_push( $arrUsers,$row );
 				if(isset($Giro)) {             $x9  = $Giro;              }else{$x9  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo de Productor','idTipo', $x1, 1, 'idTipo', 'Nombre', 'productores_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x2, 1);
-				$Form_Imputs->form_input_text( 'Nombre Fantasia', 'Nombre', $x3, 1);
-				$Form_Imputs->form_input_rut('Rut', 'Rut', $x4, 1);
-				$Form_Imputs->form_date('F Ingreso Sistema','fNacimiento', $x5, 1);
-				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo de Productor','idTipo', $x1, 1, 'idTipo', 'Nombre', 'productores_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
+				$Form_Inputs->form_input_text('Nombre Fantasia', 'Nombre', $x3, 1);
+				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
+				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x5, 1);
+				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x8, 1,'fa fa-map');	 
-				$Form_Imputs->form_input_icon( 'Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -437,7 +431,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Productores</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productores</h5>	
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -451,22 +445,22 @@ array_push( $arrUsers,$row );
 						<th>
 							<div class="pull-left">Rut</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=rut_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=rut_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=rut_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=rut_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Nombre del Productor</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -482,12 +476,12 @@ array_push( $arrUsers,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_productor.php?view='.$usuarios['idProductor']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idProductor']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_productor.php?view='.simpleEncode($usuarios['idProductor'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idProductor']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$usuarios['idProductor'];
+									$ubicacion = $location.'&del='.simpleEncode($usuarios['idProductor'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al productor '.$usuarios['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	

@@ -37,6 +37,9 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Orden editada corre
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
+//busqueda
 $search = "?submit_filter=+Filtrar";
 /**************************************************************/
 if(isset($_GET['idOcompra']) && $_GET['idOcompra'] != ''){       $search .= "&idOcompra=".$_GET['idOcompra'];}
@@ -67,7 +70,7 @@ switch ($_GET['type']) {
 
 		FROM `ocompra_listado_existencias_servicios`
 		LEFT JOIN `servicios_listado`   ON servicios_listado.idServicio    = ocompra_listado_existencias_servicios.idServicio
-		WHERE ocompra_listado_existencias_servicios.idExistencia = {$_GET['id']}";
+		WHERE ocompra_listado_existencias_servicios.idExistencia = ".$_GET['id'];
 		//Consulta
 		$resultado = mysqli_query ($dbConn, $query);
 		//Si ejecuto correctamente la consulta
@@ -93,7 +96,7 @@ switch ($_GET['type']) {
 
 		FROM `ocompra_listado_existencias_arriendos`
 		LEFT JOIN `equipos_arriendo_listado`   ON equipos_arriendo_listado.idEquipo   = ocompra_listado_existencias_arriendos.idEquipo
-		WHERE ocompra_listado_existencias_arriendos.idExistencia = {$_GET['id']}";
+		WHERE ocompra_listado_existencias_arriendos.idExistencia = ".$_GET['id'];
 		//Consulta
 		$resultado = mysqli_query ($dbConn, $query);
 		//Si ejecuto correctamente la consulta
@@ -119,7 +122,7 @@ switch ($_GET['type']) {
 
 		FROM `ocompra_listado_existencias_insumos`
 		LEFT JOIN `insumos_listado`     ON insumos_listado.idProducto      = ocompra_listado_existencias_insumos.idProducto
-		WHERE ocompra_listado_existencias_insumos.idExistencia = {$_GET['id']}";
+		WHERE ocompra_listado_existencias_insumos.idExistencia = ".$_GET['id'];
 		//Consulta
 		$resultado = mysqli_query ($dbConn, $query);
 		//Si ejecuto correctamente la consulta
@@ -145,7 +148,7 @@ switch ($_GET['type']) {
 
 		FROM `ocompra_listado_existencias_productos`
 		LEFT JOIN `productos_listado`   ON productos_listado.idProducto    = ocompra_listado_existencias_productos.idProducto
-		WHERE ocompra_listado_existencias_productos.idExistencia = {$_GET['id']}";
+		WHERE ocompra_listado_existencias_productos.idExistencia = ".$_GET['id'];
 		//Consulta
 		$resultado = mysqli_query ($dbConn, $query);
 		//Si ejecuto correctamente la consulta
@@ -173,7 +176,7 @@ switch ($_GET['type']) {
 
 		FROM `ocompra_listado_existencias_boletas`
 		LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador
-		WHERE ocompra_listado_existencias_boletas.idExistencia = {$_GET['id']}";
+		WHERE ocompra_listado_existencias_boletas.idExistencia = ".$_GET['id'];
 		//Consulta
 		$resultado = mysqli_query ($dbConn, $query);
 		//Si ejecuto correctamente la consulta
@@ -194,7 +197,7 @@ switch ($_GET['type']) {
     case 6:
     	$query = "SELECT Descripcion, Valor, Total_Ingresado
 		FROM `ocompra_listado_existencias_boletas_empresas`
-		WHERE idExistencia = {$_GET['id']}";
+		WHERE idExistencia = ".$_GET['id'];
 		//Consulta
 		$resultado = mysqli_query ($dbConn, $query);
 		//Si ejecuto correctamente la consulta
@@ -220,7 +223,7 @@ switch ($_GET['type']) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Modificar cantidades recibidas OC N° <?php echo n_doc($_GET['idOcompraTi'], 5); ?></h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -229,7 +232,7 @@ switch ($_GET['type']) {
 				<?php 
 				
 				//se dibujan los inputs	
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				
 				//Se verifican si existen los datos
 				switch ($_GET['type']) {
@@ -244,11 +247,11 @@ switch ($_GET['type']) {
 						if(isset($cant_ingresada)) {   $x3  = $cant_ingresada;  }else{$x3  = Cantidades_decimales_justos($row_data['cant_ingresada']);}
 						
 						//se dibujan los inputs
-						$Form_Imputs->form_input_disabled('Producto','Producto_fake', $x1, 1);
-						$Form_Imputs->form_input_disabled('Cantidad Solicitada','Cantidad_fake', $x2, 1);
-						$Form_Imputs->form_input_number('Cantidad Recibida', 'cant_ingresada', $x3, 2);
+						$Form_Inputs->form_input_disabled('Producto','Producto_fake', $x1, 1);
+						$Form_Inputs->form_input_disabled('Cantidad Solicitada','Cantidad_fake', $x2, 1);
+						$Form_Inputs->form_input_number('Cantidad Recibida', 'cant_ingresada', $x3, 2);
 						
-						$Form_Imputs->form_input_hidden('CantComp', $x2, 2);	
+						$Form_Inputs->form_input_hidden('CantComp', $x2, 2);	
 					break;
 					/********************************************************/
 					case 5:
@@ -259,12 +262,12 @@ switch ($_GET['type']) {
 						$x4  = 0;
 						
 						//se dibujan los inputs
-						$Form_Imputs->form_input_disabled('Trabajador','Producto_fake', $x1, 1);
-						$Form_Imputs->form_input_disabled('Boleta Honorarios N°','Boleta_fake', $x2, 1);
-						$Form_Imputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x3, 1);
-						$Form_Imputs->form_input_number('Monto Declarado', 'cant_ingresada', $x4, 2);
+						$Form_Inputs->form_input_disabled('Trabajador','Producto_fake', $x1, 1);
+						$Form_Inputs->form_input_disabled('Boleta Honorarios N°','Boleta_fake', $x2, 1);
+						$Form_Inputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x3, 1);
+						$Form_Inputs->form_input_number('Monto Declarado', 'cant_ingresada', $x4, 2);
 						
-						$Form_Imputs->form_input_hidden('CantComp', $x3, 2);
+						$Form_Inputs->form_input_hidden('CantComp', $x3, 2);
 						
 				    break;
 					/********************************************************/
@@ -275,24 +278,24 @@ switch ($_GET['type']) {
 						$x3  = Cantidades_decimales_justos($row_data['Total_Ingresado']);
 						
 						//se dibujan los inputs
-						$Form_Imputs->form_input_disabled('Descripcion','Producto_fake', $x1, 1);
-						$Form_Imputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x2, 1);
-						$Form_Imputs->form_input_number('Monto Declarado', 'cant_ingresada', $x3, 2);
+						$Form_Inputs->form_input_disabled('Descripcion','Producto_fake', $x1, 1);
+						$Form_Inputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x2, 1);
+						$Form_Inputs->form_input_number('Monto Declarado', 'cant_ingresada', $x3, 2);
 						
-						$Form_Imputs->form_input_hidden('CantComp', $x2, 2);
+						$Form_Inputs->form_input_hidden('CantComp', $x2, 2);
 					
 					
 				    break;
 				}
 				
 				
-				$Form_Imputs->form_input_hidden('type', $_GET['type'], 2);	
-				$Form_Imputs->form_input_hidden('idExistencia', $_GET['id'], 2);		 
+				$Form_Inputs->form_input_hidden('type', $_GET['type'], 2);	
+				$Form_Inputs->form_input_hidden('idExistencia', $_GET['id'], 2);		 
 				?>
 								
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location.$search; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location.$search; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?>
@@ -335,7 +338,7 @@ if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){
 	$search .= "&idEstado=".$_GET['idEstado'];
 }
 if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin'] != ''){   
-	$z .= " AND ocompra_listado.Creacion_fecha BETWEEN '{$_GET['Creacion_fecha_ini']}' AND '{$_GET['Creacion_fecha_fin']}'" ;
+	$z .= " AND ocompra_listado.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'" ;
 	$search .= "&Creacion_fecha_ini=".$_GET['Creacion_fecha_ini'];
 	$search .= "&Creacion_fecha_fin=".$_GET['Creacion_fecha_fin'];
 }
@@ -573,7 +576,7 @@ array_push( $arrBoletasEmp,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Ordenes de Compra Incompletas</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ordenes de Compra Incompletas</h5>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -600,8 +603,8 @@ array_push( $arrBoletasEmp,$row );
 							<td><?php echo Cantidades_decimales_justos($productos['Cantidad']-$productos['cant_ingresada']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=1&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=1&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -616,8 +619,8 @@ array_push( $arrBoletasEmp,$row );
 							<td><?php echo Cantidades_decimales_justos($productos['Cantidad']-$productos['cant_ingresada']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=2&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=2&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -632,8 +635,8 @@ array_push( $arrBoletasEmp,$row );
 							<td><?php echo Cantidades_decimales_justos($productos['Cantidad']-$productos['cant_ingresada']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=3&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=3&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -648,8 +651,8 @@ array_push( $arrBoletasEmp,$row );
 							<td><?php echo Cantidades_decimales_justos($productos['Cantidad']-$productos['cant_ingresada']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=4&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=4&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -659,13 +662,13 @@ array_push( $arrBoletasEmp,$row );
 							<td><?php echo 'OC N°'.n_doc($productos['idOcompra'], 5); ?></td>
 							<td><?php echo Fecha_estandar($productos['Creacion_fecha']); ?></td>
 							<td><?php echo 'Boleta N° '.$productos['N_Doc'].' / '.$productos['TrabRut'].' - '.$productos['TrabNombre'].' '.$productos['TrabApellidoPat']; ?></td>
-							<td><?php echo valores($productos['Valor'], 0); ?></td>
+							<td align="right"><?php echo valores($productos['Valor'], 0); ?></td>
 							<td></td>
-							<td><?php echo valores($productos['Valor'], 0); ?></td>
+							<td align="right"><?php echo valores($productos['Valor'], 0); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=5&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=5&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -675,13 +678,13 @@ array_push( $arrBoletasEmp,$row );
 							<td><?php echo 'OC N°'.n_doc($productos['idOcompra'], 5); ?></td>
 							<td><?php echo Fecha_estandar($productos['Creacion_fecha']); ?></td>
 							<td><?php echo 'Descripcion: '.$productos['Descripcion']; ?></td>
-							<td><?php echo valores($productos['Valor'], 0); ?></td>
-							<td><?php echo valores($productos['Total_Ingresado'], 0); ?></td>
-							<td><?php echo valores(($productos['Valor']-$productos['Total_Ingresado']), 0); ?></td>
+							<td align="right"><?php echo valores($productos['Valor'], 0); ?></td>
+							<td align="right"><?php echo valores($productos['Total_Ingresado'], 0); ?></td>
+							<td align="right"><?php echo valores(($productos['Valor']-$productos['Total_Ingresado']), 0); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=6&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.$search.'&type=6&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -697,24 +700,29 @@ array_push( $arrBoletasEmp,$row );
 <?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";	
-$y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+//Verifico el tipo de usuario que esta ingresando
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 //filtro
 $zx1 = "idProducto=0";
 //Se revisan los permisos a los productos
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -740,7 +748,7 @@ $zx2 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_insumos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -765,7 +773,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -788,23 +796,23 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Descripcion)) {         $x13 = $Descripcion;         }else{$x13 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Basicos</h3>';
-				$Form_Imputs->form_input_number('Numero OC', 'idOcompra', $x1, 1);
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_date('F Creacion Ini','Creacion_fecha_ini', $x3, 1);
-				$Form_Imputs->form_date('F Creacion Fin','Creacion_fecha_fin', $x4, 1);
-				$Form_Imputs->form_select('Sistema Origen','idSistema', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Imputs->form_select_join_filter('Usuario Creador','idUsuario', $x6, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x7, 1, 'idEstado', 'Nombre', 'core_oc_estado', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_input_number('Numero OC', 'idOcompra', $x1, 1);
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_date('F Creacion Ini','Creacion_fecha_ini', $x3, 1);
+				$Form_Inputs->form_date('F Creacion Fin','Creacion_fecha_fin', $x4, 1);
+				$Form_Inputs->form_select('Sistema Origen','idSistema', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x6, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x7, 1, 'idEstado', 'Nombre', 'core_oc_estado', 0, '', $dbConn);
 				
-				echo '<h3>Contenido</h3>';
-				$Form_Imputs->form_select_filter('Servicio','idServicio', $x8, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_select_filter('Equipos','idEquipo', $x9, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_select_filter('Insumo','idInsumo', $x10, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
-				$Form_Imputs->form_select_filter('Producto','idProducto', $x11, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x12, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $y, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Descripcion', 'Descripcion', $x13, 1); 
+				$Form_Inputs->form_tittle(3, 'Contenido');
+				$Form_Inputs->form_select_filter('Servicio','idServicio', $x8, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x9, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_select_filter('Insumo','idInsumo', $x10, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x11, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x12, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $y, '', $dbConn);
+				$Form_Inputs->form_input_text('Descripcion', 'Descripcion', $x13, 1); 
 				
 				
 				

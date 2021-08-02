@@ -27,15 +27,42 @@ require_once 'core/Web.Header.Views.php';
 	html, body, iframe, img {width: 100%;height: 100%;padding: 0;margin: 0;}
 	iframe{float:right;}
 </style>
-		<?php echo preview_docs($_GET['path'], $_GET['file'], ''); ?>
 
-	<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
+	<div class="col-sm-12" style="margin-top:10px;">
+		<?php  
+		//identificador
+		$Directorio = simpleDecode($_GET['path'], fecha_actual());
+		$Archivo    = simpleDecode($_GET['file'], fecha_actual());
+		//funcion
+		echo preview_docs($Directorio, $Archivo, '', '', ''); 
+		?>
+	</div>
+
+	<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-			<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-				<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php } ?>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 		
 <?php
 /**********************************************************************************************************************************/

@@ -47,14 +47,14 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 $whitelist = array( 'localhost', '127.0.0.1', '::1' );
 //si estoy en ambiente de desarrollo
 if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
-	//establezco el tiempo limite de la consulta	
-	set_time_limit(2400);              //Alrededor de 40 minutos antes del error
-	ini_set('memory_limit', '8096M');  // Se utilizan 4 GB para las consultas
+
 //si estoy en ambiente de produccion	
 }else{	
-	//establezco el tiempo limite de la consulta	
-	set_time_limit(2400);              //Alrededor de 40 minutos antes del error
-	ini_set('memory_limit', '4096M');  // Se utilizan 4 GB para las consultas
+	/*    Global Variables    */
+	//Tiempo Maximo de la consulta, 40 minutos por defecto
+	if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+	//Memora RAM Maxima del servidor, 4GB por defecto
+	if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
 }
 
 ?>
@@ -65,10 +65,10 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Servidor</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#data0" data-toggle="tab">BD</a></li>
+				<li class="active"><a href="#data0" data-toggle="tab"><i class="fa fa-server" aria-hidden="true"></i> BD</a></li>
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">

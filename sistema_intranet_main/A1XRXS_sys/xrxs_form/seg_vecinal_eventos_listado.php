@@ -1,0 +1,183 @@
+<?php
+/*******************************************************************************************************************/
+/*                                              Bloque de seguridEventoad                                                */
+/*******************************************************************************************************************/
+if( ! defined('XMBCXRXSKGC')) {
+    die('No tienes acceso a esta carpeta o archivo.');
+}
+/*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
+/*                                        Se traspasan los datos a variables                                       */
+/*******************************************************************************************************************/
+
+	//Traspaso de valores input a variables
+	if ( !empty($_POST['idEvento']) )                $idEvento              = $_POST['idEvento'];
+	if ( !empty($_POST['idSistema']) )               $idSistema             = $_POST['idSistema'];
+	if ( !empty($_POST['idCliente']) )               $idCliente             = $_POST['idCliente'];
+	if ( !empty($_POST['idTipo']) )                  $idTipo                = $_POST['idTipo'];
+	if ( !empty($_POST['idCiudad']) )                $idCiudad              = $_POST['idCiudad'];
+	if ( !empty($_POST['idComuna']) )                $idComuna              = $_POST['idComuna'];
+	if ( !empty($_POST['Direccion']) )               $Direccion 	        = $_POST['Direccion'];
+	if ( !empty($_POST['GeoLatitud']) )              $GeoLatitud 	        = $_POST['GeoLatitud'];
+	if ( !empty($_POST['GeoLongitud']) )             $GeoLongitud 	        = $_POST['GeoLongitud'];
+	if ( !empty($_POST['Fecha']) )                   $Fecha 	            = $_POST['Fecha'];
+	if ( !empty($_POST['Hora']) )                    $Hora 	                = $_POST['Hora'];
+	if ( !empty($_POST['DescripcionTipo']) )         $DescripcionTipo 	    = $_POST['DescripcionTipo'];
+	if ( !empty($_POST['DescripcionSituacion']) )    $DescripcionSituacion  = $_POST['DescripcionSituacion'];
+	if ( !empty($_POST['idValidado']) )              $idValidado            = $_POST['idValidado'];
+	
+/*******************************************************************************************************************/
+/*                                      Verificacion de los datos obligatorios                                     */
+/*******************************************************************************************************************/
+
+	//limpio y separo los datos de la cadena de comprobacion
+	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
+	$INT_piezas = explode(",", $form_obligatorios);
+	//recorro los elementos
+	foreach ($INT_piezas as $INT_valor) {
+		//veo si existe el dato solicitado y genero el error
+		switch ($INT_valor) {
+			case 'idEvento':              if(empty($idEvento)){               $error['idEvento']               = 'error/No ha ingresado el id';}break;
+			case 'idSistema':             if(empty($idSistema)){              $error['idSistema']              = 'error/No ha seleccionado el sistema';}break;
+			case 'idCliente':             if(empty($idCliente)){              $error['idCliente']              = 'error/No ha seleccionado el cliente';}break;
+			case 'idTipo':                if(empty($idTipo)){                 $error['idTipo']                 = 'error/No ha seleccionado el tipo de evento';}break;
+			case 'idCiudad':              if(empty($idCiudad)){               $error['idCiudad']               = 'error/No ha seleccionado la ciudad';}break;
+			case 'idComuna':              if(empty($idComuna)){               $error['idComuna']               = 'error/No ha seleccionado la comuna';}break;
+			case 'Direccion':             if(empty($Direccion)){              $error['Direccion']              = 'error/No ha ingresado el Direccion';}break;
+			case 'GeoLatitud':            if(empty($GeoLatitud)){             $error['GeoLatitud']             = 'error/No ha ingresado la latitud';}break;
+			case 'GeoLongitud':           if(empty($GeoLongitud)){            $error['GeoLongitud']            = 'error/No ha ingresado la longitud';}break;	
+			case 'Fecha':                 if(empty($Fecha)){                  $error['Fecha']                  = 'error/No ha ingresado la fecha del evento';}break;
+			case 'Hora':                  if(empty($Hora)){                   $error['Hora']                   = 'error/No ha ingresado la hora del evento';}break;
+			case 'DescripcionTipo':       if(empty($DescripcionTipo)){        $error['DescripcionTipo']        = 'error/No ha ingresado la descripcion del tipo de evento';}break;
+			case 'DescripcionSituacion':  if(empty($DescripcionSituacion)){   $error['DescripcionSituacion']   = 'error/No ha ingresado la descripcion de la situacion de evento';}break;
+			case 'idValidado':            if(empty($idValidado)){             $error['idValidado']             = 'error/No ha seleccionado el estado de validacion';}break;
+			
+		}
+	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){                        $error['Direccion']            = 'error/Edita la Direccion, contiene palabras no permitidas'; }	
+	if(isset($DescripcionTipo)&&contar_palabras_censuradas($DescripcionTipo)!=0){            $error['DescripcionTipo']      = 'error/Edita la Descripcion Tipo, contiene palabras no permitidas'; }	
+	if(isset($DescripcionSituacion)&&contar_palabras_censuradas($DescripcionSituacion)!=0){  $error['DescripcionSituacion'] = 'error/Edita la Descripcion Situacion, contiene palabras no permitidas'; }	
+	
+/*******************************************************************************************************************/
+/*                                            Se ejecutan las instrucciones                                        */
+/*******************************************************************************************************************/
+	//ejecuto segun la funcion
+	switch ($form_trabajo) {
+/*******************************************************************************************************************/		
+		case 'update':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				//Filtros
+				$a = "idEvento='".$idEvento."'" ;
+				if(isset($idSistema) && $idSistema != ''){                        $a .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idCliente) && $idCliente != ''){                        $a .= ",idCliente='".$idCliente."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                              $a .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){                          $a .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){                          $a .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){                        $a .= ",Direccion='".$Direccion."'" ;}
+				if(isset($GeoLatitud) && $GeoLatitud != ''){                      $a .= ",GeoLatitud='".$GeoLatitud."'" ;}
+				if(isset($GeoLongitud) && $GeoLongitud != ''){                    $a .= ",GeoLongitud='".$GeoLongitud."'" ;}
+				if(isset($Fecha) && $Fecha != ''){                               
+					$a .= ",Fecha='".$Fecha."'" ;
+					$a .= ",Semana='".fecha2NSemana($Fecha)."'" ;
+					$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
+					$a .= ",idMes='".fecha2NMes($Fecha)."'" ;
+					$a .= ",Ano='".fecha2Ano($Fecha)."'" ;
+				}
+				if(isset($Hora) && $Hora != ''){                                  $a .= ",Hora='".$Hora."'" ;}
+				if(isset($DescripcionTipo) && $DescripcionTipo != ''){            $a .= ",DescripcionTipo='".$DescripcionTipo."'" ;}
+				if(isset($DescripcionSituacion) && $DescripcionSituacion != ''){  $a .= ",DescripcionSituacion='".$DescripcionSituacion."'" ;}
+				if(isset($idValidado) && $idValidado != ''){                      $a .= ",idValidado='".$idValidado."'" ;}
+				
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `seg_vecinal_eventos_listado` SET ".$a." WHERE idEvento = '".$idEvento."'";
+				$resultado = mysqli_query($dbConn, $query);
+				
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					//se redirige
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+				}
+				
+			}
+	
+		break;
+/*******************************************************************************************************************/
+		case 'del':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los eventos
+				$resultado_1 = db_delete_data (false, 'seg_vecinal_eventos_listado', 'idCliente = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'seg_vecinal_eventos_listado_archivos', 'idCliente = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_3 = db_delete_data (false, 'seg_vecinal_eventos_listado_comentarios', 'idCliente = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true OR $resultado_3==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
+
+		break;					
+/*******************************************************************************************************************/
+	}
+?>

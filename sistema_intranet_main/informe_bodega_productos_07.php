@@ -88,7 +88,7 @@ array_push( $arrBodega,$row );
 }
 // Se trae un listado con los valores de las existencias actuales	
 $año_pasado = ano_actual()-1;
-$z = "WHERE bodegas_productos_facturacion_existencias.idSistema='{$_SESSION['usuario']['basic_data']['idSistema']}'";
+$z = "WHERE bodegas_productos_facturacion_existencias.idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
 $z.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
 
 $z.= " AND bodegas_productos_facturacion_existencias.idTipo = 6";
@@ -171,10 +171,8 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 
 /****************************************************************************************/
 // Se trae un listado con los valores de las existencias actuales	
-$z = "WHERE bodegas_productos_facturacion_existencias.idSistema>=0";
+$z = "WHERE bodegas_productos_facturacion_existencias.idTipo = 6";
 $z.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
-
-$z.= " AND bodegas_productos_facturacion_existencias.idTipo = 6";
 $z.= " AND bodegas_productos_facturacion.idBodegaOrigen = ".$_GET['idBodegaOrigen'];
 $z.= " AND bodegas_productos_facturacion.idBodegaDestino != ".$_GET['idBodegaOrigen'];
 //Verificar si es por concepto de ingreso o egreso de bodega
@@ -264,19 +262,27 @@ foreach ($arrBodega as $bod) {
 
 
 ?>
+<div class="row">
+	<div class="col-sm-12 clearfix">
+		<?php
+		$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+		$zz .= '&idBodegaOrigen='.$_GET['idBodegaOrigen'];
+		?>			
+		<a target="new" href="<?php echo 'informe_bodega_productos_07_to_excel.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+	</div>
+</div>
+
+
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>	
 	
-	<div class="row">
-		<div class="col-sm-12">
-			<a target="new" href="informe_bodega_productos_07_to_excel.php?idBodegaOrigen=<?php echo $_GET['idBodegaOrigen']; ?>" class="btn btn-sm btn-metis-2 fright margin_width"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-		</div>
-	</div>
+	
 	
 	<div class="col-sm-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5><?php echo 'Traspasos desde '.$rowBodega['Nombre']; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo 'Traspasos desde '.$rowBodega['Nombre']; ?></h5>
 				
 				<?php
 				//llamamos a la función para filtrar los datos
@@ -284,11 +290,11 @@ foreach ($arrBodega as $bod) {
 				$mantit = 1;
 				echo '<ul class="nav nav-tabs pull-right">';
 				//Se fija la empresa con egreso
-				echo '<li class="active"><a href="#tab_main" data-toggle="tab">'.$rowBodega['Nombre'].'</a></li>';
+				echo '<li class="active"><a href="#tab_main" data-toggle="tab"><i class="fa fa-building" aria-hidden="true"></i> '.$rowBodega['Nombre'].'</a></li>';
 				//se muestran las empresas con ingresos
 				foreach($arrExistencias as $empresa=>$datos) {
-					echo '<li class=""><a href="#tab_'.$datos[0]['BodegaID'].'" data-toggle="tab">'.$empresa.'</a></li>';
-					if($mantit==2){echo '<li class="dropdown"><a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a><ul class="dropdown-menu" role="menu">';}
+					echo '<li class=""><a href="#tab_'.$datos[0]['BodegaID'].'" data-toggle="tab"><i class="fa fa-industry" aria-hidden="true"></i> '.$empresa.'</a></li>';
+					if($mantit==2){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 					$mantit++;
 				}
 				if($mantit>=2){echo '</ul></li>';}
@@ -332,7 +338,7 @@ foreach ($arrBodega as $bod) {
 									title: 'Egresos de la bodega <?php echo $rowBodega['Nombre'] ?>',
 									isStacked: true,
 									hAxis: {title: 'Meses'},
-									vAxis: {title: 'Valores'}
+									vAxis: {title: 'Valores', minValue: 0}
 								};
 
 								var chart_main = new google.visualization.ColumnChart(document.getElementById('chart_main'));
@@ -492,7 +498,7 @@ foreach ($arrBodega as $bod) {
 									title: 'Ingresos de la bodega <?php echo $empresa ?>',
 									isStacked: true,
 									hAxis: {title: 'Meses'},
-									vAxis: {title: 'Valores'}
+									vAxis: {title: 'Valores', minValue: 0}
 								};
 
 								var chart_<?php echo $datos[0]['BodegaID'];?> = new google.visualization.ColumnChart(document.getElementById('chart_<?php echo $datos[0]['BodegaID'];?>'));
@@ -625,24 +631,23 @@ foreach ($arrBodega as $bod) {
 	
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z1="bodegas_productos_listado.idSistema>=0";
-}else{
-	$z1="bodegas_productos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_productos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";	
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -653,8 +658,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idBodegaOrigen)) {       $x1  = $idBodegaOrigen;        }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 'usuarios_bodegas_productos', $z1, $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 'usuarios_bodegas_productos', $z1, $dbConn);
 				
 				?>        
 	   

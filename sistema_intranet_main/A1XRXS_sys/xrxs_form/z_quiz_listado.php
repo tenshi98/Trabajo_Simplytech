@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -44,18 +48,18 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idQuiz':            if(empty($idQuiz)){            $error['idQuiz']             = 'error/No ha ingresado el id';}break;
 			case 'idSistema':         if(empty($idSistema)){         $error['idSistema']          = 'error/No ha seleccionado el sistema';}break;
-			case 'Nombre':            if(empty($Nombre)){            $error['Nombre']             = 'error/No ha ingresado el Nombre';}break;
+			case 'Nombre':            if(!isset($Nombre)){           $error['Nombre']             = 'error/No ha ingresado el Nombre';}break;
 			case 'Header_texto':      if(empty($Header_texto)){      $error['Header_texto']       = 'error/No ha ingresado el texto de la cabecera';}break;
 			case 'Header_fecha':      if(empty($Header_fecha)){      $error['Header_fecha']       = 'error/No ha ingresado la fecha de la cabecera';}break;
 			case 'Footer_texto':      if(empty($Footer_texto)){      $error['Footer_texto']       = 'error/No ha ingresado el texto del pie de pagina';}break;
-			case 'Texto_Inicio':      if(empty($Texto_Inicio)){      $error['Texto_Inicio']       = 'error/No ha ingresado el texto de inicio del contenido';}break;
+			case 'Texto_Inicio':      if(!isset($Texto_Inicio)){     $error['Texto_Inicio']       = 'error/No ha ingresado el texto de inicio del contenido';}break;
 			case 'idEstado':          if(empty($idEstado)){          $error['idEstado']           = 'error/No ha seleccionado el estado';}break;
 			case 'idEscala':          if(empty($idEscala)){          $error['idEscala']           = 'error/No ha seleccionado la escala';}break;
 			case 'Porcentaje_apro':   if(empty($Porcentaje_apro)){   $error['Porcentaje_apro']    = 'error/No ha seleccionado el porcentaje de aprobacion';}break;
@@ -66,19 +70,26 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			case 'idPregunta':        if(empty($idPregunta)){        $error['idPregunta']         = 'error/No ha ingresado la id de la pregunta';}break;
 			case 'idTipo':            if(empty($idTipo)){            $error['idTipo']             = 'error/No ha seleccionado el tipo de pregunta';}break;
-			case 'Opcion_1':          if(empty($Opcion_1)){          $error['Opcion_1']           = 'error/No ha ingresado la opcion 1';}break;
-			case 'Opcion_2':          if(empty($Opcion_2)){          $error['Opcion_2']           = 'error/No ha ingresado la opcion 2';}break;
-			case 'Opcion_3':          if(empty($Opcion_3)){          $error['Opcion_3']           = 'error/No ha ingresado la opcion 3';}break;
-			case 'Opcion_4':          if(empty($Opcion_4)){          $error['Opcion_4']           = 'error/No ha ingresado la opcion 4';}break;
-			case 'Opcion_5':          if(empty($Opcion_5)){          $error['Opcion_5']           = 'error/No ha ingresado la opcion 5';}break;
-			case 'Opcion_6':          if(empty($Opcion_6)){          $error['Opcion_6']           = 'error/No ha ingresado la opcion 6';}break;
-			case 'OpcionCorrecta':    if(empty($OpcionCorrecta)){    $error['OpcionCorrecta']     = 'error/No ha ingresado la opcion correcta';}break;
+			case 'Opcion_1':          if(!isset($Opcion_1)){         $error['Opcion_1']           = 'error/No ha ingresado la opcion 1';}break;
+			case 'Opcion_2':          if(!isset($Opcion_2)){         $error['Opcion_2']           = 'error/No ha ingresado la opcion 2';}break;
+			case 'Opcion_3':          if(!isset($Opcion_3)){         $error['Opcion_3']           = 'error/No ha ingresado la opcion 3';}break;
+			case 'Opcion_4':          if(!isset($Opcion_4)){         $error['Opcion_4']           = 'error/No ha ingresado la opcion 4';}break;
+			case 'Opcion_5':          if(!isset($Opcion_5)){         $error['Opcion_5']           = 'error/No ha ingresado la opcion 5';}break;
+			case 'Opcion_6':          if(!isset($Opcion_6)){         $error['Opcion_6']           = 'error/No ha ingresado la opcion 6';}break;
+			case 'OpcionCorrecta':    if(!isset($OpcionCorrecta)){   $error['OpcionCorrecta']     = 'error/No ha ingresado la opcion correcta';}break;
 			case 'idCategoria':       if(empty($idCategoria)){       $error['idCategoria']        = 'error/No ha seleccionado la categoria';}break;
 			
 			
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){              $error['Nombre']       = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Header_texto)&&contar_palabras_censuradas($Header_texto)!=0){  $error['Header_texto'] = 'error/Edita Header_texto, contiene palabras no permitidas'; }	
+	if(isset($Footer_texto)&&contar_palabras_censuradas($Footer_texto)!=0){  $error['Footer_texto'] = 'error/Edita Footer_texto, contiene palabras no permitidas'; }	
+	if(isset($Texto_Inicio)&&contar_palabras_censuradas($Texto_Inicio)!=0){  $error['Texto_Inicio'] = 'error/Edita Texto_Inicio, contiene palabras no permitidas'; }	
+	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -98,7 +109,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_3 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)){
-				$ndata_1 = db_select_nrows ('Nombre', 'quiz_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'quiz_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
@@ -126,7 +137,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `quiz_listado` (idSistema, Nombre, Header_texto, Header_fecha, Footer_texto,
 				Texto_Inicio, idEstado, idEscala, Porcentaje_apro, Tiempo, idTipoEvaluacion, idTipoQuiz, idLimiteTiempo) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -209,42 +220,49 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			$query  = "DELETE FROM `quiz_listado` WHERE idQuiz = {$_GET['del_quiz']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_quiz']) OR !validaEntero($_GET['del_quiz']))&&$_GET['del_quiz']!=''){
+				$indice = simpleDecode($_GET['del_quiz'], fecha_actual());
+			}else{
+				$indice = $_GET['del_quiz'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
 			}
 			
-			//Borrar preguntas
-			$query  = "DELETE FROM `quiz_listado_preguntas` WHERE idQuiz = {$_GET['del_quiz']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
 			}
-
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
 			
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			if($errorn==0){
+				//se borran los datos
+				$resultado_1 = db_delete_data (false, 'quiz_listado', 'idQuiz = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'quiz_listado_preguntas', 'idQuiz = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
+			
 
 		break;							
 /*******************************************************************************************************************/		
@@ -272,7 +290,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `quiz_listado_preguntas` (idQuiz, Nombre, idTipo, Opcion_1, Opcion_2, Opcion_3,
 				Opcion_4, Opcion_5, Opcion_6, OpcionCorrecta, idCategoria  ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -351,25 +369,47 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			$query  = "DELETE FROM `quiz_listado_preguntas` WHERE idPregunta = {$_GET['del_pregunta']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_pregunta']) OR !validaEntero($_GET['del_pregunta']))&&$_GET['del_pregunta']!=''){
+				$indice = simpleDecode($_GET['del_pregunta'], fecha_actual());
+			}else{
+				$indice = $_GET['del_pregunta'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
 			}
 			
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'quiz_listado_preguntas', 'idPregunta = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;				
 /*******************************************************************************************************************/

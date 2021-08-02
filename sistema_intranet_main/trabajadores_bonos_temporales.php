@@ -60,16 +60,17 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Asignacion de Bono 
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Asignacion de Bono borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
-?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 /************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT idTrabajador,Creacion_fecha,Monto,Observacion,idSistema,idBonoTemporal
 FROM `trabajadores_bonos_temporales`
-WHERE idAnticipos = {$_GET['id']}";
+WHERE idBonoTemp = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -88,7 +89,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de la Asignacion de Bono</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -103,24 +104,24 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Observacion)) {     $x5  = $Observacion;     }else{$x5  = $rowdata['Observacion'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 2);
-				$Form_Imputs->form_select_filter('Bono Asignado','idBonoTemporal', $x3, 2, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('Monto','Monto', $x4, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observacion', $x5, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 2);
+				$Form_Inputs->form_select_filter('Bono Asignado','idBonoTemporal', $x3, 2, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('Monto','Monto', $x4, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1, 160);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idAnticipos', $_GET['id'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idBonoTemp', $_GET['id'], 2);
 				
 				 
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -131,13 +132,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
- <div class="col-sm-8 fcenter">
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Asignacion de Bono</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -152,25 +157,25 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 				if(isset($Observacion)) {     $x5  = $Observacion;     }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 2);
-				$Form_Imputs->form_select_filter('Bono Asignado','idBonoTemporal', $x3, 2, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('Monto','Monto', $x4, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observacion', $x5, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 2);
+				$Form_Inputs->form_select_filter('Bono Asignado','idBonoTemporal', $x3, 2, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('Monto','Monto', $x4, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1, 160);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idUso', 1, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idUso', 1, 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -220,10 +225,15 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE trabajadores_bonos_temporales.idAnticipos!=0";
+$z = "WHERE trabajadores_bonos_temporales.idBonoTemp!=0";
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+//Verifico el tipo de usuario que esta ingresando
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){      $z .= " AND trabajadores_bonos_temporales.idTrabajador=".$_GET['idTrabajador'];}
@@ -234,7 +244,7 @@ if(isset($_GET['idMes']) && $_GET['idMes'] != ''){                    $z .= " AN
 if(isset($_GET['idBonoTemporal']) && $_GET['idBonoTemporal'] != ''){  $z .= " AND trabajadores_bonos_temporales.idBonoTemporal=".$_GET['idBonoTemporal'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idAnticipos FROM `trabajadores_bonos_temporales` 
+$query = "SELECT idBonoTemp FROM `trabajadores_bonos_temporales` 
 LEFT JOIN `trabajadores_listado`      ON trabajadores_listado.idTrabajador       = trabajadores_bonos_temporales.idTrabajador
 LEFT JOIN `usuarios_listado`          ON usuarios_listado.idUsuario              = trabajadores_bonos_temporales.idUsuario
 LEFT JOIN `sistema_bonos_temporales`  ON sistema_bonos_temporales.idBonoTemporal = trabajadores_bonos_temporales.idBonoTemporal
@@ -258,7 +268,7 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los usuarios
 $arrInasHoras = array();
 $query = "SELECT 
-trabajadores_bonos_temporales.idAnticipos,
+trabajadores_bonos_temporales.idBonoTemp,
 trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
 trabajadores_listado.Nombre AS TrabNombre,
@@ -297,7 +307,7 @@ array_push( $arrInasHoras,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -322,15 +332,15 @@ array_push( $arrInasHoras,$row );
 				if(isset($idBonoTemporal)) {  $x6  = $idBonoTemporal;  }else{$x6  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 1);
-				$Form_Imputs->form_select_n_auto('Año','Ano', $x3, 1, 2016, ano_actual());
-				$Form_Imputs->form_select_filter('Mes','idMes', $x4, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
-				$Form_Imputs->form_select_join_filter('Usuario','idUsuario', $x5, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Imputs->form_select_filter('Bono Asignado','idBonoTemporal', $x6, 1, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 1);
+				$Form_Inputs->form_select_n_auto('Año','Ano', $x3, 1, 2016, ano_actual());
+				$Form_Inputs->form_select_filter('Mes','idMes', $x4, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x5, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_filter('Bono Asignado','idBonoTemporal', $x6, 1, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -349,7 +359,7 @@ array_push( $arrInasHoras,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Bonos Temporales Asignados</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Bonos Temporales Asignados</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -363,36 +373,36 @@ array_push( $arrInasHoras,$row );
 						<th width="120">
 							<div class="pull-left">Fecha Facturacion</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Trabajador</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=trabajador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=trabajador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=trabajador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=trabajador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Bono</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=bono_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=bono_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=bono_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=bono_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Monto</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=monto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=monto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=monto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=monto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Usuario</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -405,7 +415,7 @@ array_push( $arrInasHoras,$row );
 						<td><?php echo $plan['Creacion_fecha']; ?></td>
 						<td><?php echo $plan['TrabApellidoPat'].' '.$plan['TrabApellidoMat'].' '.$plan['TrabNombre']; ?></td>
 						<td><?php echo $plan['Bono']; ?></td>
-						<td><?php echo valores($plan['Monto'], 0); ?></td>
+						<td align="right"><?php echo valores($plan['Monto'], 0); ?></td>
 						<td><?php echo $plan['UserNombre']; ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $plan['Sistema']; ?></td><?php } ?>
 						<td>
@@ -413,11 +423,11 @@ array_push( $arrInasHoras,$row );
 								<?php 
 								//mientras no haya sido utilizado se puede modificar y borrar el dato
 								if(isset($plan['idUso'])&&$plan['idUso']==1){ ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idAnticipos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idBonoTemp']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
-										$ubicacion = $location.'&del='.$plan['idAnticipos'];
+										$ubicacion = $location.'&del='.simpleEncode($plan['idBonoTemp'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el bono asignado de '.$plan['Creacion_fecha'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>	
 								<?php } ?>								
 							</div>

@@ -33,18 +33,19 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Tipo de Amonestacion Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Tipo de Amonestacion Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tipo de Amonestacion borrado correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Tabla Seguro de cesantia Creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Tabla Seguro de cesantia Modificado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tabla Seguro de cesantia borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
-?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT idTipoContrato,Porc_Empleador,Porc_Trabajador
 FROM `sistema_rrhh_tabla_seguro_cesantia`
-WHERE idTablaSeguro = {$_GET['id']}";
+WHERE idTablaSeguro = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -63,7 +64,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del seguro de cesantia</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -76,17 +77,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Porc_Trabajador)) {  $x3  = $Porc_Trabajador;    }else{$x3  = $rowdata['Porc_Trabajador'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo de Sueldo','idTipoContrato', $x1, 2, 'idTipoContrato', 'Nombre', 'core_tipos_contrato', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('% Empleador', 'Porc_Empleador', $x2, 2);
-				$Form_Imputs->form_input_number('% Trabajador', 'Porc_Trabajador', $x3, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo de Sueldo','idTipoContrato', $x1, 2, 'idTipoContrato', 'Nombre', 'core_tipos_contrato', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('% Empleador', 'Porc_Empleador', $x2, 2);
+				$Form_Inputs->form_input_number('% Trabajador', 'Porc_Trabajador', $x3, 2);
 					
-				$Form_Imputs->form_input_hidden('idTablaSeguro', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idTablaSeguro', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -131,7 +132,7 @@ array_push( $arrAmonestacion,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Seguro Cesantia</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Seguro Cesantia</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -151,7 +152,7 @@ array_push( $arrAmonestacion,$row );
 						<td><?php echo Cantidades($amon['Porc_Trabajador'], 1); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'?id='.$amon['idTablaSeguro']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'?id='.$amon['idTablaSeguro']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

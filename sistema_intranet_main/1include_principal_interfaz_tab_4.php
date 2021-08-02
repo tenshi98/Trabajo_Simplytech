@@ -5,12 +5,8 @@ if($temp!=0) {
 
 //Variable de busqueda
 $z = "WHERE clientes_listado.idCliente!=0";
-//verifico que sea un administrador
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z.=" AND clientes_listado.idSistema>=0";	
-}else{
-	$z.=" AND clientes_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-}
+//sistema
+$z.=" AND clientes_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 // Se trae un listado con todos los usuarios
 $arrClientes = array();
 $query = "SELECT 
@@ -186,13 +182,13 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 												echo '
 												<tr>
 													<td class="text-muted">
-														<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-blue"></i> OT para la Semana</a>
+														<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> OT para la Semana</a>
 													</td>
 													<td class="text-right color-red" style="font-weight: 700;">'.$subconsulta['CountOTSemana'].'</td>
 												</tr>
 												<tr>
 													<td class="text-muted">
-														<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-red"></i> OT no Cumplidas</a>
+														<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-red" aria-hidden="true"></i> OT no Cumplidas</a>
 													</td>
 													<td class="text-right color-red" style="font-weight: 700;">'.$subconsulta['CountOTRetrasada'].'</td>
 												</tr>';
@@ -213,13 +209,13 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 										<tbody>';
 																		
 																		
-										if($n_permisos['idOpcionesGen_2']=='1' or $idTipoUsuario==1) {
+										if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1) {
 											//Alertas Amarillas
 											/*if($subconsulta['CountAlertaNivel_1']!=0) {
 												echo '
 												<tr>
 													<td class="text-muted">
-														<a href="principal_alertas_alt.php?nivel=1" class="iframe" ><i class="fa fa-exclamation-triangle color-yellow"></i> Alertas Amarillas</a>
+														<a href="principal_alertas_alt.php?nivel=1" class="iframe" ><i class="fa fa-exclamation-triangle color-yellow" aria-hidden="true"></i> Alertas Amarillas</a>
 													</td>
 													<td class="text-right color-red" style="font-weight: 700;">'.$subconsulta['CountAlertaNivel_1'].'</td>
 												</tr>';
@@ -229,7 +225,7 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 												echo '
 												<tr>
 													<td class="text-muted">
-														<a href="principal_alertas_alt.php?nivel=2" class="iframe" ><i class="fa fa-exclamation-triangle color-yellow"></i> Alertas Amarillas</a>
+														<a href="principal_alertas_alt.php?nivel=2" class="iframe" ><i class="fa fa-exclamation-triangle color-yellow" aria-hidden="true"></i> Alertas Amarillas</a>
 													</td>
 													<td class="text-right color-red" style="font-weight: 700;">'.$subconsulta['CountAlertaNivel_2'].'</td>
 												</tr>';
@@ -239,7 +235,7 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 												echo '
 												<tr>
 													<td class="text-muted">
-														<a href="principal_alertas_alt.php?nivel=3" class="iframe" ><i class="fa fa-exclamation-triangle color-red"></i> Alertas Rojas</a>
+														<a href="principal_alertas_alt.php?nivel=3" class="iframe" ><i class="fa fa-exclamation-triangle color-red" aria-hidden="true"></i> Alertas Rojas</a>
 													</td>
 													<td class="text-right color-red" style="font-weight: 700;">'.$subconsulta['CountAlertaNivel_3'].'</td>
 												</tr>';
@@ -268,14 +264,14 @@ echo '
 	<div class="col-sm-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Detalle Clientes</h5>
 				<ul class="nav nav-tabs pull-right">';
 					$xcounter = 1;
 					foreach($arrClientes as $cli) {	
 						if($xcounter==1){$xactive = 'active';}else{$xactive = '';}
-						if($xcounter==4){echo '<li class="dropdown"><a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a><ul class="dropdown-menu" role="menu">';} 
-						echo '<li class="'.$xactive.'"><a href="#xid_'.$cli['idCliente'].'" data-toggle="tab">'.$cli['Nombre'].'</a></li>';
+						if($xcounter==4){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';} 
+						echo '<li class="'.$xactive.'"><a href="#xid_'.$cli['idCliente'].'" data-toggle="tab"><i class="fa fa-user" aria-hidden="true"></i> '.$cli['Nombre'].'</a></li>';
 						$xcounter++;
 					}
 					if($xcounter>3){echo '</ul></li>';}
@@ -315,25 +311,25 @@ echo '
 														
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-blue"></i> OT para la Semana</a>
+																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> OT para la Semana</a>
 																</td>
 																<td class="text-right color-blue" style="font-weight: 700;">'.$cli['CountOTSemanaCliente'].'</td>
 															</tr>
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-red"></i> OT no Cumplidas</a>
+																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-red" aria-hidden="true"></i> OT no Cumplidas</a>
 																</td>
 																<td class="text-right color-red" style="font-weight: 700;">'.$cli['CountOTRetrasadaMes'].'</td>
 															</tr>
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-yellow-light"></i> OT Programadas</a>
+																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-yellow-light" aria-hidden="true"></i> OT Programadas</a>
 																</td>
 																<td class="text-right color-yellow-light" style="font-weight: 700;">'.$cli['CountOTProgramadaMes'].'</td>
 															</tr>
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-green-dark"></i> OT Finalizadas</a>
+																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-green-dark" aria-hidden="true"></i> OT Finalizadas</a>
 																</td>
 																<td class="text-right color-green-dark" style="font-weight: 700;">'.$cli['CountOTFinalizadaMes'].'</td>
 															</tr>
@@ -385,19 +381,19 @@ echo '
 														
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-red"></i> OT no Cumplidas</a>
+																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-red" aria-hidden="true"></i> OT no Cumplidas</a>
 																</td>
 																<td class="text-right color-red" style="font-weight: 700;">'.$cli['CountOTRetrasadaTotal'].'</td>
 															</tr>
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-yellow-light"></i> OT Programadas</a>
+																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-yellow-light" aria-hidden="true"></i> OT Programadas</a>
 																</td>
 																<td class="text-right color-yellow-light" style="font-weight: 700;">'.$cli['CountOTProgramadaTotal'].'</td>
 															</tr>
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-green-dark"></i> OT Finalizadas</a>
+																	<a href="principal_ot_semana_alt.php?pagina=1" class="iframe"><i class="fa fa-database color-green-dark" aria-hidden="true"></i> OT Finalizadas</a>
 																</td>
 																<td class="text-right color-green-dark" style="font-weight: 700;">'.$cli['CountOTFinalizadaTotal'].'</td>
 															</tr>
@@ -448,12 +444,12 @@ echo '
 														<tbody>';
 																						
 																						
-														if($n_permisos['idOpcionesGen_2']=='1' or $idTipoUsuario==1) {
+														if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1) {
 															//Alertas Amarillas
 															/*echo '
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_alertas_alt.php?nivel=1" class="iframe" ><i class="fa fa-exclamation-triangle color-yellow"></i> Alertas Amarillas</a>
+																	<a href="principal_alertas_alt.php?nivel=1" class="iframe" ><i class="fa fa-exclamation-triangle color-yellow" aria-hidden="true"></i> Alertas Amarillas</a>
 																</td>
 																<td class="text-right color-red" style="font-weight: 700;">'.$cli['CountAlertaNivelCliente_1'].'</td>
 															</tr>';*/
@@ -461,7 +457,7 @@ echo '
 															echo '
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_alertas_alt.php?nivel=2" class="iframe" ><i class="fa fa-exclamation-triangle color-yellow"></i> Alertas Amarillas</a>
+																	<a href="principal_alertas_alt.php?nivel=2" class="iframe" ><i class="fa fa-exclamation-triangle color-yellow" aria-hidden="true"></i> Alertas Amarillas</a>
 																</td>
 																<td class="text-right color-red" style="font-weight: 700;">'.$cli['CountAlertaNivelCliente_2'].'</td>
 															</tr>';
@@ -470,7 +466,7 @@ echo '
 															echo '
 															<tr>
 																<td class="text-muted">
-																	<a href="principal_alertas_alt.php?nivel=3" class="iframe" ><i class="fa fa-exclamation-triangle color-red"></i> Alertas Rojas</a>
+																	<a href="principal_alertas_alt.php?nivel=3" class="iframe" ><i class="fa fa-exclamation-triangle color-red" aria-hidden="true"></i> Alertas Rojas</a>
 																</td>
 																<td class="text-right color-red" style="font-weight: 700;">'.$cli['CountAlertaNivelCliente_3'].'</td>
 															</tr>';

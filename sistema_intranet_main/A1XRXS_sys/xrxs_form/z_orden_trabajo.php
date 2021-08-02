@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -88,11 +92,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idOT':                  if(empty($idOT)){                   $error['idOT']                    = 'error/No ha ingresado el id del sistema';}break;
 			case 'idSistema':             if(empty($idSistema)){              $error['idSistema']               = 'error/No ha ingresado el idSistema del sistema';}break;
 			case 'idCliente':             if(empty($idCliente)){              $error['idCliente']               = 'error/No ha seleccionado un cliente';}break;
@@ -151,11 +155,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			case 'idInterno':             if(empty($idInterno)){              $error['idInterno']               = 'error/No ha ingresado el id de tabla';}break;
 			case 'tablaitem':             if(empty($tablaitem)){              $error['tablaitem']               = 'error/No ha ingresado la tabla itemizado';}break;
 			case 'idUml':                 if(empty($idUml)){                  $error['idUml']                   = 'error/No ha ingresado el id unidad medida';}break;
-			case 'Grasa_inicial':         if(empty($Grasa_inicial)){          $error['Grasa_inicial']           = 'error/No ha ingresado la cantidad de grasa inicial';}break;
-			case 'Grasa_relubricacion':   if(empty($Grasa_relubricacion)){    $error['Grasa_relubricacion']     = 'error/No ha ingresado la cantidad de grasa de relubricacion';}break;
-			case 'Aceite':                if(empty($Aceite)){                 $error['Aceite']                  = 'error/No ha ingresado la cantidad de aceite';}break;
-			case 'Cantidad':              if(empty($Cantidad)){               $error['Cantidad']                = 'error/No ha ingresado la cantidad';}break;
-			case 'idSubTipo':             if(empty($idSubTipo)){              $error['idSubTipo']               = 'error/No ha seleccionado el tipo de trabajo';}break;
+			case 'Grasa_inicial':         if(!isset($Grasa_inicial)){         $error['Grasa_inicial']           = 'error/No ha ingresado la cantidad de grasa inicial';}break;
+			case 'Grasa_relubricacion':   if(!isset($Grasa_relubricacion)){   $error['Grasa_relubricacion']     = 'error/No ha ingresado la cantidad de grasa de relubricacion';}break;
+			case 'Aceite':                if(!isset($Aceite)){                $error['Aceite']                  = 'error/No ha ingresado la cantidad de aceite';}break;
+			case 'Cantidad':              if(!isset($Cantidad)){              $error['Cantidad']                = 'error/No ha ingresado la cantidad';}break;
+			case 'idSubTipo':             if(!isset($idSubTipo)){             $error['idSubTipo']               = 'error/No ha seleccionado el tipo de trabajo';}break;
 			case 'idResponsable':         if(empty($idResponsable)){          $error['idResponsable']           = 'error/No ha seleccionado el responsable';}break;
 			case 'idInsumos':             if(empty($idInsumos)){              $error['idInsumos']               = 'error/No ha seleccionado el insumo';}break;
 			case 'idProductos':           if(empty($idProductos)){            $error['idProductos']             = 'error/No ha seleccionado el producto';}break;
@@ -165,7 +169,12 @@ if( ! defined('XMBCXRXSKGC')) {
 	
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){      $error['Observacion']   = 'error/Edita Observacion, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -193,49 +202,25 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['ot_basicos']['idMaquina']       = $idMaquina;
-				$_SESSION['ot_basicos']['idPrioridad']     = $idPrioridad;
-				$_SESSION['ot_basicos']['idTipo']          = $idTipo;
-				$_SESSION['ot_basicos']['f_programacion']  = $f_programacion;
-				$_SESSION['ot_basicos']['idSistema']       = $idSistema;
-				$_SESSION['ot_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['ot_basicos']['idEstado']        = $idEstado;
-				$_SESSION['ot_basicos']['f_creacion']      = $f_creacion;
-				$_SESSION['ot_basicos']['Observaciones']   = $Observaciones;
-				
-				//Se guarda el trabajador asignado
-				$_SESSION['ot_trabajador'][$idTrabajador]['idTrabajador'] = $idTrabajador;
-
-				//Si se ha seleccionado un cliente
-				if(isset($idCliente)&&$idCliente!=''){
-					$_SESSION['ot_basicos']['idCliente']       = $idCliente;
-				}else{
-					$_SESSION['ot_basicos']['idCliente']       = '';
-				}
+				if(isset($idMaquina)&&$idMaquina!=''){            $_SESSION['ot_basicos']['idMaquina']       = $idMaquina;       }else{$_SESSION['ot_basicos']['idMaquina']      = '';}
+				if(isset($idPrioridad)&&$idPrioridad!=''){        $_SESSION['ot_basicos']['idPrioridad']     = $idPrioridad;     }else{$_SESSION['ot_basicos']['idPrioridad']    = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['ot_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['ot_basicos']['idTipo']         = '';}
+				if(isset($f_programacion)&&$f_programacion!=''){  $_SESSION['ot_basicos']['f_programacion']  = $f_programacion;  }else{$_SESSION['ot_basicos']['f_programacion'] = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['ot_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['ot_basicos']['idSistema']      = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['ot_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['ot_basicos']['idUsuario']      = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['ot_basicos']['idEstado']        = $idEstado;        }else{$_SESSION['ot_basicos']['idEstado']       = '';}
+				if(isset($f_creacion)&&$f_creacion!=''){          $_SESSION['ot_basicos']['f_creacion']      = $f_creacion;      }else{$_SESSION['ot_basicos']['f_creacion']     = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['ot_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['ot_basicos']['Observaciones']  = '';}
+				if(isset($idCliente)&&$idCliente!=''){            $_SESSION['ot_basicos']['idCliente']       = $idCliente;       }else{$_SESSION['ot_basicos']['idCliente']      = '';}
 			
+				//Se guarda el trabajador asignado
+				if(isset($idTrabajador)&&$idTrabajador!=''){ $_SESSION['ot_trabajador'][$idTrabajador]['idTrabajador'] = $idTrabajador;}
+
 				/********************************************************************************/
 				if(isset($idMaquina) && $idMaquina != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT 
-					maquinas_listado.Nombre AS NombreMaquina,
-					clientes_listado.Nombre AS NombreCliente
-					FROM `maquinas_listado`
-					LEFT JOIN `clientes_listado`     ON clientes_listado.idCliente      = maquinas_listado.idCliente
-					WHERE maquinas_listado.idMaquina = ".$idMaquina;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowMaquina = mysqli_fetch_assoc ($resultado);
+					$rowMaquina = db_select_data (false, 'maquinas_listado.Nombre AS NombreMaquina, clientes_listado.Nombre AS NombreCliente', 'maquinas_listado', 'LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = maquinas_listado.idCliente', 'maquinas_listado.idMaquina='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//se guarda dato
 					$_SESSION['ot_basicos']['NombreMaquina'] = $rowMaquina['NombreMaquina'];
 					$_SESSION['ot_basicos']['NombreCliente'] = $rowMaquina['NombreCliente'];
@@ -246,23 +231,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idPrioridad) && $idPrioridad != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_ot_prioridad`
-					WHERE idPrioridad = ".$idPrioridad;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPrioridad = mysqli_fetch_assoc ($resultado);
+					$rowPrioridad = db_select_data (false, 'Nombre', 'core_ot_prioridad', '', 'idPrioridad='.$idPrioridad, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//se guarda dato
 					$_SESSION['ot_basicos']['Prioridad'] = $rowPrioridad['Nombre'];
 				}else{
@@ -271,23 +241,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_ot_tipos`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipo = mysqli_fetch_assoc ($resultado);
+					$rowTipo = db_select_data (false, 'Nombre', 'core_ot_tipos', '', 'idTipo='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//se guarda dato
 					$_SESSION['ot_basicos']['Tipo'] = $rowTipo['Nombre'];
 				}else{
@@ -295,24 +250,9 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre, ApellidoPat, ApellidoMat, Cargo, Rut
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					// Se traen todos los datos del trabajador
+					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat, Cargo, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//se guarda dato
 					$_SESSION['ot_trabajador'][$idTrabajador]['Trabajador']   = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 					$_SESSION['ot_trabajador'][$idTrabajador]['Cargo']        = $rowTrabajador['Cargo'];
@@ -361,45 +301,22 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['ot_temporal']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['ot_basicos']['idMaquina']       = $idMaquina;
-				$_SESSION['ot_basicos']['idPrioridad']     = $idPrioridad;
-				$_SESSION['ot_basicos']['idTipo']          = $idTipo;
-				$_SESSION['ot_basicos']['f_programacion']  = $f_programacion;
-				$_SESSION['ot_basicos']['idSistema']       = $idSistema;
-				$_SESSION['ot_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['ot_basicos']['idEstado']        = $idEstado;
-				$_SESSION['ot_basicos']['f_creacion']      = $f_creacion;
+				if(isset($idMaquina)&&$idMaquina!=''){            $_SESSION['ot_basicos']['idMaquina']       = $idMaquina;       }else{$_SESSION['ot_basicos']['idMaquina']      = '';}
+				if(isset($idPrioridad)&&$idPrioridad!=''){        $_SESSION['ot_basicos']['idPrioridad']     = $idPrioridad;     }else{$_SESSION['ot_basicos']['idPrioridad']    = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['ot_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['ot_basicos']['idTipo']         = '';}
+				if(isset($f_programacion)&&$f_programacion!=''){  $_SESSION['ot_basicos']['f_programacion']  = $f_programacion;  }else{$_SESSION['ot_basicos']['f_programacion'] = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['ot_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['ot_basicos']['idSistema']      = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['ot_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['ot_basicos']['idUsuario']      = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['ot_basicos']['idEstado']        = $idEstado;        }else{$_SESSION['ot_basicos']['idEstado']       = '';}
+				if(isset($f_creacion)&&$f_creacion!=''){          $_SESSION['ot_basicos']['f_creacion']      = $f_creacion;      }else{$_SESSION['ot_basicos']['f_creacion']     = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['ot_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['ot_basicos']['Observaciones']  = '';}
+				if(isset($idCliente)&&$idCliente!=''){            $_SESSION['ot_basicos']['idCliente']       = $idCliente;       }else{$_SESSION['ot_basicos']['idCliente']      = '';}
 			
-				
-				//Si se ha seleccionado un cliente
-				if(isset($idCliente)&&$idCliente!=''){
-					$_SESSION['ot_basicos']['idCliente']       = $idCliente;
-				}else{
-					$_SESSION['ot_basicos']['idCliente']       = '';
-				}
 				/********************************************************************************/
 				if(isset($idMaquina) && $idMaquina != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT 
-					maquinas_listado.Nombre AS NombreMaquina,
-					clientes_listado.Nombre AS NombreCliente
-					FROM `maquinas_listado`
-					LEFT JOIN `clientes_listado`     ON clientes_listado.idCliente      = maquinas_listado.idCliente
-					WHERE maquinas_listado.idMaquina = ".$idMaquina;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowMaquina = mysqli_fetch_assoc ($resultado);
+					$rowMaquina = db_select_data (false, 'maquinas_listado.Nombre AS NombreMaquina, clientes_listado.Nombre AS NombreCliente', 'maquinas_listado', 'LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = maquinas_listado.idCliente', 'maquinas_listado.idMaquina='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//se guarda dato
 					$_SESSION['ot_basicos']['NombreMaquina'] = $rowMaquina['NombreMaquina'];
 					$_SESSION['ot_basicos']['NombreCliente'] = $rowMaquina['NombreCliente'];
@@ -410,23 +327,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idPrioridad) && $idPrioridad != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_ot_prioridad`
-					WHERE idPrioridad = ".$idPrioridad;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowPrioridad = mysqli_fetch_assoc ($resultado);
+					$rowPrioridad = db_select_data (false, 'Nombre', 'core_ot_prioridad', '', 'idPrioridad='.$idPrioridad, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//se guarda dato
 					$_SESSION['ot_basicos']['Prioridad'] = $rowPrioridad['Nombre'];
 				}else{
@@ -435,23 +337,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_ot_tipos`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipo = mysqli_fetch_assoc ($resultado);
+					$rowTipo = db_select_data (false, 'Nombre', 'core_ot_tipos', '', 'idTipo='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//se guarda dato
 					$_SESSION['ot_basicos']['Tipo'] = $rowTipo['Nombre'];
 				}else{
@@ -474,24 +361,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, ApellidoPat, ApellidoMat, Cargo, Rut
-				FROM `trabajadores_listado`
-				WHERE idTrabajador = ".$idTrabajador;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowTrabajador = mysqli_fetch_assoc ($resultado);
-				
+				$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat, Cargo, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 				//Se guarda el trabajador asignado
 				$_SESSION['ot_trabajador'][$idTrabajador]['idTrabajador'] = $idTrabajador;
 				$_SESSION['ot_trabajador'][$idTrabajador]['Trabajador']   = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
@@ -527,26 +398,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT 
-				insumos_listado.Nombre AS NombreProducto,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idProducto = ".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto = db_select_data (false, 'insumos_listado.Nombre AS NombreProducto, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Se guarda el insumos asignado
 				$_SESSION['ot_insumos'][$idProducto]['idProducto'] = $idProducto;
@@ -582,26 +434,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT 
-				productos_listado.Nombre AS NombreProducto,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE productos_listado.idProducto = ".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto = db_select_data (false, 'productos_listado.Nombre AS NombreProducto, sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Se guarda el productos asignado
 				$_SESSION['ot_productos'][$idProducto]['idProducto'] = $idProducto;
@@ -661,11 +494,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			// Se traen los datos de la tabla madre
 			if(isset($id_tabla_madre)&&$id_tabla_madre!=0){
-				$query = "SELECT idUtilizable,tabla, table_value, idLicitacion
-				FROM `maquinas_listado_level_".$tabla_madre."`
-				WHERE idLevel_".$tabla_madre." = {$id_tabla_madre}";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_m = mysqli_fetch_assoc ($resultado);
+				$rowdata_m = db_select_data (false, 'idUtilizable,tabla, table_value, idLicitacion', 'maquinas_listado_level_'.$tabla_madre, '', 'idLevel_'.$tabla_madre.'='.$id_tabla_madre, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se verifica que sea un componente
 				if(isset($rowdata_m['idUtilizable'])&&$rowdata_m['idUtilizable']!=3&&$rowdata_m['tabla']==0){
 					$error['tabla'] = 'error/El dato seleccionado no posee tareas asignadas';
@@ -674,32 +503,30 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 			
 			// Se traen todos los datos de la maquina
-			$query = "SELECT 
-			maquinas_listado_level_".$tabla.".Nombre,
-			maquinas_listado_level_".$tabla.".Codigo,
-			maquinas_listado_level_".$tabla.".idUtilizable,
-			maquinas_listado_level_".$tabla.".idSubTipo,
-			maquinas_listado_level_".$tabla.".idProducto,
-			maquinas_listado_level_".$tabla.".Grasa_inicial,
-			maquinas_listado_level_".$tabla.".Grasa_relubricacion,
-			maquinas_listado_level_".$tabla.".Aceite,
-			maquinas_listado_level_".$tabla.".Cantidad,
-			maquinas_listado_level_".$tabla.".idUml,
+			$SIS_query = '
+			maquinas_listado_level_'.$tabla.'.Nombre,
+			maquinas_listado_level_'.$tabla.'.Codigo,
+			maquinas_listado_level_'.$tabla.'.idUtilizable,
+			maquinas_listado_level_'.$tabla.'.idSubTipo,
+			maquinas_listado_level_'.$tabla.'.idProducto,
+			maquinas_listado_level_'.$tabla.'.Grasa_inicial,
+			maquinas_listado_level_'.$tabla.'.Grasa_relubricacion,
+			maquinas_listado_level_'.$tabla.'.Aceite,
+			maquinas_listado_level_'.$tabla.'.Cantidad,
+			maquinas_listado_level_'.$tabla.'.idUml,
 			productos_listado.Nombre AS Producto,
-			sistema_productos_uml.Nombre AS Unimed
-			
-			FROM `maquinas_listado_level_".$tabla."`
-			LEFT JOIN `productos_listado`       ON productos_listado.idProducto  = maquinas_listado_level_".$tabla.".idProducto
-			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = maquinas_listado_level_".$tabla.".idUml
-			WHERE idLevel_".$tabla." = {$id_tabla}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			sistema_productos_uml.Nombre AS Unimed';
+			$SIS_join  = '
+			LEFT JOIN `productos_listado`       ON productos_listado.idProducto  = maquinas_listado_level_'.$tabla.'.idProducto
+			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = maquinas_listado_level_'.$tabla.'.idUml';
+			$SIS_where = 'idLevel_'.$tabla.' = '.$id_tabla;
+			$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$tabla, $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			//se verifica que sea un subcomponente
 			if(isset($rowdata['idUtilizable'])&&$rowdata['idUtilizable']!=''&&$rowdata['idUtilizable']!=3){
 				$error['subcomponente'] = 'error/El dato seleccionado no es un subcomponente';
 			}	
 	
-			
 			//se establece variable inicial		
 			$idInterno = 0;
 				
@@ -714,63 +541,64 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			if ( empty($error) ) {
 
-					$idInterno = $idInterno+1;
-					//Para mostrar en la creacion
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Nombre']      = $rowdata['Nombre'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Codigo']      = $rowdata['Codigo'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Unimed']      = $rowdata['Unimed'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['valor_id']    = $idInterno;
+				$idInterno = $idInterno+1;
+				//Para mostrar en la creacion
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Nombre']      = $rowdata['Nombre'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Codigo']      = $rowdata['Codigo'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Unimed']      = $rowdata['Unimed'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['valor_id']    = $idInterno;
 					
-					//variables vacias
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1']       = '';
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2']       = '';
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t']       = '';
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Codigo']  = '';
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Nombre']  = '';
+				//variables vacias
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1']       = '';
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2']       = '';
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t']       = '';
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Codigo']  = '';
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Nombre']  = '';
 					
-					//Datos para guardar en la base de datos
-					//subcomponente seleccionado
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['id_tabla']       = $id_tabla;
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['tabla']          = $tabla;
-					//tabla madre del itemizado
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['tabla_m']        = $rowdata_m['tabla'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['tabla_m_value']  = $rowdata_m['table_value'];
-					//productos a utilizar
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idProducto']  = $rowdata['idProducto'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idUml']       = $rowdata['idUml'];
-					//medidas
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = $rowdata['Grasa_inicial'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = $rowdata['Grasa_relubricacion'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite']               = $rowdata['Aceite'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Cantidad']             = $rowdata['Cantidad'];
-					//idSubTipo
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idSubTipo']   = $rowdata['idSubTipo'];
-					//Licitacion relacionada
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idLicitacion']   = $rowdata_m['idLicitacion'];
+				//Datos para guardar en la base de datos
+				//subcomponente seleccionado
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['id_tabla']       = $id_tabla;
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['tabla']          = $tabla;
+				//tabla madre del itemizado
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['tabla_m']        = $rowdata_m['tabla'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['tabla_m_value']  = $rowdata_m['table_value'];
+				//productos a utilizar
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idProducto']  = $rowdata['idProducto'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idUml']       = $rowdata['idUml'];
+				//medidas
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = $rowdata['Grasa_inicial'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = $rowdata['Grasa_relubricacion'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite']               = $rowdata['Aceite'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Cantidad']             = $rowdata['Cantidad'];
+				//idSubTipo
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idSubTipo']   = $rowdata['idSubTipo'];
+				//Licitacion relacionada
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idLicitacion']   = $rowdata_m['idLicitacion'];
 					
-					switch ($rowdata['idSubTipo']) {
-						case 1://Grasa
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Grasa_inicial'];
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2'] = $rowdata['Grasa_relubricacion'];
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Grasa Lub/Relub';
-							break;
-						case 2://Aceite
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Aceite'];
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
-							break;
-						case 3://Normal
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Cantidad'];
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Normal';
-							break;
-						case 4://Otro
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Otro';
+				switch ($rowdata['idSubTipo']) {
+					case 1://Grasa
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Grasa_inicial'];
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2'] = $rowdata['Grasa_relubricacion'];
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Grasa Lub/Relub';
+						break;
+					case 2://Aceite
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Aceite'];
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
+						break;
+					case 3://Normal
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Cantidad'];
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Normal';
+						break;
+					case 4://Otro
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Otro';
 							
-							break;
-					}
-		
-					header( 'Location: '.$location.'&view=true' );
-					die;
+						break;
+				}
+				
+				//redirijo
+				header( 'Location: '.$location.'&view=true' );
+				die;
 				
 			}
 		
@@ -795,50 +623,48 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen todos los datos de la tarea
-			$query = "SELECT 
-			licitacion_listado_level_".$tablaitem.".Nombre, 
-			licitacion_listado_level_".$tablaitem.".Codigo, 
-			licitacion_listado_level_".$tablaitem.".idTrabajo,
-			core_licitacion_trabajos.Nombre as Trabajo
-			FROM `licitacion_listado_level_".$tablaitem."`
-			LEFT JOIN `core_licitacion_trabajos`   ON core_licitacion_trabajos.idTrabajo   = licitacion_listado_level_".$tablaitem.".idTrabajo
-			WHERE idLevel_".$tablaitem." = {$idItemizado}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$SIS_query = '
+			licitacion_listado_level_'.$tablaitem.'.Nombre, 
+			licitacion_listado_level_'.$tablaitem.'.Codigo, 
+			licitacion_listado_level_'.$tablaitem.'.idTrabajo,
+			core_licitacion_trabajos.Nombre as Trabajo';
+			$SIS_join  = 'LEFT JOIN `core_licitacion_trabajos` ON core_licitacion_trabajos.idTrabajo = licitacion_listado_level_'.$tablaitem.'.idTrabajo';
+			$SIS_where = 'idLevel_'.$tablaitem.' = '.$idItemizado;
+			$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado_level_'.$tablaitem, $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			if ( empty($error) ) {
 
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Nombre']      = $rowdata['Nombre'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Codigo']      = $rowdata['Codigo'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Trabajo']     = $rowdata['Trabajo'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idTrabajo']        = $rowdata['idTrabajo'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idItemizado']      = $idItemizado;
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['tablaitem']        = $tablaitem;
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Nombre']      = $rowdata['Nombre'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Codigo']      = $rowdata['Codigo'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Item_Trabajo']     = $rowdata['Trabajo'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idTrabajo']        = $rowdata['idTrabajo'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idItemizado']      = $idItemizado;
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['tablaitem']        = $tablaitem;
 
 
-					switch ($rowdata['idTrabajo']) {
-						case 1: //Analisis
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = 0;
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = 0;
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite']               = 0;
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Cantidad']             = 0;
+				switch ($rowdata['idTrabajo']) {
+					case 1: //Analisis
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = 0;
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = 0;
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite']               = 0;
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Cantidad']             = 0;
 									
 						break;
-						case 2: //Consumo de Materiales
+					case 2: //Consumo de Materiales
 									
 						break;
-						case 3: //Observacion
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = 0;
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = 0;
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite']               = 0;
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Cantidad']             = 0;
+					case 3: //Observacion
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = 0;
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = 0;
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite']               = 0;
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Cantidad']             = 0;
 									
 						break;
-					}
+				}
 					
-								
-					header( 'Location: '.$location.'&view=true' );
-					die;
+				//redirijo				
+				header( 'Location: '.$location.'&view=true' );
+				die;
 			}
 				
 		break;
@@ -849,96 +675,52 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen todos los datos del producto
-			$query = "SELECT 
-			productos_listado.idProducto,
-			productos_listado.Nombre AS Producto,
-			sistema_productos_uml.Nombre AS Unimed,
-			productos_listado.idUml
-			FROM `productos_listado`
-			LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-			WHERE productos_listado.idProducto = {$idProducto}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
-			if ( empty($error) ) {
-
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idProducto']  = $rowdata['idProducto'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idUml']       = $rowdata['idUml'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
-					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Unimed']      = $rowdata['Unimed'];
-					
-					
-					
-					switch ($idSubTipo) {
-						case 1: //Grasa
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t']         = 'Grasa Lub/Relub';
-							if(isset($Grasa_inicial)&&$Grasa_inicial!='') {              
-								$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']  = $Grasa_inicial;
-								$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1']         = $Grasa_inicial; 
-							}
-							if(isset($Grasa_relubricacion)&&$Grasa_relubricacion!='') {  
-								$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = $Grasa_relubricacion;    
-								$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2']               = $Grasa_relubricacion;    
-							}
-							break;
-							
-						case 2: //Aceite
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite'] = $Aceite; 
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $Aceite; 
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2'] = '';
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
-							break;
-							
-						case 3: //Normal
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Cantidad'] = $Cantidad;
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1']   = $Cantidad;
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2']   = '';
-							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t']   = 'Normal';
-							break;
-							
-						case 4: //Otro
-						   
-							break;
-					}
-
-					
-					header( 'Location: '.$location.'&view=true' );
-					die;
-			}
+			$rowdata = db_select_data (false, 'productos_listado.idProducto, productos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Unimed, productos_listado.idUml', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idProducto = '.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-		break;
-/*******************************************************************************************************************/		
-		case 'add_obs':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
 			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['ot_basicos']['Observaciones'] = $Observacion;
 
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idProducto']  = $rowdata['idProducto'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idUml']       = $rowdata['idUml'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
+				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Unimed']      = $rowdata['Unimed'];
+					
+				switch ($idSubTipo) {
+					case 1: //Grasa
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t']         = 'Grasa Lub/Relub';
+						if(isset($Grasa_inicial)&&$Grasa_inicial!='') {              
+							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']  = $Grasa_inicial;
+							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1']         = $Grasa_inicial; 
+						}
+						if(isset($Grasa_relubricacion)&&$Grasa_relubricacion!='') {  
+							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = $Grasa_relubricacion;    
+							$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2']               = $Grasa_relubricacion;    
+						}
+						break;
+							
+					case 2: //Aceite
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite'] = $Aceite; 
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $Aceite; 
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2'] = '';
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
+						break;
+							
+					case 3: //Normal
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Cantidad'] = $Cantidad;
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1']   = $Cantidad;
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2']   = '';
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t']   = 'Normal';
+						break;
+							
+					case 4: //Otro
+						   
+						break;
+				}
+
+				//redirijo	
+				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['ot_temporal'] = $_SESSION['ot_basicos']['Observaciones'];
-			$_SESSION['ot_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
+				
 		break;		
 /*******************************************************************************************************************/		
 		case 'crear_ot':
@@ -949,26 +731,25 @@ if( ! defined('XMBCXRXSKGC')) {
 			/*********************************************************************/
 			//variables
 			$n_trabajadores = 0;
-			$n_trabajos = 0;
-			
+			$n_trabajos     = 0;
 			
 			//Se verifican los datos basicos
 			if (isset($_SESSION['ot_basicos'])){
-				if(!isset($_SESSION['ot_basicos']['idSistema']) or $_SESSION['ot_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha ingresado el id del sistema';}
-				if(!isset($_SESSION['ot_basicos']['idMaquina']) or $_SESSION['ot_basicos']['idMaquina']=='' ){           $error['idMaquina']        = 'error/No ha seleccionado la maquina';}
-				if(!isset($_SESSION['ot_basicos']['idUsuario']) or $_SESSION['ot_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha ingresado el id del usuario';}
-				if(!isset($_SESSION['ot_basicos']['idEstado']) or $_SESSION['ot_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha ingresado el id del estado';}
-				if(!isset($_SESSION['ot_basicos']['idPrioridad']) or $_SESSION['ot_basicos']['idPrioridad']=='' ){       $error['idPrioridad']      = 'error/No ha seleccionado la prioridad';}
-				if(!isset($_SESSION['ot_basicos']['idTipo']) or $_SESSION['ot_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
-				if(!isset($_SESSION['ot_basicos']['f_creacion']) or $_SESSION['ot_basicos']['f_creacion']=='' ){         $error['f_creacion']       = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['ot_basicos']['f_programacion']) or $_SESSION['ot_basicos']['f_programacion']=='' ){ $error['f_programacion']   = 'error/No ha ingresado la fecha de programacion';}
+				if(!isset($_SESSION['ot_basicos']['idSistema']) OR $_SESSION['ot_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha ingresado el id del sistema';}
+				if(!isset($_SESSION['ot_basicos']['idMaquina']) OR $_SESSION['ot_basicos']['idMaquina']=='' ){           $error['idMaquina']        = 'error/No ha seleccionado la maquina';}
+				if(!isset($_SESSION['ot_basicos']['idUsuario']) OR $_SESSION['ot_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha ingresado el id del usuario';}
+				if(!isset($_SESSION['ot_basicos']['idEstado']) OR $_SESSION['ot_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha ingresado el id del estado';}
+				if(!isset($_SESSION['ot_basicos']['idPrioridad']) OR $_SESSION['ot_basicos']['idPrioridad']=='' ){       $error['idPrioridad']      = 'error/No ha seleccionado la prioridad';}
+				if(!isset($_SESSION['ot_basicos']['idTipo']) OR $_SESSION['ot_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
+				if(!isset($_SESSION['ot_basicos']['f_creacion']) OR $_SESSION['ot_basicos']['f_creacion']=='' ){         $error['f_creacion']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['ot_basicos']['f_programacion']) OR $_SESSION['ot_basicos']['f_programacion']=='' ){ $error['f_programacion']   = 'error/No ha ingresado la fecha de programacion';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la orden de trabajo';
 			}
 			//Se verifica que tenga trabajadores asignados
 			if (isset($_SESSION['ot_trabajador'])){
 				foreach ($_SESSION['ot_trabajador'] as $key => $trabajador){
-					if(!isset($trabajador['idTrabajador']) or $trabajador['idTrabajador'] == ''){  $error['idTrabajador']   = 'error/No ha ingresado un trabajador';}
+					if(!isset($trabajador['idTrabajador']) OR $trabajador['idTrabajador'] == ''){  $error['idTrabajador']   = 'error/No ha ingresado un trabajador';}
 					$n_trabajadores++;
 				}
 			}else{
@@ -979,16 +760,16 @@ if( ! defined('XMBCXRXSKGC')) {
 				foreach ($_SESSION['ot_trabajos'] as $key => $x_tabla){
 					foreach ($x_tabla as $x_id_tabla) {
 						foreach ($x_id_tabla as $x_idInterno) {
-							if(!isset($x_idInterno['idItemizado']) or $x_idInterno['idItemizado'] == ''){   $error['idItemizado']   = 'error/No ha seleccionado un trabajo para el subcomponente';}
-							if(!isset($x_idInterno['idSubTipo']) or $x_idInterno['idSubTipo'] == ''){       $error['idSubTipo']     = 'error/No ha seleccionado un tipo de subcomponente';}
-							if(!isset($x_idInterno['id_tabla']) or $x_idInterno['id_tabla'] == ''){         $error['id_tabla']      = 'error/No ha seleccionado un subcomponente';}
-							if(!isset($x_idInterno['tabla']) or $x_idInterno['tabla'] == ''){               $error['tabla']         = 'error/No ha seleccionado un subcomponente';}
-							if(!isset($x_idInterno['idLicitacion']) or $x_idInterno['idLicitacion'] == ''){ $error['idLicitacion']  = 'error/No ha seleccionado una licitacion';}
+							if(!isset($x_idInterno['idItemizado']) OR $x_idInterno['idItemizado'] == ''){   $error['idItemizado']   = 'error/No ha seleccionado un trabajo para el subcomponente';}
+							if(!isset($x_idInterno['idSubTipo']) OR $x_idInterno['idSubTipo'] == ''){       $error['idSubTipo']     = 'error/No ha seleccionado un tipo de subcomponente';}
+							if(!isset($x_idInterno['id_tabla']) OR $x_idInterno['id_tabla'] == ''){         $error['id_tabla']      = 'error/No ha seleccionado un subcomponente';}
+							if(!isset($x_idInterno['tabla']) OR $x_idInterno['tabla'] == ''){               $error['tabla']         = 'error/No ha seleccionado un subcomponente';}
+							if(!isset($x_idInterno['idLicitacion']) OR $x_idInterno['idLicitacion'] == ''){ $error['idLicitacion']  = 'error/No ha seleccionado una licitacion';}
 							$n_trabajos++;
 							//variable reseteada
 							$n_grasa = 0;
 							//Se revisa por tipo de trabajo
-							if(!isset($x_idInterno['idTrabajo']) or $x_idInterno['idTrabajo'] == ''){               
+							if(!isset($x_idInterno['idTrabajo']) OR $x_idInterno['idTrabajo'] == ''){               
 								$error['idTrabajo'] = 'error/No ha seleccionado un trabajo';
 							}else{	
 								switch ($x_idInterno['idTrabajo']) {
@@ -1032,9 +813,6 @@ if( ! defined('XMBCXRXSKGC')) {
 				$error['trabajos'] = 'error/No tiene trabajos asignados a la orden de trabajo';
 			}	
 			
-			
-
-
 			/*********************************************************************/
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
@@ -1066,7 +844,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `orden_trabajo_listado` (idSistema, idMaquina, idUsuario, idEstado, idPrioridad,
 				idTipo, f_creacion, f_programacion, progDia, progSemana, progMes, progAno, Observaciones,idCliente) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1102,7 +880,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `orden_trabajo_listado_responsable` (idOT,idSistema, idMaquina, idUsuario,
 						idEstado,idPrioridad, idTipo, f_creacion, f_programacion, idTrabajador) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -1138,10 +916,9 @@ if( ! defined('XMBCXRXSKGC')) {
 							if(isset($insumos['Cantidad']) && $insumos['Cantidad'] != ''){                                            $a .= ",'".$insumos['Cantidad']."'" ;                       }else{$a .= ",''";}
 							
 							// inserto los datos de registro en la db
-							mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 							$query  = "INSERT INTO `orden_trabajo_listado_insumos` (idOT, idSistema, idMaquina, idUsuario, idEstado,
 							idPrioridad, idTipo, f_creacion, f_programacion, idProducto,Cantidad ) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1178,10 +955,9 @@ if( ! defined('XMBCXRXSKGC')) {
 							if(isset($prod['Cantidad']) && $prod['Cantidad'] != ''){                                                  $a .= ",'".$prod['Cantidad']."'" ;                          }else{$a .= ",''";}
 							
 							// inserto los datos de registro en la db
-							mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 							$query  = "INSERT INTO `orden_trabajo_listado_productos` (idOT, idSistema, idMaquina, idUsuario, idEstado,
 							idPrioridad, idTipo, f_creacion, f_programacion, idProducto,Cantidad ) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1242,7 +1018,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									idTipo, f_creacion, f_programacion, comp_tabla_id, comp_tabla, item_m_tabla_id, item_m_tabla, item_tabla_id, item_tabla,
 									idSubTipo, idTrabajo, idProducto, idUml, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, NombreComponente, NombreTrabajo, 
 									Observacion, idLicitacion) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -1286,88 +1062,51 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos de la tabla principal
-			$query  = "DELETE FROM `orden_trabajo_listado` WHERE idOT = {$_GET['del_ot']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_ot']) OR !validaEntero($_GET['del_ot']))&&$_GET['del_ot']!=''){
+				$indice = simpleDecode($_GET['del_ot'], fecha_actual());
+			}else{
+				$indice = $_GET['del_ot'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
 			}
 			
-			//se borran los responsables
-			$query  = "DELETE FROM `orden_trabajo_listado_responsable` WHERE idOT = {$_GET['del_ot']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
 			}
 			
-			//se borran los trabajos
-			$query  = "DELETE FROM `orden_trabajo_listado_trabajos` WHERE idOT = {$_GET['del_ot']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+			if($errorn==0){
+				//se borran los datos
+				$resultado_1 = db_delete_data (false, 'orden_trabajo_listado', 'idOT = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'orden_trabajo_listado_responsable', 'idOT = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_3 = db_delete_data (false, 'orden_trabajo_listado_trabajos', 'idOT = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_4 = db_delete_data (false, 'orden_trabajo_listado_insumos', 'idOT = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_5 = db_delete_data (false, 'orden_trabajo_listado_productos', 'idOT = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true OR $resultado_3==true OR $resultado_4==true OR $resultado_5==true){
 					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
 					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
 			}
 			
-			//se borran los insumos
-			$query  = "DELETE FROM `orden_trabajo_listado_insumos` WHERE idOT = {$_GET['del_ot']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
 			
-			//se borran los productos
-			$query  = "DELETE FROM `orden_trabajo_listado_productos` WHERE idOT = {$_GET['del_ot']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
 		
 		break;
 /*******************************************************************************************************************/		
@@ -1381,36 +1120,18 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/*****************************************************/
 				// Se traen todos los datos de la ot seleccionada
-				$query = "SELECT idSistema,idMaquina,idPrioridad,idTipo,Observaciones,idCliente
-				FROM `orden_trabajo_listado`
-				WHERE idOT = {$idOT}";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata = mysqli_fetch_assoc ($resultado);
+				$rowdata = db_select_data (false, 'idSistema,idMaquina,idPrioridad,idTipo,Observaciones,idCliente', 'orden_trabajo_listado', '', 'idOT = '.$idOT, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************/
 				// Se trae un listado con los trabajadores de la OT
 				$arrTrabajadores = array();
-				$query = "SELECT idSistema,idMaquina,idPrioridad,idTipo,idTrabajador
-				FROM `orden_trabajo_listado_responsable`
-				WHERE idOT = {$idOT}";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrTrabajadores,$row );
-				}
-
+				$arrTrabajadores = db_select_array (false, 'idSistema,idMaquina,idPrioridad,idTipo,idTrabajador', 'orden_trabajo_listado_responsable', '', 'idOT ='.$idOT, 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*****************************************************/
 				// Se trae un listado de los trabajos a realizar
 				$arrTrabajo = array();
-				$query = "SELECT  idSistema,idMaquina,idPrioridad,idTipo,comp_tabla_id,comp_tabla,item_m_tabla_id,
-				item_m_tabla,item_tabla_id,item_tabla,idSubTipo,idTrabajo,idProducto,idUml,Grasa_inicial,Grasa_relubricacion,
-				Aceite,Cantidad,NombreComponente,NombreTrabajo,idLicitacion
-				FROM `orden_trabajo_listado_trabajos`
-				WHERE idOT = {$idOT} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrTrabajo,$row );
-				}
-		
+				$arrTrabajo = db_select_array (false, 'idSistema,idMaquina,idPrioridad,idTipo,comp_tabla_id,comp_tabla,item_m_tabla_id,item_m_tabla,item_tabla_id,item_tabla,idSubTipo,idTrabajo,idProducto,idUml,Grasa_inicial,Grasa_relubricacion,Aceite,Cantidad,NombreComponente,NombreTrabajo,idLicitacion', 'orden_trabajo_listado_trabajos', $SIS_join, 'idOT ='.$idOT, 'idOT ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*****************************************************/
 				//Se guardan los datos basicos
 				if(isset($rowdata['idSistema']) &&$rowdata['idSistema'] != ''){        $a = "'".$rowdata['idSistema']."'" ;         }else{$a ="''";}
@@ -1439,7 +1160,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `orden_trabajo_listado` (idSistema, idMaquina, idUsuario, idEstado, idPrioridad,
 				idTipo, f_creacion, f_programacion, progDia, progSemana, progMes, progAno, Observaciones,idCliente) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1456,7 +1177,6 @@ if( ! defined('XMBCXRXSKGC')) {
 					//recibo el último id generado por mi sesion
 					$ultimo_id = mysqli_insert_id($dbConn);
 		
-					
 					/*****************************************************/
 					//Se guardan los datos de los trabajadores			
 					foreach ($arrTrabajadores AS $trabajador){
@@ -1476,7 +1196,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `orden_trabajo_listado_responsable` (idOT,idSistema,idMaquina,idUsuario,
 						idEstado,idPrioridad,idTipo,f_creacion,f_programacion,idTrabajador) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -1533,7 +1253,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						item_tabla_id, item_tabla, idSubTipo, idTrabajo, idProducto, idUml, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 						NombreComponente, NombreTrabajo, Observacion, idLicitacion) 
 						
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -1645,7 +1365,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idTrabajador)&&isset($idOT)){
-				$ndata_1 = db_select_nrows ('idResponsable', 'orden_trabajo_listado_responsable', '', "idTrabajador='".$idTrabajador."' AND idOT='".$idOT."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idResponsable', 'orden_trabajo_listado_responsable', '', "idTrabajador='".$idTrabajador."' AND idOT='".$idOT."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El trabajador seleccionado ya esta asignado a esta OT';}
@@ -1668,7 +1388,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `orden_trabajo_listado_responsable` (idOT,idSistema,idMaquina,idUsuario,
 				idEstado,idPrioridad,idTipo,f_creacion,f_programacion,idTrabajador) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1705,7 +1425,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idTrabajador)&&isset($idOT)){
-				$ndata_1 = db_select_nrows ('idResponsable', 'orden_trabajo_listado_responsable', '', "idTrabajador='".$idTrabajador."' AND idOT='".$idOT."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idResponsable', 'orden_trabajo_listado_responsable', '', "idTrabajador='".$idTrabajador."' AND idOT='".$idOT."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El trabajador seleccionado ya esta asignado a esta OT';}
@@ -1749,28 +1469,46 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			$query  = "DELETE FROM `orden_trabajo_listado_responsable` WHERE idResponsable = {$_GET['del_trab']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&deltrab=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_trab']) OR !validaEntero($_GET['del_trab']))&&$_GET['del_trab']!=''){
+				$indice = simpleDecode($_GET['del_trab'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_trab'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
-						
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'orden_trabajo_listado_responsable', 'idResponsable = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deltrab=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+					
 			
 
 		break;
@@ -1785,7 +1523,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProducto)&&isset($idOT)){
-				$ndata_1 = db_select_nrows ('idInsumos', 'orden_trabajo_listado_insumos', '', "idProducto='".$idProducto."' AND idOT='".$idOT."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idInsumos', 'orden_trabajo_listado_insumos', '', "idProducto='".$idProducto."' AND idOT='".$idOT."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Insumo seleccionado ya esta asignado a esta OT';}
@@ -1809,7 +1547,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `orden_trabajo_listado_insumos` (idOT,idSistema,idMaquina,idUsuario,
 				idEstado,idPrioridad,idTipo,f_creacion,f_programacion,idProducto, Cantidad) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1844,7 +1582,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProducto)&&isset($idOT)&&isset($idInsumos)){
-				$ndata_1 = db_select_nrows ('idInsumos', 'orden_trabajo_listado_insumos', '', "idProducto='".$idProducto."' AND idOT='".$idOT."' AND idInsumos!='".$idInsumos."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idInsumos', 'orden_trabajo_listado_insumos', '', "idProducto='".$idProducto."' AND idOT='".$idOT."' AND idInsumos!='".$idInsumos."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Insumo seleccionado ya esta asignado a esta OT';}
@@ -1890,28 +1628,46 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			$query  = "DELETE FROM `orden_trabajo_listado_insumos` WHERE idInsumos = {$_GET['del_ins']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&delins=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_ins']) OR !validaEntero($_GET['del_ins']))&&$_GET['del_ins']!=''){
+				$indice = simpleDecode($_GET['del_ins'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_ins'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
-						
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'orden_trabajo_listado_insumos', 'idInsumos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&delins=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 
 		break;
@@ -1926,7 +1682,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProducto)&&isset($idOT)){
-				$ndata_1 = db_select_nrows ('idProductos', 'orden_trabajo_listado_productos', '', "idProducto='".$idProducto."' AND idOT='".$idOT."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idProductos', 'orden_trabajo_listado_productos', '', "idProducto='".$idProducto."' AND idOT='".$idOT."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Producto seleccionado ya esta asignado a esta OT';}
@@ -1950,7 +1706,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `orden_trabajo_listado_productos` (idOT,idSistema,idMaquina,idUsuario,
 				idEstado,idPrioridad,idTipo,f_creacion,f_programacion,idProducto, Cantidad) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1987,7 +1743,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProducto)&&isset($idOT)&&isset($idProductos)){
-				$ndata_1 = db_select_nrows ('idProductos', 'orden_trabajo_listado_productos', '', "idProducto='".$idProducto."' AND idOT='".$idOT."' AND idProductos!='".$idProductos."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idProductos', 'orden_trabajo_listado_productos', '', "idProducto='".$idProducto."' AND idOT='".$idOT."' AND idProductos!='".$idProductos."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Producto seleccionado ya esta asignado a esta OT';}
@@ -2030,28 +1786,46 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			$query  = "DELETE FROM `orden_trabajo_listado_productos` WHERE idProductos = {$_GET['del_prod']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&delprod=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_prod']) OR !validaEntero($_GET['del_prod']))&&$_GET['del_prod']!=''){
+				$indice = simpleDecode($_GET['del_prod'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_prod'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
-						
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'orden_trabajo_listado_productos', 'idProductos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&delprod=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 
 		break;
@@ -2062,27 +1836,46 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `orden_trabajo_listado_trabajos` WHERE idTrabajoOT = {$_GET['idInterno']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				header( 'Location: '.$location.'&deltarea=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['idInterno']) OR !validaEntero($_GET['idInterno']))&&$_GET['idInterno']!=''){
+				$indice = simpleDecode($_GET['idInterno'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['idInterno'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'orden_trabajo_listado_trabajos', 'idTrabajoOT = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deltarea=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 			
 
@@ -2094,18 +1887,8 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen todos los datos de la tarea
-			$query = "SELECT 
-			licitacion_listado_level_".$tablaitem.".Nombre, 
-			licitacion_listado_level_".$tablaitem.".Codigo, 
-			licitacion_listado_level_".$tablaitem.".idTrabajo,
-			core_licitacion_trabajos.Nombre as Trabajo
-			FROM `licitacion_listado_level_".$tablaitem."`
-			LEFT JOIN `core_licitacion_trabajos`   ON core_licitacion_trabajos.idTrabajo   = licitacion_listado_level_".$tablaitem.".idTrabajo
-			WHERE idLevel_".$tablaitem." = {$idItemizado}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'licitacion_listado_level_'.$tablaitem.'.Nombre, licitacion_listado_level_'.$tablaitem.'.Codigo, licitacion_listado_level_'.$tablaitem.'.idTrabajo, core_licitacion_trabajos.Nombre as Trabajo', 'licitacion_listado_level_'.$tablaitem, 'LEFT JOIN `core_licitacion_trabajos` ON core_licitacion_trabajos.idTrabajo = licitacion_listado_level_'.$tablaitem.'.idTrabajo', 'idLevel_'.$tablaitem.' = '.$idItemizado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-		
 			if ( empty($error) ) {
 
 				//filtros
@@ -2167,46 +1950,40 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen todos los datos del producto
-			$query = "SELECT  idProducto, idUml
-			FROM `productos_listado`
-			WHERE idProducto = {$idProducto}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-
+			$rowdata = db_select_data (false, 'idProducto, idUml', 'productos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			if ( empty($error) ) {
 					
-					//filtros
-					$a = "idTrabajoOT='".$idInterno."'" ;
-					if(isset($rowdata['idProducto']) && $rowdata['idProducto'] != ''){   $a .= ",idProducto='".$rowdata['idProducto']."'" ;}
-					if(isset($rowdata['idUml']) && $rowdata['idUml'] != ''){             $a .= ",idUml='".$rowdata['idUml']."'" ;}
-					if(isset($Grasa_inicial) && $Grasa_inicial!= ''){                    $a .= ",Grasa_inicial='".$Grasa_inicial."'" ;              }else{$a .= ",Grasa_inicial=''" ;}
-					if(isset($Grasa_relubricacion) && $Grasa_relubricacion!= ''){        $a .= ",Grasa_relubricacion='".$Grasa_relubricacion."'" ;  }else{$a .= ",Grasa_relubricacion=''" ;}
-					if(isset($Aceite) && $Aceite!= ''){                                  $a .= ",Aceite='".$Aceite."'" ;                            }else{$a .= ",Aceite=''" ;}
-					if(isset($Cantidad) && $Cantidad!= ''){                              $a .= ",Cantidad='".$Cantidad."'" ;                        }else{$a .= ",Cantidad=''" ;}
+				//filtros
+				$a = "idTrabajoOT='".$idInterno."'" ;
+				if(isset($rowdata['idProducto']) && $rowdata['idProducto'] != ''){   $a .= ",idProducto='".$rowdata['idProducto']."'" ;}
+				if(isset($rowdata['idUml']) && $rowdata['idUml'] != ''){             $a .= ",idUml='".$rowdata['idUml']."'" ;}
+				if(isset($Grasa_inicial) && $Grasa_inicial!= ''){                    $a .= ",Grasa_inicial='".$Grasa_inicial."'" ;              }else{$a .= ",Grasa_inicial=''" ;}
+				if(isset($Grasa_relubricacion) && $Grasa_relubricacion!= ''){        $a .= ",Grasa_relubricacion='".$Grasa_relubricacion."'" ;  }else{$a .= ",Grasa_relubricacion=''" ;}
+				if(isset($Aceite) && $Aceite!= ''){                                  $a .= ",Aceite='".$Aceite."'" ;                            }else{$a .= ",Aceite=''" ;}
+				if(isset($Cantidad) && $Cantidad!= ''){                              $a .= ",Cantidad='".$Cantidad."'" ;                        }else{$a .= ",Cantidad=''" ;}
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `orden_trabajo_listado_trabajos` SET ".$a." WHERE idTrabajoOT = '$idInterno'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if($resultado){
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `orden_trabajo_listado_trabajos` SET ".$a." WHERE idTrabajoOT = '$idInterno'";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if($resultado){
 						
-						header( 'Location: '.$location.'&edittarea=true' );
-						die;
+					header( 'Location: '.$location.'&edittarea=true' );
+					die;
 						
-					//si da error, guardar en el log de errores una copia
-					}else{
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
 						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
-					}
-					
-					
+				}	
 
 			}
 				
@@ -2245,11 +2022,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			// Se traen los datos de la tabla madre
 			if(isset($id_tabla_madre)&&$id_tabla_madre!=0){
-				$query = "SELECT idUtilizable,tabla, table_value, idLicitacion
-				FROM `maquinas_listado_level_".$tabla_madre."`
-				WHERE idLevel_".$tabla_madre." = {$id_tabla_madre}";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata_m = mysqli_fetch_assoc ($resultado);
+				$rowdata_m = db_select_data (false, 'idUtilizable,tabla, table_value, idLicitacion', 'maquinas_listado_level_'.$tabla_madre, '', 'idLevel_'.$tabla_madre.' = '.$id_tabla_madre, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se verifica que sea un componente
 				if(isset($rowdata_m['idUtilizable'])&&$rowdata_m['idUtilizable']!=3&&$rowdata_m['tabla']==0){
 					$error['tabla'] = 'error/El dato seleccionado no posee tareas asignadas';
@@ -2257,31 +2030,29 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 			
 			// Se traen todos los datos de la maquina
-			$query = "SELECT 
-			maquinas_listado_level_".$tabla.".Nombre,
-			maquinas_listado_level_".$tabla.".Codigo,
-			maquinas_listado_level_".$tabla.".idUtilizable,
-			maquinas_listado_level_".$tabla.".idSubTipo,
-			maquinas_listado_level_".$tabla.".idProducto,
-			maquinas_listado_level_".$tabla.".Grasa_inicial,
-			maquinas_listado_level_".$tabla.".Grasa_relubricacion,
-			maquinas_listado_level_".$tabla.".Aceite,
-			maquinas_listado_level_".$tabla.".Cantidad,
-			maquinas_listado_level_".$tabla.".idUml,
+			$SIS_query = '
+			maquinas_listado_level_'.$tabla.'.Nombre,
+			maquinas_listado_level_'.$tabla.'.Codigo,
+			maquinas_listado_level_'.$tabla.'.idUtilizable,
+			maquinas_listado_level_'.$tabla.'.idSubTipo,
+			maquinas_listado_level_'.$tabla.'.idProducto,
+			maquinas_listado_level_'.$tabla.'.Grasa_inicial,
+			maquinas_listado_level_'.$tabla.'.Grasa_relubricacion,
+			maquinas_listado_level_'.$tabla.'.Aceite,
+			maquinas_listado_level_'.$tabla.'.Cantidad,
+			maquinas_listado_level_'.$tabla.'.idUml,
 			productos_listado.Nombre AS Producto,
-			sistema_productos_uml.Nombre AS Unimed
-			
-			FROM `maquinas_listado_level_".$tabla."`
-			LEFT JOIN `productos_listado`       ON productos_listado.idProducto  = maquinas_listado_level_".$tabla.".idProducto
-			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = maquinas_listado_level_".$tabla.".idUml
-			WHERE idLevel_".$tabla." = {$id_tabla}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			sistema_productos_uml.Nombre AS Unimed';
+			$SIS_join  = '
+			LEFT JOIN `productos_listado`       ON productos_listado.idProducto  = maquinas_listado_level_'.$tabla.'.idProducto
+			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = maquinas_listado_level_'.$tabla.'.idUml';
+			$SIS_where = 'idLevel_'.$tabla.' = '.$id_tabla;
+			$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$tabla, $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			//se verifica que sea un subcomponente
 			if(isset($rowdata['idUtilizable'])&&$rowdata['idUtilizable']!=''&&$rowdata['idUtilizable']!=3){
 				$error['subcomponente'] = 'error/El dato seleccionado no es un subcomponente';
 			}	
-	
 			
 			//se establece variable inicial		
 			$idInterno = 0;
@@ -2297,63 +2068,63 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			if ( empty($error) ) {
 
-					$idInterno = $idInterno+1;
-					//Para mostrar en la creacion
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Nombre']      = $rowdata['Nombre'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Codigo']      = $rowdata['Codigo'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Unimed']      = $rowdata['Unimed'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['valor_id']    = $idInterno;
+				$idInterno = $idInterno+1;
+				//Para mostrar en la creacion
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Nombre']      = $rowdata['Nombre'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Codigo']      = $rowdata['Codigo'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Unimed']      = $rowdata['Unimed'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['valor_id']    = $idInterno;
 					
-					//variables vacias
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1']       = '';
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2']       = '';
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t']       = '';
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Codigo']  = '';
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Nombre']  = '';
+				//variables vacias
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1']       = '';
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2']       = '';
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t']       = '';
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Codigo']  = '';
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Nombre']  = '';
 					
-					//Datos para guardar en la base de datos
-					//subcomponente seleccionado
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['id_tabla']       = $id_tabla;
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['tabla']          = $tabla;
-					//tabla madre del itemizado
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['tabla_m']        = $rowdata_m['tabla'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['tabla_m_value']  = $rowdata_m['table_value'];
-					//productos a utilizar
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idProducto']  = $rowdata['idProducto'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idUml']       = $rowdata['idUml'];
-					//medidas
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = $rowdata['Grasa_inicial'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = $rowdata['Grasa_relubricacion'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite']               = $rowdata['Aceite'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Cantidad']             = $rowdata['Cantidad'];
-					//idSubTipo
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idSubTipo']   = $rowdata['idSubTipo'];
-					//Licitacion
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idLicitacion']   = $rowdata_m['idLicitacion'];
+				//Datos para guardar en la base de datos
+				//subcomponente seleccionado
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['id_tabla']       = $id_tabla;
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['tabla']          = $tabla;
+				//tabla madre del itemizado
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['tabla_m']        = $rowdata_m['tabla'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['tabla_m_value']  = $rowdata_m['table_value'];
+				//productos a utilizar
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idProducto']  = $rowdata['idProducto'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idUml']       = $rowdata['idUml'];
+				//medidas
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = $rowdata['Grasa_inicial'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = $rowdata['Grasa_relubricacion'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite']               = $rowdata['Aceite'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Cantidad']             = $rowdata['Cantidad'];
+				//idSubTipo
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idSubTipo']   = $rowdata['idSubTipo'];
+				//Licitacion
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idLicitacion']   = $rowdata_m['idLicitacion'];
 					
-					switch ($rowdata['idSubTipo']) {
-						case 1://Grasa
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Grasa_inicial'];
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2'] = $rowdata['Grasa_relubricacion'];
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Grasa Lub/Relub';
-							break;
-						case 2://Aceite
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Aceite'];
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
-							break;
-						case 3://Normal
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Cantidad'];
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Normal';
-							break;
-						case 4://Otro
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Otro';
-							
-							break;
-					}
-		
-					header( 'Location: '.$location.'&addtarea=true' );
-					die;
+				switch ($rowdata['idSubTipo']) {
+					case 1://Grasa
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Grasa_inicial'];
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2'] = $rowdata['Grasa_relubricacion'];
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Grasa Lub/Relub';
+						break;
+					case 2://Aceite
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Aceite'];
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
+						break;
+					case 3://Normal
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $rowdata['Cantidad'];
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Normal';
+						break;
+					case 4://Otro
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Otro';
+						break;
+				}
+				
+				//redirijo
+				header( 'Location: '.$location.'&addtarea=true' );
+				die;
 				
 			}
 		
@@ -2378,50 +2149,40 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen todos los datos de la tarea
-			$query = "SELECT 
-			licitacion_listado_level_".$tablaitem.".Nombre, 
-			licitacion_listado_level_".$tablaitem.".Codigo, 
-			licitacion_listado_level_".$tablaitem.".idTrabajo,
-			core_licitacion_trabajos.Nombre as Trabajo
-			FROM `licitacion_listado_level_".$tablaitem."`
-			LEFT JOIN `core_licitacion_trabajos`   ON core_licitacion_trabajos.idTrabajo   = licitacion_listado_level_".$tablaitem.".idTrabajo
-			WHERE idLevel_".$tablaitem." = {$idItemizado}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
+			$rowdata = db_select_data (false, 'licitacion_listado_level_'.$tablaitem.'.Nombre, licitacion_listado_level_'.$tablaitem.'.Codigo, licitacion_listado_level_'.$tablaitem.'.idTrabajo, core_licitacion_trabajos.Nombre as Trabajo', 'licitacion_listado_level_'.$tablaitem, 'LEFT JOIN `core_licitacion_trabajos` ON core_licitacion_trabajos.idTrabajo = licitacion_listado_level_'.$tablaitem.'.idTrabajo', 'idLevel_'.$tablaitem.' = '.$idItemizado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			if ( empty($error) ) {
 
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Nombre']      = $rowdata['Nombre'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Codigo']      = $rowdata['Codigo'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Trabajo']     = $rowdata['Trabajo'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idTrabajo']        = $rowdata['idTrabajo'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idItemizado']      = $idItemizado;
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['tablaitem']        = $tablaitem;
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Nombre']      = $rowdata['Nombre'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Codigo']      = $rowdata['Codigo'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Item_Trabajo']     = $rowdata['Trabajo'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idTrabajo']        = $rowdata['idTrabajo'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idItemizado']      = $idItemizado;
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['tablaitem']        = $tablaitem;
 
-
-					switch ($rowdata['idTrabajo']) {
-						case 1: //Analisis
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = 0;
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = 0;
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite']               = 0;
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Cantidad']             = 0;
+				switch ($rowdata['idTrabajo']) {
+					case 1: //Analisis
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = 0;
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = 0;
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite']               = 0;
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Cantidad']             = 0;
 									
 						break;
-						case 2: //Consumo de Materiales
+					case 2: //Consumo de Materiales
 									
 						break;
-						case 3: //Observacion
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = 0;
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = 0;
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite']               = 0;
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Cantidad']             = 0;
+					case 3: //Observacion
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']        = 0;
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = 0;
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite']               = 0;
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Cantidad']             = 0;
 									
 						break;
-					}
+				}
 					
-								
-					header( 'Location: '.$location.'&edittarea=true' );
-					die;
+				//redirijo				
+				header( 'Location: '.$location.'&edittarea=true' );
+				die;
 			}
 				
 		break;
@@ -2432,61 +2193,50 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen todos los datos del producto
-			$query = "SELECT 
-			productos_listado.idProducto,
-			productos_listado.Nombre AS Producto,
-			sistema_productos_uml.Nombre AS Unimed,
-			productos_listado.idUml
-			FROM `productos_listado`
-			LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-			WHERE productos_listado.idProducto = {$idProducto}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
+			$rowdata = db_select_data (false, 'productos_listado.idProducto, productos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Unimed, productos_listado.idUml', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idProducto = '.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			if ( empty($error) ) {
 
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idProducto']  = $rowdata['idProducto'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idUml']       = $rowdata['idUml'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
-					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Unimed']      = $rowdata['Unimed'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idProducto']  = $rowdata['idProducto'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idUml']       = $rowdata['idUml'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
+				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Unimed']      = $rowdata['Unimed'];
 					
-					
-					
-					switch ($idSubTipo) {
-						case 1: //Grasa
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t']         = 'Grasa Lub/Relub';
-							if(isset($Grasa_inicial)&&$Grasa_inicial!='') {              
-								$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']  = $Grasa_inicial;
-								$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1']         = $Grasa_inicial; 
-							}
-							if(isset($Grasa_relubricacion)&&$Grasa_relubricacion!='') {  
-								$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = $Grasa_relubricacion;    
-								$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2']               = $Grasa_relubricacion;    
-							}
-							break;
+				switch ($idSubTipo) {
+					case 1: //Grasa
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t']         = 'Grasa Lub/Relub';
+						if(isset($Grasa_inicial)&&$Grasa_inicial!='') {              
+							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_inicial']  = $Grasa_inicial;
+							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1']         = $Grasa_inicial; 
+						}
+						if(isset($Grasa_relubricacion)&&$Grasa_relubricacion!='') {  
+							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Grasa_relubricacion']  = $Grasa_relubricacion;    
+							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2']               = $Grasa_relubricacion;    
+						}
+						break;
 							
-						case 2: //Aceite
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite'] = $Aceite; 
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $Aceite; 
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2'] = '';
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
-							break;
+					case 2: //Aceite
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite'] = $Aceite; 
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $Aceite; 
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2'] = '';
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
+						break;
 							
-						case 3: //Normal
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Cantidad'] = $Cantidad;
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1']   = $Cantidad;
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2']   = '';
-							$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t']   = 'Normal';
-							break;
+					case 3: //Normal
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Cantidad'] = $Cantidad;
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1']   = $Cantidad;
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2']   = '';
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t']   = 'Normal';
+						break;
 							
-						case 4: //Otro
+					case 4: //Otro
 						   
-							break;
-					}
+						break;
+				}
 
-					
-					header( 'Location: '.$location.'&edittarea=true' );
-					die;
+				//redirijo	
+				header( 'Location: '.$location.'&edittarea=true' );
+				die;
 			}
 				
 		break;
@@ -2506,15 +2256,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				foreach ($_SESSION['ot_trabajos_temp'] as $key => $x_tabla){
 					foreach ($x_tabla as $x_id_tabla) {
 						foreach ($x_id_tabla as $x_idInterno) {
-							if(!isset($x_idInterno['idItemizado']) or $x_idInterno['idItemizado'] == ''){   $error['idItemizado']   = 'error/No ha seleccionado un trabajo para el subcomponente';}
-							if(!isset($x_idInterno['idSubTipo']) or $x_idInterno['idSubTipo'] == ''){       $error['idSubTipo']     = 'error/No ha seleccionado un tipo de subcomponente';}
-							if(!isset($x_idInterno['id_tabla']) or $x_idInterno['id_tabla'] == ''){         $error['id_tabla']      = 'error/No ha seleccionado un subcomponente';}
-							if(!isset($x_idInterno['tabla']) or $x_idInterno['tabla'] == ''){               $error['tabla']         = 'error/No ha seleccionado un subcomponente';}
+							if(!isset($x_idInterno['idItemizado']) OR $x_idInterno['idItemizado'] == ''){   $error['idItemizado']   = 'error/No ha seleccionado un trabajo para el subcomponente';}
+							if(!isset($x_idInterno['idSubTipo']) OR $x_idInterno['idSubTipo'] == ''){       $error['idSubTipo']     = 'error/No ha seleccionado un tipo de subcomponente';}
+							if(!isset($x_idInterno['id_tabla']) OR $x_idInterno['id_tabla'] == ''){         $error['id_tabla']      = 'error/No ha seleccionado un subcomponente';}
+							if(!isset($x_idInterno['tabla']) OR $x_idInterno['tabla'] == ''){               $error['tabla']         = 'error/No ha seleccionado un subcomponente';}
 							$n_trabajos++;
 							//variable reseteada
 							$n_grasa = 0;
 							//Se revisa por tipo de trabajo
-							if(!isset($x_idInterno['idTrabajo']) or $x_idInterno['idTrabajo'] == ''){               
+							if(!isset($x_idInterno['idTrabajo']) OR $x_idInterno['idTrabajo'] == ''){               
 								$error['idTrabajo'] = 'error/No ha seleccionado un trabajo';
 							}else{
 								switch ($x_idInterno['idTrabajo']) {
@@ -2561,14 +2311,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//Se traen los datos de la ot
-				$query = "SELECT idSistema, idMaquina, idUsuario, idEstado, idPrioridad, idTipo,
-				f_creacion,f_programacion 
-				FROM `orden_trabajo_listado`
-				WHERE idOT = {$_GET['view']}";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata = mysqli_fetch_assoc ($resultado);
-			
-				
+				$rowdata = db_select_data (false, 'idSistema, idMaquina, idUsuario, idEstado, idPrioridad, idTipo, f_creacion,f_programacion', 'orden_trabajo_listado', '', 'idOT = '.$_GET['view'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************/
 				//Se guardan los trabajos a realizar
@@ -2613,7 +2356,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								idTipo, f_creacion, f_programacion, comp_tabla_id, comp_tabla, item_m_tabla_id, item_m_tabla, item_tabla_id, item_tabla,
 								idSubTipo, idTrabajo, idProducto, idUml, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, NombreComponente, NombreTrabajo, 
 								Observacion, idLicitacion) 
-								VALUES ({$a} )";
+								VALUES (".$a.")";
 								//Consulta
 								$resultado = mysqli_query ($dbConn, $query);
 								//Si ejecuto correctamente la consulta
@@ -2657,11 +2400,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
 			if(isset($idAnalisis)){
-				$ndata_1 = db_select_nrows ('idAnalisis', 'analisis_listado', '', "idAnalisis='".$idAnalisis."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idAnalisis', 'analisis_listado', '', "idAnalisis='".$idAnalisis."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($idAnalisis)&&isset($idOT)){
-				$ndata_2 = db_select_nrows ('idOT', 'analisis_listado', '', "idAnalisis='".$idAnalisis."' AND idOT!='".$idOT."'", $dbConn);
-				$rowan   = db_select_data ('idOT', 'analisis_listado', '', "idAnalisis='".$idAnalisis."' AND idOT!='".$idOT."'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'idOT', 'analisis_listado', '', "idAnalisis='".$idAnalisis."' AND idOT!='".$idOT."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowan   = db_select_data (false, 'idOT', 'analisis_listado', '', "idAnalisis='".$idAnalisis."' AND idOT!='".$idOT."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 == 0) {$error['ndata_1'] = 'error/El Analisis que esta tratando de ingresar no existe';}
@@ -2732,56 +2475,32 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			
 			/*********************************************************************/
 			//Se traen los datos de la OT
-			$query = "SELECT 
-			orden_trabajo_listado.idSistema, 
-			orden_trabajo_listado.idMaquina, 
-			orden_trabajo_listado.idUsuario, 
-			orden_trabajo_listado.idEstado, 
-			orden_trabajo_listado.idPrioridad, 
-			orden_trabajo_listado.idTipo,
-			orden_trabajo_listado.f_creacion, 
-			orden_trabajo_listado.f_programacion, 
-			orden_trabajo_listado.f_termino, 
-			orden_trabajo_listado.idSupervisor,
-			core_sistemas.OT_idBodegaProd,
-			core_sistemas.OT_idBodegaIns
-			
-			FROM `orden_trabajo_listado`
-			LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema   = orden_trabajo_listado.idSistema
-			WHERE idOT = {$_GET['view']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'orden_trabajo_listado.idSistema, orden_trabajo_listado.idMaquina, orden_trabajo_listado.idUsuario, orden_trabajo_listado.idEstado, orden_trabajo_listado.idPrioridad, orden_trabajo_listado.idTipo, orden_trabajo_listado.f_creacion, orden_trabajo_listado.f_programacion, orden_trabajo_listado.f_termino, orden_trabajo_listado.idSupervisor, core_sistemas.OT_idBodegaProd, core_sistemas.OT_idBodegaIns', 'orden_trabajo_listado', 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = orden_trabajo_listado.idSistema', 'idOT = '.$_GET['view'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//Se verifican los datos basicos
-			if(!isset($rowdata['idSistema']) or $rowdata['idSistema']=='' or $rowdata['idSistema']==0){                            $error['idSistema']        = 'error/No ha ingresado el id del sistema';}
-			if(!isset($rowdata['idMaquina']) or $rowdata['idMaquina']=='' or $rowdata['idMaquina']==0){                            $error['idMaquina']        = 'error/No ha seleccionado la maquina';}
-			if(!isset($rowdata['idUsuario']) or $rowdata['idUsuario']=='' or $rowdata['idUsuario']==0){                            $error['idUsuario']        = 'error/No ha ingresado el id del usuario';}
-			if(!isset($rowdata['idEstado']) or $rowdata['idEstado']=='' or $rowdata['idEstado']==0){                               $error['idEstado']         = 'error/No ha ingresado el id del estado';}
-			if(!isset($rowdata['idPrioridad']) or $rowdata['idPrioridad']=='' or $rowdata['idPrioridad']==0){                      $error['idPrioridad']      = 'error/No ha seleccionado la prioridad';}
-			if(!isset($rowdata['idTipo']) or $rowdata['idTipo']=='' or $rowdata['idTipo']==0){                                     $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
-			if(!isset($rowdata['f_creacion']) or $rowdata['f_creacion']=='' or $rowdata['f_creacion']=='0000-00-00'){              $error['f_creacion']       = 'error/No ha ingresado la fecha de creacion';}
-			if(!isset($rowdata['f_programacion']) or $rowdata['f_programacion']=='' or $rowdata['f_programacion']=='0000-00-00'){  $error['f_programacion']   = 'error/No ha ingresado la fecha de programacion';}
-			if(!isset($rowdata['f_termino']) or $rowdata['f_termino']=='' or $rowdata['f_termino']=='0000-00-00'){                 $error['f_termino']        = 'error/No ha ingresado la fecha de termino';}
-			if(!isset($rowdata['idSupervisor']) or $rowdata['idSupervisor']=='' or $rowdata['idSupervisor']==0){                   $error['idSupervisor']     = 'error/No ha seleccionado el supervisor';}
+			if(!isset($rowdata['idSistema']) OR $rowdata['idSistema']=='' OR $rowdata['idSistema']==0){                            $error['idSistema']        = 'error/No ha ingresado el id del sistema';}
+			if(!isset($rowdata['idMaquina']) OR $rowdata['idMaquina']=='' OR $rowdata['idMaquina']==0){                            $error['idMaquina']        = 'error/No ha seleccionado la maquina';}
+			if(!isset($rowdata['idUsuario']) OR $rowdata['idUsuario']=='' OR $rowdata['idUsuario']==0){                            $error['idUsuario']        = 'error/No ha ingresado el id del usuario';}
+			if(!isset($rowdata['idEstado']) OR $rowdata['idEstado']=='' OR $rowdata['idEstado']==0){                               $error['idEstado']         = 'error/No ha ingresado el id del estado';}
+			if(!isset($rowdata['idPrioridad']) OR $rowdata['idPrioridad']=='' OR $rowdata['idPrioridad']==0){                      $error['idPrioridad']      = 'error/No ha seleccionado la prioridad';}
+			if(!isset($rowdata['idTipo']) OR $rowdata['idTipo']=='' OR $rowdata['idTipo']==0){                                     $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
+			if(!isset($rowdata['f_creacion']) OR $rowdata['f_creacion']=='' OR $rowdata['f_creacion']=='0000-00-00'){              $error['f_creacion']       = 'error/No ha ingresado la fecha de creacion';}
+			if(!isset($rowdata['f_programacion']) OR $rowdata['f_programacion']=='' OR $rowdata['f_programacion']=='0000-00-00'){  $error['f_programacion']   = 'error/No ha ingresado la fecha de programacion';}
+			if(!isset($rowdata['f_termino']) OR $rowdata['f_termino']=='' OR $rowdata['f_termino']=='0000-00-00'){                 $error['f_termino']        = 'error/No ha ingresado la fecha de termino';}
+			if(!isset($rowdata['idSupervisor']) OR $rowdata['idSupervisor']=='' OR $rowdata['idSupervisor']==0){                   $error['idSupervisor']     = 'error/No ha seleccionado el supervisor';}
 				
 			/*********************************************************************/
 			//Se traen a todos los trabajadores relacionados a las ot
 			$arrTrabajadores = array();
-			$query = "SELECT idTrabajador
-			FROM `orden_trabajo_listado_responsable`
-			WHERE idOT = {$_GET['view']}";
-			$resultado = mysqli_query($dbConn, $query);
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrTrabajadores,$row );
-			}
+			$arrTrabajadores = db_select_array (false, 'idTrabajador', 'orden_trabajo_listado_responsable', '', 'idOT = '.$_GET['view'], 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 			//variables
 			$n_trabajadores = 0;
 			//Se verifica que tenga trabajadores asignados
 			foreach ($arrTrabajadores as $trabajador){
-				if(!isset($trabajador['idTrabajador']) or $trabajador['idTrabajador'] == '' or $trabajador['idTrabajador'] == 0){  $error['idTrabajador']   = 'error/No ha ingresado un trabajador';}
+				if(!isset($trabajador['idTrabajador']) OR $trabajador['idTrabajador'] == '' OR $trabajador['idTrabajador'] == 0){  $error['idTrabajador']   = 'error/No ha ingresado un trabajador';}
 				$n_trabajadores++;
 			}
 			//Se verifica el minimo de trabajadores
@@ -2791,39 +2510,32 @@ if( ! defined('XMBCXRXSKGC')) {
 			/*********************************************************************/
 			// Se trae un listado con todos los trabajos relacionados a la orden
 			$arrTrabajo = array();
-			$query = "SELECT idTrabajoOT, idSubTipo, comp_tabla_id, comp_tabla, idTrabajo,
-			idAnalisis, idProducto, idUml, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-			item_m_tabla_id, item_m_tabla, Observacion 
-			FROM `orden_trabajo_listado_trabajos`
-			WHERE idOT = {$_GET['view']} ";
-			$resultado = mysqli_query($dbConn, $query);
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrTrabajo,$row );
-			}
+			$arrTrabajo = db_select_array (false, 'idTrabajoOT, idSubTipo, comp_tabla_id, comp_tabla, idTrabajo, idAnalisis, idProducto, idUml, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, item_m_tabla_id, item_m_tabla, Observacion', 'orden_trabajo_listado_trabajos', '', 'idOT = '.$_GET['view'], 'idTrabajoOT ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 			//variables
 			$n_trabajos = 0;
 			//Se verifica que los trabajos tengan datos asignados
 			foreach ($arrTrabajo as $trab){
-				if(!isset($trab['idTrabajoOT']) or $trab['idTrabajoOT'] == '' or $trab['idTrabajoOT'] == 0){              $error['idTrabajoOT']      = 'error/No ha seleccionado un trabajo para el subcomponente';}
-				if(!isset($trab['idSubTipo']) or $trab['idSubTipo'] == '' or $trab['idSubTipo'] == 0){                    $error['idSubTipo']        = 'error/No ha seleccionado un tipo de subcomponente';}
-				if(!isset($trab['comp_tabla_id']) or $trab['comp_tabla_id'] == '' or $trab['comp_tabla_id'] == 0){        $error['comp_tabla_id']    = 'error/No ha seleccionado un subcomponente';}
-				if(!isset($trab['comp_tabla']) or $trab['comp_tabla'] == '' or $trab['comp_tabla'] == 0){                 $error['comp_tabla']       = 'error/No ha seleccionado un subcomponente';}
-				if(!isset($trab['item_m_tabla_id']) or $trab['item_m_tabla_id'] == '' or $trab['item_m_tabla_id'] == 0){  $error['item_m_tabla_id']  = 'error/No ha seleccionado un subcomponente';}
-				if(!isset($trab['item_m_tabla']) or $trab['item_m_tabla'] == '' or $trab['item_m_tabla'] == 0){           $error['item_m_tabla']     = 'error/No ha seleccionado un subcomponente';}
+				if(!isset($trab['idTrabajoOT']) OR $trab['idTrabajoOT'] == '' OR $trab['idTrabajoOT'] == 0){              $error['idTrabajoOT']      = 'error/No ha seleccionado un trabajo para el subcomponente';}
+				if(!isset($trab['idSubTipo']) OR $trab['idSubTipo'] == '' OR $trab['idSubTipo'] == 0){                    $error['idSubTipo']        = 'error/No ha seleccionado un tipo de subcomponente';}
+				if(!isset($trab['comp_tabla_id']) OR $trab['comp_tabla_id'] == '' OR $trab['comp_tabla_id'] == 0){        $error['comp_tabla_id']    = 'error/No ha seleccionado un subcomponente';}
+				if(!isset($trab['comp_tabla']) OR $trab['comp_tabla'] == '' OR $trab['comp_tabla'] == 0){                 $error['comp_tabla']       = 'error/No ha seleccionado un subcomponente';}
+				if(!isset($trab['item_m_tabla_id']) OR $trab['item_m_tabla_id'] == '' OR $trab['item_m_tabla_id'] == 0){  $error['item_m_tabla_id']  = 'error/No ha seleccionado un subcomponente';}
+				if(!isset($trab['item_m_tabla']) OR $trab['item_m_tabla'] == '' OR $trab['item_m_tabla'] == 0){           $error['item_m_tabla']     = 'error/No ha seleccionado un subcomponente';}
 				$n_trabajos++;
 				//variable reseteada
 				$n_grasa = 0;
 				//Se revisa por tipo de trabajo
-				if(!isset($trab['idTrabajo']) or $trab['idTrabajo'] == '' or $trab['idTrabajo'] == 0){               
+				if(!isset($trab['idTrabajo']) OR $trab['idTrabajo'] == '' OR $trab['idTrabajo'] == 0){               
 					$error['idTrabajo'] = 'error/No ha seleccionado un trabajo';
 				}else{	
 					switch ($trab['idTrabajo']) {
 						case 1: //Analisis
-							if(!isset($trab['idAnalisis']) or $trab['idAnalisis'] == '' or $trab['idAnalisis'] == 0){   $error['idAnalisis'] = 'error/No ha ingresado un analisis';}
+							if(!isset($trab['idAnalisis']) OR $trab['idAnalisis'] == '' OR $trab['idAnalisis'] == 0){   $error['idAnalisis'] = 'error/No ha ingresado un analisis';}
 						break;
 						case 2: //Consumo de Materiales
-							if(!isset($trab['idProducto']) or $trab['idProducto'] == '' or $trab['idProducto'] == ''){ $error['idProducto'] = 'error/No ha seleccionado un producto';}
-							if(!isset($trab['idUml']) or $trab['idUml'] == '' or $trab['idUml'] == ''){                $error['idUml']      = 'error/No ha seleccionado una unidad de medida';}
+							if(!isset($trab['idProducto']) OR $trab['idProducto'] == '' OR $trab['idProducto'] == ''){ $error['idProducto'] = 'error/No ha seleccionado un producto';}
+							if(!isset($trab['idUml']) OR $trab['idUml'] == '' OR $trab['idUml'] == ''){                $error['idUml']      = 'error/No ha seleccionado una unidad de medida';}
 							//verifico si en grasa tiene ambas cantidades guardadas
 							if(isset($trab['Grasa_inicial']) && $trab['Grasa_inicial'] != '' && $trab['Grasa_inicial'] != 0){ $n_grasa++;}
 							if(isset($trab['Grasa_relubricacion']) && $trab['Grasa_relubricacion'] != '' && $trab['Grasa_relubricacion'] != 0){ $n_grasa++;}
@@ -2838,10 +2550,10 @@ if( ! defined('XMBCXRXSKGC')) {
 									}
 								break;
 								case 2: //Aceite
-									if(!isset($trab['Aceite']) or $trab['Aceite'] == '' or $trab['Aceite'] == 0){   $error['Aceite'] = 'error/No ha ingresado una cantidad de aceite';}
+									if(!isset($trab['Aceite']) OR $trab['Aceite'] == '' OR $trab['Aceite'] == 0){   $error['Aceite'] = 'error/No ha ingresado una cantidad de aceite';}
 								break;
 								case 3: //Normal
-									if(!isset($trab['Cantidad']) or $trab['Cantidad'] == '' or $trab['Cantidad'] == 0){   $error['Cantidad'] = 'error/No ha ingresado una cantidad';}
+									if(!isset($trab['Cantidad']) OR $trab['Cantidad'] == '' OR $trab['Cantidad'] == 0){   $error['Cantidad'] = 'error/No ha ingresado una cantidad';}
 								break;
 								case 4: //Otro
 								
@@ -2850,7 +2562,7 @@ if( ! defined('XMBCXRXSKGC')) {
 		
 						break;
 						case 3: //Observacion
-							if(!isset($trab['Observacion']) or $trab['Observacion'] == '' ){   $error['Observacion'] = 'error/No ha ingresado una observacion';}
+							if(!isset($trab['Observacion']) OR $trab['Observacion'] == '' ){   $error['Observacion'] = 'error/No ha ingresado una observacion';}
 						break;
 					}
 				}	
@@ -2861,8 +2573,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 			/*********************************************************************/
 			// Se trae un listado con todos los trabajos relacionados a la orden y si existen materiales para hacerlo
-			$arrConsumosOT = array();
-			$query = "SELECT
+			$SIS_query = '
 			orden_trabajo_listado_trabajos.idSubTipo,
 			orden_trabajo_listado_trabajos.NombreComponente,
 			orden_trabajo_listado_trabajos.NombreTrabajo,
@@ -2875,21 +2586,19 @@ if( ! defined('XMBCXRXSKGC')) {
 			licitacion_listado.idBodegaIns,
 			productos_listado.Nombre AS NombreProducto,
 			(SELECT SUM(Cantidad_ing) FROM bodegas_productos_facturacion_existencias  WHERE idProducto = orden_trabajo_listado_trabajos.idProducto AND idBodega=licitacion_listado.idBodegaProd LIMIT 1) AS BodegaProdIngresos,
-			(SELECT SUM(Cantidad_eg)  FROM bodegas_productos_facturacion_existencias  WHERE idProducto = orden_trabajo_listado_trabajos.idProducto AND idBodega=licitacion_listado.idBodegaProd LIMIT 1) AS BodegaProdEgresos
-			
-			FROM `orden_trabajo_listado_trabajos`
+			(SELECT SUM(Cantidad_eg)  FROM bodegas_productos_facturacion_existencias  WHERE idProducto = orden_trabajo_listado_trabajos.idProducto AND idBodega=licitacion_listado.idBodegaProd LIMIT 1) AS BodegaProdEgresos';
+			$SIS_join  = '
 			LEFT JOIN `licitacion_listado`  ON licitacion_listado.idLicitacion   = orden_trabajo_listado_trabajos.idLicitacion
-			LEFT JOIN `productos_listado`   ON productos_listado.idProducto      = orden_trabajo_listado_trabajos.idProducto
-			WHERE orden_trabajo_listado_trabajos.idOT = {$_GET['view']} 
-			GROUP BY orden_trabajo_listado_trabajos.idLicitacion, orden_trabajo_listado_trabajos.idProducto";
-			$resultado = mysqli_query($dbConn, $query);
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrConsumosOT,$row );
-			}
+			LEFT JOIN `productos_listado`   ON productos_listado.idProducto      = orden_trabajo_listado_trabajos.idProducto';
+			$SIS_where = 'orden_trabajo_listado_trabajos.idOT = '.$_GET['view'].' GROUP BY orden_trabajo_listado_trabajos.idLicitacion, orden_trabajo_listado_trabajos.idProducto';
+			$SIS_order = 0;
+			$arrConsumosOT = array();
+			$arrConsumosOT = db_select_array (false, $SIS_query, 'orden_trabajo_listado_trabajos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			
 			//Se verifica que los trabajos tengan datos asignados
 			foreach ($arrConsumosOT as $trab){
-				if(!isset($trab['idBodegaProd']) or $trab['idBodegaProd'] == '' or $trab['idBodegaProd'] == 0){   $error['idTrabajoOT']      = 'error/El Componente '.$trab['NombreComponente'].' con el trabajo '.$trab['NombreTrabajo'].', la licitacion relacionada no posee una bodega de productos asignada';}
-				if(!isset($trab['idBodegaIns']) or $trab['idBodegaIns'] == '' or $trab['idBodegaIns'] == 0){      $error['idTrabajoOT']      = 'error/El Componente '.$trab['NombreComponente'].' con el trabajo '.$trab['NombreTrabajo'].', la licitacion relacionada no posee una bodega de insumos asignada';}
+				if(!isset($trab['idBodegaProd']) OR $trab['idBodegaProd'] == '' OR $trab['idBodegaProd'] == 0){   $error['idTrabajoOT']      = 'error/El Componente '.$trab['NombreComponente'].' con el trabajo '.$trab['NombreTrabajo'].', la licitacion relacionada no posee una bodega de productos asignada';}
+				if(!isset($trab['idBodegaIns']) OR $trab['idBodegaIns'] == '' OR $trab['idBodegaIns'] == 0){      $error['idTrabajoOT']      = 'error/El Componente '.$trab['NombreComponente'].' con el trabajo '.$trab['NombreTrabajo'].', la licitacion relacionada no posee una bodega de insumos asignada';}
 				//Se revisa si existe la cantidad sificiente de materiales
 				switch ($trab['idSubTipo']) {
 					case 1: $valor = $trab['sum_ginicial']+$trab['sum_grelu']; break;   //Grasa
@@ -2907,24 +2616,21 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 			/*********************************************************************/
 			//Se verifica el stock de productos de la bodega de productos	
-			$arrProdCons = array();
-			$query = "SELECT
+			$SIS_query = '
 			SUM(orden_trabajo_listado_productos.Cantidad) AS Cantidad,
 			orden_trabajo_listado_productos.idProducto,
 			productos_listado.Nombre AS NombreProducto,
 			core_sistemas.OT_idBodegaProd,
 			(SELECT SUM(Cantidad_ing) FROM bodegas_productos_facturacion_existencias  WHERE idProducto = orden_trabajo_listado_productos.idProducto AND idBodega=core_sistemas.OT_idBodegaProd LIMIT 1) AS BodegaProdIngresos,
-			(SELECT SUM(Cantidad_eg)  FROM bodegas_productos_facturacion_existencias  WHERE idProducto = orden_trabajo_listado_productos.idProducto AND idBodega=core_sistemas.OT_idBodegaProd LIMIT 1) AS BodegaProdEgresos
-			
-			FROM `orden_trabajo_listado_productos`
+			(SELECT SUM(Cantidad_eg)  FROM bodegas_productos_facturacion_existencias  WHERE idProducto = orden_trabajo_listado_productos.idProducto AND idBodega=core_sistemas.OT_idBodegaProd LIMIT 1) AS BodegaProdEgresos';
+			$SIS_join  = '
 			LEFT JOIN `productos_listado`   ON productos_listado.idProducto      = orden_trabajo_listado_productos.idProducto
-			LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema           = orden_trabajo_listado_productos.idSistema
-			WHERE orden_trabajo_listado_productos.idOT = {$_GET['view']} 
-			GROUP BY orden_trabajo_listado_productos.idProducto";
-			$resultado = mysqli_query($dbConn, $query);
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrTrabajo,$row );
-			}
+			LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema           = orden_trabajo_listado_productos.idSistema';
+			$SIS_where = 'orden_trabajo_listado_productos.idOT = '.$_GET['view'].' GROUP BY orden_trabajo_listado_productos.idProducto';
+			$SIS_order = 0;
+			$arrProdCons = array();
+			$arrProdCons = db_select_array (false, $SIS_query, 'orden_trabajo_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 			//Verifico resultados
 			$xan = 0;
 			foreach ($arrProdCons as $trab){
@@ -2933,7 +2639,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se verifica que los trabajos tengan datos asignados
 			if($xan!=0){
 				foreach ($arrProdCons as $trab){
-					if(!isset($trab['OT_idBodegaProd']) or $trab['OT_idBodegaProd'] == '' or $trab['OT_idBodegaProd'] == 0){   $error['idTrabajoOT']      = 'error/La empresa no tiene una bodega de productos asignada a la OT';}		
+					if(!isset($trab['OT_idBodegaProd']) OR $trab['OT_idBodegaProd'] == '' OR $trab['OT_idBodegaProd'] == 0){   $error['idTrabajoOT']      = 'error/La empresa no tiene una bodega de productos asignada a la OT';}		
 					//Realizo las operaciones
 					$ingreso = $trab['BodegaProdIngresos'];
 					$egreso  = $trab['BodegaProdEgresos'] + $trab['Cantidad'];
@@ -2946,24 +2652,20 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 			/*********************************************************************/
 			//Se verifica el stock de productos de la bodega de insumos	
-			$arrInsCons = array();
-			$query = "SELECT
-			SUM(orden_trabajo_listado_insumos.Cantidad) AS Cantidad,
+			$SIS_query = 'SUM(orden_trabajo_listado_insumos.Cantidad) AS Cantidad,
 			orden_trabajo_listado_insumos.idProducto,
 			insumos_listado.Nombre AS NombreProducto,
 			core_sistemas.OT_idBodegaIns,
 			(SELECT SUM(Cantidad_ing) FROM bodegas_insumos_facturacion_existencias  WHERE idProducto = orden_trabajo_listado_insumos.idProducto AND idBodega=core_sistemas.OT_idBodegaIns LIMIT 1) AS BodegaProdIngresos,
-			(SELECT SUM(Cantidad_eg)  FROM bodegas_insumos_facturacion_existencias  WHERE idProducto = orden_trabajo_listado_insumos.idProducto AND idBodega=core_sistemas.OT_idBodegaIns LIMIT 1) AS BodegaProdEgresos
-			
-			FROM `orden_trabajo_listado_insumos`
+			(SELECT SUM(Cantidad_eg)  FROM bodegas_insumos_facturacion_existencias  WHERE idProducto = orden_trabajo_listado_insumos.idProducto AND idBodega=core_sistemas.OT_idBodegaIns LIMIT 1) AS BodegaProdEgresos';
+			$SIS_join  = '
 			LEFT JOIN `insumos_listado`     ON insumos_listado.idProducto        = orden_trabajo_listado_insumos.idProducto
-			LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema           = orden_trabajo_listado_insumos.idSistema
-			WHERE orden_trabajo_listado_insumos.idOT = {$_GET['view']} 
-			GROUP BY orden_trabajo_listado_insumos.idProducto";
-			$resultado = mysqli_query($dbConn, $query);
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrInsCons,$row );
-			}
+			LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema           = orden_trabajo_listado_insumos.idSistema';
+			$SIS_where = 'orden_trabajo_listado_insumos.idOT = '.$_GET['view'].' GROUP BY orden_trabajo_listado_insumos.idProducto';
+			$SIS_order = 0;
+			$arrInsCons = array();
+			$arrInsCons = db_select_array (false, $SIS_query, 'orden_trabajo_listado_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 			//Verifico resultados
 			$xan = 0;
 			foreach ($arrInsCons as $trab){
@@ -2972,7 +2674,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se verifica que los trabajos tengan datos asignados
 			if($xan!=0){
 				foreach ($arrInsCons as $trab){
-					if(!isset($trab['OT_idBodegaIns']) or $trab['OT_idBodegaIns'] == '' or $trab['OT_idBodegaIns'] == 0){   $error['idTrabajoOT']      = 'error/La empresa no tiene una bodega de productos asignada a la OT';}		
+					if(!isset($trab['OT_idBodegaIns']) OR $trab['OT_idBodegaIns'] == '' OR $trab['OT_idBodegaIns'] == 0){   $error['idTrabajoOT']      = 'error/La empresa no tiene una bodega de productos asignada a la OT';}		
 					//Realizo las operaciones
 					$ingreso = $trab['BodegaProdIngresos'];
 					$egreso  = $trab['BodegaProdEgresos'] + $trab['Cantidad'];
@@ -3003,7 +2705,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($rowdata['f_termino']) && $rowdata['f_termino']=='' && $rowdata['f_termino']=='0000-00-00'){                 $a .= ",f_termino='".$rowdata['f_termino']."'" ;}
 				
 				// Actualizo la tabla principal
-				$query  = "UPDATE `orden_trabajo_listado` SET ".$a." WHERE idOT = '{$_GET['view']}'";
+				$query  = "UPDATE `orden_trabajo_listado` SET ".$a." WHERE idOT = '".$_GET['view']."'";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3019,7 +2721,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				
 				// Actualizo los insumos
-				$query  = "UPDATE `orden_trabajo_listado_insumos` SET ".$a." WHERE idOT = '{$_GET['view']}'";
+				$query  = "UPDATE `orden_trabajo_listado_insumos` SET ".$a." WHERE idOT = '".$_GET['view']."'";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3035,7 +2737,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				
 				// Actualizo los productos
-				$query  = "UPDATE `orden_trabajo_listado_productos` SET ".$a." WHERE idOT = '{$_GET['view']}'";
+				$query  = "UPDATE `orden_trabajo_listado_productos` SET ".$a." WHERE idOT = '".$_GET['view']."'";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3051,7 +2753,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				
 				// Actualizo los trabajadores
-				$query  = "UPDATE `orden_trabajo_listado_responsable` SET ".$a." WHERE idOT = '{$_GET['view']}'";
+				$query  = "UPDATE `orden_trabajo_listado_responsable` SET ".$a." WHERE idOT = '".$_GET['view']."'";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3067,7 +2769,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				
 				// Actualizo los trabajos
-				$query  = "UPDATE `orden_trabajo_listado_trabajos` SET ".$a." WHERE idOT = '{$_GET['view']}'";
+				$query  = "UPDATE `orden_trabajo_listado_trabajos` SET ".$a." WHERE idOT = '".$_GET['view']."'";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3085,17 +2787,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*********************************************************************/
 				// Se actualizan los analisis utilizados
 				$arrAnalisis = array();
-				$query = "SELECT idAnalisis
-				FROM `orden_trabajo_listado_trabajos`
-				WHERE idOT = {$_GET['view']} AND idAnalisis!=0 AND idTrabajo=1";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrAnalisis,$row );
-				}
+				$arrAnalisis = db_select_array (false, 'idAnalisis', 'orden_trabajo_listado_trabajos', '', 'idOT = '.$_GET['view'].' AND idAnalisis!=0 AND idTrabajo=1', 'idAnalisis ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 				//Se actualizan los registros
 				foreach ($arrAnalisis as $trab){
 					if(isset($trab['idAnalisis']) && $trab['idAnalisis'] == '' && $trab['idAnalisis'] == 0){  
-						$query  = "UPDATE `analisis_listado` SET idOT = '{$_GET['view']}' WHERE idAnalisis = '{$trab['idAnalisis']}'";
+						$query  = "UPDATE `analisis_listado` SET idOT = '".$_GET['view']."' WHERE idAnalisis = '".$trab['idAnalisis']."'";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -3115,7 +2812,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/*************************************************************************/
 				/*************************************************************************/
 				
-				$Observaciones  = 'Consumo de materiales desde la OT '.$_GET['view'] ;
+				$Observaciones  = 'Consumo de materiales desde la OT '.$_GET['view'];
 				$idTipo         = 7;
 				$fecha_auto     = fecha_actual();
 				
@@ -3142,7 +2839,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_productos_facturacion` (idBodegaOrigen, idOT, Observaciones, idSistema, 
 					idUsuario, idTipo, Creacion_fecha, Creacion_mes, Creacion_ano, fecha_auto) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -3187,7 +2884,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_productos_facturacion_existencias` (idFacturacion, idOT, idBodega, 
 							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano,  idTipo, idProducto, 
 							Cantidad_eg, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -3229,7 +2926,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion` (idBodegaOrigen, idOT, Observaciones, idSistema, 
 					idUsuario, idTipo, Creacion_fecha, Creacion_mes, Creacion_ano, fecha_auto) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -3274,7 +2971,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idOT, idBodega, 
 							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano,  idTipo, idProducto, 
 							Cantidad_eg, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta

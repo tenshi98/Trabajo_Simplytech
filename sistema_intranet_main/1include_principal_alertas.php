@@ -134,7 +134,7 @@ array_push( $arrAlertas,$row );
 														//Arriendos
 														foreach ($arrAlertas as $prod) { 
 															if ($prod['Creacion_dia']==$Dia) {
-																$ver = 'view_analisis.php?view='.$prod['idAnalisis'];
+																$ver = 'view_analisis.php?view='.simpleEncode($prod['idAnalisis'], fecha_actual());
 																$trabajo = $prod['Nombrepunto'].' fuera de parametros';
 																switch ($nivel) {
 																	case 1:

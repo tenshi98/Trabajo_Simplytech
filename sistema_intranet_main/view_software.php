@@ -21,26 +21,35 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 soporte_software_listado.Nombre, 
 soporte_software_listado.Descripcion,
-soporte_software_listado.Peso,
+
 soporte_software_listado.SitioWeb,
 soporte_software_listado.SitioDescarga,
 
 soporte_software_listado_licencias.Nombre AS Licencia,
-soporte_software_listado_categorias.Nombre AS Categoria,
-soporte_software_listado_medidas.Nombre AS MedidaPeso
+soporte_software_listado_categorias.Nombre AS Categoria
 
 FROM `soporte_software_listado`
 LEFT JOIN `soporte_software_listado_licencias`   ON soporte_software_listado_licencias.idLicencia     = soporte_software_listado.idLicencia
 LEFT JOIN `soporte_software_listado_categorias`  ON soporte_software_listado_categorias.idCategoria   = soporte_software_listado.idCategoria
-LEFT JOIN `soporte_software_listado_medidas`     ON soporte_software_listado_medidas.idMedidaPeso     = soporte_software_listado.idMedidaPeso
 
-
-
-WHERE soporte_software_listado.idSoftware = {$_GET['view']}";
+WHERE soporte_software_listado.idSoftware = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -51,14 +60,7 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
@@ -71,7 +73,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="col-md-12">
 
 								
-			<div class="block task task-high">
+			<div class="block task task-high boxsoftware">
 				<div class="row with-padding">
 					<div class="col-sm-9">
 						<div class="task-description">
@@ -83,7 +85,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<div class="col-sm-3">
 						<div class="task-info">
 							<span><?php echo $rowdata['Licencia']; ?></span>
-							<span><span class="label label-danger"><?php echo Cantidades_decimales_justos($rowdata['Peso']).' '.$rowdata['MedidaPeso']; ?></span></span>
+
 						</div>
 					</div>
 				</div>
@@ -107,13 +109,31 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

@@ -31,14 +31,13 @@ $z ="WHERE idTipo=".$idTipo;      //Solo ingresos - egresos
 $z.=" AND idEstadoDevolucion=1";  //No devueltos aun
 $z.=" AND Pago_mes=".$Mes;        //el mes actual
 $z.=" AND Pago_ano=".$Ano;        //el año actual
+$z.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z.=" AND bodegas_arriendos_facturacion.idSistema>=0";
 	$join = "";	
 }else{
-	$z.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-	$z.=" AND usuarios_bodegas_arriendos.idUsuario={$_SESSION['usuario']['basic_data']['idUsuario']}";
+	$z.=" AND usuarios_bodegas_arriendos.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 	$join = "INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega =  bodegas_arriendos_facturacion.idBodega";
 }
 /******************************/
@@ -154,7 +153,7 @@ array_push( $arrFacturas_1,$row );
 														//Arriendos
 														foreach ($arrFacturas_1 as $prod) { 
 															if ($prod['Dia']==$Dia) {
-																$ver = 'view_mov_arriendos.php?view='.$prod['idFacturacion'];
+																$ver = 'view_mov_arriendos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual());
 																$trabajo = 'Factura Arriendos N°'.$prod['NumDoc'];
 																if($original=="principal_arriendos_alt.php"){
 																	echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor1.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';

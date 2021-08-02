@@ -130,7 +130,7 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     color: #555 !important;
-    border-bottom: none;
+    /*border-bottom: none;*/
 }
 /** Modificacion del dropdown de la tablas **/
 .box header .dropdown-menu {

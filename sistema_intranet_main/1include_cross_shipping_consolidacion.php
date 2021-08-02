@@ -71,7 +71,7 @@ LEFT JOIN `core_oc_estado`                               ON core_oc_estado.idEst
 LEFT JOIN `trabajadores_listado`                         ON trabajadores_listado.idTrabajador                         = cross_shipping_consolidacion.idAprobador
 LEFT JOIN `cross_shipping_recibidores`                   ON cross_shipping_recibidores.idRecibidor                    = cross_shipping_consolidacion.idRecibidor
 
-WHERE cross_shipping_consolidacion.idConsolidacion = {$_GET['view']}";
+WHERE cross_shipping_consolidacion.idConsolidacion = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -81,15 +81,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowConso = mysqli_fetch_assoc ($resultado);				
 			
@@ -115,7 +108,7 @@ LEFT JOIN `core_cross_shipping_consolidacion_posicion`    ON core_cross_shipping
 LEFT JOIN `cross_shipping_envase`                         ON cross_shipping_envase.idEnvase                           = cross_shipping_consolidacion_estibas.idEnvase
 LEFT JOIN `cross_shipping_termografo`                     ON cross_shipping_termografo.idTermografo                   = cross_shipping_consolidacion_estibas.idTermografo
 
-WHERE cross_shipping_consolidacion_estibas.idConsolidacion = {$_GET['view']}
+WHERE cross_shipping_consolidacion_estibas.idConsolidacion = ".$_GET['view']."
 ORDER BY cross_shipping_consolidacion_estibas.idEstiba ASC, core_estibas_ubicacion.Nombre ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -126,15 +119,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrEstibas,$row );
@@ -153,7 +139,7 @@ core_cross_shipping_archivos_tipos.Nombre AS Tipo
 FROM `cross_shipping_consolidacion_archivo`
 LEFT JOIN `core_cross_shipping_archivos_tipos`     ON core_cross_shipping_archivos_tipos.idArchivoTipo     = cross_shipping_consolidacion_archivo.idArchivoTipo
 
-WHERE cross_shipping_consolidacion_archivo.idConsolidacion = {$_GET['view']}";
+WHERE cross_shipping_consolidacion_archivo.idConsolidacion = ".$_GET['view'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -163,15 +149,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivos,$row );
@@ -181,19 +160,19 @@ array_push( $arrArchivos,$row );
 <?php if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 	if(isset($rowConso['idEstado'])&&$rowConso['idEstado']!=2){ ?>
 		<div class="col-xs-12" style="margin-top:15px;">
-			<div class="alert alert-danger alert-white rounded"> 
-				<div class="icon"><i class="fa fa-info-circle faa-bounce animated"></i></div> 
-				<strong>Fecha: </strong><?php echo fecha_estandar($rowConso['Aprobacion_Fecha']); ?><br/>
-				<strong>Hora: </strong><?php echo $rowConso['Aprobacion_Hora']; ?><br/>
-				<strong>Observacion: </strong><?php echo $rowConso['Observacion']; ?>
-			</div>
+			<?php
+				$Alert_Text  = '<strong>Fecha: </strong>'.fecha_estandar($rowConso['Aprobacion_Fecha']).'<br/>';
+				$Alert_Text .= '<strong>Hora: </strong>'.$rowConso['Aprobacion_Hora'].'<br/>';
+				$Alert_Text .= '<strong>Observacion: </strong>'.$rowConso['Observacion'];
+				alert_post_data(4,1,1,  $Alert_Text);
+			?>
 		</div>
 		<div class="clearfix" style="margin-bottom:15px;"></div>
 	<?php } ?> 
 <?php } ?>
 
 
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 	<div id="page-wrap">
 		<div id="header"> Control Proceso Preembarque - T° y Estiba de Contenedores <?php if(isset($rowConso['idEstado'])&&$rowConso['idEstado']!=2){echo '('.$rowConso['Estado'].')';} ?></div>

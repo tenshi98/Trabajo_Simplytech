@@ -1,0 +1,211 @@
+<?php session_start();
+date_default_timezone_set('Europe/London');
+
+if (PHP_SAPI == 'cli')
+	die('This example should only be run from a Web Browser');
+
+/** Include PHPExcel */
+require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Excel.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+/**********************************************************************************************************************************/
+/*                                                          Consultas                                                             */
+/**********************************************************************************************************************************/
+/**********************************************************/
+//Seleccionar la tabla
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
+	$x_table = 'telemetria_listado_aux_equipo';
+}else{
+	$x_table = 'telemetria_listado_aux';
+}
+//se verifica si se ingreso la hora, es un dato optativo
+$z = "WHERE ".$x_table.".idSistema=".$_GET['idSistema'];
+//Se aplican los filtros
+if(isset($_GET['fecha'])&&$_GET['fecha']!=''){
+	
+	//Se organizan los datos
+	$Fecha     = $_GET['fecha'];
+	$Hora      = '20:00:00';
+	$FechaSig  = sumarDias($_GET['fecha'], 1);
+	$HoraSig   = '09:00:00';
+
+	//se crea query
+	$z.=" AND (".$x_table.".TimeStamp BETWEEN '".$Fecha." ".$Hora ."' AND '".$FechaSig." ".$HoraSig."')";
+	
+}
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
+	$z.=" AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
+}
+/**********************************************************/
+// Se trae un listado con todos los datos
+$arrHistorial = array();
+$query = "SELECT Fecha, Hora, HeladaDia, HeladaHora, Temperatura, Helada, CrossTech_TempMin ,
+Fecha_Anterior, Hora_Anterior, Tiempo_Helada
+
+FROM `".$x_table."`
+".$z."
+ORDER BY idAuxiliar ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrHistorial,$row );
+}
+
+$arrEvento = array();
+$nevento   = 0;
+//Se busca la temperatura real							
+foreach($arrHistorial as $hist2) {
+	//verifico que exista fecha
+	if(isset($hist2['Fecha'])&&$hist2['Fecha']!='0000-00-00'){
+		//se obtiene la hora
+		if(isset($hist2['Temperatura'])&&$hist2['Temperatura']<=$hist2['CrossTech_TempMin']){
+			
+			//se crean variables en caso de no existir
+			if(!isset($arrEvento[$nevento]['TempMinima'])){  $arrEvento[$nevento]['TempMinima']  = 1000;}
+			if(!isset($arrEvento[$nevento]['TempMaxima'])){  $arrEvento[$nevento]['TempMaxima']  = -1000;}
+			if(!isset($arrEvento[$nevento]['TempSum'])){     $arrEvento[$nevento]['TempSum']  = 0;}
+			if(!isset($arrEvento[$nevento]['TempCuenta'])){  $arrEvento[$nevento]['TempCuenta']  = 0;}
+			if(!isset($arrEvento[$nevento]['Minutos'])){     $arrEvento[$nevento]['Minutos']  = 0;}
+			if(!isset($arrEvento[$nevento]['FechaInicio'])){ $arrEvento[$nevento]['FechaInicio'] = $hist2['Fecha'];}
+			if(!isset($arrEvento[$nevento]['HoraInicio'])){  $arrEvento[$nevento]['HoraInicio']  = $hist2['Hora'];}
+
+			$arrEvento[$nevento]['FechaTermino'] = $hist2['Fecha'];
+			$arrEvento[$nevento]['HoraTermino']  = $hist2['Hora'];
+			$arrEvento[$nevento]['TempSum']      = $arrEvento[$nevento]['TempSum'] + $hist2['Temperatura'];
+			$arrEvento[$nevento]['TempCuenta']   = $arrEvento[$nevento]['TempCuenta'] + 1;
+			$arrEvento[$nevento]['TempProm']     = $arrEvento[$nevento]['TempSum']/$arrEvento[$nevento]['TempCuenta'];
+			$arrEvento[$nevento]['Minutos']      = $arrEvento[$nevento]['Minutos'] + $hist2['Tiempo_Helada'];
+			
+			//Guardo la temperatura Minima
+			if(isset($hist2['Temperatura'])&&$hist2['Temperatura']<$arrEvento[$nevento]['TempMinima']){
+				$arrEvento[$nevento]['TempMinima'] = $hist2['Temperatura'];
+			}
+			//Guardo la temperatura Maxima
+			if(isset($hist2['Temperatura'])&&$hist2['Temperatura']>$arrEvento[$nevento]['TempMaxima']){
+				$arrEvento[$nevento]['TempMaxima'] = $hist2['Temperatura'];
+			}
+		
+		}else{
+			$nevento++;
+		}
+	}
+}
+/***********************************************************/
+$arrResumen = array();	
+$arrResumen['Tiempo']     = 0;
+$arrResumen['TempMinima'] = 0;
+foreach ($arrEvento as $key => $eve){ 
+	//comparo temperaturas
+	if($arrResumen['TempMinima']>$eve['TempMinima']){                               
+		$arrResumen['TempMinima']      = $eve['TempMinima'];
+		//guardo los otros datos
+		if(!isset($arrResumen['Duracion'])OR $arrResumen['Duracion']==''){              $arrResumen['Duracion']        = $eve['Minutos'];}
+		if(!isset($arrResumen['HoraTempMinima'])OR $arrResumen['HoraTempMinima']==''){  $arrResumen['HoraTempMinima']  = $eve['HoraInicio'];}
+	
+	}
+	//tiempo total de la helada
+	$arrResumen['Tiempo'] = $arrResumen['Tiempo'] + $eve['Minutos'];
+}
+
+
+// Create new PHPExcel object
+$objPHPExcel = new PHPExcel();
+
+// Set document properties
+$objPHPExcel->getProperties()->setCreator("Office 2007")
+							 ->setLastModifiedBy("Office 2007")
+							 ->setTitle("Office 2007")
+							 ->setSubject("Office 2007")
+							 ->setDescription("Document for Office 2007")
+							 ->setKeywords("office 2007")
+							 ->setCategory("office 2007 result file");
+
+			
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Temperatura Minima')
+            ->setCellValue('B1', 'Duracion Temp Min')
+            ->setCellValue('C1', 'Hora Temp Minima')
+            ->setCellValue('D1', 'Tiempo bajo '.$arrHistorial[0]['CrossTech_TempMin'].'°C');
+
+ 
+
+
+$objPHPExcel->setActiveSheetIndex(0)
+			->setCellValue('A2', $arrResumen['TempMinima'].'°C')
+			->setCellValue('B2', $arrResumen['Duracion'].'Horas')
+			->setCellValue('C2', $arrResumen['HoraTempMinima'])
+			->setCellValue('D2', Cantidades($arrResumen['Tiempo']), 0).' Horas'); 					
+
+         
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A4', 'Inicio')
+            ->setCellValue('B4', 'Termino')
+            ->setCellValue('C4', 'Temperatura Minima (°C)')
+            ->setCellValue('D4', 'Temperatura Maxima (°C)')
+            ->setCellValue('E4', 'Temperatura Promedio (°C)')
+            ->setCellValue('F4', 'Duracion (horas)');
+
+ 
+$nn       = 5; 
+foreach ($arrEvento as $key => $eve){
+	$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('A'.$nn, $eve['HoraInicio'].' - '.fecha_estandar($eve['FechaInicio']))
+				->setCellValue('B'.$nn, $eve['HoraTermino'].' - '.fecha_estandar($eve['FechaTermino']))
+				->setCellValue('C'.$nn, Cantidades($eve['TempMinima'], 2))
+				->setCellValue('D'.$nn, Cantidades($eve['TempMaxima'], 2))
+				->setCellValue('E'.$nn, Cantidades($eve['TempProm'], 2))
+				->setCellValue('F'.$nn, $eve['Minutos']); 					
+							
+	$nn++;			
+}
+
+
+
+
+// Rename worksheet
+$objPHPExcel->getActiveSheet()->setTitle('Resumen Heladas');
+
+
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+$objPHPExcel->setActiveSheetIndex(0);
+
+
+// Redirect output to a client’s web browser (Excel5)
+header('Content-Type: application/vnd.ms-excel');
+header('Content-Disposition: attachment;filename="Resumen Heladas.xls"');
+header('Cache-Control: max-age=0');
+// If you're serving to IE 9, then the following may be needed
+header('Cache-Control: max-age=1');
+
+// If you're serving to IE over SSL, then the following may be needed
+header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header ('Pragma: public'); // HTTP/1.0
+
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter->save('php://output');
+exit;

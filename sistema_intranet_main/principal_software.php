@@ -41,9 +41,14 @@ if (!$num_pag){
 } else {
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
-
+//Filtro
+if(isset($_GET['filterCat'])&&$_GET['filterCat']!=''){
+	$z = 'WHERE soporte_software_listado.idCategoria='.$_GET['filterCat'];
+}else{
+	$z = '';
+}
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT Nombre FROM `soporte_software_listado` ";
+$query = "SELECT Nombre FROM `soporte_software_listado` ".$z;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -77,9 +82,7 @@ FROM `soporte_software_listado`
 LEFT JOIN `soporte_software_listado_licencias`   ON soporte_software_listado_licencias.idLicencia     = soporte_software_listado.idLicencia
 LEFT JOIN `soporte_software_listado_categorias`  ON soporte_software_listado_categorias.idCategoria   = soporte_software_listado.idCategoria
 LEFT JOIN `soporte_software_listado_medidas`     ON soporte_software_listado_medidas.idMedidaPeso     = soporte_software_listado.idMedidaPeso
-
-
-
+".$z."
 ORDER BY soporte_software_listado.Nombre ASC
 LIMIT $comienzo, $cant_reg ";
 //Consulta
@@ -99,12 +102,41 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrSoftware,$row );
 }
 
+//obtengo los usuarios que enviaron la notificacion
+$arrCategorias = array();
+$query = "SELECT
+soporte_software_listado_categorias.idCategoria,
+soporte_software_listado_categorias.Nombre,
+count(soporte_software_listado.idCategoria)AS cuenta
+
+FROM `soporte_software_listado_categorias`
+LEFT JOIN `soporte_software_listado`  ON soporte_software_listado.idCategoria   = soporte_software_listado_categorias.idCategoria
+
+GROUP BY soporte_software_listado_categorias.Nombre
+ORDER BY soporte_software_listado_categorias.Nombre ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrCategorias,$row );
+}
+
 ?>
 <div class="row">
-	<div class="col-md-12">
-
+	
+	<div class="col-sm-8">
 		<?php foreach ($arrSoftware as $soft) { ?>					
-			<div class="block task task-high">
+			<div class="block task task-high boxsoftware">
 				<div class="row with-padding">
 					<div class="col-sm-9">
 						<div class="task-description">
@@ -115,8 +147,7 @@ array_push( $arrSoftware,$row );
 					</div>
 					<div class="col-sm-3">
 						<div class="task-info">
-							<span><?php echo $soft['Licencia']; ?></span>
-							<span><span class="label label-danger"><?php echo Cantidades_decimales_justos($soft['Peso']).' '.$soft['MedidaPeso']; ?></span></span>
+							<span><span class="label label-success"><?php echo $soft['Licencia']; ?></span></span>
 						</div>
 					</div>
 				</div>
@@ -134,15 +165,40 @@ array_push( $arrSoftware,$row );
 				</div>
 			</div>
 		<?php } ?>     											
-	</div>			
+	</div>
+	
+	
+	<div class="col-sm-4 mail-left-box">
+  		<div class="list-group inbox-options">
+			<?php $todos = 0; foreach ($arrCategorias as $cat) { $todos = $todos + $cat['cuenta']; } ?>
+					
+			<div class="list-group-item">Filtro</div>	
+			<a href="<?php echo $original.'?pagina=1'; ?>" class="list-group-item">
+				<i class="fa fa-inbox" aria-hidden="true"></i> 
+				Mostrar Todos
+				<span class="badge  bg-primary"><?php echo $todos; ?></span> 
+			</a>
+					
+			<?php foreach ($arrCategorias as $cat) { ?>
+				<a href="<?php echo $original.'?pagina=1&filterCat='.$cat['idCategoria']; ?>" class="list-group-item">
+					<i class="fa fa-inbox" aria-hidden="true"></i> 
+					<?php echo $cat['Nombre']; ?>
+					<span class="badge  bg-primary"><?php echo $cat['cuenta']; ?></span> 
+				</a>	
+			<?php } ?>
+					
+					
+  		</div>
+	</div>
+				
 </div>
 
 <?php echo paginador_1($total_paginas, $original, '', $num_pag); ?>
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px; margin-top:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
+<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

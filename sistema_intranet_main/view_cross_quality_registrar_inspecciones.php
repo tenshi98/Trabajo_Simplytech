@@ -23,13 +23,29 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['viewMuestra']) ) { 
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+$X_viewMuestra = simpleDecode($_GET['viewMuestra'], fecha_actual());
+$X_cantPuntos  = simpleDecode($_GET['cantPuntos'], fecha_actual());
+$X_idCalidad   = simpleDecode($_GET['idCalidad'], fecha_actual());
+/**************************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 /***********************************************/
 //Armo cadena
 $cadena  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
-for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+for ($i = 1; $i <= $X_cantPuntos; $i++) {
 	$cadena .= ',PuntoNombre_'.$i;
 	$cadena .= ',PuntoidTipo_'.$i;
 	$cadena .= ',PuntoidGrupo_'.$i;
@@ -39,7 +55,7 @@ for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 // tomo los datos del usuario
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
-WHERE idMatriz = {$_GET['idCalidad']}";
+WHERE idMatriz = ".$X_idCalidad;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -49,22 +65,15 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 $rowdata = mysqli_fetch_assoc ($resultado); 
 
 /***********************************************/
 //Armo cadena
 $cadena  = '';
-for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+for ($i = 1; $i <= $X_cantPuntos; $i++) {
 	$cadena .= ',cross_quality_registrar_inspecciones_muestras.Medida_'.$i;
 }
 
@@ -90,7 +99,7 @@ FROM `cross_quality_registrar_inspecciones_muestras`
 LEFT JOIN `productores_listado`               ON productores_listado.idProductor         = cross_quality_registrar_inspecciones_muestras.idProductor
 LEFT JOIN `sistema_cross_analisis_embalaje`   ON sistema_cross_analisis_embalaje.idTipo  = cross_quality_registrar_inspecciones_muestras.idTipo
 
-WHERE cross_quality_registrar_inspecciones_muestras.idMuestras = {$_GET['viewMuestra']}";
+WHERE cross_quality_registrar_inspecciones_muestras.idMuestras = ".$X_viewMuestra;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -100,15 +109,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 $rowMuestras = mysqli_fetch_assoc ($resultado); 
 
@@ -126,15 +128,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrGrupo,$row );
@@ -153,15 +148,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUnidadMedida,$row );
@@ -192,7 +180,7 @@ array_push( $arrUnidadMedida,$row );
 		foreach ($arrGrupo as $grupo) {
 			//Cuento si hay items dentro de la categoria
 			$x_con = 0;
-			for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+			for ($i = 1; $i <= $X_cantPuntos; $i++) {
 				if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
 					$x_con++;
 				}
@@ -211,7 +199,7 @@ array_push( $arrUnidadMedida,$row );
 						
 				
 					
-				for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+				for ($i = 1; $i <= $X_cantPuntos; $i++) {
 					if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
 						//sumo subtotales
 						if(isset($rowMuestras['Medida_'.$i])&&$rowMuestras['Medida_'.$i]!=''){
@@ -314,13 +302,26 @@ array_push( $arrUnidadMedida,$row );
 
 
 <div class="clearfix"></div>
-	<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="view_cross_quality_registrar_inspecciones.php?view=<?php echo $_GET['view'];?>"  class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="col-sm-12" style="margin-bottom:30px">
+		<a href="view_cross_quality_registrar_inspecciones.php?view=<?php echo $_GET['view'];?>"  class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
 </div>
 		
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  {  
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos del analisis
 $query = "SELECT 
 cross_quality_registrar_inspecciones.fecha_auto,
@@ -375,7 +376,7 @@ LEFT JOIN `ubicacion_listado_level_3`              ON ubicacion_listado_level_3.
 LEFT JOIN `ubicacion_listado_level_4`              ON ubicacion_listado_level_4.idLevel_4          = cross_quality_registrar_inspecciones.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.idLevel_5          = cross_quality_registrar_inspecciones.idUbicacion_lvl_5
 
-WHERE cross_quality_registrar_inspecciones.idAnalisis = {$_GET['view']} ";
+WHERE cross_quality_registrar_inspecciones.idAnalisis = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -386,15 +387,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
@@ -410,7 +404,7 @@ trabajadores_listado.Rut
 
 FROM `cross_quality_registrar_inspecciones_trabajador` 
 LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = cross_quality_registrar_inspecciones_trabajador.idTrabajador
-WHERE cross_quality_registrar_inspecciones_trabajador.idAnalisis = {$_GET['view']} ";
+WHERE cross_quality_registrar_inspecciones_trabajador.idAnalisis = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -421,15 +415,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTrabajadores,$row );
@@ -443,7 +430,7 @@ maquinas_listado.Codigo
 
 FROM `cross_quality_registrar_inspecciones_maquina` 
 LEFT JOIN `maquinas_listado`  ON maquinas_listado.idMaquina   = cross_quality_registrar_inspecciones_maquina.idMaquina
-WHERE cross_quality_registrar_inspecciones_maquina.idAnalisis = {$_GET['view']} ";
+WHERE cross_quality_registrar_inspecciones_maquina.idAnalisis = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -454,15 +441,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrMaquinas,$row );
@@ -478,7 +458,7 @@ productores_listado.Nombre AS ClienteNombre
 
 FROM `cross_quality_registrar_inspecciones_muestras` 
 LEFT JOIN `productores_listado`  ON productores_listado.idProductor   = cross_quality_registrar_inspecciones_muestras.idProductor
-WHERE cross_quality_registrar_inspecciones_muestras.idAnalisis = {$_GET['view']} ";
+WHERE cross_quality_registrar_inspecciones_muestras.idAnalisis = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -489,15 +469,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrMuestras,$row );
@@ -508,7 +481,7 @@ $arrArchivos = array();
 $query = "SELECT Nombre
 
 FROM `cross_quality_registrar_inspecciones_archivo` 
-WHERE idAnalisis = {$_GET['view']} ";
+WHERE idAnalisis = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -519,15 +492,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivos,$row );
@@ -543,7 +509,7 @@ array_push( $arrArchivos,$row );
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> <?php echo $row_data['TipoAnalisis']?>.
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['TipoAnalisis']?>.
 				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto'])?></small>
 			</h2>
 		</div>   
@@ -556,8 +522,8 @@ array_push( $arrArchivos,$row );
 			<div class="col-sm-4 invoice-col">
 				Datos Basicos
 				<address>
-					<strong>'.$x_column_producto_nombre_sing.'</strong><br>
-					'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br>
+					<strong>'.$x_column_producto_nombre_sing.'</strong><br/>
+					'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>
 					Ubicacion: '.$row_data['UbicacionNombre'];
 					if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}
 					if(isset($row_data['UbicacionNombre_lvl_2'])&&$row_data['UbicacionNombre_lvl_2']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_2'];}
@@ -565,23 +531,23 @@ array_push( $arrArchivos,$row );
 					if(isset($row_data['UbicacionNombre_lvl_4'])&&$row_data['UbicacionNombre_lvl_4']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_4'];}
 					if(isset($row_data['UbicacionNombre_lvl_5'])&&$row_data['UbicacionNombre_lvl_5']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_5'];}
 						
-					echo '<br>
+					echo '<br/>
 				</address>
 			</div>
 				
 			<div class="col-sm-4 invoice-col">
 				Fecha Creacion
 				<address>
-					Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br>
-					Temporada: '.$row_data['Temporada'].'<br>
+					Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
+					Temporada: '.$row_data['Temporada'].'<br/>
 				</address>
 			</div>
 			   
 			<div class="col-sm-4 invoice-col">
 				Datos Creacion
 				<address>
-					Sistema: '.$row_data['Sistema'].'<br>
-					Usuario: '.$row_data['Usuario'].'<br>
+					Sistema: '.$row_data['Sistema'].'<br/>
+					Usuario: '.$row_data['Usuario'].'<br/>
 				</address>	
 					
 			</div>'; ?>
@@ -631,7 +597,7 @@ array_push( $arrArchivos,$row );
 								<td><?php echo $muestra['lote'];?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<a href="<?php echo 'view_cross_quality_registrar_inspecciones.php?view='.$_GET['view'].'&viewMuestra='.$muestra['idMuestras'].'&cantPuntos='.$row_data['Producto_cantPuntos'].'&idCalidad='.$row_data['Producto_idCalidad']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+										<a href="<?php echo 'view_cross_quality_registrar_inspecciones.php?view='.$_GET['view'].'&viewMuestra='.simpleEncode($muestra['idMuestras'], fecha_actual()).'&cantPuntos='.simpleEncode($row_data['Producto_cantPuntos'], fecha_actual()).'&idCalidad='.simpleEncode($row_data['Producto_idCalidad'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -655,17 +621,17 @@ array_push( $arrArchivos,$row );
 
 
 <?php
-	$zz  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
 	?>
 	<div class="row no-print">
 		<div class="col-xs-12">
 			<a target="new" href="view_cross_quality_registrar_inspecciones_to_print.php<?php echo $zz; ?>" class="btn btn-default">
-				<i class="fa fa-print"></i> Imprimir
+				<i class="fa fa-print" aria-hidden="true"></i> Imprimir
 			</a>
 
 			<a target="new" href="view_cross_quality_registrar_inspecciones_to_pdf.php<?php echo $zz; ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
-				<i class="fa fa-file-pdf-o"></i> Exportar a PDF
+				<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF
 			</a>
 		</div>
 	</div>
@@ -685,8 +651,8 @@ array_push( $arrArchivos,$row );
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?return=true&path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-								<a href="1download.php?dir=upload&file=<?php echo $producto['Nombre']; ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -697,13 +663,31 @@ array_push( $arrArchivos,$row );
     
 </div>
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php } ?> 
 

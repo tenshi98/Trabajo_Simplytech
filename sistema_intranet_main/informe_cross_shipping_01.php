@@ -109,7 +109,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){                          
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                            $z .=" AND cross_shipping_consolidacion.idEstado=".$_GET['idEstado'];}
 
 if(isset($_GET['Creacion_fechaDesde']) && $_GET['Creacion_fechaDesde'] != ''&&isset($_GET['Creacion_fechaHasta']) && $_GET['Creacion_fechaHasta'] != ''){ 
-	$z .= " AND cross_shipping_consolidacion.Creacion_fecha BETWEEN '{$_GET['Creacion_fechaDesde']}' AND '{$_GET['Creacion_fechaHasta']}'" ;
+	$z .= " AND cross_shipping_consolidacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fechaDesde']."' AND '".$_GET['Creacion_fechaHasta']."'" ;
 }
 
 /**********************************************************/
@@ -177,14 +177,18 @@ array_push( $arrTipo,$row );
 }
 
 ?>
-<div class="col-sm-12">
-	<a target="new" href="<?php echo 'informe_cross_shipping_01_to_excel.php?bla=bla'.$search.'&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-2 fright margin_width"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
+<div class="col-sm-12 clearfix">
+	<?php
+	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+	?>			
+	<a target="new" href="<?php echo 'informe_cross_shipping_01_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado Consolidaciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado Consolidaciones</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -219,7 +223,7 @@ array_push( $arrTipo,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.$tipo['idConsolidacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.simpleEncode($tipo['idConsolidacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
@@ -238,21 +242,21 @@ array_push( $arrTipo,$row );
 <?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -293,50 +297,50 @@ $z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Cuerpo Indentificacion</h3>';
-				$Form_Imputs->form_select('Estado','idEstado', $xz, 2, 'idEstado', 'Nombre', 'core_oc_estado', 0, '', $dbConn);	
-				$Form_Imputs->form_input_text( 'Contenedor Nro.', 'CTNNombreCompañia', $x0, 1);
-				$Form_Imputs->form_input_number_integer('Nro. Del Informe', 'NInforme', $x1, 1);
-				$Form_Imputs->form_date('Fecha del informe Desde','Creacion_fechaDesde', $x2, 1);
-				$Form_Imputs->form_date('Fecha del informe Hasta','Creacion_fechaHasta', $x3, 1);
-				$Form_Imputs->form_date('Fecha Inicio del Embarque','FechaInicioEmbarque', $x4, 1);
-				$Form_Imputs->form_time('Hora Inicio Carga','HoraInicioCarga', $x5, 1, 1, 24);
-				$Form_Imputs->form_date('Fecha Termino del Embarque','FechaTerminoEmbarque', $x6, 1);
-				$Form_Imputs->form_time('Hora Termino Carga','HoraTerminoCarga', $x7, 1, 1, 24);
-				$Form_Imputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x8, 1, 'idPlantaDespacho', 'Codigo,Nombre', 'cross_shipping_plantas', $z, '', $dbConn);	
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x9, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion');
+				$Form_Inputs->form_select('Estado','idEstado', $xz, 2, 'idEstado', 'Nombre', 'core_oc_estado', 0, '', $dbConn);	
+				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x0, 1);
+				$Form_Inputs->form_input_number_integer('Nro. Del Informe', 'NInforme', $x1, 1);
+				$Form_Inputs->form_date('Fecha del informe Desde','Creacion_fechaDesde', $x2, 1);
+				$Form_Inputs->form_date('Fecha del informe Hasta','Creacion_fechaHasta', $x3, 1);
+				$Form_Inputs->form_date('Fecha Inicio del Embarque','FechaInicioEmbarque', $x4, 1);
+				$Form_Inputs->form_time('Hora Inicio Carga','HoraInicioCarga', $x5, 1, 1, 24);
+				$Form_Inputs->form_date('Fecha Termino del Embarque','FechaTerminoEmbarque', $x6, 1);
+				$Form_Inputs->form_time('Hora Termino Carga','HoraTerminoCarga', $x7, 1, 1, 24);
+				$Form_Inputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x8, 1, 'idPlantaDespacho', 'Codigo,Nombre', 'cross_shipping_plantas', $z, '', $dbConn);	
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x9, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x10, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_number_integer('Cantidad de Cajas', 'CantidadCajas', $x11, 1);
-				$Form_Imputs->form_select_filter('N° Instructivo','idInstructivo', $x12, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $z, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Naviera','idNaviera', $x13, 1, 'idNaviera', 'Codigo,Nombre', 'cross_shipping_naviera', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Puerto Embarque','idPuertoEmbarque', $x14, 1, 'idPuertoEmbarque', 'Codigo,Nombre', 'cross_shipping_puerto_embarque', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);	
+				$Form_Inputs->form_input_number_integer('Cantidad de Cajas', 'CantidadCajas', $x11, 1);
+				$Form_Inputs->form_select_filter('N° Instructivo','idInstructivo', $x12, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $z, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Naviera','idNaviera', $x13, 1, 'idNaviera', 'Codigo,Nombre', 'cross_shipping_naviera', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Puerto Embarque','idPuertoEmbarque', $x14, 1, 'idPuertoEmbarque', 'Codigo,Nombre', 'cross_shipping_puerto_embarque', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);	
 				
 				
-				echo '<h3>Cuerpo Indentificacion Empresa Transportista</h3>';
-				$Form_Imputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x17, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);	
-				$Form_Imputs->form_input_text( 'Conductor', 'ChoferNombreRut', $x18, 1);
-				$Form_Imputs->form_input_text( 'Patente Camion', 'PatenteCamion', $x19, 1);
-				$Form_Imputs->form_input_text( 'Patente Carro', 'PatenteCarro', $x20, 1);
+				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion Empresa Transportista');
+				$Form_Inputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x17, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);	
+				$Form_Inputs->form_input_text('Conductor', 'ChoferNombreRut', $x18, 1);
+				$Form_Inputs->form_input_text('Patente Camion', 'PatenteCamion', $x19, 1);
+				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x20, 1);
 				
 				
-				echo '<h3>Cuerpo Parametros Evaluados</h3>';
-				$Form_Imputs->form_select('Condicion CTN','idCondicion', $x21, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Sellado Piso','idSellado', $x22, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Imputs->form_input_number('T° Set Point', 'TSetPoint', $x23, 1);
-				$Form_Imputs->form_input_number('T° Ventilacion', 'TVentilacion', $x24, 1);
-				$Form_Imputs->form_input_number('T° Ambiente', 'TAmbiente', $x25, 1);
-				$Form_Imputs->form_input_text( 'Numero de sello', 'NumeroSello', $x26, 1);
-				$Form_Imputs->form_select_filter('Inspector','idInspector', $x27, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
+				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
+				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x21, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Sellado Piso','idSellado', $x22, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_input_number('T° Set Point', 'TSetPoint', $x23, 1);
+				$Form_Inputs->form_input_number('T° Ventilacion', 'TVentilacion', $x24, 1);
+				$Form_Inputs->form_input_number('T° Ambiente', 'TAmbiente', $x25, 1);
+				$Form_Inputs->form_input_text('Numero de sello', 'NumeroSello', $x26, 1);
+				$Form_Inputs->form_select_filter('Inspector','idInspector', $x27, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 				
 				
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>        
 	   
 				<div class="form-group">

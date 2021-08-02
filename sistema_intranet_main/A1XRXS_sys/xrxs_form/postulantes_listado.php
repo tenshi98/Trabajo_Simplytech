@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -36,11 +40,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idPostulante':                if(empty($idPostulante)){                 $error['idPostulante']                 = 'error/No ha ingresado el id';}break;
 			case 'idSistema':                   if(empty($idSistema)){                    $error['idSistema']                    = 'error/No ha seleccionado el sistema al cual pertenece';}break;
 			case 'idEstado':                    if(empty($idEstado)){                     $error['idEstado']                     = 'error/No ha seleccionado el estado';}break;
@@ -70,6 +74,12 @@ if( ! defined('XMBCXRXSKGC')) {
 	if(isset($Fono2)&&!validarNumero($Fono2)) { $error['Fono2']  = 'error/Ingrese un numero telefonico valido'; }
 	//if(isset($Rut)&&!validarRut($Rut)){       $error['Rut']    = 'error/El Rut ingresado no es valido'; }
 
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){      $error['ApellidoPat']   = 'error/Edita Apellido Pat, contiene palabras no permitidas'; }	
+	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){      $error['ApellidoMat']   = 'error/Edita Apellido Mat, contiene palabras no permitidas'; }	
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){          $error['Direccion']     = 'error/Edita la Direccion, contiene palabras no permitidas'; }	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -87,10 +97,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'postulantes_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'postulantes_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Rut)&&isset($idSistema)){
-				$ndata_2 = db_select_nrows ('Rut', 'postulantes_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'Rut', 'postulantes_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Postulante que intenta ingresar ya existe en el sistema';}
@@ -123,7 +133,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `postulantes_listado` (idSistema, idEstado, Nombre, ApellidoPat, 
 				ApellidoMat,idSexo,FNacimiento, idEstadoCivil, Fono1, Fono2, Rut, idCiudad,
 				idComuna, Direccion, Observaciones, SueldoLiquido, idTipoLicencia) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -162,10 +172,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idSistema)&&isset($idPostulante)){
-				$ndata_1 = db_select_nrows ('Nombre', 'postulantes_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."' AND idPostulante!='".$idPostulante."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'postulantes_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."' AND idPostulante!='".$idPostulante."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Rut)&&isset($idSistema)&&isset($idPostulante)){
-				$ndata_2 = db_select_nrows ('Rut', 'postulantes_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idPostulante!='".$idPostulante."'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'Rut', 'postulantes_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idPostulante!='".$idPostulante."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El trabajador que intenta ingresar ya existe en el sistema';}
@@ -228,48 +238,62 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			// Se obtiene el nombre del logo
-			$query = "SELECT File_Curriculum
-			FROM `postulantes_listado`
-			WHERE idPostulante = {$_GET['del']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `postulantes_listado` WHERE idPostulante = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//se elimina el curriculum
-				if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['File_Curriculum'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['File_Curriculum']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'File_Curriculum', 'postulantes_listado', '', 'idPostulante = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				//se borran los datos
+				$resultado = db_delete_data (false, 'postulantes_listado', 'idPostulante = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina el curriculum
+					if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['File_Curriculum'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['File_Curriculum']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 
 		break;	
@@ -281,9 +305,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idPostulante  = $_GET['id'];
-			$idEstado      = $_GET['estado'];
-			$query  = "UPDATE postulantes_listado SET idEstado = '$idEstado'	
-			WHERE idPostulante    = '$idPostulante'";
+			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
+			$query  = "UPDATE postulantes_listado SET idEstado = '".$idEstado."'	
+			WHERE idPostulante = '".$idPostulante."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -315,7 +339,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["File_Curriculum"]["error"] > 0){ 
-				$error['File_Curriculum']     = 'error/Ha ocurrido un error'; 
+				$error['File_Curriculum'] = 'error/'.uploadPHPError($_FILES["File_Curriculum"]["error"]); 
 			} else {
 			  //Se verifican las extensiones de los archivos
 			  $permitidos = array("application/msword",
@@ -394,17 +418,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idPostulante = $_GET['del_File_Curriculum'];
 			// Se obtiene el nombre del logo
-			$query = "SELECT File_Curriculum
-			FROM `postulantes_listado`
-			WHERE idPostulante = {$idPostulante}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'File_Curriculum', 'postulantes_listado', '', 'idPostulante = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `postulantes_listado` SET File_Curriculum='' WHERE idPostulante = '{$idPostulante}'";
+			$query  = "UPDATE `postulantes_listado` SET File_Curriculum='' WHERE idPostulante = '".$_GET['del_File_Curriculum']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta

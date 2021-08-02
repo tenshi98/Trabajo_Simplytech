@@ -26,7 +26,7 @@ telemetria_listado.Nombre AS NombreEquipo
 
 FROM `telemetria_listado_error_fuera_linea`
 LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria
-WHERE idFueraLinea = {$_GET['view']}";
+WHERE idFueraLinea = ".simpleDecode($_GET['view'], fecha_actual());
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -56,7 +56,7 @@ require_once 'core/Web.Header.Views.php';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>	
 		</header>
 		<div class="table-responsive">
@@ -65,10 +65,11 @@ require_once 'core/Web.Header.Views.php';
 							
 			//Si no existe una ID se utiliza una por defecto
 			if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-				echo '<p>No ha ingresado Una API de Google Maps</p>';
+				$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+				alert_post_data(4,2,2, $Alert_Text);
 			}else{
 				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-				<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 				<script type="text/javascript">
 					function initialize() {
 						var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
@@ -122,14 +123,14 @@ require_once 'core/Web.Header.Views.php';
 							map			: map,
 							title		: "Direccion",
 							animation 	: google.maps.Animation.DROP,
-							icon      	: "<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_red.png"
+							icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_red.png"
 						});
 						var marker_2 = new google.maps.Marker({
 							position	: factory_2,
 							map			: map,
 							title		: "Direccion",
 							animation 	: google.maps.Animation.DROP,
-							icon      	: "<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_green.png"
+							icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_green.png"
 						});
 								
 

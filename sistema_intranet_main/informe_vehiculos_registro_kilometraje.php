@@ -82,7 +82,7 @@ foreach ($arrRutas as $fac) {
 				</div>
 				<div class="box-body">
 					<div class="value">
-						<span><i class="fa fa-tachometer"></i></span>
+						<span><i class="fa fa-tachometer" aria-hidden="true"></i></span>
 						<span><?php echo Cantidades($Kilometros, 2) ?></span>
 						Kilometros
 					</div>
@@ -99,7 +99,7 @@ foreach ($arrRutas as $fac) {
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5> Graficos </h5>
 			
 		</header>
@@ -178,7 +178,7 @@ foreach ($arrRutas as $fac) {
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Informe Kilometros Recorridos equipo <?php echo $arrRutas[0]['NombreEquipo']; ?></h5>
 			
 		</header>
@@ -203,7 +203,7 @@ foreach ($arrRutas as $fac) {
 						<td><?php echo Cantidades($rutas['GeoMovimiento'], 4).' KM'; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<a href="<?php echo 'informe_vehiculos_registro_kilometraje_view.php?idVehiculo='.$_GET['idVehiculo'].'&view='.$rutas['idTabla']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+								<a href="<?php echo 'informe_vehiculos_registro_kilometraje_view.php?idVehiculo='.simpleEncode($_GET['idVehiculo'], fecha_actual()).'&view='.simpleEncode($rutas['idTabla'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -220,19 +220,19 @@ foreach ($arrRutas as $fac) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";?>			
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";?>			
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Filtro de busqueda</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -250,12 +250,12 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 				if(isset($_GET['view'])&&$_GET['view']!='') { $x5  = $_GET['view']; }
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x2, 2);
-				$Form_Imputs->form_time('Hora Inicio','h_inicio', $x3, 1, 1);
-				$Form_Imputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
-				$Form_Imputs->form_select_filter('Vehiculo','idVehiculo', $x5, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
+				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x3, 1, 1);
+				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
+				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x5, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
 				
 				?>        
 	   

@@ -16,7 +16,7 @@ $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
 $location .= "?submit_filter=Filtrar";
-if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){        $location .= "&idSolicitud=".$_GET['idSolicitud'];        $search .= "&idSolicitud=".$_GET['idSolicitud'];}
+if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $location .= "&NSolicitud=".$_GET['NSolicitud'];          $search .= "&NSolicitud=".$_GET['NSolicitud'];}
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $location .= "&idPredio=".$_GET['idPredio'];              $search .= "&idPredio=".$_GET['idPredio'];}
 if(isset($_GET['idZona']) && $_GET['idZona'] != ''){                  $location .= "&idZona=".$_GET['idZona'];                  $search .= "&idZona=".$_GET['idZona'];}
 if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $location .= "&idTemporada=".$_GET['idTemporada'];        $search .= "&idTemporada=".$_GET['idTemporada'];}
@@ -26,16 +26,16 @@ if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $location 
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $location .= "&idUsuario=".$_GET['idUsuario'];            $search .= "&idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $location .= "&idEstado=".$_GET['idEstado'];              $search .= "&idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
-	$search .="&f_programacion_desde={$_GET['f_programacion_desde']}";
-	$search .="&f_programacion_hasta={$_GET['f_programacion_hasta']}";
+	$search .="&f_programacion_desde=".$_GET['f_programacion_desde'];
+	$search .="&f_programacion_hasta=".$_GET['f_programacion_hasta'];
 }
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
-	$search .="&f_ejecucion_desde={$_GET['f_ejecucion_desde']}";
-	$search .="&f_ejecucion_hasta={$_GET['f_ejecucion_hasta']}";
+	$search .="&f_ejecucion_desde=".$_GET['f_ejecucion_desde'];
+	$search .="&f_ejecucion_hasta=".$_GET['f_ejecucion_hasta'];
 }
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
-	$search .="&f_termino_desde={$_GET['f_termino_desde']}";
-	$search .="&f_termino_hasta={$_GET['f_termino_hasta']}";
+	$search .="&f_termino_desde=".$_GET['f_termino_desde'];
+	$search .="&f_termino_hasta=".$_GET['f_termino_hasta'];
 }			     
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -67,12 +67,12 @@ if (!$num_pag){
 //Variable de busqueda
 $z = "WHERE cross_solicitud_aplicacion_listado.idSolicitud!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND cross_solicitud_aplicacion_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".$_GET['idSolicitud'];}
+if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $z .= " AND cross_solicitud_aplicacion_listado.NSolicitud=".$_GET['NSolicitud'];}
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $z .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){                  $z .= " AND cross_solicitud_aplicacion_listado.idZona=".$_GET['idZona'];}
+if(isset($_GET['idZona']) && $_GET['idZona'] != ''){                  $z .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".$_GET['idZona'];}
 if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
 if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idEstadoFen=".$_GET['idEstadoFen'];}
 if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idCategoria=".$_GET['idCategoria'];}
@@ -80,37 +80,20 @@ if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $z .= " AN
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AND cross_solicitud_aplicacion_listado.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $z .= " AND cross_solicitud_aplicacion_listado.idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '{$_GET['f_programacion_desde']}' AND '{$_GET['f_programacion_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '".$_GET['f_programacion_desde']."' AND '".$_GET['f_programacion_hasta']."'";
 }
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '{$_GET['f_ejecucion_desde']}' AND '{$_GET['f_ejecucion_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '".$_GET['f_ejecucion_desde']."' AND '".$_GET['f_ejecucion_hasta']."'";
 }
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '{$_GET['f_termino_desde']}' AND '{$_GET['f_termino_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '".$_GET['f_termino_desde']."' AND '".$_GET['f_termino_hasta']."'";
 }
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $query = "SELECT cross_solicitud_aplicacion_listado.idSolicitud FROM `cross_solicitud_aplicacion_listado` 
-LEFT JOIN `core_sistemas`   sistema_origen                 ON sistema_origen.idSistema                                   = cross_solicitud_aplicacion_listado.idSistema
-LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad          ON sis_or_ciudad.idCiudad                                     = sistema_origen.idCiudad
-LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna          ON sis_or_comuna.idComuna                                     = sistema_origen.idComuna
-LEFT JOIN `cross_predios_listado`                          ON cross_predios_listado.idPredio                             = cross_solicitud_aplicacion_listado.idPredio
-LEFT JOIN `usuarios_listado`                               ON usuarios_listado.idUsuario                                 = cross_solicitud_aplicacion_listado.idUsuario
-LEFT JOIN `core_estado_solicitud`                          ON core_estado_solicitud.idEstado                             = cross_solicitud_aplicacion_listado.idEstado
-LEFT JOIN `cross_checking_temporada`                       ON cross_checking_temporada.idTemporada                       = cross_solicitud_aplicacion_listado.idTemporada
-LEFT JOIN `cross_checking_estado_fenologico`               ON cross_checking_estado_fenologico.idEstadoFen               = cross_solicitud_aplicacion_listado.idEstadoFen
-LEFT JOIN `sistema_variedades_categorias`                  ON sistema_variedades_categorias.idCategoria                  = cross_solicitud_aplicacion_listado.idCategoria
-LEFT JOIN `variedades_listado`                             ON variedades_listado.idProducto                              = cross_solicitud_aplicacion_listado.idProducto
-LEFT JOIN `core_cross_prioridad`                           ON core_cross_prioridad.idPrioridad                           = cross_solicitud_aplicacion_listado.idPrioridad
-LEFT JOIN `trabajadores_listado`     dosificador           ON dosificador.idTrabajador                                   = cross_solicitud_aplicacion_listado.idDosificador
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
 LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
-LEFT JOIN `core_cross_estados_productivos`                 ON core_cross_estados_productivos.idEstadoProd                = cross_predios_listado_zonas.idEstadoProd
-LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
-LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
-LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
-LEFT JOIN `trabajadores_listado`       conductor           ON conductor.idTrabajador                                     = cross_solicitud_aplicacion_listado_tractores.idTrabajador
-".$z;
+".$z."";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -131,6 +114,7 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 $arrOTS = array();
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,
+cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.f_creacion,
 cross_solicitud_aplicacion_listado.f_programacion,
 cross_solicitud_aplicacion_listado.f_ejecucion,
@@ -146,31 +130,87 @@ cross_solicitud_aplicacion_listado.horaEjecucion_fin,
 cross_solicitud_aplicacion_listado.horaTermino_fin,
 
 cross_predios_listado.Nombre AS NombrePredio,
-usuarios_listado.Nombre AS NombreUsuario,
 core_estado_solicitud.Nombre AS Estado,
-cross_checking_temporada.Codigo AS TemporadaCodigo,
-cross_checking_temporada.Nombre AS TemporadaNombre,
-cross_checking_estado_fenologico.Codigo AS EstadoFenCodigo,
-cross_checking_estado_fenologico.Nombre AS EstadoFenNombre,
 sistema_variedades_categorias.Nombre AS VariedadCat,
 variedades_listado.Nombre AS VariedadNombre,
-core_cross_prioridad.Nombre AS NombrePrioridad,
+cross_predios_listado_zonas.Nombre AS CuartelNombre,
+cross_predios_listado_zonas.AnoPlantacion AS CuartelAnoPlantacion,
+cross_predios_listado_zonas.Hectareas AS CuartelHectareas,
+cross_predios_listado_zonas.Hileras AS CuartelHileras,
+cross_predios_listado_zonas.Plantas AS CuartelPlantas,
+cross_predios_listado_zonas.DistanciaPlant AS CuartelDistanciaPlant,
+cross_predios_listado_zonas.DistanciaHileras AS CuartelDistanciaHileras,
+core_cross_estados_productivos.Nombre AS CuartelEstadoProd,
+cross_checking_estado_fenologico.Codigo AS EstadoFenCodigo,
+cross_checking_estado_fenologico.Nombre AS EstadoFenNombre,
+cross_solicitud_aplicacion_listado_cuarteles.f_cierre AS Cuartelf_cierre,
+cross_solicitud_aplicacion_listado_cuarteles.Mojamiento AS CuartelMojamiento,
+cross_solicitud_aplicacion_listado_cuarteles.VelTractor AS CuartelVelTractor,
+cross_solicitud_aplicacion_listado_cuarteles.VelViento AS CuartelVelViento,
+cross_solicitud_aplicacion_listado_cuarteles.TempMin AS CuartelTempMin,
+cross_solicitud_aplicacion_listado_cuarteles.TempMax AS CuartelTempMax,
+vehiculos_listado.Marca AS Vehiculo_Marca,
+telemetria_listado.Nombre AS Telem_Identificador,
+telemetria_listado.Capacidad AS Telem_Capacidad,
+cross_solicitud_aplicacion_listado_tractores.Diferencia AS Telem_Diferencia,
+cross_solicitud_aplicacion_listado_tractores.GeoVelocidadMin AS Telem_GeoVelocidadMin,
+cross_solicitud_aplicacion_listado_tractores.GeoVelocidadMax AS Telem_GeoVelocidadMax,
+cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm AS Telem_GeoVelocidadProm,
+cross_solicitud_aplicacion_listado_tractores.GeoDistance AS Telem_GeoDistance,
+cross_solicitud_aplicacion_listado_tractores.Sensor_1_Prom AS Telem_Sensor_1_Prom,
+cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom AS Telem_Sensor_2_Prom,
+cross_solicitud_aplicacion_listado_tractores.Sensor_1_Min AS Telem_Sensor_1_Min,
+cross_solicitud_aplicacion_listado_tractores.Sensor_2_Min AS Telem_Sensor_2_Min,
+cross_solicitud_aplicacion_listado_tractores.Sensor_1_Max AS Telem_Sensor_1_Max,
+cross_solicitud_aplicacion_listado_tractores.Sensor_2_Max AS Telem_Sensor_2_Max,
+cross_solicitud_aplicacion_listado_tractores.Sensor_1_Sum AS Telem_Sensor_1_Sum,
+cross_solicitud_aplicacion_listado_tractores.Sensor_2_Sum AS Telem_Sensor_2_Sum,
 dosificador.Rut AS DosificadorRut,
 dosificador.Nombre AS DosificadorNombre,
-dosificador.ApellidoPat AS DosificadorApellidoPat
+dosificador.ApellidoPat AS DosificadorApellidoPat,
+conductor.Rut AS ConductorRut,
+conductor.Nombre AS ConductorNombre,
+conductor.ApellidoPat AS ConductorApellidoPat,
+usuarios_listado.Nombre AS NombreUsuario,
+cross_checking_temporada.Codigo AS TemporadaCodigo,
+cross_checking_temporada.Nombre AS TemporadaNombre,
+core_cross_prioridad.Nombre AS NombrePrioridad,
+
+sistema_productos_categorias.Nombre AS ProductoCategoria,
+productos_listado.IngredienteActivo AS ProductoIngrediente,
+productos_listado.Nombre AS ProductoNombre,
+productos_listado.EfectoResidual AS ProductoEfectoResidual,
+productos_listado.EfectoRetroactivo AS ProductoEfectoRetroactivo,
+productos_listado.CarenciaExportador AS ProductoCarenciaExportador,
+sistema_productos_uml.Nombre AS ProductoUniMed,
+cross_solicitud_aplicacion_listado_productos.DosisRecomendada AS ProductoDosisRecomendada,
+cross_solicitud_aplicacion_listado_productos.DosisAplicar AS ProductoDosisAplicar,
+cross_solicitud_aplicacion_listado_productos.Objetivo AS ProductoObjetivo
+
 
 
 FROM `cross_solicitud_aplicacion_listado`
 
-LEFT JOIN `cross_predios_listado`                  ON cross_predios_listado.idPredio                = cross_solicitud_aplicacion_listado.idPredio
-LEFT JOIN `usuarios_listado`                       ON usuarios_listado.idUsuario                    = cross_solicitud_aplicacion_listado.idUsuario
-LEFT JOIN `core_estado_solicitud`                  ON core_estado_solicitud.idEstado                = cross_solicitud_aplicacion_listado.idEstado
-LEFT JOIN `cross_checking_temporada`               ON cross_checking_temporada.idTemporada          = cross_solicitud_aplicacion_listado.idTemporada
-LEFT JOIN `cross_checking_estado_fenologico`       ON cross_checking_estado_fenologico.idEstadoFen  = cross_solicitud_aplicacion_listado.idEstadoFen
-LEFT JOIN `sistema_variedades_categorias`          ON sistema_variedades_categorias.idCategoria     = cross_solicitud_aplicacion_listado.idCategoria
-LEFT JOIN `variedades_listado`                     ON variedades_listado.idProducto                 = cross_solicitud_aplicacion_listado.idProducto
-LEFT JOIN `core_cross_prioridad`                   ON core_cross_prioridad.idPrioridad              = cross_solicitud_aplicacion_listado.idPrioridad
-LEFT JOIN `trabajadores_listado`     dosificador   ON dosificador.idTrabajador                      = cross_solicitud_aplicacion_listado.idDosificador
+LEFT JOIN `cross_predios_listado`                          ON cross_predios_listado.idPredio                             = cross_solicitud_aplicacion_listado.idPredio
+LEFT JOIN `usuarios_listado`                               ON usuarios_listado.idUsuario                                 = cross_solicitud_aplicacion_listado.idUsuario
+LEFT JOIN `core_estado_solicitud`                          ON core_estado_solicitud.idEstado                             = cross_solicitud_aplicacion_listado.idEstado
+LEFT JOIN `cross_checking_temporada`                       ON cross_checking_temporada.idTemporada                       = cross_solicitud_aplicacion_listado.idTemporada
+LEFT JOIN `cross_checking_estado_fenologico`               ON cross_checking_estado_fenologico.idEstadoFen               = cross_solicitud_aplicacion_listado.idEstadoFen
+LEFT JOIN `sistema_variedades_categorias`                  ON sistema_variedades_categorias.idCategoria                  = cross_solicitud_aplicacion_listado.idCategoria
+LEFT JOIN `variedades_listado`                             ON variedades_listado.idProducto                              = cross_solicitud_aplicacion_listado.idProducto
+LEFT JOIN `core_cross_prioridad`                           ON core_cross_prioridad.idPrioridad                           = cross_solicitud_aplicacion_listado.idPrioridad
+LEFT JOIN `trabajadores_listado`     dosificador           ON dosificador.idTrabajador                                   = cross_solicitud_aplicacion_listado.idDosificador
+LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
+LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
+LEFT JOIN `core_cross_estados_productivos`                 ON core_cross_estados_productivos.idEstadoProd                = cross_predios_listado_zonas.idEstadoProd
+LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
+LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
+LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
+LEFT JOIN `trabajadores_listado`       conductor           ON conductor.idTrabajador                                     = cross_solicitud_aplicacion_listado_tractores.idTrabajador
+LEFT JOIN `cross_solicitud_aplicacion_listado_productos`   ON cross_solicitud_aplicacion_listado_productos.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
+LEFT JOIN `productos_listado`                              ON productos_listado.idProducto                               = cross_solicitud_aplicacion_listado_productos.idProducto
+LEFT JOIN `sistema_productos_categorias`                   ON sistema_productos_categorias.idCategoria                   = productos_listado.idCategoria
+LEFT JOIN `sistema_productos_uml`                          ON sistema_productos_uml.idUml                                = cross_solicitud_aplicacion_listado_productos.idUml
 
 ".$z."
 LIMIT $comienzo, $cant_reg ";
@@ -192,15 +232,18 @@ array_push( $arrOTS,$row );
 }
 ?>
 
-
-<div class="col-sm-12">
-	<a target="new" href="<?php echo 'informe_cross_checking_03_to_excel.php?bla=bla'.$search.'&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-2 fright margin_width"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
+<div class="col-sm-12 clearfix">
+	<?php
+	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+	?>			
+	<a target="new" href="<?php echo 'informe_cross_checking_03_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Solicitudes de Aplicacion</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Solicitudes de Aplicacion</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -213,56 +256,127 @@ array_push( $arrOTS,$row );
 					<tr role="row">
 						
 						<th>Predio</th>
-						<th>Usuario creador</th>
-						<th>Estado</th>
-						<th>Temporada</th>
-						<th>Estado Fenologico</th>
-						<th>Especie/Variedad</th>
-						<th>Prioridad</th>
-						<th>Dosificador</th>
-						<th>N° Solicitud</th>
+						<th>Nro. Solicitud</th>
 						<th>Fecha creación</th>
 						<th>Solicitud Fecha Inicio</th>
-						<th>Solicitud Hora Inicio</th>
 						<th>Solicitud Fecha Termino</th>
-						<th>Solicitud Hora Termino</th>
 						<th>Programacion Fecha Inicio</th>
-						<th>Programacion Hora Inicio</th>
 						<th>Programacion Fecha Termino</th>
-						<th>Programacion Hora Termino</th>
 						<th>Termino Fecha Inicio</th>
-						<th>Termino Hora Inicio</th>
 						<th>Termino Fecha Termino</th>
-						<th>Termino Hora Termino</th>
+						<th>Solicitado Por</th>
+						<th>Especie</th>
+						<th>Variedad</th>
+						<th>Cuartel</th>
+						<th>Nro. Plantas</th>
+						<th>Hectareas</th>
+						<th>Año Plantacion</th>
+						<th>Estado Fenologico</th>
+						<th>Estado Productivo</th>
+						<th>Estado</th>
+						<th>Dosificador</th>
+						<th>Aplicador</th>
+						<th>Equipo</th>
+						<th>Capacidad Estanque</th>
+						<th>Veloc. Promedio</th>
+						<th>lts. Aplicados</th>
+						<th>lts. por hectarias</th>
+						<th>Plantas aplicada</th>
+						<th>Caudal Izquierdo</th>
+						<th>Caudal Derecho</th>
+						<th>Estado Aplicación</th>
+						<th>Ingrediente Activo</th>
+						<th>Nombre Producto</th>
+						<th>Categoria Producto Quimico</th>
+						<th>Dosis Recomendada</th>
+						<th>Dosis Solicitada</th>
+						<th>Objetivo Producto</th>
+						<th>Fin Carencia</th>
+						<th>Fin efecto Residual</th>
+						<th>Objetivo</th>
 						
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrOTS as $ot) { ?>
+					<?php foreach ($arrOTS as $ot) { 
+						//Litros aplicados
+						$sdata1 = $ot['Telem_Diferencia'];
+						//litros por hectareas
+						if(isset($ot['CuartelHectareas'])&&$ot['CuartelHectareas']!=0){
+							$sdata2 = ($ot['Telem_Diferencia']/$ot['CuartelHectareas']);
+						}else{
+							$sdata2 = 0;
+						}
+						//se verifica plantas faltantes
+						if(isset($temp['Telem_GeoDistance'])&&$temp['Telem_GeoDistance']!=0){
+							$sdata3 = ((($temp['Telem_GeoDistance']*1000))/$temp['CuartelDistanciaPlant']);
+							if($sdata3<0){
+								$sdata3 = 0;
+							}
+						}else{
+							$sdata3 = 0;
+						}
+						//Maquinadas
+						if(isset($ot['Telem_Capacidad'])&&$ot['Telem_Capacidad']!=0){
+							$sdata4 = $ot['Telem_Diferencia']/$ot['Telem_Capacidad'];
+						}else{
+							$sdata4 = 'Capacidad con valor 0';
+						}
+						//Especie
+						if(isset($ot['VariedadCat'])&&$ot['VariedadCat']!=''){
+							$VariedadCat = $ot['VariedadCat'];
+						}else{
+							$VariedadCat = 'Todas las especies';
+						}
+						//Variedad
+						if(isset($ot['VariedadNombre'])&&$ot['VariedadNombre']!=''){
+							$VariedadNombre = $ot['VariedadNombre'];
+						}else{
+							$VariedadNombre = 'Todas las variedades';
+						}
+						?>
+						
 						<tr class="odd">		
 							
 							<td><?php echo $ot['NombrePredio']; ?></td>
+							<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>
+							<td><?php echo fecha_estandar($ot['f_creacion']); ?></td>
+							<td><?php echo fecha_estandar($ot['f_programacion']).' '.$ot['horaProg']; ?></td>
+							<td><?php echo fecha_estandar($ot['f_programacion_fin']).' '.$ot['horaProg_fin']; ?></td>
+							<td><?php echo fecha_estandar($ot['f_ejecucion']).' '.$ot['horaEjecucion']; ?></td>
+							<td><?php echo fecha_estandar($ot['f_ejecucion_fin']).' '.$ot['horaEjecucion_fin']; ?></td>
+							<td><?php echo fecha_estandar($ot['f_termino']).' '.$ot['horaTermino']; ?></td>
+							<td><?php echo fecha_estandar($ot['f_termino_fin']).' '.$ot['horaTermino_fin']; ?></td>
 							<td><?php echo $ot['NombreUsuario']; ?></td>
+							<td><?php echo $VariedadCat; ?></td>
+							<td><?php echo $VariedadNombre; ?></td>
+							<td><?php echo $ot['CuartelNombre']; ?></td>
+							<td><?php echo $ot['CuartelPlantas']; ?></td>
+							<td><?php echo $ot['CuartelHectareas']; ?></td>
+							<td><?php echo $ot['CuartelAnoPlantacion']; ?></td>
+							<td><?php echo $ot['EstadoFenNombre']; ?></td>
+							<td><?php echo $ot['CuartelEstadoProd']; ?></td>
 							<td><?php echo $ot['Estado']; ?></td>
-							<td><?php echo $ot['TemporadaCodigo'].' '.$ot['TemporadaNombre']; ?></td>
-							<td><?php echo $ot['EstadoFenCodigo'].' '.$ot['EstadoFenNombre']; ?></td>
-							<td><?php echo $ot['VariedadCat'].'/'.$ot['VariedadNombre']; ?></td>
-							<td><?php echo $ot['NombrePrioridad']; ?></td>
 							<td><?php echo $ot['DosificadorRut'].' - '.$ot['DosificadorNombre'].' '.$ot['DosificadorApellidoPat']; ?></td>
-							<td><?php echo n_doc($ot['idSolicitud'], 5); ?></td>
-							<td><?php echo Fecha_estandar($ot['f_creacion']); ?></td>
-							<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>
-							<td><?php echo $ot['horaProg']; ?></td>
-							<td><?php echo Fecha_estandar($ot['f_programacion_fin']); ?></td>
-							<td><?php echo $ot['horaProg_fin']; ?></td>
-							<td><?php echo Fecha_estandar($ot['f_ejecucion']); ?></td>
-							<td><?php echo $ot['horaEjecucion']; ?></td>
-							<td><?php echo Fecha_estandar($ot['f_ejecucion_fin']); ?></td>
-							<td><?php echo $ot['horaEjecucion_fin']; ?></td>
-							<td><?php echo Fecha_estandar($ot['f_termino']); ?></td>
-							<td><?php echo $ot['horaTermino']; ?></td>
-							<td><?php echo Fecha_estandar($ot['f_termino_fin']); ?></td>
-							<td><?php echo $ot['horaTermino_fin']; ?></td>
+							<td><?php echo $ot['ConductorRut'].' - '.$ot['ConductorNombre'].' '.$ot['ConductorApellidoPat']; ?></td>
+							<td><?php echo $ot['Telem_Identificador']; ?></td>
+							<td><?php echo $ot['Telem_Capacidad']; ?></td>
+							<td><?php echo $ot['Telem_GeoVelocidadProm']; ?></td>
+							<td><?php echo $sdata1; ?></td>
+							<td><?php echo $sdata2; ?></td>
+							<td><?php echo $sdata3; ?></td>
+							<td><?php echo $ot['Telem_Sensor_1_Prom']; ?></td>
+							<td><?php echo $ot['Telem_Sensor_2_Prom']; ?></td>
+							<td><?php echo $ot['Estado']; ?></td>
+							<td><?php echo $ot['ProductoIngrediente']; ?></td>
+							<td><?php echo $ot['ProductoNombre']; ?></td>
+							<td><?php echo $ot['ProductoCategoria']; ?></td>
+							<td><?php echo $ot['ProductoDosisRecomendada']; ?></td>
+							<td><?php echo $ot['ProductoDosisAplicar']; ?></td>
+							<td><?php echo $ot['ProductoObjetivo']; ?></td>
+							<td><?php echo $ot['ProductoCarenciaExportador']; ?></td>
+							<td><?php echo $ot['ProductoEfectoResidual']; ?></td>
+							<td><?php echo $ot['ProductoObjetivo']; ?></td>
 							
 						</tr>
 					<?php } ?>                    
@@ -279,21 +393,27 @@ array_push( $arrOTS,$row );
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 $y = "idEstado=1";
-$x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -301,7 +421,7 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idSolicitud)) {            $x1  = $idSolicitud;            }else{$x1  = '';}
+				if(isset($NSolicitud)) {             $x1  = $NSolicitud;             }else{$x1  = '';}
 				if(isset($idPredio)) {               $x2  = $idPredio;               }else{$x2  = '';}
 				if(isset($idZona)) {                 $x3  = $idZona;                 }else{$x3  = '';}
 				if(isset($idTemporada)) {            $x4  = $idTemporada;            }else{$x4  = '';}
@@ -318,26 +438,113 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idEstado)) {               $x15 = $idEstado;               }else{$x15 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_number('N° Solicitud','idSolicitud', $x1, 1);
-				$Form_Imputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Temporada','idTemporada', $x4, 1, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
+				$Form_Inputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
 										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select_filter('Temporada','idTemporada', $x4, 1, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
-				$Form_Imputs->form_select_filter('Estado Fenológico','idEstadoFen', $x5, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
-										 $dbConn, 'form1');
-				$Form_Imputs->form_date('Fecha Programada Desde','f_programacion_desde', $x8, 1);
-				$Form_Imputs->form_date('Fecha Programada Hasta','f_programacion_hasta', $x9, 1);
-				$Form_Imputs->form_date('Fecha Ejecutada Desde','f_ejecucion_desde', $x10, 1);
-				$Form_Imputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x11, 1);
-				$Form_Imputs->form_date('Fecha Terminada Desde','f_termino_desde', $x12, 1);
-				$Form_Imputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x13, 1);
-				$Form_Imputs->form_select_join_filter('Usuario Creador','idUsuario', $x14, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x15, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
-						
+										 $dbConn, 'form1');						 
+				$Form_Inputs->form_select_filter('N° Solicitud','NSolicitud', $x1, 1, 'NSolicitud', 'NSolicitud', 'cross_solicitud_aplicacion_listado', $w, '', $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x15, 2, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Programada Desde','f_programacion_desde', $x8, 1);
+				$Form_Inputs->form_date('Fecha Programada Hasta','f_programacion_hasta', $x9, 1);
+				$Form_Inputs->form_date('Fecha Ejecutada Desde','f_ejecucion_desde', $x10, 1);
+				$Form_Inputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x11, 1);
+				$Form_Inputs->form_date('Fecha Terminada Desde','f_termino_desde', $x12, 1);
+				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x13, 1);
+				
+				/*
+				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x14, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x15, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Solicitud','NSolicitud', $x1, 1);
+				$Form_Inputs->form_select_filter('Estado Fenológico','idEstadoFen', $x5, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
+					*/	
 				?> 
+				
+				<script>
+					//oculto los div
+					document.getElementById('div_f_programacion_desde').style.display = 'none';
+					document.getElementById('div_f_programacion_hasta').style.display = 'none';
+					document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+					document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+					document.getElementById('div_f_termino_desde').style.display = 'none';
+					document.getElementById('div_f_termino_hasta').style.display = 'none';
+						
+					var idEstado;
+						
+					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
+						idEstado = $(this).val(); //Asignamos el valor seleccionado
+						
+						//Solicitado
+						if(idEstado == 1){ 
+							document.getElementById('div_f_programacion_desde').style.display = 'block';
+							document.getElementById('div_f_programacion_hasta').style.display = 'block';
+							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+							document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+							document.getElementById('div_f_termino_desde').style.display = 'none';
+							document.getElementById('div_f_termino_hasta').style.display = 'none';
+							//Reseteo los valores a 0
+							//document.getElementById('f_programacion_desde').value = "";
+							//document.getElementById('f_programacion_hasta').value = "";
+							document.getElementById('f_ejecucion_desde').value = "";
+							document.getElementById('f_ejecucion_hasta').value = "";
+							document.getElementById('f_termino_desde').value = "";
+							document.getElementById('f_termino_hasta').value = "";				
+						
+						//Programado
+						}else if(idEstado == 2){ 
+							document.getElementById('div_f_programacion_desde').style.display = 'none';
+							document.getElementById('div_f_programacion_hasta').style.display = 'none';
+							document.getElementById('div_f_ejecucion_desde').style.display = 'block';
+							document.getElementById('div_f_ejecucion_hasta').style.display = 'block';
+							document.getElementById('div_f_termino_desde').style.display = 'none';
+							document.getElementById('div_f_termino_hasta').style.display = 'none';
+							//Reseteo los valores a 0
+							document.getElementById('f_programacion_desde').value = "";
+							document.getElementById('f_programacion_hasta').value = "";
+							//document.getElementById('f_ejecucion_desde').value = "";
+							//document.getElementById('f_ejecucion_hasta').value = "";
+							document.getElementById('f_termino_desde').value = "";
+							document.getElementById('f_termino_hasta').value = "";	
+						
+						//Ejecutado
+						}else if(idEstado == 3){ 
+							document.getElementById('div_f_programacion_desde').style.display = 'none';
+							document.getElementById('div_f_programacion_hasta').style.display = 'none';
+							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+							document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+							document.getElementById('div_f_termino_desde').style.display = 'block';
+							document.getElementById('div_f_termino_hasta').style.display = 'block';
+							//Reseteo los valores a 0
+							document.getElementById('f_programacion_desde').value = "";
+							document.getElementById('f_programacion_hasta').value = "";
+							document.getElementById('f_ejecucion_desde').value = "";
+							document.getElementById('f_ejecucion_hasta').value = "";
+							//document.getElementById('f_termino_desde').value = "";
+							//document.getElementById('f_termino_hasta').value = "";		
+						
+						//el resto
+						}else{ 
+							document.getElementById('div_f_programacion_desde').style.display = 'none';
+							document.getElementById('div_f_programacion_hasta').style.display = 'none';
+							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+							document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+							document.getElementById('div_f_termino_desde').style.display = 'none';
+							document.getElementById('div_f_termino_hasta').style.display = 'none';
+							//Reseteo los valores a 0
+							document.getElementById('f_programacion_desde').value = "";
+							document.getElementById('f_programacion_hasta').value = "";
+							document.getElementById('f_ejecucion_desde').value = "";
+							document.getElementById('f_ejecucion_hasta').value = "";
+							document.getElementById('f_termino_desde').value = "";
+							document.getElementById('f_termino_hasta').value = "";				
+								
+						}
+					});
+					
+				</script>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 

@@ -11,39 +11,95 @@ if( ! defined('XMBCXRXSKGC')) {
 
 //verifica la capa de desarrollo
 $whitelist = array( 'localhost', '127.0.0.1', '::1' );
+////////////////////////////////////////////////////////////////////////////////
 //si estoy en ambiente de desarrollo
 if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 	
+	/*******************************************/
+	//Servidor
 	define( 'DB_SERVER', 'localhost' );
-	define( 'DB_SITE', 'http://localhost/power_engine' );
 	define( 'DB_NAME', 'power_engine_main');
-	//define( 'DB_NAME', 'simyl_pe_casacentral');
-	//define( 'DB_NAME', 'exilon36_gruasyequipos');
-	//define( 'DB_NAME', 'exilon36_pe_mamut');
-	//define( 'DB_NAME', 'exilon36_pe_agropraxis');
 	define( 'DB_USER', 'root');
 	define( 'DB_PASS', '');
-	define( 'DB_SOFT_NAME', 'Plataforma de Pruebas');
-	define( 'DB_SOFT_SLOGAN', 'Software de gestion');
-	define( 'DB_EMPRESA_NAME', 'TEST');
-	define( 'DB_EMPRESA_PATH', '/sistema_intranet_main');
-	define( 'DB_ERROR_MAIL', 'vreyes@exilon360.cl');
-	define( 'DB_COMPARE', 'simyl_power_engine_main');
 	
+	/*******************************************/
+	//Repositorio
+	define( 'DB_SITE_REPO', 'http://localhost/power_engine' );                                 //repositorio
+	//Sitio
+	define( 'DB_SITE_MAIN', 'http://localhost/power_engine/sistema_intranet_main' );           //URL del sistema
+	define( 'DB_SITE_MAIN_PATH', '/sistema_intranet_main');                                    //Path de la carpeta contenedora
+	//sitios externos
+	define( 'DB_SITE_ALT_1', 'http://localhost/power_engine/sistema_web_clientes_crosstech' ); //URL 1 para uso interno
+	define( 'DB_SITE_ALT_1_PATH', '/sistema_web_clientes_crosstech');                          //Path de la carpeta contenedora
+	define( 'DB_SITE_ALT_2', '' );                                                             //URL 2 para uso interno
+	define( 'DB_SITE_ALT_2_PATH', '');                                                         //Path de la carpeta contenedora
+	define( 'DB_SITE_ALT_3', '' );                                                             //URL 3 para uso interno
+	define( 'DB_SITE_ALT_3_PATH', '');                                                         //Path de la carpeta contenedora
+	
+	/*******************************************/
+	//Software
+	define( 'DB_SOFT_NAME', 'Intranet');
+	define( 'DB_SOFT_SLOGAN', 'Software de gestion');
+	
+	/*******************************************/
+	//Empresa
+	define( 'DB_EMPRESA_NAME', 'Crosstech');
+	define( 'DB_EMPRESA_MAIL', 'notificaciones@crosstech.cl');
+	
+	/*******************************************/
+	//Debug
+	define( 'DB_ERROR_MAIL', 'vreyes@crosstech.cl');
+	define( 'DB_COMPARE', 'crosstech_power_engine_main');
+	
+	/*******************************************/
+	//Notificaciones
+	define( 'DB_GMAIL_USER', '');
+	define( 'DB_GMAIL_PASSWORD', '');
+	
+////////////////////////////////////////////////////////////////////////////////
 //si estoy en ambiente de produccion	
 }else{
 	
+	/*******************************************/
+	//Servidor
 	define( 'DB_SERVER', 'localhost' );
-	define( 'DB_SITE', 'http://repositorio.exilon360.com' );
-	define( 'DB_NAME', 'hbarzela_main');
-	define( 'DB_USER', 'hbarzela_madlan');
-	define( 'DB_PASS', 'Inicio1*');
-	define( 'DB_SOFT_NAME', 'Plataforma de Pruebas');
+	define( 'DB_NAME', 'crosstech_pe_intranet');
+	define( 'DB_USER', 'crosstech_admin');
+	define( 'DB_PASS', '&-VSda,#rFvT');
+	
+	/*******************************************/
+	//Repositorio
+	define( 'DB_SITE_REPO', 'https://repositorio.crosstech.cl' );       //repositorio
+	//Sitio
+	define( 'DB_SITE_MAIN', 'https://intranet.crosstech.cl' );          //URL del sistema
+	define( 'DB_SITE_MAIN_PATH', '/sistema_intranet_intranet');         //Path de la carpeta contenedora
+	//sitios externos
+	define( 'DB_SITE_ALT_1', 'https://plataforma.crosstech.cl' );       //URL 1 para uso interno
+	define( 'DB_SITE_ALT_1_PATH', '/sistema_web_clientes_crosstech');   //Path de la carpeta contenedora
+	define( 'DB_SITE_ALT_2', '' );                                      //URL 2 para uso interno
+	define( 'DB_SITE_ALT_2_PATH', '');                                  //Path de la carpeta contenedora
+	define( 'DB_SITE_ALT_3', '' );                                      //URL 3 para uso interno
+	define( 'DB_SITE_ALT_3_PATH', '');                                  //Path de la carpeta contenedora
+	
+	/*******************************************/
+	//Software
+	define( 'DB_SOFT_NAME', 'Intranet');
 	define( 'DB_SOFT_SLOGAN', 'Software de gestion');
-	define( 'DB_EMPRESA_NAME', 'Exilon360');
-	define( 'DB_EMPRESA_PATH', '/sistema_intranet_main');
-	define( 'DB_ERROR_MAIL', 'vreyes@exilon360.cl');
-	define( 'DB_COMPARE', 'hbarzela_power_engine_main');
+	
+	/*******************************************/
+	//Empresa
+	define( 'DB_EMPRESA_NAME', 'Crosstech');
+	define( 'DB_EMPRESA_MAIL', 'notificaciones@crosstech.cl');
+	
+	/*******************************************/
+	//Debug
+	define( 'DB_ERROR_MAIL', 'vreyes@crosstech.cl');
+	define( 'DB_COMPARE', 'crosstech_power_engine_main');
+	
+	/*******************************************/
+	//Notificaciones
+	define( 'DB_GMAIL_USER', '');
+	define( 'DB_GMAIL_PASSWORD', '');
 	
 }							
 ?>

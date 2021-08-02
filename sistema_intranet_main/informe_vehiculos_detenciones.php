@@ -45,16 +45,16 @@ $search  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search .='&submit_filter=Filtrar';
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND vehiculos_listado_error_detenciones.Fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+	$z.=" AND vehiculos_listado_error_detenciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$search .='&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
-	$z.=" AND vehiculos_listado_error_detenciones.idVehiculo='{$_GET['idVehiculo']}'";
+	$z.=" AND vehiculos_listado_error_detenciones.idVehiculo='".$_GET['idVehiculo']."'";
 	$search .='&idVehiculo='.$_GET['idVehiculo'];
 }
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND vehiculos_listado_error_detenciones.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND vehiculos_listado_error_detenciones.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Realizo una consulta para saber el total de elementos existentes
 $query = "SELECT vehiculos_listado_error_detenciones.idDetencion FROM `vehiculos_listado_error_detenciones`  LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_error_detenciones.idVehiculo ".$z;
 //Consulta
@@ -106,16 +106,19 @@ array_push( $arrErrores,$row );
 }
 
  ?>	
-
-<div class="col-sm-12">
-	<a target="new" href="<?php echo 'informe_vehiculos_detenciones_to_excel.php'.$search.'&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-2 fright margin_width"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-	<a target="new" href="<?php echo 'informe_vehiculos_detenciones_to_pdf.php'.$search.'&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-3 fright margin_width"><i class="fa fa-file-pdf-o"></i> Exportar a PDF</a>
+<div class="col-sm-12 clearfix">
+	<?php
+	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	?>			
+	<a target="new" href="<?php echo 'informe_vehiculos_detenciones_to_excel.php'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+	<a target="new" href="<?php echo 'informe_vehiculos_detenciones_to_pdf.php'.$search ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 </div>
 
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Fuera de Linea</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Fuera de Linea</h5>	
 			<div class="toolbar">
 				<?php 
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
@@ -141,7 +144,7 @@ array_push( $arrErrores,$row );
 							<td><?php echo $error['Tiempo'].' hrs'; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_vehiculos_detenciones.php?view='.$error['idDetencion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_vehiculos_detenciones.php?view='.simpleEncode($error['idDetencion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -162,20 +165,20 @@ array_push( $arrErrores,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  ?>			
 	<div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Filtro de busqueda</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -188,10 +191,10 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 				if(isset($idVehiculo)) {    $x3  = $idVehiculo;   }else{$x3  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x2, 2);
-				$Form_Imputs->form_select_filter('Vehiculo','idVehiculo', $x3, 1, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
+				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x3, 1, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
 				
 				?>        
 	   

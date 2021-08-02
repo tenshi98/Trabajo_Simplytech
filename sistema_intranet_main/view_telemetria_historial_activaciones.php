@@ -21,6 +21,20 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+$X_cantSensores = simpleDecode($_GET['cantSensores'], fecha_actual());
+/**************************************************************/
 //Se traen todos los grupos
 $arrGruposRev = array();
 $query = "SELECT idGrupo, Valor, idSupervisado
@@ -36,15 +50,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrGruposRev,$row );
@@ -52,27 +59,24 @@ array_push( $arrGruposRev,$row );
 
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_listado_tablarelacionada_".$_GET['view'].".idTabla!=0";
+$z = "WHERE telemetria_listado_tablarelacionada_".$X_Puntero.".idTabla!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['dia']) && $_GET['dia'] != ''){    $z.=" AND telemetria_listado_tablarelacionada_".$_GET['view'].".FechaSistema ='".$_GET['dia']."'";}
+if(isset($_GET['dia']) && $_GET['dia'] != ''){    $z.=" AND telemetria_listado_tablarelacionada_".$X_Puntero.".FechaSistema ='".simpleDecode($_GET['dia'], fecha_actual())."'";}
 
 //Se arma la queri con los datos justos recibidos
 $subquery = '';
-for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
+for ($i = 1; $i <= $X_cantSensores; $i++) {
 	$subquery .= ',telemetria_listado.SensoresActivo_'.$i;
 	$subquery .= ',telemetria_listado.SensoresRevision_'.$i;
 	$subquery .= ',telemetria_listado.SensoresRevisionGrupo_'.$i;
 	$subquery .= ',telemetria_listado.SensoresNombre_'.$i;
-	$subquery .= ',telemetria_listado_tablarelacionada_'.$_GET['view'].'.Sensor_'.$i;
+	$subquery .= ',telemetria_listado_tablarelacionada_'.$X_Puntero.'.Sensor_'.$i;
 	
 	/*
 	$subquery .= ',telemetria_listado.SensoresGrupo_'.$i;
 	$subquery .= ',telemetria_listado.SensoresMedMin_'.$i;
 	$subquery .= ',telemetria_listado.SensoresMedMax_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMedErrores_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMedErrores_2_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMedErrores_3_'.$i;
 	$subquery .= ',telemetria_listado.SensoresMedAlerta_'.$i;
 	$subquery .= ',telemetria_listado.SensoresErrorActual_'.$i;
 	$subquery .= ',telemetria_listado.SensoresMedActual_'.$i;
@@ -88,15 +92,15 @@ for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
 $arrConsulta = array(); 
 $query = "SELECT 
 telemetria_listado.Nombre AS EquipoNombre,
-telemetria_listado_tablarelacionada_".$_GET['view'].".FechaSistema AS EquipoFecha,
-telemetria_listado_tablarelacionada_".$_GET['view'].".HoraSistema AS EquipoHora
+telemetria_listado_tablarelacionada_".$X_Puntero.".FechaSistema AS EquipoFecha,
+telemetria_listado_tablarelacionada_".$X_Puntero.".HoraSistema AS EquipoHora
 	
 ".$subquery."
 
-FROM `telemetria_listado_tablarelacionada_".$_GET['view']."`
-LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria  = telemetria_listado_tablarelacionada_".$_GET['view'].".idTelemetria
+FROM `telemetria_listado_tablarelacionada_".$X_Puntero."`
+LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria  = telemetria_listado_tablarelacionada_".$X_Puntero.".idTelemetria
 ".$z." 
-ORDER BY telemetria_listado_tablarelacionada_".$_GET['view'].".FechaSistema ASC, telemetria_listado_tablarelacionada_".$_GET['view'].".HoraSistema ASC";
+ORDER BY telemetria_listado_tablarelacionada_".$X_Puntero.".FechaSistema ASC, telemetria_listado_tablarelacionada_".$X_Puntero.".HoraSistema ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 
@@ -110,15 +114,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 /*while ( $row = mysqli_fetch_assoc ($resultado) ) {
 array_push( $arrConsulta,$row );
@@ -144,7 +141,7 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 		//Solo busco en los sensores que supervisan
 		if(isset($sen['idSupervisado'])&&$sen['idSupervisado']==1){
 			//recorro los sensores
-			for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
+			for ($i = 1; $i <= $X_cantSensores; $i++) {
 				//verifico que esten activos
 				if(isset($con['SensoresActivo_'.$i])&&$con['SensoresActivo_'.$i]==1){
 					//Reviso si el sensor esta siendo supervisado
@@ -153,7 +150,7 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 						if($con['SensoresRevisionGrupo_'.$i]==$sen['idGrupo']){
 							
 							//verifico que el valor sea igual o superior al establecido
-							if(isset($_GET['Amp'])&&$_GET['Amp']!=''&&$_GET['Amp']!=0){$valor_amp=$_GET['Amp'];}else{$valor_amp=$sen['Valor'];}
+							if(isset($_GET['Amp'])&&$_GET['Amp']!=''&&simpleDecode($_GET['Amp'], fecha_actual())!=0){$valor_amp=simpleDecode($_GET['Amp'], fecha_actual());}else{$valor_amp=$sen['Valor'];}
 							if($con['Sensor_'.$i]>=$valor_amp){
 								
 								//cuento los sensores dentro del grupo
@@ -203,7 +200,7 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Voltaje del equipo <?php echo $arrTable['termino']['EquipoNombre'].' el '.fecha_estandar($arrTable['termino']['EquipoFecha']); ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Amperaje del equipo <?php echo $arrTable['termino']['EquipoNombre'].' el '.fecha_estandar($arrTable['termino']['EquipoFecha']); ?></h5>
 		</header>
 		<div class="tab-content">
 			<div class="table-responsive">
@@ -222,7 +219,7 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 						<tr class="odd">
 							<td>
 								<?php
-								for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
+								for ($i = 1; $i <= $X_cantSensores; $i++) {
 									if(isset($arrTable['inicio'][$i]['SensorValor'])){
 										echo $arrTable['inicio'][$i]['SensorNombre'].': '.Cantidades_decimales_justos($arrTable['inicio'][$i]['SensorValor']).'<br/>';
 									}
@@ -231,7 +228,7 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 							</td>
 							<td>
 								<?php
-								for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
+								for ($i = 1; $i <= $X_cantSensores; $i++) {
 									if(isset($arrTable['termino'][$i]['SensorValor'])&&$arrTable['termino'][$i]['SensorValor']!=0){
 										echo $arrTable['termino'][$i]['SensorNombre'].': '.Cantidades_decimales_justos($arrTable['termino'][$i]['SensorValor']).'<br/>';
 									}
@@ -247,13 +244,31 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 	</div>
 </div>
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

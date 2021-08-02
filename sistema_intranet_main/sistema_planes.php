@@ -58,13 +58,14 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Plan Modificado cor
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Plan borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
-?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre, Valor, idTransporte
 FROM `sistema_planes`
-WHERE idPlan = {$_GET['id']}";
+WHERE idPlan = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -80,13 +81,13 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 //Verifico el tipo de usuario que esta ingresando
-$y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
  
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Plan</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -99,17 +100,17 @@ $y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idTransporte)) {  $x3  = $idTransporte;  }else{$x3  = $rowdata['idTransporte'];}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_values('Valor','Valor', $x2, 2);
-				$Form_Imputs->form_select('Transportista','idTransporte', $x3, 2, 'idTransporte', 'Nombre', 'transportes_listado', $y, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_values('Valor','Valor', $x2, 2);
+				$Form_Inputs->form_select('Transportista','idTransporte', $x3, 2, 'idTransporte', 'Nombre', 'transportes_listado', $y, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('idPlan', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idPlan', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -120,12 +121,16 @@ $y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //Verifico el tipo de usuario que esta ingresando
-$y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";?>
- <div class="col-sm-8 fcenter">
+$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Plan</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -138,15 +143,15 @@ $y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idTransporte)) {  $x3  = $idTransporte;  }else{$x3  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_values('Valor','Valor', $x2, 2);
-				$Form_Imputs->form_select('Transportista','idTransporte', $x3, 2, 'idTransporte', 'Nombre', 'transportes_listado', $y, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_values('Valor','Valor', $x2, 2);
+				$Form_Inputs->form_select('Transportista','idTransporte', $x3, 2, 'idTransporte', 'Nombre', 'transportes_listado', $y, '', $dbConn);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -197,7 +202,7 @@ $z = "WHERE sistema_planes.idPlan!=0";
 //Se aplican los filtros
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){               $z .= " AND sistema_planes.Nombre LIKE '%".$_GET['Nombre']."%'";}
 if(isset($_GET['Valor']) && $_GET['Valor'] != ''){                 $z .= " AND sistema_planes.Valor LIKE '%".$_GET['Valor']."%'";}
-if(isset($_GET['idTransporte']) && $_GET['idTransporte'] != ''){   $z .= " AND sistema_planes.Valor=".$_GET['idTransporte'];}
+if(isset($_GET['idTransporte']) && $_GET['idTransporte'] != ''){   $z .= " AND sistema_planes.idTransporte=".$_GET['idTransporte'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $query = "SELECT idPlan FROM `sistema_planes` ".$z;
@@ -247,12 +252,12 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrPlan,$row );
 }
 //Verifico el tipo de usuario que esta ingresando
-$y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";?>
+$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";?>
 
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -274,12 +279,12 @@ $y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idTransporte)) {  $x3  = $idTransporte;  }else{$x3  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 1);
-				$Form_Imputs->form_values('Valor','Valor', $x2, 1);
-				$Form_Imputs->form_select('Transportista','idTransporte', $x3, 1, 'idTransporte', 'Nombre', 'transportes_listado', $y, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
+				$Form_Inputs->form_values('Valor','Valor', $x2, 1);
+				$Form_Inputs->form_select('Transportista','idTransporte', $x3, 1, 'idTransporte', 'Nombre', 'transportes_listado', $y, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -298,7 +303,7 @@ $y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Planes</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Planes</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -312,22 +317,22 @@ $y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 						<th>
 							<div class="pull-left">Transportista</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=transporte_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=transporte_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=transporte_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=transporte_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Valor</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=valor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=valor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=valor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=valor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -338,14 +343,14 @@ $y = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 					<tr class="odd">
 						<td><?php echo $plan['Transportista']; ?></td>
 						<td><?php echo $plan['Nombre']; ?></td>
-						<td><?php echo valores($plan['Valor'], 0); ?></td>
+						<td align="right"><?php echo valores($plan['Valor'], 0); ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idPlan']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idPlan']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$plan['idPlan'];
+									$ubicacion = $location.'&del='.simpleEncode($plan['idPlan'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el plan '.$plan['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

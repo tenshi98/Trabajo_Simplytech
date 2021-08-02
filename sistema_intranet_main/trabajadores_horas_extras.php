@@ -65,19 +65,6 @@ if ( !empty($_GET['del_horas']) )     {
 	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_horas_extras.php';	
 }
 /**********************************************/
-//se borra un dato
-if ( !empty($_GET['add_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'add_obs_ing_nd';
-	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_horas_extras.php';	
-}
-//se borra un dato
-if ( !empty($_GET['del_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'del_obs_ing_nd';
-	require_once 'A1XRXS_sys/xrxs_form/z_trabajadores_horas_extras.php';	
-}
-/**********************************************/
 //formulario para crear
 if ( !empty($_POST['submit_file']) )  { 
 	//Llamamos al formulario
@@ -115,7 +102,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -123,14 +110,14 @@ if ( ! empty($_GET['addFile']) ) { ?>
 			
 				<?php           
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 					
 				?> 
 
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -143,13 +130,13 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['editHora']) ) {  
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	 
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	 
 ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Horas Extras</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -175,49 +162,49 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idTurnos)) {          $x15  = $idTurnos;          }elseif(isset($_SESSION['horas_extras_ing_horas'][$_GET['idTrabajador']][$_GET['nSem']]['idTurnos'])){                              $x15  = $_SESSION['horas_extras_ing_horas'][$_GET['idTrabajador']][$_GET['nSem']]['idTurnos'];                              }else{$x15  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x0, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x0, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				if(isset($_GET['fecha_dia_1'])&&$_GET['fecha_dia_1']){
-					$Form_Imputs->form_input_number('N° Horas Lunes '.fecha_estandar($_GET['fecha_dia_1']), 'horas_dia_1', $x1, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_1', $x8, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Lunes '.fecha_estandar($_GET['fecha_dia_1']), 'horas_dia_1', $x1, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_1', $x8, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_2'])&&$_GET['fecha_dia_2']){
-					$Form_Imputs->form_input_number('N° Horas Martes '.fecha_estandar($_GET['fecha_dia_2']), 'horas_dia_2', $x2, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_2', $x9, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Martes '.fecha_estandar($_GET['fecha_dia_2']), 'horas_dia_2', $x2, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_2', $x9, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_3'])&&$_GET['fecha_dia_3']){
-					$Form_Imputs->form_input_number('N° Horas Miercoles '.fecha_estandar($_GET['fecha_dia_3']), 'horas_dia_3', $x3, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_3', $x10, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Miercoles '.fecha_estandar($_GET['fecha_dia_3']), 'horas_dia_3', $x3, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_3', $x10, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_4'])&&$_GET['fecha_dia_4']){
-					$Form_Imputs->form_input_number('N° Horas Jueves '.fecha_estandar($_GET['fecha_dia_4']), 'horas_dia_4', $x4, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_4', $x11, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Jueves '.fecha_estandar($_GET['fecha_dia_4']), 'horas_dia_4', $x4, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_4', $x11, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_5'])&&$_GET['fecha_dia_5']){
-					$Form_Imputs->form_input_number('N° Horas Viernes '.fecha_estandar($_GET['fecha_dia_5']), 'horas_dia_5', $x5, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_5', $x12, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Viernes '.fecha_estandar($_GET['fecha_dia_5']), 'horas_dia_5', $x5, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_5', $x12, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_6'])&&$_GET['fecha_dia_6']){
-					$Form_Imputs->form_input_number('N° Horas Sabado '.fecha_estandar($_GET['fecha_dia_6']), 'horas_dia_6', $x6, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_6', $x13, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Sabado '.fecha_estandar($_GET['fecha_dia_6']), 'horas_dia_6', $x6, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_6', $x13, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_7'])&&$_GET['fecha_dia_7']){
-					$Form_Imputs->form_input_number('N° Horas Domingo '.fecha_estandar($_GET['fecha_dia_7']), 'horas_dia_7', $x7, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_7', $x14, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Domingo '.fecha_estandar($_GET['fecha_dia_7']), 'horas_dia_7', $x7, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_7', $x14, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				//Turno
-				$Form_Imputs->form_select('Turno','idTurnos', $x15, 2, 'idTurnos', 'Nombre', 'core_horas_extras_turnos', 0, '', $dbConn);
+				$Form_Inputs->form_select('Turno','idTurnos', $x15, 2, 'idTurnos', 'Nombre', 'core_horas_extras_turnos', 0, '', $dbConn);
 				
 				
 				//Envio otros datos
-				if(isset($_GET['nSem'])&&$_GET['nSem']){                 $Form_Imputs->form_input_hidden('nSem', $_GET['nSem'], 2);}
-				if(isset($_GET['fecha_dia_1'])&&$_GET['fecha_dia_1']){   $Form_Imputs->form_input_hidden('fecha_dia_1', $_GET['fecha_dia_1'], 2);}
-				if(isset($_GET['fecha_dia_2'])&&$_GET['fecha_dia_2']){   $Form_Imputs->form_input_hidden('fecha_dia_2', $_GET['fecha_dia_2'], 2);}
-				if(isset($_GET['fecha_dia_3'])&&$_GET['fecha_dia_3']){   $Form_Imputs->form_input_hidden('fecha_dia_3', $_GET['fecha_dia_3'], 2);}
-				if(isset($_GET['fecha_dia_4'])&&$_GET['fecha_dia_4']){   $Form_Imputs->form_input_hidden('fecha_dia_4', $_GET['fecha_dia_4'], 2);}
-				if(isset($_GET['fecha_dia_5'])&&$_GET['fecha_dia_5']){   $Form_Imputs->form_input_hidden('fecha_dia_5', $_GET['fecha_dia_5'], 2);}
-				if(isset($_GET['fecha_dia_6'])&&$_GET['fecha_dia_6']){   $Form_Imputs->form_input_hidden('fecha_dia_6', $_GET['fecha_dia_6'], 2);}
-				if(isset($_GET['fecha_dia_7'])&&$_GET['fecha_dia_7']){   $Form_Imputs->form_input_hidden('fecha_dia_7', $_GET['fecha_dia_7'], 2);}
+				if(isset($_GET['nSem'])&&$_GET['nSem']){                 $Form_Inputs->form_input_hidden('nSem', $_GET['nSem'], 2);}
+				if(isset($_GET['fecha_dia_1'])&&$_GET['fecha_dia_1']){   $Form_Inputs->form_input_hidden('fecha_dia_1', $_GET['fecha_dia_1'], 2);}
+				if(isset($_GET['fecha_dia_2'])&&$_GET['fecha_dia_2']){   $Form_Inputs->form_input_hidden('fecha_dia_2', $_GET['fecha_dia_2'], 2);}
+				if(isset($_GET['fecha_dia_3'])&&$_GET['fecha_dia_3']){   $Form_Inputs->form_input_hidden('fecha_dia_3', $_GET['fecha_dia_3'], 2);}
+				if(isset($_GET['fecha_dia_4'])&&$_GET['fecha_dia_4']){   $Form_Inputs->form_input_hidden('fecha_dia_4', $_GET['fecha_dia_4'], 2);}
+				if(isset($_GET['fecha_dia_5'])&&$_GET['fecha_dia_5']){   $Form_Inputs->form_input_hidden('fecha_dia_5', $_GET['fecha_dia_5'], 2);}
+				if(isset($_GET['fecha_dia_6'])&&$_GET['fecha_dia_6']){   $Form_Inputs->form_input_hidden('fecha_dia_6', $_GET['fecha_dia_6'], 2);}
+				if(isset($_GET['fecha_dia_7'])&&$_GET['fecha_dia_7']){   $Form_Inputs->form_input_hidden('fecha_dia_7', $_GET['fecha_dia_7'], 2);}
 				
 				
 				
@@ -226,7 +213,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_horas"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -237,13 +224,13 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addHora']) ) {  
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	 
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	 
 ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Horas Extras</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -269,49 +256,49 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idTurnos)) {          $x15  = $idTurnos;          }else{$x15  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x0, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x0, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				if(isset($_GET['fecha_dia_1'])&&$_GET['fecha_dia_1']){
-					$Form_Imputs->form_input_number('N° Horas Lunes '.fecha_estandar($_GET['fecha_dia_1']), 'horas_dia_1', $x1, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_1', $x8, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Lunes '.fecha_estandar($_GET['fecha_dia_1']), 'horas_dia_1', $x1, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_1', $x8, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_2'])&&$_GET['fecha_dia_2']){
-					$Form_Imputs->form_input_number('N° Horas Martes '.fecha_estandar($_GET['fecha_dia_2']), 'horas_dia_2', $x2, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_2', $x9, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Martes '.fecha_estandar($_GET['fecha_dia_2']), 'horas_dia_2', $x2, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_2', $x9, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_3'])&&$_GET['fecha_dia_3']){
-					$Form_Imputs->form_input_number('N° Horas Miercoles '.fecha_estandar($_GET['fecha_dia_3']), 'horas_dia_3', $x3, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_3', $x10, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Miercoles '.fecha_estandar($_GET['fecha_dia_3']), 'horas_dia_3', $x3, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_3', $x10, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_4'])&&$_GET['fecha_dia_4']){
-					$Form_Imputs->form_input_number('N° Horas Jueves '.fecha_estandar($_GET['fecha_dia_4']), 'horas_dia_4', $x4, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_4', $x11, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Jueves '.fecha_estandar($_GET['fecha_dia_4']), 'horas_dia_4', $x4, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_4', $x11, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_5'])&&$_GET['fecha_dia_5']){
-					$Form_Imputs->form_input_number('N° Horas Viernes '.fecha_estandar($_GET['fecha_dia_5']), 'horas_dia_5', $x5, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_5', $x12, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Viernes '.fecha_estandar($_GET['fecha_dia_5']), 'horas_dia_5', $x5, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_5', $x12, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_6'])&&$_GET['fecha_dia_6']){
-					$Form_Imputs->form_input_number('N° Horas Sabado '.fecha_estandar($_GET['fecha_dia_6']), 'horas_dia_6', $x6, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_6', $x13, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Sabado '.fecha_estandar($_GET['fecha_dia_6']), 'horas_dia_6', $x6, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_6', $x13, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				if(isset($_GET['fecha_dia_7'])&&$_GET['fecha_dia_7']){
-					$Form_Imputs->form_input_number('N° Horas Domingo '.fecha_estandar($_GET['fecha_dia_7']), 'horas_dia_7', $x7, 1);
-					$Form_Imputs->form_select('Porcentaje Horas','porcentaje_dia_7', $x14, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Horas Domingo '.fecha_estandar($_GET['fecha_dia_7']), 'horas_dia_7', $x7, 1);
+					$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia_7', $x14, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
 				}
 				//Turno
-				$Form_Imputs->form_select('Turno','idTurnos', $x15, 2, 'idTurnos', 'Nombre', 'core_horas_extras_turnos', 0, '', $dbConn);
+				$Form_Inputs->form_select('Turno','idTurnos', $x15, 2, 'idTurnos', 'Nombre', 'core_horas_extras_turnos', 0, '', $dbConn);
 				
 				
 				//Envio otros datos
-				if(isset($_GET['nSem'])&&$_GET['nSem']){                 $Form_Imputs->form_input_hidden('nSem', $_GET['nSem'], 2);}
-				if(isset($_GET['fecha_dia_1'])&&$_GET['fecha_dia_1']){   $Form_Imputs->form_input_hidden('fecha_dia_1', $_GET['fecha_dia_1'], 2);}
-				if(isset($_GET['fecha_dia_2'])&&$_GET['fecha_dia_2']){   $Form_Imputs->form_input_hidden('fecha_dia_2', $_GET['fecha_dia_2'], 2);}
-				if(isset($_GET['fecha_dia_3'])&&$_GET['fecha_dia_3']){   $Form_Imputs->form_input_hidden('fecha_dia_3', $_GET['fecha_dia_3'], 2);}
-				if(isset($_GET['fecha_dia_4'])&&$_GET['fecha_dia_4']){   $Form_Imputs->form_input_hidden('fecha_dia_4', $_GET['fecha_dia_4'], 2);}
-				if(isset($_GET['fecha_dia_5'])&&$_GET['fecha_dia_5']){   $Form_Imputs->form_input_hidden('fecha_dia_5', $_GET['fecha_dia_5'], 2);}
-				if(isset($_GET['fecha_dia_6'])&&$_GET['fecha_dia_6']){   $Form_Imputs->form_input_hidden('fecha_dia_6', $_GET['fecha_dia_6'], 2);}
-				if(isset($_GET['fecha_dia_7'])&&$_GET['fecha_dia_7']){   $Form_Imputs->form_input_hidden('fecha_dia_7', $_GET['fecha_dia_7'], 2);}
+				if(isset($_GET['nSem'])&&$_GET['nSem']){                 $Form_Inputs->form_input_hidden('nSem', $_GET['nSem'], 2);}
+				if(isset($_GET['fecha_dia_1'])&&$_GET['fecha_dia_1']){   $Form_Inputs->form_input_hidden('fecha_dia_1', $_GET['fecha_dia_1'], 2);}
+				if(isset($_GET['fecha_dia_2'])&&$_GET['fecha_dia_2']){   $Form_Inputs->form_input_hidden('fecha_dia_2', $_GET['fecha_dia_2'], 2);}
+				if(isset($_GET['fecha_dia_3'])&&$_GET['fecha_dia_3']){   $Form_Inputs->form_input_hidden('fecha_dia_3', $_GET['fecha_dia_3'], 2);}
+				if(isset($_GET['fecha_dia_4'])&&$_GET['fecha_dia_4']){   $Form_Inputs->form_input_hidden('fecha_dia_4', $_GET['fecha_dia_4'], 2);}
+				if(isset($_GET['fecha_dia_5'])&&$_GET['fecha_dia_5']){   $Form_Inputs->form_input_hidden('fecha_dia_5', $_GET['fecha_dia_5'], 2);}
+				if(isset($_GET['fecha_dia_6'])&&$_GET['fecha_dia_6']){   $Form_Inputs->form_input_hidden('fecha_dia_6', $_GET['fecha_dia_6'], 2);}
+				if(isset($_GET['fecha_dia_7'])&&$_GET['fecha_dia_7']){   $Form_Inputs->form_input_hidden('fecha_dia_7', $_GET['fecha_dia_7'], 2);}
 				
 				
 				
@@ -320,7 +307,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_horas"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -335,7 +322,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos del Ingreso</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -346,21 +333,23 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($Creacion_fecha)) {  $x1  = $Creacion_fecha;     }else{$x1  = $_SESSION['horas_extras_ing_basicos']['Creacion_fecha'];}
 				if(isset($Fecha_desde)) {     $x2  = $Fecha_desde;        }else{$x2  = $_SESSION['horas_extras_ing_basicos']['Fecha_desde'];}
 				if(isset($Fecha_hasta)) {     $x3  = $Fecha_hasta;        }else{$x3  = $_SESSION['horas_extras_ing_basicos']['Fecha_hasta'];}
+				if(isset($Observaciones)) {   $x4  = $Observaciones;      }else{$x4  = $_SESSION['horas_extras_ing_basicos']['Observaciones'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
-				$Form_Imputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
-				$Form_Imputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
+				$Form_Inputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
+				$Form_Inputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 
 				?> 
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -369,18 +358,16 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 	</div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['view']) ) { 
-$Form_Imputs = new Inputs();
-?>
+ } elseif ( ! empty($_GET['view']) ) { ?>
 
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 
 	<?php 		
 	$ubicacion = $location.'&view=true&ing_bodega=true';
 	$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
 	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
 
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<?php 
 	$ubicacion = $location.'&clear_all=true';
@@ -390,7 +377,7 @@ $Form_Imputs = new Inputs();
 	<div class="clearfix"></div>
 </div> 
 
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 	<div id="page-wrap">
 		<div id="header"> Ingreso Horas Extras</div>
@@ -402,7 +389,7 @@ $Form_Imputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Desde</td>
@@ -554,12 +541,12 @@ $Form_Imputs = new Inputs();
 								echo '
 								<td>
 									<div class="btn-group" style="width: 70px;" >
-										<a href="'.$location.'&editHora=true&nSem='.$nSem.$cadena.$subcadena.'" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+										<a href="'.$location.'&editHora=true&nSem='.$nSem.$cadena.$subcadena.'" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									';
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $location.'&del_horas=true&nSem='.$nSem.$subcadena;
 									$dialogo   = '¿Realmente deseas eliminar el registro de la semana?';
-									echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								
 									</div>
 								</td>';
@@ -601,55 +588,16 @@ $Form_Imputs = new Inputs();
 					}
 					?>
 				
-				
-				
-				<tr>
-					<?php if(isset($_SESSION['horas_extras_ing_basicos']['Observaciones'])&&$_SESSION['horas_extras_ing_basicos']['Observaciones']!=''){ ?>
-					
-						<td colspan="10" class="blank word_break"> 
-							<?php echo $_SESSION['horas_extras_ing_basicos']['Observaciones'];?>
-						</td>
-						<td class="blank">
-							<div class="btn-group" style="width: 35px;" >
-								<?php 
-								$ubicacion = $location.'&view=true&del_obs=true';
-								$dialogo   = '¿Realmente deseas eliminar la observacion?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
-							</div>
-						</td>
-					
-					<?php }else{?>
-						<td colspan="10" class="blank"> 
-							<?php 
-							$non = '';
-							if(isset($_SESSION['horas_extras_ing_temporal'])&&$_SESSION['horas_extras_ing_temporal']!=''){
-								$non = $_SESSION['horas_extras_ing_temporal'];
-							}	
-								
-							$Form_Imputs->input_textarea_obs('Observaciones','Observaciones', 1,'width:100%; height: 200px;', $non);?>
-						</td>
-						<td class="blank">
-							<div class="btn-group" style="width: 35px;" >
-								<?php $ubicacion=$location.'&view=true&add_obs=true';?>			
-								<a onclick="add_obs('<?php echo $ubicacion ?>')" title="Agregar Observacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
-							</div>
-						</td>
-						
-					<?php }?>	
-					
-					
-				</tr>
-				<tr>
-					<td colspan="11" class="blank"><p>Observaciones</p></td> 
-				</tr>
-				
-				
-							
-							
-				
 			</tbody>
 		</table>
     </div>
+    
+    <div class="row">
+		<div class="col-xs-12">
+			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['horas_extras_ing_basicos']['Observaciones'];?></p>
+		</div>
+	</div>
     
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
@@ -668,11 +616,11 @@ $Form_Imputs = new Inputs();
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 								<?php 
 								$ubicacion = $location.'&del_file='.$producto['idFile'];
 								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
 					</tr>
@@ -692,11 +640,14 @@ $Form_Imputs = new Inputs();
 <div class="clearfix"></div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingresar Horas Extras</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -710,23 +661,23 @@ $Form_Imputs = new Inputs();
 				if(isset($Observaciones)) {   $x4  = $Observaciones;      }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
-				$Form_Imputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
-				$Form_Imputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
+				$Form_Inputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
+				$Form_Inputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 
 						
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -772,8 +723,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable con la ubicacion
 $z="WHERE trabajadores_horas_extras_facturacion.idFacturacion!=0";//Solo ingresos
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND trabajadores_horas_extras_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z.=" AND trabajadores_horas_extras_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND trabajadores_horas_extras_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
@@ -835,7 +786,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -868,13 +819,13 @@ array_push( $arrTipo,$row );
 				if(isset($Creacion_ano)) {       $x3  = $Creacion_ano;     }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x1, 1);
-				$Form_Imputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
-				$Form_Imputs->form_select_n_auto('Año','Creacion_ano', $x3, 1, 2016, ano_actual());
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x1, 1);
+				$Form_Inputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_n_auto('Año','Creacion_ano', $x3, 1, 2016, ano_actual());
 						
 			
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -892,7 +843,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Ingreso Horas Extras</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ingreso Horas Extras</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -906,15 +857,15 @@ array_push( $arrTipo,$row );
 						<th>
 							<div class="pull-left">Periodo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=periodo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=periodo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=periodo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=periodo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fechas</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fechas_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fechas_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fechas_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fechas_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -930,7 +881,7 @@ array_push( $arrTipo,$row );
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_horas_extras.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_horas_extras.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

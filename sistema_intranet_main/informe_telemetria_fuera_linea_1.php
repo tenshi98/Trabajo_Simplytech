@@ -43,33 +43,33 @@ if (!$num_pag){
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
 //Inicia variable
-$z="WHERE telemetria_listado_error_fuera_linea.idFueraLinea>0"; 
-$z.=" AND telemetria_listado.id_Geo='1'";
-$search  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$z = "WHERE telemetria_listado_error_fuera_linea.idFueraLinea>0"; 
+$z.= " AND telemetria_listado.id_Geo='1'";
+$z.= " AND telemetria_listado_error_fuera_linea.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+//Solo para plataforma CrossTech
+if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
+	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
+}
+$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search .='&submit_filter=Filtrar';
 $search .='&idOpciones=1';
+$search .='&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND telemetria_listado_error_fuera_linea.Fecha_inicio BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+	$z.=" AND telemetria_listado_error_fuera_linea.Fecha_inicio BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$search .='&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z.=" AND telemetria_listado_error_fuera_linea.idTelemetria='{$_GET['idTelemetria']}'";
+	$z.=" AND telemetria_listado_error_fuera_linea.idTelemetria='".$_GET['idTelemetria']."'";
 	$search .='&idTelemetria='.$_GET['idTelemetria'];
 }
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z.=" AND telemetria_listado_error_fuera_linea.idSistema>=0";
-	$search .='&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
-	$search .='&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$join = "";		
 }else{
-	$z.=" AND telemetria_listado_error_fuera_linea.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-	$search .='&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
-	$search .='&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria ";	
-	$z.=" AND usuarios_equipos_telemetria.idUsuario={$_SESSION['usuario']['basic_data']['idUsuario']}";
+	$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Realizo una consulta para saber el total de elementos existentes
 $query = "SELECT telemetria_listado_error_fuera_linea.idFueraLinea FROM `telemetria_listado_error_fuera_linea`  LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria ".$join."  ".$z;
@@ -125,16 +125,19 @@ array_push( $arrErrores,$row );
 }
 
  ?>	
- 
-<div class="col-sm-12">
-	<a target="new" href="<?php echo 'informe_telemetria_fuera_linea_1_to_excel.php'.$search.'&userType='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-2 fright margin_width"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-	<a target="new" href="<?php echo 'informe_telemetria_fuera_linea_1_to_pdf.php'.$search.'&userType='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-3 fright margin_width"><i class="fa fa-file-pdf-o"></i> Exportar a PDF</a>
-</div>
+<div class="col-sm-12 clearfix">
+	<?php
+	$search .= '&userType='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	?>			
+	<a target="new" href="<?php echo 'informe_telemetria_fuera_linea_1_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+	<a target="new" href="<?php echo 'informe_telemetria_fuera_linea_1_to_pdf.php?bla=bla'.$search ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
+</div> 
 
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Fuera de Linea</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Fuera de Linea</h5>	
 			<div class="toolbar">
 				<?php 
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
@@ -164,7 +167,7 @@ array_push( $arrErrores,$row );
 							<td><?php echo $error['Tiempo'].' hrs'; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'informe_telemetria_fuera_linea_1_view.php?view='.$error['idFueraLinea']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'informe_telemetria_fuera_linea_1_view.php?view='.simpleEncode($error['idFueraLinea'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -184,24 +187,27 @@ array_push( $arrErrores,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='1'";	 
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "telemetria_listado.idSistema>=0 AND telemetria_listado.id_Geo='1'";
-}else{
-	$z = "telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_equipos_telemetria.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']} AND telemetria_listado.id_Geo='1'";		
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+}
+//Solo para plataforma CrossTech
+if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
+	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
 }
  ?>			
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Filtro de busqueda</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -214,14 +220,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idTelemetria)) {  $x3  = $idTelemetria; }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Imputs->form_select_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
 				}else{
-					$Form_Imputs->form_select_join_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
+					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				?>        
 	   

@@ -59,7 +59,7 @@ $order_by = 'ORDER BY caja_chica_facturacion.Creacion_fecha DESC '; $bread_order
 //Variable con la ubicacion
 $z="WHERE caja_chica_facturacion.idTipo!=0";//Solo egresos
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND caja_chica_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND caja_chica_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idCajaChica']) && $_GET['idCajaChica'] != ''){                            $z .= " AND caja_chica_facturacion.idCajaChica=".$_GET['idCajaChica'];}
@@ -134,7 +134,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>	
 	</ul>
 
@@ -145,7 +145,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Cotizaciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Cotizaciones</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -159,7 +159,7 @@ array_push( $arrTipo,$row );
 						<th>Movimiento</th>
 						<th>Fecha</th>
 						<th>Trabajador</th>
-						<th>Doc Relacionado</th>
+						<th>Doc Rendicion Relacionado</th>
 						<th>Ingreso</th>
 						<th>Egreso</th>
 						<th>Rendicion</th>
@@ -175,40 +175,40 @@ array_push( $arrTipo,$row );
 							<td><?php echo $tipo['TipoMov']; ?></td>
 							<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
 							<td><?php echo $tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']; ?></td>
-							<td><?php echo n_doc($tipo['idFacturacionRelacionada'], 8); ?></td>
+							<td><?php if(isset($tipo['idTipo'])&&$tipo['idTipo']==3){ echo n_doc($tipo['idFacturacionRelacionada'], 8);} ?></td>
 							<?php
 							//Reviso el tipo de movimiento
 							switch ($tipo['idTipo']) {
 								//Ingreso Caja Chica
 								case 1:
-									echo '<td>'.Valores($tipo['MovSum'], 0).'</td>';
-									echo '<td></td>';
-									echo '<td></td>';
+									echo '<td align="right">'.Valores($tipo['MovSum'], 0).'</td>';
+									echo '<td align="right"></td>';
+									echo '<td align="right"></td>';
 									break;
 								//Egreso Caja Chica
 								case 2:
-									echo '<td></td>';
-									echo '<td>'.Valores($tipo['MovSum'], 0).'</td>';
-									echo '<td></td>';
+									echo '<td align="right"></td>';
+									echo '<td align="right">'.Valores($tipo['MovSum'], 0).'</td>';
+									echo '<td align="right"></td>';
 									break;
 								//Rendicion Caja Chica
 								case 3:
-									echo '<td>'.Valores($tipo['MovSum'], 0).'</td>';
-									echo '<td></td>';
-									echo '<td>'.Valores($tipo['DevSum'], 0).'</td>';
+									echo '<td align="right">'.Valores($tipo['MovSum'], 0).'</td>';
+									echo '<td align="right"></td>';
+									echo '<td align="right">'.Valores($tipo['DevSum'], 0).'</td>';
 									break;
 							}
 							
 							?>
-							<td><strong><?php echo Valores($tipo['Valor'], 0); ?></strong></td>
+							<td align="right"><strong><?php echo Valores($tipo['Valor'], 0); ?></strong></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo 'view_mov_caja_chica.php?view='.$tipo['ID'].'&return=true'; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_mov_caja_chica.php?view='.simpleEncode($tipo['ID'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									<?php
 									//solo si es rendicion
 									if(isset($tipo['idTipo'])&&$tipo['idTipo']==3){
-										echo '<a href="view_mov_caja_chica.php?view='.$tipo['idFacturacionRelacionada'].'&return=true" title="Ver Documento Relacionado" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';	
+										echo '<a href="view_mov_caja_chica.php?view='.simpleEncode($tipo['idFacturacionRelacionada'], fecha_actual()).'" title="Ver Documento Relacionado" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';	
 									}
 									?>
 								</div>
@@ -229,26 +229,24 @@ array_push( $arrTipo,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$z = "caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z="caja_chica_listado.idSistema>=0";
-	$w="idSistema>=0";
-}else{
-	$z="caja_chica_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_cajas_chicas.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";		
-	$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";		
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z .= " AND usuarios_cajas_chicas.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];			
 }
 ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -264,13 +262,13 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idEstado)) {                   $x6  = $idEstado;                  }else{$x6  = '';}
 				
 				//se dibujan los inputs	
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_join_filter('Caja','idCajaChica', $x1, 2, 'idCajaChica', 'Nombre', 'caja_chica_listado', 'usuarios_cajas_chicas', $z, $dbConn);
-				$Form_Imputs->form_select_filter('Trabajador Asignado','idTrabajador', $x2, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha de Creacion','Creacion_fecha', $x3, 1);
-				$Form_Imputs->form_input_number('N° Doc Relacionado', 'idFacturacionRelacionada', $x4, 1);
-				$Form_Imputs->form_select('Tipo Movimiento','idTipo', $x5, 1, 'idTipo', 'Nombre', 'caja_chica_facturacion_tipo', 0, '', $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_caja', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_join_filter('Caja','idCajaChica', $x1, 2, 'idCajaChica', 'Nombre', 'caja_chica_listado', 'usuarios_cajas_chicas', $z, $dbConn);
+				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x2, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha de Creacion','Creacion_fecha', $x3, 1);
+				$Form_Inputs->form_input_number('N° Doc Relacionado', 'idFacturacionRelacionada', $x4, 1);
+				$Form_Inputs->form_select('Tipo Movimiento','idTipo', $x5, 1, 'idTipo', 'Nombre', 'caja_chica_facturacion_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_caja', 0, '', $dbConn);
 				
 				?>        
 	   

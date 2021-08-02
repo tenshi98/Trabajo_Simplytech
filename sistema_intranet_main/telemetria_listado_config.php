@@ -45,10 +45,11 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // tomo los datos del usuario
-$query = "SELECT Nombre,Identificador,id_Geo,id_Sensores,cantSensores, idDispositivo, idShield,LimiteVelocidad, TiempoFueraLinea,
-TiempoDetencion, idUsoContrato, idUsoPredio
+$query = "SELECT Nombre,Identificador,id_Geo,id_Sensores,cantSensores, idDispositivo, 
+idShield, TiempoFueraLinea, idUsoContrato, idUsoPredio, idUsoGeocerca, NErroresGeocercaMax,
+idTab, idBackup, NregBackup, idGenerador
 FROM `telemetria_listado`
-WHERE idTelemetria = {$_GET['id']}";
+WHERE idTelemetria = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -65,26 +66,12 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Equipo</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Configuracion</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Configuracion');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -92,30 +79,38 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'telemetria_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'telemetria_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class="active"><a href="<?php echo 'telemetria_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Configuracion</a></li>
+				<li class=""><a href="<?php echo 'telemetria_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'telemetria_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="<?php echo 'telemetria_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<?php if($rowdata['idUsoContrato']==1){ ?>
-						<li class=""><a href="<?php echo 'telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Contratos</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_alerta_general.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Alarma General</a></li>
-						<?php if($rowdata['id_Geo']==2){ ?>
-						<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Direccion</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_alerta_general.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarma General</a></li>
+						<?php if($rowdata['id_Sensores']==1){ ?>
+							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
+						<?php } ?>
+						<?php if($rowdata['id_Geo']==1){ ?>
+							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
+							<?php if($rowdata['idUsoGeocerca']==1){ ?>
+								<li class=""><a href="<?php echo 'telemetria_listado_geocercas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> GeoCercas</a></li>
+							<?php } ?>
+						<?php } elseif($rowdata['id_Geo']==2){ ?>
+							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
-						<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Sensores</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Alarmas Personalizadas</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Imagen</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_horario.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Horario</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Jornada Trabajo</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Otros Datos</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivos</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_horario.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Horario Envio Notificaciones</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 						
 					</ul>
                 </li>           
@@ -127,100 +122,162 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Identificador)) {      $x1  = $Identificador;       }else{$x1  = $rowdata['Identificador'];}
-					if(isset($id_Geo)) {             $x2  = $id_Geo;              }else{$x2  = $rowdata['id_Geo'];}
-					if(isset($LimiteVelocidad)) {    $x3  = $LimiteVelocidad;     }else{$x3  = Cantidades_decimales_justos($rowdata['LimiteVelocidad']);}
-					if(isset($id_Sensores)) {        $x4  = $id_Sensores;         }else{$x4  = $rowdata['id_Sensores'];}
-					if(isset($cantSensores)) {       $x5  = $cantSensores;        }else{$x5  = $rowdata['cantSensores'];}
-					if(isset($idDispositivo)) {      $x6  = $idDispositivo;       }else{$x6  = $rowdata['idDispositivo'];}
-					if(isset($idShield)) {           $x7  = $idShield;            }else{$x7  = $rowdata['idShield'];}
-					if(isset($TiempoFueraLinea)) {   $x8  = $TiempoFueraLinea;    }else{$x8  = $rowdata['TiempoFueraLinea'];}
-					if(isset($TiempoDetencion)) {    $x9  = $TiempoDetencion;     }else{$x9  = $rowdata['TiempoDetencion'];}
-					if(isset($idUsoContrato)) {      $x10 = $idUsoContrato;       }else{$x10 = $rowdata['idUsoContrato'];}
-					if(isset($idUsoPredio)) {        $x11 = $idUsoPredio;         }else{$x11 = $rowdata['idUsoPredio'];}
+					if(isset($Identificador)) {        $x1  = $Identificador;        }else{$x1  = $rowdata['Identificador'];}
+					if(isset($idDispositivo)) {        $x2  = $idDispositivo;        }else{$x2  = $rowdata['idDispositivo'];}
+					if(isset($idShield)) {             $x3  = $idShield;             }else{$x3  = $rowdata['idShield'];}
+					if(isset($TiempoFueraLinea)) {     $x4  = $TiempoFueraLinea;     }else{$x4  = $rowdata['TiempoFueraLinea'];}
+					if(isset($idGenerador)) {          $x5  = $idGenerador;          }else{$x5  = $rowdata['idGenerador'];}
+					if(isset($idTab)) {                $x6  = $idTab;                }else{$x6  = $rowdata['idTab'];}
+					if(isset($id_Geo)) {               $x7  = $id_Geo;               }else{$x7  = $rowdata['id_Geo'];}
+					if(isset($id_Sensores)) {          $x8  = $id_Sensores;          }else{$x8  = $rowdata['id_Sensores'];}
+					if(isset($cantSensores)) {         $x9  = $cantSensores;         }else{$x9  = $rowdata['cantSensores'];}
+					if(isset($idUsoContrato)) {        $x10 = $idUsoContrato;        }else{$x10 = $rowdata['idUsoContrato'];}
+					if(isset($idUsoPredio)) {          $x11 = $idUsoPredio;          }else{$x11 = $rowdata['idUsoPredio'];}
+					if(isset($idUsoGeocerca)) {        $x12 = $idUsoGeocerca;        }else{$x12 = $rowdata['idUsoGeocerca'];}
+					if(isset($NErroresGeocercaMax)) {  $x13 = $NErroresGeocercaMax;  }else{$x13 = $rowdata['NErroresGeocercaMax'];}
+					if(isset($idBackup)) {             $x14 = $idBackup;             }else{$x14 = $rowdata['idBackup'];}
+					if(isset($NregBackup)) {           $x15 = $NregBackup;           }else{$x15 = $rowdata['NregBackup'];}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_input_icon( 'Identificador', 'Identificador', $x1, 2,'fa fa-flag');
-					$Form_Imputs->form_select('Geolocalizacion','id_Geo', $x2, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Imputs->form_input_number('Velocidad Maxima','LimiteVelocidad', $x3, 1);
-					$Form_Imputs->form_select('Sensores','id_Sensores', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Imputs->form_select_n_auto('Cantidad de Sensores','cantSensores', $x5, 1, 1, 50);
-					$Form_Imputs->form_select('Hardware','idDispositivo', $x6, 2, 'idDispositivo', 'Nombre', 'telemetria_listado_dispositivos', 0, '', $dbConn);	
-					$Form_Imputs->form_select('SHIELD','idShield', $x7, 1, 'idShield', 'Nombre', 'telemetria_listado_shield', 0, '', $dbConn);	
-					$Form_Imputs->form_time('Tiempo Fuera Linea Maximo','TiempoFueraLinea', $x8, 1, 1);
-					$Form_Imputs->form_time('Tiempo Maximo Detencion','TiempoDetencion', $x9, 1, 1);
-					$Form_Imputs->form_select('Uso de Contratos','idUsoContrato', $x10, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Imputs->form_select('Verificacion de Predio (Cross)','idUsoPredio', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_tittle(3, 'Basicos');
+					$Form_Inputs->form_input_icon('Identificador', 'Identificador', $x1, 2,'fa fa-flag');
+					$Form_Inputs->form_select('Hardware','idDispositivo', $x2, 2, 'idDispositivo', 'Nombre', 'telemetria_listado_dispositivos', 0, '', $dbConn);	
+					$Form_Inputs->form_select('SHIELD','idShield', $x3, 1, 'idShield', 'Nombre', 'telemetria_listado_shield', 0, '', $dbConn);	
+					$Form_Inputs->form_time('Tiempo Fuera Linea Maximo','TiempoFueraLinea', $x4, 1, 1);
+					
+					//Solo para plataforma CrossTech
+					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
+						$Form_Inputs->form_post_data(2, 'Esta opcion indica en que pestaña de la pantalla principal sera mostrado el equipo (Funcion solo disponible con la interfaz de  crosstech.)' );
+						$Form_Inputs->form_select('Tab','idTab', $x6, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, '', $dbConn);	
+					}
+					
+					$Form_Inputs->form_tittle(3, 'Funciones');
+					$Form_Inputs->form_post_data(2, 'Uso de las funciones de gps y alertas relacionadas a este (geocercas, detenciones, ingreso a lugares prohibidos, etc.)' );
+					$Form_Inputs->form_select('Geolocalizacion','id_Geo', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					
+					$Form_Inputs->form_post_data(2, 'Uso de las funciones de Telemetria (registro de sensores, alertas, etc.)' );
+					$Form_Inputs->form_select('Sensores','id_Sensores', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select_n_auto('Cantidad de Sensores','cantSensores', $x9, 1, 1, 72);
+					
+					$Form_Inputs->form_post_data(2, '<strong>Opcional:</strong> Se guarda registro del Contrato utilizado.' );
+					$Form_Inputs->form_select('Uso de Contratos','idUsoContrato', $x10, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					
+					$Form_Inputs->form_post_data(2, 'Registra el ingreso y la salida de los predios configurados, para ser utilizado debe tener la opcion de Geolocalizacion activa.' );
+					$Form_Inputs->form_select('Uso de Predios (Cross)','idUsoPredio', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					
+					$Form_Inputs->form_post_data(2, 'Verifica que el equipo se mantenga dentro de una geocerca, en caso de salir de esta manda una alerta, para ser utilizado debe tener la opcion de Geolocalizacion activa.' );
+					$Form_Inputs->form_select('Uso de GeoCercas','idUsoGeocerca', $x12, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select_n_auto('Max. Errores Fuera Geocerca','NErroresGeocercaMax', $x13, 1, 1, 60);
+					
+					$Form_Inputs->form_post_data(2, 'Opcion de respaldo de la tabla donde se guardan los datos del equipo bajo una cierta cantidad de registros.' );
+					$Form_Inputs->form_select('Backup Tabla relacionada','idBackup', $x14, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_input_number('N° Registros para Backup','NregBackup', $x15, 1);
+				
+					$Form_Inputs->form_post_data(2, 'Indica si la alimentacion electrica es directa o por generador.' );
+					$Form_Inputs->form_select('Uso Generador','idGenerador', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					
 					
-					$Form_Imputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
+					
+					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>
 					
 					<script>
 						document.getElementById('div_cantSensores').style.display = 'none';
+						document.getElementById('div_NErroresGeocercaMax').style.display = 'none';
+						document.getElementById('div_NregBackup').style.display = 'none';
 						
-						var Sensores_val;
-						var Geo_val;
-						var modelSelected1;
-						var modelSelected2;
-		 
-						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+						var id_Sensores;
+						var id_SensoresSelected;
+						var idUsoGeocerca;
+						var idUsoGeocercaSelected;
+						var idBackup;
+						var idBackupSelected;
+						
+						//se ejecuta al cargar la página (OBLIGATORIO)
+						$(document).ready(function(){ 
 							
-							Sensores_val= $("#id_Sensores").val();
-							Geo_val= $("#id_Geo").val();
+							id_Sensores   = $("#id_Sensores").val();
+							idUsoGeocerca = $("#idUsoGeocerca").val();
+							idBackup      = $("#idBackup").val();
+							/*******************************/
 							//si es SI
-							if(Sensores_val == 1){ 
+							if(id_Sensores == 1){ 
 								document.getElementById('div_cantSensores').style.display = '';						
-								
 							//si es NO
-							} else if(Sensores_val == 2){ 
+							} else if(id_Sensores == 2){ 
 								document.getElementById('div_cantSensores').style.display = 'none';	
 								//Reseteo los valores a 0
 								document.getElementById('cantSensores').value = "0";
 							}
-							
+							/*******************************/
 							//si es SI
-							if(Geo_val == 1){ 
-								document.getElementById('div_LimiteVelocidad').style.display = '';	
-								document.getElementById('div_TiempoDetencion').style.display = '';					
-								
+							if(idUsoGeocerca == 1){ 
+								document.getElementById('div_NErroresGeocercaMax').style.display = '';						
 							//si es NO
-							} else if(Geo_val == 2){ 
-								document.getElementById('div_LimiteVelocidad').style.display = 'none';	
-								document.getElementById('div_TiempoDetencion').style.display = 'none';
+							} else if(idUsoGeocerca == 2){ 
+								document.getElementById('div_NErroresGeocercaMax').style.display = 'none';	
+								//Reseteo los valores a 0
+								document.getElementById('NErroresGeocercaMax').value = "0";
 							}
+							/*******************************/
+							//si es SI
+							if(idBackup == 1){ 
+								document.getElementById('div_NregBackup').style.display = '';						
+							//si es NO
+							} else if(idBackup == 2){ 
+								document.getElementById('div_NregBackup').style.display = 'none';	
+								//Reseteo los valores a 0
+								document.getElementById('NregBackup').value = "0";
+							}
+							
 						}); 
 						
 						$("#id_Sensores").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+							id_SensoresSelected = $(this).val(); //Asignamos el valor seleccionado
 					
 							//si es SI
-							if(modelSelected1 == 1){ 
+							if(id_SensoresSelected == 1){ 
 								document.getElementById('div_cantSensores').style.display = '';
 															
 							//si es NO
-							} else if(modelSelected1 == 2){ 
+							} else if(id_SensoresSelected == 2){ 
 								document.getElementById('div_cantSensores').style.display = 'none';
 								//Reseteo los valores a 0
 								document.getElementById('cantSensores').value = "0";
 							}
 						});
 						
-						$("#id_Geo").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected2 = $(this).val(); //Asignamos el valor seleccionado
+						$("#idUsoGeocerca").on("change", function(){ //se ejecuta al cambiar valor del select
+							idUsoGeocercaSelected = $(this).val(); //Asignamos el valor seleccionado
 					
 							//si es SI
-							if(modelSelected2 == 1){ 
-								document.getElementById('div_LimiteVelocidad').style.display = '';
-								document.getElementById('div_TiempoDetencion').style.display = '';	
+							if(idUsoGeocercaSelected == 1){ 
+								document.getElementById('div_NErroresGeocercaMax').style.display = '';
 															
 							//si es NO
-							} else if(modelSelected2 == 2){ 
-								document.getElementById('div_LimiteVelocidad').style.display = 'none';
-								document.getElementById('div_TiempoDetencion').style.display = 'none';
+							} else if(idUsoGeocercaSelected == 2){ 
+								document.getElementById('div_NErroresGeocercaMax').style.display = 'none';
+								//Reseteo los valores a 0
+								document.getElementById('NErroresGeocercaMax').value = "0";
 							}
 						});
+						
+						$("#idBackup").on("change", function(){ //se ejecuta al cambiar valor del select
+							idBackupSelected = $(this).val(); //Asignamos el valor seleccionado
+					
+							//si es SI
+							if(idBackupSelected == 1){ 
+								document.getElementById('div_NregBackup').style.display = '';
+															
+							//si es NO
+							} else if(idBackupSelected == 2){ 
+								document.getElementById('div_NregBackup').style.display = 'none';
+								//Reseteo los valores a 0
+								document.getElementById('NregBackup').value = "0";
+							}
+						});
+					
 					</script>
 			
 
@@ -235,8 +292,8 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

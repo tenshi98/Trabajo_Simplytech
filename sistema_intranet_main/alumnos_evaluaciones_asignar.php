@@ -62,12 +62,19 @@ if ( !empty($_POST['submit_reintento']) )  {
 	$form_trabajo= 'reintento';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';
 }
+//formulario para crear
+if ( !empty($_POST['submit_modfecha']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'modfecha';
+	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';
+}
 //se borra un dato
 if ( !empty($_GET['del_asignacion']) )     {
 	//Llamamos al formulario
 	$form_trabajo= 'del_asignacion';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';	
 }
+
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -82,11 +89,63 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Asignacion borrada 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['add']) ) { ?>
+ if ( ! empty($_GET['editFecha']) ) { 
+// Se traen todos los datos del trabajador
+$query = "SELECT Programada_fecha
+FROM `alumnos_evaluaciones_asignadas`
+WHERE idAsignadas = ".$_GET['editFecha'];
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+$rowdata = mysqli_fetch_assoc ($resultado);	 
+?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Reprogramar Fecha</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($Programada_fecha)) {   $x1  = $Programada_fecha;  }else{$x1  = $rowdata['Programada_fecha'];}
+				
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x1, 2);
+				
+				$Form_Inputs->form_input_hidden('idAsignadas', $_GET['editFecha'], 2);
+				?>        
+	   
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_modfecha"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php widget_validator(); ?>        
+		</div>
+	</div>
+</div>	 
+	 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+}elseif ( ! empty($_GET['add']) ) { ?>
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Programar Reintento</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -97,15 +156,15 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 				if(isset($Programada_fecha)) {   $x1  = $Programada_fecha;  }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Programada','Programada_fecha', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x1, 2);
 				
-				$Form_Imputs->form_input_hidden('idAsignadas', $_GET['add'], 2);
+				$Form_Inputs->form_input_hidden('idAsignadas', $_GET['add'], 2);
 				?>        
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_reintento"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -150,41 +209,41 @@ array_push( $arrCategoria,$row );
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Limitar Cantidades por categoria</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				//variables
 				$xxn = 0;
 				foreach ($arrCategoria as $cat) {
 					$xxn++;
-					$Form_Imputs->form_input_number_alt($cat['Categoria'].'(Maximo '.$cat['Cuenta'].')','categoria_'.$xxn, '', 2);
+					$Form_Inputs->form_input_number_alt($cat['Categoria'].'(Maximo '.$cat['Cuenta'].')','categoria_'.$xxn, '', 2);
 				}
 				
 				//Se envian ocultos los valores maximos
 				$xxn = 0;
 				foreach ($arrCategoria as $cat) {
 					$xxn++;
-					$Form_Imputs->form_input_hidden('n_categoria_'.$xxn, $cat['Cuenta'], 2);
+					$Form_Inputs->form_input_hidden('n_categoria_'.$xxn, $cat['Cuenta'], 2);
 				}
 				
-				$Form_Imputs->form_input_hidden('idAsignar', $_GET['idAsignar'], 2);
-				$Form_Imputs->form_input_hidden('idCurso', $_GET['idCurso'], 2);
-				$Form_Imputs->form_input_hidden('idQuiz', $_GET['idQuiz'], 2);
-				$Form_Imputs->form_input_hidden('Programada_fecha', $_GET['Programada_fecha'], 2);
-				$Form_Imputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('Semana', $_GET['Semana'], 2);
+				$Form_Inputs->form_input_hidden('idAsignar', $_GET['idAsignar'], 2);
+				$Form_Inputs->form_input_hidden('idCurso', $_GET['idCurso'], 2);
+				$Form_Inputs->form_input_hidden('idQuiz', $_GET['idQuiz'], 2);
+				$Form_Inputs->form_input_hidden('Programada_fecha', $_GET['Programada_fecha'], 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
+				//$Form_Inputs->form_input_hidden('Semana', $_GET['Semana'], 2);
 				
 				
 				?>        
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_pas_2a"> 
-					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -229,39 +288,39 @@ array_push( $arrCategoria,$row );
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Limitar Cantidades por categoria</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				//variables
 				$xxn = 0;
 				foreach ($arrCategoria as $cat) {
 					$xxn++;
-					$Form_Imputs->form_input_number_alt($cat['Categoria'].'(Maximo '.$cat['Cuenta'].')','categoria_'.$xxn, '', 2);
+					$Form_Inputs->form_input_number_alt($cat['Categoria'].'(Maximo '.$cat['Cuenta'].')','categoria_'.$xxn, '', 2);
 				}
 				
 				//Se envian ocultos los valores maximos
 				$xxn = 0;
 				foreach ($arrCategoria as $cat) {
 					$xxn++;
-					$Form_Imputs->form_input_hidden('n_categoria_'.$xxn, $cat['Cuenta'], 2);
+					$Form_Inputs->form_input_hidden('n_categoria_'.$xxn, $cat['Cuenta'], 2);
 				}
 				
-				$Form_Imputs->form_input_hidden('idAsignar', $_GET['idAsignar'], 2);
-				$Form_Imputs->form_input_hidden('idCurso', $_GET['idCurso'], 2);
-				$Form_Imputs->form_input_hidden('idQuiz', $_GET['idQuiz'], 2);
-				$Form_Imputs->form_input_hidden('Programada_fecha', $_GET['Programada_fecha'], 2);
-				$Form_Imputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('Semana', $_GET['Semana'], 2);
+				$Form_Inputs->form_input_hidden('idAsignar', $_GET['idAsignar'], 2);
+				$Form_Inputs->form_input_hidden('idCurso', $_GET['idCurso'], 2);
+				$Form_Inputs->form_input_hidden('idQuiz', $_GET['idQuiz'], 2);
+				$Form_Inputs->form_input_hidden('Programada_fecha', $_GET['Programada_fecha'], 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
+				//$Form_Inputs->form_input_hidden('Semana', $_GET['Semana'], 2);
 				?>        
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_pas_2b"> 
-					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -270,15 +329,17 @@ array_push( $arrCategoria,$row );
 	</div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+ } elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Asignar Evaluacion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -288,85 +349,25 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				//Se verifican si existen los datos
 				if(isset($idAsignar)) {          $x1  = $idAsignar;         }else{$x1  = '';}
 				if(isset($idCurso)) {            $x2  = $idCurso;           }else{$x2  = '';}
-				if(isset($Semana)) {             $x3  = $Semana;            }else{$x3  = '';}
-				if(isset($idQuiz)) {             $x4  = $idQuiz;            }else{$x4  = '';}
-				if(isset($Programada_fecha)) {   $x5  = $Programada_fecha;  }else{$x5  = '';}
+				if(isset($idQuiz)) {             $x3  = $idQuiz;            }else{$x3  = '';}
+				if(isset($Programada_fecha)) {   $x4  = $Programada_fecha;  }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo Asignacion','idAsignar', $x1, 2, 'idAsignar', 'Nombre', 'alumnos_evaluaciones_asignar', 0, '', $dbConn);
-				$Form_Imputs->form_select('Grupo Alumnos','idCurso', $x2, 2, 'idCurso', 'Nombre', 'alumnos_cursos', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_select_n_auto('Semana','Semana', $x3, 2, 1, 1);
-				
-				$Form_Imputs->form_select_filter('Cuestionario','idQuiz', $x4, 2, 'idQuiz', 'Nombre', 'quiz_listado', $z, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Programada','Programada_fecha', $x5, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo Asignacion','idAsignar', $x1, 2, 'idAsignar', 'Nombre', 'alumnos_evaluaciones_asignar', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cursos Alumnos','idCurso', $x2, 2, 'idCurso', 'Nombre', 'cursos_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cuestionario','idQuiz', $x3, 2, 'idQuiz', 'Nombre', 'quiz_listado', $z, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x4, 2);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				/****************************************************************/
-				$arrCursos = array();
-				$query = "SELECT  idCurso, Semanas
-				FROM `alumnos_cursos`
-				ORDER BY idCurso";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrCursos,$row );
-				}
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				
-				$cadena = '';			
-				$cadena .= '<script>';
-				foreach ($arrCursos as $prod) {
-					$cadena .= 'var id_data_'.$prod['idCurso'].'= "'.$prod['Semanas'].'";';	
-				}
-				$cadena .= '</script>';
-							
-				
-				$cadena .= '
-				<script>
-					//al cargar la pagina
-					$(document).ready(function(){
-						myFunction_idCurso()
-					}); 
-					//al seleccionar algun curso
-					document.getElementById("idCurso").onchange = function() {myFunction_idCurso()};
-					
-					function myFunction_idCurso() {
-						var Componente = document.getElementById("idCurso").value;
-						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							//escribo dentro del input
-							var elem1 = document.getElementById("Semana");
-							elem1.innerText = null;   
-							for(var i = 1; i <= id_data1; i++) {
-								var opt = document.createElement("option");
-								opt.innerHTML = i;
-								opt.value = i;
-								elem1.appendChild(opt);
-							}
-						}
-					}
-				</script>
-				';
-				
-				echo $cadena;
 				?>         
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Asignar" name="submit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -423,7 +424,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE alumnos_evaluaciones_asignadas.idAsignadas!=0";
 //verifico que sea un administrador
-$z.=" AND alumnos_evaluaciones_asignadas.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND alumnos_evaluaciones_asignadas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Se aplican los filtros
@@ -461,18 +462,17 @@ alumnos_evaluaciones_asignadas.idAsignadas,
 alumnos_evaluaciones_asignadas.Programada_fecha,
 alumnos_evaluaciones_asignadas.N_preguntas,
 alumnos_evaluaciones_asignadas.N_Alumnos,
-alumnos_evaluaciones_asignadas.Semana,
 alumnos_evaluaciones_asignadas.N_Alumnos_Rep,
 alumnos_evaluaciones_asignadas.N_Alumnos_Falla,
 alumnos_evaluaciones_asignar.Nombre AS Asignar,
-alumnos_cursos.Nombre AS Curso,
+cursos_listado.Nombre AS Curso,
 quiz_listado.Nombre AS Quiz,
 core_sistemas.Nombre AS Sistema,
 alumnos_evaluaciones_asignadas.idQuiz
 
 FROM `alumnos_evaluaciones_asignadas`
 LEFT JOIN `alumnos_evaluaciones_asignar`   ON alumnos_evaluaciones_asignar.idAsignar   = alumnos_evaluaciones_asignadas.idAsignar
-LEFT JOIN `alumnos_cursos`                 ON alumnos_cursos.idCurso                   = alumnos_evaluaciones_asignadas.idCurso
+LEFT JOIN `cursos_listado`                 ON cursos_listado.idCurso                   = alumnos_evaluaciones_asignadas.idCurso
 LEFT JOIN `quiz_listado`                   ON quiz_listado.idQuiz                      = alumnos_evaluaciones_asignadas.idQuiz
 LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema                  = alumnos_evaluaciones_asignadas.idSistema
 ".$z."
@@ -494,12 +494,13 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUsers,$row );
 }
-
+//Verifico el tipo de usuario que esta ingresando
+$yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -515,9 +516,6 @@ array_push( $arrUsers,$row );
 		<div class="col-sm-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php
-				//Verifico el tipo de usuario que esta ingresando
-				$yz = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-				
 				//Se verifican si existen los datos
 				if(isset($idAsignar)) {          $x1  = $idAsignar;         }else{$x1  = '';}
 				if(isset($idCurso)) {            $x2  = $idCurso;           }else{$x2  = '';}
@@ -529,17 +527,17 @@ array_push( $arrUsers,$row );
 				if(isset($N_Alumnos_Rep)) {      $x8  = $N_Alumnos_Rep;     }else{$x8  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo Asignacion','idAsignar', $x1, 1, 'idAsignar', 'Nombre', 'alumnos_evaluaciones_asignar', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Grupo Alumnos','idCurso', $x2, 1, 'idCurso', 'Nombre', 'alumnos_cursos', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_select_filter('Cuestionario','idQuiz', $x3, 1, 'idQuiz', 'Nombre', 'quiz_listado', $yz, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Programada','Programada_fecha', $x4, 1);
-				$Form_Imputs->form_input_number('N° Preguntas','N_preguntas', $x5, 1);
-				$Form_Imputs->form_input_number('N° Alumnos','N_Alumnos', $x6, 1);
-				$Form_Imputs->form_input_number('N° Fallas','N_Alumnos_Falla', $x7, 1);
-				$Form_Imputs->form_input_number('N° Reintentos','N_Alumnos_Rep', $x8, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo Asignacion','idAsignar', $x1, 1, 'idAsignar', 'Nombre', 'alumnos_evaluaciones_asignar', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cursos Alumnos','idCurso', $x2, 1, 'idCurso', 'Nombre', 'cursos_listado', $yz, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cuestionario','idQuiz', $x3, 1, 'idQuiz', 'Nombre', 'quiz_listado', $yz, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x4, 1);
+				$Form_Inputs->form_input_number('N° Preguntas','N_preguntas', $x5, 1);
+				$Form_Inputs->form_input_number('N° Alumnos','N_Alumnos', $x6, 1);
+				$Form_Inputs->form_input_number('N° Fallas','N_Alumnos_Falla', $x7, 1);
+				$Form_Inputs->form_input_number('N° Reintentos','N_Alumnos_Rep', $x8, 1);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -557,7 +555,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Evaluaciones</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Evaluaciones</h5>	
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -571,64 +569,57 @@ array_push( $arrUsers,$row );
 						<th width="120">
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Tipo Asignacion</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Curso</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=curso_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=curso_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
-							</div>
-						</th>
-						<th>
-							<div class="pull-left">Semana</div>
-							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=semana_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=semana_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=curso_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=curso_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Cuestionario</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=evaluacion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=evaluacion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=evaluacion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=evaluacion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">N° Preguntas</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=npreg_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=npreg_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=npreg_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=npreg_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">N° Alumnos</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nalum_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nalum_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nalum_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nalum_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">N° Fallas</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nfallas_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nfallas_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nfallas_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nfallas_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">N° Reintentos</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=reint_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=reint_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=reint_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=reint_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -642,7 +633,6 @@ array_push( $arrUsers,$row );
 						<td><?php echo fecha_estandar($usuarios['Programada_fecha']); ?></td>		
 						<td><?php echo $usuarios['Asignar']; ?></td>		
 						<td><?php echo $usuarios['Curso']; ?></td>		
-						<td><?php echo $usuarios['Semana']; ?></td>		
 						<td><?php echo $usuarios['Quiz']; ?></td>		
 						<td style="text-align:center"><?php echo $usuarios['N_preguntas']; ?></td>		
 						<td style="text-align:center"><?php echo $usuarios['N_Alumnos']; ?></td>		
@@ -650,13 +640,14 @@ array_push( $arrUsers,$row );
 						<td style="text-align:center"><?php echo $usuarios['N_Alumnos_Rep']; ?></td>		
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['Sistema']; ?></td><?php } ?>
 						<td>
-							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_evaluacion.php?view='.$usuarios['idAsignadas']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&add='.$usuarios['idAsignadas']; ?>" title="Agregar Reintento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-user-plus"></i></a><?php } ?>
+							<div class="btn-group" style="width: 140px;" >
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_evaluacion.php?view='.simpleEncode($usuarios['idAsignadas'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&add='.$usuarios['idAsignadas']; ?>" title="Agregar Reintento para Reprobados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-user-plus" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&editFecha='.$usuarios['idAsignadas']; ?>" title="Editar Fecha Programada" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del_asignacion='.$usuarios['idAsignadas'];
+									$ubicacion = $location.'&del_asignacion='.simpleEncode($usuarios['idAsignadas'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la evaluacion '.$usuarios['Quiz'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Asignacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Asignacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	

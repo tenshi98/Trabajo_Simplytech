@@ -13,7 +13,7 @@ require_once 'core/Load.Utils.Web.php';
 //Cargamos la ubicacion 
 $original = "principal.php";
 $location = $original;
-
+header('Access-Control-Allow-Origin: *');
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -25,8 +25,26 @@ require_once 'core/Web.Header.Main.php';
 /*****************************************************************************************************************/
 /*                                        Se verifica la plataforma                                              */
 /*****************************************************************************************************************/
-echo obtenerNavegador();
-echo obtenerSistOperativo();
+$Navegador = obtenerNavegador();
+if(isset($Navegador)&&$Navegador!=''&&$Navegador!='Mozilla Firefox'&&$Navegador!='Google Chrome'){
+	echo '<div class="col-xs-12" style="margin-top:15px;">';
+		$Alert_Text  = 'Esta utilizando el navegador '.$Navegador;
+		$Alert_Text .= ', Se garantiza el funcionamiento en los navegadores Firefox o Chrome en sus ultimas versiones.';
+		alert_post_data(4,2,2, $Alert_Text);
+	echo '</div>';
+}
+
+$SistOp = obtenerSistOperativo();
+if(isset($SistOp)&&$SistOp!=''&&$SistOp!='Debian'&&$SistOp!='Ubuntu'&&$SistOp!='Slackware'&&$SistOp!='Linux Mint'&&$SistOp!='Gentoo'&&$SistOp!='ELementary OS'&&$SistOp!='Fedora'&&$SistOp!='Kubuntu'&&$SistOp!='Linux'&&$SistOp!='Windows 10'&&$SistOp!='Windows 8.1'&&$SistOp!='Windows 8'&&$SistOp!='Windows 7'){
+	echo '<div class="col-xs-12" style="margin-top:15px;">';
+		$Alert_Text  = 'Esta utilizando el sistema operativo '.$SistOp;
+		$Alert_Text .= ', Se garantiza el funcionamiento en los sistemas operativos Windows 10,Windows 8.1,';
+		$Alert_Text .= 'Windows 8,Windows 7,Debian,Ubuntu,Slackware,Linux Mint,Gentoo,ELementary OS,Fedora,Kubuntu,Linux.';
+		alert_post_data(4,2,2, $Alert_Text);
+	echo '</div>';
+}								
+
+
 /*****************************************************************************************************************/
 /*                                Se verifica si se ha cambiado la clave de inicio                               */
 /*****************************************************************************************************************/
@@ -64,6 +82,7 @@ if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313e
 
 			<?php include '1include_principal.php'; ?>
 			<?php widget_validator(); ?>
+			<?php widget_modal(80, 95); ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

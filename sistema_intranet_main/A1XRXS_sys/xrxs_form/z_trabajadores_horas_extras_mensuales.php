@@ -6,17 +6,21 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idFacturacion']) )  $idFacturacion   = $_POST['idFacturacion'];
-	if ( !empty($_POST['idSistema']) )      $idSistema       = $_POST['idSistema'];
-	if ( !empty($_POST['idUsuario']) )      $idUsuario       = $_POST['idUsuario'];
-	if ( !empty($_POST['fecha_auto']) )     $fecha_auto      = $_POST['fecha_auto'];
-	if ( !empty($_POST['Creacion_fecha']) ) $Creacion_fecha  = $_POST['Creacion_fecha'];
-	if ( !empty($_POST['Ano']) )            $Ano             = $_POST['Ano'];
-	if ( !empty($_POST['idMes']) )          $idMes           = $_POST['idMes'];
-	if ( !empty($_POST['Observaciones']) )  $Observaciones   = $_POST['Observaciones'];
+	if ( !empty($_POST['idFacturacion']) )     $idFacturacion      = $_POST['idFacturacion'];
+	if ( !empty($_POST['idSistema']) )         $idSistema          = $_POST['idSistema'];
+	if ( !empty($_POST['idUsuario']) )         $idUsuario          = $_POST['idUsuario'];
+	if ( !empty($_POST['fecha_auto']) )        $fecha_auto         = $_POST['fecha_auto'];
+	if ( !empty($_POST['Creacion_fecha']) )    $Creacion_fecha     = $_POST['Creacion_fecha'];
+	if ( !empty($_POST['Ano']) )               $Ano                = $_POST['Ano'];
+	if ( !empty($_POST['idMes']) )             $idMes              = $_POST['idMes'];
+	if ( !empty($_POST['Observaciones']) )     $Observaciones      = $_POST['Observaciones'];
 	
 	if ( !empty($_POST['idTrabajador']) )      $idTrabajador       = $_POST['idTrabajador'];
 	if ( !empty($_POST['horas_dia']) )         $horas_dia          = $_POST['horas_dia'];
@@ -31,11 +35,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idFacturacion':   if(empty($idFacturacion)){    $error['idFacturacion']    = 'error/No ha ingresado el id';}break;
 			case 'idSistema':       if(empty($idSistema)){        $error['idSistema']        = 'error/No ha ingresado el numero de documento';}break;
 			case 'idUsuario':       if(empty($idUsuario)){        $error['idUsuario']        = 'error/No ha seleccionado el usuario';}break;
@@ -51,6 +55,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -98,13 +106,13 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['horas_extras_mens_ing_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['horas_extras_mens_ing_basicos']['Ano']              = $Ano;
-				$_SESSION['horas_extras_mens_ing_basicos']['idMes']            = $idMes;
-				$_SESSION['horas_extras_mens_ing_basicos']['idSistema']        = $idSistema;
-				$_SESSION['horas_extras_mens_ing_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['horas_extras_mens_ing_basicos']['Observaciones']    = $Observaciones;
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']  = '';}
+				if(isset($Ano)&&$Ano!=''){                        $_SESSION['horas_extras_mens_ing_basicos']['Ano']              = $Ano;             }else{$_SESSION['horas_extras_mens_ing_basicos']['Ano']             = '';}
+				if(isset($idMes)&&$idMes!=''){                    $_SESSION['horas_extras_mens_ing_basicos']['idMes']            = $idMes;           }else{$_SESSION['horas_extras_mens_ing_basicos']['idMes']           = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['horas_extras_mens_ing_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['horas_extras_mens_ing_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['horas_extras_mens_ing_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['horas_extras_mens_ing_basicos']['idUsuario']       = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']      = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['horas_extras_mens_ing_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['horas_extras_mens_ing_basicos']['Observaciones']   = '';}
 				
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -161,14 +169,13 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['horas_extras_mens_ing_horas']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['horas_extras_mens_ing_basicos']['Ano']              = $Ano;
-				$_SESSION['horas_extras_mens_ing_basicos']['idMes']            = $idMes;
-				$_SESSION['horas_extras_mens_ing_basicos']['idSistema']        = $idSistema;
-				$_SESSION['horas_extras_mens_ing_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['horas_extras_mens_ing_basicos']['Observaciones']    = $Observaciones;
-				
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']  = '';}
+				if(isset($Ano)&&$Ano!=''){                        $_SESSION['horas_extras_mens_ing_basicos']['Ano']              = $Ano;             }else{$_SESSION['horas_extras_mens_ing_basicos']['Ano']             = '';}
+				if(isset($idMes)&&$idMes!=''){                    $_SESSION['horas_extras_mens_ing_basicos']['idMes']            = $idMes;           }else{$_SESSION['horas_extras_mens_ing_basicos']['idMes']           = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['horas_extras_mens_ing_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['horas_extras_mens_ing_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['horas_extras_mens_ing_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['horas_extras_mens_ing_basicos']['idUsuario']       = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']      = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['horas_extras_mens_ing_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['horas_extras_mens_ing_basicos']['Observaciones']   = '';}
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -187,23 +194,14 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idTrabajador)&&isset($porcentaje_dia)&&isset($idMes)&&isset($Ano)){
-				$ndata_1 = db_select_nrows ('idTrabajador', 'trabajadores_horas_extras_mensuales_facturacion_horas', '', "idTrabajador='".$idTrabajador."' AND idPorcentaje='".$porcentaje_dia."' AND idMes='".$idMes."' AND Ano='".$Ano."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idTrabajador', 'trabajadores_horas_extras_mensuales_facturacion_horas', '', "idTrabajador='".$idTrabajador."' AND idPorcentaje='".$porcentaje_dia."' AND idMes='".$idMes."' AND Ano='".$Ano."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/Las horas extras que esta tratando de ingresar ya fueron ingresadas previamente';}
 			/*******************************************************************/
 			//Trabajador
 			if(isset($idTrabajador)&&$idTrabajador!=''){
-				$query = "SELECT Nombre, ApellidoPat, ApellidoMat, Rut
-				FROM `trabajadores_listado`
-				WHERE idTrabajador=".$idTrabajador;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					$error['idTrabajador'] = 'error/No existe el trabajador seleccionado';				
-				}
-				$rowTrabajador = mysqli_fetch_assoc ($resultado);
+				$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat, Rut', 'trabajadores_listado', '', 'idTrabajador='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}else{
 				$error['idTrabajador'] = 'error/No ha seleccionado trabajador';	
 			}
@@ -214,13 +212,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/****************************/
 				//Porcentaje
-				$query = "SELECT Porcentaje
-				FROM `core_horas_extras_porcentajes` 
-				WHERE idPorcentaje=".$porcentaje_dia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				$rowPorcentaje = mysqli_fetch_assoc ($resultado);
-	
+				$rowPorcentaje = db_select_data (false, 'Porcentaje', 'core_horas_extras_porcentajes', '', 'idPorcentaje='.$porcentaje_dia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Horas trabajadores			
 				$_SESSION['horas_extras_mens_ing_horas'][$idTrabajador]['TrabajadorNombre']                   = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 				$_SESSION['horas_extras_mens_ing_horas'][$idTrabajador]['TrabajadorRut']                      = $rowTrabajador['Rut'];
@@ -252,39 +245,6 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;
 /*******************************************************************************************************************/		
-		case 'add_obs_ing_nd':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['horas_extras_mens_ing_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing_nd':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['horas_extras_mens_ing_temporal'] = $_SESSION['horas_extras_mens_ing_basicos']['Observaciones'];
-			$_SESSION['horas_extras_mens_ing_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_ing':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -306,7 +266,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -409,13 +369,13 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['horas_extras_mens_ing_basicos'])){
-				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']) or $_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
-				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['Ano']) or $_SESSION['horas_extras_mens_ing_basicos']['Ano']=='' ){                       $error['Ano']              = 'error/No ha seleccionado el año de creacion';}
-				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['idMes']) or $_SESSION['horas_extras_mens_ing_basicos']['idMes']=='' ){                   $error['idMes']            = 'error/No ha seleccionado el mes de creacion';}
-				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['idSistema']) or $_SESSION['horas_extras_mens_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['idUsuario']) or $_SESSION['horas_extras_mens_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']) or $_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
-				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['Observaciones']) or $_SESSION['horas_extras_mens_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']) OR $_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['Ano']) OR $_SESSION['horas_extras_mens_ing_basicos']['Ano']=='' ){                       $error['Ano']              = 'error/No ha seleccionado el año de creacion';}
+				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['idMes']) OR $_SESSION['horas_extras_mens_ing_basicos']['idMes']=='' ){                   $error['idMes']            = 'error/No ha seleccionado el mes de creacion';}
+				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['idSistema']) OR $_SESSION['horas_extras_mens_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['idUsuario']) OR $_SESSION['horas_extras_mens_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']) OR $_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
+				if(!isset($_SESSION['horas_extras_mens_ing_basicos']['Observaciones']) OR $_SESSION['horas_extras_mens_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 						
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a las horas extras';
@@ -461,7 +421,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `trabajadores_horas_extras_mensuales_facturacion` (idSistema, idUsuario, fecha_auto,
 				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Ano, idMes, Observaciones) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -513,7 +473,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									$query  = "INSERT INTO `trabajadores_horas_extras_mensuales_facturacion_horas` (idFacturacion, idSistema,
 									idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Ano, idMes, idTrabajador,
 									N_Horas, idPorcentaje, idUso) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -558,7 +518,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `trabajadores_horas_extras_mensuales_facturacion_archivos` (idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Ano, idMes, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta

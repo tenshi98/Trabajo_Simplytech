@@ -47,8 +47,13 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrSistemas,$row );
 }
 
-//Se limitan los permisos a las bodegas asignadas
-$x2 ="idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+
+//se verifica el tipo de usuario
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+	$x2 = "idUsuario>=0";		
+}else{
+	$x2 = "idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+}
 //Variables
 $join_1  = "INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion_existencias.idBodega";
 $join_2  = "INNER JOIN usuarios_bodegas_insumos ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_facturacion_existencias.idBodega";
@@ -438,7 +443,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Sistemas</h5>
 			<ul class="nav nav-tabs pull-right">
 				<?php 
@@ -448,12 +453,12 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 				foreach ($arrSistemas as $sistema) { 
 					
 					if($sis_count==1){
-						echo '<li class="active"><a href="#tab_sis_'.$sis_count.'" data-toggle="tab">'.$sistema['Nombre'].'</a></li>';
+						echo '<li class="active"><a href="#tab_sis_'.$sis_count.'" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> '.$sistema['Nombre'].'</a></li>';
 					}else{
 						if($sis_count==4){
-							echo '<li class="dropdown"><a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a><ul class="dropdown-menu" role="menu">';
+							echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';
 						}
-						echo '<li class=""><a href="#tab_sis_'.$sis_count.'" data-toggle="tab">'.$sistema['Nombre'].'</a></li>';
+						echo '<li class=""><a href="#tab_sis_'.$sis_count.'" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> '.$sistema['Nombre'].'</a></li>';
 					}
 					$sis_count++;	
 				} 
@@ -478,22 +483,22 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 					<div class="col-sm-12">
 						<div class="box">
 							<header>
-								<div class="icons"><i class="fa fa-table"></i></div>
+								<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 								<h5>Bodega de Productos</h5>
 								<ul class="nav nav-tabs pull-right">
-									<li class="active"><a href="#tab_prod_1_<?php echo $sis_count; ?>" data-toggle="tab">Resumen</a></li>
-									<li class=""><a href="#tab_prod_2_<?php echo $sis_count; ?>" data-toggle="tab">Compras</a></li>
+									<li class="active"><a href="#tab_prod_1_<?php echo $sis_count; ?>" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+									<li class=""><a href="#tab_prod_2_<?php echo $sis_count; ?>" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Compras</a></li>
 									<li class="dropdown">
-										<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+										<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 										<ul class="dropdown-menu" role="menu">
-											<?php if($s_prod_Ventas=='true'){ ?>            <li class=""><a href="#tab_prod_3_<?php echo $sis_count; ?>" data-toggle="tab">Ventas</a></li><?php } ?>
-											<?php if($s_prod_Gastos=='true'){ ?>            <li class=""><a href="#tab_prod_4_<?php echo $sis_count; ?>" data-toggle="tab">Gastos</a></li><?php } ?>
-											<?php if($s_prod_Traspasos=='true'){ ?>         <li class=""><a href="#tab_prod_5_<?php echo $sis_count; ?>" data-toggle="tab">Traspasos</a></li><?php } ?>
-											<?php if($s_prod_Transformacion=='true'){ ?>    <li class=""><a href="#tab_prod_6_<?php echo $sis_count; ?>" data-toggle="tab">Transformacion</a></li><?php } ?>
-											<?php if($s_prod_Traspaso_empresa=='true'){ ?>  <li class=""><a href="#tab_prod_7_<?php echo $sis_count; ?>" data-toggle="tab">Traspaso otra empresa</a></li><?php } ?>
-											<?php if($s_prod_Gasto_OT=='true'){ ?>          <li class=""><a href="#tab_prod_8_<?php echo $sis_count; ?>" data-toggle="tab">Gasto OT</a></li><?php } ?>
-											<?php if($s_prod_Traspaso_Manual=='true'){ ?>   <li class=""><a href="#tab_prod_9_<?php echo $sis_count; ?>" data-toggle="tab">Traspaso manual otra empresa</a></li><?php } ?>
-											<?php if($s_prod_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab_prod_10_<?php echo $sis_count; ?>" data-toggle="tab">Ingreso Manual</a></li><?php } ?>
+											<?php if($s_prod_Ventas=='true'){ ?>            <li class=""><a href="#tab_prod_3_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ventas</a></li><?php } ?>
+											<?php if($s_prod_Gastos=='true'){ ?>            <li class=""><a href="#tab_prod_4_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Gastos</a></li><?php } ?>
+											<?php if($s_prod_Traspasos=='true'){ ?>         <li class=""><a href="#tab_prod_5_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspasos</a></li><?php } ?>
+											<?php if($s_prod_Transformacion=='true'){ ?>    <li class=""><a href="#tab_prod_6_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Transformacion</a></li><?php } ?>
+											<?php if($s_prod_Traspaso_empresa=='true'){ ?>  <li class=""><a href="#tab_prod_7_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspaso otra empresa</a></li><?php } ?>
+											<?php if($s_prod_Gasto_OT=='true'){ ?>          <li class=""><a href="#tab_prod_8_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Gasto OT</a></li><?php } ?>
+											<?php if($s_prod_Traspaso_Manual=='true'){ ?>   <li class=""><a href="#tab_prod_9_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspaso manual otra empresa</a></li><?php } ?>
+											<?php if($s_prod_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab_prod_10_<?php echo $sis_count; ?>" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ingreso Manual</a></li><?php } ?>
 											
 										</ul>
 									</li>           
@@ -1011,22 +1016,22 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 					<div class="col-sm-12">
 						<div class="box">
 							<header>
-								<div class="icons"><i class="fa fa-table"></i></div>
+								<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 								<h5>Bodega de Insumos</h5>
 								<ul class="nav nav-tabs pull-right">
-									<li class="active"><a href="#tab_ins_1_<?php echo $sis_count; ?>" data-toggle="tab">Resumen</a></li>
-									<li class=""><a href="#tab_ins_2_<?php echo $sis_count; ?>" data-toggle="tab">Compras</a></li>
+									<li class="active"><a href="#tab_ins_1_<?php echo $sis_count; ?>" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+									<li class=""><a href="#tab_ins_2_<?php echo $sis_count; ?>" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Compras</a></li>
 									<li class="dropdown">
-										<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+										<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 										<ul class="dropdown-menu" role="menu">
-											<?php if($s_ins_Ventas=='true'){ ?>            <li class=""><a href="#tab_ins_3_<?php echo $sis_count; ?>" data-toggle="tab">Ventas</a></li><?php } ?>
-											<?php if($s_ins_Gastos=='true'){ ?>            <li class=""><a href="#tab_ins_4_<?php echo $sis_count; ?>" data-toggle="tab">Gastos</a></li><?php } ?>
-											<?php if($s_ins_Traspasos=='true'){ ?>         <li class=""><a href="#tab_ins_5_<?php echo $sis_count; ?>" data-toggle="tab">Traspasos</a></li><?php } ?>
-											<?php if($s_ins_Transformacion=='true'){ ?>    <li class=""><a href="#tab_ins_6_<?php echo $sis_count; ?>" data-toggle="tab">Transformacion</a></li><?php } ?>
-											<?php if($s_ins_Traspaso_empresa=='true'){ ?>  <li class=""><a href="#tab_ins_7_<?php echo $sis_count; ?>" data-toggle="tab">Traspaso otra empresa</a></li><?php } ?>
-											<?php if($s_ins_Gasto_OT=='true'){ ?>          <li class=""><a href="#tab_ins_8_<?php echo $sis_count; ?>" data-toggle="tab">Gasto OT</a></li><?php } ?>
-											<?php if($s_ins_Traspaso_Manual=='true'){ ?>   <li class=""><a href="#tab_ins_9_<?php echo $sis_count; ?>" data-toggle="tab">Traspaso manual otra empresa</a></li><?php } ?>
-											<?php if($s_ins_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab_ins_10_<?php echo $sis_count; ?>" data-toggle="tab">Ingreso Manual</a></li><?php } ?>
+											<?php if($s_ins_Ventas=='true'){ ?>            <li class=""><a href="#tab_ins_3_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ventas</a></li><?php } ?>
+											<?php if($s_ins_Gastos=='true'){ ?>            <li class=""><a href="#tab_ins_4_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Gastos</a></li><?php } ?>
+											<?php if($s_ins_Traspasos=='true'){ ?>         <li class=""><a href="#tab_ins_5_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspasos</a></li><?php } ?>
+											<?php if($s_ins_Transformacion=='true'){ ?>    <li class=""><a href="#tab_ins_6_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Transformacion</a></li><?php } ?>
+											<?php if($s_ins_Traspaso_empresa=='true'){ ?>  <li class=""><a href="#tab_ins_7_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspaso otra empresa</a></li><?php } ?>
+											<?php if($s_ins_Gasto_OT=='true'){ ?>          <li class=""><a href="#tab_ins_8_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Gasto OT</a></li><?php } ?>
+											<?php if($s_ins_Traspaso_Manual=='true'){ ?>   <li class=""><a href="#tab_ins_9_<?php echo $sis_count; ?>"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspaso manual otra empresa</a></li><?php } ?>
+											<?php if($s_ins_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab_ins_10_<?php echo $sis_count; ?>" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ingreso Manual</a></li><?php } ?>
 											
 										</ul>
 									</li>           
@@ -1544,15 +1549,15 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 					<div class="col-sm-12">
 						<div class="box">
 							<header>
-								<div class="icons"><i class="fa fa-table"></i></div>
+								<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 								<h5>Bodega de Arriendos</h5>
 								<ul class="nav nav-tabs pull-right">
-									<li class="active"><a href="#tab_arr_1_<?php echo $sis_count; ?>" data-toggle="tab">Resumen</a></li>
-									<li class=""><a href="#tab_arr_2_<?php echo $sis_count; ?>" data-toggle="tab">Compras</a></li>
+									<li class="active"><a href="#tab_arr_1_<?php echo $sis_count; ?>" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+									<li class=""><a href="#tab_arr_2_<?php echo $sis_count; ?>" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Compras</a></li>
 									<li class="dropdown">
-										<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+										<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 										<ul class="dropdown-menu" role="menu">
-											<?php if($s_arri_Ventas=='true'){ ?>            <li class=""><a href="#tab_arr_3_<?php echo $sis_count; ?>" data-toggle="tab">Ventas</a></li><?php } ?>
+											<?php if($s_arri_Ventas=='true'){ ?>            <li class=""><a href="#tab_arr_3_<?php echo $sis_count; ?>" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ventas</a></li><?php } ?>
 										</ul>
 									</li>           
 								</ul>	

@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -50,11 +54,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idFacturacion':   if(empty($idFacturacion)){    $error['idFacturacion']    = 'error/No ha ingresado el id';}break;
 			case 'idSistema':       if(empty($idSistema)){        $error['idSistema']        = 'error/No ha ingresado el numero de documento';}break;
 			case 'idUsuario':       if(empty($idUsuario)){        $error['idUsuario']        = 'error/No ha seleccionado la bodega';}break;
@@ -94,6 +98,12 @@ if( ! defined('XMBCXRXSKGC')) {
 		}
 	}	
 /*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	
+/*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
@@ -118,13 +128,13 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_3 = 0;
 			//Se verifica si el dato existe
 			if(isset($idTrabajador)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'boleta_honorarios_facturacion', '', "idTrabajador='".$idTrabajador."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'boleta_honorarios_facturacion', '', "idTrabajador='".$idTrabajador."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($idOcompra)&&$idOcompra!=''){
 				//Se verifica la existencia de la ocompra
-				$ndata_2 = db_select_nrows ('idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."' AND idEstado='2'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."' AND idEstado='2'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se verifica si aun hay datos pendientes
-				$ndata_3 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_boletas', '', "idUso=1 AND idOcompra = ".$idOcompra." AND idTrabajador = ".$idTrabajador." AND N_Doc = ".$N_Doc."", $dbConn);
+				$ndata_3 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_boletas', '', "idUso=1 AND idOcompra = ".$idOcompra." AND idTrabajador = ".$idTrabajador." AND N_Doc = ".$N_Doc."", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -162,46 +172,34 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['boleta_ing_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['boleta_ing_basicos']['idTrabajador']     = $idTrabajador;
-				$_SESSION['boleta_ing_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['boleta_ing_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['boleta_ing_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['boleta_ing_basicos']['idSistema']        = $idSistema;
-				$_SESSION['boleta_ing_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['boleta_ing_basicos']['idTipo']           = $idTipo;
-				$_SESSION['boleta_ing_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['boleta_ing_basicos']['idEstado']         = $idEstado;
+				if(isset($idTrabajador)&&$idTrabajador!=''){      $_SESSION['boleta_ing_basicos']['idTrabajador']     = $idTrabajador;    }else{$_SESSION['boleta_ing_basicos']['idTrabajador']    = '';}
+				if(isset($N_Doc)&&$N_Doc!=''){                    $_SESSION['boleta_ing_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['boleta_ing_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['boleta_ing_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['boleta_ing_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['boleta_ing_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['boleta_ing_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['boleta_ing_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['boleta_ing_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['boleta_ing_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['boleta_ing_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['boleta_ing_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['boleta_ing_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['boleta_ing_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['boleta_ing_basicos']['fecha_auto']      = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['boleta_ing_basicos']['idEstado']         = $idEstado;        }else{$_SESSION['boleta_ing_basicos']['idEstado']        = '';}
 				
+				/*******************************************************/
+				if(isset($idSistema)&&$idSistema!=''){
+					//Obtengo el porcentaje de retencion
+					$rowImpuesto = db_select_data (false, 'Porcentaje_Ret_Boletas', 'sistema_leyes_fiscales', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['boleta_ing_basicos']['Porc_Impuesto'] = $rowImpuesto['Porcentaje_Ret_Boletas'];
+				}else{
+					//se guarda dato
+					$_SESSION['boleta_ing_basicos']['Porc_Impuesto'] = '';
+				}
 				/*******************************************************/
 				//Si existe una Orden de compra relacionada
 				if(isset($idOcompra)&&$idOcompra!=''){
 					
 					$_SESSION['boleta_ing_basicos']['idOcompra'] = $idOcompra;
 					
-					// Se trae un listado con todos las boletas de los trabajadores
 					$arrBoletas = array();
-					$query = "SELECT idExistencia, Descripcion, Valor
-					FROM `ocompra_listado_existencias_boletas` 
-					WHERE idUso=1 
-					AND idOcompra = ".$idOcompra."
-					AND idTrabajador = ".$idTrabajador."
-					AND N_Doc = ".$N_Doc." ";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrBoletas,$row );
-					} 
+					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor', 'ocompra_listado_existencias_boletas', '', 'idUso=1 AND idOcompra = '.$idOcompra.' AND idTrabajador = '.$idTrabajador.' AND N_Doc = '.$N_Doc, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se guardan los datos
 					$bvar = 1;
@@ -219,23 +217,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `boleta_honorarios_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -243,28 +226,62 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					//Se traen todos los datos del trabajador
+					$SIS_query = '
+					trabajadores_listado.Nombre, 
+					trabajadores_listado.ApellidoPat, 
+					trabajadores_listado.ApellidoMat, 
+					trabajadores_listado.idCentroCosto, 
+					trabajadores_listado.idLevel_1, 
+					trabajadores_listado.idLevel_2, 
+					trabajadores_listado.idLevel_3, 
+					trabajadores_listado.idLevel_4, 
+					trabajadores_listado.idLevel_5,
+					centrocosto_listado.Nombre AS CentroCosto_Nombre,
+					centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
+					centrocosto_listado_level_2.Nombre AS CentroCosto_Level_2,
+					centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
+					centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
+					centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5';
+					$SIS_join  = '
+					LEFT JOIN `centrocosto_listado`              ON centrocosto_listado.idCentroCosto         = trabajadores_listado.idCentroCosto
+					LEFT JOIN `centrocosto_listado_level_1`      ON centrocosto_listado_level_1.idLevel_1     = trabajadores_listado.idLevel_1
+					LEFT JOIN `centrocosto_listado_level_2`      ON centrocosto_listado_level_2.idLevel_2     = trabajadores_listado.idLevel_2
+					LEFT JOIN `centrocosto_listado_level_3`      ON centrocosto_listado_level_3.idLevel_3     = trabajadores_listado.idLevel_3
+					LEFT JOIN `centrocosto_listado_level_4`      ON centrocosto_listado_level_4.idLevel_4     = trabajadores_listado.idLevel_4
+					LEFT JOIN `centrocosto_listado_level_5`      ON centrocosto_listado_level_5.idLevel_5     = trabajadores_listado.idLevel_5
+					';
+					$SIS_where = 'trabajadores_listado.idTrabajador = '.$idTrabajador;
+					$rowTrabajador = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
+				
+					$_SESSION['boleta_ing_basicos']['idCentroCosto']        = $rowTrabajador['idCentroCosto'];       //idCentroCosto
+					$_SESSION['boleta_ing_basicos']['idLevel_1']            = $rowTrabajador['idLevel_1'];           //idLevel_1
+					$_SESSION['boleta_ing_basicos']['idLevel_2']            = $rowTrabajador['idLevel_2'];           //idLevel_2
+					$_SESSION['boleta_ing_basicos']['idLevel_3']            = $rowTrabajador['idLevel_3'];           //idLevel_3
+					$_SESSION['boleta_ing_basicos']['idLevel_4']            = $rowTrabajador['idLevel_4'];           //idLevel_4
+					$_SESSION['boleta_ing_basicos']['idLevel_5']            = $rowTrabajador['idLevel_5'];           //idLevel_5
+					
+					$_SESSION['boleta_ing_basicos']['CentroCosto']          = '';       //CentroCosto
+					if(isset($rowTrabajador['CentroCosto_Nombre'])&&$rowTrabajador['CentroCosto_Nombre']!=''){    $_SESSION['boleta_ing_basicos']['CentroCosto']  = $rowTrabajador['CentroCosto_Nombre'];}
+					if(isset($rowTrabajador['CentroCosto_Level_1'])&&$rowTrabajador['CentroCosto_Level_1']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_1'];}
+					if(isset($rowTrabajador['CentroCosto_Level_2'])&&$rowTrabajador['CentroCosto_Level_2']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_2'];}
+					if(isset($rowTrabajador['CentroCosto_Level_3'])&&$rowTrabajador['CentroCosto_Level_3']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_3'];}
+					if(isset($rowTrabajador['CentroCosto_Level_4'])&&$rowTrabajador['CentroCosto_Level_4']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_4'];}
+					if(isset($rowTrabajador['CentroCosto_Level_5'])&&$rowTrabajador['CentroCosto_Level_5']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_5'];}
+					
 				}else{
-					$_SESSION['boleta_ing_basicos']['Trabajador'] = '';
+					$_SESSION['boleta_ing_basicos']['Trabajador']     = '';
+					$_SESSION['boleta_ing_basicos']['idCentroCosto']  = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_1']      = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_2']      = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_3']      = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_4']      = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_5']      = '';
+					$_SESSION['boleta_ing_basicos']['CentroCosto']    = '';      
+					
 				}
 				
 				
@@ -321,13 +338,13 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_3 = 0;
 			//Se verifica si el dato existe
 			if(isset($idTrabajador)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'boleta_honorarios_facturacion', '', "idTrabajador='".$idTrabajador."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'boleta_honorarios_facturacion', '', "idTrabajador='".$idTrabajador."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($idOcompra)&&$idOcompra!=''){
 				//Se verifica la existencia de la ocompra
-				$ndata_2 = db_select_nrows ('idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."' AND idEstado='2'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."' AND idEstado='2'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se verifica si aun hay datos pendientes
-				$ndata_3 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_boletas', '', "idUso=1 AND idOcompra = ".$idOcompra." AND idTrabajador = ".$idTrabajador." AND N_Doc = ".$N_Doc."", $dbConn);
+				$ndata_3 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_boletas', '', "idUso=1 AND idOcompra = ".$idOcompra." AND idTrabajador = ".$idTrabajador." AND N_Doc = ".$N_Doc."", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -349,46 +366,34 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['boleta_ing_servicios']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['boleta_ing_basicos']['idTrabajador']     = $idTrabajador;
-				$_SESSION['boleta_ing_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['boleta_ing_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['boleta_ing_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['boleta_ing_basicos']['idSistema']        = $idSistema;
-				$_SESSION['boleta_ing_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['boleta_ing_basicos']['idTipo']           = $idTipo;
-				$_SESSION['boleta_ing_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['boleta_ing_basicos']['idEstado']         = $idEstado;
+				if(isset($idTrabajador)&&$idTrabajador!=''){      $_SESSION['boleta_ing_basicos']['idTrabajador']     = $idTrabajador;    }else{$_SESSION['boleta_ing_basicos']['idTrabajador']    = '';}
+				if(isset($N_Doc)&&$N_Doc!=''){                    $_SESSION['boleta_ing_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['boleta_ing_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['boleta_ing_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['boleta_ing_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['boleta_ing_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['boleta_ing_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['boleta_ing_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['boleta_ing_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['boleta_ing_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['boleta_ing_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['boleta_ing_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['boleta_ing_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['boleta_ing_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['boleta_ing_basicos']['fecha_auto']      = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['boleta_ing_basicos']['idEstado']         = $idEstado;        }else{$_SESSION['boleta_ing_basicos']['idEstado']        = '';}
 				
+				/*******************************************************/
+				if(isset($idSistema)&&$idSistema!=''){
+					//Obtengo el porcentaje de retencion
+					$rowImpuesto = db_select_data (false, 'Porcentaje_Ret_Boletas', 'sistema_leyes_fiscales', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['boleta_ing_basicos']['Porc_Impuesto'] = $rowImpuesto['Porcentaje_Ret_Boletas'];
+				}else{
+					//se guarda dato
+					$_SESSION['boleta_ing_basicos']['Porc_Impuesto'] = '';
+				}
 				/*******************************************************/
 				//Si existe una Orden de compra relacionada
 				if(isset($idOcompra)&&$idOcompra!=''){
 					
-					$_SESSION['boleta_ing_basicos']['idOcompra']        = $idOcompra;
+					$_SESSION['boleta_ing_basicos']['idOcompra'] = $idOcompra;
 					
-					// Se trae un listado con todos las boletas de los trabajadores
 					$arrBoletas = array();
-					$query = "SELECT idExistencia, Descripcion, Valor
-					FROM `ocompra_listado_existencias_boletas` 
-					WHERE idUso=1 
-					AND idOcompra = ".$idOcompra."
-					AND idTrabajador = ".$idTrabajador."
-					AND N_Doc = ".$N_Doc." ";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrBoletas,$row );
-					} 
+					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor', 'ocompra_listado_existencias_boletas', '', 'idUso=1 AND idOcompra = '.$idOcompra.' AND idTrabajador = '.$idTrabajador.' AND N_Doc = '.$N_Doc, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se guardan los datos
 					$bvar = 1;
@@ -406,23 +411,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `boleta_honorarios_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -430,28 +420,62 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					//Se traen todos los datos del trabajador
+					$SIS_query = '
+					trabajadores_listado.Nombre, 
+					trabajadores_listado.ApellidoPat, 
+					trabajadores_listado.ApellidoMat, 
+					trabajadores_listado.idCentroCosto, 
+					trabajadores_listado.idLevel_1, 
+					trabajadores_listado.idLevel_2, 
+					trabajadores_listado.idLevel_3, 
+					trabajadores_listado.idLevel_4, 
+					trabajadores_listado.idLevel_5,
+					centrocosto_listado.Nombre AS CentroCosto_Nombre,
+					centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
+					centrocosto_listado_level_2.Nombre AS CentroCosto_Level_2,
+					centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
+					centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
+					centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5';
+					$SIS_join  = '
+					LEFT JOIN `centrocosto_listado`              ON centrocosto_listado.idCentroCosto         = trabajadores_listado.idCentroCosto
+					LEFT JOIN `centrocosto_listado_level_1`      ON centrocosto_listado_level_1.idLevel_1     = trabajadores_listado.idLevel_1
+					LEFT JOIN `centrocosto_listado_level_2`      ON centrocosto_listado_level_2.idLevel_2     = trabajadores_listado.idLevel_2
+					LEFT JOIN `centrocosto_listado_level_3`      ON centrocosto_listado_level_3.idLevel_3     = trabajadores_listado.idLevel_3
+					LEFT JOIN `centrocosto_listado_level_4`      ON centrocosto_listado_level_4.idLevel_4     = trabajadores_listado.idLevel_4
+					LEFT JOIN `centrocosto_listado_level_5`      ON centrocosto_listado_level_5.idLevel_5     = trabajadores_listado.idLevel_5
+					';
+					$SIS_where = 'trabajadores_listado.idTrabajador = '.$idTrabajador;
+					$rowTrabajador = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
+				
+					$_SESSION['boleta_ing_basicos']['idCentroCosto']        = $rowTrabajador['idCentroCosto'];       //idCentroCosto
+					$_SESSION['boleta_ing_basicos']['idLevel_1']            = $rowTrabajador['idLevel_1'];           //idLevel_1
+					$_SESSION['boleta_ing_basicos']['idLevel_2']            = $rowTrabajador['idLevel_2'];           //idLevel_2
+					$_SESSION['boleta_ing_basicos']['idLevel_3']            = $rowTrabajador['idLevel_3'];           //idLevel_3
+					$_SESSION['boleta_ing_basicos']['idLevel_4']            = $rowTrabajador['idLevel_4'];           //idLevel_4
+					$_SESSION['boleta_ing_basicos']['idLevel_5']            = $rowTrabajador['idLevel_5'];           //idLevel_5
+					
+					$_SESSION['boleta_ing_basicos']['CentroCosto']          = '';       //CentroCosto
+					if(isset($rowTrabajador['CentroCosto_Nombre'])&&$rowTrabajador['CentroCosto_Nombre']!=''){    $_SESSION['boleta_ing_basicos']['CentroCosto']  = $rowTrabajador['CentroCosto_Nombre'];}
+					if(isset($rowTrabajador['CentroCosto_Level_1'])&&$rowTrabajador['CentroCosto_Level_1']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_1'];}
+					if(isset($rowTrabajador['CentroCosto_Level_2'])&&$rowTrabajador['CentroCosto_Level_2']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_2'];}
+					if(isset($rowTrabajador['CentroCosto_Level_3'])&&$rowTrabajador['CentroCosto_Level_3']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_3'];}
+					if(isset($rowTrabajador['CentroCosto_Level_4'])&&$rowTrabajador['CentroCosto_Level_4']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_4'];}
+					if(isset($rowTrabajador['CentroCosto_Level_5'])&&$rowTrabajador['CentroCosto_Level_5']!=''){  $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_5'];}
+					
 				}else{
-					$_SESSION['boleta_ing_basicos']['Trabajador'] = '';
+					$_SESSION['boleta_ing_basicos']['Trabajador']     = '';
+					$_SESSION['boleta_ing_basicos']['idCentroCosto']  = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_1']      = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_2']      = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_3']      = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_4']      = '';
+					$_SESSION['boleta_ing_basicos']['idLevel_5']      = '';
+					$_SESSION['boleta_ing_basicos']['CentroCosto']    = '';      
+					
 				}
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -522,39 +546,6 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;
 /*******************************************************************************************************************/		
-		case 'add_obs_ing_nd':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['boleta_ing_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing_nd':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['boleta_ing_temporal'] = $_SESSION['boleta_ing_basicos']['Observaciones'];
-			$_SESSION['boleta_ing_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_ing':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -576,7 +567,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -679,16 +670,17 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['boleta_ing_basicos'])){
-				if(!isset($_SESSION['boleta_ing_basicos']['idTrabajador']) or $_SESSION['boleta_ing_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
-				if(!isset($_SESSION['boleta_ing_basicos']['N_Doc']) or $_SESSION['boleta_ing_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['boleta_ing_basicos']['Creacion_fecha']) or $_SESSION['boleta_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
-				if(!isset($_SESSION['boleta_ing_basicos']['Observaciones']) or $_SESSION['boleta_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['boleta_ing_basicos']['idSistema']) or $_SESSION['boleta_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['boleta_ing_basicos']['idUsuario']) or $_SESSION['boleta_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['boleta_ing_basicos']['idTipo']) or $_SESSION['boleta_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de boleta';}
-				if(!isset($_SESSION['boleta_ing_basicos']['fecha_auto']) or $_SESSION['boleta_ing_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
-				if(!isset($_SESSION['boleta_ing_basicos']['idEstado']) or $_SESSION['boleta_ing_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
-					
+				if(!isset($_SESSION['boleta_ing_basicos']['idTrabajador']) OR $_SESSION['boleta_ing_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
+				if(!isset($_SESSION['boleta_ing_basicos']['N_Doc']) OR $_SESSION['boleta_ing_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
+				if(!isset($_SESSION['boleta_ing_basicos']['Creacion_fecha']) OR $_SESSION['boleta_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['boleta_ing_basicos']['Observaciones']) OR $_SESSION['boleta_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['boleta_ing_basicos']['idSistema']) OR $_SESSION['boleta_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['boleta_ing_basicos']['idUsuario']) OR $_SESSION['boleta_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['boleta_ing_basicos']['idTipo']) OR $_SESSION['boleta_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de boleta';}
+				if(!isset($_SESSION['boleta_ing_basicos']['fecha_auto']) OR $_SESSION['boleta_ing_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
+				if(!isset($_SESSION['boleta_ing_basicos']['idEstado']) OR $_SESSION['boleta_ing_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
+				if(!isset($_SESSION['boleta_ing_basicos']['Porc_Impuesto']) OR $_SESSION['boleta_ing_basicos']['Porc_Impuesto']=='' ){   $error['Porc_Impuesto']    = 'error/No hay un porcentaje de retencion configurado';}
+						
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la boleta de honorarios';
 			}
@@ -735,12 +727,21 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($_SESSION['boleta_ing_basicos']['valor_imp'])&&$_SESSION['boleta_ing_basicos']['valor_imp']!=''){                $a .= ",'".$_SESSION['boleta_ing_basicos']['valor_imp']."'";       }else{$a .= ",''";}
 				if(isset($_SESSION['boleta_ing_basicos']['valor_total'])&&$_SESSION['boleta_ing_basicos']['valor_total']!=''){            $a .= ",'".$_SESSION['boleta_ing_basicos']['valor_total']."'";     }else{$a .= ",''";}
 				if(isset($_SESSION['boleta_ing_basicos']['idOcompra'])&&$_SESSION['boleta_ing_basicos']['idOcompra']!=''){                $a .= ",'".$_SESSION['boleta_ing_basicos']['idOcompra']."'";       }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idCentroCosto'])&&$_SESSION['boleta_ing_basicos']['idCentroCosto']!=''){        $a .= ",'".$_SESSION['boleta_ing_basicos']['idCentroCosto']."'";   }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_1'])&&$_SESSION['boleta_ing_basicos']['idLevel_1']!=''){                $a .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_1']."'";       }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_2'])&&$_SESSION['boleta_ing_basicos']['idLevel_2']!=''){                $a .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_2']."'";       }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_3'])&&$_SESSION['boleta_ing_basicos']['idLevel_3']!=''){                $a .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_3']."'";       }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_4'])&&$_SESSION['boleta_ing_basicos']['idLevel_4']!=''){                $a .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_4']."'";       }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_5'])&&$_SESSION['boleta_ing_basicos']['idLevel_5']!=''){                $a .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_5']."'";       }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['CentroCosto'])&&$_SESSION['boleta_ing_basicos']['CentroCosto']!=''){            $a .= ",'".$_SESSION['boleta_ing_basicos']['CentroCosto']."'";     }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['Porc_Impuesto'])&&$_SESSION['boleta_ing_basicos']['Porc_Impuesto']!=''){        $a .= ",'".$_SESSION['boleta_ing_basicos']['Porc_Impuesto']."'";   }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `boleta_honorarios_facturacion` (idSistema, idUsuario, idTipo, Creacion_fecha,
 				Creacion_Semana, Creacion_mes, Creacion_ano, N_Doc, Observaciones, idTrabajador, idEstado, fecha_auto,
-				ValorNeto, Impuesto, ValorTotal, idOcompra) 
-				VALUES ({$a} )";
+				ValorNeto, Impuesto, ValorTotal, idOcompra, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4,
+				idLevel_5, CentroCosto, Porcentaje_Ret_Boletas) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -783,7 +784,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `boleta_honorarios_facturacion_servicios` (idFacturacion, idSistema, idUsuario,
 							idTipo, Creacion_fecha, Creacion_mes, Creacion_ano, Nombre, vTotal, idExistencia ) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -839,7 +840,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `boleta_honorarios_facturacion_archivos` (idFacturacion, idSistema, idUsuario, idTipo, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -871,7 +872,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `boleta_honorarios_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -919,7 +920,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idCliente)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'boleta_honorarios_facturacion', '', "idCliente='".$idCliente."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'boleta_honorarios_facturacion', '', "idCliente='".$idCliente."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -953,36 +954,30 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['boleta_eg_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['boleta_eg_basicos']['idCliente']        = $idCliente;
-				$_SESSION['boleta_eg_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['boleta_eg_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['boleta_eg_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['boleta_eg_basicos']['idSistema']        = $idSistema;
-				$_SESSION['boleta_eg_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['boleta_eg_basicos']['idTipo']           = $idTipo;
-				$_SESSION['boleta_eg_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['boleta_eg_basicos']['idEstado']         = $idEstado;
+				if(isset($idCliente)&&$idCliente!=''){            $_SESSION['boleta_eg_basicos']['idCliente']        = $idCliente;      }else{$_SESSION['boleta_eg_basicos']['idCliente']       = '';}
+				if(isset($N_Doc)&&$N_Doc!=''){                    $_SESSION['boleta_eg_basicos']['N_Doc']            = $N_Doc;          }else{$_SESSION['boleta_eg_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['boleta_eg_basicos']['Creacion_fecha']   = $Creacion_fecha; }else{$_SESSION['boleta_eg_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['boleta_eg_basicos']['Observaciones']    = $Observaciones;  }else{$_SESSION['boleta_eg_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['boleta_eg_basicos']['idSistema']        = $idSistema;      }else{$_SESSION['boleta_eg_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['boleta_eg_basicos']['idUsuario']        = $idUsuario;      }else{$_SESSION['boleta_eg_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['boleta_eg_basicos']['idTipo']           = $idTipo;         }else{$_SESSION['boleta_eg_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['boleta_eg_basicos']['fecha_auto']       = $fecha_auto;     }else{$_SESSION['boleta_eg_basicos']['fecha_auto']      = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['boleta_eg_basicos']['idEstado']         = $idEstado;       }else{$_SESSION['boleta_eg_basicos']['idEstado']        = '';}
 				
+				/*******************************************************/
+				if(isset($idSistema)&&$idSistema!=''){
+					//Obtengo el porcentaje de retencion
+					$rowImpuesto = db_select_data (false, 'Porcentaje_Ret_Boletas', 'sistema_leyes_fiscales', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['boleta_eg_basicos']['Porc_Impuesto'] = $rowImpuesto['Porcentaje_Ret_Boletas'];
+				}else{
+					//se guarda dato
+					$_SESSION['boleta_eg_basicos']['Porc_Impuesto'] = '';
+				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `boleta_honorarios_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_eg_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -991,23 +986,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `clientes_listado`
-					WHERE idCliente = ".$idCliente;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCliente = mysqli_fetch_assoc ($resultado);
+					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = '.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_eg_basicos']['Cliente'] = $rowCliente['Nombre'];
 				}else{
@@ -1064,7 +1043,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idCliente)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'boleta_honorarios_facturacion', '', "idCliente='".$idCliente."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'boleta_honorarios_facturacion', '', "idCliente='".$idCliente."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -1082,36 +1061,30 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['boleta_eg_servicios']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['boleta_eg_basicos']['idCliente']        = $idCliente;
-				$_SESSION['boleta_eg_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['boleta_eg_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['boleta_eg_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['boleta_eg_basicos']['idSistema']        = $idSistema;
-				$_SESSION['boleta_eg_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['boleta_eg_basicos']['idTipo']           = $idTipo;
-				$_SESSION['boleta_eg_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['boleta_eg_basicos']['idEstado']         = $idEstado;
+				if(isset($idCliente)&&$idCliente!=''){            $_SESSION['boleta_eg_basicos']['idCliente']        = $idCliente;      }else{$_SESSION['boleta_eg_basicos']['idCliente']       = '';}
+				if(isset($N_Doc)&&$N_Doc!=''){                    $_SESSION['boleta_eg_basicos']['N_Doc']            = $N_Doc;          }else{$_SESSION['boleta_eg_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['boleta_eg_basicos']['Creacion_fecha']   = $Creacion_fecha; }else{$_SESSION['boleta_eg_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['boleta_eg_basicos']['Observaciones']    = $Observaciones;  }else{$_SESSION['boleta_eg_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['boleta_eg_basicos']['idSistema']        = $idSistema;      }else{$_SESSION['boleta_eg_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['boleta_eg_basicos']['idUsuario']        = $idUsuario;      }else{$_SESSION['boleta_eg_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['boleta_eg_basicos']['idTipo']           = $idTipo;         }else{$_SESSION['boleta_eg_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['boleta_eg_basicos']['fecha_auto']       = $fecha_auto;     }else{$_SESSION['boleta_eg_basicos']['fecha_auto']      = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['boleta_eg_basicos']['idEstado']         = $idEstado;       }else{$_SESSION['boleta_eg_basicos']['idEstado']        = '';}
 				
+				/*******************************************************/
+				if(isset($idSistema)&&$idSistema!=''){
+					//Obtengo el porcentaje de retencion
+					$rowImpuesto = db_select_data (false, 'Porcentaje_Ret_Boletas', 'sistema_leyes_fiscales', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['boleta_eg_basicos']['Porc_Impuesto'] = $rowImpuesto['Porcentaje_Ret_Boletas'];
+				}else{
+					//se guarda dato
+					$_SESSION['boleta_eg_basicos']['Porc_Impuesto'] = '';
+				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `boleta_honorarios_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_eg_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -1120,23 +1093,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `clientes_listado`
-					WHERE idCliente = ".$idCliente;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCliente = mysqli_fetch_assoc ($resultado);
+					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = '.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_eg_basicos']['Cliente'] = $rowCliente['Nombre'];
 				}else{
@@ -1211,39 +1168,6 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;
 /*******************************************************************************************************************/		
-		case 'add_obs_eg':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['boleta_eg_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_eg':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['boleta_eg_temporal'] = $_SESSION['boleta_eg_basicos']['Observaciones'];
-			$_SESSION['boleta_eg_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_eg':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -1265,7 +1189,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -1368,15 +1292,16 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['boleta_eg_basicos'])){
-				if(!isset($_SESSION['boleta_eg_basicos']['idCliente']) or $_SESSION['boleta_eg_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el Cliente';}
-				if(!isset($_SESSION['boleta_eg_basicos']['N_Doc']) or $_SESSION['boleta_eg_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['boleta_eg_basicos']['Creacion_fecha']) or $_SESSION['boleta_eg_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
-				if(!isset($_SESSION['boleta_eg_basicos']['Observaciones']) or $_SESSION['boleta_eg_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['boleta_eg_basicos']['idSistema']) or $_SESSION['boleta_eg_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['boleta_eg_basicos']['idUsuario']) or $_SESSION['boleta_eg_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['boleta_eg_basicos']['idTipo']) or $_SESSION['boleta_eg_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de boleta';}
-				if(!isset($_SESSION['boleta_eg_basicos']['fecha_auto']) or $_SESSION['boleta_eg_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
-				if(!isset($_SESSION['boleta_eg_basicos']['idEstado']) or $_SESSION['boleta_eg_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
+				if(!isset($_SESSION['boleta_eg_basicos']['idCliente']) OR $_SESSION['boleta_eg_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el Cliente';}
+				if(!isset($_SESSION['boleta_eg_basicos']['N_Doc']) OR $_SESSION['boleta_eg_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
+				if(!isset($_SESSION['boleta_eg_basicos']['Creacion_fecha']) OR $_SESSION['boleta_eg_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['boleta_eg_basicos']['Observaciones']) OR $_SESSION['boleta_eg_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['boleta_eg_basicos']['idSistema']) OR $_SESSION['boleta_eg_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['boleta_eg_basicos']['idUsuario']) OR $_SESSION['boleta_eg_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['boleta_eg_basicos']['idTipo']) OR $_SESSION['boleta_eg_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de boleta';}
+				if(!isset($_SESSION['boleta_eg_basicos']['fecha_auto']) OR $_SESSION['boleta_eg_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
+				if(!isset($_SESSION['boleta_eg_basicos']['idEstado']) OR $_SESSION['boleta_eg_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
+				if(!isset($_SESSION['boleta_eg_basicos']['Porc_Impuesto']) OR $_SESSION['boleta_eg_basicos']['Porc_Impuesto']=='' ){   $error['Porc_Impuesto']    = 'error/No hay un porcentaje de retencion configurado';}
 					
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la boleta de honorarios';
@@ -1423,12 +1348,13 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($_SESSION['boleta_eg_basicos']['valor_neto'])&&$_SESSION['boleta_eg_basicos']['valor_neto']!=''){              $a .= ",'".$_SESSION['boleta_eg_basicos']['valor_neto']."'";      }else{$a .= ",''";}
 				if(isset($_SESSION['boleta_eg_basicos']['valor_imp'])&&$_SESSION['boleta_eg_basicos']['valor_imp']!=''){                $a .= ",'".$_SESSION['boleta_eg_basicos']['valor_imp']."'";       }else{$a .= ",''";}
 				if(isset($_SESSION['boleta_eg_basicos']['valor_total'])&&$_SESSION['boleta_eg_basicos']['valor_total']!=''){            $a .= ",'".$_SESSION['boleta_eg_basicos']['valor_total']."'";     }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['Porc_Impuesto'])&&$_SESSION['boleta_eg_basicos']['Porc_Impuesto']!=''){        $a .= ",'".$_SESSION['boleta_eg_basicos']['Porc_Impuesto']."'";   }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `boleta_honorarios_facturacion` (idSistema, idUsuario, idTipo, Creacion_fecha,
 				Creacion_Semana, Creacion_mes, Creacion_ano, N_Doc, Observaciones, idCliente, idEstado, fecha_auto,
-				ValorNeto, Impuesto, ValorTotal) 
-				VALUES ({$a} )";
+				ValorNeto, Impuesto, ValorTotal, Porcentaje_Ret_Boletas) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1470,7 +1396,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `boleta_honorarios_facturacion_servicios` (idFacturacion, idSistema, idUsuario,
 							idTipo, Creacion_fecha, Creacion_mes, Creacion_ano, Nombre, vTotal ) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1511,7 +1437,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `boleta_honorarios_facturacion_archivos` (idFacturacion, idSistema, idUsuario, idTipo, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1543,7 +1469,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `boleta_honorarios_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -1594,13 +1520,13 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_3 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'boleta_honorarios_facturacion', '', "idProveedor='".$idProveedor."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'boleta_honorarios_facturacion', '', "idProveedor='".$idProveedor."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($idOcompra)&&$idOcompra!=''){
 				//Se verifica la existencia de la ocompra
-				$ndata_2 = db_select_nrows ('idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."' AND idEstado='2'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."' AND idEstado='2'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se verifica si aun hay datos pendientes
-				$ndata_3 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_boletas_empresas', '', "Valor>Total_Ingresado AND idOcompra = ".$idOcompra."", $dbConn);
+				$ndata_3 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_boletas_empresas', '', "Valor>Total_Ingresado AND idOcompra = ".$idOcompra."", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -1638,16 +1564,26 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['boleta_ing_prov_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['boleta_ing_prov_basicos']['idProveedor']      = $idProveedor;
-				$_SESSION['boleta_ing_prov_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['boleta_ing_prov_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['boleta_ing_prov_basicos']['idSistema']        = $idSistema;
-				$_SESSION['boleta_ing_prov_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['boleta_ing_prov_basicos']['idTipo']           = $idTipo;
-				$_SESSION['boleta_ing_prov_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['boleta_ing_prov_basicos']['idEstado']         = $idEstado;
+				if(isset($idProveedor)&&$idProveedor!=''){        $_SESSION['boleta_ing_prov_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['boleta_ing_prov_basicos']['idProveedor']     = '';}
+				if(isset($N_Doc)&&$N_Doc!=''){                    $_SESSION['boleta_ing_prov_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['boleta_ing_prov_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['boleta_ing_prov_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['boleta_ing_prov_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['boleta_ing_prov_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['boleta_ing_prov_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['boleta_ing_prov_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['boleta_ing_prov_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['boleta_ing_prov_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['boleta_ing_prov_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['boleta_ing_prov_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['boleta_ing_prov_basicos']['fecha_auto']      = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['boleta_ing_prov_basicos']['idEstado']         = $idEstado;        }else{$_SESSION['boleta_ing_prov_basicos']['idEstado']        = '';}
 				
+				/*******************************************************/
+				if(isset($idSistema)&&$idSistema!=''){
+					//Obtengo el porcentaje de retencion
+					$rowImpuesto = db_select_data (false, 'Porcentaje_Ret_Boletas', 'sistema_leyes_fiscales', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto'] = $rowImpuesto['Porcentaje_Ret_Boletas'];
+				}else{
+					//se guarda dato
+					$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto'] = '';
+				}
 				/*******************************************************/
 				//Si existe una Orden de compra relacionada
 				if(isset($idOcompra)&&$idOcompra!=''){
@@ -1656,26 +1592,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					// Se trae un listado con todos las boletas de los trabajadores
 					$arrBoletas = array();
-					$query = "SELECT idExistencia, Descripcion, Valor, Total_Ingresado
-					FROM `ocompra_listado_existencias_boletas_empresas` 
-					WHERE Valor>Total_Ingresado 
-					AND idOcompra = ".$idOcompra." ";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrBoletas,$row );
-					} 
+					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor, Total_Ingresado', 'ocompra_listado_existencias_boletas_empresas', '', 'Valor>Total_Ingresado AND idOcompra = '.$idOcompra, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se guardan los datos
 					$bvar = 1;
@@ -1695,23 +1612,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `boleta_honorarios_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_ing_prov_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -1720,23 +1621,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
+					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = '.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_ing_prov_basicos']['Proveedor'] = $rowProveedor['Nombre'];
 				}else{
@@ -1796,13 +1681,13 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_3 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'boleta_honorarios_facturacion', '', "idProveedor='".$idProveedor."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'boleta_honorarios_facturacion', '', "idProveedor='".$idProveedor."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($idOcompra)&&$idOcompra!=''){
 				//Se verifica la existencia de la ocompra
-				$ndata_2 = db_select_nrows ('idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."' AND idEstado='2'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."' AND idEstado='2'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se verifica si aun hay datos pendientes
-				$ndata_3 = db_select_nrows ('idExistencia', 'ocompra_listado_existencias_boletas_empresas', '', "Valor>Total_Ingresado AND idOcompra = ".$idOcompra."", $dbConn);
+				$ndata_3 = db_select_nrows (false, 'idExistencia', 'ocompra_listado_existencias_boletas_empresas', '', "Valor>Total_Ingresado AND idOcompra = ".$idOcompra."", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -1824,45 +1709,35 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['boleta_ing_prov_servicios']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['boleta_ing_prov_basicos']['idProveedor']      = $idProveedor;
-				$_SESSION['boleta_ing_prov_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['boleta_ing_prov_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['boleta_ing_prov_basicos']['idSistema']        = $idSistema;
-				$_SESSION['boleta_ing_prov_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['boleta_ing_prov_basicos']['idTipo']           = $idTipo;
-				$_SESSION['boleta_ing_prov_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['boleta_ing_prov_basicos']['idEstado']         = $idEstado;
+				if(isset($idProveedor)&&$idProveedor!=''){        $_SESSION['boleta_ing_prov_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['boleta_ing_prov_basicos']['idProveedor']     = '';}
+				if(isset($N_Doc)&&$N_Doc!=''){                    $_SESSION['boleta_ing_prov_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['boleta_ing_prov_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['boleta_ing_prov_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['boleta_ing_prov_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['boleta_ing_prov_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['boleta_ing_prov_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['boleta_ing_prov_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['boleta_ing_prov_basicos']['idUsuario']       = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['boleta_ing_prov_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['boleta_ing_prov_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['boleta_ing_prov_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['boleta_ing_prov_basicos']['fecha_auto']      = '';}
+				if(isset($idEstado)&&$idEstado!=''){              $_SESSION['boleta_ing_prov_basicos']['idEstado']         = $idEstado;        }else{$_SESSION['boleta_ing_prov_basicos']['idEstado']        = '';}
 				
+				/*******************************************************/
+				if(isset($idSistema)&&$idSistema!=''){
+					//Obtengo el porcentaje de retencion
+					$rowImpuesto = db_select_data (false, 'Porcentaje_Ret_Boletas', 'sistema_leyes_fiscales', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto'] = $rowImpuesto['Porcentaje_Ret_Boletas'];
+				}else{
+					//se guarda dato
+					$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto'] = '';
+				}
 				/*******************************************************/
 				//Si existe una Orden de compra relacionada
 				if(isset($idOcompra)&&$idOcompra!=''){
 					
-					//se guarda la OC Relacionada
-					$_SESSION['boleta_ing_prov_basicos']['idOcompra'] = $idOcompra;
+					$_SESSION['boleta_ing_prov_basicos']['idOcompra']        = $idOcompra;
 					
 					// Se trae un listado con todos las boletas de los trabajadores
 					$arrBoletas = array();
-					$query = "SELECT idExistencia, Descripcion, Valor, Total_Ingresado
-					FROM `ocompra_listado_existencias_boletas_empresas` 
-					WHERE Valor>Total_Ingresado 
-					AND idOcompra = ".$idOcompra." ";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrBoletas,$row );
-					} 
+					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor, Total_Ingresado', 'ocompra_listado_existencias_boletas_empresas', '', 'Valor>Total_Ingresado AND idOcompra = '.$idOcompra, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se guardan los datos
 					$bvar = 1;
@@ -1877,31 +1752,12 @@ if( ! defined('XMBCXRXSKGC')) {
 						$bvar++;
 					}
 				
-				//si no existe se guarda vacia
-				}else{
-					$_SESSION['boleta_ing_prov_basicos']['idOcompra'] = '';
 				}
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `boleta_honorarios_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_ing_prov_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -1910,23 +1766,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
+					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = '.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_ing_prov_basicos']['Proveedor'] = $rowProveedor['Nombre'];
 				}else{
@@ -1979,9 +1819,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if(isset($_SESSION['boleta_ing_prov_basicos']['idOcompra'])&&$_SESSION['boleta_ing_prov_basicos']['idOcompra']!=''){
 				//Se verifica si el dato existe
 				if(isset($idExistencia)){
-					$query  = "SELECT Valor, Total_Ingresado FROM ocompra_listado_existencias_boletas_empresas WHERE idExistencia='".$idExistencia."'";
-					$result = mysqli_query($dbConn, $query);
-					$rowOrden = mysqli_fetch_assoc ($result);		
+					$rowOrden = db_select_data (false, 'Valor, Total_Ingresado', 'ocompra_listado_existencias_boletas_empresas', '', 'idExistencia='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				//Comprovacion de cantidades
 				if($rowOrden['Valor']<($rowOrden['Total_Ingresado']+$vTotal)){
@@ -2018,39 +1856,6 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;
 /*******************************************************************************************************************/		
-		case 'add_obs_ing_nd_emp':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['boleta_ing_prov_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing_nd_emp':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['boleta_ing_prov_temporal'] = $_SESSION['boleta_ing_prov_basicos']['Observaciones'];
-			$_SESSION['boleta_ing_prov_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_ing_emp':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -2072,7 +1877,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -2175,15 +1980,16 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['boleta_ing_prov_basicos'])){
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['idProveedor']) or $_SESSION['boleta_ing_prov_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado el proveedor';}
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['N_Doc']) or $_SESSION['boleta_ing_prov_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']) or $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['Observaciones']) or $_SESSION['boleta_ing_prov_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['idSistema']) or $_SESSION['boleta_ing_prov_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['idUsuario']) or $_SESSION['boleta_ing_prov_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['idTipo']) or $_SESSION['boleta_ing_prov_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de boleta';}
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['fecha_auto']) or $_SESSION['boleta_ing_prov_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['idEstado']) or $_SESSION['boleta_ing_prov_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['idProveedor']) OR $_SESSION['boleta_ing_prov_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado el proveedor';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['N_Doc']) OR $_SESSION['boleta_ing_prov_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']) OR $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['Observaciones']) OR $_SESSION['boleta_ing_prov_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['idSistema']) OR $_SESSION['boleta_ing_prov_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['idUsuario']) OR $_SESSION['boleta_ing_prov_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['idTipo']) OR $_SESSION['boleta_ing_prov_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de boleta';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['fecha_auto']) OR $_SESSION['boleta_ing_prov_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['idEstado']) OR $_SESSION['boleta_ing_prov_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']) OR $_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']=='' ){   $error['Porc_Impuesto']    = 'error/No hay un porcentaje de retencion configurado';}
 					
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la boleta de honorarios';
@@ -2231,12 +2037,13 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($_SESSION['boleta_ing_prov_basicos']['valor_imp'])&&$_SESSION['boleta_ing_prov_basicos']['valor_imp']!=''){                $a .= ",'".$_SESSION['boleta_ing_prov_basicos']['valor_imp']."'";       }else{$a .= ",''";}
 				if(isset($_SESSION['boleta_ing_prov_basicos']['valor_total'])&&$_SESSION['boleta_ing_prov_basicos']['valor_total']!=''){            $a .= ",'".$_SESSION['boleta_ing_prov_basicos']['valor_total']."'";     }else{$a .= ",''";}
 				if(isset($_SESSION['boleta_ing_prov_basicos']['idOcompra'])&&$_SESSION['boleta_ing_prov_basicos']['idOcompra']!=''){                $a .= ",'".$_SESSION['boleta_ing_prov_basicos']['idOcompra']."'";       }else{$a .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto'])&&$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']!=''){        $a .= ",'".$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']."'";   }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `boleta_honorarios_facturacion` (idSistema, idUsuario, idTipo, Creacion_fecha,
 				Creacion_Semana, Creacion_mes, Creacion_ano, N_Doc, Observaciones, idProveedor, idEstado, fecha_auto,
-				ValorNeto, Impuesto, ValorTotal, idOcompra) 
-				VALUES ({$a} )";
+				ValorNeto, Impuesto, ValorTotal, idOcompra, Porcentaje_Ret_Boletas) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2279,7 +2086,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `boleta_honorarios_facturacion_servicios` (idFacturacion, idSistema, idUsuario,
 							idTipo, Creacion_fecha, Creacion_mes, Creacion_ano, Nombre, vTotal, idExistencia ) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2334,7 +2141,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `boleta_honorarios_facturacion_archivos` (idFacturacion, idSistema, idUsuario, idTipo, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2366,7 +2173,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `boleta_honorarios_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -2403,117 +2210,123 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			/*******************************************************************/
-			//variables
-			$ndata_1 = 0;
-			$ndata_2 = 0;
-			$ndata_3 = 0;
-			//Se verifica si el dato existe
-			if(isset($_GET['del'])&&$_GET['del']!=''){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'boleta_honorarios_facturacion', '', "WHERE idFacturacion='".$_GET['del']."' AND idEstado=2", $dbConn);
-				$ndata_2 = db_select_nrows ('idPago', 'pagos_boletas_clientes', '', "idFacturacion='".$_GET['del']."'", $dbConn);
-				$ndata_3 = db_select_nrows ('idPago', 'pagos_boletas_trabajadores', '', "idFacturacion='".$_GET['del']."'", $dbConn);
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				$error['del'] = 'error/No existe OC a eliminar';
-			}
-			//generacion de errores
-			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La boleta ya tiene pagos ingresados, primero reverse los pagos antes de eliminar la boleta';}
-			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El documento que trata de eliminar ya posee pagos relacionados';}
-			if($ndata_3 > 0) {$error['ndata_3'] = 'error/El documento que trata de eliminar ya posee pagos relacionados';}
-			
-			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
-				/********************************************************/
-				//Actualizo la OC
-				$arrServicios = array();
-				$query = "SELECT 
-				boleta_honorarios_facturacion_servicios.idTipo, 
-				boleta_honorarios_facturacion_servicios.vTotal,
-				boleta_honorarios_facturacion_servicios.idExistencia,
-				ocompra_listado_existencias_boletas_empresas.Total_Ingresado
-				
-				FROM `boleta_honorarios_facturacion_servicios` 
-				LEFT JOIN `ocompra_listado_existencias_boletas_empresas`   ON ocompra_listado_existencias_boletas_empresas.idExistencia   = boleta_honorarios_facturacion_servicios.idExistencia
-				WHERE boleta_honorarios_facturacion_servicios.idFacturacion = ".$_GET['del'];
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrServicios,$row );
-				}
-				
-				foreach ($arrServicios as $serv) {
-					if(isset($serv['idExistencia'])&&$serv['idExistencia']!=0){
-						switch ($serv['idTipo']) {
-							//Boleta Trabajadores
-							case 1:
-								$query  = "UPDATE `ocompra_listado_existencias_boletas` SET idUso='1' WHERE idExistencia = '".$serv['idExistencia']."'";
-								$result = mysqli_query($dbConn, $query);
-								break;
-							//Boleta Clientes
-							case 2:
-								break;
-							//Boleta Empresas
-							case 3:
-								//calculo
-								$nuevo_total = $serv['Total_Ingresado'] - $serv['vTotal'];
-								//Actualizo 
-								$a = "Total_Ingresado='".$nuevo_total."'" ;
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `ocompra_listado_existencias_boletas_empresas` SET ".$a." WHERE idExistencia = '".$serv['idExistencia']."'";
-								$result = mysqli_query($dbConn, $query);
-								break;
-						}
-					}
-				}
-				
-				
-				/********************************************************/
-				// Se trae un listado con todos los archivos relacionados
-				$arrArchivos = array();
-				$query = "SELECT Nombre
-				FROM `boleta_honorarios_facturacion_archivos` 
-				WHERE idFacturacion = {$_GET['del']} ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrArchivos,$row );
-				}
-				
-				/********************************************************/
-				//Se borran los archivos relacionados
-				foreach ($arrArchivos as $archivo){
-					try {
-						if(!is_writable('upload/'.$archivo['Nombre'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$archivo['Nombre']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				/********************************************************/
-				//se borran los datos
-				$query  = "DELETE FROM `boleta_honorarios_facturacion` WHERE idFacturacion = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `boleta_honorarios_facturacion_archivos` WHERE idFacturacion = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `boleta_honorarios_facturacion_historial` WHERE idFacturacion = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				$query  = "DELETE FROM `boleta_honorarios_facturacion_servicios` WHERE idFacturacion = {$_GET['del']}";
-				$result = mysqli_query($dbConn, $query);
-				
-				
-				//Redirijo			
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				/*******************************************************************/
+				//variables
+				$ndata_1 = 0;
+				$ndata_2 = 0;
+				$ndata_3 = 0;
+				//Se verifica si el dato existe
+				if(isset($indice)&&$indice!=''){
+					$ndata_1 = db_select_nrows (false, 'idFacturacion', 'boleta_honorarios_facturacion', '', "WHERE idFacturacion='".$indice."' AND idEstado=2", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ndata_2 = db_select_nrows (false, 'idPago', 'pagos_boletas_clientes', '', "idFacturacion='".$indice."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ndata_3 = db_select_nrows (false, 'idPago', 'pagos_boletas_trabajadores', '', "idFacturacion='".$indice."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				}else{
+					$error['del'] = 'error/No existe OC a eliminar';
+				}
+				//generacion de errores
+				if($ndata_1 > 0) {$error['ndata_1'] = 'error/La boleta ya tiene pagos ingresados, primero reverse los pagos antes de eliminar la boleta';}
+				if($ndata_2 > 0) {$error['ndata_2'] = 'error/El documento que trata de eliminar ya posee pagos relacionados';}
+				if($ndata_3 > 0) {$error['ndata_3'] = 'error/El documento que trata de eliminar ya posee pagos relacionados';}
+				
+				/*******************************************************************/
+				
+				// si no hay errores ejecuto el codigo	
+				if ( empty($error) ) {
+					
+					/********************************************************/
+					//Actualizo la OC
+					$arrServicios = array();
+					$arrServicios = db_select_array (false, 'boleta_honorarios_facturacion_servicios.idTipo, boleta_honorarios_facturacion_servicios.vTotal, boleta_honorarios_facturacion_servicios.idExistencia, ocompra_listado_existencias_boletas_empresas.Total_Ingresado', 'boleta_honorarios_facturacion_servicios', 'LEFT JOIN `ocompra_listado_existencias_boletas_empresas`   ON ocompra_listado_existencias_boletas_empresas.idExistencia   = boleta_honorarios_facturacion_servicios.idExistencia', 'boleta_honorarios_facturacion_servicios.idFacturacion ='.$indice, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+					foreach ($arrServicios as $serv) {
+						if(isset($serv['idExistencia'])&&$serv['idExistencia']!=0){
+							switch ($serv['idTipo']) {
+								//Boleta Trabajadores
+								case 1:
+									$query  = "UPDATE `ocompra_listado_existencias_boletas` SET idUso='1' WHERE idExistencia = '".$serv['idExistencia']."'";
+									$result = mysqli_query($dbConn, $query);
+									break;
+								//Boleta Clientes
+								case 2:
+									break;
+								//Boleta Empresas
+								case 3:
+									//calculo
+									$nuevo_total = $serv['Total_Ingresado'] - $serv['vTotal'];
+									//Actualizo 
+									$a = "Total_Ingresado='".$nuevo_total."'" ;
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `ocompra_listado_existencias_boletas_empresas` SET ".$a." WHERE idExistencia = '".$serv['idExistencia']."'";
+									$result = mysqli_query($dbConn, $query);
+									break;
+							}
+						}
+					}
+					
+					
+					/********************************************************/
+					// Se trae un listado con todos los archivos relacionados
+					$arrArchivos = array();
+					$arrArchivos = db_select_array (false, 'Nombre', 'boleta_honorarios_facturacion_archivos', '', 'idFacturacion ='.$indice, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+					/********************************************************/
+					//se borran los datos
+					$resultado_1 = db_delete_data (false, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_2 = db_delete_data (false, 'boleta_honorarios_facturacion_archivos', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_3 = db_delete_data (false, 'boleta_honorarios_facturacion_historial', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado_4 = db_delete_data (false, 'boleta_honorarios_facturacion_servicios', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//Si ejecuto correctamente la consulta
+					if($resultado_1==true OR $resultado_2==true OR $resultado_3==true OR $resultado_4==true){
+						
+						//Se borran los archivos relacionados
+						foreach ($arrArchivos as $archivo){
+							try {
+								if(!is_writable('upload/'.$archivo['Nombre'])){
+									//throw new Exception('File not writable');
+								}else{
+									unlink('upload/'.$archivo['Nombre']);
+								}
+							}catch(Exception $e) { 
+								//guardar el dato en un archivo log
+							}
+						}
+					
+						//redirijo
+						header( 'Location: '.$location.'&deleted=true' );
+						die;
+						
+					}
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 	
 		break;	

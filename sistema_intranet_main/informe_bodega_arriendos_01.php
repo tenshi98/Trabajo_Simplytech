@@ -50,8 +50,8 @@ LEFT JOIN `core_tiempo_frecuencia`               ON core_tiempo_frecuencia.idFre
 LEFT JOIN `equipos_arriendo_listado`             ON equipos_arriendo_listado.idEquipo            = bodegas_arriendos_facturacion_existencias.idEquipo
 LEFT JOIN `bodegas_arriendos_listado`            ON bodegas_arriendos_listado.idBodega           = bodegas_arriendos_facturacion_existencias.idBodega
 LEFT JOIN `bodegas_arriendos_facturacion_tipo`   ON bodegas_arriendos_facturacion_tipo.idTipo    = bodegas_arriendos_facturacion_existencias.idTipo
-WHERE bodegas_arriendos_facturacion_existencias.idBodega={$_GET['idBodega']}
-AND bodegas_arriendos_facturacion_existencias.idTipo={$_GET['idTipo']}
+WHERE bodegas_arriendos_facturacion_existencias.idBodega=".$_GET['idBodega']."
+AND bodegas_arriendos_facturacion_existencias.idTipo=".$_GET['idTipo']."
 ORDER BY bodegas_arriendos_facturacion.Devolucion_fecha DESC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -72,7 +72,7 @@ array_push( $arrProductos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5><?php echo 'Listado de Arriendos de la bodega '.$arrProductos[0]['Bodega'].'('.$arrProductos[0]['Tipo'].')'; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo 'Listado de Arriendos de la bodega '.$arrProductos[0]['Bodega'].'('.$arrProductos[0]['Tipo'].')'; ?></h5>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -96,12 +96,12 @@ array_push( $arrProductos,$row );
 							<?php }elseif(isset($_GET['idTipo'])&&$_GET['idTipo']==2){ ?>
 								<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'];?></td>
 							<?php } ?> 
-							<td><?php echo Valores($productos['ValorTotal'], 0); ?></td>
+							<td align="right"><?php echo Valores($productos['ValorTotal'], 0); ?></td>
 							<td><?php echo fecha_estandar($productos['Creacion_fecha']); ?></td>
 							<td><?php echo fecha_estandar($productos['Devolucion_fecha']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.$productos['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($productos['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -115,25 +115,24 @@ array_push( $arrProductos,$row );
 <?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$z = "bodegas_arriendos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z="bodegas_arriendos_listado.idSistema>=0";	
-}else{
-	$z="bodegas_arriendos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_arriendos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";	
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z .= " AND usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -145,9 +144,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idTipo)) {      $x2  = $idTipo;    }else{$x2  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_join_filter('Bodega','idBodega', $x1, 2, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $z, $dbConn);
-				$Form_Imputs->form_select('Tipo Movimiento','idTipo', $x2, 2, 'idTipo', 'Nombre', 'bodegas_arriendos_facturacion_tipo', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_join_filter('Bodega','idBodega', $x1, 2, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $z, $dbConn);
+				$Form_Inputs->form_select('Tipo Movimiento','idTipo', $x2, 2, 'idTipo', 'Nombre', 'bodegas_arriendos_facturacion_tipo', 0, '', $dbConn);
 				?>        
 	   
 				<div class="form-group">

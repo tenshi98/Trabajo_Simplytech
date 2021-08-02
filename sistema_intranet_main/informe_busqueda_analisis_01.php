@@ -15,21 +15,21 @@ $original = "informe_busqueda_analisis_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['n_muestra'])&&$_GET['n_muestra']!=''){     $search .="&n_muestra={$_GET['n_muestra']}";}
-if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){     $search .="&idMaquina={$_GET['idMaquina']}";}
-if(isset($_GET['idMatriz'])&&$_GET['idMatriz']!=''){       $search .="&idMatriz={$_GET['idMatriz']}";}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){       $search .="&idEstado={$_GET['idEstado']}";}
+if(isset($_GET['n_muestra'])&&$_GET['n_muestra']!=''){     $search .="&n_muestra=".$_GET['n_muestra'];}
+if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){     $search .="&idMaquina=".$_GET['idMaquina'];}
+if(isset($_GET['idMatriz'])&&$_GET['idMatriz']!=''){       $search .="&idMatriz=".$_GET['idMatriz'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){       $search .="&idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_muestreo_ini'])&&$_GET['f_muestreo_ini']!=''&&isset($_GET['f_muestreo_fin'])&&$_GET['f_muestreo_fin']!=''){
-	$search .="&f_muestreo_ini={$_GET['f_muestreo_ini']}";
-	$search .="&f_muestreo_fin={$_GET['f_muestreo_fin']}";
+	$search .="&f_muestreo_ini=".$_GET['f_muestreo_ini'];
+	$search .="&f_muestreo_fin=".$_GET['f_muestreo_fin'];
 }
 if(isset($_GET['f_recibida_ini'])&&$_GET['f_recibida_ini']!=''&&isset($_GET['f_recibida_fin'])&&$_GET['f_recibida_fin']!=''){
-	$search .="&f_recibida_ini={$_GET['f_recibida_ini']}";
-	$search .="&f_recibida_fin={$_GET['f_recibida_fin']}";
+	$search .="&f_recibida_ini=".$_GET['f_recibida_ini'];
+	$search .="&f_recibida_fin=".$_GET['f_recibida_fin'];
 }
 if(isset($_GET['f_reporte_ini'])&&$_GET['f_reporte_ini']!=''&&isset($_GET['f_reporte_fin'])&&$_GET['f_reporte_fin']!=''){
-	$search .="&f_reporte_ini={$_GET['f_reporte_ini']}";
-	$search .="&f_reporte_fin={$_GET['f_reporte_fin']}";
+	$search .="&f_reporte_ini=".$_GET['f_reporte_ini'];
+	$search .="&f_reporte_fin=".$_GET['f_reporte_fin'];
 }
 
 //Verifico los permisos del usuario sobre la transaccion
@@ -85,21 +85,21 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z="WHERE analisis_listado.idAnalisis!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND analisis_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND analisis_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
-if(isset($_GET['n_muestra'])&&$_GET['n_muestra']!=''){   $z.=" AND analisis_listado.n_muestra={$_GET['n_muestra']}";}
-if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){   $z.=" AND analisis_listado.idMaquina={$_GET['idMaquina']}";}
-if(isset($_GET['idMatriz'])&&$_GET['idMatriz']!=''){     $z.=" AND analisis_listado.idMatriz={$_GET['idMatriz']}";}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){     $z.=" AND analisis_listado.idEstado={$_GET['idEstado']}";}
+if(isset($_GET['n_muestra'])&&$_GET['n_muestra']!=''){   $z.=" AND analisis_listado.n_muestra=".$_GET['n_muestra'];}
+if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){   $z.=" AND analisis_listado.idMaquina=".$_GET['idMaquina'];}
+if(isset($_GET['idMatriz'])&&$_GET['idMatriz']!=''){     $z.=" AND analisis_listado.idMatriz=".$_GET['idMatriz'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){     $z.=" AND analisis_listado.idEstado=".$_GET['idEstado'];}
 
 if(isset($_GET['f_muestreo_ini'])&&$_GET['f_muestreo_ini']!=''&&isset($_GET['f_muestreo_fin'])&&$_GET['f_muestreo_fin']!=''){
-	$z.=" AND analisis_listado.Creacion_fecha BETWEEN '{$_GET['f_muestreo_ini']}' AND '{$_GET['f_muestreo_fin']}'";
+	$z.=" AND analisis_listado.Creacion_fecha BETWEEN '".$_GET['f_muestreo_ini']."' AND '".$_GET['f_muestreo_fin']."'";
 }
 if(isset($_GET['f_recibida_ini'])&&$_GET['f_recibida_ini']!=''&&isset($_GET['f_recibida_fin'])&&$_GET['f_recibida_fin']!=''){
-	$z.=" AND analisis_listado.Pago_fecha BETWEEN '{$_GET['f_recibida_ini']}' AND '{$_GET['f_recibida_fin']}'";
+	$z.=" AND analisis_listado.Pago_fecha BETWEEN '".$_GET['f_recibida_ini']."' AND '".$_GET['f_recibida_fin']."'";
 }
 if(isset($_GET['f_reporte_ini'])&&$_GET['f_reporte_ini']!=''&&isset($_GET['f_reporte_fin'])&&$_GET['f_reporte_fin']!=''){
-	$z.=" AND analisis_listado.F_Pago BETWEEN '{$_GET['f_reporte_ini']}' AND '{$_GET['f_reporte_fin']}'";
+	$z.=" AND analisis_listado.F_Pago BETWEEN '".$_GET['f_reporte_ini']."' AND '".$_GET['f_reporte_fin']."'";
 }
 
 /**********************************************************/
@@ -175,7 +175,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Documentos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Documentos</h5>
 			<div class="toolbar">
 				<?php echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
@@ -187,43 +187,43 @@ array_push( $arrTipo,$row );
 						<th width="200">
 							<div class="pull-left"><?php echo $x_column_maquina_sing; ?></div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="200">
 							<div class="pull-left">Analisis</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=analisis_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=analisis_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=analisis_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=analisis_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="200">
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="270">
 							<div class="pull-left">Fecha Muestreo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fmuestro_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fmuestro_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fmuestro_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fmuestro_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="270">
 							<div class="pull-left">Fecha Recibida</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=frecibida_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=frecibida_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=frecibida_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=frecibida_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="270">
 							<div class="pull-left">Fecha Reporte</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=freporte_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=freporte_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=freporte_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=freporte_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -242,7 +242,7 @@ array_push( $arrTipo,$row );
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_analisis.php?view='.$tipo['idAnalisis']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_analisis.php?view='.simpleEncode($tipo['idAnalisis'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -258,20 +258,20 @@ array_push( $arrTipo,$row );
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -291,18 +291,18 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($f_reporte_fin)) {    $x10 = $f_reporte_fin;    }else{$x10 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_number('N° Muestra de Pago', 'n_muestra', $x1, 1);
-				$Form_Imputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x2, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_number('N° Muestra de Pago', 'n_muestra', $x1, 1);
+				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x2, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
 										 'Analisis','idMatriz', $x3, 1, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										  $dbConn, 'form1');
-				$Form_Imputs->form_select('Tipo Documento','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Muestreo Desde','f_muestreo_ini', $x5, 1);
-				$Form_Imputs->form_date('Fecha Muestreo Hasta','f_muestreo_fin', $x6, 1);
-				$Form_Imputs->form_date('Fecha Recibida Desde','f_recibida_ini', $x7, 1);
-				$Form_Imputs->form_date('Fecha Recibida Hasta','f_recibida_fin', $x8, 1);
-				$Form_Imputs->form_date('Fecha Reporte Desde','f_reporte_ini', $x9, 1);
-				$Form_Imputs->form_date('Fecha Reporte Hasta','f_reporte_fin', $x10, 1);
+				$Form_Inputs->form_select('Tipo Documento','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Muestreo Desde','f_muestreo_ini', $x5, 1);
+				$Form_Inputs->form_date('Fecha Muestreo Hasta','f_muestreo_fin', $x6, 1);
+				$Form_Inputs->form_date('Fecha Recibida Desde','f_recibida_ini', $x7, 1);
+				$Form_Inputs->form_date('Fecha Recibida Hasta','f_recibida_fin', $x8, 1);
+				$Form_Inputs->form_date('Fecha Reporte Desde','f_reporte_ini', $x9, 1);
+				$Form_Inputs->form_date('Fecha Reporte Hasta','f_reporte_fin', $x10, 1);
 				
 				
 						

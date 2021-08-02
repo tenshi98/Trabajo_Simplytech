@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -67,11 +71,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idAsignar':         if(empty($idAsignar)){         $error['idAsignar']         = 'error/No ha seleccionado el tipo de asignacion';}break;
 			case 'idCurso':           if(empty($idCurso)){           $error['idCurso']           = 'error/No ha seleccionado el curso';}break;
 			case 'Semana':            if(empty($Semana)){            $error['Semana']            = 'error/No ha seleccionado la semana';}break;
@@ -90,7 +94,6 @@ if( ! defined('XMBCXRXSKGC')) {
 			$error['n_categoria_'.$i]      = 'error/La cantidad es superior a la permitida';
 		}
 	}
-	
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -108,10 +111,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idQuiz)&&isset($idCurso)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('idAsignadas', 'alumnos_evaluaciones_asignadas', '', "idQuiz='".$idQuiz."' AND idCurso='".$idCurso."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idAsignadas', 'alumnos_evaluaciones_asignadas', '', "idQuiz='".$idQuiz."' AND idCurso='".$idCurso."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
-			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La evaluacion ya fue asignada anteriormente a este curso';}
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El cuestionario ya fue asignado anteriormente a este curso';}
 			/*******************************************************************/
 			
 			
@@ -124,42 +127,15 @@ if( ! defined('XMBCXRXSKGC')) {
 					case 1:
 						//Lista de alumnos
 						$arrAlumnos = array();
-						$query = "SELECT idAlumno
-						FROM `alumnos_listado`
-						WHERE idCurso=".$idCurso." AND idEstado=1
-						ORDER BY idAlumno ASC";
-						$resultado = mysqli_query($dbConn, $query);
-						while ( $row = mysqli_fetch_assoc ($resultado)) {
-						array_push( $arrAlumnos,$row );
-						}
+						$arrAlumnos = db_select_array (false, 'idAlumno', 'alumnos_listado', '', 'idCurso='.$idCurso.' AND idEstado=1', 'idAlumno ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						//Traigo las preguntas
 						$arrPreguntas = array();
-						$query = "SELECT 
-						quiz_listado.Tiempo,
-						quiz_listado_preguntas.idPregunta
-						FROM `quiz_listado_preguntas`
-						LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz
-						WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-						ORDER BY quiz_listado_preguntas.idCategoria ASC, RAND()";
-						$resultado = mysqli_query($dbConn, $query);
-						while ( $row = mysqli_fetch_assoc ($resultado)) {
-						array_push( $arrPreguntas,$row );
-						}
+						$arrPreguntas = db_select_array (false, 'quiz_listado.Tiempo, quiz_listado_preguntas.idPregunta', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz', 'quiz_listado_preguntas.idQuiz='.$idQuiz, 'quiz_listado_preguntas.idCategoria ASC, RAND()', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						//Consulto por las categorias y el maximo de preguntas por cada una de estas
 						$arrCategoria = array();
-						$query = "SELECT 
-						quiz_listado_preguntas.idCategoria,
-						COUNT(quiz_listado_preguntas.idPregunta) AS Cuenta
-						FROM `quiz_listado_preguntas`
-						WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-						GROUP BY quiz_listado_preguntas.idCategoria
-						ORDER BY quiz_listado_preguntas.idCategoria ASC";
-						$resultado = mysqli_query($dbConn, $query);
-						while ( $row = mysqli_fetch_assoc ($resultado)) {
-						array_push( $arrCategoria,$row );
-						}
+						$arrCategoria = db_select_array (false, 'quiz_listado_preguntas.idCategoria, COUNT(quiz_listado_preguntas.idPregunta) AS Cuenta', 'quiz_listado_preguntas', '', 'quiz_listado_preguntas.idQuiz='.$idQuiz.' GROUP BY quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas.idCategoria ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						//Categorias
 						$categoria   = array();
@@ -223,7 +199,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
 							Programada_fecha, Programada_dia, Programada_mes, Programada_ano, Semana
 							".$cadena.") 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -272,7 +248,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `alumnos_evaluaciones_asignadas` (idSistema, idAsignar, idCurso, idQuiz,
 						Programada_fecha, Programada_mes, Programada_ano, N_preguntas, N_Alumnos, N_Alumnos_Rep, Semana) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -303,7 +279,7 @@ if( ! defined('XMBCXRXSKGC')) {
 									// inserto los datos de registro en la db
 									$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_categorias` (idAsignadas,
 									idCategoria, N_preguntas) 
-									VALUES ({$a} )";
+									VALUES (".$a.")";
 									//Consulta
 									$resultado = mysqli_query ($dbConn, $query);
 									//Si ejecuto correctamente la consulta
@@ -331,15 +307,15 @@ if( ! defined('XMBCXRXSKGC')) {
 								// inserto los datos de registro en la db
 								$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_alumnos` (idAsignadas,
 								idAlumno, idTipo, Programada_fecha) 
-								VALUES ({$a} )";
+								VALUES (".$a.")";
 								$result = mysqli_query($dbConn, $query);
 								
 								/*****************/
 								//Se asigna el valor
-								$a = "idAsignadas=".$ultimo_id."" ;
+								$a = "idAsignadas=".$ultimo_id;
 						
 								// inserto los datos de registro en la db
-								$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$MemoLastID[$pre['idAlumno']]."";
+								$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$MemoLastID[$pre['idAlumno']];
 								//Consulta
 								$resultado = mysqli_query ($dbConn, $query);
 								//Si ejecuto correctamente la consulta
@@ -389,28 +365,11 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				//Consulto por las categorias y el maximo de preguntas por cada una de estas
 				$arrCategoria = array();
-				$query = "SELECT 
-				quiz_listado_preguntas.idCategoria
-				FROM `quiz_listado_preguntas`
-				LEFT JOIN `quiz_categorias` ON quiz_categorias.idCategoria = quiz_listado_preguntas.idCategoria
-				WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-				GROUP BY quiz_listado_preguntas.idCategoria
-				ORDER BY quiz_listado_preguntas.idCategoria ASC";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrCategoria,$row );
-				}
+				$arrCategoria = db_select_array (false, 'quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_categorias` ON quiz_categorias.idCategoria = quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas.idQuiz='.$idQuiz.' GROUP BY quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas.idCategoria ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Lista de alumnos
 				$arrAlumnos = array();
-				$query = "SELECT idAlumno
-				FROM `alumnos_listado`
-				WHERE idCurso=".$idCurso." AND idEstado=1
-				ORDER BY idAlumno ASC";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrAlumnos,$row );
-				}
+				$arrAlumnos = db_select_array (false, 'idAlumno', 'alumnos_listado', '', 'idCurso='.$idCurso.' AND idEstado=1', 'idAlumno ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Cadena temporal
 				$cadena = '';
@@ -429,19 +388,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					$xxn++;
 					//Traigo las preguntas
 					$arrPreguntas = array();
-					$query = "SELECT 
-					quiz_listado.Tiempo,
-					quiz_listado_preguntas.idPregunta
-					FROM `quiz_listado_preguntas`
-					LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz
-					WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-					AND quiz_listado_preguntas.idCategoria=".$cat['idCategoria']."
-					ORDER BY quiz_listado_preguntas.idCategoria ASC, RAND()
-					LIMIT ".$categoria[$xxn]."";
-					$resultado = mysqli_query($dbConn, $query);
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrPreguntas,$row );
-					}
+					$arrPreguntas = db_select_array (false, 'quiz_listado.Tiempo, quiz_listado_preguntas.idPregunta', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz', 'quiz_listado_preguntas.idQuiz='.$idQuiz.' AND quiz_listado_preguntas.idCategoria='.$cat['idCategoria'], 'quiz_listado_preguntas.idCategoria ASC, RAND() LIMIT '.$categoria[$xxn], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se cuentan las preguntas de la campaña y se guardan sus id
 					foreach ($arrPreguntas as $pre) {
@@ -449,8 +396,6 @@ if( ! defined('XMBCXRXSKGC')) {
 						$BPreg[$Total_Preguntas] = $pre['idPregunta'];
 						$Tiempo = $pre['Tiempo'];
 					}
-				
-					
 				}
 				
 				//recorro los alumnos
@@ -488,7 +433,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
 					Programada_fecha, Programada_dia, Programada_mes, Programada_ano, Semana
 					".$cadena.") 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -539,7 +484,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `alumnos_evaluaciones_asignadas` (idSistema, idAsignar, idCurso, idQuiz,
 				Programada_fecha, Programada_mes, Programada_ano, N_preguntas, N_Alumnos, N_Alumnos_Rep, Semana) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -570,7 +515,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_categorias` (idAsignadas,
 							idCategoria, N_preguntas) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -598,15 +543,15 @@ if( ! defined('XMBCXRXSKGC')) {
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_alumnos` (idAsignadas,
 						idAlumno, idTipo, Programada_fecha) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						$result = mysqli_query($dbConn, $query);
 						
 						/*****************/
 						//Se actualiza
-						$a = "idAsignadas=".$ultimo_id."" ;
+						$a = "idAsignadas=".$ultimo_id;
 						
 						// inserto los datos de registro en la db
-						$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$MemoLastID[$pre['idAlumno']]."";
+						$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$MemoLastID[$pre['idAlumno']];
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -643,28 +588,11 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				//Consulto por las categorias y el maximo de preguntas por cada una de estas
 				$arrCategoria = array();
-				$query = "SELECT 
-				quiz_listado_preguntas.idCategoria
-				FROM `quiz_listado_preguntas`
-				LEFT JOIN `quiz_categorias` ON quiz_categorias.idCategoria = quiz_listado_preguntas.idCategoria
-				WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-				GROUP BY quiz_listado_preguntas.idCategoria
-				ORDER BY quiz_listado_preguntas.idCategoria ASC";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrCategoria,$row );
-				}
+				$arrCategoria = db_select_array (false, 'quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_categorias` ON quiz_categorias.idCategoria = quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas.idQuiz='.$idQuiz.' GROUP BY quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas.idCategoria ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Lista de alumnos
 				$arrAlumnos = array();
-				$query = "SELECT idAlumno
-				FROM `alumnos_listado`
-				WHERE idCurso=".$idCurso." AND idEstado=1
-				ORDER BY idAlumno ASC";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrAlumnos,$row );
-				}
+				$arrAlumnos = db_select_array (false, 'idAlumno', 'alumnos_listado', '', 'idCurso='.$idCurso.' AND idEstado=1', 'idAlumno ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Cadena temporal
 				$cadena = '';
@@ -686,22 +614,10 @@ if( ! defined('XMBCXRXSKGC')) {
 						$xxn++;
 						//Traigo las preguntas
 						$arrPreguntas = array();
-						$query = "SELECT 
-						quiz_listado.Tiempo,
-						quiz_listado_preguntas.idPregunta
-						FROM `quiz_listado_preguntas`
-						LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz
-						WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-						AND quiz_listado_preguntas.idCategoria=".$cat['idCategoria']."
-						ORDER BY quiz_listado_preguntas.idCategoria ASC, RAND()
-						LIMIT ".$categoria[$xxn]."";
-						$resultado = mysqli_query($dbConn, $query);
-						while ( $row = mysqli_fetch_assoc ($resultado)) {
-						array_push( $arrPreguntas,$row );
-						}
+						$arrPreguntas = db_select_array (false, 'quiz_listado.Tiempo, quiz_listado_preguntas.idPregunta', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz', 'quiz_listado_preguntas.idQuiz='.$idQuiz.' AND quiz_listado_preguntas.idCategoria='.$cat['idCategoria'], 'quiz_listado_preguntas.idCategoria ASC, RAND() LIMIT '.$categoria[$xxn], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 						
 						//se cuentan las preguntas de la campaña y se guardan sus id
-						
 						foreach ($arrPreguntas as $bla) {
 							$Total_Preguntas++;
 							$BPreg[$pre['idAlumno']][$Total_Preguntas] = $bla['idPregunta'];
@@ -746,7 +662,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
 					Programada_fecha, Programada_dia, Programada_mes, Programada_ano, Semana
 					".$cadena.") 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -796,7 +712,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `alumnos_evaluaciones_asignadas` (idSistema, idAsignar, idCurso, idQuiz,
 				Programada_fecha, Programada_mes, Programada_ano, N_preguntas, N_Alumnos, N_Alumnos_Rep, Semana) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -827,7 +743,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_categorias` (idAsignadas,
 							idCategoria, N_preguntas) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -855,15 +771,15 @@ if( ! defined('XMBCXRXSKGC')) {
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_alumnos` (idAsignadas,
 						idAlumno, idTipo, Programada_fecha) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						$result = mysqli_query($dbConn, $query);
 						
 						/*****************/
 						//Se actualiza
-						$a = "idAsignadas=".$ultimo_id."" ;
+						$a = "idAsignadas=".$ultimo_id;
 						
 						// inserto los datos de registro en la db
-						$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$MemoLastID[$pre['idAlumno']]."";
+						$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$MemoLastID[$pre['idAlumno']];
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -897,11 +813,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 			/*****************************************************/
 			//Consulta por los datos de evaluacion
-			$query = "SELECT idSistema, idAsignar, idCurso, idQuiz, N_Alumnos_Rep
-			FROM `alumnos_evaluaciones_asignadas`
-			WHERE idAsignadas=".$idAsignadas."";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);	
+			$rowdata = db_select_data (false, 'idSistema, idAsignar, idCurso, idQuiz, N_Alumnos_Rep', 'alumnos_evaluaciones_asignadas', '', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			/*****************************************************/
 			//Variables
 			$idAsignar      = $rowdata['idAsignar'];
@@ -913,39 +825,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 			//Lista de alumnos reprobados
 			$arrAlumnos = array();
-			$query = "SELECT idQuizRealizadas, idAlumno
-			FROM `quiz_realizadas`
-			WHERE idQuiz=".$idQuiz." AND idEstado=2 AND idEstadoAprobacion=1 AND idAsignadas=".$idAsignadas."
-			ORDER BY idAlumno ASC";
-			$resultado = mysqli_query($dbConn, $query);
-			$ndata_1 = mysqli_num_rows($resultado);
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrAlumnos,$row );
-			}
+			$arrAlumnos = db_select_array (false, 'idQuizRealizadas, idAlumno', 'quiz_realizadas', '', 'idQuiz='.$idQuiz.' AND idEstado=2 AND idEstadoAprobacion=1 AND idAsignadas='.$idAsignadas, 'idAlumno ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//Consulto por las categorias y el maximo de preguntas por cada una de estas
 			$arrCategoria = array();
-			$query = "SELECT 
-			quiz_listado_preguntas.idCategoria
-			FROM `quiz_listado_preguntas`
-			LEFT JOIN `quiz_categorias` ON quiz_categorias.idCategoria = quiz_listado_preguntas.idCategoria
-			WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-			GROUP BY quiz_listado_preguntas.idCategoria
-			ORDER BY quiz_listado_preguntas.idCategoria ASC";
-			$resultado = mysqli_query($dbConn, $query);
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrCategoria,$row );
-			}
+			$arrCategoria = db_select_array (false, 'quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_categorias` ON quiz_categorias.idCategoria = quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas.idQuiz='.$idQuiz.' GROUP BY quiz_listado_preguntas.idCategoria', 'quiz_listado_preguntas.idCategoria ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 			//Lista de categorias utilizadas
 			$arrCategoriaMain = array();
-			$query = "SELECT idCategoria, N_preguntas
-			FROM `alumnos_evaluaciones_asignadas_categorias`
-			WHERE idAsignadas=".$idAsignadas."";
-			$resultado = mysqli_query($dbConn, $query);
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrCategoriaMain,$row );
-			}
+			$arrCategoriaMain = db_select_array (false, 'idCategoria, N_preguntas', 'alumnos_evaluaciones_asignadas_categorias', '', 'idAsignadas='.$idAsignadas, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//Categorias
 			$categoria   = array();
@@ -971,17 +859,7 @@ if( ! defined('XMBCXRXSKGC')) {
 
 						//Traigo las preguntas
 						$arrPreguntas = array();
-						$query = "SELECT 
-						quiz_listado.Tiempo,
-						quiz_listado_preguntas.idPregunta
-						FROM `quiz_listado_preguntas`
-						LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz
-						WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-						ORDER BY quiz_listado_preguntas.idCategoria ASC, RAND()";
-						$resultado = mysqli_query($dbConn, $query);
-						while ( $row = mysqli_fetch_assoc ($resultado)) {
-						array_push( $arrPreguntas,$row );
-						}
+						$arrPreguntas = db_select_array (false, 'quiz_listado.Tiempo, quiz_listado_preguntas.idPregunta', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz', 'quiz_listado_preguntas.idQuiz='.$idQuiz, 'quiz_listado_preguntas.idCategoria ASC, RAND()', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						//se cuentan las preguntas de la campaña y se guardan sus id
 						$Total_Preguntas = 0;
@@ -1033,7 +911,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
 							Programada_fecha, Programada_dia, Programada_mes, Programada_ano, Semana
 							".$cadena.") 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1071,19 +949,8 @@ if( ! defined('XMBCXRXSKGC')) {
 							$xxn++;
 							//Traigo las preguntas
 							$arrPreguntas = array();
-							$query = "SELECT 
-							quiz_listado.Tiempo,
-							quiz_listado_preguntas.idPregunta
-							FROM `quiz_listado_preguntas`
-							LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz
-							WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-							AND quiz_listado_preguntas.idCategoria=".$cat['idCategoria']."
-							ORDER BY quiz_listado_preguntas.idCategoria ASC, RAND()
-							LIMIT ".$categoria[$xxn]."";
-							$resultado = mysqli_query($dbConn, $query);
-							while ( $row = mysqli_fetch_assoc ($resultado)) {
-							array_push( $arrPreguntas,$row );
-							}
+							$arrPreguntas = db_select_array (false, 'quiz_listado.Tiempo, quiz_listado_preguntas.idPregunta', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz', 'quiz_listado_preguntas.idQuiz='.$idQuiz.' AND quiz_listado_preguntas.idCategoria='.$cat['idCategoria'], 'quiz_listado_preguntas.idCategoria ASC, RAND() LIMIT '.$categoria[$xxn], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							
 							//se cuentan las preguntas de la campaña y se guardan sus id
 							foreach ($arrPreguntas as $pre) {
@@ -1132,7 +999,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
 							Programada_fecha, Programada_dia, Programada_mes, Programada_ano, idAsignadas, Semana
 							".$cadena.") 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1173,19 +1040,8 @@ if( ! defined('XMBCXRXSKGC')) {
 								$xxn++;
 								//Traigo las preguntas
 								$arrPreguntas = array();
-								$query = "SELECT 
-								quiz_listado.Tiempo,
-								quiz_listado_preguntas.idPregunta
-								FROM `quiz_listado_preguntas`
-								LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz
-								WHERE quiz_listado_preguntas.idQuiz=".$idQuiz."
-								AND quiz_listado_preguntas.idCategoria=".$cat['idCategoria']."
-								ORDER BY quiz_listado_preguntas.idCategoria ASC, RAND()
-								LIMIT ".$categoria[$xxn]."";
-								$resultado = mysqli_query($dbConn, $query);
-								while ( $row = mysqli_fetch_assoc ($resultado)) {
-								array_push( $arrPreguntas,$row );
-								}
+								$arrPreguntas = db_select_array (false, 'quiz_listado.Tiempo, quiz_listado_preguntas.idPregunta', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz', 'quiz_listado_preguntas.idQuiz='.$idQuiz.' AND quiz_listado_preguntas.idCategoria='.$cat['idCategoria'], 'quiz_listado_preguntas.idCategoria ASC, RAND() LIMIT '.$categoria[$xxn], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 								
 								//se cuentan las preguntas de la campaña y se guardan sus id
 								
@@ -1235,7 +1091,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
 							Programada_fecha, Programada_dia, Programada_mes, Programada_ano, idAsignadas, Semana
 							".$cadena.") 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1270,7 +1126,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_alumnos` (idAsignadas,
 					idAlumno, idTipo, Programada_fecha) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					$result = mysqli_query($dbConn, $query);
 					
 					
@@ -1279,7 +1135,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					$a = "idEstadoAprobacion='3'" ;
 					
 					// inserto los datos de registro en la db
-					$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$pre['idQuizRealizadas']."";
+					$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$pre['idQuizRealizadas'];
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -1473,74 +1329,121 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Se borran las asignaciones creadas
-			$query  = "DELETE FROM `alumnos_evaluaciones_asignadas` WHERE idAsignadas = {$_GET['del_asignacion']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_asignacion']) OR !validaEntero($_GET['del_asignacion']))&&$_GET['del_asignacion']!=''){
+				$indice = simpleDecode($_GET['del_asignacion'], fecha_actual());
+			}else{
+				$indice = $_GET['del_asignacion'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
-			//Se borran las asignaciones a los alumnos
-			$query  = "DELETE FROM `alumnos_evaluaciones_asignadas_alumnos` WHERE idAsignadas = {$_GET['del_asignacion']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
-			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
 			}
 			
-			//Se borran las asignaciones a las categorias
-			$query  = "DELETE FROM `alumnos_evaluaciones_asignadas_categorias` WHERE idAsignadas = {$_GET['del_asignacion']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
+			if($errorn==0){
+				//se borran los datos
+				$resultado_1 = db_delete_data (false, 'alumnos_evaluaciones_asignadas', 'idAsignadas = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'alumnos_evaluaciones_asignadas_alumnos', 'idAsignadas = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_3 = db_delete_data (false, 'alumnos_evaluaciones_asignadas_categorias', 'idAsignadas = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_4 = db_delete_data (false, 'quiz_realizadas', 'idAsignadas = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true OR $resultado_3==true OR $resultado_4==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
 			}
 			
-			//Se borran las asignaciones a las quiz
-			$query  = "DELETE FROM `quiz_realizadas` WHERE idAsignadas = {$_GET['del_asignacion']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
-			}
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			
 
+		break;
+/*******************************************************************************************************************/		
+		case 'modfecha':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				/*************************************************************/
+				//tabla principal
+				$a = "idAsignadas='".$idAsignadas."'" ;
+				if(isset($Programada_fecha) && $Programada_fecha != ''){    
+					$a .= ",Programada_fecha='".$Programada_fecha."'" ;  
+					$a .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'" ;
+					$a .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'" ; 
+				}
+					
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `alumnos_evaluaciones_asignadas` SET ".$a." WHERE idAsignadas = '$idAsignadas'";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*************************************************************/
+				//tabla dependiente
+				$a = "Programada_fecha='".$Programada_fecha."'" ;
+					
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `alumnos_evaluaciones_asignadas_alumnos` SET ".$a." WHERE idAsignadas = '$idAsignadas'";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*************************************************************/
+				//tabla con la prueba
+				$a = "idAsignadas='".$idAsignadas."'" ;
+				if(isset($Programada_fecha) && $Programada_fecha != ''){    
+					$a .= ",Programada_fecha='".$Programada_fecha."'" ; 
+					$a .= ",Programada_dia='".fecha2NdiaMes($Programada_fecha)."'" ; 
+					$a .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'" ;
+					$a .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'" ; 
+				}
+					
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idAsignadas = '$idAsignadas'";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				
+				
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+				}
+			}
+		
+	
 		break;					
 /*******************************************************************************************************************/
 	}

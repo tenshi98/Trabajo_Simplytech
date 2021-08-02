@@ -35,17 +35,17 @@ $search ='?submit_filter=Filtrar';
 $z1 = "WHERE pagos_facturas_proveedores.idPago!=0";
 
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){ 
-	$z1.=" AND pagos_facturas_proveedores.idProveedor={$_GET['idProveedor']}";
-	$search .="&idProveedor={$_GET['idProveedor']}";
+	$z1.=" AND pagos_facturas_proveedores.idProveedor=".$_GET['idProveedor'];
+	$search .="&idProveedor=".$_GET['idProveedor'];
 }
 if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){ 
-	$z1.=" AND pagos_facturas_proveedores.idDocPago={$_GET['idDocPago']}";
-	$search .="&idDocPago={$_GET['idDocPago']}";
+	$z1.=" AND pagos_facturas_proveedores.idDocPago=".$_GET['idDocPago'];
+	$search .="&idDocPago=".$_GET['idDocPago'];
 }
 if(isset($_GET['f_inicio_pago'])&&$_GET['f_inicio_pago']!=''&&isset($_GET['f_termino_pago'])&&$_GET['f_termino_pago']!=''){ 
-	$z1.=" AND pagos_facturas_proveedores.F_Pago BETWEEN '{$_GET['f_inicio_pago']}' AND '{$_GET['f_termino_pago']}'";
-	$search .="&f_inicio_p={$_GET['f_inicio_pago']}";
-	$search .="&f_termino_p={$_GET['f_termino_pago']}";
+	$z1.=" AND pagos_facturas_proveedores.F_Pago BETWEEN '".$_GET['f_inicio_pago']."' AND '".$_GET['f_termino_pago']."'";
+	$search .="&f_inicio_p=".$_GET['f_inicio_pago'];
+	$search .="&f_termino_p=".$_GET['f_termino_pago'];
 }
 
 /*************************************************************************************************/
@@ -125,7 +125,7 @@ $TotalGeneral = 0;
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Pagos Proveedores</h5>
 		</header>
 		<div class="table-responsive"> 
@@ -195,20 +195,20 @@ $TotalGeneral = 0;
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -222,11 +222,11 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($f_termino_pago)) {  $x4  = $f_termino_pago;   }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select_filter('Forma de Pago','idDocPago', $x2, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Pago Inicio','f_inicio_pago', $x3, 1);
-				$Form_Imputs->form_date('Fecha Pago Termino','f_termino_pago', $x4, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Documento de Pago','idDocPago', $x2, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Pago Inicio','f_inicio_pago', $x3, 1);
+				$Form_Inputs->form_date('Fecha Pago Termino','f_termino_pago', $x4, 1);
 						
 				?> 
 

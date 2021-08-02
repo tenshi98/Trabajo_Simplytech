@@ -68,16 +68,17 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Carta de Amonestaci
 if (isset($_GET['delfile'])) {$error['usuario'] 	  = 'sucess/Archivo borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
-?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 /************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT idTrabajador,Fecha, idAmonestaciones,File_Amonestacion,Observacion, idSistema
 FROM `trabajadores_cartas_amonestacion`
-WHERE idCartaAmo = {$_GET['id']}";
+WHERE idCartaAmo = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -96,7 +97,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de la Carta de Amonestacion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -110,38 +111,38 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Observacion)) {      $x4  = $Observacion;       }else{$x4  = $rowdata['Observacion'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha inicio','Fecha', $x2, 2);
-				$Form_Imputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 2, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
-				$Form_Imputs->form_textarea('Observaciones','Observacion', $x4, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha inicio','Fecha', $x2, 2);
+				$Form_Inputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 2, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x4, 1, 160);
 				
 				if(isset($rowdata['File_Amonestacion'])&&$rowdata['File_Amonestacion']!=''){?>
         
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs('upload', $rowdata['File_Amonestacion'], ''); ?>
+						<?php echo preview_docs('upload', $rowdata['File_Amonestacion'], '', '', ''); ?>
 					</div>
 					<a href="<?php echo $location.'&id='.$_GET['id'].'&del_file='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>
 					
 				<?php 
 				}else{ 
-					$Form_Imputs->form_multiple_upload('Seleccionar archivo','File_Amonestacion', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
+					$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Amonestacion', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 							
 				}
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idCartaAmo', $_GET['id'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idCartaAmo', $_GET['id'], 2);
 				
 				 
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -152,13 +153,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
- <div class="col-sm-8 fcenter">
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Carta de Amonestacion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -172,24 +177,24 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($Observacion)) {       $x4  = $Observacion;       }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha inicio','Fecha', $x2, 2);
-				$Form_Imputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 2, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
-				$Form_Imputs->form_textarea('Observaciones','Observacion', $x4, 1, 160);
-				$Form_Imputs->form_multiple_upload('Seleccionar archivo','File_Amonestacion', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha inicio','Fecha', $x2, 2);
+				$Form_Inputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 2, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x4, 1, 160);
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Amonestacion', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('Fecha_ingreso', fecha_actual(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('Fecha_ingreso', fecha_actual(), 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -239,13 +244,18 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE trabajadores_cartas_amonestacion.idCartaAmo!=0";
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+//Verifico el tipo de usuario que esta ingresando
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){         $z .= " AND trabajadores_cartas_amonestacion.idTrabajador=".$_GET['idTrabajador'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){               $z .= " AND trabajadores_cartas_amonestacion.idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                       $z .= " AND trabajadores_cartas_amonestacion.Fecha=".$_GET['Fecha'];}
+if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                       $z .= " AND trabajadores_cartas_amonestacion.Fecha='".$_GET['Fecha']."'";}
 if(isset($_GET['idAmonestaciones']) && $_GET['idAmonestaciones'] != ''){ $z .= " AND trabajadores_cartas_amonestacion.idAmonestaciones=".$_GET['idAmonestaciones'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -311,7 +321,7 @@ array_push( $arrInasHoras,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -334,13 +344,13 @@ array_push( $arrInasHoras,$row );
 				if(isset($idUsuario)) {         $x4  = $idUsuario;         }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
-				$Form_Imputs->form_date('Fecha inicio','Fecha', $x2, 1);
-				$Form_Imputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 1, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
-				$Form_Imputs->form_select_join_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
+				$Form_Inputs->form_date('Fecha inicio','Fecha', $x2, 1);
+				$Form_Inputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 1, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -359,7 +369,7 @@ array_push( $arrInasHoras,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Cartas de amonestaciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Cartas de amonestaciones</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -373,29 +383,29 @@ array_push( $arrInasHoras,$row );
 						<th width="120">
 							<div class="pull-left">Fechas</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Tipo Amonestacion</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=amonestacion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=amonestacion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=amonestacion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=amonestacion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Trabajador</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=trabajador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=trabajador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=trabajador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=trabajador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Usuario</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -412,12 +422,12 @@ array_push( $arrInasHoras,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $plan['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cartas.php?view='.$plan['idCartaAmo']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idCartaAmo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cartas.php?view='.simpleEncode($plan['idCartaAmo'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idCartaAmo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$plan['idCartaAmo'];
+									$ubicacion = $location.'&del='.simpleEncode($plan['idCartaAmo'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la carta de amonestacion del '.fecha_estandar($plan['Fecha']).'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

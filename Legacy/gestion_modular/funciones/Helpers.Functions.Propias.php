@@ -214,13 +214,13 @@ function prod_print_venta($idBodega, $dato, $tabla1, $tabla2, $input_select, $in
 		SUM(Cantidad_ing) AS ingreso
 		FROM `".$tabla2."`
 		WHERE idProducto = ".$tabla1.".idProducto 
-		AND idBodega={$idBodega}) AS ingreso,
+		AND idBodega=".$idBodega.") AS ingreso,
 					
 		(SELECT 
 		SUM(Cantidad_eg) AS egreso
 		FROM `".$tabla2."`
 		WHERE idProducto = ".$tabla1.".idProducto 
-		AND idBodega={$idBodega}) AS egreso
+		AND idBodega=".$idBodega.") AS egreso
 					
 	FROM `".$tabla1."`
 	LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = ".$tabla1.".idUml
@@ -334,12 +334,19 @@ function print_select ($tipo, $Nombre, $idNombre, $valor, $Validacion) {
 //Verifico si los parametros estan dentro del radio
 function TituloMenu( $Nombre ) {  
     
-    $healthy = array("1 - ", "2 - ", "3 - ", "4 - ", "5 - ", "6 - ", "7 - ", "8 - ", "9 - ", "10 - ");
-	$yummy   = array("", "", "", "", "", "", "", "", "", "");
+    $xdata  = array("1 - ", "2 - ", "3 - ", "4 - ", "5 - ", "6 - ", "7 - ", "8 - ", "9 - ", "10 - ", 
+					"11 - ", "12 - ", "13 - ", "14 - ", "15 - ", "16 - ", "17 - ", "18 - ", "19 - ", "20 - ", 
+					"21 - ", "22 - ", "23 - ", "24 - ", "25 - ", "26 - ", "27 - ", "28 - ", "29 - ", "30 - ", 
+					"31 - ", "32 - ", "33 - ", "34 - ", "35 - ", "36 - ", "37 - ", "38 - ", "39 - ", "40 - ", 
+					"41 - ", "42 - ", "43 - ", "44 - ", "45 - ", "46 - ", "47 - ", "48 - ", "49 - ", "50 - ", 
+					"51 - ", "52 - ", "53 - ", "54 - ", "55 - ", "56 - ", "57 - ", "58 - ", "59 - ", "60 - ", 
+					"61 - ", "62 - ", "63 - ", "64 - ", "65 - ", "66 - ", "67 - ", "68 - ", "69 - ", "70 - ", 
+					"71 - ", "72 - ", "73 - ", "74 - ", "75 - ", "76 - ", "77 - ", "78 - ", "79 - ", "80 - ", 
+					"81 - ", "82 - ", "83 - ", "84 - ", "85 - ", "86 - ", "87 - ", "88 - ", "89 - ", "90 - ");
+	
+	$newText = str_replace($xdata, "", $Nombre);
 
-	$newphrase = str_replace($healthy, $yummy, $Nombre);
-
-    return $newphrase;  
+    return $newText;  
 }
 /*******************************************************************************************************************/
 //Permite verificar si se trata de ingresar a un sitio a la fuerza
@@ -355,26 +362,26 @@ function checkbrute($usuario, $email, $IP_Client, $table, $dbConn) {
 	
 	//Consulto si el usuario ha tratado de ingresar en reiteradas ocaciones
 	if(isset($usuario)&&$usuario!=''&&$num_rows==0){
-		$query = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE usuario = '".$usuario."' AND Time > '".$valid_attempts."'";
-		$resultado = mysqli_query($dbConn, $query);
-		$rowSis = mysqli_fetch_array($resultado);
-		$num_rows = $num_rows + $rowSis['Acceso'];
+		$query      = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE usuario = '".$usuario."' AND Time > '".$valid_attempts."'";
+		$resultado  = mysqli_query($dbConn, $query);
+		$rowSis     = mysqli_fetch_array($resultado);
+		$num_rows   = $num_rows + $rowSis['Acceso'];
 	}
 
 	//Consulto si el ip ha tratado de ingresar en reiteradas ocaciones
 	if(isset($IP_Client)&&$IP_Client!=''&&$num_rows==0){
-		$query = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE IP_Client = '".$IP_Client."' AND Time > '".$valid_attempts."'";
-		$resultado = mysqli_query($dbConn, $query);
-		$rowSis = mysqli_fetch_array($resultado);
-		$num_rows = $num_rows + $rowSis['Acceso'];
+		$query      = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE IP_Client = '".$IP_Client."' AND Time > '".$valid_attempts."'";
+		$resultado  = mysqli_query($dbConn, $query);
+		$rowSis     = mysqli_fetch_array($resultado);
+		$num_rows   = $num_rows + $rowSis['Acceso'];
 	}
 	
 	//Consulto si el ip ha tratado de ingresar en reiteradas ocaciones
 	if(isset($email)&&$email!=''&&$num_rows==0){
-		$query = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE email = '".$email."' AND Time > '".$valid_attempts."'";
-		$resultado = mysqli_query($dbConn, $query);
-		$rowSis = mysqli_fetch_array($resultado);
-		$num_rows = $num_rows + $rowSis['Acceso'];
+		$query      = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE email = '".$email."' AND Time > '".$valid_attempts."'";
+		$resultado  = mysqli_query($dbConn, $query);
+		$rowSis     = mysqli_fetch_array($resultado);
+		$num_rows   = $num_rows + $rowSis['Acceso'];
 	}
    
     // Si ha habido más de 5 intentos de inicio de sesión fallidos.
@@ -385,5 +392,35 @@ function checkbrute($usuario, $email, $IP_Client, $table, $dbConn) {
     }
         
 }
-
+/*******************************************************************************************************************/
+//Funcion para guardar datos
+function valida_latxlong($Direccion, $Config_IDGoogle,  $idSubasta, $dbConn){
+	$geocodeData = getGeocodeData($Direccion, $Config_IDGoogle);
+	if($geocodeData) {         
+		return true;
+    } else {
+        return false;
+    }
+}
+/*******************************************************************************************************************/
+//Funcion para guardar datos
+function latxlong($Direccion, $Config_IDGoogle,  $idSubasta, $dbConn){
+	$geocodeData = getGeocodeData($Direccion, $Config_IDGoogle);
+	if($geocodeData) {         
+		$GeoLatitud  = $geocodeData[0];
+		$GeoLongitud = $geocodeData[1];
+					
+		if(isset($idSubasta) && $idSubasta != ''){        $a  = "'".$idSubasta."'" ;      }else{$a  = "''";}
+		if(isset($GeoLatitud) && $GeoLatitud != ''){      $a .= ",'".$GeoLatitud."'" ;    }else{$a .= ",''";}
+		if(isset($GeoLongitud) && $GeoLongitud != ''){    $a .= ",'".$GeoLongitud."'" ;   }else{$a .= ",''";}
+		if(isset($Direccion) && $Direccion != ''){        $a .= ",'".$Direccion."'" ;     }else{$a .= ",''";}
+								
+		// inserto los datos de registro en la db
+		$query  = "INSERT INTO `subastas_listado_ubicaciones` (idSubasta, GeoLatitud,GeoLongitud,Direccion) 
+		VALUES (".$a.")";
+		//Consulta
+		$resultado = mysqli_query ($dbConn, $query);
+			
+	}
+}
 ?>

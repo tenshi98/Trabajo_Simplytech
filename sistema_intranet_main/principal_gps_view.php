@@ -21,51 +21,27 @@ $eq_ok          = 0;
 //Variable
 $z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento activado
-if(isset($_GET['seguimiento'])&&$_GET['seguimiento']!=''&&$_GET['seguimiento']!=0){
-	$z .= " AND telemetria_listado.id_Geo = ".$_GET['seguimiento'];
+if(isset($_GET['seguimiento'])&&$_GET['seguimiento']!=''&&simpleDecode($_GET['seguimiento'], fecha_actual())!=0){
+	$z .= " AND telemetria_listado.id_Geo = ".simpleDecode($_GET['seguimiento'], fecha_actual());
 }
 //Filtro el sistema al cual pertenece	
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
-	$z .= " AND telemetria_listado.idSistema = ".$_GET['idSistema'];	
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSistema'], fecha_actual())!=0){
+	$z .= " AND telemetria_listado.idSistema = ".simpleDecode($_GET['idSistema'], fecha_actual());	
 }
-	
+
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresMedErrores_'.$i;
+	$subquery .= ',SensoresErrorActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}	
 //Listar los equipos
 $arrEquipo = array();
 $query = "SELECT idTelemetria, Nombre, 
-LastUpdateFecha, LastUpdateHora,cantSensores,GeoLatitud, GeoLongitud,NDetenciones,TiempoFueraLinea,
-
-SensoresMedErrores_1, SensoresMedErrores_2, SensoresMedErrores_3, SensoresMedErrores_4, SensoresMedErrores_5, 
-SensoresMedErrores_6, SensoresMedErrores_7, SensoresMedErrores_8, SensoresMedErrores_9, SensoresMedErrores_10, 
-SensoresMedErrores_11, SensoresMedErrores_12, SensoresMedErrores_13, SensoresMedErrores_14, SensoresMedErrores_15, 
-SensoresMedErrores_16, SensoresMedErrores_17, SensoresMedErrores_18, SensoresMedErrores_19, SensoresMedErrores_20, 
-SensoresMedErrores_21, SensoresMedErrores_22, SensoresMedErrores_23, SensoresMedErrores_24, SensoresMedErrores_25, 
-SensoresMedErrores_26, SensoresMedErrores_27, SensoresMedErrores_28, SensoresMedErrores_29, SensoresMedErrores_30, 
-SensoresMedErrores_31, SensoresMedErrores_32, SensoresMedErrores_33, SensoresMedErrores_34, SensoresMedErrores_35, 
-SensoresMedErrores_36, SensoresMedErrores_37, SensoresMedErrores_38, SensoresMedErrores_39, SensoresMedErrores_40, 
-SensoresMedErrores_41, SensoresMedErrores_42, SensoresMedErrores_43, SensoresMedErrores_44, SensoresMedErrores_45, 
-SensoresMedErrores_46, SensoresMedErrores_47, SensoresMedErrores_48, SensoresMedErrores_49, SensoresMedErrores_50,
-	
-SensoresErrorActual_1, SensoresErrorActual_2, SensoresErrorActual_3, SensoresErrorActual_4, SensoresErrorActual_5, 
-SensoresErrorActual_6, SensoresErrorActual_7, SensoresErrorActual_8, SensoresErrorActual_9, SensoresErrorActual_10, 
-SensoresErrorActual_11, SensoresErrorActual_12, SensoresErrorActual_13, SensoresErrorActual_14, SensoresErrorActual_15, 
-SensoresErrorActual_16, SensoresErrorActual_17, SensoresErrorActual_18, SensoresErrorActual_19, SensoresErrorActual_20, 
-SensoresErrorActual_21, SensoresErrorActual_22, SensoresErrorActual_23, SensoresErrorActual_24, SensoresErrorActual_25, 
-SensoresErrorActual_26, SensoresErrorActual_27, SensoresErrorActual_28, SensoresErrorActual_29, SensoresErrorActual_30, 
-SensoresErrorActual_31, SensoresErrorActual_32, SensoresErrorActual_33, SensoresErrorActual_34, SensoresErrorActual_35, 
-SensoresErrorActual_36, SensoresErrorActual_37, SensoresErrorActual_38, SensoresErrorActual_39, SensoresErrorActual_40, 
-SensoresErrorActual_41, SensoresErrorActual_42, SensoresErrorActual_43, SensoresErrorActual_44, SensoresErrorActual_45, 
-SensoresErrorActual_46, SensoresErrorActual_47, SensoresErrorActual_48, SensoresErrorActual_49, SensoresErrorActual_50,
-			
-SensoresActivo_1, SensoresActivo_2, SensoresActivo_3, SensoresActivo_4, SensoresActivo_5, 
-SensoresActivo_6, SensoresActivo_7, SensoresActivo_8, SensoresActivo_9, SensoresActivo_10, 
-SensoresActivo_11, SensoresActivo_12, SensoresActivo_13, SensoresActivo_14, SensoresActivo_15, 
-SensoresActivo_16, SensoresActivo_17, SensoresActivo_18, SensoresActivo_19, SensoresActivo_20, 
-SensoresActivo_21, SensoresActivo_22, SensoresActivo_23, SensoresActivo_24, SensoresActivo_25, 
-SensoresActivo_26, SensoresActivo_27, SensoresActivo_28, SensoresActivo_29, SensoresActivo_30, 
-SensoresActivo_31, SensoresActivo_32, SensoresActivo_33, SensoresActivo_34, SensoresActivo_35, 
-SensoresActivo_36, SensoresActivo_37, SensoresActivo_38, SensoresActivo_39, SensoresActivo_40, 
-SensoresActivo_41, SensoresActivo_42, SensoresActivo_43, SensoresActivo_44, SensoresActivo_45, 
-SensoresActivo_46, SensoresActivo_47, SensoresActivo_48, SensoresActivo_49, SensoresActivo_50
+LastUpdateFecha, LastUpdateHora,cantSensores,GeoLatitud, GeoLongitud,NDetenciones,TiempoFueraLinea
+".$subquery."
 	
 FROM `telemetria_listado`
 ".$z."
@@ -101,7 +77,7 @@ require_once 'core/Web.Header.Views.php';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo</h5>
 				
 		</header>
@@ -132,7 +108,7 @@ require_once 'core/Web.Header.Views.php';
 							$ident = 0;
 									
 							//dependiendo del tipo de datos que quiero mostrar ajusto los datos
-							switch ($_GET['dataType']) {
+							switch (simpleDecode($_GET['dataType'], fecha_actual())) {
 								//En caso de que los sensores registren alguna alerta
 								case 1:
 									//recorro los sensores activos
@@ -151,7 +127,7 @@ require_once 'core/Web.Header.Views.php';
 											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>		
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_errores_'.$_GET['seguimiento'].'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>						
+													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_errores_'.simpleDecode($_GET['seguimiento'], fecha_actual()).'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 												</div>
 											</td>	
 										</tr>
@@ -187,10 +163,10 @@ require_once 'core/Web.Header.Views.php';
 										echo '
 										<tr class="odd">		
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs</td>		
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>		
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_fuera_linea_'.$_GET['seguimiento'].'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>						
+													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_fuera_linea_'.simpleDecode($_GET['seguimiento'], fecha_actual()).'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 												</div>
 											</td>	
 										</tr>
@@ -243,7 +219,7 @@ require_once 'core/Web.Header.Views.php';
 											echo '
 											<tr class="odd">		
 												<td>'.$data['Nombre'].'</td>
-												<td>'.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs</td>		
+												<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>		
 												<td></td>	
 											</tr>
 											';
@@ -258,10 +234,10 @@ require_once 'core/Web.Header.Views.php';
 										echo '
 										<tr class="odd">		
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs</td>		
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>		
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a target="_blank" rel="noopener noreferrer" href="principal_gps_view_view.php?view='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>						
+													<a target="_blank" rel="noopener noreferrer" href="principal_gps_view_view.php?view='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 												</div>
 											</td>	
 										</tr>

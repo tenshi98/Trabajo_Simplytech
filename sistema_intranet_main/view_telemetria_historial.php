@@ -30,8 +30,8 @@ if(isset($_GET['fueraHorario'])&&$_GET['fueraHorario']!=''){
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['view']) && $_GET['view'] != ''){  $z.=" AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['view'];}
-if(isset($_GET['dia']) && $_GET['dia'] != ''){    $z.=" AND telemetria_listado_historial_activaciones.Fecha ='".$_GET['dia']."'";}
+if(isset($_GET['view']) && $_GET['view'] != ''){  $z.=" AND telemetria_listado_historial_activaciones.idTelemetria =".simpleDecode($_GET['view'], fecha_actual());}
+if(isset($_GET['dia']) && $_GET['dia'] != ''){    $z.=" AND telemetria_listado_historial_activaciones.Fecha ='".simpleDecode($_GET['dia'], fecha_actual())."'";}
 
 /**********************************************************/
 //se consulta
@@ -58,15 +58,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrConsulta,$row );
@@ -77,7 +70,7 @@ array_push( $arrConsulta,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Actividad del equipo <?php echo $arrConsulta[0]['EquipoNombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Actividad del equipo <?php echo $arrConsulta[0]['EquipoNombre']; ?></h5>
 		</header>
 		<div class="tab-content">
 			<div class="table-responsive">
@@ -104,13 +97,31 @@ array_push( $arrConsulta,$row );
 	</div>
 </div>
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

@@ -34,7 +34,7 @@ $d2 = "";
 $data = "";
 $n_meses = 1;
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND vehiculos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND vehiculos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 if (isset($_GET['Ano'])&&$_GET['Ano']!=''&&isset($_GET['idMes'])&&$_GET['idMes']!=''){
 	$d1.=" AND Creacion_mes='".$_GET['idMes']."' AND Creacion_ano='".$_GET['Ano']."'";	
 	$d2.=" AND idMes='".$_GET['idMes']."' AND Ano='".$_GET['Ano']."'";
@@ -42,8 +42,8 @@ if (isset($_GET['Ano'])&&$_GET['Ano']!=''&&isset($_GET['idMes'])&&$_GET['idMes']
 	
 }
 if (isset($_GET['fInicio'])&&$_GET['fInicio']!=''&&isset($_GET['fTermino'])&&$_GET['fTermino']!=''){
-	$d1.=" AND Creacion_fecha BETWEEN '{$_GET['fInicio']}' AND '{$_GET['fTermino']}'";
-	$d2.=" AND Fecha BETWEEN '{$_GET['fInicio']}' AND '{$_GET['fTermino']}'";
+	$d1.=" AND Creacion_fecha BETWEEN '".$_GET['fInicio']."' AND '".$_GET['fTermino']."'";
+	$d2.=" AND Fecha BETWEEN '".$_GET['fInicio']."' AND '".$_GET['fTermino']."'";
 	$data .= " entre ".Fecha_estandar($_GET['fInicio'])." al ".Fecha_estandar($_GET['fTermino']);
 	$n_meses = diferencia_meses($_GET['fInicio'], $_GET['fTermino'] );	
 }
@@ -142,7 +142,7 @@ array_push( $arrVehiculos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Calculos <?php echo $data; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Calculos <?php echo $data; ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -212,25 +212,25 @@ array_push( $arrVehiculos,$row );
 							<td><?php echo $trab['Modelo']; ?></td>
 							<td><?php echo $trab['Tipo']; ?></td>
 							
-							<td class="text-right"><?php echo $trab['PasajerosCuenta']; ?></td>
-							<td class="text-right" style="background-color: #eee;"><?php echo  valores($pas_valor,0); ?></td>
+							<td align="right"><?php echo $trab['PasajerosCuenta']; ?></td>
+							<td align="right" style="background-color: #eee;"><?php echo  valores($pas_valor,0); ?></td>
 							
 							
 							<?php $subtotal = 0;?>
-							<td class="text-right"><?php echo valores($pas_sueldo,0); $subtotal = $subtotal + $pas_sueldo;?></td>
+							<td align="right"><?php echo valores($pas_sueldo,0); $subtotal = $subtotal + $pas_sueldo;?></td>
 							<?php 
 							$cost = 0;
 							foreach ($arrCostos as $costo) { ?>
-								<td class="text-right"><?php echo  valores($trab['Costo_'.$cost],0); ?></td>
+								<td align="right"><?php echo  valores($trab['Costo_'.$cost],0); ?></td>
 							<?php 
 							$subtotal = $subtotal + $trab['Costo_'.$cost];
 							$cost++;
 							} ?>
-							<td class="text-right" style="background-color: #eee;"><?php echo  valores($subtotal,0); ?></td>
+							<td align="right" style="background-color: #eee;"><?php echo  valores($subtotal,0); ?></td>
 							<?php $total_cost = $total_cost + $subtotal; ?>
 							
-							<td class="text-right"><?php echo  valores($total_recolec,0); ?></td>
-							<td class="text-right" style="background-color: #eee;"><?php echo  valores($total_recolec-$subtotal,0); ?></td>
+							<td align="right"><?php echo  valores($total_recolec,0); ?></td>
+							<td align="right" style="background-color: #eee;"><?php echo  valores($total_recolec-$subtotal,0); ?></td>
 							<?php $total_reco = $total_reco + $total_recolec; ?>
 							
 
@@ -240,20 +240,20 @@ array_push( $arrVehiculos,$row );
 						<td colspan="<?php echo 10+$cost?>"></td>	
 					</tr> 
 					<tr class="odd">
-						<td class="text-right" colspan="<?php echo 9+$cost?>">Total Planificado</td>
-						<td class="text-right"><?php echo valores($total_prog,0); ?></td>
+						<td align="right" colspan="<?php echo 9+$cost?>">Total Planificado</td>
+						<td align="right"><?php echo valores($total_prog,0); ?></td>
 					</tr>
 					<tr class="odd">
-						<td class="text-right" colspan="<?php echo 9+$cost?>">Total Costos</td>
-						<td class="text-right"><?php echo valores($total_cost,0); ?></td>
+						<td align="right" colspan="<?php echo 9+$cost?>">Total Costos</td>
+						<td align="right"><?php echo valores($total_cost,0); ?></td>
 					</tr>
 					<tr class="odd">
-						<td class="text-right" colspan="<?php echo 9+$cost?>">Total Recolectado</td>
-						<td class="text-right"><?php echo valores($total_reco,0); ?></td>
+						<td align="right" colspan="<?php echo 9+$cost?>">Total Recolectado</td>
+						<td align="right"><?php echo valores($total_reco,0); ?></td>
 					</tr>
 					<tr class="odd">
-						<td class="text-right" colspan="<?php echo 9+$cost?>">Saldo</td>
-						<td class="text-right"><?php echo valores($total_reco-$total_cost,0); ?></td>
+						<td align="right" colspan="<?php echo 9+$cost?>">Saldo</td>
+						<td align="right"><?php echo valores($total_reco-$total_cost,0); ?></td>
 					</tr>
 				                   
 				</tbody>
@@ -263,8 +263,8 @@ array_push( $arrVehiculos,$row );
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -273,7 +273,7 @@ array_push( $arrVehiculos,$row );
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -288,17 +288,18 @@ array_push( $arrVehiculos,$row );
 				if(isset($fTermino)) {  $x4  = $fTermino;  }else{$x4  = '';}
 						
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Generar Informe por Mes</h3>';
-				$Form_Imputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
-				$Form_Imputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
-				echo '<h3>Generar informe entre fechas</h3>';
-				$Form_Imputs->form_date('F Inicio','fInicio', $x3, 1);
-				$Form_Imputs->form_date('F Termino','fTermino', $x4, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Generar Informe por Mes');
+				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
+				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				
+				$Form_Inputs->form_tittle(3, 'Generar informe entre fechas');
+				$Form_Inputs->form_date('F Inicio','fInicio', $x3, 1);
+				$Form_Inputs->form_date('F Termino','fTermino', $x4, 1);
 				
 	
 						
-				$Form_Imputs->form_input_hidden('pagina', 1, 2);
+				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 
 				?>        
 	   

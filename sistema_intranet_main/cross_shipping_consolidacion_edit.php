@@ -99,7 +99,7 @@ if ( ! empty($_GET['addFile']) ) {
 // Se trae la informacion del producto
 $query = "SELECT CTNNombreCompañia
 FROM `cross_shipping_consolidacion`
-WHERE idConsolidacion = {$_GET['edit']}";
+WHERE idConsolidacion = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -119,7 +119,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -130,19 +130,19 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				if(isset($idArchivoTipo)) {    $x1  = $idArchivoTipo;  }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_multiple_upload('Seleccionar archivo','exFile', 15, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 15, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 				
-				$Form_Imputs->form_select('Tipo Foto','idArchivoTipo', $x1, 2, 'idArchivoTipo', 'Nombre', 'core_cross_shipping_archivos_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Foto','idArchivoTipo', $x1, 2, 'idArchivoTipo', 'Nombre', 'core_cross_shipping_archivos_tipos', 0, '', $dbConn);
 				
 				
-				$Form_Imputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
-				$Form_Imputs->form_input_hidden('CTNNombreCompañia', $rowConso['CTNNombreCompañia'], 2);	
+				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('CTNNombreCompañia', $rowConso['CTNNombreCompañia'], 2);	
 				?> 
 
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -159,7 +159,7 @@ Temperatura, idTermografo, NSerieSensor
 
 FROM `cross_shipping_consolidacion_estibas`
 
-WHERE idEstibaListado = {$_GET['cloneEstiba']}";
+WHERE idEstibaListado = ".$_GET['cloneEstiba'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -178,7 +178,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Estiba</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -195,26 +195,26 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				if(isset($NSerieSensor)) {       $x8  = $NSerieSensor;       }else{$x8  = $rowEstiba['NSerieSensor'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
 										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. De Pallet', 'NPallet', $x5, 2);
-				$Form_Imputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
-				$Form_Imputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
+				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. De Pallet', 'NPallet', $x5, 2);
+				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
+				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
 				
 				
-				$Form_Imputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				?>
 				
 				
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -231,7 +231,7 @@ Temperatura, idTermografo, NSerieSensor
 
 FROM `cross_shipping_consolidacion_estibas`
 
-WHERE idEstibaListado = {$_GET['editEstiba']}";
+WHERE idEstibaListado = ".$_GET['editEstiba'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -250,7 +250,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Estiba</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -267,27 +267,27 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				if(isset($NSerieSensor)) {       $x8  = $NSerieSensor;       }else{$x8  = $rowEstiba['NSerieSensor'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
 										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. De Pallet', 'NPallet', $x5, 2);
-				$Form_Imputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
-				$Form_Imputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
+				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. De Pallet', 'NPallet', $x5, 2);
+				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
+				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
 				
 				
-				$Form_Imputs->form_input_hidden('idEstibaListado', $_GET['editEstiba'], 2);
-				$Form_Imputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('idEstibaListado', $_GET['editEstiba'], 2);
+				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				?>
 				
 				
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_estiba">
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -300,7 +300,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingreso Estibas</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -318,23 +318,23 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				if(isset($NSerieSensor)) {       $x8  = $NSerieSensor;       }else{$x8  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
 										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. De Pallet', 'NPallet', $x5, 2);
-				$Form_Imputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
-				$Form_Imputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
+				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. De Pallet', 'NPallet', $x5, 2);
+				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
+				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
 				
-				$Form_Imputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -347,7 +347,8 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*****************************************************/
 // Se trae la informacion del producto
 $query = "SELECT Creacion_fecha,CTNNombreCompañia,FechaInicioEmbarque,HoraInicioCarga,FechaTerminoEmbarque,
@@ -357,7 +358,7 @@ idPlantaDespacho,idCategoria,idProducto,idInstructivo,idNaviera,idPuertoEmbarque
 idPais,idEmpresaTransporte,idCondicion,idSellado,idEstado,idAprobador, idRecibidor
 
 FROM `cross_shipping_consolidacion`
-WHERE idConsolidacion = {$_GET['edit']}";
+WHERE idConsolidacion = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -378,7 +379,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Consolidacion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -417,60 +418,60 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				if(isset($Observaciones)) {         $x29 = $Observaciones;         }else{$x29 = $rowConso['Observaciones'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Cuerpo Indentificacion</h3>';
-				$Form_Imputs->form_input_text( 'Contenedor Nro.', 'CTNNombreCompañia', $x1, 2);
-				$Form_Imputs->form_date('Fecha del informe','Creacion_fecha', $x2, 1);
-				$Form_Imputs->form_date('Fecha Inicio del Embarque','FechaInicioEmbarque', $x3, 1);
-				$Form_Imputs->form_time('Hora Inicio Carga','HoraInicioCarga', $x4, 1, 1, 24);
-				$Form_Imputs->form_date('Fecha Termino del Embarque','FechaTerminoEmbarque', $x5, 1);
-				$Form_Imputs->form_time('Hora Termino Carga','HoraTerminoCarga', $x6, 1, 1, 24);
-				$Form_Imputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x7, 1, 'idPlantaDespacho', 'Codigo,Nombre', 'cross_shipping_plantas', $z, '', $dbConn);	
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x8, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion');
+				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x1, 2);
+				$Form_Inputs->form_date('Fecha del informe','Creacion_fecha', $x2, 1);
+				$Form_Inputs->form_date('Fecha Inicio del Embarque','FechaInicioEmbarque', $x3, 1);
+				$Form_Inputs->form_time('Hora Inicio Carga','HoraInicioCarga', $x4, 1, 1, 24);
+				$Form_Inputs->form_date('Fecha Termino del Embarque','FechaTerminoEmbarque', $x5, 1);
+				$Form_Inputs->form_time('Hora Termino Carga','HoraTerminoCarga', $x6, 1, 1, 24);
+				$Form_Inputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x7, 1, 'idPlantaDespacho', 'Codigo,Nombre', 'cross_shipping_plantas', $w, '', $dbConn);	
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x8, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x9, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_number_integer('Cantidad de Cajas', 'CantidadCajas', $x10, 1);
-				$Form_Imputs->form_select_filter('N° Instructivo','idInstructivo', $x11, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $z, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Naviera','idNaviera', $x12, 1, 'idNaviera', 'Codigo,Nombre', 'cross_shipping_naviera', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Puerto Embarque','idPuertoEmbarque', $x13, 1, 'idPuertoEmbarque', 'Codigo,Nombre', 'cross_shipping_puerto_embarque', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Puerto Destino','idPuertoDestino', $x14, 1, 'idPuertoDestino', 'Codigo,Nombre', 'cross_shipping_puerto_destino', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Recibidor','idRecibidor', $x17, 1, 'idRecibidor', 'Codigo,Nombre', 'cross_shipping_recibidores', $z, '', $dbConn);	
+				$Form_Inputs->form_input_number_integer('Cantidad de Cajas', 'CantidadCajas', $x10, 1);
+				$Form_Inputs->form_select_filter('N° Instructivo','idInstructivo', $x11, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $w, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Naviera','idNaviera', $x12, 1, 'idNaviera', 'Codigo,Nombre', 'cross_shipping_naviera', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Puerto Embarque','idPuertoEmbarque', $x13, 1, 'idPuertoEmbarque', 'Codigo,Nombre', 'cross_shipping_puerto_embarque', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Puerto Destino','idPuertoDestino', $x14, 1, 'idPuertoDestino', 'Codigo,Nombre', 'cross_shipping_puerto_destino', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Recibidor','idRecibidor', $x17, 1, 'idRecibidor', 'Codigo,Nombre', 'cross_shipping_recibidores', $w, '', $dbConn);	
 				
 				
-				echo '<h3>Cuerpo Indentificacion Empresa Transportista</h3>';
-				$Form_Imputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x18, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);	
-				$Form_Imputs->form_input_text( 'Conductor', 'ChoferNombreRut', $x19, 1);
-				$Form_Imputs->form_input_text( 'Patente Camion', 'PatenteCamion', $x20, 1);
-				$Form_Imputs->form_input_text( 'Patente Carro', 'PatenteCarro', $x21, 1);
+				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion Empresa Transportista');
+				$Form_Inputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x18, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);	
+				$Form_Inputs->form_input_text('Conductor', 'ChoferNombreRut', $x19, 1);
+				$Form_Inputs->form_input_text('Patente Camion', 'PatenteCamion', $x20, 1);
+				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x21, 1);
 				
 				
-				echo '<h3>Cuerpo Parametros Evaluados</h3>';
-				$Form_Imputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Imputs->form_input_number('T° Set Point', 'TSetPoint', $x24, 1);
-				$Form_Imputs->form_input_number('T° Ventilacion', 'TVentilacion', $x25, 1);
-				$Form_Imputs->form_input_number('T° Ambiente', 'TAmbiente', $x26, 1);
-				$Form_Imputs->form_input_text( 'Numero de sello', 'NumeroSello', $x27, 1);
-				$Form_Imputs->form_select_filter('Inspector','idInspector', $x28, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
+				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
+				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_input_number('T° Set Point', 'TSetPoint', $x24, 1);
+				$Form_Inputs->form_input_number('T° Ventilacion', 'TVentilacion', $x25, 1);
+				$Form_Inputs->form_input_number('T° Ambiente', 'TAmbiente', $x26, 1);
+				$Form_Inputs->form_input_text('Numero de sello', 'NumeroSello', $x27, 1);
+				$Form_Inputs->form_select_filter('Inspector','idInspector', $x28, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 				
 				
-				echo '<h3>Otros</h3>';
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x29, 1, 160);
+				$Form_Inputs->form_tittle(3, 'Otros');
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x29, 1, 160);
 				
 				
 
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);		
-				$Form_Imputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);		
+				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				
 				?> 
 				
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -552,7 +553,7 @@ LEFT JOIN `core_oc_estado`                               ON core_oc_estado.idEst
 LEFT JOIN `trabajadores_listado`                         ON trabajadores_listado.idTrabajador                         = cross_shipping_consolidacion.idAprobador
 LEFT JOIN `cross_shipping_recibidores`                   ON cross_shipping_recibidores.idRecibidor                    = cross_shipping_consolidacion.idRecibidor
 
-WHERE cross_shipping_consolidacion.idConsolidacion = {$_GET['edit']}";
+WHERE cross_shipping_consolidacion.idConsolidacion = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -590,7 +591,7 @@ LEFT JOIN `core_cross_shipping_consolidacion_posicion`    ON core_cross_shipping
 LEFT JOIN `cross_shipping_envase`                         ON cross_shipping_envase.idEnvase                           = cross_shipping_consolidacion_estibas.idEnvase
 LEFT JOIN `cross_shipping_termografo`                     ON cross_shipping_termografo.idTermografo                   = cross_shipping_consolidacion_estibas.idTermografo
 
-WHERE cross_shipping_consolidacion_estibas.idConsolidacion = {$_GET['edit']}
+WHERE cross_shipping_consolidacion_estibas.idConsolidacion = ".$_GET['edit']."
 ORDER BY cross_shipping_consolidacion_estibas.idEstiba ASC, core_estibas_ubicacion.Nombre ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -622,7 +623,7 @@ core_cross_shipping_archivos_tipos.Nombre AS Tipo
 FROM `cross_shipping_consolidacion_archivo`
 LEFT JOIN `core_cross_shipping_archivos_tipos`     ON core_cross_shipping_archivos_tipos.idArchivoTipo     = cross_shipping_consolidacion_archivo.idArchivoTipo
 
-WHERE cross_shipping_consolidacion_archivo.idConsolidacion = {$_GET['edit']}";
+WHERE cross_shipping_consolidacion_archivo.idConsolidacion = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -654,7 +655,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 	<div class="clearfix"></div>
 <?php } ?>
  
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 	<div id="page-wrap">
 		<div id="header"> Control Proceso Preembarque - T° y Estiba de Contenedores</div>
@@ -665,7 +666,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 				<tbody>
 					<tr>
 						<td class="meta-head" colspan="3"><strong>DATOS MAESTROS</strong></td>
-						<td class="meta-head"><a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					
 					
@@ -823,12 +824,12 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 						<td class="item-name"><?php echo $estiba['NSerieSensor'];?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&cloneEstiba='.$estiba['idEstibaListado']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a>
-								<a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&editEstiba='.$estiba['idEstibaListado']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&cloneEstiba='.$estiba['idEstibaListado']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+								<a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&editEstiba='.$estiba['idEstibaListado']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php 
-								$ubicacion = $new_location.'&edit='.$_GET['edit'].'&del_estiba='.$estiba['idEstibaListado'];
+								$ubicacion = $new_location.'&edit='.$_GET['edit'].'&del_estiba='.simpleEncode($estiba['idEstibaListado'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro ?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
 					</tr> 
@@ -866,11 +867,11 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 						<td><?php echo $arch['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$arch['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($arch['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 								<?php 
-								$ubicacion = $new_location.'&edit='.$_GET['edit'].'&del_file='.$arch['idArchivo'];
+								$ubicacion = $new_location.'&edit='.$_GET['edit'].'&del_file='.simpleEncode($arch['idArchivo'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$arch['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
 					</tr>

@@ -50,7 +50,7 @@ LEFT JOIN `clientes_listado`             ON clientes_listado.idCliente          
 LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema              = licitacion_listado.idSistema
 LEFT JOIN `core_estados`                 ON core_estados.idEstado                = licitacion_listado.idEstado
 
-WHERE licitacion_listado.idLicitacion={$_GET['idLicitacion']} ";
+WHERE licitacion_listado.idLicitacion=".$_GET['idLicitacion'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -98,7 +98,7 @@ licitacion_listado_level_1.idLevel_1 AS bla
 ".$z."
 FROM `licitacion_listado_level_1`
 ".$leftjoin."
-WHERE licitacion_listado_level_1.idLicitacion={$_GET['idLicitacion']}
+WHERE licitacion_listado_level_1.idLicitacion=".$_GET['idLicitacion']."
 ORDER BY licitacion_listado_level_1.Codigo ASC ".$orderby."
 
 ";
@@ -415,7 +415,7 @@ $arrOTRealizadas = array();
 $query = "SELECT COUNT(idTrabajoOT) AS Cuenta, item_tabla, item_tabla_id
 FROM `orden_trabajo_listado_trabajos`
 LEFT JOIN `orden_trabajo_listado` ON orden_trabajo_listado.idOT = orden_trabajo_listado_trabajos.idOT
-WHERE orden_trabajo_listado_trabajos.idLicitacion={$_GET['idLicitacion']} 
+WHERE orden_trabajo_listado_trabajos.idLicitacion=".$_GET['idLicitacion']." 
 GROUP BY item_tabla,item_tabla_id
 ORDER BY item_tabla ASC, item_tabla_id ASC";
 //Consulta
@@ -509,7 +509,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 			echo '<td align="right">';
 			if(isset($ConsumosOC[$value['lvl']][$value['id']]['Valor'])&&$ConsumosOC[$value['lvl']][$value['id']]['Valor']!=''){
 				echo valores($ConsumosOC[$value['lvl']][$value['id']]['Valor'], 0).' ';
-				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_oc.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=1" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_oc.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=1" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 				//$_SESSION['garb']['xxx2'] = $_SESSION['garb']['xxx2'] + $ConsumosOC[$value['lvl']][$value['id']]['Valor'];
 			}
 			echo '</td>';
@@ -518,7 +518,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 			echo '<td align="right">';
 			if(isset($ConsumosOCApro[$value['lvl']][$value['id']]['Valor'])&&$ConsumosOCApro[$value['lvl']][$value['id']]['Valor']!=''){
 				echo valores($ConsumosOCApro[$value['lvl']][$value['id']]['Valor'], 0).' ';
-				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_oc.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=3" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_oc.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=3" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 				//$_SESSION['garb']['xxx3'] = $_SESSION['garb']['xxx3'] + $ConsumosOCApro[$value['lvl']][$value['id']]['Valor'];
 			}
 			echo '</td>';
@@ -535,7 +535,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 			echo '<td align="right">';
 			if(isset($ComprasApro[$value['lvl']][$value['id']]['Valor'])&&$ComprasApro[$value['lvl']][$value['id']]['Valor']!=''){
 				echo valores($ComprasApro[$value['lvl']][$value['id']]['Valor'], 0).' ';
-				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_fact.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=3" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_fact.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=3" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 				//$_SESSION['garb']['xxx4'] = $_SESSION['garb']['xxx4'] + $ComprasApro[$value['lvl']][$value['id']]['Valor'];
 			}
 			echo '</td>';
@@ -562,7 +562,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Cumplimiento del Contrato</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
@@ -660,26 +660,21 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 	
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$y = "licitacion_listado.idSistema>=0";
-	$w = "idSistema>=0 AND idEstado=1";
-}else{
-	$y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";		
-	$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-}
+//sistema
+$y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";		
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -691,14 +686,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idLicitacion)) {    $x1  = $idLicitacion;  }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				//verifico el sistema
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Imputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, 0,
+					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, 0,
 											 'Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Imputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);	
 				}
 				
 				

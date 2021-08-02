@@ -48,13 +48,15 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Contacto Creado cor
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Contacto Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Contacto borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre, Fono, idSistema, idUsuario
 FROM `principal_agenda_telefonica`
-WHERE idAgenda = {$_GET['id']}";
+WHERE idAgenda = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -73,7 +75,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Contacto</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -86,9 +88,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($idUsuario)) {   $x3  = $idUsuario;  }else{$x3  = $rowdata['idUsuario'];}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_phone('Telefono', 'Fono', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_phone('Telefono', 'Fono', $x2, 2);
 				
 				
 				$zx ='';
@@ -100,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				}
 				echo '<div class="form-group" id="div_idUsuario">
 					<label for="text2" class="control-label col-sm-4" id="label_idSistema">Visibilidad</label>
-					<div class="col-sm-8">
+					<div class="col-sm-8 field">
 						<select name="idUsuario" id="idUsuario" class="form-control" required="">
 							<option value="" selected="">Seleccione una Opcion</option>
 							<option '.$zx.' value="'.$_SESSION['usuario']['basic_data']['idUsuario'].'">Solo yo</option>
@@ -109,14 +111,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					</div>
 				</div>';
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idAgenda', $_GET['id'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idAgenda', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -126,11 +128,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Nuevo Contacto</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -143,9 +148,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($idUsuario)) {   $x3  = $idUsuario;  }else{$x3  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_phone('Telefono', 'Fono', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_phone('Telefono', 'Fono', $x2, 2);
 				
 				
 				$zx ='';
@@ -157,7 +162,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				}
 				echo '<div class="form-group" id="div_idUsuario">
 					<label for="text2" class="control-label col-sm-4" id="label_idSistema">Visibilidad</label>
-					<div class="col-sm-8">
+					<div class="col-sm-8 field">
 						<select name="idUsuario" id="idUsuario" class="form-control" required="">
 							<option value="" selected="">Seleccione una Opcion</option>
 							<option '.$zx.' value="'.$_SESSION['usuario']['basic_data']['idUsuario'].'">Solo yo</option>
@@ -166,13 +171,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					</div>
 				</div>';
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -201,9 +206,9 @@ if (!$num_pag){
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
 //Verifico el tipo de usuario que esta ingresando
-$z = "WHERE principal_agenda_telefonica.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z = "WHERE principal_agenda_telefonica.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //filtro si el documento lo creo el usuario o el sistema
-$z .=" AND principal_agenda_telefonica.idUsuario = '{$_SESSION['usuario']['basic_data']['idUsuario']}' ";
+$z .=" AND principal_agenda_telefonica.idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."'";
 $z .=" OR principal_agenda_telefonica.idUsuario = '9999' ";
 //Realizo una consulta para saber el total de elementos existentes
 $query = "SELECT idAgenda FROM `principal_agenda_telefonica` ".$z;
@@ -261,7 +266,7 @@ $search='';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Contactos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Contactos</h5>
 			<div class="toolbar">
 				<?php 
 				//paginador
@@ -288,11 +293,11 @@ $search='';
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if($cont['idUsuario']!=9999){?>
-									<a href="<?php echo $location.'&id='.$cont['idAgenda']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+									<a href="<?php echo $location.'&id='.$cont['idAgenda']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php 
-									$ubicacion = $location.'&del='.$cont['idAgenda'];
+									$ubicacion = $location.'&del='.simpleEncode($cont['idAgenda'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el contacto '.$cont['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>
@@ -311,8 +316,8 @@ $search='';
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px; margin-top:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
+<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php } ?>           

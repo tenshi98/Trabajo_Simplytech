@@ -115,15 +115,8 @@ function crear_data($limite, $idVehiculo, $f_inicio, $f_termino, $dbConn ) {
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrRutas,$row );
@@ -207,7 +200,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	$z="WHERE vehiculos_listado.idVehiculo>0"; 
 
 	//Verifico el tipo de usuario que esta ingresando
-	$z.=" AND vehiculos_listado.idSistema={$_GET['idSistema']}";
+	$z.=" AND vehiculos_listado.idSistema=".$_GET['idSistema'];
 	
 	/*********************************************/
 	// Se trae un listado con todos los usuarios
@@ -227,15 +220,8 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrEquipos,$row );

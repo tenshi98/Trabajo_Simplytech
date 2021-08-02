@@ -33,12 +33,12 @@ require_once 'core/Web.Header.Main.php';
  
 <?php 
 	//Se dibuja el explorador de archivos
-	echo file_explorer(1, 'connector_procedimientos', DB_EMPRESA_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
+	echo file_explorer(1, 'connector_procedimientos', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px; margin-top:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
+<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

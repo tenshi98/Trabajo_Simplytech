@@ -35,9 +35,10 @@ if ( ! empty($_GET['submit_filter']) ) {
 $z = "WHERE usuarios_accesos.idAcceso>0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AND usuarios_accesos.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){         $z .= " AND usuarios_accesos.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idSistemaFil']) && $_GET['idSistemaFil'] != ''){   $z .= " AND usuarios_accesos.idSistema=".$_GET['idSistemaFil'];}
 if(isset($_GET['Rango_Inicio']) && $_GET['Rango_Inicio'] != ''&&isset($_GET['Rango_Termino']) && $_GET['Rango_Termino'] != ''){  
-	$z .= " AND usuarios_accesos.Fecha BETWEEN '{$_GET['Rango_Inicio']}' AND '{$_GET['Rango_Termino']}'" ;
+	$z .= " AND usuarios_accesos.Fecha BETWEEN '".$_GET['Rango_Inicio']."' AND '".$_GET['Rango_Termino']."'" ;
 }
 /**********************************************************/
 //consulta
@@ -47,9 +48,12 @@ usuarios_accesos.Fecha,
 usuarios_accesos.Hora,
 usuarios_accesos.IP_Client,
 usuarios_accesos.Agent_Transp,
-usuarios_listado.Nombre AS Usuario
+usuarios_listado.Nombre AS Usuario,
+core_sistemas.Nombre AS Sistema
+
 FROM `usuarios_accesos`
 LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario   = usuarios_accesos.idUsuario 
+LEFT JOIN `core_sistemas`      ON core_sistemas.idSistema      = usuarios_accesos.idSistema 
 ".$z."
 ORDER BY usuarios_accesos.Fecha DESC";
 //Consulta
@@ -70,20 +74,28 @@ array_push( $arrAccesos,$row );
 }
 
 
+
 ?>
-<div class="col-sm-12">
-	<a target="new" href="<?php echo 'informe_usuarios_accesos_01_to_excel.php?bla=true'.$search.'&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'] ; ?>" class="btn btn-sm btn-metis-2 fright margin_width"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
+
+<div class="col-sm-12 clearfix">
+	<?php
+	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	?>			
+	<a target="new" href="<?php echo 'informe_usuarios_accesos_01_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
+
                        
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Accesos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Accesos</h5>
 		</header>
 		<div class="table-responsive">   
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
+						<th>Sistema</th>
 						<th>Usuario</th>
 						<th width="120">Fecha</th>
 						<th width="120">Hora</th>
@@ -93,8 +105,11 @@ array_push( $arrAccesos,$row );
 				</thead>
 				
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrAccesos as $sol) { ?>
+					<?php 
+					//recorro los datos
+					foreach ($arrAccesos as $sol) { ?>
 						<tr class="odd">
+							<td><?php echo $sol['Sistema']; ?></td>
 							<td><?php echo $sol['Usuario']; ?></td>
 							<td><?php echo Fecha_estandar($sol['Fecha']); ?></td>
 							<td><?php echo $sol['Hora']; ?></td>
@@ -109,21 +124,20 @@ array_push( $arrAccesos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -131,15 +145,17 @@ $usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idS
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idUsuario)) {      $x1  = $idUsuario;     }else{$x1  = '';}
-				if(isset($Rango_Inicio)) {   $x2  = $Rango_Inicio;  }else{$x2  = '';}
-				if(isset($Rango_Termino)) {  $x3  = $Rango_Termino; }else{$x3  = '';}
+				if(isset($idSistemaFil)) {   $x1 = $idSistemaFil;   }else{$x1 = '';}
+				if(isset($idUsuario)) {      $x2 = $idUsuario;      }else{$x2 = '';}
+				if(isset($Rango_Inicio)) {   $x3 = $Rango_Inicio;   }else{$x3 = '';}
+				if(isset($Rango_Termino)) {  $x4 = $Rango_Termino;  }else{$x4 = '';}
 
 				//se dibujan los inputs	
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Usuario','idUsuario', $x1, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 0, '', $dbConn);
-				$Form_Imputs->form_date('Rango de Inicio','Rango_Inicio', $x2, 1);
-				$Form_Imputs->form_date('Rango de Termino','Rango_Termino', $x3, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Sistema','idSistemaFil', $x1, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Usuario','idUsuario', $x2, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 0, '', $dbConn);
+				$Form_Inputs->form_date('Rango de Inicio','Rango_Inicio', $x3, 1);
+				$Form_Inputs->form_date('Rango de Termino','Rango_Termino', $x4, 1);
 
 				?>        
 	   

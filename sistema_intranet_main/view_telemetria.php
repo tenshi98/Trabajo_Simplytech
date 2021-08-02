@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 telemetria_listado.Identificador,
@@ -35,12 +48,21 @@ telemetria_listado.IdentificadorEmpresa,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.TiempoDetencion,
 telemetria_listado.Capacidad,
+telemetria_listado.Marca, 
+telemetria_listado.Modelo, 
+telemetria_listado.Patente, 
+telemetria_listado.Num_serie, 
+telemetria_listado.AnoFab, 
+telemetria_listado.CapacidadPersonas,
+telemetria_listado.CapacidadKilos, 
+telemetria_listado.MCubicos,
+telemetria_listado.NErroresGeocercaMax,
+telemetria_listado.idUsoGeocerca,
 opc2.Nombre AS Geo,
 opc3.Nombre AS Sensores,
 opc4.Nombre AS Contratos,
-telemetria_listado.Codigo AS ContratoCodigo,
-telemetria_listado.F_Inicio AS ContratoF_Inicio,
-telemetria_listado.F_Termino AS ContratoF_Termino,
+opc5.Nombre AS Predio,
+opc6.Nombre AS Geocerca,
 telemetria_listado.cantSensores,
 telemetria_listado.Direccion_img,
 core_sistemas.Nombre AS sistema,
@@ -83,14 +105,31 @@ telemetria_listado.LimiteVelocidad,
 core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 telemetria_listado.Direccion,
-telemetria_zonas.Nombre AS Zona, 
-telemetria_listado.idUsoContrato
+telemetria_zonas.Nombre AS ZonaSinGPS, 
+vehiculos_zonas.Nombre AS ZonaConGPS, 
+telemetria_listado.idUsoContrato,
+vehiculos_tipo.Nombre AS TipoVehiculo,
+core_telemetria_tabs.Nombre AS Tab,
+opc7.Nombre AS Backup,
+telemetria_listado.NregBackup,
+opc8.Nombre AS Generador,
+
+telemetria_listado.CrossCrane_tiempo_revision AS TiempoRevision,
+grupo_1.Nombre AS Grupo_amperaje,
+grupo_2.Nombre AS Grupo_elevacion,
+grupo_3.Nombre AS Grupo_giro,
+grupo_4.Nombre AS Grupo_carro, 
+grupo_5.Nombre AS Grupo_voltaje,
+grupo_6.Nombre AS Grupo_motor_subida,
+grupo_7.Nombre AS Grupo_motor_bajada
 
 FROM `telemetria_listado`
 LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                            = telemetria_listado.idSistema
 LEFT JOIN `core_sistemas_opciones`        opc2   ON opc2.idOpciones                                    = telemetria_listado.id_Geo
 LEFT JOIN `core_sistemas_opciones`        opc3   ON opc3.idOpciones                                    = telemetria_listado.id_Sensores
 LEFT JOIN `core_sistemas_opciones`        opc4   ON opc4.idOpciones                                    = telemetria_listado.idUsoContrato
+LEFT JOIN `core_sistemas_opciones`        opc5   ON opc5.idOpciones                                    = telemetria_listado.idUsoPredio
+LEFT JOIN `core_sistemas_opciones`        opc6   ON opc6.idOpciones                                    = telemetria_listado.idUsoGeocerca
 LEFT JOIN `telemetria_listado_dispositivos`      ON telemetria_listado_dispositivos.idDispositivo      = telemetria_listado.idDispositivo
 LEFT JOIN `core_estados`                         ON core_estados.idEstado                              = telemetria_listado.idEstado
 LEFT JOIN `telemetria_listado_shield`            ON telemetria_listado_shield.idShield                 = telemetria_listado.idShield
@@ -98,8 +137,20 @@ LEFT JOIN `telemetria_listado_alarma_general`    ON telemetria_listado_alarma_ge
 LEFT JOIN `core_ubicacion_ciudad`                ON core_ubicacion_ciudad.idCiudad                     = telemetria_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`               ON core_ubicacion_comunas.idComuna                    = telemetria_listado.idComuna
 LEFT JOIN `telemetria_zonas`                     ON telemetria_zonas.idZona                            = telemetria_listado.idZona
+LEFT JOIN `vehiculos_zonas`                      ON vehiculos_zonas.idZona                             = telemetria_listado.idZona
+LEFT JOIN `vehiculos_tipo`                       ON vehiculos_tipo.idTipo                              = telemetria_listado.idTipo
+LEFT JOIN `core_telemetria_tabs`                 ON core_telemetria_tabs.idTab                         = telemetria_listado.idTab
+LEFT JOIN `core_sistemas_opciones`        opc7   ON opc7.idOpciones                                    = telemetria_listado.idBackup
+LEFT JOIN `core_sistemas_opciones`        opc8   ON opc8.idOpciones                                    = telemetria_listado.idGenerador
+LEFT JOIN `telemetria_listado_grupos`  grupo_1   ON grupo_1.idGrupo                                    = telemetria_listado.CrossCrane_grupo_amperaje
+LEFT JOIN `telemetria_listado_grupos`  grupo_2   ON grupo_2.idGrupo                                    = telemetria_listado.CrossCrane_grupo_elevacion
+LEFT JOIN `telemetria_listado_grupos`  grupo_3   ON grupo_3.idGrupo                                    = telemetria_listado.CrossCrane_grupo_giro
+LEFT JOIN `telemetria_listado_grupos`  grupo_4   ON grupo_4.idGrupo                                    = telemetria_listado.CrossCrane_grupo_carro
+LEFT JOIN `telemetria_listado_grupos`  grupo_5   ON grupo_5.idGrupo                                    = telemetria_listado.CrossCrane_grupo_voltaje
+LEFT JOIN `telemetria_listado_grupos`  grupo_6   ON grupo_6.idGrupo                                    = telemetria_listado.CrossCrane_grupo_motor_subida
+LEFT JOIN `telemetria_listado_grupos`  grupo_7   ON grupo_7.idGrupo                                    = telemetria_listado.CrossCrane_grupo_motor_bajada
 
-WHERE idTelemetria = {$_GET['view']}";
+WHERE idTelemetria = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -110,78 +161,65 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
 
-//Se traen todas las activaciones
+/********************************************/
+$arrContratos = array();
+$arrContratos = db_select_array (false, 'Codigo, F_Inicio, F_Termino', 'telemetria_listado_contratos', '', 'idTelemetria ='.$X_Puntero, 'idContrato DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"]), 'arrContratos');
+											
 $arrOpciones = array();
-$query = "SELECT idOpciones,Nombre
-FROM `core_sistemas_opciones`
-ORDER BY idOpciones ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrOpciones = db_select_array (false, 'idOpciones,Nombre', 'core_sistemas_opciones', '', '', 'idOpciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"]), 'arrOpciones');
+											
+$arrUnimed = array();
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"]), 'arrUnimed');
 
-	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOpciones,$row );
-}
+
+/********************************************/
+//recorro
+$arrEXOpciones = array();
+$arrFinalUnimed = array();
+
+foreach ($arrOpciones as $sen) { $arrEXOpciones[$sen['idOpciones']] = $sen['Nombre']; }
+foreach ($arrUnimed as $sen) { $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre']; }
+
+$arrEXOpciones[0]  = 'No Asignado';
+$arrFinalUnimed[0] = 'No Asignado';
+
 
 ?>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab">Datos Basicos</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				
 				<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
-				<li class=""><a href="#mediciones" data-toggle="tab">Ultimas Mediciones</a></li>
+				<li class=""><a href="#mediciones" data-toggle="tab"><i class="fa fa-wifi" aria-hidden="true"></i> Ultimas Mediciones</a></li>
 				<?php } ?>
 				
 				<?php if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){ ?>
-				<li class=""><a href="#trabajador" data-toggle="tab">Datos del Trabajador</a></li>
+				<li class=""><a href="#trabajador" data-toggle="tab"><i class="fa fa-user-o" aria-hidden="true"></i> Datos del Trabajador</a></li>
 				<?php } ?>
 				
 				<?php if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){ ?>
-				<li class=""><a href="#bodega" data-toggle="tab">Stock Bodega</a></li>
+				<li class=""><a href="#bodega" data-toggle="tab"><i class="fa fa-cubes" aria-hidden="true"></i> Stock Bodega</a></li>
 				<?php } ?>
 				
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="#alertas" data-toggle="tab">Alertas</a></li>
-						<li class=""><a href="#flinea" data-toggle="tab">Fuera de Linea</a></li>
+						<li class=""><a href="#alertas" data-toggle="tab"><i class="fa fa-bullhorn"  aria-hidden="true"></i> Alertas</a></li>
+						<li class=""><a href="#flinea" data-toggle="tab"><i class="fa fa-power-off" aria-hidden="true"></i> Fuera de Linea</a></li>
 						
-						<li class=""><a href="#carga" data-toggle="tab">Cargas</a></li>
-						<li class=""><a href="#mantencion" data-toggle="tab">Mantenciones</a></li>
+						<li class=""><a href="#carga" data-toggle="tab"><i class="fa fa-money" aria-hidden="true"></i> Cargas</a></li>
+						<li class=""><a href="#mantencion" data-toggle="tab"><i class="fa fa-wrench" aria-hidden="true"></i> Mantenciones</a></li>
 						
 					</ul>
                 </li>           
@@ -194,7 +232,7 @@ array_push( $arrOpciones,$row );
 					
 					<div class="col-sm-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/maquina.jpg">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
@@ -202,67 +240,119 @@ array_push( $arrOpciones,$row );
 					<div class="col-sm-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
 						<p class="text-muted">
-							<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?>                              <strong>Nombre Equipo: </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?>  <strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?>                    <strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?>                <strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){ ?>                  <strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){ ?>                        <strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){ ?>                      <strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){ ?>                        <strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){ ?>                  <strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Estado'])&&$rowdata['Estado']!=''){ ?>                              <strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/><?php } ?>
+							
 						</p>
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Configuracion</h2>
 						<p class="text-muted">
+							<strong class="color-red-dark">Basicos</strong><br/>
 							<strong>Identificador : </strong><?php echo $rowdata['Identificador']; ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<strong>Alarma General : </strong><?php echo $rowdata['AlarmaGeneral']; ?><br/>
-							<strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/>
-							<?php if($rowdata['id_Geo']==1){ ?>
-							<strong>Limite Velocidad : </strong><?php echo Cantidades_decimales_justos($rowdata['LimiteVelocidad']).' KM/h'; ?><br/>
-							<?php }
-							if($rowdata['id_Geo']==2){ ?>
-								<strong>Zona : </strong><?php echo $rowdata['Zona']; ?><br/>
+							<?php if(isset($rowdata['Dispositivo'])&&$rowdata['Dispositivo']!=''){ ?>            <strong>Hardware : </strong><?php echo $rowdata['Dispositivo']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Shield'])&&$rowdata['Shield']!=''){ ?>                      <strong>Shield : </strong><?php echo $rowdata['Shield']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['TiempoFueraLinea'])&&$rowdata['TiempoFueraLinea']!=''){ ?>  <strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowdata['TiempoFueraLinea']; ?> Horas<br/><?php } ?>
+							<?php if(isset($rowdata['Tab'])&&$rowdata['Tab']!=''){ ?>                            <strong>Tab: </strong><?php echo $rowdata['Tab']; ?><br/><?php } ?>
+							
+							<br/>
+							<strong class="color-red-dark">Funciones</strong><br/>
+							<?php if(isset($rowdata['Geo'])&&$rowdata['Geo']!=''){ ?>                     <strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sensores'])&&$rowdata['Sensores']!=''){ ?>           <strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/><?php } ?>
+							<?php if(isset($rowdata['Predio'])&&$rowdata['Predio']!=''){ ?>               <strong>Utilizacion de Predios : </strong><?php echo $rowdata['Predio'];?><br/><?php } ?>
+							<?php if(isset($rowdata['Geocerca'])&&$rowdata['Geocerca']!=''){ ?>           <strong>Utilizacion de Geocercas : </strong><?php echo $rowdata['Geocerca'].' ';if($rowdata['idUsoGeocerca']==1){echo '('.$rowdata['NErroresGeocercaMax'].' Errores Maximo)';} ?><br/><?php } ?>
+							<?php if(isset($rowdata['Backup'])&&$rowdata['Backup']!=''){ ?>               <strong>Utilizacion de Backup : </strong><?php echo $rowdata['Backup'].' ';if(isset($rowdata['NregBackup'])&&$rowdata['NregBackup']!=''){echo '('.$rowdata['NregBackup'].' Registros)';} ?><br/><?php } ?>
+							<?php if(isset($rowdata['Generador'])&&$rowdata['Generador']!=''){ ?>         <strong>Generador Electrico : </strong><?php echo $rowdata['Generador']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['AlarmaGeneral'])&&$rowdata['AlarmaGeneral']!=''){ ?> <strong>Alarma General : </strong><?php echo $rowdata['AlarmaGeneral']; ?><br/><?php } ?>
+							
+							
+							<br/>
+							<strong class="color-red-dark">Otros Datos</strong><br/>
+							<?php if(isset($rowdata['Capacidad'])&&$rowdata['Capacidad']!=0){ ?>                   <strong>Capacidad Nebulizador: </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/><?php } ?>
+							<?php if(isset($rowdata['TiempoRevision'])&&$rowdata['TiempoRevision']!=0){ ?>         <strong>Hora Revision: </strong><?php echo $rowdata['TiempoRevision']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_amperaje'])&&$rowdata['Grupo_amperaje']!=0){ ?>         <strong>Gruas - Grupo Alimentacion: </strong><?php echo $rowdata['Grupo_amperaje']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_elevacion'])&&$rowdata['Grupo_elevacion']!=0){ ?>       <strong>Gruas - Grupo Elevacion: </strong><?php echo $rowdata['Grupo_elevacion']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_giro'])&&$rowdata['Grupo_giro']!=0){ ?>                 <strong>Gruas - Grupo Giro: </strong><?php echo $rowdata['Grupo_giro']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_carro'])&&$rowdata['Grupo_carro']!=0){ ?>               <strong>Gruas - Grupo Carro: </strong><?php echo $rowdata['Grupo_carro']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_voltaje'])&&$rowdata['Grupo_voltaje']!=0){ ?>           <strong>Gruas - Grupo Voltaje: </strong><?php echo $rowdata['Grupo_voltaje']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_motor_subida'])&&$rowdata['Grupo_motor_subida']!=0){ ?> <strong>Ascensores - Grupo Amperaje Motor Subida: </strong><?php echo $rowdata['Grupo_motor_subida']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_motor_bajada'])&&$rowdata['Grupo_motor_bajada']!=0){ ?> <strong>Ascensores - Grupo Amperaje Motor Bajada: </strong><?php echo $rowdata['Grupo_motor_bajada']; ?><br/><?php } ?>
+							
+							
+							<?php if($rowdata['id_Geo']==2){ ?>
+								<br/>
+								<strong class="color-red-dark">Ubicacion</strong><br/>
+								<strong>Zona de Trabajo : </strong><?php echo $rowdata['ZonaSinGPS']; ?><br/>
 								<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/>
 							<?php } ?>
-							<strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/>
-							<strong>Hardware : </strong><?php echo $rowdata['Dispositivo']; ?><br/>
-							<?php if(isset($rowdata['Shield'])&&$rowdata['Shield']!=''){ ?>
-							<strong>Shield : </strong><?php echo $rowdata['Shield']; ?><br/>
+							
+							<?php if(isset($rowdata['Contratos'])&&$rowdata['Contratos']!=''){ ?>         
+								<br/>
+								<strong class="color-red-dark">Contratos</strong><br/>
+								<strong>Utilizacion de Contratos : </strong><?php echo $rowdata['Contratos']; ?><br/>
+								<?php if($arrContratos){ ?>
+									<table id="items" style="margin-bottom: 20px;">
+										<tbody>
+											<?php foreach ($arrContratos as $carga) { ?>
+												<tr class="item-row">
+													<td><?php echo $carga['Codigo']; ?></td>		
+													<td><?php echo fecha_estandar($carga['F_Inicio']); ?></td>	
+													<td><?php echo fecha_estandar($carga['F_Termino']); ?></td>						
+												</tr>
+											<?php } ?>
+										</tbody>
+									</table>
+								<?php } ?>
 							<?php } ?>
-							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowdata['TiempoFueraLinea']; ?> Horas<br/>
-							<?php if($rowdata['id_Geo']==1){ ?>
-							<strong>Tiempo Maximo Detencion : </strong><?php echo $rowdata['TiempoDetencion']; ?> Horas<br/>
-							<?php } ?>
-							<strong>Utilizacion de Contratos : </strong><?php echo $rowdata['Contratos'].' ';if($rowdata['idUsoContrato']==1){ echo '(Contrato Cod <strong>'.$rowdata['ContratoCodigo'].'</strong>, valido del <strong>'.fecha_estandar($rowdata['ContratoF_Inicio']).'</strong> al <strong>'.fecha_estandar($rowdata['ContratoF_Termino']).'</strong>)';} ?><br/>
-							<?php if(isset($rowdata['Capacidad'])&&$rowdata['Capacidad']!=0){ ?>
-								<strong>Capacidad : </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/>
-							<?php } ?>
+							
 						</p>
+						
+						<?php if($rowdata['id_Geo']==1){ ?>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos GPS</h2>
+							<p class="text-muted">
+								<strong class="color-red-dark">Basicos</strong><br/>
+								<strong>Tipo de Vehiculo : </strong><?php echo $rowdata['TipoVehiculo']; ?><br/>
+								<strong>Marca : </strong><?php echo $rowdata['Marca']; ?><br/>
+								<strong>Modelo : </strong><?php echo $rowdata['Modelo']; ?><br/>
+								<strong>Patente : </strong><?php echo $rowdata['Patente']; ?><br/>
+								<strong>Numero de serie : </strong><?php echo $rowdata['Num_serie']; ?><br/>
+								<strong>Año de Fabricacion : </strong><?php echo $rowdata['AnoFab']; ?><br/>
+							
+								<br/>
+								<strong class="color-red-dark">Caracteristicos</strong><br/>
+								<strong>Zona de Trabajo : </strong><?php echo $rowdata['ZonaConGPS']; ?><br/>
+								<strong>Capacidad Pasajeros : </strong><?php echo $rowdata['CapacidadPersonas']; ?><br/>
+								<strong>Capacidad (Kilos) : </strong><?php echo Cantidades_decimales_justos($rowdata['CapacidadKilos']); ?><br/>
+								<strong>Metros Cubicos (M3) : </strong><?php echo Cantidades_decimales_justos($rowdata['MCubicos']); ?><br/>
+							
+								<br/>
+								<strong class="color-red-dark">Datos Movilizacion</strong><br/>
+								<strong>Limite Velocidad : </strong><?php echo Cantidades_decimales_justos($rowdata['LimiteVelocidad']).' KM/h'; ?><br/>
+								<strong>Tiempo Maximo Detencion : </strong><?php echo $rowdata['TiempoDetencion']; ?> Horas<br/>
+							</p>
+								
+						<?php } ?>
+							
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Horario Notificaciones</h2>
 						<p class="text-muted">
-							<?php
-							for ($i = 1; $i <= 7; $i++) {
-								//Unidad medida
-								$bla = 'No Asignado';
-								foreach ($arrOpciones as $sen) { 
-									if($rowdata['Hor_idActivo_dia'.$i]==$sen['idOpciones']){
-										$bla = $sen['Nombre'];
-									}
-								}
-								?>
-								<strong><?php echo numero_nombreDia($i); ?> : </strong><?php echo $bla.' / '.$rowdata['Hor_Inicio_dia'.$i].' - '.$rowdata['Hor_Termino_dia'.$i]; ?><br/>
+							<?php for ($i = 1; $i <= 7; $i++) { ?>
+								<strong><?php echo numero_nombreDia($i); ?> : </strong><?php echo $arrEXOpciones[$rowdata['Hor_idActivo_dia'.$i]].' / '.$rowdata['Hor_Inicio_dia'.$i].' - '.$rowdata['Hor_Termino_dia'.$i]; ?><br/>
 							<?php } ?>
-						</p>
+						</p>	
+						
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Jornada Laboral</h2>
 						<p class="text-muted">
-							<strong>Hora Inicio Jornada : </strong><?php echo $rowdata['Jornada_inicio'].' hrs'; ?><br/>
-							<strong>Hora Termino Jornada : </strong><?php echo $rowdata['Jornada_termino'].' hrs'; ?><br/>
-							<strong>Hora Inicio Colacion : </strong><?php echo $rowdata['Colacion_inicio'].' hrs'; ?><br/>
-							<strong>Hora Termino Colacion : </strong><?php echo $rowdata['Colacion_termino'].' hrs'; ?><br/>
+							<strong>Jornada : </strong><?php echo 'De '.$rowdata['Jornada_inicio'].' a '.$rowdata['Jornada_termino']; ?><br/>
+							<strong>Colacion : </strong><?php echo 'De '.$rowdata['Colacion_inicio'].' a '.$rowdata['Colacion_termino']; ?><br/>
 							<strong>Tiempo Microparadas : </strong><?php echo $rowdata['Microparada'].' hrs'; ?><br/>
 						</p>
 						
@@ -279,122 +369,29 @@ array_push( $arrOpciones,$row );
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
 						<?php
+						
+						//numero sensores equipo
+						$N_Maximo_Sensores = 72;
+						$subquery = '';
+						for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+							$subquery .= ',SensoresNombre_'.$i;
+							$subquery .= ',SensoresTipo_'.$i;
+							$subquery .= ',SensoresMedMin_'.$i;
+							$subquery .= ',SensoresMedMax_'.$i;
+							$subquery .= ',SensoresMedErrores_'.$i;
+							$subquery .= ',SensoresErrorActual_'.$i;
+							$subquery .= ',SensoresGrupo_'.$i;
+							$subquery .= ',SensoresUniMed_'.$i;
+							$subquery .= ',SensoresMedActual_'.$i;
+							$subquery .= ',SensoresActivo_'.$i;
+						}
 						// tomo los datos del usuario
 						$query = "SELECT Nombre,id_Geo, id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,
-						GeoVelocidad,
-
-						SensoresNombre_1, SensoresNombre_2, SensoresNombre_3, SensoresNombre_4, SensoresNombre_5, 
-						SensoresNombre_6, SensoresNombre_7, SensoresNombre_8, SensoresNombre_9, SensoresNombre_10, 
-						SensoresNombre_11, SensoresNombre_12, SensoresNombre_13, SensoresNombre_14, SensoresNombre_15, 
-						SensoresNombre_16, SensoresNombre_17, SensoresNombre_18, SensoresNombre_19, SensoresNombre_20, 
-						SensoresNombre_21, SensoresNombre_22, SensoresNombre_23, SensoresNombre_24, SensoresNombre_25, 
-						SensoresNombre_26, SensoresNombre_27, SensoresNombre_28, SensoresNombre_29, SensoresNombre_30, 
-						SensoresNombre_31, SensoresNombre_32, SensoresNombre_33, SensoresNombre_34, SensoresNombre_35, 
-						SensoresNombre_36, SensoresNombre_37, SensoresNombre_38, SensoresNombre_39, SensoresNombre_40, 
-						SensoresNombre_41, SensoresNombre_42, SensoresNombre_43, SensoresNombre_44, SensoresNombre_45, 
-						SensoresNombre_46, SensoresNombre_47, SensoresNombre_48, SensoresNombre_49, SensoresNombre_50,
-
-						SensoresTipo_1, SensoresTipo_2, SensoresTipo_3, SensoresTipo_4, SensoresTipo_5, 
-						SensoresTipo_6, SensoresTipo_7, SensoresTipo_8, SensoresTipo_9, SensoresTipo_10, 
-						SensoresTipo_11, SensoresTipo_12, SensoresTipo_13, SensoresTipo_14, SensoresTipo_15, 
-						SensoresTipo_16, SensoresTipo_17, SensoresTipo_18, SensoresTipo_19, SensoresTipo_20, 
-						SensoresTipo_21, SensoresTipo_22, SensoresTipo_23, SensoresTipo_24, SensoresTipo_25, 
-						SensoresTipo_26, SensoresTipo_27, SensoresTipo_28, SensoresTipo_29, SensoresTipo_30, 
-						SensoresTipo_31, SensoresTipo_32, SensoresTipo_33, SensoresTipo_34, SensoresTipo_35, 
-						SensoresTipo_36, SensoresTipo_37, SensoresTipo_38, SensoresTipo_39, SensoresTipo_40, 
-						SensoresTipo_41, SensoresTipo_42, SensoresTipo_43, SensoresTipo_44, SensoresTipo_45, 
-						SensoresTipo_46, SensoresTipo_47, SensoresTipo_48, SensoresTipo_49, SensoresTipo_50,
-						 
-						SensoresMedMin_1, SensoresMedMin_2, SensoresMedMin_3, SensoresMedMin_4, SensoresMedMin_5, 
-						SensoresMedMin_6, SensoresMedMin_7, SensoresMedMin_8, SensoresMedMin_9, SensoresMedMin_10, 
-						SensoresMedMin_11, SensoresMedMin_12, SensoresMedMin_13, SensoresMedMin_14, SensoresMedMin_15, 
-						SensoresMedMin_16, SensoresMedMin_17, SensoresMedMin_18, SensoresMedMin_19, SensoresMedMin_20, 
-						SensoresMedMin_21, SensoresMedMin_22, SensoresMedMin_23, SensoresMedMin_24, SensoresMedMin_25, 
-						SensoresMedMin_26, SensoresMedMin_27, SensoresMedMin_28, SensoresMedMin_29, SensoresMedMin_30, 
-						SensoresMedMin_31, SensoresMedMin_32, SensoresMedMin_33, SensoresMedMin_34, SensoresMedMin_35, 
-						SensoresMedMin_36, SensoresMedMin_37, SensoresMedMin_38, SensoresMedMin_39, SensoresMedMin_40, 
-						SensoresMedMin_41, SensoresMedMin_42, SensoresMedMin_43, SensoresMedMin_44, SensoresMedMin_45, 
-						SensoresMedMin_46, SensoresMedMin_47, SensoresMedMin_48, SensoresMedMin_49, SensoresMedMin_50,
-						 
-						SensoresMedMax_1, SensoresMedMax_2, SensoresMedMax_3, SensoresMedMax_4, SensoresMedMax_5, 
-						SensoresMedMax_6, SensoresMedMax_7, SensoresMedMax_8, SensoresMedMax_9, SensoresMedMax_10, 
-						SensoresMedMax_11, SensoresMedMax_12, SensoresMedMax_13, SensoresMedMax_14, SensoresMedMax_15, 
-						SensoresMedMax_16, SensoresMedMax_17, SensoresMedMax_18, SensoresMedMax_19, SensoresMedMax_20, 
-						SensoresMedMax_21, SensoresMedMax_22, SensoresMedMax_23, SensoresMedMax_24, SensoresMedMax_25, 
-						SensoresMedMax_26, SensoresMedMax_27, SensoresMedMax_28, SensoresMedMax_29, SensoresMedMax_30, 
-						SensoresMedMax_31, SensoresMedMax_32, SensoresMedMax_33, SensoresMedMax_34, SensoresMedMax_35, 
-						SensoresMedMax_36, SensoresMedMax_37, SensoresMedMax_38, SensoresMedMax_39, SensoresMedMax_40, 
-						SensoresMedMax_41, SensoresMedMax_42, SensoresMedMax_43, SensoresMedMax_44, SensoresMedMax_45, 
-						SensoresMedMax_46, SensoresMedMax_47, SensoresMedMax_48, SensoresMedMax_49, SensoresMedMax_50, 
-
-						SensoresMedErrores_1, SensoresMedErrores_2, SensoresMedErrores_3, SensoresMedErrores_4, SensoresMedErrores_5, 
-						SensoresMedErrores_6, SensoresMedErrores_7, SensoresMedErrores_8, SensoresMedErrores_9, SensoresMedErrores_10, 
-						SensoresMedErrores_11, SensoresMedErrores_12, SensoresMedErrores_13, SensoresMedErrores_14, SensoresMedErrores_15, 
-						SensoresMedErrores_16, SensoresMedErrores_17, SensoresMedErrores_18, SensoresMedErrores_19, SensoresMedErrores_20, 
-						SensoresMedErrores_21, SensoresMedErrores_22, SensoresMedErrores_23, SensoresMedErrores_24, SensoresMedErrores_25, 
-						SensoresMedErrores_26, SensoresMedErrores_27, SensoresMedErrores_28, SensoresMedErrores_29, SensoresMedErrores_30, 
-						SensoresMedErrores_31, SensoresMedErrores_32, SensoresMedErrores_33, SensoresMedErrores_34, SensoresMedErrores_35, 
-						SensoresMedErrores_36, SensoresMedErrores_37, SensoresMedErrores_38, SensoresMedErrores_39, SensoresMedErrores_40, 
-						SensoresMedErrores_41, SensoresMedErrores_42, SensoresMedErrores_43, SensoresMedErrores_44, SensoresMedErrores_45, 
-						SensoresMedErrores_46, SensoresMedErrores_47, SensoresMedErrores_48, SensoresMedErrores_49, SensoresMedErrores_50, 
-
-						SensoresErrorActual_1, SensoresErrorActual_2, SensoresErrorActual_3, SensoresErrorActual_4, SensoresErrorActual_5, 
-						SensoresErrorActual_6, SensoresErrorActual_7, SensoresErrorActual_8, SensoresErrorActual_9, SensoresErrorActual_10, 
-						SensoresErrorActual_11, SensoresErrorActual_12, SensoresErrorActual_13, SensoresErrorActual_14, SensoresErrorActual_15, 
-						SensoresErrorActual_16, SensoresErrorActual_17, SensoresErrorActual_18, SensoresErrorActual_19, SensoresErrorActual_20, 
-						SensoresErrorActual_21, SensoresErrorActual_22, SensoresErrorActual_23, SensoresErrorActual_24, SensoresErrorActual_25, 
-						SensoresErrorActual_26, SensoresErrorActual_27, SensoresErrorActual_28, SensoresErrorActual_29, SensoresErrorActual_30, 
-						SensoresErrorActual_31, SensoresErrorActual_32, SensoresErrorActual_33, SensoresErrorActual_34, SensoresErrorActual_35, 
-						SensoresErrorActual_36, SensoresErrorActual_37, SensoresErrorActual_38, SensoresErrorActual_39, SensoresErrorActual_40, 
-						SensoresErrorActual_41, SensoresErrorActual_42, SensoresErrorActual_43, SensoresErrorActual_44, SensoresErrorActual_45, 
-						SensoresErrorActual_46, SensoresErrorActual_47, SensoresErrorActual_48, SensoresErrorActual_49, SensoresErrorActual_50,
-
-						SensoresGrupo_1, SensoresGrupo_2, SensoresGrupo_3, SensoresGrupo_4, SensoresGrupo_5, 
-						SensoresGrupo_6, SensoresGrupo_7, SensoresGrupo_8, SensoresGrupo_9, SensoresGrupo_10, 
-						SensoresGrupo_11, SensoresGrupo_12, SensoresGrupo_13, SensoresGrupo_14, SensoresGrupo_15, 
-						SensoresGrupo_16, SensoresGrupo_17, SensoresGrupo_18, SensoresGrupo_19, SensoresGrupo_20, 
-						SensoresGrupo_21, SensoresGrupo_22, SensoresGrupo_23, SensoresGrupo_24, SensoresGrupo_25, 
-						SensoresGrupo_26, SensoresGrupo_27, SensoresGrupo_28, SensoresGrupo_29, SensoresGrupo_30, 
-						SensoresGrupo_31, SensoresGrupo_32, SensoresGrupo_33, SensoresGrupo_34, SensoresGrupo_35, 
-						SensoresGrupo_36, SensoresGrupo_37, SensoresGrupo_38, SensoresGrupo_39, SensoresGrupo_40, 
-						SensoresGrupo_41, SensoresGrupo_42, SensoresGrupo_43, SensoresGrupo_44, SensoresGrupo_45, 
-						SensoresGrupo_46, SensoresGrupo_47, SensoresGrupo_48, SensoresGrupo_49, SensoresGrupo_50,
-						
-						SensoresUniMed_1, SensoresUniMed_2, SensoresUniMed_3, SensoresUniMed_4, SensoresUniMed_5, 
-						SensoresUniMed_6, SensoresUniMed_7, SensoresUniMed_8, SensoresUniMed_9, SensoresUniMed_10, 
-						SensoresUniMed_11, SensoresUniMed_12, SensoresUniMed_13, SensoresUniMed_14, SensoresUniMed_15, 
-						SensoresUniMed_16, SensoresUniMed_17, SensoresUniMed_18, SensoresUniMed_19, SensoresUniMed_20, 
-						SensoresUniMed_21, SensoresUniMed_22, SensoresUniMed_23, SensoresUniMed_24, SensoresUniMed_25, 
-						SensoresUniMed_26, SensoresUniMed_27, SensoresUniMed_28, SensoresUniMed_29, SensoresUniMed_30, 
-						SensoresUniMed_31, SensoresUniMed_32, SensoresUniMed_33, SensoresUniMed_34, SensoresUniMed_35, 
-						SensoresUniMed_36, SensoresUniMed_37, SensoresUniMed_38, SensoresUniMed_39, SensoresUniMed_40, 
-						SensoresUniMed_41, SensoresUniMed_42, SensoresUniMed_43, SensoresUniMed_44, SensoresUniMed_45, 
-						SensoresUniMed_46, SensoresUniMed_47, SensoresUniMed_48, SensoresUniMed_49, SensoresUniMed_50,
-						
-						SensoresMedActual_1, SensoresMedActual_2, SensoresMedActual_3, SensoresMedActual_4, SensoresMedActual_5, 
-						SensoresMedActual_6, SensoresMedActual_7, SensoresMedActual_8, SensoresMedActual_9, SensoresMedActual_10, 
-						SensoresMedActual_11, SensoresMedActual_12, SensoresMedActual_13, SensoresMedActual_14, SensoresMedActual_15, 
-						SensoresMedActual_16, SensoresMedActual_17, SensoresMedActual_18, SensoresMedActual_19, SensoresMedActual_20, 
-						SensoresMedActual_21, SensoresMedActual_22, SensoresMedActual_23, SensoresMedActual_24, SensoresMedActual_25, 
-						SensoresMedActual_26, SensoresMedActual_27, SensoresMedActual_28, SensoresMedActual_29, SensoresMedActual_30, 
-						SensoresMedActual_31, SensoresMedActual_32, SensoresMedActual_33, SensoresMedActual_34, SensoresMedActual_35, 
-						SensoresMedActual_36, SensoresMedActual_37, SensoresMedActual_38, SensoresMedActual_39, SensoresMedActual_40, 
-						SensoresMedActual_41, SensoresMedActual_42, SensoresMedActual_43, SensoresMedActual_44, SensoresMedActual_45, 
-						SensoresMedActual_46, SensoresMedActual_47, SensoresMedActual_48, SensoresMedActual_49, SensoresMedActual_50,
-						
-						SensoresActivo_1, SensoresActivo_2, SensoresActivo_3, SensoresActivo_4, SensoresActivo_5, 
-						SensoresActivo_6, SensoresActivo_7, SensoresActivo_8, SensoresActivo_9, SensoresActivo_10, 
-						SensoresActivo_11, SensoresActivo_12, SensoresActivo_13, SensoresActivo_14, SensoresActivo_15, 
-						SensoresActivo_16, SensoresActivo_17, SensoresActivo_18, SensoresActivo_19, SensoresActivo_20, 
-						SensoresActivo_21, SensoresActivo_22, SensoresActivo_23, SensoresActivo_24, SensoresActivo_25, 
-						SensoresActivo_26, SensoresActivo_27, SensoresActivo_28, SensoresActivo_29, SensoresActivo_30, 
-						SensoresActivo_31, SensoresActivo_32, SensoresActivo_33, SensoresActivo_34, SensoresActivo_35, 
-						SensoresActivo_36, SensoresActivo_37, SensoresActivo_38, SensoresActivo_39, SensoresActivo_40, 
-						SensoresActivo_41, SensoresActivo_42, SensoresActivo_43, SensoresActivo_44, SensoresActivo_45, 
-						SensoresActivo_46, SensoresActivo_47, SensoresActivo_48, SensoresActivo_49, SensoresActivo_50
+						GeoVelocidad
+						".$subquery."
 
 						FROM `telemetria_listado`
-						WHERE idTelemetria = {$_GET['view']}";
+						WHERE idTelemetria = ".$X_Puntero;
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -405,15 +402,8 @@ array_push( $arrOpciones,$row );
 							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
+							php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 						}
 						$rowMed = mysqli_fetch_assoc ($resultado);
 
@@ -433,15 +423,8 @@ array_push( $arrOpciones,$row );
 							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
+							php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 						}
 						while ( $row = mysqli_fetch_assoc ($resultado)) {
 						array_push( $arrSensores,$row );
@@ -462,48 +445,14 @@ array_push( $arrOpciones,$row );
 							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
+							php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 						}
 						while ( $row = mysqli_fetch_assoc ($resultado)) {
 						array_push( $arrGrupos,$row );
 						}
 						
-						//Se traen todas las unidades de medida
-						$arrUnimed = array();
-						$query = "SELECT idUniMed,Nombre
-						FROM `telemetria_listado_unidad_medida`
-						ORDER BY idUniMed ASC";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							
-							//variables
-							$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
-						}
-						while ( $row = mysqli_fetch_assoc ($resultado)) {
-						array_push( $arrUnimed,$row );
-						}
+						
 						?>
 						
 						<div class="table-responsive">    
@@ -511,12 +460,12 @@ array_push( $arrOpciones,$row );
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<?php if(isset($rowMed['id_Geo'])&&$rowMed['id_Geo']!=''&&$rowMed['id_Geo']==1){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.$_GET['view'].'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default fright margin_width fmrbtn" >Ver Ultima Ubicacion</a>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_1.php?view='.$_GET['view']; ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Sensores</a>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_velocidad.php?view='.$_GET['view']; ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Velocidades</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default fright margin_width fmrbtn" >Ver Ultima Ubicacion</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_1.php?view='.$X_Puntero; ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Sensores</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_velocidad.php?view='.$X_Puntero; ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Velocidades</a>
 								<?php }elseif(isset($rowMed['id_Geo'])&&$rowMed['id_Geo']!=''&&$rowMed['id_Geo']==2){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.$_GET['view'].'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default fright margin_width fmrbtn" >Ver Ultima Ubicacion</a>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.$_GET['view']; ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Sensores</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default fright margin_width fmrbtn" >Ver Ultima Ubicacion</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.$X_Puntero; ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<?php } ?>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
@@ -564,17 +513,11 @@ array_push( $arrOpciones,$row );
 										<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
 											//solo sensores activos
 											if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){
-												$unimed = '';
-												//unidad de medida
-												foreach ($arrUnimed as $sen) {
-													if($rowMed['SensoresUniMed_'.$i]==$sen['idUniMed']){
-														$unimed = ' '.$sen['Nombre'];	
-													}
-												}
+												$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];
 												$s_alert = '';
 												//se verifica que la medicion minima y maxima sean distintas de 0
 												if($rowMed['SensoresMedMin_'.$i]!=0&&$rowMed['SensoresMedMax_'.$i]!=0){
-													if($rowMed['SensoresMedActual_'.$i] < $rowMed['SensoresMedMin_'.$i] or $rowMed['SensoresMedActual_'.$i]>$rowMed['SensoresMedMax_'.$i]){
+													if($rowMed['SensoresMedActual_'.$i] < $rowMed['SensoresMedMin_'.$i] OR $rowMed['SensoresMedActual_'.$i]>$rowMed['SensoresMedMax_'.$i]){
 														$s_alert = 'danger';
 													}
 												}
@@ -602,7 +545,7 @@ array_push( $arrOpciones,$row );
 													</td>
 													<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
 													<td><?php 
-													if(isset($rowMed['SensoresMedActual_'.$i])&&$rowMed['SensoresMedActual_'.$i]!=999){
+													if(isset($rowMed['SensoresMedActual_'.$i])&&$rowMed['SensoresMedActual_'.$i]<99900){
 														echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).$unimed;
 													}else{
 														echo 'Sin Datos';
@@ -667,22 +610,15 @@ array_push( $arrOpciones,$row );
 							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
+							php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 						}
 						$rowTrabajador = mysqli_fetch_assoc ($resultado);
 						?>
 						
 						<div class="col-sm-4">
 							<?php if ($rowdata['Direccion_img']=='') { ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/maquina.jpg">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 							<?php }else{  ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 							<?php }?>
@@ -747,15 +683,8 @@ array_push( $arrOpciones,$row );
 							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
+							php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 						}
 						while ( $row = mysqli_fetch_assoc ($resultado)) {
 						array_push( $arrProductos,$row );
@@ -818,9 +747,9 @@ array_push( $arrOpciones,$row );
 						
 						FROM `telemetria_listado_errores`
 						LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria
-						WHERE telemetria_listado_errores.idTelemetria = {$_GET['view']}
+						WHERE telemetria_listado_errores.idTelemetria = ".$X_Puntero."
 						AND telemetria_listado_errores.idTipo!='999'
-						AND telemetria_listado_errores.Valor!='999'
+						AND telemetria_listado_errores.Valor<'99900'
 						ORDER BY telemetria_listado_errores.idErrores DESC
 						LIMIT 20";
 						//Consulta
@@ -833,54 +762,19 @@ array_push( $arrOpciones,$row );
 							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
+							php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 						}
 						while ( $row = mysqli_fetch_assoc ($resultado)) {
 						array_push( $arrAlertas,$row );
 						}
 						
-						//Se traen todas las unidades de medida
-						$arrUnimed = array();
-						$query = "SELECT idUniMed,Nombre
-						FROM `telemetria_listado_unidad_medida`
-						ORDER BY idUniMed ASC";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							
-							//variables
-							$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
-						}
-						while ( $row = mysqli_fetch_assoc ($resultado)) {
-						array_push( $arrUnimed,$row );
-						}
 						?>
 						
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'.php?idTelemetria='.$_GET['view'].'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'.php?idTelemetria='.$X_Puntero.'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 							
@@ -902,13 +796,8 @@ array_push( $arrOpciones,$row );
 								
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<?php foreach ($arrAlertas as $error) { 
-											//Guardo la unidad de medida
-											$unimed = '';
-											foreach ($arrUnimed as $sen) {
-												if($error['SensoresUniMed_'.$error['Sensor']]==$sen['idUniMed']){
-													$unimed = ' '.$sen['Nombre'];	
-												}
-											} ?>
+										//Guardo la unidad de medida
+										$unimed = ' '.$arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]]; ?>
 										<tr>
 											<td><?php echo $error['Descripcion']; ?></td>
 											<td><?php echo fecha_estandar($error['Fecha']); ?></td>
@@ -919,7 +808,7 @@ array_push( $arrOpciones,$row );
 											<?php if($rowdata['id_Geo']==1){ ?>
 												<td>
 													<div class="btn-group" style="width: 35px;" >
-														<a href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'_view.php?view='.$error['idErrores'].'&return=true'; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+														<a href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'_view.php?view='.$error['idErrores'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											<?php } ?> 		
@@ -940,7 +829,7 @@ array_push( $arrOpciones,$row );
 						$query = "SELECT  idFueraLinea, Fecha_inicio, Hora_inicio, Fecha_termino, Hora_termino, Tiempo
 
 						FROM `telemetria_listado_error_fuera_linea`
-						WHERE idTelemetria = {$_GET['view']}
+						WHERE idTelemetria = ".$X_Puntero."
 						ORDER BY idFueraLinea DESC
 						LIMIT 20";
 						//Consulta
@@ -953,15 +842,8 @@ array_push( $arrOpciones,$row );
 							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
+							php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 						}
 						while ( $row = mysqli_fetch_assoc ($resultado)) {
 						array_push( $arrFlinea,$row );
@@ -971,7 +853,7 @@ array_push( $arrOpciones,$row );
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'.php?idTelemetria='.$_GET['view'].'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'.php?idTelemetria='.$X_Puntero.'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 							
@@ -1001,7 +883,7 @@ array_push( $arrOpciones,$row );
 											<?php if($rowdata['id_Geo']==1){ ?>
 												<td>
 													<div class="btn-group" style="width: 35px;" >
-														<a href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'_view.php?view='.$error['idFueraLinea'].'&return=true'; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+														<a href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'_view.php?view='.$error['idFueraLinea'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											<?php } ?> 		
@@ -1029,7 +911,7 @@ array_push( $arrOpciones,$row );
 						FROM `telemetria_carga_bam`
 						LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario       = telemetria_carga_bam.idUsuario
 
-						WHERE telemetria_carga_bam.idTelemetria = {$_GET['view']}
+						WHERE telemetria_carga_bam.idTelemetria = ".$X_Puntero."
 						ORDER BY telemetria_carga_bam.FechaVencimiento DESC
 						LIMIT 20";
 						//Consulta
@@ -1042,15 +924,8 @@ array_push( $arrOpciones,$row );
 							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
+							php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 						}
 						while ( $row = mysqli_fetch_assoc ($resultado)) {
 						array_push( $arrCarga,$row );
@@ -1098,11 +973,12 @@ array_push( $arrOpciones,$row );
 						usuarios_listado.Nombre AS Usuario,
 						telemetria_listado.Nombre AS Equipo
 
-						FROM `telemetria_historial_mantencion`
-						LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria   = telemetria_historial_mantencion.idTelemetria
-						LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario        = telemetria_historial_mantencion.idUsuario
+						FROM `telemetria_historial_mantencion_equipos`
+						LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria                = telemetria_historial_mantencion_equipos.idTelemetria
+						LEFT JOIN `telemetria_historial_mantencion`   ON telemetria_historial_mantencion.idMantencion   = telemetria_historial_mantencion_equipos.idMantencion
+						LEFT JOIN `usuarios_listado`                  ON usuarios_listado.idUsuario                     = telemetria_historial_mantencion.idUsuario
 
-						WHERE telemetria_historial_mantencion.idTelemetria = {$_GET['view']}
+						WHERE telemetria_historial_mantencion_equipos.idTelemetria = ".$X_Puntero."
 						ORDER BY telemetria_historial_mantencion.Fecha DESC
 						LIMIT 20";
 						//Consulta
@@ -1115,15 +991,8 @@ array_push( $arrOpciones,$row );
 							$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 							//generar log
-							error_log("========================================================================================================================================", 0);
-							error_log("Usuario: ". $NombreUsr, 0);
-							error_log("Transaccion: ". $Transaccion, 0);
-							error_log("-------------------------------------------------------------------", 0);
-							error_log("Error code: ". mysqli_errno($dbConn), 0);
-							error_log("Error description: ". mysqli_error($dbConn), 0);
-							error_log("Error query: ". $query, 0);
-							error_log("-------------------------------------------------------------------", 0);
-											
+							php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 						}
 						while ( $row = mysqli_fetch_assoc ($resultado)) {
 						array_push( $arrMantenciones,$row );
@@ -1149,7 +1018,7 @@ array_push( $arrOpciones,$row );
 										<td><?php echo $mant['Equipo']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 35px;" >
-												<a href="<?php echo 'view_telemetria_mantencion.php?view='.$mant['idMantencion'].'&return=true'; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+												<a href="<?php echo 'view_telemetria_mantencion.php?view='.simpleEncode($mant['idMantencion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 											</div>
 										</td>
 									</tr>
@@ -1169,13 +1038,31 @@ array_push( $arrOpciones,$row );
 </div>
 
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 
 <?php

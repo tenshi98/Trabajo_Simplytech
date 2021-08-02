@@ -17,33 +17,23 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
-//Se buscan la imagen i el tipo de PDF
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
-	//Consulta
-	$query = "SELECT Config_imgLogo, idOpcionesGen_5	
-	FROM `core_sistemas` 
-	WHERE idSistema = '{$_GET['idSistema']}'  ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-	$rowEmpresa = mysqli_fetch_array ($resultado);
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
+//Se buscan la imagen i el tipo de PDF
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSistema'], fecha_actual())!=0){
+	//Consulta
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema ='.simpleDecode($_GET['idSistema'], fecha_actual()), $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 /********************************************************************/
 // Se trae la informacion del producto
@@ -117,7 +107,7 @@ LEFT JOIN `core_oc_estado`                               ON core_oc_estado.idEst
 LEFT JOIN `trabajadores_listado`                         ON trabajadores_listado.idTrabajador                         = cross_shipping_consolidacion.idAprobador
 LEFT JOIN `cross_shipping_recibidores`                   ON cross_shipping_recibidores.idRecibidor                    = cross_shipping_consolidacion.idRecibidor
 
-WHERE cross_shipping_consolidacion.idConsolidacion = {$_GET['view']}";
+WHERE cross_shipping_consolidacion.idConsolidacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -127,15 +117,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 $rowConso = mysqli_fetch_assoc ($resultado);				
 			
@@ -161,7 +144,7 @@ LEFT JOIN `core_cross_shipping_consolidacion_posicion`    ON core_cross_shipping
 LEFT JOIN `cross_shipping_envase`                         ON cross_shipping_envase.idEnvase                           = cross_shipping_consolidacion_estibas.idEnvase
 LEFT JOIN `cross_shipping_termografo`                     ON cross_shipping_termografo.idTermografo                   = cross_shipping_consolidacion_estibas.idTermografo
 
-WHERE cross_shipping_consolidacion_estibas.idConsolidacion = {$_GET['view']}
+WHERE cross_shipping_consolidacion_estibas.idConsolidacion = ".$X_Puntero."
 ORDER BY cross_shipping_consolidacion_estibas.idEstiba ASC, core_estibas_ubicacion.Nombre ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -172,15 +155,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrEstibas,$row );
@@ -199,7 +175,7 @@ core_cross_shipping_archivos_tipos.Nombre AS Tipo
 FROM `cross_shipping_consolidacion_archivo`
 LEFT JOIN `core_cross_shipping_archivos_tipos`     ON core_cross_shipping_archivos_tipos.idArchivoTipo     = cross_shipping_consolidacion_archivo.idArchivoTipo
 
-WHERE cross_shipping_consolidacion_archivo.idConsolidacion = {$_GET['view']}";
+WHERE cross_shipping_consolidacion_archivo.idConsolidacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -209,15 +185,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivos,$row );
@@ -474,7 +443,8 @@ $pdf_titulo     = 'Consolidacion Contenedor '.$rowConso['CTNNombreCompañia'];
 $pdf_subtitulo  = 'Brown Norte Nro. 100,  Ofina Nro.704, Ñuñoa, Santiago, Chile. Fonos: +569 99099476, +562 9935665. www.agropraxis.cl; e-mail agropraxis@agropraxis.cl';
 $pdf_file       = 'Consolidacion Contenedor '.$rowConso['CTNNombreCompañia'].'.pdf';
 $OpcDom         = "'A4', 'landscape'";
-$OpcTcp         = "'L', 'A4'";
+$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
+$OpcTcpPg       = "A4"; //Tipo de Hoja
 /********************************************************************************/
 //Se verifica que este configurado el motor de pdf
 if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
@@ -496,14 +466,14 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->SetKeywords('');
 
 			// set default header data
-			if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
+			if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSistema'], fecha_actual())!=0){
 				if(isset($rowEmpresa['Config_imgLogo'])&&$rowEmpresa['Config_imgLogo']!=''){
-					$logo = '../../../../'.DB_EMPRESA_PATH.'/upload/'.$rowEmpresa['Config_imgLogo'];
+					$logo = '../../../../'.DB_SITE_MAIN_PATH.'/upload/'.$rowEmpresa['Config_imgLogo'];
 				}else{
-					$logo = '../../../../LIB_assets/img/logo_empresa.jpg';
+					$logo = '../../../../Legacy/gestion_modular/img/logo_empresa.jpg';
 				}
 			}else{
-				$logo = '../../../../LIB_assets/img/logo_empresa.jpg';
+				$logo = '../../../../Legacy/gestion_modular/img/logo_empresa.jpg';
 			}
 			$pdf->SetHeaderData($logo, 40, $pdf_titulo, $pdf_subtitulo);
 
@@ -533,7 +503,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 
 			//Se crea el archivo
 			$pdf->SetFont('helvetica', '', 8);
-			//$pdf->AddPage($AddPageL, AddPageA);
+			//$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 			$pdf->AddPage('L');
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();

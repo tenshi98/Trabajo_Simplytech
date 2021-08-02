@@ -30,7 +30,7 @@ $z = "WHERE usuarios_accesos.idAcceso>0";
 //Se aplican los filtros
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AND usuarios_accesos.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['Rango_Inicio']) && $_GET['Rango_Inicio'] != ''&&isset($_GET['Rango_Termino']) && $_GET['Rango_Termino'] != ''){  
-	$z .= " AND usuarios_accesos.Fecha BETWEEN '{$_GET['Rango_Inicio']}' AND '{$_GET['Rango_Termino']}'" ;
+	$z .= " AND usuarios_accesos.Fecha BETWEEN '".$_GET['Rango_Inicio']."' AND '".$_GET['Rango_Termino']."'" ;
 }
 /**********************************************************/
 //consulta
@@ -40,9 +40,12 @@ usuarios_accesos.Fecha,
 usuarios_accesos.Hora,
 usuarios_accesos.IP_Client,
 usuarios_accesos.Agent_Transp,
-usuarios_listado.Nombre AS Usuario
+usuarios_listado.Nombre AS Usuario,
+core_sistemas.Nombre AS Sistema
+
 FROM `usuarios_accesos`
 LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario   = usuarios_accesos.idUsuario 
+LEFT JOIN `core_sistemas`      ON core_sistemas.idSistema      = usuarios_accesos.idSistema 
 ".$z."
 ORDER BY usuarios_accesos.Fecha DESC";
 //Consulta
@@ -54,15 +57,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrAccesos,$row );
@@ -85,22 +81,24 @@ $objPHPExcel->getProperties()->setCreator("Office 2007")
             
 //Titulo columnas
 $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'Usuario')
-            ->setCellValue('B1', 'Fecha')
-            ->setCellValue('C1', 'Hora')
-            ->setCellValue('D1', 'IP Cliente')
-            ->setCellValue('E1', 'Agent Transp');       					                              
+            ->setCellValue('A1', 'Sistema')
+            ->setCellValue('B1', 'Usuario')
+            ->setCellValue('C1', 'Fecha')
+            ->setCellValue('D1', 'Hora')
+            ->setCellValue('E1', 'IP Cliente')
+            ->setCellValue('F1', 'Agent Transp');       					                              
          
 $nn=2;
 foreach ($arrAccesos as $acceso) { 
 						
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A'.$nn, $acceso['Usuario'])
-            ->setCellValue('B'.$nn, fecha_estandar($acceso['Fecha']))
-            ->setCellValue('C'.$nn, $acceso['Hora'])
-            ->setCellValue('D'.$nn, $acceso['IP_Client'])
-            ->setCellValue('E'.$nn, $acceso['Agent_Transp']);
- $nn++;           
+	$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('A'.$nn, $acceso['Sistema'])
+				->setCellValue('B'.$nn, $acceso['Usuario'])
+				->setCellValue('C'.$nn, fecha_estandar($acceso['Fecha']))
+				->setCellValue('D'.$nn, $acceso['Hora'])
+				->setCellValue('E'.$nn, $acceso['IP_Client'])
+				->setCellValue('F'.$nn, $acceso['Agent_Transp']);
+	$nn++;           
    
 } 
 

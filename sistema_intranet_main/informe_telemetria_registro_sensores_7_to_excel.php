@@ -100,15 +100,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUnidad,$row );
@@ -133,15 +126,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrGrupo,$row );
@@ -154,6 +140,16 @@ foreach ($arrGrupo as $uni) {
 /*******************************************************************************/
 //Funcion para escribir datos
 function crear_data($limite, $idTelemetria, $f_inicio, $f_termino, $dbConn ) {
+	
+	//numero sensores equipo
+	$N_Maximo_Sensores = 72;
+	$subquery = '';
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
+		$subquery .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensorUniMed_'.$i;
+		$subquery .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensorGrupo_'.$i;
+		$subquery .= ',telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.' AS SensorValue_'.$i;
+	}
 	//Se traen todos los registros
 	$arrRutas = array();
 	$query = "SELECT 
@@ -164,212 +160,10 @@ function crear_data($limite, $idTelemetria, $f_inicio, $f_termino, $dbConn ) {
 	telemetria_listado.GeoDireccion AS GeoDireccionEquipo,
 	telemetria_listado.GeoMovimiento AS GeoMovimientoEquipo,
 	telemetria_listado.cantSensores,
-	telemetria_listado.SensoresNombre_1 AS SensorNombre_1,
-	telemetria_listado.SensoresNombre_2 AS SensorNombre_2,
-	telemetria_listado.SensoresNombre_3 AS SensorNombre_3,
-	telemetria_listado.SensoresNombre_4 AS SensorNombre_4,
-	telemetria_listado.SensoresNombre_5 AS SensorNombre_5,
-	telemetria_listado.SensoresNombre_6 AS SensorNombre_6,
-	telemetria_listado.SensoresNombre_7 AS SensorNombre_7,
-	telemetria_listado.SensoresNombre_8 AS SensorNombre_8,
-	telemetria_listado.SensoresNombre_9 AS SensorNombre_9,
-	telemetria_listado.SensoresNombre_10 AS SensorNombre_10,
-	telemetria_listado.SensoresNombre_11 AS SensorNombre_11,
-	telemetria_listado.SensoresNombre_12 AS SensorNombre_12,
-	telemetria_listado.SensoresNombre_13 AS SensorNombre_13,
-	telemetria_listado.SensoresNombre_14 AS SensorNombre_14,
-	telemetria_listado.SensoresNombre_15 AS SensorNombre_15,
-	telemetria_listado.SensoresNombre_16 AS SensorNombre_16,
-	telemetria_listado.SensoresNombre_17 AS SensorNombre_17,
-	telemetria_listado.SensoresNombre_18 AS SensorNombre_18,
-	telemetria_listado.SensoresNombre_19 AS SensorNombre_19,
-	telemetria_listado.SensoresNombre_20 AS SensorNombre_20,
-	telemetria_listado.SensoresNombre_21 AS SensorNombre_21,
-	telemetria_listado.SensoresNombre_22 AS SensorNombre_22,
-	telemetria_listado.SensoresNombre_23 AS SensorNombre_23,
-	telemetria_listado.SensoresNombre_24 AS SensorNombre_24,
-	telemetria_listado.SensoresNombre_25 AS SensorNombre_25,
-	telemetria_listado.SensoresNombre_26 AS SensorNombre_26,
-	telemetria_listado.SensoresNombre_27 AS SensorNombre_27,
-	telemetria_listado.SensoresNombre_28 AS SensorNombre_28,
-	telemetria_listado.SensoresNombre_29 AS SensorNombre_29,
-	telemetria_listado.SensoresNombre_30 AS SensorNombre_30,
-	telemetria_listado.SensoresNombre_31 AS SensorNombre_31,
-	telemetria_listado.SensoresNombre_32 AS SensorNombre_32,
-	telemetria_listado.SensoresNombre_33 AS SensorNombre_33,
-	telemetria_listado.SensoresNombre_34 AS SensorNombre_34,
-	telemetria_listado.SensoresNombre_35 AS SensorNombre_35,
-	telemetria_listado.SensoresNombre_36 AS SensorNombre_36,
-	telemetria_listado.SensoresNombre_37 AS SensorNombre_37,
-	telemetria_listado.SensoresNombre_38 AS SensorNombre_38,
-	telemetria_listado.SensoresNombre_39 AS SensorNombre_39,
-	telemetria_listado.SensoresNombre_40 AS SensorNombre_40,
-	telemetria_listado.SensoresNombre_41 AS SensorNombre_41,
-	telemetria_listado.SensoresNombre_42 AS SensorNombre_42,
-	telemetria_listado.SensoresNombre_43 AS SensorNombre_43,
-	telemetria_listado.SensoresNombre_44 AS SensorNombre_44,
-	telemetria_listado.SensoresNombre_45 AS SensorNombre_45,
-	telemetria_listado.SensoresNombre_46 AS SensorNombre_46,
-	telemetria_listado.SensoresNombre_47 AS SensorNombre_47,
-	telemetria_listado.SensoresNombre_48 AS SensorNombre_48,
-	telemetria_listado.SensoresNombre_49 AS SensorNombre_49,
-	telemetria_listado.SensoresNombre_50 AS SensorNombre_50,
-
-	telemetria_listado.SensoresUniMed_1 AS SensorUniMed_1,
-	telemetria_listado.SensoresUniMed_2 AS SensorUniMed_2,
-	telemetria_listado.SensoresUniMed_3 AS SensorUniMed_3,
-	telemetria_listado.SensoresUniMed_4 AS SensorUniMed_4,
-	telemetria_listado.SensoresUniMed_5 AS SensorUniMed_5,
-	telemetria_listado.SensoresUniMed_6 AS SensorUniMed_6,
-	telemetria_listado.SensoresUniMed_7 AS SensorUniMed_7,
-	telemetria_listado.SensoresUniMed_8 AS SensorUniMed_8,
-	telemetria_listado.SensoresUniMed_9 AS SensorUniMed_9,
-	telemetria_listado.SensoresUniMed_10 AS SensorUniMed_10,
-	telemetria_listado.SensoresUniMed_11 AS SensorUniMed_11,
-	telemetria_listado.SensoresUniMed_12 AS SensorUniMed_12,
-	telemetria_listado.SensoresUniMed_13 AS SensorUniMed_13,
-	telemetria_listado.SensoresUniMed_14 AS SensorUniMed_14,
-	telemetria_listado.SensoresUniMed_15 AS SensorUniMed_15,
-	telemetria_listado.SensoresUniMed_16 AS SensorUniMed_16,
-	telemetria_listado.SensoresUniMed_17 AS SensorUniMed_17,
-	telemetria_listado.SensoresUniMed_18 AS SensorUniMed_18,
-	telemetria_listado.SensoresUniMed_19 AS SensorUniMed_19,
-	telemetria_listado.SensoresUniMed_20 AS SensorUniMed_20,
-	telemetria_listado.SensoresUniMed_21 AS SensorUniMed_21,
-	telemetria_listado.SensoresUniMed_22 AS SensorUniMed_22,
-	telemetria_listado.SensoresUniMed_23 AS SensorUniMed_23,
-	telemetria_listado.SensoresUniMed_24 AS SensorUniMed_24,
-	telemetria_listado.SensoresUniMed_25 AS SensorUniMed_25,
-	telemetria_listado.SensoresUniMed_26 AS SensorUniMed_26,
-	telemetria_listado.SensoresUniMed_27 AS SensorUniMed_27,
-	telemetria_listado.SensoresUniMed_28 AS SensorUniMed_28,
-	telemetria_listado.SensoresUniMed_29 AS SensorUniMed_29,
-	telemetria_listado.SensoresUniMed_30 AS SensorUniMed_30,
-	telemetria_listado.SensoresUniMed_31 AS SensorUniMed_31,
-	telemetria_listado.SensoresUniMed_32 AS SensorUniMed_32,
-	telemetria_listado.SensoresUniMed_33 AS SensorUniMed_33,
-	telemetria_listado.SensoresUniMed_34 AS SensorUniMed_34,
-	telemetria_listado.SensoresUniMed_35 AS SensorUniMed_35,
-	telemetria_listado.SensoresUniMed_36 AS SensorUniMed_36,
-	telemetria_listado.SensoresUniMed_37 AS SensorUniMed_37,
-	telemetria_listado.SensoresUniMed_38 AS SensorUniMed_38,
-	telemetria_listado.SensoresUniMed_39 AS SensorUniMed_39,
-	telemetria_listado.SensoresUniMed_40 AS SensorUniMed_40,
-	telemetria_listado.SensoresUniMed_41 AS SensorUniMed_41,
-	telemetria_listado.SensoresUniMed_42 AS SensorUniMed_42,
-	telemetria_listado.SensoresUniMed_43 AS SensorUniMed_43,
-	telemetria_listado.SensoresUniMed_44 AS SensorUniMed_44,
-	telemetria_listado.SensoresUniMed_45 AS SensorUniMed_45,
-	telemetria_listado.SensoresUniMed_46 AS SensorUniMed_46,
-	telemetria_listado.SensoresUniMed_47 AS SensorUniMed_47,
-	telemetria_listado.SensoresUniMed_48 AS SensorUniMed_48,
-	telemetria_listado.SensoresUniMed_49 AS SensorUniMed_49,
-	telemetria_listado.SensoresUniMed_50 AS SensorUniMed_50,
-
-	telemetria_listado.SensoresGrupo_1 AS SensorGrupo_1,
-	telemetria_listado.SensoresGrupo_2 AS SensorGrupo_2,
-	telemetria_listado.SensoresGrupo_3 AS SensorGrupo_3,
-	telemetria_listado.SensoresGrupo_4 AS SensorGrupo_4,
-	telemetria_listado.SensoresGrupo_5 AS SensorGrupo_5,
-	telemetria_listado.SensoresGrupo_6 AS SensorGrupo_6,
-	telemetria_listado.SensoresGrupo_7 AS SensorGrupo_7,
-	telemetria_listado.SensoresGrupo_8 AS SensorGrupo_8,
-	telemetria_listado.SensoresGrupo_9 AS SensorGrupo_9,
-	telemetria_listado.SensoresGrupo_10 AS SensorGrupo_10,
-	telemetria_listado.SensoresGrupo_11 AS SensorGrupo_11,
-	telemetria_listado.SensoresGrupo_12 AS SensorGrupo_12,
-	telemetria_listado.SensoresGrupo_13 AS SensorGrupo_13,
-	telemetria_listado.SensoresGrupo_14 AS SensorGrupo_14,
-	telemetria_listado.SensoresGrupo_15 AS SensorGrupo_15,
-	telemetria_listado.SensoresGrupo_16 AS SensorGrupo_16,
-	telemetria_listado.SensoresGrupo_17 AS SensorGrupo_17,
-	telemetria_listado.SensoresGrupo_18 AS SensorGrupo_18,
-	telemetria_listado.SensoresGrupo_19 AS SensorGrupo_19,
-	telemetria_listado.SensoresGrupo_20 AS SensorGrupo_20,
-	telemetria_listado.SensoresGrupo_21 AS SensorGrupo_21,
-	telemetria_listado.SensoresGrupo_22 AS SensorGrupo_22,
-	telemetria_listado.SensoresGrupo_23 AS SensorGrupo_23,
-	telemetria_listado.SensoresGrupo_24 AS SensorGrupo_24,
-	telemetria_listado.SensoresGrupo_25 AS SensorGrupo_25,
-	telemetria_listado.SensoresGrupo_26 AS SensorGrupo_26,
-	telemetria_listado.SensoresGrupo_27 AS SensorGrupo_27,
-	telemetria_listado.SensoresGrupo_28 AS SensorGrupo_28,
-	telemetria_listado.SensoresGrupo_29 AS SensorGrupo_29,
-	telemetria_listado.SensoresGrupo_30 AS SensorGrupo_30,
-	telemetria_listado.SensoresGrupo_31 AS SensorGrupo_31,
-	telemetria_listado.SensoresGrupo_32 AS SensorGrupo_32,
-	telemetria_listado.SensoresGrupo_33 AS SensorGrupo_33,
-	telemetria_listado.SensoresGrupo_34 AS SensorGrupo_34,
-	telemetria_listado.SensoresGrupo_35 AS SensorGrupo_35,
-	telemetria_listado.SensoresGrupo_36 AS SensorGrupo_36,
-	telemetria_listado.SensoresGrupo_37 AS SensorGrupo_37,
-	telemetria_listado.SensoresGrupo_38 AS SensorGrupo_38,
-	telemetria_listado.SensoresGrupo_39 AS SensorGrupo_39,
-	telemetria_listado.SensoresGrupo_40 AS SensorGrupo_40,
-	telemetria_listado.SensoresGrupo_41 AS SensorGrupo_41,
-	telemetria_listado.SensoresGrupo_42 AS SensorGrupo_42,
-	telemetria_listado.SensoresGrupo_43 AS SensorGrupo_43,
-	telemetria_listado.SensoresGrupo_44 AS SensorGrupo_44,
-	telemetria_listado.SensoresGrupo_45 AS SensorGrupo_45,
-	telemetria_listado.SensoresGrupo_46 AS SensorGrupo_46,
-	telemetria_listado.SensoresGrupo_47 AS SensorGrupo_47,
-	telemetria_listado.SensoresGrupo_48 AS SensorGrupo_48,
-	telemetria_listado.SensoresGrupo_49 AS SensorGrupo_49,
-	telemetria_listado.SensoresGrupo_50 AS SensorGrupo_50,
-
 	telemetria_listado_tablarelacionada_".$idTelemetria.".idTabla,
 	telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".HoraSistema,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_1 AS SensorValue_1,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_2 AS SensorValue_2,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_3 AS SensorValue_3,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_4 AS SensorValue_4,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_5 AS SensorValue_5,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_6 AS SensorValue_6,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_7 AS SensorValue_7,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_8 AS SensorValue_8,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_9 AS SensorValue_9,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_10 AS SensorValue_10,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_11 AS SensorValue_11,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_12 AS SensorValue_12,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_13 AS SensorValue_13,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_14 AS SensorValue_14,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_15 AS SensorValue_15,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_16 AS SensorValue_16,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_17 AS SensorValue_17,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_18 AS SensorValue_18,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_19 AS SensorValue_19,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_20 AS SensorValue_20,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_21 AS SensorValue_21,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_22 AS SensorValue_22,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_23 AS SensorValue_23,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_24 AS SensorValue_24,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_25 AS SensorValue_25,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_26 AS SensorValue_26,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_27 AS SensorValue_27,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_28 AS SensorValue_28,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_29 AS SensorValue_29,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_30 AS SensorValue_30,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_31 AS SensorValue_31,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_32 AS SensorValue_32,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_33 AS SensorValue_33,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_34 AS SensorValue_34,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_35 AS SensorValue_35,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_36 AS SensorValue_36,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_37 AS SensorValue_37,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_38 AS SensorValue_38,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_39 AS SensorValue_39,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_40 AS SensorValue_40,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_41 AS SensorValue_41,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_42 AS SensorValue_42,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_43 AS SensorValue_43,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_44 AS SensorValue_44,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_45 AS SensorValue_45,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_46 AS SensorValue_46,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_47 AS SensorValue_47,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_48 AS SensorValue_48,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_49 AS SensorValue_49,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".Sensor_50 AS SensorValue_50
+	telemetria_listado_tablarelacionada_".$idTelemetria.".HoraSistema
+	".$subquery."
 
 	FROM `telemetria_listado_tablarelacionada_".$idTelemetria."`
 	LEFT JOIN `telemetria_listado`     ON telemetria_listado.idTelemetria   = telemetria_listado_tablarelacionada_".$idTelemetria.".idTelemetria
@@ -384,15 +178,8 @@ function crear_data($limite, $idTelemetria, $f_inicio, $f_termino, $dbConn ) {
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrRutas,$row );
@@ -488,17 +275,16 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
 }else{
 	//Inicia variable
-	$z="WHERE telemetria_listado.idTelemetria>0"; 
-	$z.=" AND telemetria_listado.id_Geo='1'";
+	$z = "WHERE telemetria_listado.idTelemetria>0"; 
+	$z.= " AND telemetria_listado.id_Geo='1'";
+	$z.= " AND telemetria_listado.idSistema=".$_GET['idSistema'];
 
 	//Verifico el tipo de usuario que esta ingresando
 	if($_GET['idTipoUsuario']==1){
-		$z.=" AND telemetria_listado.idSistema>=0";
 		$join = "";	
 	}else{
-		$z.=" AND telemetria_listado.idSistema={$_GET['idSistema']}";
 		$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$z.=" AND usuarios_equipos_telemetria.idUsuario={$_GET['idUsuario']}";	
+		$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_GET['idUsuario'];	
 	}
 	
 	/*********************************************/
@@ -517,15 +303,8 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrEquipos,$row );

@@ -14,15 +14,17 @@ require_once 'core/Load.Utils.Web.php';
 $original = "pago_masivo_proveedor_reversa.php";
 $location = $original;  
 //Se agregan ubicaciones
-$search ='&Filtrar=Filtrar';
-$location .= "?Filtrar=Filtrar";
+$location .='?pagina='.$_GET['pagina'];
+
+//Se agregan ubicaciones
+$search = '';
 if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){   $location .= "&idDocPago=".$_GET['idDocPago'];  $search .= "&idDocPago=".$_GET['idDocPago'];}
 if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){   $location .= "&N_DocPago=".$_GET['N_DocPago'];  $search .= "&N_DocPago=".$_GET['N_DocPago'];}
 if(isset($_GET['Monto']) && $_GET['Monto'] != ''){           $location .= "&Monto=".$_GET['Monto'];          $search .= "&Monto=".$_GET['Monto'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $location .= "&idUsuario=".$_GET['idUsuario'];  $search .= "&idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['Fecha_Inicio'])&&$_GET['Fecha_Inicio']!=''&&isset($_GET['Fecha_Termino'])&&$_GET['Fecha_Termino']!=''){
-	$search .="&f_programacion_desde={$_GET['Fecha_Inicio']}";
-	$search .="&f_programacion_hasta={$_GET['Fecha_Termino']}";
+	$search .="&f_programacion_desde=".$_GET['Fecha_Inicio'];
+	$search .="&f_programacion_hasta=".$_GET['Fecha_Termino'];
 }
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -155,7 +157,7 @@ array_push( $arrReversa,$row );
 <div class="col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Facturaciones Pagadas</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Facturaciones Pagadas</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -175,12 +177,26 @@ array_push( $arrReversa,$row );
 						//llamamos a la función para filtrar los datos
 						filtrar($arrReversa, 'DocumentoPagoNumero');
 						//recorremos el array para imprimirlo con formato HTML
-						foreach($arrReversa as $menu=>$productos) {
-							echo '<tr class="odd">';
-								echo '<td colspan="6" style="background-color: #BFBFBF;">'.$productos[0]['DocumentoPago'].' '.$menu.'</td>';
-							echo '</tr>';
+						foreach($arrReversa as $menu=>$productos) { ?>
+							<tr class="odd">
+								<td colspan="5" style="background-color: #BFBFBF;"><?php echo $productos[0]['DocumentoPago'].' '.$menu; ?></td>
+								<td style="background-color: #BFBFBF;">
+									<div class="btn-group" style="width: 35px;" >
+										<?php
+										switch ($productos[0]['idTipo']) {
+											/*Factura Insumos*/   case 1: $docu = $productos[0]['InsumoDocumentoTipo'].' N'.$productos[0]['InsumoDocumentoNumero'];     break;
+											/*Factura Productos*/ case 2: $docu = $productos[0]['ProductoDocumentoTipo'].' N'.$productos[0]['ProductoDocumentoNumero']; break;
+											/*Factura Servicios*/ case 3: $docu = $productos[0]['ServicioDocumentoTipo'].' N'.$productos[0]['ServicioDocumentoNumero']; break;
+											/*Factura Arriendos*/ case 4: $docu = $productos[0]['ArriendoDocumentoTipo'].' N'.$productos[0]['ArriendoDocumentoNumero']; break;
+										} 
+										$ubicacion = $location.'?submit_filter=Filtrar&del_idDocPago='.simpleEncode($productos[0]['idDocPago'], fecha_actual()).'&del_N_DocPago='.simpleEncode($menu, fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar el documento '.$docu.'?';?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Reversar Pago" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange" aria-hidden="true"></i></a>
+									</div>	
+								</td>
+							</tr>
 										
-							// recorremos los productos
+							<?php // recorremos los productos
 							foreach ($productos as $tipo){ ?>
 								<tr class="odd">
 									
@@ -218,36 +234,27 @@ array_push( $arrReversa,$row );
 									<td align="right"><?php echo valores($tipo['DocumentoMontoPagado'], 0); ?></td>
 
 									<td>
-										<div class="btn-group" style="width: 70px;" >
+										<div class="btn-group" style="width: 35px;" >
 											<?php
 											switch ($tipo['idTipo']) {
 												//Factura Insumos
 												case 1:
-													echo '<a href="view_mov_insumos.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
-													$docu = $tipo['InsumoDocumentoTipo'].' N'.$tipo['InsumoDocumentoNumero'];
+													echo '<a href="view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 													break;
 												//Factura Productos
 												case 2:
-													echo '<a href="view_mov_productos.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
-													$docu = $tipo['ProductoDocumentoTipo'].' N'.$tipo['ProductoDocumentoNumero'];
+													echo '<a href="view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 													break;
 												//Factura Servicios
 												case 3:
-													echo '<a href="view_mov_servicios.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
-													$docu = $tipo['ServicioDocumentoTipo'].' N'.$tipo['ServicioDocumentoNumero'];
+													echo '<a href="view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 													break;
 												//Factura Arriendos
 												case 4:
-													echo '<a href="view_mov_arriendos.php?view='.$tipo['idFacturacion'].'" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
-													$docu = $tipo['ArriendoDocumentoTipo'].' N'.$tipo['ArriendoDocumentoNumero'];
+													echo '<a href="view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 													break;
 											}
 											?>
-											<?php 
-											$ubicacion = $location.'?submit_filter=Filtrar&del_idDocPago='.$tipo['idDocPago'].'&del_N_DocPago='.$menu;
-											$dialogo   = '¿Realmente deseas eliminar el documento '.$docu.'?';?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Reversar Pago" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange"></i></a>
-										
 										</div>
 									</td>
 								</tr>
@@ -267,19 +274,23 @@ array_push( $arrReversa,$row );
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //Verifico el tipo de usuario que esta ingresando 
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";		
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -291,14 +302,16 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";
 				if(isset($N_DocPago)) {   $x2  = $N_DocPago;   }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Documento Pago','idDocPago', $x1, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_DocPago', $x2, 1);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);	
+				
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -349,7 +362,11 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE pagos_facturas_proveedores_reversa.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';		
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){   $z .= " AND pagos_facturas_proveedores_reversa.idDocPago=".$_GET['idDocPago'];}
@@ -357,7 +374,7 @@ if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){   $z .= " AND pagos_f
 if(isset($_GET['Monto']) && $_GET['Monto'] != ''){           $z .= " AND pagos_facturas_proveedores_reversa.Monto=".$_GET['Monto'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $z .= " AND pagos_facturas_proveedores_reversa.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['Fecha_Inicio'])&&$_GET['Fecha_Inicio']!=''&&isset($_GET['Fecha_Termino'])&&$_GET['Fecha_Termino']!=''){
-	$z.=" AND pagos_facturas_proveedores_reversa.Fecha BETWEEN '{$_GET['Fecha_Inicio']}' AND '{$_GET['Fecha_Termino']}'";
+	$z.=" AND pagos_facturas_proveedores_reversa.Fecha BETWEEN '".$_GET['Fecha_Inicio']."' AND '".$_GET['Fecha_Termino']."'";
 }			
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -418,7 +435,7 @@ array_push( $arrAFP,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -442,15 +459,15 @@ array_push( $arrAFP,$row );
 				if(isset($Fecha_Termino)) {   $x6  = $Fecha_Termino;   }else{$x6  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Documento Pago','idDocPago', $x1, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_DocPago', $x2, 1);	
-				$Form_Imputs->form_input_number('Monto', 'Monto', $x3, 1);
-				$Form_Imputs->form_select_join_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Imputs->form_date('Fecha Inicio','Fecha_Inicio', $x5, 1);
-				$Form_Imputs->form_date('Fecha Termino','Fecha_Termino', $x6, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Documento de Pago','idDocPago', $x1, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);	
+				$Form_Inputs->form_input_number('Monto', 'Monto', $x3, 1);
+				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_date('Fecha Inicio','Fecha_Inicio', $x5, 1);
+				$Form_Inputs->form_date('Fecha Termino','Fecha_Termino', $x6, 1);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -469,7 +486,7 @@ array_push( $arrAFP,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Reversas</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Reversas</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -483,36 +500,36 @@ array_push( $arrAFP,$row );
 						<th width="160">
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Documento</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=documento_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=documento_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=documento_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=documento_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="180">
 							<div class="pull-left">N° Documento</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=n_documento_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=n_documento_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=n_documento_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=n_documento_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Monto</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=monto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=monto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=monto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=monto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Usuario</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=usuario_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 					</tr>
@@ -523,7 +540,7 @@ array_push( $arrAFP,$row );
 						<td><?php echo $afp['Fecha'].' '.$afp['Hora']; ?></td>
 						<td><?php echo $afp['DocPago']; ?></td>
 						<td><?php echo $afp['N_DocPago']; ?></td>
-						<td><?php echo valores($afp['Monto'], 0); ?></td>
+						<td align="right"><?php echo valores($afp['Monto'], 0); ?></td>
 						<td><?php echo $afp['Usuario']; ?></td>
 					</tr>
 				<?php } ?>                    

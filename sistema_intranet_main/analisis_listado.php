@@ -59,9 +59,11 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Analisis Ingresado 
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Analisis Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Analisis borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // tomo los datos del usuario
 $query = "SELECT 
 analisis_listado.idMatriz, 
@@ -87,7 +89,7 @@ analisis_listado.idLaboratorio,
 maquinas_listado_matriz.cantPuntos
 FROM `analisis_listado`
 LEFT JOIN `maquinas_listado_matriz` ON maquinas_listado_matriz.idMatriz = analisis_listado.idMatriz
-WHERE idAnalisis = {$_GET['id']}";
+WHERE idAnalisis = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -161,7 +163,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -187,7 +189,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Analisis</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -206,42 +208,42 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idEstado)) {           $x9  = $idEstado;          }else{$x9  = $rowdata['idEstado'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Fechas</h3>';
-				$Form_Imputs->form_date('Fecha de muestreo','f_muestreo', $x1, 2);
-				$Form_Imputs->form_date('Fecha Recibida','f_recibida', $x2, 2);
-				$Form_Imputs->form_date('Fecha del reporte','f_reporte', $x3, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Fechas');
+				$Form_Inputs->form_date('Fecha de muestreo','f_muestreo', $x1, 2);
+				$Form_Inputs->form_date('Fecha Recibida','f_recibida', $x2, 2);
+				$Form_Inputs->form_date('Fecha del reporte','f_reporte', $x3, 2);
 				
-				echo '<h3>Laboratorio</h3>';
-				$Form_Imputs->form_select('Tipo Analisis','idTipo', $x4, 2, 'idTipo', 'Nombre', 'analisis_listado_tipo', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Laboratorio','idLaboratorio', $x5, 1, 'idLaboratorio', 'Nombre', 'laboratorio_listado', 0, '', $dbConn);	
+				$Form_Inputs->form_tittle(3, 'Laboratorio');
+				$Form_Inputs->form_select('Tipo Analisis','idTipo', $x4, 2, 'idTipo', 'Nombre', 'analisis_listado_tipo', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Laboratorio','idLaboratorio', $x5, 1, 'idLaboratorio', 'Nombre', 'laboratorio_listado', 0, '', $dbConn);	
 				
 				
-				echo '<h3>Datos Iniciales</h3>';
-				$Form_Imputs->form_input_number('N° de muestra', 'n_muestra', $x6, 2);
+				$Form_Inputs->form_tittle(3, 'Datos Iniciales');
+				$Form_Inputs->form_input_number('N° de muestra', 'n_muestra', $x6, 2);
 				
 				foreach ($arrGrupo as $grupo) {
-					echo '<h3>'.$grupo['Nombre'].'</h3>';
-					
+					$Form_Inputs->form_tittle(3, $grupo['Nombre']);
+				
 					for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
 						if($grupo['idGrupo']==$rowdata2['PuntoidGrupo_'.$i]){
 							//Verifico el tipo de dato
 							switch ($rowdata2['PuntoidTipo_'.$i]) {
 								//Medidas
 								case 1:
-									$Form_Imputs->form_input_number($rowdata2['PuntoNombre_'.$i], 'Medida_'.$i, $rowdata['Medida_'.$i], 2);
+									$Form_Inputs->form_input_number($rowdata2['PuntoNombre_'.$i], 'Medida_'.$i, $rowdata['Medida_'.$i], 2);
 									break;
 								//Producto
 								case 2:
-									$Form_Imputs->form_select_filter($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, $rowdata['Medida_'.$i], 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+									$Form_Inputs->form_select_filter($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, $rowdata['Medida_'.$i], 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 									break;
 								//Dispersancia
 								case 3:
-									$Form_Imputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, $rowdata['Medida_'.$i], 2, 'idDispersancia', 'Nombre', 'core_analisis_dispersancia', 0, '', $dbConn);
+									$Form_Inputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, $rowdata['Medida_'.$i], 2, 'idDispersancia', 'Nombre', 'core_analisis_dispersancia', 0, '', $dbConn);
 									break;
 								//Flashpoint
 								case 4:
-									$Form_Imputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, $rowdata['Medida_'.$i], 2, 'idFlashPoint', 'Nombre', 'core_analisis_flashpoint', 0, '', $dbConn);
+									$Form_Inputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, $rowdata['Medida_'.$i], 2, 'idFlashPoint', 'Nombre', 'core_analisis_flashpoint', 0, '', $dbConn);
 									break;
 							}
 						}
@@ -250,12 +252,12 @@ foreach ($arrPermisos as $prod) {
 				
 				
 				
-				echo '<h3>Final</h3>';
-				$Form_Imputs->form_textarea('Diagnostico','obs_Diagnostico', $x7, 1, 160);
-				$Form_Imputs->form_textarea('Accion','obs_Accion', $x8, 1, 160);
-				$Form_Imputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
+				$Form_Inputs->form_tittle(3, 'Final');
+				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', $x7, 1, 160);
+				$Form_Inputs->form_textarea('Accion','obs_Accion', $x8, 1, 160);
+				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('idAnalisis', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['id'], 2);
 			
 				?>
 				<script>
@@ -298,7 +300,7 @@ foreach ($arrPermisos as $prod) {
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -311,7 +313,7 @@ foreach ($arrPermisos as $prod) {
 // tomo los datos del usuario
 $query = "SELECT cantPuntos
 FROM `maquinas_listado_matriz`
-WHERE idMatriz = {$_GET['idMatriz']}";
+WHERE idMatriz = ".$_GET['idMatriz'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -338,7 +340,7 @@ for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
 // tomo los datos del usuario
 $query = "SELECT ".$cadena."
 FROM `maquinas_listado_matriz`
-WHERE idMatriz = {$_GET['idMatriz']}";
+WHERE idMatriz = ".$_GET['idMatriz'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -383,7 +385,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -407,7 +409,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingreso datos de <?php echo $rowdata2['Nombre']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -419,13 +421,13 @@ foreach ($arrPermisos as $prod) {
 				if(isset($n_muestra)) {          $x3  = $n_muestra;         }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Laboratorio</h3>';
-				$Form_Imputs->form_select('Tipo Analisis','idTipo', $x1, 2, 'idTipo', 'Nombre', 'analisis_listado_tipo', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Laboratorio','idLaboratorio', $x2, 1, 'idLaboratorio', 'Nombre', 'laboratorio_listado', 0, '', $dbConn);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Laboratorio');
+				$Form_Inputs->form_select('Tipo Analisis','idTipo', $x1, 2, 'idTipo', 'Nombre', 'analisis_listado_tipo', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Laboratorio','idLaboratorio', $x2, 1, 'idLaboratorio', 'Nombre', 'laboratorio_listado', 0, '', $dbConn);	
 				
-				echo '<h3>Datos Iniciales</h3>';
-				$Form_Imputs->form_input_number('N° de muestra', 'n_muestra', $x3, 2);
+				$Form_Inputs->form_tittle(3, 'Datos Iniciales');
+				$Form_Inputs->form_input_number('N° de muestra', 'n_muestra', $x3, 2);
 				
 				foreach ($arrGrupo as $grupo) {
 					//Cuento si hay items dentro de la categoria
@@ -439,27 +441,27 @@ foreach ($arrPermisos as $prod) {
 					//si hay items se muestra todo
 					if($x_con!=0){
 						
-						echo '<h3>'.$grupo['Nombre'].'</h3>';
-					
+						$Form_Inputs->form_tittle(3, $grupo['Nombre']);
+						
 						for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
 							if($grupo['idGrupo']==$rowdata2['PuntoidGrupo_'.$i]){
 								//Verifico el tipo de dato
 								switch ($rowdata2['PuntoidTipo_'.$i]) {
 									//Medidas
 									case 1:
-										$Form_Imputs->form_input_number($rowdata2['PuntoNombre_'.$i], 'Medida_'.$i, '', 2);
+										$Form_Inputs->form_input_number($rowdata2['PuntoNombre_'.$i], 'Medida_'.$i, '', 2);
 										break;
 									//Producto
 									case 2:
-										$Form_Imputs->form_select_filter($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+										$Form_Inputs->form_select_filter($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 										break;
 									//Dispersancia
 									case 3:
-										$Form_Imputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idDispersancia', 'Nombre', 'core_analisis_dispersancia', 0, '', $dbConn);
+										$Form_Inputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idDispersancia', 'Nombre', 'core_analisis_dispersancia', 0, '', $dbConn);
 										break;
 									//Flashpoint
 									case 4:
-										$Form_Imputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idFlashPoint', 'Nombre', 'core_analisis_flashpoint', 0, '', $dbConn);
+										$Form_Inputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idFlashPoint', 'Nombre', 'core_analisis_flashpoint', 0, '', $dbConn);
 										break;
 								}
 							}
@@ -471,18 +473,18 @@ foreach ($arrPermisos as $prod) {
 				
 				
 				
-				echo '<h3>Final</h3>';
-				$Form_Imputs->form_textarea('Diagnostico','obs_Diagnostico', '', 1, 160);
-				$Form_Imputs->form_textarea('Accion','obs_Accion', '', 1, 160);
-				$Form_Imputs->form_select('Estado','idEstado', '', 2, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
+				$Form_Inputs->form_tittle(3, 'Final');
+				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', '', 1, 160);
+				$Form_Inputs->form_textarea('Accion','obs_Accion', '', 1, 160);
+				$Form_Inputs->form_select('Estado','idEstado', '', 2, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 2);
-				$Form_Imputs->form_input_hidden('f_muestreo', $_GET['f_muestreo'], 2);
-				$Form_Imputs->form_input_hidden('f_recibida', $_GET['f_recibida'], 2);
-				$Form_Imputs->form_input_hidden('f_reporte', $_GET['f_reporte'], 2);
-				$Form_Imputs->form_input_hidden('idMaquina', $_GET['idMaquina'], 2);
-				$Form_Imputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
-				$Form_Imputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2);
+				$Form_Inputs->form_input_hidden('f_muestreo', $_GET['f_muestreo'], 2);
+				$Form_Inputs->form_input_hidden('f_recibida', $_GET['f_recibida'], 2);
+				$Form_Inputs->form_input_hidden('f_reporte', $_GET['f_reporte'], 2);
+				$Form_Inputs->form_input_hidden('idMaquina', $_GET['idMaquina'], 2);
+				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				
 				?>
 				
@@ -510,7 +512,7 @@ foreach ($arrPermisos as $prod) {
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit">
-					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -520,15 +522,17 @@ foreach ($arrPermisos as $prod) {
 </div>	 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
-$z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idConfig_2=1";	
+$z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_2=1";	
 	 
 ?>
 
- <div class="col-sm-8 fcenter">
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Seleccion de <?php echo $x_column_maquina_sing; ?> y Analisis</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -542,22 +546,22 @@ $z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idConfig_2=1
 				if(isset($idMatriz)) {           $x5  = $idMatriz;          }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha de muestreo','f_muestreo', $x1, 2);
-				$Form_Imputs->form_date('Fecha Recibida','f_recibida', $x2, 2);
-				$Form_Imputs->form_date('Fecha del reporte','f_reporte', $x3, 2);
-				$Form_Imputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x4, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha de muestreo','f_muestreo', $x1, 2);
+				$Form_Inputs->form_date('Fecha Recibida','f_recibida', $x2, 2);
+				$Form_Inputs->form_date('Fecha del reporte','f_reporte', $x3, 2);
+				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x4, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
 										 'Analisis','idMatriz', $x5, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										  $dbConn, 'form1');
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf178; Continuar" name="new2">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -609,13 +613,13 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Variable de busqueda
 $z="WHERE analisis_listado.idAnalisis!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND analisis_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND analisis_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Se aplican los filtros
@@ -684,7 +688,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -708,16 +712,16 @@ array_push( $arrTipo,$row );
 				if(isset($idMatriz)) {           $x5  = $idMatriz;          }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha de muestreo','f_muestreo', $x1, 1);
-				$Form_Imputs->form_date('Fecha Recibida','f_recibida', $x2, 1);
-				$Form_Imputs->form_date('Fecha del reporte','f_reporte', $x3, 1);
-				$Form_Imputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x4, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha de muestreo','f_muestreo', $x1, 1);
+				$Form_Inputs->form_date('Fecha Recibida','f_recibida', $x2, 1);
+				$Form_Inputs->form_date('Fecha del reporte','f_reporte', $x3, 1);
+				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x4, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0,
 										 'Analisis','idMatriz', $x5, 1, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										  $dbConn, 'form1');
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -735,7 +739,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Analisis</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Analisis</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -749,43 +753,43 @@ array_push( $arrTipo,$row );
 						<th>
 							<div class="pull-left"><?php echo $x_column_maquina_sing; ?></div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Analisis</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=analisis_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=analisis_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=analisis_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=analisis_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">
 							<div class="pull-left">N° Muestra</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nmuestra_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nmuestra_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nmuestra_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nmuestra_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="100">
 							<div class="pull-left">F muestreo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fmuestreo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fmuestreo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fmuestreo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fmuestreo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="100">
 							<div class="pull-left">F recibida</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=frecibida_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=frecibida_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=frecibida_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=frecibida_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="100">
 							<div class="pull-left">F reporte</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=freporte_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=freporte_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=freporte_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=freporte_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -804,12 +808,12 @@ array_push( $arrTipo,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group"style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_analisis.php?view='.$tipo['idAnalisis']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idAnalisis']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_analisis.php?view='.simpleEncode($tipo['idAnalisis'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idAnalisis']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$tipo['idAnalisis'];
+									$ubicacion = $location.'&del='.simpleEncode($tipo['idAnalisis'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el analisis?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

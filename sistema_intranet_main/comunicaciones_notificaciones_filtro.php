@@ -16,6 +16,17 @@ $location = $original;
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
+//Variables para filtro y paginacion
+$search = '';
+if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){ $location .= "&idTipoUsuario=".$_GET['idTipoUsuario']; $search .= "&idTipoUsuario=".$_GET['idTipoUsuario'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){               $location .= "&Nombre=".$_GET['Nombre'];               $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''){             $location .= "&rango_a=".$_GET['rango_a'];             $search .= "&rango_a=".$_GET['rango_a'];}
+if(isset($_GET['rango_b']) && $_GET['rango_b'] != ''){             $location .= "&rango_b=".$_GET['rango_b'];             $search .= "&rango_b=".$_GET['rango_b'];}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){           $location .= "&idCiudad=".$_GET['idCiudad'];           $search .= "&idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){           $location .= "&idComuna=".$_GET['idComuna'];           $search .= "&idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){         $location .= "&Direccion=".$_GET['Direccion'];         $search .= "&Direccion=".$_GET['Direccion'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){         $location .= "&idSistema=".$_GET['idSistema'];         $search .= "&idSistema=".$_GET['idSistema'];}
+/********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -69,7 +80,7 @@ LEFT JOIN `usuarios_listado`                   ON usuarios_listado.idUsuario    
 LEFT JOIN `core_estado_notificaciones`         ON core_estado_notificaciones.idEstado                 = principal_notificaciones_ver.idEstado
 LEFT JOIN `principal_notificaciones_listado`   ON principal_notificaciones_listado.idNotificaciones   = principal_notificaciones_ver.idNotificaciones
 
-WHERE principal_notificaciones_ver.idNotificaciones = {$_GET['detalle']}";
+WHERE principal_notificaciones_ver.idNotificaciones = ".$_GET['detalle'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -95,7 +106,7 @@ array_push( $arrNotificaciones,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5><?php echo $arrNotificaciones[0]['Titulo'];?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $arrNotificaciones[0]['Titulo'];?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -123,48 +134,64 @@ array_push( $arrNotificaciones,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['filtro']) ) { 	
 //realizo el filtrado de acuerdo al filtro anterior
-$w = 'WHERE idEstado = 1';
-if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){  $w .= " AND idTipoUsuario = '{$_GET['idTipoUsuario']}'";}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $w .= " AND Nombre LIKE '%{$_GET['Nombre']}%' " ;}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $w .= " AND idCiudad = '{$_GET['idCiudad']}'" ;}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $w .= " AND idComuna = '{$_GET['idComuna']}'" ;}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $w .= " AND Direccion LIKE '%{$_GET['Direccion']}%'" ;}
-if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $w .= " AND idSistema = '".$_GET['idSistema']."'" ;}
+$w = 'WHERE usuarios_listado.idEstado = 1';
+if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){  $w .= " AND usuarios_listado.idTipoUsuario = '".$_GET['idTipoUsuario']."'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $w .= " AND usuarios_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $w .= " AND usuarios_listado.idCiudad = '".$_GET['idCiudad']."'";}
+if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $w .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'";}
+if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $w .= " AND usuarios_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
+if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $w .= " AND usuarios_sistemas.idSistema = '".$_GET['idSistema']."'" ;}
 if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''&&isset($_GET['rango_b']) && $_GET['rango_b'] != ''){ 
-	$w .= " AND fNacimiento BETWEEN '{$_GET['rango_a']}' AND '{$_GET['rango_b']}'" ;
+	$w .= " AND usuarios_listado.fNacimiento BETWEEN '".$_GET['rango_a']."' AND '".$_GET['rango_b']."'" ;
 }
-$query = "SELECT COUNT(idUsuario) AS Cuenta
+//consulta
+$arrNotificaciones = array();
+$query = "SELECT 
+usuarios_listado.idUsuario,
+usuarios_listado.email,
+usuarios_listado.Nombre
+				
 FROM `usuarios_listado`
-".$w;
+LEFT JOIN `usuarios_sistemas` ON usuarios_sistemas.idUsuario = usuarios_listado.idUsuario
+".$w."
+GROUP BY usuarios_listado.idUsuario";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+									
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+									
 }
-$row_count = mysqli_fetch_assoc ($resultado);
-
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrNotificaciones,$row );
+}
+/*****************************************/				
+//cuento
+$total_usr = 0;
+foreach ($arrNotificaciones as $noti) {
+	$total_usr++;
+}
+					
 ?>
  <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
-			<h5>Crear Notificacion para <?php echo $row_count['Cuenta'] ?> usuarios</h5>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Notificacion para <?php echo $total_usr ?> usuarios</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -175,27 +202,28 @@ $row_count = mysqli_fetch_assoc ($resultado);
 				if(isset($Notificacion)) {  $x2  = $Notificacion;  }else{$x2  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Titulo', 'Titulo', $x1, 2);
-				$Form_Imputs->form_textarea('Notificacion','Notificacion', $x2, 2, 160);
-				$Form_Imputs->form_input_hidden('Fecha', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x1, 2);
+				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x2, 2, 160);
+				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				
-				if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){  $Form_Imputs->form_input_hidden('idTipoUsuario', $_GET['idTipoUsuario'], 2);}     
-				if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $Form_Imputs->form_input_hidden('Nombre', $_GET['Nombre'], 2);}           
-				if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $Form_Imputs->form_input_hidden('idCiudad', $_GET['idCiudad'], 2);}            
-				if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $Form_Imputs->form_input_hidden('idComuna', $_GET['idComuna'], 2);}           
-				if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $Form_Imputs->form_input_hidden('Direccion', $_GET['Direccion'], 2);}     
-				if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $Form_Imputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);}     
-				if(isset($_GET['rango_a']) && $_GET['rango_a'] != '')  {            $Form_Imputs->form_input_hidden('rango_a', $_GET['rango_a'], 2);}     
-				if(isset($_GET['rango_b']) && $_GET['rango_b'] != '')  {            $Form_Imputs->form_input_hidden('rango_b', $_GET['rango_b'], 2);}     
+				if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){  $Form_Inputs->form_input_hidden('idTipoUsuario', $_GET['idTipoUsuario'], 2);}     
+				if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $Form_Inputs->form_input_hidden('Nombre', $_GET['Nombre'], 2);}           
+				if(isset($_GET['rango_a']) && $_GET['rango_a'] != '')  {            $Form_Inputs->form_input_hidden('rango_a', $_GET['rango_a'], 2);}     
+				if(isset($_GET['rango_b']) && $_GET['rango_b'] != '')  {            $Form_Inputs->form_input_hidden('rango_b', $_GET['rango_b'], 2);}     
+				if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $Form_Inputs->form_input_hidden('idCiudad', $_GET['idCiudad'], 2);}            
+				if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $Form_Inputs->form_input_hidden('idComuna', $_GET['idComuna'], 2);}           
+				if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $Form_Inputs->form_input_hidden('Direccion', $_GET['Direccion'], 2);}     
+				if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);}     
+				
 				?>
 				
 				<div class="form-group">
-					<?php if($row_count['Cuenta']){?>
+					<?php if($total_usr){?>
 						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf003; Enviar" name="submit">
 					<?php } ?>
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -203,14 +231,43 @@ $row_count = mysqli_fetch_assoc ($resultado);
 		</div>
 	</div>
 </div>
+
+<div class="clearfix"></div>                  
+                                 
+<div class="col-sm-12">
+	<div class="box">	
+		<header>		
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de usuarios receptores</h5>	
+		</header>
+		<div class="table-responsive">
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>Nombre</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<?php foreach ($arrNotificaciones as $usuarios) { ?>
+						<tr class="odd">		
+							<td><?php echo $usuarios['Nombre']; ?></td>		
+							<td><?php echo $usuarios['email']; ?></td>		
+						</tr>
+					<?php } ?>                    
+				</tbody>
+			</table>
+		</div>  
+	</div>
+</div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
-?>
- <div class="col-sm-8 fcenter">
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro para Busqueda Avanzada</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -227,24 +284,25 @@ $row_count = mysqli_fetch_assoc ($resultado);
 				if(isset($Direccion)) {      $x7  = $Direccion;      }else{$x7  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs->form_select('Tipo de Usuario','idTipoUsuario', $x1, 1, 'idTipoUsuario', 'Nombre', 'usuarios_tipos', 'idTipoUsuario!=1', '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nombres', 'Nombre', $x2, 1);
-				$Form_Imputs->form_date('F Nacimiento inicio','rango_a', $x3, 1);
-				$Form_Imputs->form_date('F Nacimiento termino','rango_b', $x4, 1);
-				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo de Usuario','idTipoUsuario', $x1, 1, 'idTipoUsuario', 'Nombre', 'usuarios_tipos', 'idTipoUsuario!=1', '', $dbConn);
+				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 1);
+				$Form_Inputs->form_date('F Nacimiento inicio','rango_a', $x3, 1);
+				$Form_Inputs->form_date('F Nacimiento termino','rango_b', $x4, 1);
+				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										  $dbConn, 'form1');
-				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x7, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('pagina', 1, 2);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>        
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Buscar" name="submit_filter">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -289,7 +347,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z="WHERE principal_notificaciones_listado.idNotificaciones!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND principal_notificaciones_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND principal_notificaciones_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -350,7 +408,7 @@ array_push( $arrNotificaciones,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Notificaciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Notificaciones</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -364,15 +422,15 @@ array_push( $arrNotificaciones,$row );
 						<th>
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Titulo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=titulo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=titulo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=titulo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=titulo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -385,12 +443,12 @@ array_push( $arrNotificaciones,$row );
 						<td><?php echo $noti['Titulo']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_notificacion.php?view='.$noti['idNotificaciones']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&detalle='.$noti['idNotificaciones']; ?>" title="Ver detalle leidos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_notificacion.php?view='.simpleEncode($noti['idNotificaciones'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&detalle='.$noti['idNotificaciones']; ?>" title="Ver detalle leidos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$noti['idNotificaciones'];
+									$ubicacion = $location.'&del='.simpleEncode($noti['idNotificaciones'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la notificacion '.$noti['Titulo'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

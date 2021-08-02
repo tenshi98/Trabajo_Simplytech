@@ -38,24 +38,11 @@ if ( !empty($_GET['clear_all']) )     {
 	$form_trabajo= 'clear_all_solicitud';
 	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';	
 }
-/**********************************************/
 //formulario para editar
 if ( !empty($_POST['submit_modBase']) )  { 
 	//Llamamos al formulario
 	$form_trabajo= 'modBase_solicitud';
 	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';
-}
-//formulario para editar
-if ( !empty($_GET['add_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'add_obs_solicitud';
-	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';	
-}
-//se borra un dato
-if ( !empty($_GET['del_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'del_obs_solicitud';
-	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';	
 }
 /**********************************************/
 //formulario para crear
@@ -178,7 +165,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Otros</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -191,21 +178,21 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				if(isset($idFrecuencia)) {   $x3  = $idFrecuencia;  }else{$x3  = $_SESSION['solicitud_otros'][$_GET['editOtros']]['idFrecuencia'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
-				//$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
+				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_otros'][$_GET['editOtros']]['idOtros'], 2);
+				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_otros'][$_GET['editOtros']]['idOtros'], 2);
 				
-				$Form_Imputs->form_input_hidden('idFrecuencia', 2, 2);			
+				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);			
 				
 				?>
 				
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_otros"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -219,7 +206,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Otros</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -232,19 +219,19 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				if(isset($idFrecuencia)) {   $x3  = $idFrecuencia;  }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
-				//$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
+				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('idFrecuencia', 2, 2);			
+				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);			
 				
 				?>
 				
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_otros"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -260,7 +247,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Servicio</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -273,19 +260,19 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				if(isset($idFrecuencia)) {   $x3  = $idFrecuencia;  }else{$x3  = $_SESSION['solicitud_servicios'][$_GET['editServicios']]['idFrecuencia'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
-				//$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
+				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_servicios'][$_GET['editServicios']]['idServicio'], 2);
-				$Form_Imputs->form_input_hidden('idFrecuencia', 2, 2);			
+				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_servicios'][$_GET['editServicios']]['idServicio'], 2);
+				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);			
 				?>
 				
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_servicio"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -299,7 +286,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Servicio</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -312,18 +299,18 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				if(isset($idFrecuencia)) {   $x3  = $idFrecuencia;  }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
-				//$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
+				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('idFrecuencia', 2, 2);			
+				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);			
 				?>
 				
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicio"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -337,7 +324,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Equipo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -350,19 +337,19 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				if(isset($idFrecuencia)) {   $x3  = $idFrecuencia;  }else{$x3  = $_SESSION['solicitud_arriendos'][$_GET['editArriendo']]['idFrecuencia'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
-				//$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
+				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_arriendos'][$_GET['editArriendo']]['idEquipo'], 2);
-				$Form_Imputs->form_input_hidden('idFrecuencia', 2, 2);			
+				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_arriendos'][$_GET['editArriendo']]['idEquipo'], 2);
+				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);			
 				?>
 				
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_arriendo"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -376,7 +363,7 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Equipo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -389,18 +376,18 @@ if ( ! empty($_GET['editOtros']) ) {  ?>
 				if(isset($idFrecuencia)) {   $x3  = $idFrecuencia;  }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
-				//$Form_Imputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
+				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('idFrecuencia', 2, 2);			
+				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);			
 				?>
 				
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_arriendo"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -416,7 +403,7 @@ $zx2 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_insumos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -442,7 +429,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar solicitud de Insumo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -454,17 +441,17 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = $_SESSION['solicitud_insumos'][$_GET['editIns']]['Cantidad'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
-				$Form_Imputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_insumos'][$_GET['editIns']]['idProducto'], 2);
+				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_insumos'][$_GET['editIns']]['idProducto'], 2);
 				?>
 				
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_ins"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -480,7 +467,7 @@ $zx2 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_insumos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -506,7 +493,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Insumos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -518,15 +505,15 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				?>
 				
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ins"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -542,7 +529,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -567,7 +554,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar solicitud de Productos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -579,17 +566,17 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = $_SESSION['solicitud_productos'][$_GET['editProd']]['Cantidad'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
-				$Form_Imputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_productos'][$_GET['editProd']]['idProducto'], 2);
+				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_productos'][$_GET['editProd']]['idProducto'], 2);
 				?>
 				
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -605,7 +592,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -630,7 +617,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Productos</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -642,15 +629,15 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				?>
 			  
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -664,7 +651,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Solicitud</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -673,19 +660,21 @@ foreach ($arrPermisos as $prod) {
 				<?php 
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)) {   $x1  = $Creacion_fecha; }else{$x1  = $_SESSION['solicitud_basicos']['Creacion_fecha'];}
+				if(isset($Observaciones)) {    $x2  = $Observaciones;  }else{$x2  = $_SESSION['solicitud_basicos']['Observaciones'];}
 				
 				//se dibujan los inputs	
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1, 160);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Modificar Documento" name="submit_modBase">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -697,19 +686,18 @@ foreach ($arrPermisos as $prod) {
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) {
-$Form_Imputs = new Inputs(); 
 //Variable para sacar el total
 $total = 0;		
 ?>
 
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 
 	<?php
 	$ubicacion = $location.'&view=true&ing_solicitud=true';
 	$dialogo   = '¿Realmente desea ingresar el documento?';?>
 	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i>  Ingresar Documento</a>			
 
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<?php 
 	$ubicacion = $location.'&clear_all=true';
@@ -720,256 +708,214 @@ $total = 0;
 </div> 
 
 
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
-<div id="page-wrap">
-    <div id="header"> Solicitud</div>
-   
+	<div id="page-wrap">
+		<div id="header"> Solicitud</div>
+	   
 
-    
-    <div id="customer">
-        
-        <table id="meta" class="fleft otdata">
-            <tbody>
-                <tr>
-                    <td class="meta-head"><strong>DATOS BASICOS</strong></td>
-                    <td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary fright tooltip" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
-                </tr>
-                <tr>
-                    <td class="meta-head">Usuario</td>
-                    <td><?php echo $_SESSION['solicitud_basicos']['Usuario'];  ?></td>
-                </tr>
-            </tbody>
-        </table>
-        <table id="meta" class="otdata2">
-            <tbody>
-                <tr>
-                    <td class="meta-head">Fecha Creacion</td>
-                    <td><?php echo Fecha_estandar($_SESSION['solicitud_basicos']['Creacion_fecha'])?></td>
-                </tr>
-            </tbody>
-        </table>
+		
+		<div id="customer">
+			
+			<table id="meta" class="fleft otdata">
+				<tbody>
+					<tr>
+						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary fright tooltip" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+					</tr>
+					<tr>
+						<td class="meta-head">Usuario</td>
+						<td><?php echo $_SESSION['solicitud_basicos']['Usuario'];  ?></td>
+					</tr>
+				</tbody>
+			</table>
+			<table id="meta" class="otdata2">
+				<tbody>
+					<tr>
+						<td class="meta-head">Fecha Creacion</td>
+						<td><?php echo Fecha_estandar($_SESSION['solicitud_basicos']['Creacion_fecha'])?></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<table id="items">
+			<tbody>
+				
+				<tr>
+					<th colspan="5">Detalle</th>
+					<th width="160">Acciones</th>
+				</tr>		  
+				
+
+				
+				<tr class="item-row fact_tittle">
+					<td colspan="5">Productos a Solicitar</td>
+					<td><a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Producto" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a></td>
+				</tr>
+				<?php 
+				if (isset($_SESSION['solicitud_productos'])){
+					//recorro el lsiatdo entregado por la base de datos
+					foreach ($_SESSION['solicitud_productos'] as $key => $producto){ ?>
+						<tr class="item-row linea_punteada">
+							<td class="item-name" colspan="4">
+								<?php echo $producto['Nombre'];?>
+							</td>
+							<td class="item-name">
+								<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Unimed'];?>
+							</td>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<a href="<?php echo $location.'&editProd='.$producto['idProducto']; ?>" title="Editar Producto" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									<?php 
+									$ubicacion = $location.'&del_prod='.$producto['idProducto'];
+									$dialogo   = '¿Realmente deseas eliminar el producto '.$producto['Nombre'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								</div>
+							</td>
+						</tr> 
+				<?php }
+				}?>
+				
+				
+				
+				<tr class="item-row fact_tittle">
+					<td colspan="5">Insumos a Solicitar</td>
+					<td><a href="<?php echo $location.'&addIns=true' ?>" title="Agregar Insumo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumos</a></td>
+				</tr>
+				<?php 
+				if (isset($_SESSION['solicitud_insumos'])){
+					//recorro el lsiatdo entregado por la base de datos
+					foreach ($_SESSION['solicitud_insumos'] as $key => $producto){ ?>
+						<tr class="item-row linea_punteada">
+							<td class="item-name" colspan="4">
+								<?php echo $producto['Nombre'];?>
+							</td>
+							<td class="item-name">
+								<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Unimed'];?>
+							</td>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<a href="<?php echo $location.'&editIns='.$producto['idProducto']; ?>" title="Editar Insumo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									<?php 
+									$ubicacion = $location.'&del_ins='.$producto['idProducto'];
+									$dialogo   = '¿Realmente deseas eliminar el producto '.$producto['Nombre'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								</div>
+							</td>
+						</tr> 
+				<?php }
+				}?>
+				
+				
+				<tr class="item-row fact_tittle">
+					<td colspan="5">Arriendo de equipos a Solicitar</td>
+					<td><a href="<?php echo $location.'&addArriendo=true' ?>" title="Agregar Arriendo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Arriendos</a></td>
+				</tr>
+				<?php 
+				if (isset($_SESSION['solicitud_arriendos'])){
+					//recorro el lsiatdo entregado por la base de datos
+					foreach ($_SESSION['solicitud_arriendos'] as $key => $producto){ ?>
+						<tr class="item-row linea_punteada">
+							<td class="item-name" colspan="4">
+								<?php echo $producto['Nombre'];?>
+							</td>
+							<td class="item-name">
+								<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Frecuencia'];?>
+							</td>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<a href="<?php echo $location.'&editArriendo='.$producto['idEquipo']; ?>" title="Editar Arriendo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									<?php 
+									$ubicacion = $location.'&del_arriendo='.$producto['idEquipo'];
+									$dialogo   = '¿Realmente deseas eliminar el arriendo '.$producto['Nombre'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Arriendo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								</div>
+							</td>
+						</tr> 
+				<?php }
+				}?>
+				
+				<tr class="item-row fact_tittle">
+					<td colspan="5">Servicios a Solicitar</td>
+					<td><a href="<?php echo $location.'&addServicios=true' ?>" title="Agregar Servicio" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Servicios</a></td>
+				</tr>
+				<?php 
+				if (isset($_SESSION['solicitud_servicios'])){
+					//recorro el lsiatdo entregado por la base de datos
+					foreach ($_SESSION['solicitud_servicios'] as $key => $producto){ ?>
+						<tr class="item-row linea_punteada">
+							<td class="item-name" colspan="4">
+								<?php echo $producto['Nombre'];?>
+							</td>
+							<td class="item-name">
+								<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Frecuencia']; ?>
+							</td>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<a href="<?php echo $location.'&editServicios='.$producto['idServicio']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									<?php 
+									$ubicacion = $location.'&del_servicio='.$producto['idServicio'];
+									$dialogo   = '¿Realmente deseas eliminar el servicio '.$producto['Nombre'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								</div>
+							</td>
+						</tr> 
+				<?php }
+				}?>
+				
+				<tr class="item-row fact_tittle">
+					<td colspan="5">Otros a Solicitar</td>
+					<td><a href="<?php echo $location.'&addOtros=true' ?>" title="Agregar Otro" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Otros</a></td>
+				</tr>
+				<?php 
+				if (isset($_SESSION['solicitud_otros'])){
+					//recorro el lsiatdo entregado por la base de datos
+					foreach ($_SESSION['solicitud_otros'] as $key => $producto){?>
+						<tr class="item-row linea_punteada">
+							<td class="item-name" colspan="4">
+								<?php echo $producto['Nombre'];?>
+							</td>
+							<td class="item-name">
+								<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Frecuencia']; ?>
+							</td>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<a href="<?php echo $location.'&editOtros='.$producto['idOtros']; ?>" title="Editar Otros" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									<?php 
+									$ubicacion = $location.'&del_otros='.$producto['idOtros'];
+									$dialogo   = '¿Realmente deseas eliminar  '.$producto['Nombre'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Otros" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								</div>
+							</td>
+						</tr> 
+				<?php }
+				}?>
+				
+			</tbody>
+		</table>
+
     </div>
-    <table id="items">
-        <tbody>
-            
-			<tr>
-                <th colspan="5">Detalle</th>
-                <th width="160">Acciones</th>
-            </tr>		  
-            
-
-			
-            <tr class="item-row fact_tittle">
-				<td colspan="5">Productos a Solicitar</td>
-				<td><a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Producto" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a></td>
-			</tr>
-			<?php 
-			if (isset($_SESSION['solicitud_productos'])){
-				//recorro el lsiatdo entregado por la base de datos
-				foreach ($_SESSION['solicitud_productos'] as $key => $producto){ ?>
-					<tr class="item-row linea_punteada">
-						<td class="item-name" colspan="4">
-							<?php echo $producto['Nombre'];?>
-						</td>
-						<td class="item-name">
-							<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Unimed'];?>
-						</td>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&editProd='.$producto['idProducto']; ?>" title="Editar Producto" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
-								<?php 
-								$ubicacion = $location.'&del_prod='.$producto['idProducto'];
-								$dialogo   = '¿Realmente deseas eliminar el producto '.$producto['Nombre'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
-							</div>
-						</td>
-					</tr> 
-			<?php }
-			}?>
-			
-			
-			
-			<tr class="item-row fact_tittle">
-				<td colspan="5">Insumos a Solicitar</td>
-				<td><a href="<?php echo $location.'&addIns=true' ?>" title="Agregar Insumo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumos</a></td>
-			</tr>
-			<?php 
-			if (isset($_SESSION['solicitud_insumos'])){
-				//recorro el lsiatdo entregado por la base de datos
-				foreach ($_SESSION['solicitud_insumos'] as $key => $producto){ ?>
-					<tr class="item-row linea_punteada">
-						<td class="item-name" colspan="4">
-							<?php echo $producto['Nombre'];?>
-						</td>
-						<td class="item-name">
-							<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Unimed'];?>
-						</td>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&editIns='.$producto['idProducto']; ?>" title="Editar Insumo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
-								<?php 
-								$ubicacion = $location.'&del_ins='.$producto['idProducto'];
-								$dialogo   = '¿Realmente deseas eliminar el producto '.$producto['Nombre'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
-							</div>
-						</td>
-					</tr> 
-			<?php }
-			}?>
-			
-			
-			<tr class="item-row fact_tittle">
-				<td colspan="5">Arriendo de equipos a Solicitar</td>
-				<td><a href="<?php echo $location.'&addArriendo=true' ?>" title="Agregar Arriendo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Arriendos</a></td>
-			</tr>
-			<?php 
-			if (isset($_SESSION['solicitud_arriendos'])){
-				//recorro el lsiatdo entregado por la base de datos
-				foreach ($_SESSION['solicitud_arriendos'] as $key => $producto){ ?>
-					<tr class="item-row linea_punteada">
-						<td class="item-name" colspan="4">
-							<?php echo $producto['Nombre'];?>
-						</td>
-						<td class="item-name">
-							<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Frecuencia'];?>
-						</td>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&editArriendo='.$producto['idEquipo']; ?>" title="Editar Arriendo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
-								<?php 
-								$ubicacion = $location.'&del_arriendo='.$producto['idEquipo'];
-								$dialogo   = '¿Realmente deseas eliminar el arriendo '.$producto['Nombre'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Arriendo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
-							</div>
-						</td>
-					</tr> 
-			<?php }
-			}?>
-			
-			<tr class="item-row fact_tittle">
-				<td colspan="5">Servicios a Solicitar</td>
-				<td><a href="<?php echo $location.'&addServicios=true' ?>" title="Agregar Servicio" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Servicios</a></td>
-			</tr>
-			<?php 
-			if (isset($_SESSION['solicitud_servicios'])){
-				//recorro el lsiatdo entregado por la base de datos
-				foreach ($_SESSION['solicitud_servicios'] as $key => $producto){ ?>
-					<tr class="item-row linea_punteada">
-						<td class="item-name" colspan="4">
-							<?php echo $producto['Nombre'];?>
-						</td>
-						<td class="item-name">
-							<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Frecuencia']; ?>
-						</td>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&editServicios='.$producto['idServicio']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
-								<?php 
-								$ubicacion = $location.'&del_servicio='.$producto['idServicio'];
-								$dialogo   = '¿Realmente deseas eliminar el servicio '.$producto['Nombre'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
-							</div>
-						</td>
-					</tr> 
-			<?php }
-			}?>
-			
-			<tr class="item-row fact_tittle">
-				<td colspan="5">Otros a Solicitar</td>
-				<td><a href="<?php echo $location.'&addOtros=true' ?>" title="Agregar Otro" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Otros</a></td>
-			</tr>
-			<?php 
-			if (isset($_SESSION['solicitud_otros'])){
-				//recorro el lsiatdo entregado por la base de datos
-				foreach ($_SESSION['solicitud_otros'] as $key => $producto){?>
-					<tr class="item-row linea_punteada">
-						<td class="item-name" colspan="4">
-							<?php echo $producto['Nombre'];?>
-						</td>
-						<td class="item-name">
-							<?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Frecuencia']; ?>
-						</td>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&editOtros='.$producto['idOtros']; ?>" title="Editar Otros" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
-								<?php 
-								$ubicacion = $location.'&del_otros='.$producto['idOtros'];
-								$dialogo   = '¿Realmente deseas eliminar  '.$producto['Nombre'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Otros" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
-							</div>
-						</td>
-					</tr> 
-			<?php }
-			}?>
-
-			<tr id="hiderow">
-                <td colspan="6"><a name="Ancla_obs"></a></td>
-            </tr>
-			
-            <tr>
-				<?php if(isset($_SESSION['solicitud_basicos']['Observaciones'])&&$_SESSION['solicitud_basicos']['Observaciones']!=''){ ?>
-				
-					<td colspan="5" class="blank word_break"> 
-						<?php echo $_SESSION['solicitud_basicos']['Observaciones'];?>
-					</td>
-					<td class="blank">
-						<div class="btn-group" style="width: 35px;" >
-							<?php 
-							$ubicacion = $location.'&view=true&del_obs=true';
-							$dialogo   = '¿Realmente deseas eliminar la observacion?';?>
-							<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
-						</div>
-					</td>
-                
-				<?php }else{?>
-					<td colspan="5" class="blank"> 
-						<?php 
-						$non = '';
-						if(isset($_SESSION['solicitud_temporal'])&&$_SESSION['solicitud_temporal']!=''){
-							$non = $_SESSION['solicitud_temporal'];
-						}	
-							
-						$Form_Imputs->input_textarea_obs('Observaciones','Observaciones', 1,'width:100%; height: 200px;', $non);?>
-					</td>
-					<td class="blank">
-						<div class="btn-group" style="width: 35px;" >
-							<?php $ubicacion=$location.'&view=true&add_obs=true';?>	
-							<a onclick="add_obs('<?php echo $ubicacion ?>')" title="Agregar Observacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
-						</div>
-					</td>
-					
-				<?php }?>	
-				
-				
-            </tr>
-            <tr>
-                <td colspan="6" class="blank"><p>Observaciones</p></td> 
-            </tr>
-            
-        </tbody>
-    </table>
     
-   		
-			
-			
-    	<div class="clearfix"></div>
-    	<div class="col-sm-12 fcenter" style="margin-top:30px; margin-bottom:30px">   
-        	<div class="clearfix"></div>
-        </div>
-    </div>
+    <div class="row">
+		<div class="col-xs-12">
+			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['solicitud_basicos']['Observaciones'];?></p>
+		</div>
+	</div>
 
 
 </div>
 
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Solicitud</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -981,19 +927,19 @@ $total = 0;
 				if(isset($Observaciones)) {    $x2  = $Observaciones;  }else{$x2  = '';}
 				
 				//se dibujan los inputs	
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x2, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1, 160);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -1039,12 +985,10 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE solicitud_listado.idSolicitud!=0";
+$z = "WHERE solicitud_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //verifico que sea un administrador
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z.=" AND solicitud_listado.idSistema>=0";	
-}else{
-	$z.=" AND solicitud_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND solicitud_listado.idUsuario={$_SESSION['usuario']['basic_data']['idUsuario']}";	
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z.=" AND solicitud_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 /**********************************************************/
 //Se aplican los filtros
@@ -1105,7 +1049,7 @@ array_push( $arrSolicitudes,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -1136,12 +1080,12 @@ array_push( $arrSolicitudes,$row );
 				if(isset($Observaciones)) {    $x2  = $Observaciones;  }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();	
-				$Form_Imputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 1);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x2, 1, 160);
+				$Form_Inputs = new Form_Inputs();	
+				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 1);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1, 160);
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -1160,7 +1104,7 @@ array_push( $arrSolicitudes,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Solicitudes</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Solicitudes</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -1174,28 +1118,28 @@ array_push( $arrSolicitudes,$row );
 						<th width="120">
 							<div class="pull-left">N° Sol</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=sol_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=sol_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=sol_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=sol_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th><th width="120">
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Creador</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=creador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=creador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=creador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=creador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Observacion</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=observacion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=observacion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=observacion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=observacion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -1210,11 +1154,11 @@ array_push( $arrSolicitudes,$row );
 						<td><?php echo $sol['Observaciones']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.$sol['idSolicitud']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($sol['idSolicitud'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$sol['idSolicitud'];
+									$ubicacion = $location.'&del='.simpleEncode($sol['idSolicitud'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la solicitud N° '.$sol['idSolicitud'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

@@ -45,7 +45,7 @@ if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {
 	$z .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'" ;
 }
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z .= " AND analisis_listado.f_muestreo BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'" ;
+	$z .= " AND analisis_listado.f_muestreo BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'" ;
 }
 /*********************************************************************/
 //Preconsulta
@@ -618,24 +618,25 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrFlashpoint,$row );
 }
 ?>
+<div class="col-sm-12 clearfix">
+	<?php
+	$zz  = '';
+	if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     $zz .= '&idSistema='.$_GET['idSistema'];}else{$zz .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];}
+	if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {     $zz .= '&idMaquina='.$_GET['idMaquina'];}
+	if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {       $zz .= '&idMatriz='.$_GET['idMatriz'];}
+	if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
+		$zz .= '&f_inicio='.$_GET['f_inicio'];
+		$zz .= '&f_termino='.$_GET['f_termino'];
+	}
+	?>			
+	<a target="new" href="<?php echo 'informe_analisis_maquina_02_to_excel.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+</div>
+			
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5><?php echo $rowMaquina['Analisis_Nombre']?> <?php echo Fecha_estandar(fecha_actual())?></h5>
-			<div class="toolbar">
-				<?php
-				$zz  = '?bla=bla';
-				if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     $zz .= '&idSistema='.$_GET['idSistema'];}
-				if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {     $zz .= '&idMaquina='.$_GET['idMaquina'];}
-				if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {       $zz .= '&idMatriz='.$_GET['idMatriz'];}
-				if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-					$zz .= '&idSistema='.$_GET['f_inicio'];
-					$zz .= '&idSistema='.$_GET['f_termino'];
-				}
-				?>
-				<a target="new" href="informe_analisis_maquina_02_to_excel.php<?php echo $zz ?>" class="btn btn-sm btn-metis-2"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			</div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $rowMaquina['Analisis_Nombre']?> <?php echo Fecha_estandar(fecha_actual())?></h5>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -706,7 +707,7 @@ array_push( $arrFlashpoint,$row );
 								<div class="col-sm-12">
 									<div class="box">
 										<header>
-											<div class="icons"><i class="fa fa-table"></i></div><h5>Datos '.$rowMaquina['PuntoNombre_'.$i].'</h5>
+											<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos '.$rowMaquina['PuntoNombre_'.$i].'</h5>
 										</header>
 										<div class="table-responsive"> 
 											<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -778,21 +779,21 @@ array_push( $arrFlashpoint,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -806,15 +807,15 @@ $z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 				if(isset($f_termino)) {     $x4  = $f_termino;   }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
 										 'Matriz de Analisis','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_date('Fecha Muestreo Inicio','f_inicio', $x3, 2);
-				$Form_Imputs->form_date('Fecha Muestreo Termino','f_termino', $x4, 2);
+				$Form_Inputs->form_date('Fecha Muestreo Inicio','f_inicio', $x3, 2);
+				$Form_Inputs->form_date('Fecha Muestreo Termino','f_termino', $x4, 2);
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				
 				?>        
 	   

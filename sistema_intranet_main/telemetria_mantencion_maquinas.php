@@ -77,7 +77,7 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Matriz <?php echo $_GET['nombre_matriz']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
@@ -88,15 +88,15 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 				if(isset($Nombre)) {           $x1  = $Nombre;           }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
-				$Form_Imputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
+				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
 				?>  
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c5; Clonar" name="clone_Matriz">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -117,7 +117,7 @@ $cadena .= ',SensoresNumero_'.$_GET['mod'].' AS SensoresNumero';
 // tomo los datos del usuario
 $query = "SELECT ".$cadena."
 FROM `telemetria_mantencion_matriz`
-WHERE idMatriz = {$_GET['idMatriz']}";
+WHERE idMatriz = ".$_GET['idMatriz'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -138,7 +138,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Parametros</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -146,19 +146,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         	
 				<?php 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'PuntoNombre', $rowdata['Nombre'], 2);
-				$Form_Imputs->form_select('Tipo de Sensor','SensoresTipo', $rowdata['Sensor'], 2, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);	
-				$Form_Imputs->form_input_number('Valor a Alcanzar','SensoresValor', Cantidades_decimales_justos($rowdata['Valor']), 2);
-				$Form_Imputs->form_select_n_auto('N° Sensor Revisado','SensoresNumero', $rowdata['SensoresNumero'], 2, 1, 50);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowdata['Nombre'], 2);
+				$Form_Inputs->form_select('Tipo de Sensor','SensoresTipo', $rowdata['Sensor'], 2, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);	
+				$Form_Inputs->form_input_number('Valor a Alcanzar','SensoresValor', Cantidades_decimales_justos($rowdata['Valor']), 2);
+				$Form_Inputs->form_select_n_auto('N° Sensor Revisado','SensoresNumero', $rowdata['SensoresNumero'], 2, 1, 72);
 				
-				$Form_Imputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
-				$Form_Imputs->form_input_hidden('mod', $_GET['mod'], 2);
+				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
+				$Form_Inputs->form_input_hidden('mod', $_GET['mod'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -169,54 +169,22 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	 	 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } elseif ( ! empty($_GET['idMatriz']) ) {    
+
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',PuntoNombre_'.$i;
+	$subquery .= ',SensoresTipo_'.$i;
+	$subquery .= ',SensoresValor_'.$i;
+	$subquery .= ',SensoresNumero_'.$i;
+}
 // tomo los datos del usuario
-$query = "SELECT Nombre,cantPuntos,
-PuntoNombre_1,PuntoNombre_2,PuntoNombre_3,PuntoNombre_4,PuntoNombre_5,
-PuntoNombre_6,PuntoNombre_7,PuntoNombre_8,PuntoNombre_9,PuntoNombre_10,
-PuntoNombre_11,PuntoNombre_12,PuntoNombre_13,PuntoNombre_14,PuntoNombre_15,
-PuntoNombre_16,PuntoNombre_17,PuntoNombre_18,PuntoNombre_19,PuntoNombre_20,
-PuntoNombre_21,PuntoNombre_22,PuntoNombre_23,PuntoNombre_24,PuntoNombre_25,
-PuntoNombre_26,PuntoNombre_27,PuntoNombre_28,PuntoNombre_29,PuntoNombre_30,
-PuntoNombre_31,PuntoNombre_32,PuntoNombre_33,PuntoNombre_34,PuntoNombre_35,
-PuntoNombre_36,PuntoNombre_37,PuntoNombre_38,PuntoNombre_39,PuntoNombre_40,
-PuntoNombre_41,PuntoNombre_42,PuntoNombre_43,PuntoNombre_44,PuntoNombre_45,
-PuntoNombre_46,PuntoNombre_47,PuntoNombre_48,PuntoNombre_49,PuntoNombre_50,
-
-SensoresTipo_1,SensoresTipo_2,SensoresTipo_3,SensoresTipo_4,SensoresTipo_5,
-SensoresTipo_6,SensoresTipo_7,SensoresTipo_8,SensoresTipo_9,SensoresTipo_10,
-SensoresTipo_11,SensoresTipo_12,SensoresTipo_13,SensoresTipo_14,SensoresTipo_15,
-SensoresTipo_16,SensoresTipo_17,SensoresTipo_18,SensoresTipo_19,SensoresTipo_20,
-SensoresTipo_21,SensoresTipo_22,SensoresTipo_23,SensoresTipo_24,SensoresTipo_25,
-SensoresTipo_26,SensoresTipo_27,SensoresTipo_28,SensoresTipo_29,SensoresTipo_30,
-SensoresTipo_31,SensoresTipo_32,SensoresTipo_33,SensoresTipo_34,SensoresTipo_35,
-SensoresTipo_36,SensoresTipo_37,SensoresTipo_38,SensoresTipo_39,SensoresTipo_40,
-SensoresTipo_41,SensoresTipo_42,SensoresTipo_43,SensoresTipo_44,SensoresTipo_45,
-SensoresTipo_46,SensoresTipo_47,SensoresTipo_48,SensoresTipo_49,SensoresTipo_50,
-
-SensoresValor_1,SensoresValor_2,SensoresValor_3,SensoresValor_4,SensoresValor_5,
-SensoresValor_6,SensoresValor_7,SensoresValor_8,SensoresValor_9,SensoresValor_10,
-SensoresValor_11,SensoresValor_12,SensoresValor_13,SensoresValor_14,SensoresValor_15,
-SensoresValor_16,SensoresValor_17,SensoresValor_18,SensoresValor_19,SensoresValor_20,
-SensoresValor_21,SensoresValor_22,SensoresValor_23,SensoresValor_24,SensoresValor_25,
-SensoresValor_26,SensoresValor_27,SensoresValor_28,SensoresValor_29,SensoresValor_30,
-SensoresValor_31,SensoresValor_32,SensoresValor_33,SensoresValor_34,SensoresValor_35,
-SensoresValor_36,SensoresValor_37,SensoresValor_38,SensoresValor_39,SensoresValor_40,
-SensoresValor_41,SensoresValor_42,SensoresValor_43,SensoresValor_44,SensoresValor_45,
-SensoresValor_46,SensoresValor_47,SensoresValor_48,SensoresValor_49,SensoresValor_50,
-
-SensoresNumero_1,SensoresNumero_2,SensoresNumero_3,SensoresNumero_4,SensoresNumero_5,
-SensoresNumero_6,SensoresNumero_7,SensoresNumero_8,SensoresNumero_9,SensoresNumero_10,
-SensoresNumero_11,SensoresNumero_12,SensoresNumero_13,SensoresNumero_14,SensoresNumero_15,
-SensoresNumero_16,SensoresNumero_17,SensoresNumero_18,SensoresNumero_19,SensoresNumero_20,
-SensoresNumero_21,SensoresNumero_22,SensoresNumero_23,SensoresNumero_24,SensoresNumero_25,
-SensoresNumero_26,SensoresNumero_27,SensoresNumero_28,SensoresNumero_29,SensoresNumero_30,
-SensoresNumero_31,SensoresNumero_32,SensoresNumero_33,SensoresNumero_34,SensoresNumero_35,
-SensoresNumero_36,SensoresNumero_37,SensoresNumero_38,SensoresNumero_39,SensoresNumero_40,
-SensoresNumero_41,SensoresNumero_42,SensoresNumero_43,SensoresNumero_44,SensoresNumero_45,
-SensoresNumero_46,SensoresNumero_47,SensoresNumero_48,SensoresNumero_49,SensoresNumero_50
+$query = "SELECT Nombre,cantPuntos
+".$subquery."
 
 FROM `telemetria_mantencion_matriz`
-WHERE idMatriz = {$_GET['idMatriz']}";
+WHERE idMatriz = ".$_GET['idMatriz'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -267,7 +235,7 @@ array_push( $arrTipos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Puntos de <?php echo $rowdata['Nombre']; ?></h5>		
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Puntos de <?php echo $rowdata['Nombre']; ?></h5>		
 		</header>
 		
 		
@@ -293,7 +261,7 @@ array_push( $arrTipos,$row );
 						<td><?php echo $rowdata['SensoresValor_'.$i]; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
@@ -307,8 +275,8 @@ array_push( $arrTipos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -316,7 +284,7 @@ array_push( $arrTipos,$row );
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre, cantPuntos, idSistema
 FROM `telemetria_mantencion_matriz`
-WHERE idMatriz = {$_GET['idMatriz_2']}";
+WHERE idMatriz = ".$_GET['idMatriz_2'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -335,7 +303,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Matriz</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -347,19 +315,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($cantPuntos)) {  $x2  = $cantPuntos;   }else{$x2  = $rowdata['cantPuntos'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
-				$Form_Imputs->form_select_n_auto('N° Puntos Revision','cantPuntos', $x2, 2, 1, 50);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_select_n_auto('N° Puntos Revision','cantPuntos', $x2, 2, 1, 72);
 					
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
-				$Form_Imputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
 				?> 
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_mat"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -369,13 +337,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) {  
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //verifico que sea un administrador
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Matriz</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -387,19 +359,19 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($cantPuntos)) {  $x2  = $cantPuntos;   }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
-				$Form_Imputs->form_select_n_auto('N° Puntos Revision','cantPuntos', $x2, 2, 1, 50);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_select_n_auto('N° Puntos Revision','cantPuntos', $x2, 2, 1, 72);
 				
 					
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>        
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_matriz"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -447,7 +419,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE telemetria_mantencion_matriz.idMatriz!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND telemetria_mantencion_matriz.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND telemetria_mantencion_matriz.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $z .= " AND telemetria_mantencion_matriz.Nombre LIKE '%".$_GET['Nombre']."%'";}
@@ -509,7 +481,7 @@ array_push( $arrMatriz,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -530,11 +502,11 @@ array_push( $arrMatriz,$row );
 				if(isset($idEstado)) {  $x2  = $idEstado;   }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 1);
-				$Form_Imputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
+				$Form_Inputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -554,7 +526,7 @@ array_push( $arrMatriz,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Matrices</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Matrices</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -568,22 +540,22 @@ array_push( $arrMatriz,$row );
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">N° Puntos</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=puntos_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=puntos_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=puntos_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=puntos_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -597,13 +569,13 @@ array_push( $arrMatriz,$row );
 						<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $maq['Estado']; ?></label></td>		
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Matriz" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Matriz" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$maq['idMatriz'];
+									$ubicacion = $location.'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	

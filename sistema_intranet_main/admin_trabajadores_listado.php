@@ -55,9 +55,11 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Trabajador Creado c
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Trabajador Modificado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos del trabajador
 $query = "SELECT 
 trabajadores_listado.Direccion_img,
@@ -109,7 +111,14 @@ trabajadores_listado.File_Licencia,
 
 trabajadores_listado.idTipoContratoTrab,
 
-contratista_listado.Nombre AS Contratista
+contratista_listado.Nombre AS Contratista,
+
+centrocosto_listado.Nombre AS CentroCosto_Nombre,
+centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
+centrocosto_listado_level_2.Nombre AS CentroCosto_Level_2,
+centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
+centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
+centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5
 
 FROM `trabajadores_listado`
 LEFT JOIN `core_estados`                     ON core_estados.idEstado                               = trabajadores_listado.idEstado
@@ -126,8 +135,14 @@ LEFT JOIN `core_estado_civil`                ON core_estado_civil.idEstadoCivil 
 LEFT JOIN `core_tipos_contrato_trabajador`   ON core_tipos_contrato_trabajador.idTipoContratoTrab   = trabajadores_listado.idTipoContratoTrab
 LEFT JOIN `core_tipos_trabajadores`          ON core_tipos_trabajadores.idTipoTrabajador            = trabajadores_listado.idTipoTrabajador
 LEFT JOIN `contratista_listado`              ON contratista_listado.idContratista                   = trabajadores_listado.idContratista
+LEFT JOIN `centrocosto_listado`              ON centrocosto_listado.idCentroCosto                   = trabajadores_listado.idCentroCosto
+LEFT JOIN `centrocosto_listado_level_1`      ON centrocosto_listado_level_1.idLevel_1               = trabajadores_listado.idLevel_1
+LEFT JOIN `centrocosto_listado_level_2`      ON centrocosto_listado_level_2.idLevel_2               = trabajadores_listado.idLevel_2
+LEFT JOIN `centrocosto_listado_level_3`      ON centrocosto_listado_level_3.idLevel_3               = trabajadores_listado.idLevel_3
+LEFT JOIN `centrocosto_listado_level_4`      ON centrocosto_listado_level_4.idLevel_4               = trabajadores_listado.idLevel_4
+LEFT JOIN `centrocosto_listado_level_5`      ON centrocosto_listado_level_5.idLevel_5               = trabajadores_listado.idLevel_5
 
-WHERE trabajadores_listado.idTrabajador = {$_GET['id']}";
+WHERE trabajadores_listado.idTrabajador = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -147,7 +162,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $arrCargas = array();
 $query = "SELECT  Nombre, ApellidoPat, ApellidoMat
 FROM `trabajadores_listado_cargas`
-WHERE idTrabajador = {$_GET['id']}
+WHERE idTrabajador = ".$_GET['id']."
 ORDER BY idCarga ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -174,7 +189,7 @@ sistema_bonos_fijos.Nombre AS Bono,
 trabajadores_listado_bonos_fijos.Monto
 FROM `trabajadores_listado_bonos_fijos`
 LEFT JOIN `sistema_bonos_fijos`   ON sistema_bonos_fijos.idBonoFijo     = trabajadores_listado_bonos_fijos.idBonoFijo
-WHERE trabajadores_listado_bonos_fijos.idTrabajador = {$_GET['id']}
+WHERE trabajadores_listado_bonos_fijos.idTrabajador = ".$_GET['id']."
 ORDER BY sistema_bonos_fijos.Nombre  ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -197,7 +212,7 @@ array_push( $arrBonos,$row );
 $arrAnexos = array();
 $query = "SELECT  idAnexo,Documento, Fecha_ingreso
 FROM `trabajadores_listado_anexos`
-WHERE idTrabajador = {$_GET['id']}
+WHERE idTrabajador = ".$_GET['id']."
 ORDER BY Fecha_ingreso DESC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -226,7 +241,7 @@ sistema_afp.Nombre AS AFP
 FROM `trabajadores_listado_descuentos_fijos`
 LEFT JOIN `sistema_descuentos_fijos`   ON sistema_descuentos_fijos.idDescuentoFijo     = trabajadores_listado_descuentos_fijos.idDescuentoFijo
 LEFT JOIN `sistema_afp`                ON sistema_afp.idAFP                            = trabajadores_listado_descuentos_fijos.idAFP
-WHERE trabajadores_listado_descuentos_fijos.idTrabajador = {$_GET['id']}
+WHERE trabajadores_listado_descuentos_fijos.idTrabajador = ".$_GET['id']."
 ORDER BY sistema_descuentos_fijos.Nombre  ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -246,21 +261,7 @@ array_push( $arrDescuentos,$row );
 }
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Trabajador</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
@@ -268,26 +269,27 @@ array_push( $arrDescuentos,$row );
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'admin_trabajadores_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'admin_trabajadores_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'admin_trabajadores_listado_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contacto</a></li>
+				<li class="active"><a href="<?php echo 'admin_trabajadores_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'admin_trabajadores_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'admin_trabajadores_listado_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_laboral.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Informacion Laboral</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_previsional.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Descuentos Previsionales</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_descuentos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Otros Descuentos Previsionales</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_bonos_fijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Bonos Fijos Asignados</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_cargas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Cargas Familiares</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_laboral.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-university" aria-hidden="true"></i> Informacion Laboral</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_previsional.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Descuentos Previsionales</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_descuentos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Otros Descuentos Previsionales</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_bonos_fijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Bonos Fijos Asignados</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_cargas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Cargas Familiares</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Contrato</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_anexos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Anexos Contrato</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_licencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Licencia Conducir</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Foto</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Curriculum</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Antecedentes</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Carnet</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Contrato</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_anexos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Anexos Contrato</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_licencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Licencia Conducir</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Foto</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Curriculum</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
 						
 					</ul>
                 </li>           
@@ -300,7 +302,7 @@ array_push( $arrDescuentos,$row );
 					
 					<div class="col-sm-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/usr.png">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
@@ -408,10 +410,24 @@ array_push( $arrDescuentos,$row );
 								echo 'Trabajador sin Bonos Fijos Asignados';
 							}
 							?>
-						
+							
+							<?php
+							if(isset($rowdata['CentroCosto_Nombre'])&&$rowdata['CentroCosto_Nombre']!=''){ 
+								echo '<br/><strong>Centro de Costo : </strong>'.$rowdata['CentroCosto_Nombre'];
+								if(isset($rowdata['CentroCosto_Level_1'])&&$rowdata['CentroCosto_Level_1']!=''){echo ' - '.$rowdata['CentroCosto_Level_1']; }
+								if(isset($rowdata['CentroCosto_Level_2'])&&$rowdata['CentroCosto_Level_2']!=''){echo ' - '.$rowdata['CentroCosto_Level_2']; }
+								if(isset($rowdata['CentroCosto_Level_3'])&&$rowdata['CentroCosto_Level_3']!=''){echo ' - '.$rowdata['CentroCosto_Level_3']; }
+								if(isset($rowdata['CentroCosto_Level_4'])&&$rowdata['CentroCosto_Level_4']!=''){echo ' - '.$rowdata['CentroCosto_Level_4']; }
+								if(isset($rowdata['CentroCosto_Level_5'])&&$rowdata['CentroCosto_Level_5']!=''){echo ' - '.$rowdata['CentroCosto_Level_5']; }
+								echo '<br/>';
+							}
+							?>
 							
 							<br/><span class="text-danger"><strong>Observaciones</strong></span><br/>
-							<?php echo $rowdata['Observaciones']; ?>
+							<div class="text-muted well well-sm no-shadow">
+								<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){echo $rowdata['Observaciones'];}else{echo 'Sin Observaciones';} ?>
+								<div class="clearfix"></div>
+							</div>
 						</p>
 						
 							
@@ -434,8 +450,8 @@ array_push( $arrDescuentos,$row );
 											<td>Contrato de Trabajo</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Contrato'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Contrato'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -448,8 +464,8 @@ array_push( $arrDescuentos,$row );
 											<td>Anexo del '.fecha_estandar($tipo['Fecha_ingreso']).' :'.$tipo['Documento'].'</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$tipo['Documento'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$tipo['Documento'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Documento'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Documento'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -462,8 +478,8 @@ array_push( $arrDescuentos,$row );
 											<td>Curriculum</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Curriculum'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Curriculum'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Curriculum'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Curriculum'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -476,8 +492,8 @@ array_push( $arrDescuentos,$row );
 											<td>Papel de Antecedentes Penales</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Antecedentes'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Antecedentes'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Antecedentes'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Antecedentes'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -490,8 +506,8 @@ array_push( $arrDescuentos,$row );
 											<td>Carnet de Identidad</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Carnet'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Carnet'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Carnet'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Carnet'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -504,8 +520,8 @@ array_push( $arrDescuentos,$row );
 											<td>Licencia de Conducir</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path=upload&file='.$rowdata['File_Licencia'].'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-													<a href="1download.php?dir=upload&file='.$rowdata['File_Licencia'].'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Licencia'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Licencia'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -517,8 +533,7 @@ array_push( $arrDescuentos,$row );
 						</table>
 						<?php widget_modal(80, 95); ?>
 						
-
-										
+									
 					</div>	
 					<div class="clearfix"></div>
 			
@@ -529,17 +544,20 @@ array_push( $arrDescuentos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Trabajador</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -555,26 +573,27 @@ array_push( $arrDescuentos,$row );
 				if(isset($Cargo)) {               $x6  = $Cargo;                }else{$x6  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Basicos</h3>';
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_input_text( 'Apellido Paterno', 'ApellidoPat', $x2, 2);
-				$Form_Imputs->form_input_text( 'Apellido Materno', 'ApellidoMat', $x3, 2);
-				$Form_Imputs->form_input_rut('Rut', 'Rut', $x4, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_text('Apellido Paterno', 'ApellidoPat', $x2, 2);
+				$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 2);
+				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
 				
-				echo '<h3>Datos Laborales</h3>';
-				$Form_Imputs->form_select('Tipo Trabajador','idTipo', $x5, 2, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Cargo', 'Cargo', $x6, 1);
+				$Form_Inputs->form_tittle(3, 'Datos Laborales');
+				$Form_Inputs->form_select('Tipo Trabajador','idTipo', $x5, 2, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Cargo', 'Cargo', $x6, 1);
 				
-				echo '<h3>Empresa Perteneciente</h3>';
-				$Form_Imputs->form_select('Sistema','idSistema', $x6, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_tittle(3, 'Empresa Perteneciente');
+				$Form_Inputs->form_select('Sistema','idSistema', $x6, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);	 
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);	 
+				$Form_Inputs->form_input_hidden('idTipoTrabajo', 1, 2);	 
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -622,9 +641,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE trabajadores_listado.idTrabajador!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND trabajadores_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z = "WHERE trabajadores_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Se aplican los filtros
@@ -692,7 +709,7 @@ array_push( $arrTrabajador,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -718,16 +735,16 @@ array_push( $arrTrabajador,$row );
 				if(isset($idSistema)) {           $x7  = $idSistema;            }else{$x7  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 1);
-				$Form_Imputs->form_input_text( 'Apellido Paterno', 'ApellidoPat', $x2, 1);
-				$Form_Imputs->form_input_text( 'Apellido Materno', 'ApellidoMat', $x3, 1);
-				$Form_Imputs->form_input_rut('Rut', 'Rut', $x4, 1);
-				$Form_Imputs->form_select('Tipo Trabajador','idTipo', $x5, 1, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Cargo', 'Cargo', $x6, 1);
-				$Form_Imputs->form_select('Sistema','idSistema', $x7, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
+				$Form_Inputs->form_input_text('Apellido Paterno', 'ApellidoPat', $x2, 1);
+				$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 1);
+				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
+				$Form_Inputs->form_select('Tipo Trabajador','idTipo', $x5, 1, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Cargo', 'Cargo', $x6, 1);
+				$Form_Inputs->form_select('Sistema','idSistema', $x7, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -747,7 +764,7 @@ array_push( $arrTrabajador,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Trabajadores</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Trabajadores</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -761,29 +778,29 @@ array_push( $arrTrabajador,$row );
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Tipo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Sistema</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=sistema_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=sistema_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=sistema_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=sistema_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -798,12 +815,12 @@ array_push( $arrTrabajador,$row );
 						<td><?php echo $trab['RazonSocial']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_trabajador.php?view='.$trab['idTrabajador']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$trab['idTrabajador']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_trabajador.php?view='.simpleEncode($trab['idTrabajador'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$trab['idTrabajador']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$trab['idTrabajador'];
+									$ubicacion = $location.'&del='.simpleEncode($trab['idTrabajador'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

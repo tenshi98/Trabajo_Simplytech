@@ -74,16 +74,16 @@ if(isset($_GET['idEstadoDevolucion']) && $_GET['idEstadoDevolucion'] != ''){
 
 
 if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '{$_GET['Creacion_fecha_ini']}' AND '{$_GET['Creacion_fecha_fin']}'" ;
+	$z .= " AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'" ;
 }
 if(isset($_GET['Pago_fecha_ini']) && $_GET['Pago_fecha_ini'] != ''&&isset($_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.Pago_fecha BETWEEN '{$_GET['Pago_fecha_ini']}' AND '{$_GET['Pago_fecha_fin']}'" ;
+	$z .= " AND bodegas_arriendos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'" ;
 }
 if(isset($_GET['F_Pago_ini']) && $_GET['F_Pago_ini'] != ''&&isset($_GET['F_Pago_fin']) && $_GET['F_Pago_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '{$_GET['F_Pago_ini']}' AND '{$_GET['F_Pago_fin']}'" ;
+	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'" ;
 }
 if(isset($_GET['F_Devolucion_ini']) && $_GET['F_Devolucion_ini'] != ''&&isset($_GET['F_Devolucion_fin']) && $_GET['F_Devolucion_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '{$_GET['F_Devolucion_ini']}' AND '{$_GET['F_Devolucion_fin']}'" ;
+	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Devolucion_ini']."' AND '".$_GET['F_Devolucion_fin']."'" ;
 }
 				
 // Se trae un listado con todos los productos
@@ -159,15 +159,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProductos,$row );

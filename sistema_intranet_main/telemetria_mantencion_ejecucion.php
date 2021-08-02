@@ -70,7 +70,7 @@ if ( ! empty($_GET['edit']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Cancelar Mantencion</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -81,15 +81,15 @@ if ( ! empty($_GET['edit']) ) { ?>
 				if(isset($Observacion)) {     $x1  = $Observacion;    }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
 				
-				$Form_Imputs->form_input_hidden('idTelemetria', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['edit'], 2);
 				?>
 				
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_cancel">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -98,10 +98,12 @@ if ( ! empty($_GET['edit']) ) { ?>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['verify']) ) { 
+}elseif ( ! empty($_GET['verify']) ) {
+//numero sensores equipo
+$N_Maximo_Sensores = 72; 
 //Traigo todos los valores	
 $subquery = '';
-for ($i = 1; $i <= 50; $i++) {
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Tel_Sensor_Nombre_'.$i;
 	$subquery .= ',telemetria_listado.SensoresMant_'.$i.' AS Tel_Sensor_Valor_'.$i;
 	$subquery .= ',telemetria_listado.SensoresTipo_'.$i.' AS Tel_Sensor_Tipo_'.$i;
@@ -128,7 +130,7 @@ telemetria_mantencion_matriz.cantPuntos AS Matriz_Puntos
 FROM `telemetria_listado`
 LEFT JOIN `telemetria_mantencion_matriz` ON telemetria_mantencion_matriz.idMatriz = telemetria_listado.idMatriz
 
-WHERE idTelemetria = {$_GET['verify']}";
+WHERE idTelemetria = ".$_GET['verify'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -198,7 +200,7 @@ echo '
 		<div class="row">
 			<div class="col-xs-12">
 				<h2 class="page-header">
-					<i class="fa fa-globe"></i> <?php echo $rowdata['Tel_Equipo'].' ('.$rowdata['Tel_Identificador'].')'; ?>.
+					<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowdata['Tel_Equipo'].' ('.$rowdata['Tel_Identificador'].')'; ?>.
 					<small class="pull-right"> <?php echo $rowdata['Matriz_Nombre'] ?></small>
 				</h2>
 			</div>   
@@ -297,26 +299,28 @@ echo '
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+ } elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
+$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		  
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$w = "telemetria_listado.idSistema>=0 AND telemetria_listado.idEstado=1";
-	$z = "idSistema>=0";
-}else{
-	$w = "telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_equipos_telemetria.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']} AND telemetria_listado.idEstado=1 ";	
-	$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}  ";			
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];			
 }	 
 ?>
- <div class="col-sm-8 fcenter">
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Mantencion</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -328,28 +332,28 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idMatriz)) {      $x2  = $idMatriz;      }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Imputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
 				}else{
-					$Form_Imputs->form_select_join_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
-				$Form_Imputs->form_select_filter('Matriz de Mantenciones','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'telemetria_mantencion_matriz', $z, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Matriz de Mantenciones','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'telemetria_mantencion_matriz', $z, '', $dbConn);	
 				
 				
-				$Form_Imputs->form_input_hidden('idMantencion', 1, 2);
-				$Form_Imputs->form_input_hidden('idEstado', 2, 2);
-				$Form_Imputs->form_input_hidden('idUsuarioMan', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('FechaMantencionIni', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('HoraMantencionIni', hora_actual(), 2);
+				$Form_Inputs->form_input_hidden('idMantencion', 1, 2);
+				$Form_Inputs->form_input_hidden('idEstado', 2, 2);
+				$Form_Inputs->form_input_hidden('idUsuarioMan', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('FechaMantencionIni', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('HoraMantencionIni', hora_actual(), 2);
 				
 				?>
 
 							
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?>
@@ -391,7 +395,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE telemetria_listado.idEstado=2 AND telemetria_listado.idMantencion=1";//Solo los que estan en mantencion
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){  $z .= " AND telemetria_listado.Identificador LIKE '%".$_GET['Identificador']."%'";}
@@ -449,7 +453,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -470,13 +474,13 @@ array_push( $arrUsers,$row );
 				if(isset($Nombre)) {          $x2  = $Nombre;           }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_icon( 'Identificador', 'Identificador', $x1, 1,'fa fa-flag');
-				$Form_Imputs->form_input_text( 'Nombre del Equipo', 'Nombre', $x2, 1);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_icon('Identificador', 'Identificador', $x1, 1,'fa fa-flag');
+				$Form_Inputs->form_input_text('Nombre del Equipo', 'Nombre', $x2, 1);	
 				
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -498,7 +502,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Equipos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Equipos</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -512,15 +516,15 @@ array_push( $arrUsers,$row );
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Identificador</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=identificador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=identificador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=identificador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=identificador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -535,9 +539,9 @@ array_push( $arrUsers,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>			
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria.php?view='.$usuarios['idTelemetria']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&verify='.$usuarios['idTelemetria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){?><a href="<?php echo $location.'&edit='.$usuarios['idTelemetria']; ?>" title="Cerrar Mantencion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria.php?view='.simpleEncode($usuarios['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&verify='.$usuarios['idTelemetria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=4){?><a href="<?php echo $location.'&edit='.$usuarios['idTelemetria']; ?>" title="Cerrar Mantencion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

@@ -39,24 +39,19 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrGruposRev,$row );
 }
 /*******************************************************/
 //Se arma la query con los datos justos recibidos
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
 $subquery = '';
 $arrNombres = array(); 
-for ($i = 1; $i <= 50; $i++) {
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresNombre_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
 	$subquery .= ',SensoresRevision_'.$i;
@@ -66,7 +61,7 @@ for ($i = 1; $i <= 50; $i++) {
 //Se traen todos los datos de la maquina
 $query = "SELECT Nombre, cantSensores ".$subquery."
 FROM `telemetria_listado`
-WHERE idTelemetria=".$_GET['idTelemetria']."";
+WHERE idTelemetria=".$_GET['idTelemetria'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -76,15 +71,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowMaquina = mysqli_fetch_assoc ($resultado);
 //Armo la consulta
@@ -142,7 +130,7 @@ $query = "SELECT Fecha AS FechaConsultada
 ".$subquery."
 FROM `telemetria_listado_historial_activaciones`
 WHERE idTelemetria=".$_GET['idTelemetria']."
-AND Fecha BETWEEN '{$_GET['F_inicio']}' AND '{$_GET['F_termino']}'
+AND Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'
 GROUP BY Fecha
 ORDER BY Fecha ASC";
 //Consulta
@@ -154,15 +142,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrMediciones,$row );
@@ -233,7 +214,17 @@ $arrData[46] = "AU";
 $arrData[47] = "AV";
 $arrData[48] = "AW";
 $arrData[49] = "AX";
-$arrData[50] = "AY";			
+$arrData[50] = "AY";
+$arrData[51] = "AZ";
+$arrData[52] = "BA";
+$arrData[53] = "BB";
+$arrData[54] = "BC";
+$arrData[55] = "BD";
+$arrData[56] = "BE";
+$arrData[57] = "BF";
+$arrData[58] = "BG";
+$arrData[59] = "BH";
+$arrData[60] = "BI";			
          
             
 //Titulo columnas

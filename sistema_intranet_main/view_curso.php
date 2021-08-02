@@ -21,21 +21,32 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT  
-alumnos_cursos.Nombre AS CursoNombre,
-alumnos_cursos.Semanas AS CursoSemanas,
-alumnos_cursos.F_inicio AS CursoF_inicio,
-alumnos_cursos.F_termino AS CursoF_termino,
+cursos_listado.Nombre AS CursoNombre,
+cursos_listado.Semanas AS CursoSemanas,
+cursos_listado.F_inicio AS CursoF_inicio,
+cursos_listado.F_termino AS CursoF_termino,
 core_estados.Nombre AS CursoEstado,
-clientes_listado.Nombre AS CursoCliente,
 core_sistemas.Nombre AS CursoSistema
 
-FROM `alumnos_cursos`
-LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema      = alumnos_cursos.idSistema
-LEFT JOIN `clientes_listado`    ON clientes_listado.idCliente   = alumnos_cursos.idCliente
-LEFT JOIN `core_estados`        ON core_estados.idEstado        = alumnos_cursos.idEstado
-WHERE alumnos_cursos.idCurso = {$_GET['view']}";
+FROM `cursos_listado`
+LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema      = cursos_listado.idSistema
+LEFT JOIN `core_estados`        ON core_estados.idEstado        = cursos_listado.idEstado
+WHERE cursos_listado.idCurso = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -46,15 +57,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
@@ -62,12 +66,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $arrElearnng = array();
 $query =
 "SELECT 
-alumnos_elearning_listado.Nombre AS NombreElearning
+alumnos_cursos.Nombre AS NombreElearning
 
-FROM `alumnos_cursos_elearning`
-LEFT JOIN `alumnos_elearning_listado`   ON alumnos_elearning_listado.idElearning     = alumnos_elearning_listado.idElearning
-WHERE alumnos_cursos_elearning.idCurso = {$_GET['view']}
-ORDER BY alumnos_elearning_listado.Nombre ASC  ";
+FROM `cursos_listado_asignaturas`
+LEFT JOIN `alumnos_cursos`   ON alumnos_cursos.idCurso     = cursos_listado_asignaturas.idAsignatura
+WHERE cursos_listado_asignaturas.idCurso = ".$X_Puntero."
+ORDER BY alumnos_cursos.Nombre ASC  ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -78,15 +82,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrElearnng,$row );
@@ -95,8 +92,8 @@ array_push( $arrElearnng,$row );
 // Se trae un listado con todos los usuarios
 $arrArchivos = array();
 $query = "SELECT idDocumentacion, File, Semana
-FROM `alumnos_cursos_documentacion`
-WHERE idCurso = {$_GET['view']}";
+FROM `cursos_listado_documentacion`
+WHERE idCurso = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -107,26 +104,54 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivos,$row );
 }
 
+
+//Listado con los elearning
+$arrVideo = array();
+$query = "SELECT 
+cursos_listado_videoconferencia.Nombre AS NombreVideo, 
+cursos_listado_videoconferencia.HoraInicio, 
+cursos_listado_videoconferencia.HoraTermino,  
+cursos_listado_videoconferencia.idDia_1,  
+cursos_listado_videoconferencia.idDia_2,  
+cursos_listado_videoconferencia.idDia_3,  
+cursos_listado_videoconferencia.idDia_4, 
+cursos_listado_videoconferencia.idDia_5,  
+cursos_listado_videoconferencia.idDia_6,  
+cursos_listado_videoconferencia.idDia_7,
+usuarios_listado.Nombre AS Usuario
+
+FROM `cursos_listado_videoconferencia`
+LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = cursos_listado_videoconferencia.idUsuario
+WHERE cursos_listado_videoconferencia.idCurso = ".$X_Puntero."
+ORDER BY cursos_listado_videoconferencia.Nombre ASC  ";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrVideo,$row );
+}
 ?>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Grupo</h5>
 		</header>
         <div id="div-3" class="tab-content">
@@ -136,7 +161,7 @@ array_push( $arrArchivos,$row );
 					<div class="table-responsive">
 					
 						<div class="col-sm-4">
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/training.jpg">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/training.jpg">
 					</div>
 					<div class="col-sm-8">
 						<h2 class="text-primary">Datos Basicos</h2>
@@ -145,12 +170,11 @@ array_push( $arrArchivos,$row );
 							<strong>Semanas : </strong><?php echo $rowdata['CursoSemanas'].' semanas de duracion'; ?><br/>
 							<strong>Fecha de Inicio : </strong><?php echo Fecha_completa($rowdata['CursoF_inicio']); ?><br/>
 							<strong>Fecha de Termino : </strong><?php echo Fecha_completa($rowdata['CursoF_termino']); ?><br/>
-							<strong>Cliente : </strong><?php echo $rowdata['CursoCliente']; ?><br/>
 							<strong>Sistema Relacionado : </strong><?php echo $rowdata['CursoSistema']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['CursoEstado']; ?>
 						</p>
 						
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Elearnings  Asignados</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Asignaturas  Relacionadas</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
 								<?php foreach ($arrElearnng as $permiso) {?>
@@ -165,14 +189,54 @@ array_push( $arrArchivos,$row );
 							<tbody>
 								<?php foreach ($arrArchivos as $ciudad) { ?>
 									<tr class="odd">
-										<td><?php echo $ciudad['Semana']; ?></td>
+										<td><?php echo 'Semana '.$ciudad['Semana']; ?></td>
 										<td><?php echo $ciudad['File']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 70px;" >
-												<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$ciudad['File'].'&return=true'; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+												<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($ciudad['File'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 											</div>
 										</td>
 									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> VideoConferencias  Relacionadas</h2>
+						<table id="items" style="margin-bottom: 20px;">
+							<thead>
+								<tr role="row">
+									<th colspan="3">Datos Basicos</th>
+									<th colspan="7">Dias</th>
+								</tr>
+								<tr role="row">
+									<th>Nombre</th>
+									<th>Profesor</th>
+									<th>Horario</th>
+									
+									<th>Lunes</th>
+									<th>Martes</th>
+									<th>Miercoles</th>
+									<th>Jueves</th>
+									<th>Viernes</th>
+									<th>Sabado</th>
+									<th>Domingo</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($arrVideo as $video) {?>
+									<tr>
+										<td><?php echo $video['NombreVideo']; ?></td>
+										<td><?php echo $video['Usuario']; ?></td>
+										<td><?php echo $video['HoraInicio'].' - '.$video['HoraTermino']; ?></td>
+										
+										<td><?php if(isset($video['idDia_1'])&&$video['idDia_1']==2){echo 'Si';} ?></td>
+										<td><?php if(isset($video['idDia_2'])&&$video['idDia_2']==2){echo 'Si';} ?></td>
+										<td><?php if(isset($video['idDia_3'])&&$video['idDia_3']==2){echo 'Si';} ?></td>
+										<td><?php if(isset($video['idDia_4'])&&$video['idDia_4']==2){echo 'Si';} ?></td>
+										<td><?php if(isset($video['idDia_5'])&&$video['idDia_5']==2){echo 'Si';} ?></td>
+										<td><?php if(isset($video['idDia_6'])&&$video['idDia_6']==2){echo 'Si';} ?></td>
+										<td><?php if(isset($video['idDia_7'])&&$video['idDia_7']==2){echo 'Si';} ?></td>
+									</tr> 
 								<?php } ?>
 							</tbody>
 						</table>
@@ -203,13 +267,31 @@ array_push( $arrArchivos,$row );
 
 
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

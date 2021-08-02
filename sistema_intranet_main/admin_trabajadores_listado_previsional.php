@@ -45,9 +45,10 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado 
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos del trabajador
-$query = "SELECT Nombre,ApellidoPat,ApellidoMat,idAFP,idSalud
+$query = "SELECT Nombre,ApellidoPat,ApellidoMat,idAFP,idSalud,idMutual,idCotizacionSaludExtra,
+PorcCotSaludExtra, MontoCotSaludExtra
 FROM `trabajadores_listado`
-WHERE idTrabajador = {$_GET['id']}";
+WHERE idTrabajador = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -65,20 +66,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-			<div class="info-box-content">
-				<span class="info-box-text">Trabajador</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos Previsionales</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Previsionales');?>
 </div>
 <div class="clearfix"></div>
 
@@ -86,26 +74,27 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'admin_trabajadores_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'admin_trabajadores_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'admin_trabajadores_listado_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contacto</a></li>
+				<li class=""><a href="<?php echo 'admin_trabajadores_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'admin_trabajadores_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'admin_trabajadores_listado_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_laboral.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Informacion Laboral</a></li>
-						<li class="active"><a href="<?php echo 'admin_trabajadores_listado_previsional.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Descuentos Previsionales</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_descuentos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Otros Descuentos Previsionales</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_bonos_fijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Bonos Fijos Asignados</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_cargas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Cargas Familiares</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_laboral.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-university" aria-hidden="true"></i> Informacion Laboral</a></li>
+						<li class="active"><a href="<?php echo 'admin_trabajadores_listado_previsional.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Descuentos Previsionales</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_descuentos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Otros Descuentos Previsionales</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_bonos_fijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Bonos Fijos Asignados</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_cargas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Cargas Familiares</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Contrato</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_anexos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Anexos Contrato</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_licencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Licencia Conducir</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Foto</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Curriculum</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Antecedentes</a></li>
-						<li class=""><a href="<?php echo 'admin_trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivo - Carnet</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Contrato</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_anexos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Anexos Contrato</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_licencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Licencia Conducir</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Foto</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Curriculum</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
+						<li class=""><a href="<?php echo 'admin_trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
 						
 					</ul>
                 </li>           
@@ -117,18 +106,90 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($idAFP)) {     $x1 = $idAFP;     }else{$x1 = $rowdata['idAFP'];}
-					if(isset($idSalud)) {   $x2 = $idSalud;   }else{$x2 = $rowdata['idSalud'];}
+					if(isset($idAFP)) {                   $x1 = $idAFP;                    }else{$x1 = $rowdata['idAFP'];}
+					if(isset($idMutual)) {                $x2 = $idMutual;                 }else{$x2 = $rowdata['idMutual'];}
+					if(isset($idSalud)) {                 $x3 = $idSalud;                  }else{$x3 = $rowdata['idSalud'];}
+					if(isset($idCotizacionSaludExtra)) {  $x4 = $idCotizacionSaludExtra;   }else{$x4 = $rowdata['idCotizacionSaludExtra'];}
+					if(isset($PorcCotSaludExtra)) {       $x5 = $PorcCotSaludExtra;        }else{$x5 = $rowdata['PorcCotSaludExtra'];}
+					if(isset($MontoCotSaludExtra)) {      $x6 = $MontoCotSaludExtra;       }else{$x6 = $rowdata['MontoCotSaludExtra'];}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					echo '<h3>Leyes Sociales</h3>';
-					$Form_Imputs->form_select('AFP','idAFP', $x1, 1, 'idAFP', 'Nombre', 'sistema_afp', 'idEstado=1', '', $dbConn);
-					$Form_Imputs->form_select('Salud','idSalud', $x2, 1, 'idSalud', 'Nombre', 'sistema_salud', 'idEstado=1', '', $dbConn);
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_tittle(3, 'Administradora Fondos de Pensiones');
+					$Form_Inputs->form_select('AFP','idAFP', $x1, 1, 'idAFP', 'Nombre', 'sistema_afp', 'idEstado=1', '', $dbConn);
 					
-					$Form_Imputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
+					$Form_Inputs->form_tittle(3, 'Mutual de Seguridad');
+					$Form_Inputs->form_select('Mutual','idMutual', $x2, 1, 'idMutual', 'Nombre', 'sistema_mutual', 'idEstado=1', '', $dbConn);
+					
+					$Form_Inputs->form_tittle(3, 'Salud');
+					$Form_Inputs->form_select('Sistema Salud','idSalud', $x3, 1, 'idSalud', 'Nombre', 'sistema_salud', 'idEstado=1', '', $dbConn);
+					$Form_Inputs->form_select('Cotizacion Adicional Voluntaria','idCotizacionSaludExtra', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_input_number_spinner('Porcentaje Cotizacion Adicional','PorcCotSaludExtra', $x5, 0, 100, '0.1', 1, 1);
+					$Form_Inputs->form_values('Monto Cotizacion Adicional','MontoCotSaludExtra', $x6, 1);
+					
+					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
-					 
+					
+					<script>
+						//oculto los div
+						document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
+						document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
+						
+						var idCotizacionSaludExtra;
+						var idCotizacionSaludExtra_sel;
+						
+						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+									
+							idCotizacionSaludExtra      = $("#idCotizacionSaludExtra").val();
+							
+							/*************************************/
+							//Si
+							if(idCotizacionSaludExtra == 1){ 
+								document.getElementById('div_PorcCotSaludExtra').style.display = 'block';			
+								document.getElementById('div_MontoCotSaludExtra').style.display = 'block';			
+								
+							//No
+							}else if(idCotizacionSaludExtra == 2){ 
+								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
+								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
+								
+							//si no en ninguno
+							}else{ 
+								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
+								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
+							
+							}
+							
+									
+						}); 
+						
+						$("#idCotizacionSaludExtra").on("change", function(){ //se ejecuta al cambiar valor del select
+							idCotizacionSaludExtra_sel = $(this).val(); //Asignamos el valor seleccionado
+							
+							//Si
+							if(idCotizacionSaludExtra_sel == 1){ 
+								document.getElementById('div_PorcCotSaludExtra').style.display = 'block';
+								document.getElementById('div_MontoCotSaludExtra').style.display = 'block';
+								
+							//No
+							}else if(idCotizacionSaludExtra_sel == 2){ 
+								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
+								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
+								//Reseteo los valores a 0
+								document.getElementById('PorcCotSaludExtra').value = "0";				
+								document.getElementById('MontoCotSaludExtra').value = "0";				
+								
+							//si no en ninguno
+							}else{ 
+								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
+								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
+								//Reseteo los valores a 0
+								document.getElementById('PorcCotSaludExtra').value = "0";				
+								document.getElementById('MontoCotSaludExtra').value = "0";				
+								
+							}
+						});
+					</script>
 
 					<div class="form-group">		
 						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
@@ -141,8 +202,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

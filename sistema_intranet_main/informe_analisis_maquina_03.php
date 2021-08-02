@@ -45,7 +45,7 @@ if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {
 	$z .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'" ;
 }
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z .= " AND analisis_listado.f_muestreo BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'" ;
+	$z .= " AND analisis_listado.f_muestreo BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /*********************************************************************/
 //Preconsulta
@@ -201,7 +201,7 @@ array_push( $arrGrupo,$row );
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> <?php echo 'Analisis '.$rowMaquina['Analisis_Nombre']; ?>.
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo 'Analisis '.$rowMaquina['Analisis_Nombre']; ?>.
 				<small class="pull-right"><?php echo 'Desde '.Fecha_estandar($_GET['f_inicio']).' hasta '.Fecha_estandar($_GET['f_termino']); ?></small>
 			</h2>
 		</div>   
@@ -215,11 +215,11 @@ array_push( $arrGrupo,$row );
 				<div class="col-sm-4 invoice-col">
 					'.$x_column_maquina_sing.'
 					<address>
-						<strong>'.$rowMaquina['MaquinaNombre'].'</strong><br>
-						Codigo: '.$rowMaquina['MaquinaCodigo'].'<br>
-						Modelo: '.$rowMaquina['MaquinaModelo'].'<br>
-						Serie: '.$rowMaquina['MaquinaSerie'].'<br>
-						Fabricante: '.$rowMaquina['MaquinaFabricante'].'<br>
+						<strong>'.$rowMaquina['MaquinaNombre'].'</strong><br/>
+						Codigo: '.$rowMaquina['MaquinaCodigo'].'<br/>
+						Modelo: '.$rowMaquina['MaquinaModelo'].'<br/>
+						Serie: '.$rowMaquina['MaquinaSerie'].'<br/>
+						Fabricante: '.$rowMaquina['MaquinaFabricante'].'<br/>
 						Ubicacion: '.$rowMaquina['MaquinaUbicacion'];
 						if(isset($rowMaquina['MaquinaUbicacion_lvl_1'])&&$rowMaquina['MaquinaUbicacion_lvl_1']!=''){ 
 							echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_1'];
@@ -244,12 +244,12 @@ array_push( $arrGrupo,$row );
 				<div class="col-sm-4 invoice-col">
 					Empresa
 					<address>
-						<strong>'.$rowMaquina['SistemaOrigen'].'</strong><br>
-						'.$rowMaquina['SistemaOrigenCiudad'].', '.$rowMaquina['SistemaOrigenComuna'].'<br>
-						'.$rowMaquina['SistemaOrigenDireccion'].'<br>
-						Fono : '.$rowMaquina['SistemaOrigenFono'].'<br>
-						Rut: '.$rowMaquina['SistemaOrigenRut'].'<br>
-						Email: '.$rowMaquina['SistemaOrigenEmail'].'<br>
+						<strong>'.$rowMaquina['SistemaOrigen'].'</strong><br/>
+						'.$rowMaquina['SistemaOrigenCiudad'].', '.$rowMaquina['SistemaOrigenComuna'].'<br/>
+						'.$rowMaquina['SistemaOrigenDireccion'].'<br/>
+						Fono : '.$rowMaquina['SistemaOrigenFono'].'<br/>
+						Rut: '.$rowMaquina['SistemaOrigenRut'].'<br/>
+						Email: '.$rowMaquina['SistemaOrigenEmail'].'<br/>
 					</address>
 				</div>';
 			?>
@@ -304,7 +304,7 @@ array_push( $arrGrupo,$row );
 	<?php
 	foreach ($arrGrupo as $grupo) {
 		//si hay items se muestra todo
-		if($grupo['idGrupo']==4 or $grupo['idGrupo']==5){
+		if($grupo['idGrupo']==4 OR $grupo['idGrupo']==5){
 					
 			echo '<div class="row">';
 				echo '<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">';
@@ -424,21 +424,21 @@ array_push( $arrGrupo,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -452,16 +452,16 @@ $z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 				if(isset($f_termino)) {     $x4  = $f_termino;   }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
 										 'Matriz de Analisis','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_date('Fecha Muestreo Inicio','f_inicio', $x3, 2);
-				$Form_Imputs->form_date('Fecha Muestreo Termino','f_termino', $x4, 2);
+				$Form_Inputs->form_date('Fecha Muestreo Inicio','f_inicio', $x3, 2);
+				$Form_Inputs->form_date('Fecha Muestreo Termino','f_termino', $x4, 2);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>        
 	   
 				<div class="form-group">

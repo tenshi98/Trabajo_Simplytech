@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 cross_predios_listado.Nombre,
@@ -31,7 +44,7 @@ core_ubicacion_comunas.Nombre AS Comuna
 FROM `cross_predios_listado`
 LEFT JOIN `core_ubicacion_ciudad`                    ON core_ubicacion_ciudad.idCiudad                  = cross_predios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna
-WHERE cross_predios_listado.idPredio = {$_GET['view']}";
+WHERE cross_predios_listado.idPredio = ".$X_Puntero;
 
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -42,15 +55,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
@@ -71,7 +77,7 @@ LEFT JOIN `cross_predios_listado`                    ON cross_predios_listado.id
 LEFT JOIN `core_ubicacion_ciudad`                    ON core_ubicacion_ciudad.idCiudad                  = cross_predios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna
 
-WHERE cross_predios_listado_zonas.idPredio = {$_GET['view']}
+WHERE cross_predios_listado_zonas.idPredio = ".$X_Puntero."
 ORDER BY cross_predios_listado_zonas.idZona ASC, 
 cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC";
 //Consulta
@@ -83,15 +89,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrZonas,$row );
@@ -127,7 +126,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 <div class="col-sm-12">
 	<div class="box">
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Zonas del Predio <?php echo $rowdata['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Zonas del Predio <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="tab-content">
 			<div class="table-responsive">
@@ -135,124 +134,206 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-					<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-					<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-					<script>
 						
-						var map;
-						var marker;
-						/* ************************************************************************** */
-						function initialize() {
-							
-							var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
-							
-							var myOptions = {
-								zoom: 15,
-								center: myLatlng,
-								mapTypeId: google.maps.MapTypeId.SATELLITE
-							};
-							map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-							map.setTilt(0); 
-							
-							dibuja_zona();
+						<style>
+							.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
+							.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
+						</style>
+			
+						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+						<script>
+						
+							/* ************************************************************************** */
+							class MyMarker extends google.maps.OverlayView {
+								constructor(params) {
+									super();
+									this.position = params.position;
 
-						}
-						/* ************************************************************************** */
-						function dibuja_zona() {
-							
-							var polygons = [];
-							<?php 
-							//variables
-							$Latitud_z       = 0;
-							$Longitud_z      = 0;
-							$Latitud_z_prom  = 0;
-							$Longitud_z_prom = 0;
-							$zcounter        = 0;
-								
-							//Se filtra por zona
-							filtrar($arrZonas, 'idZona');
-							//se recorre
-							foreach ($arrZonas as $todaszonas=>$zonas) {
-								
-								echo 'var path'.$todaszonas.' = [';
+									const content = document.createElement('div');
+									content.classList.add('my_marker');
+									content.textContent = params.label;
+									content.style.position = 'absolute';
+									content.style.transform = 'translate(-50%, -100%)';
 
-								//Variables con la primera posicion
-								$Latitud_x = '';
-								$Longitud_x = '';
+									const container = document.createElement('div');
+									container.style.position = 'absolute';
+									container.style.cursor = 'pointer';
+									container.appendChild(content);
+
+									this.container = container;
+								}
+
+								onAdd() {
+									this.getPanes().floatPane.appendChild(this.container);
+								}
+
+								onRemove() {
+									this.container.remove();
+								}
+
+								draw() {
+									const pos = this.getProjection().fromLatLngToDivPixel(this.position);
+									this.container.style.left = pos.x + 'px';
+									this.container.style.top = pos.y + 'px';
+								}
+							}
+  
+							/* ************************************************************************** */
+							var map;
+							var marker;
+							/* ************************************************************************** */
+							function initialize() {
 								
-								foreach ($zonas as $puntos) {
-									if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
-										echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
-										';
-										if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
-											$Latitud_x = $puntos['Latitud'];
-											$Longitud_x = $puntos['Longitud'];
-											//Calculos para centrar mapa
-											$Latitud_z  = $Latitud_z+$puntos['Latitud'];
-											$Longitud_z = $Longitud_z+$puntos['Longitud'];
-											$zcounter++;
+								var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
+								
+								var myOptions = {
+									zoom: 15,
+									center: myLatlng,
+									mapTypeId: google.maps.MapTypeId.SATELLITE
+								};
+								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+								map.setTilt(0); 
+								
+								dibuja_zona();
+
+							}
+							/* ************************************************************************** */
+							function dibuja_zona() {
+								
+								var polygons = [];
+								<?php 
+								//variables
+								$Latitud_z       = 0;
+								$Longitud_z      = 0;
+								$Latitud_z_prom  = 0;
+								$Longitud_z_prom = 0;
+								$zcounter        = 0;
+								$zcounter2        = 0;
+									
+								//Se filtra por zona
+								filtrar($arrZonas, 'idZona');
+								//se recorre
+								foreach ($arrZonas as $todaszonas=>$zonas) {
+									$Latitud_z_2       = 0;
+									$Longitud_z_2      = 0;
+									$Latitud_z_prom_2  = 0;
+									$Longitud_z_prom_2 = 0;
+									$zcounter3         = 0;
+									echo 'var path'.$todaszonas.' = [';
+
+									//Variables con la primera posicion
+									$Latitud_x = '';
+									$Longitud_x = '';
+									
+									foreach ($zonas as $puntos) {
+										if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
+											echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
+											';
+											if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
+												$Latitud_x  = $puntos['Latitud'];
+												$Longitud_x = $puntos['Longitud'];
+												//Calculos para centrar mapa
+												$Latitud_z    = $Latitud_z+$puntos['Latitud'];
+												$Longitud_z   = $Longitud_z+$puntos['Longitud'];
+												$Latitud_z_2  = $Latitud_z_2+$puntos['Latitud'];
+												$Longitud_z_2 = $Longitud_z_2+$puntos['Longitud'];
+												$zcounter++;
+												$zcounter3++;
+											}
 										}
 									}
-								}
-								
-								if(isset($Longitud_x)&&$Longitud_x!=''){
-									echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
-								}
-								
-								echo '];';
-								
-								echo '
-								polygons.push(new google.maps.Polygon({
-									paths: path'.$todaszonas.',
-									strokeColor: \'#FF0000\',
-									strokeOpacity: 0.8,
-									strokeWeight: 2,
-									fillColor: \'#FF0000\',
-									fillOpacity: 0.35
-								}));
-								polygons[polygons.length-1].setMap(map);
-								';
-								
-								
 									
-							}
-							
-							//Centralizado del mapa
-							$Latitud_z_prom  = $Latitud_z/$zcounter;
-							$Longitud_z_prom = $Longitud_z/$zcounter;
-								
-							if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
-									echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
-											map.setCenter(myLatlng);'; 
-							}else{ 
-								echo 'codeAddress();';
-							}
-							?>
-						}
-						/* ************************************************************************** */
-						function codeAddress() {
-					  
-							geocoder.geocode( { address: '<?php echo $Ubicacion ?>'}, function(results, status) {
-								if (status == google.maps.GeocoderStatus.OK) {
+									if(isset($Longitud_x)&&$Longitud_x!=''){
+										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+									}
 									
-									// marker position
-									myLatlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-							
-									map.setCenter(myLatlng);
-									//marker.setPosition(myLatlng);  
-													  
-								} else {
-									alert('Geocode was not successful for the following reason: ' + status);
-								}
-							});
-						}
-						/* ************************************************************************** */
-						google.maps.event.addDomListener(window, "load", initialize());
+									echo '];';
+									
+									echo '
+									polygons.push(new google.maps.Polygon({
+										paths: path'.$todaszonas.',
+										strokeColor: \'#FF0000\',
+										strokeOpacity: 0.8,
+										strokeWeight: 2,
+										fillColor: \'#FF0000\',
+										fillOpacity: 0.35
+									}));
+									polygons[polygons.length-1].setMap(map);
+									';
+									
+									if($zcounter3!=0){
+										$Latitud_z_prom_2  = $Latitud_z_2/$zcounter3;
+										$Longitud_z_prom_2 = $Longitud_z_2/$zcounter3;
+									}
+									// The label that pops up when the mouse moves within each polygon.
+									echo '
+									myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
+									
+									var marker = new MyMarker({
+										position: myLatlng,
+										label: "'.$zonas[0]['Nombre'].'"
+									});
+									marker.setMap(map);
+  
+									// When the mouse moves within the polygon, display the label and change the BG color.
+									google.maps.event.addListener(polygons['.$zcounter2.'], "mousemove", function(event) {
+										polygons['.$zcounter2.'].setOptions({
+											fillColor: "#00FF00"
+										});
+									});
 
-					</script>
+									// WHen the mouse moves out of the polygon, hide the label and change the BG color.
+									google.maps.event.addListener(polygons['.$zcounter2.'], "mouseout", function(event) {
+										polygons['.$zcounter2.'].setOptions({
+											fillColor: "#FF0000"
+										});
+									});
+									';
+									
+									$zcounter2++;
+										
+								}
+								
+								//Centralizado del mapa
+								if($zcounter!=0){
+									$Latitud_z_prom  = $Latitud_z/$zcounter;
+									$Longitud_z_prom = $Longitud_z/$zcounter;
+										
+									if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
+											echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
+													map.setCenter(myLatlng);'; 
+									}else{ 
+										echo 'codeAddress();';
+									}
+								}
+								?>
+							}
+							/* ************************************************************************** */
+							function codeAddress() {
+						  
+								geocoder.geocode( { address: '<?php echo $Ubicacion ?>'}, function(results, status) {
+									if (status == google.maps.GeocoderStatus.OK) {
+										
+										// marker position
+										myLatlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+								
+										map.setCenter(myLatlng);
+										//marker.setPosition(myLatlng);  
+														  
+									} else {
+										alert('Geocode was not successful for the following reason: ' + status);
+									}
+								});
+							}
+							/* ************************************************************************** */
+							google.maps.event.addDomListener(window, "load", initialize());
+
+						</script>
 
 		
 				<?php } ?>
@@ -262,14 +343,31 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 	</div>
 </div>
 
-
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 
 <?php

@@ -102,7 +102,7 @@ LEFT JOIN `cross_predios_listado`    ON cross_predios_listado.idPredio    = cros
 LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = cross_predios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = cross_predios_listado.idComuna
 
-WHERE cross_predios_listado_zonas.idZona = {$_GET['edit_puntos']}";
+WHERE cross_predios_listado_zonas.idZona = ".$_GET['edit_puntos'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -138,7 +138,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 //Se traen las rutas
 $query = "SELECT Latitud, Longitud
 FROM `cross_predios_listado_zonas_ubicaciones`
-WHERE idUbicaciones = {$_GET['mod']}";
+WHERE idUbicaciones = ".$_GET['mod'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -158,7 +158,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 $arrPuntos = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud
 FROM `cross_predios_listado_zonas_ubicaciones`
-WHERE idZona = {$_GET['edit_puntos']}
+WHERE idZona = ".$_GET['edit_puntos']."
 ORDER BY idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -181,7 +181,7 @@ array_push( $arrPuntos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 			
@@ -190,10 +190,11 @@ array_push( $arrPuntos,$row );
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
 							
@@ -218,7 +219,7 @@ array_push( $arrPuntos,$row );
 									map			: map,
 									title		: "Tu Ubicacion",
 									animation 	:google.maps.Animation.DROP,
-									icon      	:"<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_orange.png"
+									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
 							
 								google.maps.event.addListener(marker, 'dragend', function (event) {
@@ -316,15 +317,15 @@ array_push( $arrPuntos,$row );
 				
 						<?php 
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowUbicacion['Latitud'], 1);
-						$Form_Imputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowUbicacion['Longitud'], 1);
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowUbicacion['Latitud'], 1);
+						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowUbicacion['Longitud'], 1);
 						
-						$Form_Imputs->form_input_hidden('Latitud', $rowUbicacion['Latitud'], 2);
-						$Form_Imputs->form_input_hidden('Longitud', $rowUbicacion['Longitud'], 2);
-						$Form_Imputs->form_input_hidden('idPredio', $_GET['id'], 2);
-						$Form_Imputs->form_input_hidden('idZona', $_GET['edit_puntos'], 2);
-						$Form_Imputs->form_input_hidden('idUbicaciones', $_GET['mod'], 2);
+						$Form_Inputs->form_input_hidden('Latitud', $rowUbicacion['Latitud'], 2);
+						$Form_Inputs->form_input_hidden('Longitud', $rowUbicacion['Longitud'], 2);
+						$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
+						$Form_Inputs->form_input_hidden('idZona', $_GET['edit_puntos'], 2);
+						$Form_Inputs->form_input_hidden('idUbicaciones', $_GET['mod'], 2);
 						
 						?>
 						
@@ -348,8 +349,8 @@ array_push( $arrPuntos,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'] ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'] ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -366,7 +367,7 @@ LEFT JOIN `cross_predios_listado`    ON cross_predios_listado.idPredio    = cros
 LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = cross_predios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = cross_predios_listado.idComuna
 
-WHERE cross_predios_listado_zonas.idZona = {$_GET['edit_puntos']}";
+WHERE cross_predios_listado_zonas.idZona = ".$_GET['edit_puntos'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -398,7 +399,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 $arrPuntos = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud
 FROM `cross_predios_listado_zonas_ubicaciones`
-WHERE idZona = {$_GET['edit_puntos']}
+WHERE idZona = ".$_GET['edit_puntos']."
 ORDER BY idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -415,13 +416,53 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrPuntos,$row );
-}?>
+}
+
+//Se traen las rutas
+$arrZonas = array();
+$query = "SELECT 
+cross_predios_listado_zonas.idZona,
+cross_predios_listado_zonas.Nombre,
+cross_predios_listado_zonas_ubicaciones.Latitud,
+cross_predios_listado_zonas_ubicaciones.Longitud,
+cross_predios_listado.Direccion,
+core_ubicacion_ciudad.Nombre AS Ciudad,
+core_ubicacion_comunas.Nombre AS Comuna
+
+FROM `cross_predios_listado_zonas`
+LEFT JOIN `cross_predios_listado_zonas_ubicaciones`  ON cross_predios_listado_zonas_ubicaciones.idZona  = cross_predios_listado_zonas.idZona
+LEFT JOIN `cross_predios_listado`                    ON cross_predios_listado.idPredio                  = cross_predios_listado_zonas.idPredio
+LEFT JOIN `core_ubicacion_ciudad`                    ON core_ubicacion_ciudad.idCiudad                  = cross_predios_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna
+
+WHERE cross_predios_listado_zonas.idPredio = ".$_GET['id']."
+AND cross_predios_listado_zonas_ubicaciones.idZona!=".$_GET['edit_puntos']."
+ORDER BY cross_predios_listado_zonas.idZona ASC, 
+cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrZonas,$row );
+}
+
+?>
 
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 			
@@ -430,10 +471,11 @@ array_push( $arrPuntos,$row );
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
 							
@@ -459,7 +501,7 @@ array_push( $arrPuntos,$row );
 									map			: map,
 									title		: "Tu Ubicacion",
 									animation 	:google.maps.Animation.DROP,
-									icon      	:"<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_orange.png"
+									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
 							
 								google.maps.event.addListener(marker, 'dragend', function (event) {
@@ -478,7 +520,61 @@ array_push( $arrPuntos,$row );
 							}
 							/* ************************************************************************** */
 							function dibuja_zona() {
+								
+								var polygons = [];
 								<?php
+								//variables
+								$Latitud_z       = 0;
+								$Longitud_z      = 0;
+								$Latitud_z_prom  = 0;
+								$Longitud_z_prom = 0;
+								$zcounter        = 0; 
+								//Se filtra por zona
+								filtrar($arrZonas, 'idZona');
+								//se recorre
+								foreach ($arrZonas as $todaszonas=>$zonas) {
+									
+									echo 'var path'.$todaszonas.' = [';
+
+									//Variables con la primera posicion
+									$Latitud_x = '';
+									$Longitud_x = '';
+									
+									foreach ($zonas as $puntos) {
+										if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
+											echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
+											';
+											if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){	
+												$Latitud_x = $puntos['Latitud'];
+												$Longitud_x = $puntos['Longitud'];
+												//Calculos para centrar mapa
+												$Latitud_z  = $Latitud_z+$puntos['Latitud'];
+												$Longitud_z = $Longitud_z+$puntos['Longitud'];
+												$zcounter++;
+											}
+										}
+									}
+									//se cierra la figura
+									if(isset($Longitud_x)&&$Longitud_x!=''){
+										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+									}
+									echo '];';
+									
+									echo '
+									polygons.push(new google.maps.Polygon({
+										paths: path'.$todaszonas.',
+										strokeColor: \'#1E90FF\',
+										strokeOpacity: 0.8,
+										strokeWeight: 2,
+										fillColor: \'#1E90FF\',
+										fillOpacity: 0.35
+									}));
+									polygons[polygons.length-1].setMap(map);
+									';	
+								}
+								
+								
+								/*********************************************************/
 								//Variables con la primera posicion
 								$Latitud_x = '';
 								$Longitud_x = '';
@@ -553,14 +649,14 @@ array_push( $arrPuntos,$row );
 				
 						<?php 
 						//se dibujan los inputs
-						$Form_Imputs = new Form_Inputs();
-						$Form_Imputs->form_input_disabled( 'Latitud', 'Latitud_fake', '', 1);
-						$Form_Imputs->form_input_disabled( 'Longitud', 'Longitud_fake', '', 1);
+						$Form_Inputs = new Form_Inputs();
+						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', '', 1);
+						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', '', 1);
 						
-						$Form_Imputs->form_input_hidden('Latitud', 0, 2);
-						$Form_Imputs->form_input_hidden('Longitud', 0, 2);
-						$Form_Imputs->form_input_hidden('idPredio', $_GET['id'], 2);
-						$Form_Imputs->form_input_hidden('idZona', $_GET['edit_puntos'], 2);
+						$Form_Inputs->form_input_hidden('Latitud', 0, 2);
+						$Form_Inputs->form_input_hidden('Longitud', 0, 2);
+						$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
+						$Form_Inputs->form_input_hidden('idZona', $_GET['edit_puntos'], 2);
 						
 						?>
 
@@ -584,15 +680,15 @@ array_push( $arrPuntos,$row );
 						$nx=1;
 						foreach ($arrPuntos as $pos) { ?>
 							<tr class="odd">
-								<td><?php echo $nx; ?></td>
+								<td><?php echo $nx;?></td>
 								<td><?php echo 'lat: '.$pos['Latitud'].'<br/>lng: '.$pos['Longitud']; ?></td>
 								<td> 
 									<div class="btn-group" style="width: 70px;" >  
-										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&mod='.$pos['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&mod='.$pos['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=2){
-											$ubicacion = $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&del_punto='.$pos['idUbicaciones'];
+											$ubicacion = $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&del_punto='.simpleEncode($pos['idUbicaciones'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar el dato?';?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
 								</td>
@@ -610,8 +706,8 @@ array_push( $arrPuntos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $new_location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -620,7 +716,7 @@ array_push( $arrPuntos,$row );
 $query = "SELECT Nombre,Codigo,idCategoria,idProducto,AnoPlantacion,Hectareas,Hileras,Plantas,
 idEstadoProd,DistanciaPlant,DistanciaHileras,idEstado
 FROM `cross_predios_listado_zonas`
-WHERE idZona = {$_GET['edit_zona']}";
+WHERE idZona = ".$_GET['edit_zona'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -639,7 +735,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Editar Cuartel</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -661,30 +757,30 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idEstado)) {         $x12 = $idEstado;          }else{$x12 = $rowdata['idEstado'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre del Cuartel', 'Nombre', $x1, 2);	
-				$Form_Imputs->form_input_text( 'Codigo del Cuartel', 'Codigo', $x2, 2);	
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre del Cuartel', 'Nombre', $x1, 2);	
+				$Form_Inputs->form_input_text('Codigo del Cuartel', 'Codigo', $x2, 2);	
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select_n_auto('Año plantación','AnoPlantacion', $x5, 2, 1975, ano_actual());
-				$Form_Imputs->form_input_number_spinner('N° Hectáreas','Hectareas', $x6, 0, 500, '0.01', 2, 2);
-				$Form_Imputs->form_input_number_spinner('N° Hileras','Hileras', $x7, 0, 2000, 1, 0, 2);
-				$Form_Imputs->form_input_number_spinner('N° Plantas','Plantas', $x8, 0, 20000, 1, 0, 2);
-				$Form_Imputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);	
-				$Form_Imputs->form_input_number_spinner('Distancia de plantación','DistanciaPlant', $x10, 0, 100, '0.1', 1, 2);
-				$Form_Imputs->form_input_number_spinner('Distancia Hileras','DistanciaHileras', $x11, 0, 100, '0.1', 1, 2);
-				$Form_Imputs->form_select('Estado','idEstado', $x12, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
+				$Form_Inputs->form_select_n_auto('Año plantación','AnoPlantacion', $x5, 2, 1975, ano_actual());
+				$Form_Inputs->form_input_number_spinner('N° Hectáreas','Hectareas', $x6, 0, 500, '0.01', 2, 2);
+				$Form_Inputs->form_input_number_spinner('N° Hileras','Hileras', $x7, 0, 2000, 1, 0, 2);
+				$Form_Inputs->form_input_number_spinner('N° Plantas','Plantas', $x8, 0, 200000, 1, 0, 2);
+				$Form_Inputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);	
+				$Form_Inputs->form_input_number_spinner('Distancia de plantación','DistanciaPlant', $x10, 0, 100, '0.1', 1, 2);
+				$Form_Inputs->form_input_number_spinner('Distancia Hileras','DistanciaHileras', $x11, 0, 100, '0.1', 1, 2);
+				$Form_Inputs->form_select('Estado','idEstado', $x12, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
 				
-				$Form_Imputs->form_input_hidden('idPredio', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('idZona', $_GET['edit_zona'], 2);
+				$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idZona', $_GET['edit_zona'], 2);
 				
 				?>
 
 							
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_zona">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?>
@@ -692,11 +788,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div> 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Cuartel</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -717,30 +816,30 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($DistanciaHileras)) { $x11 = $DistanciaHileras;  }else{$x11 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre del Cuartel', 'Nombre', $x1, 2);	
-				$Form_Imputs->form_input_text( 'Codigo del Cuartel', 'Codigo', $x2, 2);	
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre del Cuartel', 'Nombre', $x1, 2);	
+				$Form_Inputs->form_input_text('Codigo del Cuartel', 'Codigo', $x2, 2);	
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select_n_auto('Año plantación','AnoPlantacion', $x5, 2, 1975, ano_actual());
-				$Form_Imputs->form_input_number_spinner('N° Hectáreas','Hectareas', $x6, 0, 500, '0.01', 2, 2);
-				$Form_Imputs->form_input_number_spinner('N° Hileras','Hileras', $x7, 0, 2000, 1, 0, 2);
-				$Form_Imputs->form_input_number_spinner('N° Plantas','Plantas', $x8, 0, 20000, 1, 0, 2);
-				$Form_Imputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);	
-				$Form_Imputs->form_input_number_spinner('Distancia de plantación','DistanciaPlant', $x10, 0, 100, '0.1', 1, 2);
-				$Form_Imputs->form_input_number_spinner('Distancia Hileras','DistanciaHileras', $x11, 0, 100, '0.1', 1, 2);
+				$Form_Inputs->form_select_n_auto('Año plantación','AnoPlantacion', $x5, 2, 1975, ano_actual());
+				$Form_Inputs->form_input_number_spinner('N° Hectáreas','Hectareas', $x6, 0, 500, '0.01', 2, 2);
+				$Form_Inputs->form_input_number_spinner('N° Hileras','Hileras', $x7, 0, 2000, 1, 0, 2);
+				$Form_Inputs->form_input_number_spinner('N° Plantas','Plantas', $x8, 0, 20000, 1, 0, 2);
+				$Form_Inputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);	
+				$Form_Inputs->form_input_number_spinner('Distancia de plantación','DistanciaPlant', $x10, 0, 100, '0.1', 1, 2);
+				$Form_Inputs->form_input_number_spinner('Distancia Hileras','DistanciaHileras', $x11, 0, 100, '0.1', 1, 2);
 				
 				
-				$Form_Imputs->form_input_hidden('idPredio', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				
 				?>
 
 							
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?>
@@ -752,7 +851,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 // tomo los datos del usuario
 $query = "SELECT Nombre
 FROM `cross_predios_listado`
-WHERE idPredio = {$_GET['id']}";
+WHERE idPredio = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -788,7 +887,7 @@ LEFT JOIN `sistema_variedades_categorias`    ON sistema_variedades_categorias.id
 LEFT JOIN `variedades_listado`               ON variedades_listado.idProducto                 = cross_predios_listado_zonas.idProducto
 LEFT JOIN `core_cross_estados_productivos`   ON core_cross_estados_productivos.idEstadoProd   = cross_predios_listado_zonas.idEstadoProd
 				
-WHERE cross_predios_listado_zonas.idPredio = {$_GET['id']}
+WHERE cross_predios_listado_zonas.idPredio = ".$_GET['id']."
 ORDER BY sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC, 
 cross_predios_listado_zonas.Nombre ASC";
 //Consulta
@@ -809,34 +908,21 @@ array_push( $arrZonas,$row );
 }?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-map-o" aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Predio</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Cuarteles</span>
-			</div>
-		</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Cuarteles');?>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuartel</a><?php } ?>
 	</div>
-	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuartel</a><?php } ?>
-
 </div>
+<div class="clearfix"></div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'cross_predios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'cross_predios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'cross_predios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-				<li class="active"><a href="<?php echo 'cross_predios_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Cuarteles</a></li>
+				<li class=""><a href="<?php echo 'cross_predios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'cross_predios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'cross_predios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+				<li class="active"><a href="<?php echo 'cross_predios_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Editar Cuarteles</a></li>
 			</ul>	
 		</header>
         <div class="table-responsive">
@@ -871,14 +957,14 @@ array_push( $arrZonas,$row );
 						<td><?php echo $zona['CuartelDistanciaHileras']; ?></td>	
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_zona.php?view='.$zona['idZona']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_puntos='.$zona['idZona']; ?>" title="Editar Puntos" class="btn btn-success btn-sm tooltip"><i class="fa fa-map-marker"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_zona='.$zona['idZona']; ?>" title="Editar Informacion Basica" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_zona.php?view='.simpleEncode($zona['idZona'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_puntos='.$zona['idZona']; ?>" title="Editar Puntos" class="btn btn-success btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_zona='.$zona['idZona']; ?>" title="Editar Informacion Basica" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
-									$ubicacion = $new_location.'&del_zona='.$zona['idZona'];
+									$ubicacion = $new_location.'&del_zona='.simpleEncode($zona['idZona'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el cuartel '.$zona['CuartelNombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>
@@ -893,8 +979,8 @@ array_push( $arrZonas,$row );
 <?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php } ?>

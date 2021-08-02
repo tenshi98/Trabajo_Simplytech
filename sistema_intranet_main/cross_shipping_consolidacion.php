@@ -110,7 +110,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -121,20 +121,20 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($idArchivoTipo)) {    $x1  = $idArchivoTipo;  }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_multiple_upload('Seleccionar archivo','exFile', 15, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 15, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 				
-				$Form_Imputs->form_select('Tipo Foto','idArchivoTipo', $x1, 2, 'idArchivoTipo', 'Nombre', 'core_cross_shipping_archivos_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Foto','idArchivoTipo', $x1, 2, 'idArchivoTipo', 'Nombre', 'core_cross_shipping_archivos_tipos', 0, '', $dbConn);
 				
 				
 				
-				$Form_Imputs->form_input_hidden('randompass', $_GET['view'], 2);	
-				$Form_Imputs->form_input_hidden('CTNNombreCompañia', $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia'], 2);	
+				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);	
+				$Form_Inputs->form_input_hidden('CTNNombreCompañia', $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia'], 2);	
 				?> 
 
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -147,7 +147,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Estiba</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -164,26 +164,26 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($NSerieSensor)) {       $x8  = $NSerieSensor;       }else{$x8  = $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['cloneEstiba']]['NSerieSensor'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
 										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. De Pallet', 'NPallet', $x5, 2);
-				$Form_Imputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
-				$Form_Imputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
+				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. De Pallet', 'NPallet', $x5, 2);
+				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
+				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
 				
 				
-				$Form_Imputs->form_input_hidden('randompass', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				?>
 				
 				
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
-					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -196,7 +196,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Estiba</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -213,27 +213,27 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($NSerieSensor)) {       $x8  = $NSerieSensor;       }else{$x8  = $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['editEstiba']]['NSerieSensor'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
 										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. De Pallet', 'NPallet', $x5, 2);
-				$Form_Imputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
-				$Form_Imputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
+				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. De Pallet', 'NPallet', $x5, 2);
+				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
+				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
 				
 				
-				$Form_Imputs->form_input_hidden('oldidProducto', $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['editEstiba']]['idInterno'], 2);
-				$Form_Imputs->form_input_hidden('randompass', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['editEstiba']]['idInterno'], 2);
+				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				?>
 				
 				
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_estiba">
-					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -246,7 +246,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingreso Estibas</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -264,23 +264,23 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($NSerieSensor)) {       $x8  = $NSerieSensor;       }else{$x8  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
 										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. De Pallet', 'NPallet', $x5, 2);
-				$Form_Imputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
-				$Form_Imputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
+				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. De Pallet', 'NPallet', $x5, 2);
+				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
+				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
 				
-				$Form_Imputs->form_input_hidden('randompass', $_GET['view'], 2);
+				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
-					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -293,14 +293,14 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Consolidacion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -339,63 +339,62 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($Observaciones)) {         $x29 = $Observaciones;         }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Observaciones']=='Sin Datos'){        $x29 = '';}else{$x29 = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Observaciones'];}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Cuerpo Indentificacion</h3>';
-				$Form_Imputs->form_input_text( 'Contenedor Nro.', 'CTNNombreCompañia', $x1, 2);
-				$Form_Imputs->form_date('Fecha del informe','Creacion_fecha', $x2, 2);
-				$Form_Imputs->form_date('Fecha Inicio del Embarque','FechaInicioEmbarque', $x3, 1);
-				$Form_Imputs->form_time('Hora Inicio Carga','HoraInicioCarga', $x4, 1, 1, 24);
-				$Form_Imputs->form_date('Fecha Termino del Embarque','FechaTerminoEmbarque', $x5, 1);
-				$Form_Imputs->form_time('Hora Termino Carga','HoraTerminoCarga', $x6, 1, 1, 24);
-				$Form_Imputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x7, 1, 'idPlantaDespacho', 'Nombre', 'cross_shipping_plantas', $w, '', $dbConn);	
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x8, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion');
+				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x1, 2);
+				$Form_Inputs->form_date('Fecha del informe','Creacion_fecha', $x2, 2);
+				$Form_Inputs->form_date('Fecha Inicio del Embarque','FechaInicioEmbarque', $x3, 1);
+				$Form_Inputs->form_time('Hora Inicio Carga','HoraInicioCarga', $x4, 1, 1, 24);
+				$Form_Inputs->form_date('Fecha Termino del Embarque','FechaTerminoEmbarque', $x5, 1);
+				$Form_Inputs->form_time('Hora Termino Carga','HoraTerminoCarga', $x6, 1, 1, 24);
+				$Form_Inputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x7, 1, 'idPlantaDespacho', 'Nombre', 'cross_shipping_plantas', $w, '', $dbConn);	
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x8, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x9, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_number_integer('Cantidad de Cajas', 'CantidadCajas', $x10, 1);
-				$Form_Imputs->form_select_filter('N° Instructivo','idInstructivo', $x11, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $w, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Naviera','idNaviera', $x12, 1, 'idNaviera', 'Codigo,Nombre', 'cross_shipping_naviera', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Puerto Embarque','idPuertoEmbarque', $x13, 1, 'idPuertoEmbarque', 'Codigo,Nombre', 'cross_shipping_puerto_embarque', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Puerto Destino','idPuertoDestino', $x14, 1, 'idPuertoDestino', 'Codigo,Nombre', 'cross_shipping_puerto_destino', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);	
-				$Form_Imputs->form_select_filter('Recibidor','idRecibidor', $x17, 1, 'idRecibidor', 'Codigo,Nombre', 'cross_shipping_recibidores', $w, '', $dbConn);	
+				$Form_Inputs->form_input_number_integer('Cantidad de Cajas', 'CantidadCajas', $x10, 1);
+				$Form_Inputs->form_select_filter('N° Instructivo','idInstructivo', $x11, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $w, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Naviera','idNaviera', $x12, 1, 'idNaviera', 'Codigo,Nombre', 'cross_shipping_naviera', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Puerto Embarque','idPuertoEmbarque', $x13, 1, 'idPuertoEmbarque', 'Codigo,Nombre', 'cross_shipping_puerto_embarque', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Puerto Destino','idPuertoDestino', $x14, 1, 'idPuertoDestino', 'Codigo,Nombre', 'cross_shipping_puerto_destino', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Recibidor','idRecibidor', $x17, 1, 'idRecibidor', 'Codigo,Nombre', 'cross_shipping_recibidores', $w, '', $dbConn);	
 				
 				
-				echo '<h3>Cuerpo Indentificacion Empresa Transportista</h3>';
-				$Form_Imputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x18, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);	
-				$Form_Imputs->form_input_text( 'Conductor', 'ChoferNombreRut', $x19, 1);
-				$Form_Imputs->form_input_text( 'Patente Camion', 'PatenteCamion', $x20, 1);
-				$Form_Imputs->form_input_text( 'Patente Carro', 'PatenteCarro', $x21, 1);
+				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion Empresa Transportista');
+				$Form_Inputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x18, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);	
+				$Form_Inputs->form_input_text('Conductor', 'ChoferNombreRut', $x19, 1);
+				$Form_Inputs->form_input_text('Patente Camion', 'PatenteCamion', $x20, 1);
+				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x21, 1);
 				
 				
-				echo '<h3>Cuerpo Parametros Evaluados</h3>';
-				$Form_Imputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);	
-				$Form_Imputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Imputs->form_input_number('T° Set Point', 'TSetPoint', $x24, 1);
-				$Form_Imputs->form_input_number('T° Ventilacion', 'TVentilacion', $x25, 1);
-				$Form_Imputs->form_input_number('T° Ambiente', 'TAmbiente', $x26, 1);
-				$Form_Imputs->form_input_text( 'Numero de sello', 'NumeroSello', $x27, 1);
-				$Form_Imputs->form_select_filter('Inspector','idInspector', $x28, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
+				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
+				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_input_number('T° Set Point', 'TSetPoint', $x24, 1);
+				$Form_Inputs->form_input_number('T° Ventilacion', 'TVentilacion', $x25, 1);
+				$Form_Inputs->form_input_number('T° Ambiente', 'TAmbiente', $x26, 1);
+				$Form_Inputs->form_input_text('Numero de sello', 'NumeroSello', $x27, 1);
+				$Form_Inputs->form_select_filter('Inspector','idInspector', $x28, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 				
-				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Otros</h3>';
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x29, 1, 160);
+				
+				$Form_Inputs->form_tittle(3, 'Otros');
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x29, 1, 160);
 				
 				
 
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);		
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('randompass', $_GET['view'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);		
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				
 				?> 
 				
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -407,7 +406,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
  } elseif ( ! empty($_GET['view']) ) { ?>
 
 
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 
 	<?php
 	$ubicacion = $location.'&view='.$_GET['view'].'&ing_Doc=true';
@@ -415,7 +414,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
 
 
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<?php 
 	$ubicacion = $location.'&clear_all='.$_GET['view'];
@@ -425,7 +424,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 	<div class="clearfix"></div>
 </div>
  
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 	<div id="page-wrap">
 		<div id="header"> Control Proceso Preembarque - T° y Estiba de Contenedores</div>
@@ -436,7 +435,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				<tbody>
 					<tr>
 						<td class="meta-head" colspan="3"><strong>DATOS MAESTROS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&view='.$_GET['view'].'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&view='.$_GET['view'].'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					
 					
@@ -597,12 +596,12 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 							<td class="item-name"><?php echo $producto['NSerieSensor'];?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<a href="<?php echo $location.'&view='.$_GET['view'].'&cloneEstiba='.$producto['idInterno']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a>
-									<a href="<?php echo $location.'&view='.$_GET['view'].'&editEstiba='.$producto['idInterno']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+									<a href="<?php echo $location.'&view='.$_GET['view'].'&cloneEstiba='.$producto['idInterno']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+									<a href="<?php echo $location.'&view='.$_GET['view'].'&editEstiba='.$producto['idInterno']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php 
 									$ubicacion = $location.'&view='.$_GET['view'].'&del_estiba='.$producto['idInterno'];
 									$dialogo   = '¿Realmente deseas eliminar el registro ?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								</div>
 							</td>
 						</tr> 
@@ -647,11 +646,11 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 								<td><?php echo $producto['Nombre']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
-										<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+										<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 										<?php 
 										$ubicacion = $location.'&view='.$_GET['view'].'&idArchivoTipo='.$producto['idArchivoTipo'].'&del_file='.$producto['idFile'];
 										$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 									</div>
 								</td>
 							</tr>
@@ -674,7 +673,7 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
  <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Consolidacion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -686,17 +685,17 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Contenedor Nro.', 'CTNNombreCompañia', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x2, 2);
 				
 				
-				$Form_Imputs->form_input_hidden('randompass', genera_password_unica(), 2);
-				$Form_Imputs->form_input_hidden('cloneConsolidacion', $_GET['cloneConsolidacion'], 2);
+				$Form_Inputs->form_input_hidden('randompass', genera_password_unica(), 2);
+				$Form_Inputs->form_input_hidden('cloneConsolidacion', $_GET['cloneConsolidacion'], 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Clonar Documento" name="submit_clone">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -705,11 +704,14 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 	</div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Consolidacion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -724,27 +726,27 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($Observaciones)) {       $x5 = $Observaciones;      }else{$x5 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha del informe','Creacion_fecha', $x1, 2);
-				$Form_Imputs->form_input_text( 'Contenedor Nro.', 'CTNNombreCompañia', $x2, 2);
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha del informe','Creacion_fecha', $x1, 2);
+				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x2, 2);
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
 				
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
 				
 				
 
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);		
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('randompass', genera_password_unica(), 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);		
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('randompass', genera_password_unica(), 2);
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -797,7 +799,7 @@ $z="WHERE cross_shipping_consolidacion.idConsolidacion!=0";
 //Solo las que esten en espera de aprobacion
 $z.=" AND cross_shipping_consolidacion.idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND cross_shipping_consolidacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND cross_shipping_consolidacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){        $z .= " AND cross_shipping_consolidacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
@@ -867,7 +869,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -891,14 +893,14 @@ array_push( $arrTipo,$row );
 				if(isset($CTNNombreCompañia)) {   $x4  = $CTNNombreCompañia; }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha del informe','Creacion_fecha', $x1, 1);
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x2, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha del informe','Creacion_fecha', $x1, 1);
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x2, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_text( 'Contenedor Nro.', 'CTNNombreCompañia', $x4, 1);
+				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x4, 1);
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -928,7 +930,7 @@ if(isset($pasa)&&$pasa!=0){ ?>
 	<div class="col-sm-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Consolidaciones Abiertas</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consolidaciones Abiertas</h5>
 			</header>
 			<div class="table-responsive">   
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -948,12 +950,12 @@ if(isset($pasa)&&$pasa!=0){ ?>
 							<td><?php echo $tipo['ProdMuestra']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&cloneConsolidacion='.$tipo['randompass']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&view='.$tipo['randompass']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&cloneConsolidacion='.$tipo['randompass']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&view='.$tipo['randompass']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&clear_all='.$tipo['randompass'];
 										$dialogo   = '¿Realmente deseas eliminar el ingreso de '.$tipo['CTNNombreCompañia'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>
@@ -968,7 +970,7 @@ if(isset($pasa)&&$pasa!=0){ ?>
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Consolidaciones En espera de Aprobacion</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consolidaciones En espera de Aprobacion</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -982,29 +984,29 @@ if(isset($pasa)&&$pasa!=0){ ?>
 						<th>
 							<div class="pull-left">Fecha del informe</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Contenedor Nro.</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=ctn_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=ctn_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=ctn_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=ctn_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left"><?php echo $x_column_producto_cat_sing.' - '.$x_column_producto_nombre_sing; ?></div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=producto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=producto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=producto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=producto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Creador</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=creador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=creador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=creador_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=creador_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -1021,8 +1023,8 @@ if(isset($pasa)&&$pasa!=0){ ?>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.$tipo['idConsolidacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a target="new" href="<?php echo 'cross_shipping_consolidacion_edit.php?edit='.$tipo['idConsolidacion']; ?>" title="Editar Consolidacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.simpleEncode($tipo['idConsolidacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a target="new" href="<?php echo 'cross_shipping_consolidacion_edit.php?edit='.$tipo['idConsolidacion']; ?>" title="Editar Consolidacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

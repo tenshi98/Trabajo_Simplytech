@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 bodegas_servicios_facturacion.idTipo,
@@ -46,6 +59,9 @@ bodegas_servicios_facturacion.Impuesto_08,
 bodegas_servicios_facturacion.Impuesto_09,
 bodegas_servicios_facturacion.Impuesto_10,
 bodegas_servicios_facturacion.ValorTotal,
+bodegas_servicios_facturacion.fecha_fact_desde,
+bodegas_servicios_facturacion.fecha_fact_hasta,
+bodegas_servicios_facturacion.idUsoIVA,
 
 sistema_origen.Nombre AS SistemaOrigen,
 sis_or_ciudad.Nombre AS SistemaOrigenCiudad,
@@ -123,7 +139,7 @@ LEFT JOIN `centrocosto_listado_level_3`             ON centrocosto_listado_level
 LEFT JOIN `centrocosto_listado_level_4`             ON centrocosto_listado_level_4.idLevel_4        = bodegas_servicios_facturacion.idLevel_4
 LEFT JOIN `centrocosto_listado_level_5`             ON centrocosto_listado_level_5.idLevel_5        = bodegas_servicios_facturacion.idLevel_5
 
-WHERE idFacturacion = {$_GET['view']} ";
+WHERE idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -134,15 +150,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
@@ -161,7 +170,7 @@ core_tiempo_frecuencia.Nombre AS Frecuencia
 FROM `bodegas_servicios_facturacion_existencias` 
 LEFT JOIN `servicios_listado`        ON servicios_listado.idServicio           = bodegas_servicios_facturacion_existencias.idServicio
 LEFT JOIN `core_tiempo_frecuencia`   ON core_tiempo_frecuencia.idFrecuencia    = bodegas_servicios_facturacion_existencias.idFrecuencia
-WHERE bodegas_servicios_facturacion_existencias.idFacturacion = {$_GET['view']} ";
+WHERE bodegas_servicios_facturacion_existencias.idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -172,15 +181,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrServicios,$row );
@@ -191,7 +193,7 @@ array_push( $arrServicios,$row );
 $arrOtros = array();
 $query = "SELECT Nombre, vTotal
 FROM `bodegas_servicios_facturacion_otros` 
-WHERE idFacturacion = {$_GET['view']} ";
+WHERE idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -202,15 +204,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrOtros,$row );
@@ -220,7 +215,7 @@ array_push( $arrOtros,$row );
 $arrDescuentos = array();
 $query = "SELECT Nombre, vTotal
 FROM `bodegas_servicios_facturacion_descuentos`
-WHERE idFacturacion = {$_GET['view']} 
+WHERE idFacturacion = ".$X_Puntero." 
 ORDER BY Nombre ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -232,15 +227,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrDescuentos,$row );
@@ -261,15 +249,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrImpuestos,$row );
@@ -279,7 +260,7 @@ array_push( $arrImpuestos,$row );
 $arrGuias = array();
 $query = "SELECT  N_Doc, ValorNeto
 FROM `bodegas_servicios_facturacion`
-WHERE idDocumentos = 1 AND DocRel = {$_GET['view']}
+WHERE idDocumentos = 1 AND DocRel = ".$X_Puntero."
 ORDER BY N_Doc ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -291,15 +272,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrGuias,$row );
@@ -318,7 +292,7 @@ usuarios_listado.Nombre AS UsuarioPago
 FROM `pagos_facturas_proveedores`
 LEFT JOIN `sistema_documentos_pago`    ON sistema_documentos_pago.idDocPago    = pagos_facturas_proveedores.idDocPago
 LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario           = pagos_facturas_proveedores.idUsuario
-WHERE pagos_facturas_proveedores.idFacturacion = {$_GET['view']} AND idTipo=3
+WHERE pagos_facturas_proveedores.idFacturacion = ".$X_Puntero." AND idTipo=3
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -330,15 +304,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrPagosProv,$row );
@@ -356,7 +323,7 @@ usuarios_listado.Nombre AS UsuarioPago
 FROM `pagos_facturas_clientes`
 LEFT JOIN `sistema_documentos_pago`    ON sistema_documentos_pago.idDocPago    = pagos_facturas_clientes.idDocPago
 LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario           = pagos_facturas_clientes.idUsuario
-WHERE pagos_facturas_clientes.idFacturacion = {$_GET['view']} AND idTipo=3
+WHERE pagos_facturas_clientes.idFacturacion = ".$X_Puntero." AND idTipo=3
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -368,15 +335,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrPagosClien,$row );
@@ -387,7 +347,7 @@ array_push( $arrPagosClien,$row );
 $arrArchivo = array();
 $query = "SELECT Nombre
 FROM `bodegas_servicios_facturacion_archivos` 
-WHERE idFacturacion = {$_GET['view']} ";
+WHERE idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -398,15 +358,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivo,$row );
@@ -425,7 +378,7 @@ usuarios_listado.Nombre AS Usuario
 FROM `bodegas_servicios_facturacion_historial` 
 LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = bodegas_servicios_facturacion_historial.idTipo
 LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = bodegas_servicios_facturacion_historial.idUsuario
-WHERE bodegas_servicios_facturacion_historial.idFacturacion = {$_GET['view']} 
+WHERE bodegas_servicios_facturacion_historial.idFacturacion = ".$X_Puntero." 
 ORDER BY bodegas_servicios_facturacion_historial.idHistorial ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -437,15 +390,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrHistorial,$row );
@@ -462,7 +408,7 @@ sistema_documentos_pago.Nombre AS Documento_pago
 FROM `bodegas_servicios_facturacion`
 LEFT JOIN `ocompra_listado_documentos`  ON ocompra_listado_documentos.idOcompra   = bodegas_servicios_facturacion.idOcompra
 LEFT JOIN `sistema_documentos_pago`     ON sistema_documentos_pago.idDocPago      = ocompra_listado_documentos.idDocPago
-WHERE bodegas_servicios_facturacion.idFacturacion = {$_GET['view']} 
+WHERE bodegas_servicios_facturacion.idFacturacion = ".$X_Puntero." 
 ORDER BY sistema_documentos_pago.Nombre ASC, ocompra_listado_documentos.Fpago ASC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -474,15 +420,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrDocRel,$row );
@@ -499,7 +438,7 @@ usuarios_listado.Nombre AS Usuario
 FROM `bodegas_servicios_facturacion`
 LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos     = bodegas_servicios_facturacion.idDocumentos
 LEFT JOIN `usuarios_listado`             ON usuarios_listado.idUsuario                   = bodegas_servicios_facturacion.idUsuario
-WHERE bodegas_servicios_facturacion.idFacturacionRelacionado = {$_GET['view']}";
+WHERE bodegas_servicios_facturacion.idFacturacionRelacionado = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -510,15 +449,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrNotasCredito,$row );
@@ -549,7 +481,7 @@ if($row_data['MontoPagado']!=0){?>
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
 										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
-										<td class="text-right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
+										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
 								<?php } ?>  
 								<?php foreach ($arrPagosClien as $pagos) { ?>
@@ -557,7 +489,7 @@ if($row_data['MontoPagado']!=0){?>
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
 										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
-										<td class="text-right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
+										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
 								<?php } ?> 
 								<?php foreach ($arrNotasCredito as $doc) { ?>
@@ -565,7 +497,7 @@ if($row_data['MontoPagado']!=0){?>
 										<td><?php echo $doc['Usuario']; ?></td>
 										<td><?php echo $doc['Documento'].' '.$doc['N_Doc']; ?></td>
 										<td><?php echo Fecha_estandar($doc['Creacion_fecha']); ?></td>
-										<td class="text-right" style="padding-right: 22px !important;"><?php echo Valores($doc['ValorTotal'], 0); ?></td>
+										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($doc['ValorTotal'], 0); ?></td>
 									</tr>
 								<?php } ?>                  
 							</tbody>
@@ -579,22 +511,22 @@ if($row_data['MontoPagado']!=0){?>
 								<tbody>
 									<tr>
 										<th>Monto Abonado:</th>
-										<td class="text-right"><?php echo Valores($row_data['MontoPagado'], 0) ?></td>
+										<td align="right"><?php echo Valores($row_data['MontoPagado'], 0) ?></td>
 									</tr>
 									<tr>
 										<th>Monto Facturado:</th>
-										<td class="text-right"><?php echo Valores($row_data['ValorTotal'], 0) ?></td>
+										<td align="right"><?php echo Valores($row_data['ValorTotal'], 0) ?></td>
 									</tr>
 									<tr>
 										<th>Diferencia:</th>
 										<?php 
 										$diferencia = $row_data['MontoPagado'] - $row_data['ValorTotal'];
 										if($diferencia<0){
-											echo '<td class="text-right text-danger"><h6><i class="fa fa-arrow-down" aria-hidden="true"></i> '.Valores($diferencia, 0).'</h6></td>';
+											echo '<td align="right" class="text-danger"><h6><i class="fa fa-arrow-down" aria-hidden="true"></i> '.Valores($diferencia, 0).'</h6></td>';
 										}elseif($diferencia>0){
-											echo '<td class="text-right text-info"><h6><i class="fa fa-arrow-up" aria-hidden="true"></i> '.Valores($diferencia, 0).'</h6></td>';
+											echo '<td align="right" class="text-info"><h6><i class="fa fa-arrow-up" aria-hidden="true"></i> '.Valores($diferencia, 0).'</h6></td>';
 										}else{
-											echo '<td class="text-right"><h6>Valores OK</h6></td>';
+											echo '<td align="right"><h6>Valores OK</h6></td>';
 										}
 										?>
 									</tr>
@@ -650,7 +582,7 @@ if($row_data['MontoPagado']!=0){?>
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> <?php echo $row_data['TipoDoc']?>.
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['TipoDoc']?>.
 				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
 			</h2>
 		</div>   
@@ -669,15 +601,15 @@ if($row_data['MontoPagado']!=0){?>
 				<div class="col-sm-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['NombreProveedor'].'</strong><br>
-						'.$row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor'].'<br>
-						'.$row_data['DireccionProveedor'].'<br>
-						Fono Fijo: '.$row_data['Fono1Proveedor'].'<br>
-						Celular: '.$row_data['Fono2Proveedor'].'<br>
-						Fax: '.$row_data['FaxProveedor'].'<br>
-						Rut: '.$row_data['RutProveedor'].'<br>
-						Email: '.$row_data['EmailProveedor'].'<br>
-						Contacto: '.$row_data['PersonaContactoProveedor'].'<br>
+						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
+						'.$row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor'].'<br/>
+						'.$row_data['DireccionProveedor'].'<br/>
+						Fono Fijo: '.$row_data['Fono1Proveedor'].'<br/>
+						Celular: '.$row_data['Fono2Proveedor'].'<br/>
+						Fax: '.$row_data['FaxProveedor'].'<br/>
+						Rut: '.$row_data['RutProveedor'].'<br/>
+						Email: '.$row_data['EmailProveedor'].'<br/>
+						Contacto: '.$row_data['PersonaContactoProveedor'].'<br/>
 						Giro de la Empresa: '.$row_data['GiroProveedor'].'
 					</address>
 				</div>
@@ -685,43 +617,55 @@ if($row_data['MontoPagado']!=0){?>
 				<div class="col-sm-4 invoice-col">
 					Empresa Destino
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
-						'.$row_data['SistemaOrigenDireccion'].'<br>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br>
+						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
+						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
+						'.$row_data['SistemaOrigenDireccion'].'<br/>
+						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
+						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
 			   
 				<div class="col-sm-4 invoice-col">
-					<b>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</b><br>
-					<b>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</b><br>';
+					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
+					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>';
 					
 					if(isset($row_data['Estado'])&&$row_data['Estado']!=''){ 
-						echo '<b>Estado: </b>'.$row_data['Estado'].'<br>';
+						echo '<strong>Estado: </strong>'.$row_data['Estado'].'<br/>';
 					}
 					if(isset($row_data['Pago_fecha'])&&$row_data['Pago_fecha']!=''&&$row_data['Pago_fecha']!='0000-00-00'){ 
-						echo '<b>Vencimiento : </b>'.Fecha_estandar($row_data['Pago_fecha']).'<br>';
+						echo '<strong>Vencimiento : </strong>'.Fecha_estandar($row_data['Pago_fecha']).'<br/>';
 					}
-					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
-						echo '<b>Dto de Pago : </b>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br>';
+					/*if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+						echo '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
 					}
 					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
-						echo '<b>Fecha Pagado: </b>'.Fecha_estandar($row_data['F_Pago']).'<br>';
-					}
-					if(isset($row_data['idOcompra'])&&$row_data['idOcompra']!=''&&$row_data['idOcompra']!=0){ 
-						echo '<b>OC Relacionada : </b>'.N_doc($row_data['idOcompra'], 5).'<br>';
+						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
+					}*/
+					if(isset($row_data['idOcompra'])&&$row_data['idOcompra']!=''&&$row_data['idOcompra']!=0){ 	
+						echo '<strong>OC Relacionada N°: </strong>'.N_doc($row_data['idOcompra'], 5).'<br/>';
 					} 
+					if(isset($row_data['OC_Ventas'])&&$row_data['OC_Ventas']!=''&&$row_data['OC_Ventas']!=0){ 
+						echo '<strong>OC Relacionada N°: </strong>'.N_doc($row_data['OC_Ventas'], 5).'<br/>';
+					}
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){ 
-						echo '<b>Centro de Costo : </b>'.$row_data['CentroCosto_Nombre'];
+						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
 						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1']; }
 						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2']; }
 						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3']; }
 						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4']; }
 						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5']; }
-						echo '<br>';
+						echo '<br/>';
 					}	
+					if(isset($row_data['fecha_fact_desde'])&&$row_data['fecha_fact_desde']!=''&&$row_data['fecha_fact_desde']!='0000-00-00'){ 
+						echo '<strong>Facturacion Desde : </strong>'.Fecha_estandar($row_data['fecha_fact_desde']).'<br/>';
+					}
+					if(isset($row_data['fecha_fact_hasta'])&&$row_data['fecha_fact_hasta']!=''&&$row_data['fecha_fact_hasta']!='0000-00-00'){ 
+						echo '<strong>Facturacion Hasta : </strong>'.Fecha_estandar($row_data['fecha_fact_hasta']).'<br/>';
+					}
+					if(isset($row_data['idUsoIVA'])&&$row_data['idUsoIVA']!=''&&$row_data['idUsoIVA']==1){ 
+						echo '<strong>Exento de IVA : </strong>Factura exenta de IVA<br/>';
+					} 
 					
 				echo '</div>';
 
@@ -734,11 +678,11 @@ if($row_data['MontoPagado']!=0){?>
 				<div class="col-sm-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
-						'.$row_data['SistemaOrigenDireccion'].'<br>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br>
+						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
+						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
+						'.$row_data['SistemaOrigenDireccion'].'<br/>
+						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
+						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
@@ -746,48 +690,60 @@ if($row_data['MontoPagado']!=0){?>
 				<div class="col-sm-4 invoice-col">
 					Empresa Destino
 					<address>
-						<strong>'.$row_data['NombreCliente'].'</strong><br>
-						'.$row_data['CiudadCliente'].', '.$row_data['ComunaProveedor'].'<br>
-						'.$row_data['DireccionCliente'].'<br>
-						Fono Fijo: '.$row_data['Fono1Cliente'].'<br>
-						Celular: '.$row_data['Fono2Cliente'].'<br>
-						Fax: '.$row_data['FaxCliente'].'<br>
-						Rut: '.$row_data['RutCliente'].'<br>
-						Email: '.$row_data['EmailCliente'].'<br>
-						Contacto: '.$row_data['PersonaContactoCliente'].'<br>
+						<strong>'.$row_data['NombreCliente'].'</strong><br/>
+						'.$row_data['CiudadCliente'].', '.$row_data['ComunaProveedor'].'<br/>
+						'.$row_data['DireccionCliente'].'<br/>
+						Fono Fijo: '.$row_data['Fono1Cliente'].'<br/>
+						Celular: '.$row_data['Fono2Cliente'].'<br/>
+						Fax: '.$row_data['FaxCliente'].'<br/>
+						Rut: '.$row_data['RutCliente'].'<br/>
+						Email: '.$row_data['EmailCliente'].'<br/>
+						Contacto: '.$row_data['PersonaContactoCliente'].'<br/>
 						Giro de la Empresa: '.$row_data['GiroCliente'].'
 					</address>
 				</div>
 				
 				<div class="col-sm-4 invoice-col">
-					<b>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</b><br>
-					<b>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</b><br>
-					<b>Vendedor: </b>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellido'].'<br>';
+					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
+					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
+					<strong>Vendedor: </strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellido'].'<br/>';
 					
 					if(isset($row_data['Estado'])&&$row_data['Estado']!=''){ 
-						echo '<b>Estado: </b>'.$row_data['Estado'].'<br>';
+						echo '<strong>Estado: </strong>'.$row_data['Estado'].'<br/>';
 					}
 					if(isset($row_data['Pago_fecha'])&&$row_data['Pago_fecha']!=''&&$row_data['Pago_fecha']!='0000-00-00'){ 
-						echo '<b>Vencimiento : </b>'.Fecha_estandar($row_data['Pago_fecha']).'<br>';
+						echo '<strong>Vencimiento : </strong>'.Fecha_estandar($row_data['Pago_fecha']).'<br/>';
 					}
 					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
-						echo '<b>Dto de Pago : </b>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br>';
+						echo '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
 					}
 					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
-						echo '<b>Fecha Pagado: </b>'.Fecha_estandar($row_data['F_Pago']).'<br>';
+						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
 					}
-					if(isset($row_data['OC_Ventas'])&&$row_data['OC_Ventas']!=''){ 
-						echo '<b>OC Relacionada N°: </b>'.$row_data['OC_Ventas'].'<br>';
+					if(isset($row_data['idOcompra'])&&$row_data['idOcompra']!=''&&$row_data['idOcompra']!=0){ 	
+						echo '<strong>OC Relacionada N°: </strong>'.N_doc($row_data['idOcompra'], 5).'<br/>';
+					} 
+					if(isset($row_data['OC_Ventas'])&&$row_data['OC_Ventas']!=''&&$row_data['OC_Ventas']!=0){ 
+						echo '<strong>OC Relacionada N°: </strong>'.N_doc($row_data['OC_Ventas'], 5).'<br/>';
 					} 
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){ 
-						echo '<b>Centro de Costo : </b>'.$row_data['CentroCosto_Nombre'];
+						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
 						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1']; }
 						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2']; }
 						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3']; }
 						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4']; }
 						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5']; }
-						echo '<br>';
+						echo '<br/>';
 					}	
+					if(isset($row_data['fecha_fact_desde'])&&$row_data['fecha_fact_desde']!=''&&$row_data['fecha_fact_desde']!='0000-00-00'){ 
+						echo '<strong>Facturacion Desde : </strong>'.Fecha_estandar($row_data['fecha_fact_desde']).'<br/>';
+					}
+					if(isset($row_data['fecha_fact_hasta'])&&$row_data['fecha_fact_hasta']!=''&&$row_data['fecha_fact_hasta']!='0000-00-00'){ 
+						echo '<strong>Facturacion Hasta : </strong>'.Fecha_estandar($row_data['fecha_fact_hasta']).'<br/>';
+					}
+					if(isset($row_data['idUsoIVA'])&&$row_data['idUsoIVA']!=''&&$row_data['idUsoIVA']==1){ 
+						echo '<strong>Exento de IVA : </strong>Factura exenta de IVA<br/>';
+					}
 					
 				echo '
 				</div>';
@@ -970,17 +926,17 @@ if($row_data['MontoPagado']!=0){?>
 	
 
 <?php
-	$zz  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
 	?>
 	<div class="row no-print">
 		<div class="col-xs-12">
 			<a target="new" href="view_mov_servicios_to_print.php<?php echo $zz ?>" class="btn btn-default">
-				<i class="fa fa-print"></i> Imprimir
+				<i class="fa fa-print" aria-hidden="true"></i> Imprimir
 			</a>
 
 			<a target="new" href="view_mov_servicios_to_pdf.php<?php echo $zz ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
-				<i class="fa fa-file-pdf-o"></i> Exportar a PDF
+				<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF
 			</a>
 		</div>
 	</div>
@@ -1022,8 +978,8 @@ if($row_data['MontoPagado']!=0){?>
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?return=true&path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
-								<a href="1download.php?dir=upload&file=<?php echo $producto['Nombre']; ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -1034,13 +990,31 @@ if($row_data['MontoPagado']!=0){?>
     
 </div>
  
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

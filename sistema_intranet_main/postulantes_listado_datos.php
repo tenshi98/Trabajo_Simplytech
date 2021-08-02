@@ -48,7 +48,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 $query = "SELECT Nombre,ApellidoPat,ApellidoMat,Fono1,Fono2,Rut,idCiudad,idComuna,Direccion,idSistema,idSexo,FNacimiento,idEstadoCivil,
 idTipoLicencia, SueldoLiquido
 FROM `postulantes_listado`
-WHERE idPostulante = {$_GET['id']}";
+WHERE idPostulante = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -66,20 +66,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-			<div class="info-box-content">
-				<span class="info-box-text">Postulante</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos Personales</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Personales');?>
 </div>
 <div class="clearfix"></div>
 
@@ -87,17 +74,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'postulantes_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class="active"><a href="<?php echo 'postulantes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos</a></li>
-				<li class=""><a href="<?php echo 'postulantes_listado_estudios.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estudios</a></li>
+				<li class=""><a href="<?php echo 'postulantes_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class="active"><a href="<?php echo 'postulantes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'postulantes_listado_estudios.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-graduation-cap" aria-hidden="true"></i>  Estudios</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'postulantes_listado_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Cursos</a></li>
-						<li class=""><a href="<?php echo 'postulantes_listado_experiencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Experiencia</a></li>
-						<li class=""><a href="<?php echo 'postulantes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Curriculum</a></li>
-						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Otros</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-graduation-cap" aria-hidden="true"></i>  Cursos</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_experiencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-industry" aria-hidden="true"></i>  Experiencia</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i>  Curriculum</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i>  Otros</a></li>
 						
 					</ul>
                 </li>           
@@ -125,26 +112,26 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					if(isset($SueldoLiquido)) {       $x14 = $SueldoLiquido;        }else{$x14 = $rowdata['SueldoLiquido'];}
 					
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-					$Form_Imputs->form_input_text( 'Apellido Paterno', 'ApellidoPat', $x2, 2);
-					$Form_Imputs->form_input_text( 'Apellido Materno', 'ApellidoMat', $x3, 2);
-					$Form_Imputs->form_input_rut('Rut', 'Rut', $x4, 2);
-					$Form_Imputs->form_select('Sexo','idSexo', $x5, 2, 'idSexo', 'Nombre', 'core_sexo', 0, '', $dbConn);
-					$Form_Imputs->form_date('FNacimiento','FNacimiento', $x6, 1);
-					$Form_Imputs->form_input_phone('Fono1', 'Fono1', $x7, 1);
-					$Form_Imputs->form_input_phone('Fono2', 'Fono2', $x8, 1);
-					$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+					$Form_Inputs->form_input_text('Apellido Paterno', 'ApellidoPat', $x2, 2);
+					$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 2);
+					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
+					$Form_Inputs->form_select('Sexo','idSexo', $x5, 2, 'idSexo', 'Nombre', 'core_sexo', 0, '', $dbConn);
+					$Form_Inputs->form_date('FNacimiento','FNacimiento', $x6, 1);
+					$Form_Inputs->form_input_phone('Fono1', 'Fono1', $x7, 1);
+					$Form_Inputs->form_input_phone('Fono2', 'Fono2', $x8, 1);
+					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
-					$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x11, 1,'fa fa-map');
-					$Form_Imputs->form_select('Estado Civil','idEstadoCivil', $x12, 1, 'idEstadoCivil', 'Nombre', 'core_estado_civil', 0, '', $dbConn);
-					$Form_Imputs->form_select('Tipo Licencia','idTipoLicencia', $x13, 2, 'idTipoLicencia', 'Nombre', 'core_tipos_licencia_conducir', 0, '', $dbConn);
-					$Form_Imputs->form_values('Pretenciones','SueldoLiquido', $x14, 1);
+					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
+					$Form_Inputs->form_select('Estado Civil','idEstadoCivil', $x12, 1, 'idEstadoCivil', 'Nombre', 'core_estado_civil', 0, '', $dbConn);
+					$Form_Inputs->form_select('Tipo Licencia','idTipoLicencia', $x13, 2, 'idTipoLicencia', 'Nombre', 'core_tipos_licencia_conducir', 0, '', $dbConn);
+					$Form_Inputs->form_values('Pretenciones','SueldoLiquido', $x14, 1);
 					
-					$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-					$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-					$Form_Imputs->form_input_hidden('idPostulante', $_GET['id'], 2);
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idPostulante', $_GET['id'], 2);
 					?>
 
 					<div class="form-group">		
@@ -158,8 +145,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

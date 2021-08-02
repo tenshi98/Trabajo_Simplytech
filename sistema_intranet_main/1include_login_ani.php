@@ -1,7 +1,15 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6 ">
+			<h1 class="comingsoontxt">Sitio en mantencion desde <?php echo $Mantenciones['Hora_ini']; ?> hasta las <?php echo $Mantenciones['Hora_fin']; ?> hrs</h1>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
 		<div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8 svgcenter">
-               <svg version="1.1" class="svgcenter" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+               <svg version="1.1" class="svgcenter" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" x="0px" y="0px"
                   width="100%" viewBox="0 0 526.473 295" enable-background="new 0 0 526.473 295"
                   xml:space="preserve">
                   <g id="webpages" class="mgwebpage">
@@ -363,13 +371,10 @@
             <div class="col-md-2"></div>
         </div>
          
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
-		<script src="<?php echo DB_SITE ?>/LIB_assets/js/js_animate.js"></script>
-      
-		<style>
-			.login {
-				background: none !important;
-				background-color: #1d91f4 !important;
-			}
-		</style> 
+</div>
+         
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
+<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/js_animate.js"></script>     
+<style>.login {background: none !important;background-color: #87939d !important;}</style> 
+  
          

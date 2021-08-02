@@ -15,15 +15,15 @@ $original = "informe_gerencial_16.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){               $search .="&idTipoMov={$_GET['idTipoMov']}";}
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor={$_GET['idProveedor']}";}
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){         $search .="&idCliente={$_GET['idCliente']}";}
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo={$_GET['idTipo']}";}
-if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){         $search .="&idDocPago={$_GET['idDocPago']}";}
-if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){         $search .="&N_DocPago={$_GET['N_DocPago']}";}
+if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){         $search .="&idTipoMov=".$_GET['idTipoMov'];}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){         $search .="&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){         $search .="&idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){         $search .="&N_DocPago=".$_GET['N_DocPago'];}
 if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
-	$search .="&f_inicio_p={$_GET['f_inicio_p']}";
-	$search .="&f_termino_p={$_GET['f_termino_p']}";
+	$search .="&f_inicio_p=".$_GET['f_inicio_p'];
+	$search .="&f_termino_p=".$_GET['f_termino_p'];
 }
 	
 
@@ -49,12 +49,12 @@ switch ($_GET['idTipoProd']) {
         /**********************************************************/
 		//Variable de busqueda
 		$z    = "WHERE bodegas_arriendos_facturacion_existencias.idExistencia!=0";
-		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_arriendos_facturacion.idTipo={$_GET['idTipoMov']}";}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_arriendos_facturacion.idProveedor={$_GET['idProveedor']}";}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_arriendos_facturacion.idCliente={$_GET['idCliente']}";}
-		if(isset($_GET['idEquipo'])&&$_GET['idEquipo']!=''){         $z.=" AND bodegas_arriendos_facturacion_existencias.idEquipo={$_GET['idEquipo']}";}
+		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_arriendos_facturacion.idTipo=".$_GET['idTipoMov'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_arriendos_facturacion.idCliente=".$_GET['idCliente'];}
+		if(isset($_GET['idEquipo'])&&$_GET['idEquipo']!=''){         $z.=" AND bodegas_arriendos_facturacion_existencias.idEquipo=".$_GET['idEquipo'];}
 		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-			$z.=" AND bodegas_arriendos_facturacion_existencias.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+			$z.=" AND bodegas_arriendos_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
 		/**********************************************************/
 		$arrTipo = array();
@@ -98,12 +98,12 @@ switch ($_GET['idTipoProd']) {
 		/**********************************************************/
 		//Variable de busqueda
 		$z    = "WHERE bodegas_insumos_facturacion_existencias.idExistencia!=0";
-		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_insumos_facturacion.idTipo={$_GET['idTipoMov']}";}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_insumos_facturacion.idProveedor={$_GET['idProveedor']}";}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_insumos_facturacion.idCliente={$_GET['idCliente']}";}
-		if(isset($_GET['idInsumo'])&&$_GET['idInsumo']!=''){         $z.=" AND bodegas_insumos_facturacion_existencias.idProducto={$_GET['idInsumo']}";}
+		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_insumos_facturacion.idTipo=".$_GET['idTipoMov'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_insumos_facturacion.idCliente=".$_GET['idCliente'];}
+		if(isset($_GET['idInsumo'])&&$_GET['idInsumo']!=''){         $z.=" AND bodegas_insumos_facturacion_existencias.idProducto=".$_GET['idInsumo'];}
 		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-			$z.=" AND bodegas_insumos_facturacion_existencias.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+			$z.=" AND bodegas_insumos_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
 		/**********************************************************/
 		$arrTipo = array();
@@ -147,12 +147,12 @@ switch ($_GET['idTipoProd']) {
 		/**********************************************************/
 		//Variable de busqueda
 		$z    = "WHERE bodegas_productos_facturacion_existencias.idExistencia!=0";
-		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_productos_facturacion.idTipo={$_GET['idTipoMov']}";}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_productos_facturacion.idProveedor={$_GET['idProveedor']}";}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_productos_facturacion.idCliente={$_GET['idCliente']}";}
-		if(isset($_GET['idProducto'])&&$_GET['idProducto']!=''){     $z.=" AND bodegas_productos_facturacion_existencias.idProducto={$_GET['idProducto']}";}
+		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_productos_facturacion.idTipo=".$_GET['idTipoMov'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_productos_facturacion.idCliente=".$_GET['idCliente'];}
+		if(isset($_GET['idProducto'])&&$_GET['idProducto']!=''){     $z.=" AND bodegas_productos_facturacion_existencias.idProducto=".$_GET['idProducto'];}
 		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-			$z.=" AND bodegas_productos_facturacion_existencias.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+			$z.=" AND bodegas_productos_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
 		/**********************************************************/
 		$arrTipo = array();
@@ -196,12 +196,12 @@ switch ($_GET['idTipoProd']) {
 		/**********************************************************/
 		//Variable de busqueda
 		$z    = "WHERE bodegas_servicios_facturacion_existencias.idExistencia!=0";
-		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_servicios_facturacion.idTipo={$_GET['idTipoMov']}";}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_servicios_facturacion.idProveedor={$_GET['idProveedor']}";}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_servicios_facturacion.idCliente={$_GET['idCliente']}";}
-		if(isset($_GET['idServicio'])&&$_GET['idServicio']!=''){     $z.=" AND bodegas_servicios_facturacion_existencias.idServicio={$_GET['idServicio']}";}
+		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_servicios_facturacion.idTipo=".$_GET['idTipoMov'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['idProveedor'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_servicios_facturacion.idCliente=".$_GET['idCliente'];}
+		if(isset($_GET['idServicio'])&&$_GET['idServicio']!=''){     $z.=" AND bodegas_servicios_facturacion_existencias.idServicio=".$_GET['idServicio'];}
 		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-			$z.=" AND bodegas_servicios_facturacion_existencias.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+			$z.=" AND bodegas_servicios_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
 		/**********************************************************/
 		$arrTipo = array();
@@ -248,7 +248,7 @@ switch ($_GET['idTipoProd']) {
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Productos</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -285,22 +285,22 @@ switch ($_GET['idTipoProd']) {
 						<td><?php echo $prod['Documento'].' '.$prod['N_Doc']; ?></td>
 						<td><?php echo fecha_estandar($prod['Creacion_fecha']); ?></td>
 						<td><?php echo $prod['Producto']; ?></td>
-						<td><?php echo valores($prod['Valor'], 0); ?></td>
+						<td align="right"><?php echo valores($prod['Valor'], 0); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
 								<?php
 								switch ($_GET['idTipoProd']) {
 									case 1://Arriendos
-										echo '<a href="view_mov_arriendos.php?view='.$prod['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+										echo '<a href="view_mov_arriendos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 									case 2://Insumos
-										echo '<a href="view_mov_insumos.php?view='.$prod['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+										echo '<a href="view_mov_insumos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 									case 3://Productos
-										echo '<a href="view_mov_productos.php?view='.$prod['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+										echo '<a href="view_mov_productos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 									case 4://Servicios
-										echo '<a href="view_mov_servicios.php?view='.$prod['idFacturacion'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';
+										echo '<a href="view_mov_servicios.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 								}
 								?>
@@ -316,14 +316,14 @@ switch ($_GET['idTipoProd']) {
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 //filtro
 $zx1 = "idProducto=0";
@@ -331,7 +331,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -357,7 +357,7 @@ $zx2 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_insumos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -382,7 +382,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -402,19 +402,19 @@ foreach ($arrPermisos as $prod) {
 				if(isset($f_termino)) {      $x10 = $f_termino;     }else{$x10 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Tipo Movimiento','idTipoMov', $x1, 2, 'idTipoMov', 'Nombre', 'core_bodega_tipomov', 0, '', $dbConn);
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x3, 1, 'idCliente', 'Nombre', 'clientes_listado', $z, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Tipo Movimiento','idTipoMov', $x1, 2, 'idTipoMov', 'Nombre', 'core_bodega_tipomov', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x3, 1, 'idCliente', 'Nombre', 'clientes_listado', $z, '', $dbConn);
 				
-				$Form_Imputs->form_select('Tipo Producto','idTipoProd', $x4, 2, 'idTipoProd', 'Nombre', 'core_bodega_tipoprod', 0, '', $dbConn);
-				$Form_Imputs->form_select('Equipos','idEquipo', $x5, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_select('Insumo','idInsumo', $x6, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
-				$Form_Imputs->form_select('Producto','idProducto', $x7, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				$Form_Imputs->form_select('Servicio','idServicio', $x8, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_select('Tipo Producto','idTipoProd', $x4, 2, 'idTipoProd', 'Nombre', 'core_bodega_tipoprod', 0, '', $dbConn);
+				$Form_Inputs->form_select('Equipos','idEquipo', $x5, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_select('Insumo','idInsumo', $x6, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_select('Producto','idProducto', $x7, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_select('Servicio','idServicio', $x8, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
 				
-				$Form_Imputs->form_date('Fecha Mov Desde','f_inicio', $x9, 1);
-				$Form_Imputs->form_date('Fecha Mov Hasta','f_termino', $x10, 1);
+				$Form_Inputs->form_date('Fecha Mov Desde','f_inicio', $x9, 1);
+				$Form_Inputs->form_date('Fecha Mov Hasta','f_termino', $x10, 1);
 						
 				?> 
 				

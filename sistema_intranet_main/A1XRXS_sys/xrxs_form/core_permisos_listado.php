@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -31,11 +35,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idAdmpm':           if(empty($idAdmpm)){           $error['idAdmpm']            = 'error/No ha ingresado el id';}break;
 			case 'id_pmcat':          if(empty($id_pmcat)){          $error['id_pmcat']           = 'error/No ha seleccionado la categoria';}break;
 			case 'Direccionweb':      if(empty($Direccionweb)){      $error['Direccionweb']       = 'error/No ha ingresado la imagen';}break;
@@ -45,11 +49,20 @@ if( ! defined('XMBCXRXSKGC')) {
 			case 'Version':           if(empty($Version)){           $error['Version']            = 'error/No ha ingresado la version';}break;
 			case 'Descripcion':       if(empty($Descripcion)){       $error['Descripcion']        = 'error/No ha ingresado una descripcion';}break;
 			case 'Level_Limit':       if(empty($Level_Limit)){       $error['Level_Limit']        = 'error/No ha seleccionado el limite del nivel de permiso';}break;
-			case 'Habilita':          if(empty($Habilita)){          $error['Habilita']           = 'error/No ha ingresado los tabs que habilita';}break;
-			case 'Principal':         if(empty($Principal)){         $error['Principal']          = 'error/No ha ingresado los tabs que habilita en principal';}break;
+			case 'Habilita':          if(!isset($Habilita)){          $error['Habilita']           = 'error/No ha ingresado los tabs que habilita';}break;
+			case 'Principal':         if(!isset($Principal)){         $error['Principal']          = 'error/No ha ingresado los tabs que habilita en principal';}break;
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+if(isset($Direccionweb)&&contar_palabras_censuradas($Direccionweb)!=0){    $error['Direccionweb']  = 'error/Edita la Direccion web, contiene palabras no permitidas'; }	
+if(isset($Direccionbase)&&contar_palabras_censuradas($Direccionbase)!=0){  $error['Direccionbase'] = 'error/Edita la Direccion base, contiene palabras no permitidas'; }	
+if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){      $error['Descripcion']   = 'error/Edita la Descripcion, contiene palabras no permitidas'; }	
+if(isset($Habilita)&&contar_palabras_censuradas($Habilita)!=0){            $error['Habilita']      = 'error/Edita Habilita, contiene palabras no permitidas'; }	
+if(isset($Principal)&&contar_palabras_censuradas($Principal)!=0){          $error['Principal']     = 'error/Edita Principal, contiene palabras no permitidas'; }	
 
 	
 /*******************************************************************************************************************/
@@ -68,7 +81,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($id_pmcat)){
-				$ndata_1 = db_select_nrows ('Nombre', 'core_permisos_listado', '', "Nombre='".$Nombre."' AND id_pmcat='".$id_pmcat."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'core_permisos_listado', '', "Nombre='".$Nombre."' AND id_pmcat='".$id_pmcat."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Permiso ya existe en el sistema';}
@@ -94,7 +107,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `core_permisos_listado` (id_pmcat, Direccionweb, Direccionbase, Nombre, visualizacion, Version,
-				Descripcion, Level_Limit, Habilita, Principal) VALUES ({$a} )";
+				Descripcion, Level_Limit, Habilita, Principal) VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -102,9 +115,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					/************************************************************/
 					//Ingreso modificacion al log de cambios
-					$query = "SELECT Nombre FROM `core_permisos_categorias` WHERE id_pmcat='".$id_pmcat."'";
-					$resultado = mysqli_query($dbConn, $query);
-					$rowCat = mysqli_fetch_assoc ($resultado);
+					$rowCat = db_select_data (false, 'Nombre', 'core_permisos_categorias', '', 'id_pmcat = "'.$id_pmcat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					/****************************/
 					$a = "'".fecha_actual()."'" ;
 					if(isset($Nombre) && $Nombre != ''){ 
@@ -116,7 +127,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `core_log_cambios` (Fecha, Descripcion) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					$result = mysqli_query($dbConn, $query);
 					
 					
@@ -149,7 +160,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($id_pmcat)&&isset($idAdmpm)){
-				$ndata_1 = db_select_nrows ('Nombre', 'core_permisos_listado', '', "Nombre='".$Nombre."' AND id_pmcat='".$id_pmcat."' AND idAdmpm!='".$idAdmpm."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'core_permisos_listado', '', "Nombre='".$Nombre."' AND id_pmcat='".$id_pmcat."' AND idAdmpm!='".$idAdmpm."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Permiso ya existe en el sistema';}
@@ -186,13 +197,9 @@ if( ! defined('XMBCXRXSKGC')) {
 					//Si la categoria cambia
 					if($id_pmcat!=$fake_id_pmcat){
 						//Reviso la categoria antigua
-						$query = "SELECT Nombre FROM `core_permisos_categorias` WHERE id_pmcat='".$fake_id_pmcat."'";
-						$resultado = mysqli_query($dbConn, $query);
-						$rowCat_1 = mysqli_fetch_assoc ($resultado);
+						$rowCat_1 = db_select_data (false, 'Nombre', 'core_permisos_categorias', '', 'id_pmcat = "'.$fake_id_pmcat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Reviso la categoria nueva
-						$query = "SELECT Nombre FROM `core_permisos_categorias` WHERE id_pmcat='".$id_pmcat."'";
-						$resultado = mysqli_query($dbConn, $query);
-						$rowCat_2 = mysqli_fetch_assoc ($resultado);
+						$rowCat_2 = db_select_data (false, 'Nombre', 'core_permisos_categorias', '', 'id_pmcat = "'.$id_pmcat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//concateno mensaje
 						$Descripcion .= 'Se cambia la transaccion '.$Nombre.' de la categoria '.$rowCat_1['Nombre'].' a la categoria '.$rowCat_2['Nombre'].'. '; 
 						
@@ -209,7 +216,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `core_log_cambios` (Fecha, Descripcion) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						$result = mysqli_query($dbConn, $query);
 					}
 					
@@ -239,45 +246,50 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `core_permisos_listado` WHERE idAdmpm = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
-			
-				
-			
-			//elimino los permisos relacionados a los usuarios
-			$query  = "DELETE FROM `usuarios_permisos` WHERE idAdmpm = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
 			}
 			
-				
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			if($errorn==0){
+				//se borran los datos
+				$resultado_1 = db_delete_data (false, 'core_permisos_listado', 'idAdmpm = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'usuarios_permisos', 'idAdmpm = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
+			
+	
 
 		break;														
 /*******************************************************************************************************************/

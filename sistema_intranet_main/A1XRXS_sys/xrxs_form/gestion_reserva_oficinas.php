@@ -1,0 +1,262 @@
+<?php
+/*******************************************************************************************************************/
+/*                                              Bloque de seguridad                                                */
+/*******************************************************************************************************************/
+if( ! defined('XMBCXRXSKGC')) {
+    die('No tienes acceso a esta carpeta o archivo.');
+}
+/*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
+/*                                        Se traspasan los datos a variables                                       */
+/*******************************************************************************************************************/
+
+	//Traspaso de idUsuarioes input a variables
+	if ( !empty($_POST['idReserva']) )            $idReserva             = $_POST['idReserva'];
+	if ( !empty($_POST['idSistema']) )            $idSistema             = $_POST['idSistema'];
+	if ( !empty($_POST['idUsuario']) )            $idUsuario             = $_POST['idUsuario'];
+	if ( !empty($_POST['idEstado']) )             $idEstado              = $_POST['idEstado'];
+	if ( !empty($_POST['Fecha']) )                $Fecha                 = $_POST['Fecha'];
+	if ( !empty($_POST['Dia']) )                  $Dia                   = $_POST['Dia'];
+	if ( !empty($_POST['Mes']) )                  $Mes                   = $_POST['Mes'];
+	if ( !empty($_POST['Ano']) )                  $Ano                   = $_POST['Ano'];
+	if ( !empty($_POST['Hora_Inicio']) )          $Hora_Inicio           = $_POST['Hora_Inicio'];
+	if ( !empty($_POST['Hora_Termino']) )         $Hora_Termino          = $_POST['Hora_Termino'];
+	if ( !empty($_POST['Solicitante']) )          $Solicitante           = $_POST['Solicitante'];
+	if ( !empty($_POST['Observaciones']) )        $Observaciones         = $_POST['Observaciones'];
+	if ( !empty($_POST['idServicioCafeteria']) )  $idServicioCafeteria   = $_POST['idServicioCafeteria'];
+	if ( !empty($_POST['CantidadAsistentes']) )   $CantidadAsistentes    = $_POST['CantidadAsistentes'];
+	if ( !empty($_POST['idOficina']) )            $idOficina             = $_POST['idOficina'];
+	
+	
+/*******************************************************************************************************************/
+/*                                      Verificacion de los datos obligatorios                                     */
+/*******************************************************************************************************************/
+
+	//limpio y separo los datos de la cadena de comprobacion
+	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
+	$INT_piezas = explode(",", $form_obligatorios);
+	//recorro los elementos
+	foreach ($INT_piezas as $INT_valor) {
+		//veo si existe el dato solicitado y genero el error
+		switch ($INT_valor) {
+			case 'idReserva':            if(empty($idReserva)){               $error['idReserva']            = 'error/No ha ingresado el id';}break;
+			case 'idSistema':            if(empty($idSistema)){               $error['idSistema']            = 'error/No ha seleccionado el Sistema';}break;
+			case 'idUsuario':            if(empty($idUsuario)){               $error['idUsuario']            = 'error/No ha seleccionado el Usuario';}break;
+			case 'idEstado':             if(empty($idEstado)){                $error['idEstado']             = 'error/No ha seleccionado el estado';}break;
+			case 'Fecha':                if(empty($Fecha)){                   $error['Fecha']                = 'error/No ha ingresado la fecha';}break;
+			case 'Dia':                  if(empty($Dia)){                     $error['Dia']                  = 'error/No ha ingresado el dia';}break;
+			case 'Mes':                  if(empty($Mes)){                     $error['Mes']                  = 'error/No ha ingresado el mes';}break;
+			case 'Ano':                  if(empty($Ano)){                     $error['Ano']                  = 'error/No ha ingresado el año';}break;
+			case 'Hora_Inicio':          if(empty($Hora_Inicio)){             $error['Hora_Inicio']          = 'error/No ha ingresado la Hora de Inicio';}break;
+			case 'Hora_Termino':         if(empty($Hora_Termino)){            $error['Hora_Termino']         = 'error/No ha ingresado la Hora de Termino';}break;
+			case 'Solicitante':          if(empty($Solicitante)){             $error['Solicitante']          = 'error/No ha ingresado el Solicitante';}break;
+			case 'Observaciones':        if(empty($Observaciones)){           $error['Observaciones']        = 'error/No ha ingresado las Observaciones';}break;
+			case 'idServicioCafeteria':  if(empty($idServicioCafeteria)){     $error['idServicioCafeteria']  = 'error/No ha seleccionado si usa servicio de cafeteria';}break;
+			case 'CantidadAsistentes':   if(empty($CantidadAsistentes)){      $error['CantidadAsistentes']   = 'error/No ha ingresado la cantidad de personas asistente';}break;
+			case 'idOficina':            if(empty($idOficina)){               $error['idOficina']            = 'error/No ha seleccionado la oficina a utilizar';}break;
+			
+		}
+	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Solicitante)&&contar_palabras_censuradas($Solicitante)!=0){      $error['Solicitante']   = 'error/Edita Solicitante, contiene palabras no permitidas'; }	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita la Observacion, contiene palabras no permitidas'; }	
+	
+/*******************************************************************************************************************/
+/*                                            Se ejecutan las instrucciones                                        */
+/*******************************************************************************************************************/
+	//ejecuto segun la funcion
+	switch ($form_trabajo) {
+/*******************************************************************************************************************/		
+		case 'insert':
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/*******************************************************************/
+			//variables
+			$ndata_1 = 0;
+			//Se verifica si el dato existe
+			if(isset($idOficina)&&isset($Fecha)&&isset($idSistema)&&isset($Hora_Inicio)&&isset($Hora_Termino)){
+				//se crea filtro
+				$subfilter  = 'idOficina="'.$idOficina.'"';
+				$subfilter .= ' AND Fecha="'.$Fecha.'"';
+				$subfilter .= ' AND idSistema="'.$idSistema.'"';
+				$subfilter .= ' AND (Hora_Inicio<"'.$Hora_Inicio.'" AND Hora_Termino>"'.$Hora_Termino.'")';
+				$subfilter .= ' AND (Hora_Termino<"'.$Hora_Inicio.'" AND Hora_Termino>"'.$Hora_Termino.'")';
+				$subfilter .= ' AND (Hora_Inicio>"'.$Hora_Inicio.'" AND Hora_Inicio>"'.$Hora_Termino.'")';
+				//se buscan coincidencias
+				$ndata_1 = db_select_nrows (false, 'idReserva', 'gestion_reserva_oficinas', '', $subfilter, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			}
+			//generacion de errores
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La reserva de la oficina ya existe en el sistema';}
+			/*******************************************************************/
+			
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				//filtros
+				if(isset($idSistema) && $idSistema != ''){   $a  = "'".$idSistema."'" ;   }else{$a  ="''";}
+				if(isset($idUsuario) && $idUsuario != ''){   $a .= ",'".$idUsuario."'" ;  }else{$a .=",''";}
+				if(isset($idEstado) && $idEstado != ''){     $a .= ",'".$idEstado."'" ;   }else{$a .=",''";}
+				if(isset($Fecha) && $Fecha != ''){  
+					$a .= ",'".$Fecha."'" ;  
+					$a .= ",'".fecha2NdiaMes($Fecha)."'" ;
+					$a .= ",'".fecha2NMes($Fecha)."'" ;
+					$a .= ",'".fecha2Ano($Fecha)."'" ;
+				}else{
+					$a .= ",''";
+					$a .= ",''";
+					$a .= ",''";
+					$a .= ",''";
+				}
+				if(isset($Hora_Inicio) && $Hora_Inicio != ''){                  $a .= ",'".$Hora_Inicio."'" ;          }else{$a .=",''";}
+				if(isset($Hora_Termino) && $Hora_Termino != ''){                $a .= ",'".$Hora_Termino."'" ;         }else{$a .=",''";}
+				if(isset($Solicitante) && $Solicitante != ''){                  $a .= ",'".$Solicitante."'" ;          }else{$a .=",''";}
+				if(isset($Observaciones) && $Observaciones != ''){              $a .= ",'".$Observaciones."'" ;        }else{$a .=",''";}
+				if(isset($idServicioCafeteria) && $idServicioCafeteria != ''){  $a .= ",'".$idServicioCafeteria."'" ;  }else{$a .=",''";}
+				if(isset($CantidadAsistentes) && $CantidadAsistentes != ''){    $a .= ",'".$CantidadAsistentes."'" ;   }else{$a .=",''";}
+				if(isset($idOficina) && $idOficina != ''){                      $a .= ",'".$idOficina."'" ;            }else{$a .=",''";}
+				
+				// inserto los datos de registro en la db
+				$query  = "INSERT INTO `gestion_reserva_oficinas` (idSistema, idUsuario, idEstado, Fecha, 
+				Dia, Mes, Ano, Hora_Inicio, Hora_Termino, Solicitante, Observaciones, idServicioCafeteria,
+				CantidadAsistentes, idOficina ) 
+				VALUES (".$a.")";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					header( 'Location: '.$location.'&created=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+				}
+				
+			}
+	
+		break;
+/*******************************************************************************************************************/		
+		case 'update':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				//Filtros
+				$a = "idReserva='".$idReserva."'" ;
+				if(isset($idSistema) && $idSistema != ''){  $a .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){  $a .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){    $a .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Fecha) && $Fecha != ''){  
+					$a .= ",Fecha='".$Fecha."'" ;  
+					$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
+					$a .= ",Mes='".fecha2NMes($Fecha)."'" ;
+					$a .= ",Ano='".fecha2Ano($Fecha)."'" ;
+				}
+				if(isset($Hora_Inicio) && $Hora_Inicio != ''){                  $a .= ",Hora_Inicio='".$Hora_Inicio."'" ;}
+				if(isset($Hora_Termino) && $Hora_Termino != ''){                $a .= ",Hora_Termino='".$Hora_Termino."'" ;}
+				if(isset($Solicitante) && $Solicitante != ''){                  $a .= ",Solicitante='".$Solicitante."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){              $a .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($idServicioCafeteria) && $idServicioCafeteria != ''){  $a .= ",idServicioCafeteria='".$idServicioCafeteria."'" ;}
+				if(isset($CantidadAsistentes) && $CantidadAsistentes != ''){    $a .= ",CantidadAsistentes='".$CantidadAsistentes."'" ;}
+				if(isset($idOficina) && $idOficina != ''){                      $a .= ",idOficina='".$idOficina."'" ;}
+				
+				// inserto los datos de registro en la db
+				$query  = "UPDATE `gestion_reserva_oficinas` SET ".$a." WHERE idReserva = '$idReserva'";
+				//Consulta
+				$resultado = mysqli_query ($dbConn, $query);
+				//Si ejecuto correctamente la consulta
+				if($resultado){
+					
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+				//si da error, guardar en el log de errores una copia
+				}else{
+					//Genero numero aleatorio
+					$vardata = genera_password(8,'alfanumerico');
+					
+					//Guardo el error en una variable temporal
+					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					
+				}
+			}
+		
+	
+		break;	
+						
+/*******************************************************************************************************************/
+		case 'del':	
+
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'gestion_reserva_oficinas', 'idReserva = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
+			
+			
+
+		break;							
+						
+/*******************************************************************************************************************/
+	}
+?>

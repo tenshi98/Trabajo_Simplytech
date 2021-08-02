@@ -48,10 +48,10 @@ $meses=array(1=>"Enero",
 			);
 
 //Filtros
-$z= "WHERE orden_trabajo_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 if(isset($Ano)&&$Ano!=''){ 
-	$z.=" AND orden_trabajo_listado.progAno={$Ano}";
+	$z.=" AND orden_trabajo_listado.progAno=".$Ano;
 }
 
 
@@ -140,9 +140,9 @@ array_push( $arrCountMaq,$row );
 }
 
 //filtros 
-$z= "WHERE orden_trabajo_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}  AND orden_trabajo_listado_trabajos.idEstado=2";
+$z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."  AND orden_trabajo_listado_trabajos.idEstado=2";
 if(isset($Ano)&&$Ano!=''){ 
-	$z.=" AND orden_trabajo_listado.progAno={$Ano}";
+	$z.=" AND orden_trabajo_listado.progAno=".$Ano;
 }
 
 // Se trae un listado con todas las OT
@@ -220,9 +220,9 @@ array_push( $arrOT2,$row );
 }
 
 //filtros
-$z= "WHERE orden_trabajo_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND orden_trabajo_listado.idEstado=2";
+$z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND orden_trabajo_listado.idEstado=2";
 if(isset($Ano)&&$Ano!=''){ 
-	$z.=" AND orden_trabajo_listado.progAno={$Ano}";
+	$z.=" AND orden_trabajo_listado.progAno=".$Ano;
 }
 // Se trae un listado con todos los usuarios
 $arrInsumos = array();
@@ -322,7 +322,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen por Estado</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por Estado</h5>
 			</header>
 			 <div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -356,7 +356,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Graficos</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Graficos</h5>
 			</header>
 			 <div class="table-responsive">
 				<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -392,7 +392,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen por Tipo</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por Tipo</h5>
 			</header>
 			 <div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -427,7 +427,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Graficos</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Graficos</h5>
 			</header>
 			<div class="table-responsive">
 				<script type="text/javascript">
@@ -462,7 +462,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen por <?php echo $x_column_maquina_sing; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por <?php echo $x_column_maquina_sing; ?></h5>
 			</header>
 			 <div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -497,7 +497,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
 			</header>
 			<div class="table-responsive">
 				<script type="text/javascript">
@@ -532,7 +532,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Consumo General de Productos Valorizado</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo General de Productos Valorizado</h5>
 			</header>
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -557,7 +557,7 @@ array_push( $arrInsumos2,$row );
 								<tr class="odd">
 									<td><?php echo $consumos['Producto']; ?></td>
 									<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml'];?></td>
-									<td><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
+									<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 								</tr>
 						<?php 
 							} 
@@ -571,7 +571,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
 			</header>
 			<div class="table-responsive">
 				<script type="text/javascript">
@@ -615,7 +615,7 @@ array_push( $arrInsumos2,$row );
 		<div class="col-sm-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>Consumo de Productos Detallado</h5>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo de Productos Detallado</h5>
 				</header>
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -644,8 +644,8 @@ array_push( $arrInsumos2,$row );
 										<tr class="odd">
 											<td><?php echo $consumos['Producto']; ?></td>
 											<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml'];?></td>
-											<td><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
-											<td><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
+											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
+											<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
 								<?php 
 									} 
@@ -666,7 +666,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Consumo General de Insumos Valorizado</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo General de Insumos Valorizado</h5>
 			</header>
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -685,7 +685,7 @@ array_push( $arrInsumos2,$row );
 							<tr class="odd">
 								<td><?php echo $consumos['NombreInsumo']; ?></td>
 								<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad'];?></td>
-								<td><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
+								<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 							</tr>
 						<?php }  ?>                    
 					</tbody>
@@ -697,7 +697,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
 			</header>
 			<div class="table-responsive">
 				<script type="text/javascript">
@@ -731,7 +731,7 @@ array_push( $arrInsumos2,$row );
 		<div class="col-sm-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>Consumo de Insumos Detallado</h5>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo de Insumos Detallado</h5>
 				</header>
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -756,8 +756,8 @@ array_push( $arrInsumos2,$row );
 											<td><?php echo $consumos['Maquina']; ?></td>
 											<td><?php echo $consumos['NombreInsumo']; ?></td>
 											<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad'];?></td>
-											<td><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
-											<td><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
+											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
+											<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
 								<?php
 								}

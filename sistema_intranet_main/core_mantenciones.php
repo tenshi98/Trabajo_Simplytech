@@ -50,13 +50,13 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Mantencion Creada c
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Mantencion Modificada correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Mantencion borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 // Se traen todos los datos de mi usuario
 $query = "SELECT Fecha, Descripcion, Hora_ini, Hora_fin
 FROM `core_mantenciones`
-WHERE idMantencion = {$_GET['id']}";
+WHERE idMantencion = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -75,7 +75,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de la Mantencion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -89,18 +89,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Descripcion)) { $x4  = $Descripcion; }else{$x4  = $rowdata['Descripcion'];}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Imputs->form_time('Tiempo Inicio','Hora_ini', $x2, 2, 2);
-				$Form_Imputs->form_time('Tiempo Termino','Hora_fin', $x3, 2, 2);
-				$Form_Imputs->form_textarea('Descripcion', 'Descripcion', $x4, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
+				$Form_Inputs->form_time('Tiempo Inicio','Hora_ini', $x2, 2, 2);
+				$Form_Inputs->form_time('Tiempo Termino','Hora_fin', $x3, 2, 2);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x4, 2, 160);
 				
-				$Form_Imputs->form_input_hidden('idMantencion', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idMantencion', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -113,12 +113,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
+ } elseif ( ! empty($_GET['new']) ) {   ?>
 
- <div class="col-sm-8 fcenter">
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Mantencion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -132,18 +132,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Descripcion)) { $x4  = $Descripcion; }else{$x4  = '';}
 			
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Imputs->form_time('Tiempo Inicio','Hora_ini', $x2, 2, 2);
-				$Form_Imputs->form_time('Tiempo Termino','Hora_fin', $x3, 2, 2);
-				$Form_Imputs->form_textarea('Descripcion', 'Descripcion', $x4, 2, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
+				$Form_Inputs->form_time('Tiempo Inicio','Hora_ini', $x2, 2, 2);
+				$Form_Inputs->form_time('Tiempo Termino','Hora_fin', $x3, 2, 2);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x4, 2, 160);
 				
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 	 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -222,7 +222,7 @@ $search='';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Mantenciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Mantenciones</h5>
 			<div class="toolbar">
 				<?php 
 				//paginacion
@@ -248,11 +248,11 @@ $search='';
 						<td><?php echo cortar($man['Descripcion'], 140); ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&id='.$man['idMantencion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?php echo $location.'&id='.$man['idMantencion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php 
-								$ubicacion = $location.'&del='.$man['idMantencion'];
+								$ubicacion = $location.'&del='.simpleEncode($man['idMantencion'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro '.$man['Descripcion'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 							</div>
 						</td>
 					</tr>

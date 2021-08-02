@@ -17,6 +17,19 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de la pregunta
 $query = "SELECT
 quiz_listado.Nombre,
@@ -247,7 +260,7 @@ LEFT JOIN `quiz_escala`  esc_2      ON esc_2.idEscala                           
 LEFT JOIN `quiz_tipo_evaluacion`    ON quiz_tipo_evaluacion.idTipoEvaluacion     = quiz_listado.idTipoEvaluacion
 LEFT JOIN `quiz_tipo_quiz`          ON quiz_tipo_quiz.idTipoQuiz                 = quiz_listado.idTipoQuiz
 
-WHERE quiz_realizadas.idQuizRealizadas = {$_GET['view']}";
+WHERE quiz_realizadas.idQuizRealizadas = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -258,15 +271,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);		 
 
@@ -289,7 +295,7 @@ quiz_categorias.Nombre AS Categoria
 FROM `quiz_listado_preguntas`
 LEFT JOIN `quiz_tipo`        ON quiz_tipo.idTipo              = quiz_listado_preguntas.idTipo
 LEFT JOIN `quiz_categorias`  ON quiz_categorias.idCategoria   = quiz_listado_preguntas.idCategoria
-WHERE quiz_listado_preguntas.idQuiz = {$_GET['idQuiz']}
+WHERE quiz_listado_preguntas.idQuiz = ".$_GET['idQuiz']."
 ORDER BY quiz_listado_preguntas.idCategoria ASC
 ";
 //Consulta
@@ -302,15 +308,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrPreguntas,$row );
@@ -335,8 +334,11 @@ require_once 'core/Web.Header.Print.php';
  
 <?php if(isset($count)&&$count==0){ ?>
 		
-	<div class="col-sm-12">
-		<div class="alert alert-danger" role="alert" style="margin-top:20px;">No tiene preguntas asignadas a la Quiz</div>
+	<div class="col-sm-12" style="margin-top:20px;">
+		<?php
+		$Alert_Text  = 'No tiene preguntas asignadas a la Quiz';
+		alert_post_data(4,1,1, $Alert_Text);
+		?>
 	</div>
 
 <?php } ?>
@@ -346,7 +348,7 @@ require_once 'core/Web.Header.Print.php';
 	<div class="col-sm-12">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Datos Basicos</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Basicos</h5>
 			</header>
 			<div class="table-responsive">    
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -422,7 +424,7 @@ require_once 'core/Web.Header.Print.php';
 	<div class="col-sm-12">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Preguntas</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Preguntas</h5>
 			</header>
 			<div class="table-responsive">    
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">

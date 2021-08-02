@@ -64,11 +64,11 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 //verifico que sea un administrador
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Obtengo los datos de una observacion
 $query = "SELECT idMatriz, idProceso, idSistema
 FROM `sistema_variedades_categorias_matriz_proceso`
-WHERE idVarMatriz = {$_GET['edit']}";
+WHERE idVarMatriz = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -87,7 +87,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Editar Matriz</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -99,22 +99,22 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idMatriz)) {   $x2  = $idMatriz;  }else{$x2  = $rowdata['idMatriz'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, 0,
 										 'Matriz','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'cross_quality_proceso_matriz', $z, 0, 
 										 $dbConn, 'form1');
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idCategoria',$_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('idVarMatriz',$_GET['edit'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idVarMatriz',$_GET['edit'], 2);
 				
 				?>
 
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -123,13 +123,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //verifico que sea un administrador
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Agregar Nueva Matriz</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -141,22 +145,22 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($idMatriz)) {   $x2  = $idMatriz;  }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, 0,
 										 'Matriz','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'cross_quality_proceso_matriz', $z, 0, 
 										 $dbConn, 'form1');
 				
 				
 					
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idCategoria',$_GET['id'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);
 			
 				?>
 
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -170,7 +174,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 // Se traen todos los datos de mi Transporte
 $query = "SELECT Nombre
 FROM `sistema_variedades_categorias`
-WHERE idCategoria = {$_GET['id']}";
+WHERE idCategoria = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -199,8 +203,8 @@ LEFT JOIN `cross_quality_proceso_matriz`         ON cross_quality_proceso_matriz
 LEFT JOIN `core_cross_quality_analisis_calidad`  ON core_cross_quality_analisis_calidad.idTipo    = sistema_variedades_categorias_matriz_proceso.idProceso
 LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                       = sistema_variedades_categorias_matriz_proceso.idSistema
 
-WHERE sistema_variedades_categorias_matriz_proceso.idCategoria = {$_GET['id']}
-AND sistema_variedades_categorias_matriz_proceso.idSistema = {$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE sistema_variedades_categorias_matriz_proceso.idCategoria = ".$_GET['id']."
+AND sistema_variedades_categorias_matriz_proceso.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -222,21 +226,7 @@ array_push( $arrProductos,$row );
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Especie</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Matrices</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Editar Matrices');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar nueva matriz</a><?php }?>
 	</div>
@@ -247,11 +237,11 @@ array_push( $arrProductos,$row );
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'sistema_variedades_categorias.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'sistema_variedades_categorias_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'sistema_variedades_categorias.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'sistema_variedades_categorias_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'sistema_variedades_categorias_matriz_calidad.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Matriz Calidad</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class="active"><a href="<?php echo 'sistema_variedades_categorias_matriz_proceso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Matriz Proceso</a></li>
 						<li class=""><a href="<?php echo 'sistema_variedades_categorias_tipo_embalaje.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Tipo Embalaje</a></li>
@@ -279,11 +269,11 @@ array_push( $arrProductos,$row );
 							<td><?php echo $subprocesos['Sistema']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo $new_location.'&edit='.$subprocesos['idVarMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+									<a href="<?php echo $new_location.'&edit='.$subprocesos['idVarMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php 
-										$ubicacion = $new_location.'&del='.$subprocesos['idVarMatriz'];
+										$ubicacion = $new_location.'&del='.simpleEncode($subprocesos['idVarMatriz'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el dato '.$subprocesos['Matriz'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								</div>
 							</td>   
 						</tr> 
@@ -297,8 +287,8 @@ array_push( $arrProductos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

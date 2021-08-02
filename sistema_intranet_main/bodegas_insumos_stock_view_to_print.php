@@ -33,7 +33,7 @@ trabajadores_listado.Nombre AS trab_nombre,
 trabajadores_listado.ApellidoPat AS trab_appat,
 trabajadores_listado.ApellidoMat AS trab_apmat,
 proveedor_listado.Nombre AS Proveedor,
-(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega={$_GET['idBodega']} LIMIT 1) AS NombreBodega
+(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega=".$_GET['idBodega']." LIMIT 1) AS NombreBodega
 
 FROM `bodegas_insumos_facturacion_existencias`
 LEFT JOIN `bodegas_insumos_facturacion_tipo`    ON bodegas_insumos_facturacion_tipo.idTipo       = bodegas_insumos_facturacion_existencias.idTipo
@@ -44,8 +44,8 @@ LEFT JOIN `core_documentos_mercantiles`      ON core_documentos_mercantiles.idDo
 LEFT JOIN `proveedor_listado`                   ON proveedor_listado.idProveedor                 = bodegas_insumos_facturacion.idProveedor
 LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabajador             = bodegas_insumos_facturacion.idTrabajador
 
-WHERE bodegas_insumos_facturacion_existencias.idProducto={$_GET['view']}  
-AND bodegas_insumos_facturacion_existencias.idBodega={$_GET['idBodega']}
+WHERE bodegas_insumos_facturacion_existencias.idProducto=".$_GET['view']."  
+AND bodegas_insumos_facturacion_existencias.idBodega=".$_GET['idBodega']."
 ORDER BY bodegas_insumos_facturacion_existencias.Creacion_fecha DESC 
 LIMIT 100";
 //Consulta
@@ -57,15 +57,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProductos,$row );

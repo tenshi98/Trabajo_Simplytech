@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -33,11 +37,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idFacturacion':   if(empty($idFacturacion)){    $error['idFacturacion']    = 'error/No ha ingresado el id';}break;
 			case 'idSistema':       if(empty($idSistema)){        $error['idSistema']        = 'error/No ha ingresado el numero de documento';}break;
 			case 'idUsuario':       if(empty($idUsuario)){        $error['idUsuario']        = 'error/No ha seleccionado el usuario';}break;
@@ -56,6 +60,11 @@ if( ! defined('XMBCXRXSKGC')) {
 		
 		}
 	}	
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -103,15 +112,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['desc_cuotas_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['desc_cuotas_basicos']['idTrabajador']     = $idTrabajador;
-				$_SESSION['desc_cuotas_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['desc_cuotas_basicos']['idTipo']           = $idTipo;
-				$_SESSION['desc_cuotas_basicos']['Monto']            = $Monto;
-				$_SESSION['desc_cuotas_basicos']['N_Cuotas']         = $N_Cuotas;
-				$_SESSION['desc_cuotas_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['desc_cuotas_basicos']['idSistema']        = $idSistema;
-				$_SESSION['desc_cuotas_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['desc_cuotas_basicos']['fecha_auto']       = $fecha_auto;
+				if(isset($idTrabajador)&&$idTrabajador!=''){      $_SESSION['desc_cuotas_basicos']['idTrabajador']     = $idTrabajador;    }else{$_SESSION['desc_cuotas_basicos']['idTrabajador']    = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['desc_cuotas_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['desc_cuotas_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['desc_cuotas_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['desc_cuotas_basicos']['idTipo']          = '';}
+				if(isset($Monto)&&$Monto!=''){                    $_SESSION['desc_cuotas_basicos']['Monto']            = $Monto;           }else{$_SESSION['desc_cuotas_basicos']['Monto']           = '';}
+				if(isset($N_Cuotas)&&$N_Cuotas!=''){              $_SESSION['desc_cuotas_basicos']['N_Cuotas']         = $N_Cuotas;        }else{$_SESSION['desc_cuotas_basicos']['N_Cuotas']        = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['desc_cuotas_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['desc_cuotas_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['desc_cuotas_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['desc_cuotas_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['desc_cuotas_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['desc_cuotas_basicos']['idUsuario']       = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['desc_cuotas_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['desc_cuotas_basicos']['fecha_auto']      = '';}
 				
 				/*******************************/
 				//Calculo aproximado cuotas
@@ -135,23 +144,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `trabajadores_descuentos_cuotas_tipos`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'trabajadores_descuentos_cuotas_tipos', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -160,23 +153,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 				}else{
@@ -185,23 +162,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `usuarios_listado`
-					WHERE idUsuario = ".$idUsuario;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUsuario = mysqli_fetch_assoc ($resultado);
+					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['Usuario'] = $rowUsuario['Nombre'];
 				}else{
@@ -265,14 +226,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['desc_cuotas_listado']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['desc_cuotas_basicos']['idTrabajador']     = $idTrabajador;
-				$_SESSION['desc_cuotas_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['desc_cuotas_basicos']['idTipo']           = $idTipo;
-				$_SESSION['desc_cuotas_basicos']['Monto']            = $Monto;
-				$_SESSION['desc_cuotas_basicos']['N_Cuotas']         = $N_Cuotas;
-				$_SESSION['desc_cuotas_basicos']['idSistema']        = $idSistema;
-				$_SESSION['desc_cuotas_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['desc_cuotas_basicos']['fecha_auto']       = $fecha_auto;
+				if(isset($idTrabajador)&&$idTrabajador!=''){      $_SESSION['desc_cuotas_basicos']['idTrabajador']     = $idTrabajador;    }else{$_SESSION['desc_cuotas_basicos']['idTrabajador']    = '';}
+				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['desc_cuotas_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['desc_cuotas_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['desc_cuotas_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['desc_cuotas_basicos']['idTipo']          = '';}
+				if(isset($Monto)&&$Monto!=''){                    $_SESSION['desc_cuotas_basicos']['Monto']            = $Monto;           }else{$_SESSION['desc_cuotas_basicos']['Monto']           = '';}
+				if(isset($N_Cuotas)&&$N_Cuotas!=''){              $_SESSION['desc_cuotas_basicos']['N_Cuotas']         = $N_Cuotas;        }else{$_SESSION['desc_cuotas_basicos']['N_Cuotas']        = '';}
+				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['desc_cuotas_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['desc_cuotas_basicos']['Observaciones']   = '';}
+				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['desc_cuotas_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['desc_cuotas_basicos']['idSistema']       = '';}
+				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['desc_cuotas_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['desc_cuotas_basicos']['idUsuario']       = '';}
+				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['desc_cuotas_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['desc_cuotas_basicos']['fecha_auto']      = '';}
 				
 				/*******************************/
 				//Calculo aproximado cuotas
@@ -296,23 +258,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `trabajadores_descuentos_cuotas_tipos`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'trabajadores_descuentos_cuotas_tipos', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -321,23 +267,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 				}else{
@@ -346,29 +276,13 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `usuarios_listado`
-					WHERE idUsuario = ".$idUsuario;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowUsuario = mysqli_fetch_assoc ($resultado);
+					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['Usuario'] = $rowUsuario['Nombre'];
 				}else{
 					$_SESSION['desc_cuotas_basicos']['Usuario'] = '';
 				}
-			
+				
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -406,40 +320,6 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 
 		break;
-
-/*******************************************************************************************************************/		
-		case 'add_obs_ing':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['desc_cuotas_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['desc_cuotas_temporal'] = $_SESSION['desc_cuotas_basicos']['Observaciones'];
-			$_SESSION['desc_cuotas_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'new_file_ing':
 			
@@ -462,7 +342,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -565,15 +445,15 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['desc_cuotas_basicos'])){
-				if(!isset($_SESSION['desc_cuotas_basicos']['idTrabajador']) or $_SESSION['desc_cuotas_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
-				if(!isset($_SESSION['desc_cuotas_basicos']['Creacion_fecha']) or $_SESSION['desc_cuotas_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
-				if(!isset($_SESSION['desc_cuotas_basicos']['idTipo']) or $_SESSION['desc_cuotas_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de boleta';}
-				if(!isset($_SESSION['desc_cuotas_basicos']['Monto']) or $_SESSION['desc_cuotas_basicos']['Monto']=='' ){                   $error['Monto']            = 'error/No ha ingresado el Monto total de las cuotas';}
-				if(!isset($_SESSION['desc_cuotas_basicos']['N_Cuotas']) or $_SESSION['desc_cuotas_basicos']['N_Cuotas']=='' ){             $error['N_Cuotas']         = 'error/No ha ingresado el numero total de cuotas';}
-				if(!isset($_SESSION['desc_cuotas_basicos']['Observaciones']) or $_SESSION['desc_cuotas_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['desc_cuotas_basicos']['idSistema']) or $_SESSION['desc_cuotas_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['desc_cuotas_basicos']['idUsuario']) or $_SESSION['desc_cuotas_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['desc_cuotas_basicos']['fecha_auto']) or $_SESSION['desc_cuotas_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['idTrabajador']) OR $_SESSION['desc_cuotas_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['Creacion_fecha']) OR $_SESSION['desc_cuotas_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['idTipo']) OR $_SESSION['desc_cuotas_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de boleta';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['Monto']) OR $_SESSION['desc_cuotas_basicos']['Monto']=='' ){                   $error['Monto']            = 'error/No ha ingresado el Monto total de las cuotas';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['N_Cuotas']) OR $_SESSION['desc_cuotas_basicos']['N_Cuotas']=='' ){             $error['N_Cuotas']         = 'error/No ha ingresado el numero total de cuotas';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['Observaciones']) OR $_SESSION['desc_cuotas_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['idSistema']) OR $_SESSION['desc_cuotas_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['idUsuario']) OR $_SESSION['desc_cuotas_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['fecha_auto']) OR $_SESSION['desc_cuotas_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
 					
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al descuento por cuotas';
@@ -621,7 +501,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `trabajadores_descuentos_cuotas` (idSistema, idUsuario, idTipo, idTrabajador,
 				fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Observaciones, Monto, N_Cuotas) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -670,7 +550,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `trabajadores_descuentos_cuotas_listado` (idFacturacion,idSistema, idUsuario, idTipo, idTrabajador,
 							fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,Fecha, nCuota, TotalCuotas, monto_cuotas, idUso ) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -715,7 +595,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `trabajadores_descuentos_cuotas_archivos` (idFacturacion,idSistema, idUsuario, idTipo, idTrabajador,
 							fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta

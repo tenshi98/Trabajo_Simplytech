@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -41,11 +45,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idMatriz':            if(empty($idMatriz)){             $error['idMatriz']              = 'error/No ha ingresado el id';}break;
 			case 'idSistema':           if(empty($idSistema)){            $error['idSistema']             = 'error/No ha seleccionado el sistema';}break;
 			case 'idEstado':            if(empty($idEstado)){             $error['idEstado']              = 'error/No ha seleccionado el estado';}break;
@@ -73,6 +77,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($PuntoNombre)&&contar_palabras_censuradas($PuntoNombre)!=0){  $error['PuntoNombre'] = 'error/Edita Punto Nombre, contiene palabras no permitidas'; }	
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -90,7 +99,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'cross_quality_calidad_matriz', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'cross_quality_calidad_matriz', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Tipo de Planilla ya existe en el sistema';}
@@ -112,7 +121,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `cross_quality_proceso_matriz` (Nombre, cantPuntos, idTipo, idEstado,
 				idSistema, idNota_1, idNota_2, idNota_3) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -150,7 +159,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)&&isset($idMatriz)){
-				$ndata_1 = db_select_nrows ('Nombre', 'cross_quality_calidad_matriz', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idMatriz!='".$idMatriz."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'cross_quality_calidad_matriz', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idMatriz!='".$idMatriz."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Tipo de Planilla ya existe en el sistema';}
@@ -213,28 +222,49 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `cross_quality_proceso_matriz` WHERE idMatriz = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
 			}
-						
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'cross_quality_proceso_matriz', 'idMatriz = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 
 		break;
-
-
 		
 /*******************************************************************************************************************/
 		case 'clone_Matriz':
@@ -247,7 +277,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'cross_quality_calidad_matriz', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'cross_quality_calidad_matriz', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Tipo de Planilla ya existe en el sistema';}
@@ -272,15 +302,8 @@ if( ! defined('XMBCXRXSKGC')) {
 
 				/*******************************************************************/
 				// Se traen todos los datos de la maquina
-				$query = "SELECT 
-				cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2,
-				idNotaTipo_3, idTipo, idSistema
-				".$qry."
-				FROM `cross_quality_proceso_matriz`
-				WHERE idMatriz = {$idMatriz}";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata = mysqli_fetch_assoc ($resultado);
-
+				$rowdata = db_select_data (false, 'cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, idTipo, idSistema'.$qry, 'cross_quality_proceso_matriz', '', 'idMatriz ='.$idMatriz, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*******************************************************************/
 				//filtros
 				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){       $a  = "'".$rowdata['cantPuntos']."'" ;      }else{$a  ="''";}
@@ -312,7 +335,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `cross_quality_proceso_matriz` (cantPuntos,idTipo,idSistema,idEstado, Nombre,
 				idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3
 				".$qry.") 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -346,7 +369,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'cross_quality_calidad_matriz', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'cross_quality_calidad_matriz', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Tipo de Planilla ya existe en el sistema';}
@@ -371,15 +394,8 @@ if( ! defined('XMBCXRXSKGC')) {
 
 				/*******************************************************************/
 				// Se traen todos los datos de la maquina
-				$query = "SELECT 
-				cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2,
-				idNotaTipo_3, idTipo, idSistema
-				".$qry."
-				FROM `cross_quality_proceso_matriz`
-				WHERE idMatriz = {$idMatriz}";
-				$resultado = mysqli_query($dbConn, $query);
-				$rowdata = mysqli_fetch_assoc ($resultado);
-
+				$rowdata = db_select_data (false, 'cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, idTipo, idSistema'.$qry, 'cross_quality_proceso_matriz', '', 'idMatriz ='.$idMatriz, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*******************************************************************/
 				//filtros
 				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){       $a  = "'".$rowdata['cantPuntos']."'" ;      }else{$a  ="''";}
@@ -411,7 +427,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `cross_quality_proceso_matriz` (cantPuntos,idTipo,idSistema,idEstado, Nombre,
 				idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3
 				".$qry.") 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta

@@ -15,13 +15,13 @@ $original = "informe_busqueda_ordenes_compra_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor={$_GET['idProveedor']}";}
-if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){   $search .="&idLicitacion={$_GET['idLicitacion']}";}
-if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){             $search .="&idOcompra={$_GET['idOcompra']}";}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){           $search .="&idEstado={$_GET['idEstado']}";}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){   $search .="&idLicitacion=".$_GET['idLicitacion'];}
+if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){             $search .="&idOcompra=".$_GET['idOcompra'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){           $search .="&idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
-	$search .="&f_creacion_inicio={$_GET['f_creacion_inicio']}";
-	$search .="&f_creacion_termino={$_GET['f_creacion_termino']}";
+	$search .="&f_creacion_inicio=".$_GET['f_creacion_inicio'];
+	$search .="&f_creacion_termino=".$_GET['f_creacion_termino'];
 }
 			    
 //Verifico los permisos del usuario sobre la transaccion
@@ -71,14 +71,14 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z = "WHERE ocompra_listado.idOcompra>=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND ocompra_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND ocompra_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND ocompra_listado.idProveedor={$_GET['idProveedor']}";}
-if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){           $z.=" AND ocompra_listado.idOcompra={$_GET['idOcompra']}";}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){         $z.=" AND ocompra_listado.idEstado={$_GET['idEstado']}";}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){       $z.=" AND ocompra_listado.idOcompra=".$_GET['idOcompra'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){         $z.=" AND ocompra_listado.idEstado=".$_GET['idEstado'];}
 
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
-	$z.=" AND ocompra_listado.Creacion_fecha BETWEEN '{$_GET['f_creacion_inicio']}' AND '{$_GET['f_creacion_termino']}'";
+	$z.=" AND ocompra_listado.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 }
 
 /**********************************************************/
@@ -145,7 +145,7 @@ $search='';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Ordenes de Compra</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Ordenes de Compra</h5>
 			<div class="toolbar">
 				<?php 
 				//paginacion
@@ -159,22 +159,22 @@ $search='';
 						<th>
 							<div class="pull-left">Proveedor</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=proveedor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=proveedor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=proveedor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=proveedor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">N° Doc</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=ndoc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=ndoc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=ndoc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=ndoc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'?d=d'.$search.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -188,7 +188,7 @@ $search='';
 						<td><?php echo Fecha_estandar($orden['Creacion_fecha']); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$orden['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($orden['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
@@ -206,20 +206,20 @@ $search='';
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -234,13 +234,13 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($idEstado)) {             $x5  = $idEstado;            }else{$x5  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Emision</h3>';
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_input_number('N° Documento', 'idOcompra', $x2, 1);
-				$Form_Imputs->form_date('Fecha Creacion Desde','f_creacion_inicio', $x3, 1);
-				$Form_Imputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x4, 1);
-				$Form_Imputs->form_select('Estado','idEstado', $x5, 1, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Emision');
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Documento', 'idOcompra', $x2, 1);
+				$Form_Inputs->form_date('Fecha Creacion Desde','f_creacion_inicio', $x3, 1);
+				$Form_Inputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x4, 1);
+				$Form_Inputs->form_select('Estado','idEstado', $x5, 1, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
 				?> 
 
 				<div class="form-group">

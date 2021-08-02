@@ -23,16 +23,16 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_GET['ele_add']) )  { 
-	//Nueva ubicacion
-	$location = $new_location;
+if ( !empty($_POST['submit']) )  { 
+	//Agregamos nuevas direcciones
+	$location=$new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'ele_add';
 	require_once 'A1XRXS_sys/xrxs_form/alumnos_cursos.php';
 }
 //se borra un dato
-if ( !empty($_GET['ele_del']) )     {
+if ( !empty($_GET['del']) )     {
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -48,14 +48,55 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/ 
 //Listado de errores no manejables
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Estado cambiado correctamente';}
+if (isset($_GET['created']))  {$error['created'] 	  = 'sucess/Elearning agregado correctamente';}
+if (isset($_GET['deleted']))  {$error['deleted'] 	  = 'sucess/Elearning eliminado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//filtro para el Elearning
+$z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+?>
+
+<div class="col-sm-8 fcenter">
+	<div class="box dark">	
+		<header>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
+			<h5>Agregar Elearning</h5>	
+		</header>	
+		<div id="div-1" class="body">	
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+   
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idElearning)) {     $x1  = $idElearning;    }else{$x1  = '';}
+
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Elearning','idElearning', $x1, 2, 'idElearning', 'Nombre', 'alumnos_elearning_listado',$z, '', $dbConn);
+				
+				$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
+						
+				?>
+
+				<div class="form-group">		
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				</div>
+			</form>
+			<?php widget_validator(); ?> 
+		</div>
+	</div>
+</div>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+}else{
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre
 FROM `alumnos_cursos`
-WHERE idCurso = {$_GET['id']}";
+WHERE idCurso = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -71,23 +112,19 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-//Verifico el tipo de usuario que esta ingresando
-$z = " AND alumnos_elearning_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";	
 
 
 // SE TRAE UN LISTADO DE TODOS LOS PERMISOS ASIGNADOS SOLO A UN USUARIO
 $arrCursos = array();
 $query =
 "SELECT 
-alumnos_elearning_listado.idElearning, 
-alumnos_elearning_listado.Nombre AS NombreElearning,
-(SELECT COUNT(idRelacionados) FROM alumnos_cursos_elearning WHERE idElearning = alumnos_elearning_listado.idElearning AND idCurso = {$_GET['id']} LIMIT 1) AS contar,
-(SELECT idRelacionados FROM alumnos_cursos_elearning WHERE idElearning = alumnos_elearning_listado.idElearning AND idCurso = {$_GET['id']} LIMIT 1) AS idpermiso
+alumnos_cursos_elearning.idRelacionados, 
+alumnos_elearning_listado.Nombre AS NombreElearning
 
-FROM `alumnos_elearning_listado`
-LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema     = alumnos_elearning_listado.idSistema
-WHERE alumnos_elearning_listado.idElearning>=0 ".$z."
-ORDER BY NombreElearning ASC  
+FROM `alumnos_cursos_elearning`
+LEFT JOIN `alumnos_elearning_listado`   ON alumnos_elearning_listado.idElearning     = alumnos_cursos_elearning.idElearning
+WHERE alumnos_cursos_elearning.idCurso = ".$_GET['id']."
+ORDER BY alumnos_elearning_listado.Nombre ASC  
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -105,23 +142,13 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrCursos,$row );
 }
-mysqli_free_result($resultado);
+
 
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-			<div class="info-box-content">
-				<span class="info-box-text">Grupo</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Elearning Asignados</span>
-			</div>
-		</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['Nombre'], 'Editar Elearning Asignados');?>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Elearning</a><?php }?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -130,13 +157,13 @@ mysqli_free_result($resultado);
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'alumnos_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'alumnos_cursos_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class="active"><a href="<?php echo 'alumnos_cursos_elearning.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Elearning Asignados</a></li>
+				<li class=""><a href="<?php echo 'alumnos_cursos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'alumnos_cursos_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'alumnos_cursos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'alumnos_cursos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
+						<li class="active"><a href="<?php echo 'alumnos_cursos_elearning.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Elearning Asignados</a></li>
 						<li class=""><a href="<?php echo 'alumnos_cursos_documentacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Documentos Relacionados</a></li>
 					</ul>
                 </li>           
@@ -152,24 +179,20 @@ mysqli_free_result($resultado);
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					
-					<?php 
-					$xxx ='&id='.$_GET['id'];//Ciclo
-					foreach ($arrCursos as $permiso) {?>
+					<?php foreach ($arrCursos as $curso) {?>
 						<tr> 
-							<td><?php echo $permiso['NombreElearning']; ?></td>
+							<td><?php echo $curso['NombreElearning']; ?></td>
 							<td>
-								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	
-									<?php if ( $permiso['contar']=='1' ) {?>   
-										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.$xxx; ?>&ele_del=<?php echo $permiso['idpermiso']; ?>">OFF</a>
-										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
-									<?php } else {?>
-										<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
-										<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.$xxx; ?>&ele_add=<?php echo $permiso['idElearning']; ?>">ON</a>
-									<?php }?>    
-								</div> 
+								<div class="btn-group" style="width: 35px;" >
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($curso['idRelacionados'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar el elearning '.$curso['NombreElearning'].'?';?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>								
+								</div>
 							</td>
 						</tr> 
-						<?php } ?>
+					<?php } ?>
 						                
 				</tbody>
 			</table>
@@ -178,12 +201,12 @@ mysqli_free_result($resultado);
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

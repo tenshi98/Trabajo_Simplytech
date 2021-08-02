@@ -33,41 +33,41 @@ $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
 $z3 = "WHERE bodegas_productos_facturacion.idTipo=1"; //solo ventas
 $z4 = "WHERE bodegas_servicios_facturacion.idTipo=1"; //solo ventas
 //sololas del mismo sistema
-$z1.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z2.=" AND bodegas_insumos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z3.=" AND bodegas_productos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z4.=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //variable
-$search = '';
+$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 
 if(isset($_GET['details_mensual'])&&$_GET['details_mensual']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idProveedor={$_GET['details_mensual']}";
-	$z2.=" AND bodegas_insumos_facturacion.idProveedor={$_GET['details_mensual']}";
-	$z3.=" AND bodegas_productos_facturacion.idProveedor={$_GET['details_mensual']}";
-	$z4.=" AND bodegas_servicios_facturacion.idProveedor={$_GET['details_mensual']}";
-	$search .="&idProveedor={$_GET['details_mensual']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['details_mensual'];
+	$z2.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['details_mensual'];
+	$z3.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['details_mensual'];
+	$z4.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['details_mensual'];
+	$search .="&idProveedor=".$_GET['details_mensual'];
 }
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idEstado={$_GET['idEstado']}";
-	$z2.=" AND bodegas_insumos_facturacion.idEstado={$_GET['idEstado']}";
-	$z3.=" AND bodegas_productos_facturacion.idEstado={$_GET['idEstado']}";
-	$z4.=" AND bodegas_servicios_facturacion.idEstado={$_GET['idEstado']}";
-	$location .="&idEstado={$_GET['idEstado']}";
-	$search .="&idEstado={$_GET['idEstado']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idEstado=".$_GET['idEstado'];
+	$z2.=" AND bodegas_insumos_facturacion.idEstado=".$_GET['idEstado'];
+	$z3.=" AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado'];
+	$z4.=" AND bodegas_servicios_facturacion.idEstado=".$_GET['idEstado'];
+	$location .="&idEstado=".$_GET['idEstado'];
+	$search .="&idEstado=".$_GET['idEstado'];
 }
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$location .="&f_inicio={$_GET['f_inicio']}";
-	$location .="&f_termino={$_GET['f_termino']}";
-	$search .="&f_inicio={$_GET['f_inicio']}";
-	$search .="&f_termino={$_GET['f_termino']}";
+	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$location .="&f_inicio=".$_GET['f_inicio'];
+	$location .="&f_termino=".$_GET['f_termino'];
+	$search .="&f_inicio=".$_GET['f_inicio'];
+	$search .="&f_termino=".$_GET['f_termino'];
 }
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){ 
-	$location .="&idProveedor={$_GET['idProveedor']}";
-	$search .="&idProveedor={$_GET['idProveedor']}";
+	$location .="&idProveedor=".$_GET['idProveedor'];
+	$search .="&idProveedor=".$_GET['idProveedor'];
 }			
 		
 
@@ -242,12 +242,16 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
+<div class="col-sm-12 clearfix">		
+	<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_4.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+</div>
+
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#netos" data-toggle="tab">Graficos Netos</a></li>
-				<li class=""><a href="#totales" data-toggle="tab">Graficos Totales</a></li>          
+				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -285,7 +289,7 @@ $Total_4 = 0;
 							title: 'Grafico Compras Netos',
 							legend: { position: 'none' },
 							hAxis: { title: 'Mes', },
-							vAxis: { title: 'Valor $' },
+							vAxis: { title: 'Valor $', minValue: 0 },
 							width: "100%",
 						};
 						var chart = new google.visualization.ColumnChart(
@@ -329,7 +333,7 @@ $Total_4 = 0;
 							title: 'Grafico Compras Totales',
 							legend: { position: 'none' },
 							hAxis: { title: 'Mes', },
-							vAxis: { title: 'Valor $' },
+							vAxis: { title: 'Valor $', minValue: 0 },
 							width: "100%",
 						};
 						var chart = new google.visualization.ColumnChart(
@@ -350,11 +354,8 @@ $Total_4 = 0;
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Compras Proveedor por mes</h5>
-			<div class="toolbar">
-				<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_4.php?d=d'.$search  ?>" class="btn btn-xs btn-metis-2 btn-line cboxElement"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			</div>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -458,8 +459,8 @@ $Total_4 = 0;
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 	
@@ -474,41 +475,41 @@ $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
 $z3 = "WHERE bodegas_productos_facturacion.idTipo=1"; //solo ventas
 $z4 = "WHERE bodegas_servicios_facturacion.idTipo=1"; //solo ventas
 //sololas del mismo sistema
-$z1.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z2.=" AND bodegas_insumos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z3.=" AND bodegas_productos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z4.=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //variable
-$search = '';
+$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 
 if(isset($_GET['details_diario'])&&$_GET['details_diario']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idProveedor={$_GET['details_diario']}";
-	$z2.=" AND bodegas_insumos_facturacion.idProveedor={$_GET['details_diario']}";
-	$z3.=" AND bodegas_productos_facturacion.idProveedor={$_GET['details_diario']}";
-	$z4.=" AND bodegas_servicios_facturacion.idProveedor={$_GET['details_diario']}";
-	$search .="&idProveedor={$_GET['details_diario']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['details_diario'];
+	$z2.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['details_diario'];
+	$z3.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['details_diario'];
+	$z4.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['details_diario'];
+	$search .="&idProveedor=".$_GET['details_diario'];
 }
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idEstado={$_GET['idEstado']}";
-	$z2.=" AND bodegas_insumos_facturacion.idEstado={$_GET['idEstado']}";
-	$z3.=" AND bodegas_productos_facturacion.idEstado={$_GET['idEstado']}";
-	$z4.=" AND bodegas_servicios_facturacion.idEstado={$_GET['idEstado']}";
-	$location .="&idEstado={$_GET['idEstado']}";
-	$search .="&idEstado={$_GET['idEstado']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idEstado=".$_GET['idEstado'];
+	$z2.=" AND bodegas_insumos_facturacion.idEstado=".$_GET['idEstado'];
+	$z3.=" AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado'];
+	$z4.=" AND bodegas_servicios_facturacion.idEstado=".$_GET['idEstado'];
+	$location .="&idEstado=".$_GET['idEstado'];
+	$search .="&idEstado=".$_GET['idEstado'];
 }
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$location .="&f_inicio={$_GET['f_inicio']}";
-	$location .="&f_termino={$_GET['f_termino']}";
-	$search .="&f_inicio={$_GET['f_inicio']}";
-	$search .="&f_termino={$_GET['f_termino']}";
+	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$location .="&f_inicio=".$_GET['f_inicio'];
+	$location .="&f_termino=".$_GET['f_termino'];
+	$search .="&f_inicio=".$_GET['f_inicio'];
+	$search .="&f_termino=".$_GET['f_termino'];
 }
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){ 
-	$location .="&idProveedor={$_GET['idProveedor']}";
-	$search .="&idProveedor={$_GET['idProveedor']}";
+	$location .="&idProveedor=".$_GET['idProveedor'];
+	$search .="&idProveedor=".$_GET['idProveedor'];
 }			
 		
 
@@ -683,13 +684,16 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
+<div class="col-sm-12 clearfix">		
+	<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_3.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+</div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#netos" data-toggle="tab">Graficos Netos</a></li>
-				<li class=""><a href="#totales" data-toggle="tab">Graficos Totales</a></li>          
+				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -727,7 +731,7 @@ $Total_4 = 0;
 							title: 'Grafico Compras Netos',
 							legend: { position: 'none' },
 							hAxis: { title: 'Fecha', },
-							vAxis: { title: 'Valor $' },
+							vAxis: { title: 'Valor $', minValue: 0 },
 							width: "100%",
 						};
 						var chart = new google.visualization.ColumnChart(
@@ -771,7 +775,7 @@ $Total_4 = 0;
 							title: 'Grafico Compras Totales',
 							legend: { position: 'none' },
 							hAxis: { title: 'Fecha', },
-							vAxis: { title: 'Valor $' },
+							vAxis: { title: 'Valor $', minValue: 0 },
 							width: "100%",
 						};
 						var chart = new google.visualization.ColumnChart(
@@ -792,11 +796,8 @@ $Total_4 = 0;
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Compras Proveedor Por dia</h5>
-			<div class="toolbar">
-				<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_3.php?d=d'.$search  ?>" class="btn btn-xs btn-metis-2 btn-line cboxElement"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			</div>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -901,8 +902,8 @@ $Total_4 = 0;
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
@@ -915,41 +916,41 @@ $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
 $z3 = "WHERE bodegas_productos_facturacion.idTipo=1"; //solo ventas
 $z4 = "WHERE bodegas_servicios_facturacion.idTipo=1"; //solo ventas
 //sololas del mismo sistema
-$z1.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z2.=" AND bodegas_insumos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z3.=" AND bodegas_productos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z4.=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //variable
-$search = '';
+$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 
 if(isset($_GET['details_semanal'])&&$_GET['details_semanal']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idProveedor={$_GET['details_semanal']}";
-	$z2.=" AND bodegas_insumos_facturacion.idProveedor={$_GET['details_semanal']}";
-	$z3.=" AND bodegas_productos_facturacion.idProveedor={$_GET['details_semanal']}";
-	$z4.=" AND bodegas_servicios_facturacion.idProveedor={$_GET['details_semanal']}";
-	$search .="&idProveedor={$_GET['details_semanal']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['details_semanal'];
+	$z2.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['details_semanal'];
+	$z3.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['details_semanal'];
+	$z4.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['details_semanal'];
+	$search .="&idProveedor=".$_GET['details_semanal'];
 }
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idEstado={$_GET['idEstado']}";
-	$z2.=" AND bodegas_insumos_facturacion.idEstado={$_GET['idEstado']}";
-	$z3.=" AND bodegas_productos_facturacion.idEstado={$_GET['idEstado']}";
-	$z4.=" AND bodegas_servicios_facturacion.idEstado={$_GET['idEstado']}";
-	$location .="&idEstado={$_GET['idEstado']}";
-	$search .="&idEstado={$_GET['idEstado']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idEstado=".$_GET['idEstado'];
+	$z2.=" AND bodegas_insumos_facturacion.idEstado=".$_GET['idEstado'];
+	$z3.=" AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado'];
+	$z4.=" AND bodegas_servicios_facturacion.idEstado=".$_GET['idEstado'];
+	$location .="&idEstado=".$_GET['idEstado'];
+	$search .="&idEstado=".$_GET['idEstado'];
 }
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$location .="&f_inicio={$_GET['f_inicio']}";
-	$location .="&f_termino={$_GET['f_termino']}";
-	$search .="&f_inicio={$_GET['f_inicio']}";
-	$search .="&f_termino={$_GET['f_termino']}";
+	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$location .="&f_inicio=".$_GET['f_inicio'];
+	$location .="&f_termino=".$_GET['f_termino'];
+	$search .="&f_inicio=".$_GET['f_inicio'];
+	$search .="&f_termino=".$_GET['f_termino'];
 }
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){ 
-	$location .="&idProveedor={$_GET['idProveedor']}";
-	$search .="&idProveedor={$_GET['idProveedor']}";
+	$location .="&idProveedor=".$_GET['idProveedor'];
+	$search .="&idProveedor=".$_GET['idProveedor'];
 }			
 		
 
@@ -1124,13 +1125,16 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
+<div class="col-sm-12 clearfix">		
+	<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_2.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+</div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#netos" data-toggle="tab">Graficos Netos</a></li>
-				<li class=""><a href="#totales" data-toggle="tab">Graficos Totales</a></li>          
+				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -1168,7 +1172,7 @@ $Total_4 = 0;
 							title: 'Grafico Compras Netos',
 							legend: { position: 'none' },
 							hAxis: { title: 'Semana', },
-							vAxis: { title: 'Valor $' },
+							vAxis: { title: 'Valor $', minValue: 0 },
 							width: "100%",
 						};
 						var chart = new google.visualization.ColumnChart(
@@ -1212,7 +1216,7 @@ $Total_4 = 0;
 							title: 'Grafico Compras Totales',
 							legend: { position: 'none' },
 							hAxis: { title: 'Semana', },
-							vAxis: { title: 'Valor $' },
+							vAxis: { title: 'Valor $', minValue: 0 },
 							width: "100%",
 						};
 						var chart = new google.visualization.ColumnChart(
@@ -1233,11 +1237,8 @@ $Total_4 = 0;
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Compras Proveedor por semana</h5>
-			<div class="toolbar">
-				<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_2.php?d=d'.$search  ?>" class="btn btn-xs btn-metis-2 btn-line cboxElement"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			</div>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -1341,8 +1342,8 @@ $Total_4 = 0;
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 	
@@ -1356,37 +1357,37 @@ $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
 $z3 = "WHERE bodegas_productos_facturacion.idTipo=1"; //solo ventas
 $z4 = "WHERE bodegas_servicios_facturacion.idTipo=1"; //solo ventas
 //sololas del mismo sistema
-$z1.=" AND bodegas_arriendos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z2.=" AND bodegas_insumos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z3.=" AND bodegas_productos_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$z4.=" AND bodegas_servicios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //variable
-$search = '';
+$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z2.=" AND bodegas_insumos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z3.=" AND bodegas_productos_facturacion.idProveedor={$_GET['idProveedor']}";
-	$z4.=" AND bodegas_servicios_facturacion.idProveedor={$_GET['idProveedor']}";
-	$location .="&idProveedor={$_GET['idProveedor']}";
-	$search .="&idProveedor={$_GET['idProveedor']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z2.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z3.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];
+	$z4.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['idProveedor'];
+	$location .="&idProveedor=".$_GET['idProveedor'];
+	$search .="&idProveedor=".$_GET['idProveedor'];
 }
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idEstado={$_GET['idEstado']}";
-	$z2.=" AND bodegas_insumos_facturacion.idEstado={$_GET['idEstado']}";
-	$z3.=" AND bodegas_productos_facturacion.idEstado={$_GET['idEstado']}";
-	$z4.=" AND bodegas_servicios_facturacion.idEstado={$_GET['idEstado']}";
-	$location .="&idEstado={$_GET['idEstado']}";
-	$search .="&idEstado={$_GET['idEstado']}";
+	$z1.=" AND bodegas_arriendos_facturacion.idEstado=".$_GET['idEstado'];
+	$z2.=" AND bodegas_insumos_facturacion.idEstado=".$_GET['idEstado'];
+	$z3.=" AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado'];
+	$z4.=" AND bodegas_servicios_facturacion.idEstado=".$_GET['idEstado'];
+	$location .="&idEstado=".$_GET['idEstado'];
+	$search .="&idEstado=".$_GET['idEstado'];
 }
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
-	$location .="&f_inicio={$_GET['f_inicio']}";
-	$location .="&f_termino={$_GET['f_termino']}";
-	$search .="&f_inicio={$_GET['f_inicio']}";
-	$search .="&f_termino={$_GET['f_termino']}";
+	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$location .="&f_inicio=".$_GET['f_inicio'];
+	$location .="&f_termino=".$_GET['f_termino'];
+	$search .="&f_inicio=".$_GET['f_inicio'];
+	$search .="&f_termino=".$_GET['f_termino'];
 }
 
 
@@ -1547,13 +1548,16 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
+<div class="col-sm-12 clearfix">		
+	<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_1.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+</div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#netos" data-toggle="tab">Graficos Netos</a></li>
-				<li class=""><a href="#totales" data-toggle="tab">Graficos Totales</a></li>          
+				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -1589,7 +1593,7 @@ $Total_4 = 0;
 							title: 'Grafico Compras Netos',
 							legend: { position: 'none' },
 							hAxis: { title: 'Empresas', },
-							vAxis: { title: 'Valor $' },
+							vAxis: { title: 'Valor $', minValue: 0 },
 							width: "100%",
 						};
 						var chart = new google.visualization.ColumnChart(
@@ -1631,7 +1635,7 @@ $Total_4 = 0;
 							title: 'Grafico Compras Totales',
 							legend: { position: 'none' },
 							hAxis: { title: 'Empresas', },
-							vAxis: { title: 'Valor $' },
+							vAxis: { title: 'Valor $', minValue: 0 },
 							width: "100%",
 						};
 						var chart = new google.visualization.ColumnChart(
@@ -1653,11 +1657,8 @@ $Total_4 = 0;
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Compras por proveedor</h5>
-			<div class="toolbar">
-				<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_1.php?d=d'.$search  ?>" class="btn btn-xs btn-metis-2 btn-line cboxElement"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			</div>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -1725,9 +1726,9 @@ $Total_4 = 0;
 							
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_mensual='.$prod['idProveedor']; ?>" title="Ver detalle Mensual" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_semanal='.$prod['idProveedor']; ?>" title="Ver detalle Semanal" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_diario='.$prod['idProveedor']; ?>" title="Ver detalle Diario" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_mensual='.$prod['idProveedor']; ?>" title="Ver detalle Mensual" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_semanal='.$prod['idProveedor']; ?>" title="Ver detalle Semanal" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_diario='.$prod['idProveedor']; ?>" title="Ver detalle Diario" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -1766,20 +1767,20 @@ $Total_4 = 0;
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -1793,11 +1794,11 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($f_termino)) {    $x4  = $f_termino;    }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select_filter('Estado de Pago','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 0, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x3, 1);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x4, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Estado de Pago','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x3, 1);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 1);
 						
 				?> 
 

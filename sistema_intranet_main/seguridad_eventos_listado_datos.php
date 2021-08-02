@@ -50,7 +50,7 @@ seguridad_eventos_listado.Hora,
 seguridad_eventos_listado.Observacion
 
 FROM `seguridad_eventos_listado`
-WHERE seguridad_eventos_listado.idEvento = {$_GET['id']}";
+WHERE seguridad_eventos_listado.idEvento = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -67,21 +67,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Evento</span>
-				<span class="info-box-number"><?php echo fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs'; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Datos Basicos</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
@@ -89,9 +75,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'seguridad_eventos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class="active"><a href="<?php echo 'seguridad_eventos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'seguridad_eventos_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivos Adjuntos</a></li>          
+				<li class=""><a href="<?php echo 'seguridad_eventos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class="active"><a href="<?php echo 'seguridad_eventos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'seguridad_eventos_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos Adjuntos</a></li>          
 			</ul>	
 		</header>
         <div class="table-responsive">
@@ -105,12 +91,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($Observacion)) {   $x3  = $Observacion;  }else{$x3  = $rowdata['Observacion'];}
 
 					//se dibujan los inputs
-					$Form_Imputs = new Form_Inputs();
-					$Form_Imputs->form_date('Fecha','Fecha', $x1, 2);
-					$Form_Imputs->form_time('Hora','Hora', $x2, 2, 2);
-					$Form_Imputs->form_ckeditor('Observacion','Observacion', $x3, 2, 2);
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
+					$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
+					$Form_Inputs->form_ckeditor('Observacion','Observacion', $x3, 2, 2);
 					
-					$Form_Imputs->form_input_hidden('idEvento', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idEvento', $_GET['id'], 2);
 					?>
 					
 
@@ -126,8 +112,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

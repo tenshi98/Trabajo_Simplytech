@@ -48,13 +48,15 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Evaluacion creada c
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Evaluacion editada correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Evaluacion borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos del trabajador
 $query = "SELECT idEstadoAprobacion
 FROM `quiz_realizadas`
-WHERE idQuizRealizadas = {$_GET['id']}";
+WHERE idQuizRealizadas = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -76,7 +78,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Modificacion Evaluacion</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -87,16 +89,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idEstadoAprobacion)) {  $x1  = $idEstadoAprobacion; }else{$x1  = $rowdata['idEstadoAprobacion'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Estado Aprobacion','idEstadoAprobacion', $x1, 2, 'idEstadoAprobacion', 'Nombre', 'core_estado_aprobacion_evaluacion', 'idEstadoAprobacion!=3', '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Estado Aprobacion','idEstadoAprobacion', $x1, 2, 'idEstadoAprobacion', 'Nombre', 'core_estado_aprobacion_evaluacion', 'idEstadoAprobacion!=3', '', $dbConn);
 				
 				
-				$Form_Imputs->form_input_hidden('idQuizRealizadas', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idQuizRealizadas', $_GET['id'], 2);
 				?>
 								
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form> 
 			<?php widget_validator(); ?>
@@ -115,14 +117,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 //Solo las que correspondan		
 $z     = "WHERE quiz_realizadas.idQuizRealizadas!=0"; 
 //Tipo de usuario
-$z.= " AND quiz_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.= " AND quiz_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
-if(isset($_GET['idCurso'])&&$_GET['idCurso']!=''){                     $z.=" AND alumnos_listado.idCurso={$_GET['idCurso']}";}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                   $z.=" AND quiz_listado.idEstado={$_GET['idEstado']}";}
-if(isset($_GET['idQuiz'])&&$_GET['idQuiz']!=''){                       $z.=" AND quiz_realizadas.idQuiz={$_GET['idQuiz']}";}
-if(isset($_GET['idTipoEvaluacion'])&&$_GET['idTipoEvaluacion']!=''){   $z.=" AND quiz_listado.idTipoEvaluacion={$_GET['idTipoEvaluacion']}";}
-if(isset($_GET['idTipoQuiz'])&&$_GET['idTipoQuiz']!=''){               $z.=" AND quiz_listado.idTipoQuiz={$_GET['idTipoQuiz']}";}
-if(isset($_GET['idLimiteTiempo'])&&$_GET['idLimiteTiempo']!=''){       $z.=" AND quiz_listado.idLimiteTiempo={$_GET['idLimiteTiempo']}";}
+if(isset($_GET['idCurso'])&&$_GET['idCurso']!=''){                     $z.=" AND alumnos_listado.idCurso='".$_GET['idCurso']."'";}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                   $z.=" AND quiz_listado.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['idQuiz'])&&$_GET['idQuiz']!=''){                       $z.=" AND quiz_realizadas.idQuiz='".$_GET['idQuiz']."'";}
+if(isset($_GET['idTipoEvaluacion'])&&$_GET['idTipoEvaluacion']!=''){   $z.=" AND quiz_listado.idTipoEvaluacion='".$_GET['idTipoEvaluacion']."'";}
+if(isset($_GET['idTipoQuiz'])&&$_GET['idTipoQuiz']!=''){               $z.=" AND quiz_listado.idTipoQuiz='".$_GET['idTipoQuiz']."'";}
+if(isset($_GET['idLimiteTiempo'])&&$_GET['idLimiteTiempo']!=''){       $z.=" AND quiz_listado.idLimiteTiempo='".$_GET['idLimiteTiempo']."'";}
+if(isset($_GET['Programada_fecha'])&&$_GET['Programada_fecha']!=''){   $z.=" AND quiz_realizadas.Programada_fecha='".$_GET['Programada_fecha']."'";}
 			
 /*************************************************************************************************/
 //Evaluaciones
@@ -168,7 +171,7 @@ array_push( $arrAlumnos,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Alumnos</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Alumnos</h5>	
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -200,7 +203,7 @@ array_push( $arrAlumnos,$row );
 							<td><?php echo $eva['Evaluacion']; ?></td>
 							<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$eva['idQuizRealizadas']; ?>" title="Editar Evaluacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$eva['idQuizRealizadas']; ?>" title="Editar Evaluacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>		
 						</tr>
@@ -217,8 +220,8 @@ array_push( $arrAlumnos,$row );
  
  
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 	
@@ -227,14 +230,12 @@ array_push( $arrAlumnos,$row );
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-
- 
+$yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -242,7 +243,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {        $x1  = $idCliente;         }else{$x1  = '';}
+				if(isset($Programada_fecha)) { $x1  = $Programada_fecha;  }else{$x1  = '';}
 				if(isset($idCurso)) {          $x2  = $idCurso;           }else{$x2  = '';}
 				if(isset($idEstado)) {         $x3  = $idEstado;          }else{$x3  = '';}
 				if(isset($idQuiz)) {           $x4  = $idQuiz;            }else{$x4  = '';}
@@ -251,17 +252,16 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($idLimiteTiempo)) {   $x7  = $idLimiteTiempo;    }else{$x7  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Clientes','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $z, 0,
-										'Grupo','idCurso', $x2, 2, 'idCurso', 'Nombre', 'alumnos_cursos', 'idEstado=1', 0, 
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x1, 2);
+				$Form_Inputs->form_select_filter('Cursos Alumnos','idCurso', $x2, 2, 'idCurso', 'Nombre', 'cursos_listado', $yz, '', $dbConn);
+				$Form_Inputs->form_select_depend1('Estado Cuestionario','idEstado', $x3, 2, 'idEstado', 'Nombre', 'core_estados', 0, 0,
+										'Cuestionario','idQuiz', $x4, 2, 'idQuiz', 'Nombre', 'quiz_listado', $yz, 0, 
 										$dbConn, 'form1');
-				$Form_Imputs->form_select_depend1('Estado','idEstado', $x3, 2, 'idEstado', 'Nombre', 'core_estados', 0, 0,
-										'Evaluacion','idQuiz', $x4, 2, 'idQuiz', 'Nombre', 'quiz_listado', $z, 0, 
-										$dbConn, 'form1');
-				$Form_Imputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x5, 1, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x6, 1, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tiempo Limite','idLimiteTiempo', $x7, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-								
+				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x5, 1, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x6, 1, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tiempo Limite','idLimiteTiempo', $x7, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				
 				?> 
 
 				<div class="form-group">

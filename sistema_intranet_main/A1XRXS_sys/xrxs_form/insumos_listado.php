@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -35,19 +39,19 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idProducto':      if(empty($idProducto)){       $error['idProducto']      = 'error/No ha ingresado el id';}break;
 			case 'idCategoria':     if(empty($idCategoria)){      $error['idCategoria']     = 'error/No ha seleccionado la categoria del producto';}break;
 			case 'idUml':           if(empty($idUml)){            $error['idUml']           = 'error/No ha seleccionado la unidad de medida del producto';}break;
 			case 'Nombre':          if(empty($Nombre)){           $error['Nombre']          = 'error/No ha ingresado el nombre del producto';}break;
 			case 'Marca':           if(empty($Marca)){            $error['Marca']           = 'error/No ha ingresado la marca del producto';}break;
-			case 'StockLimite':     if(empty($StockLimite)){      $error['StockLimite']     = 'error/No ha ingresado el stock minimo del producto';}break;
-			case 'ValorIngreso':    if(empty($ValorIngreso)){     $error['ValorIngreso']    = 'error/No ha ingresado el valor del producto';}break;
-			case 'ValorEgreso':     if(empty($ValorEgreso)){      $error['ValorEgreso']     = 'error/No ha ingresado el valor del producto';}break;
+			case 'StockLimite':     if(!isset($StockLimite)){     $error['StockLimite']     = 'error/No ha ingresado el stock minimo del producto';}break;
+			case 'ValorIngreso':    if(!isset($ValorIngreso)){    $error['ValorIngreso']    = 'error/No ha ingresado el valor del producto';}break;
+			case 'ValorEgreso':     if(!isset($ValorEgreso)){     $error['ValorEgreso']     = 'error/No ha ingresado el valor del producto';}break;
 			case 'Descripcion':     if(empty($Descripcion)){      $error['Descripcion']     = 'error/No ha ingresado una Descripcion';}break;
 			case 'Codigo':          if(empty($Codigo)){           $error['Codigo']          = 'error/No ha ingresado un Codigo';}break;
 			case 'idProveedor':     if(empty($idProveedor)){      $error['idProveedor']     = 'error/No ha seleccionado un proveedor';}break;
@@ -60,7 +64,14 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Marca)&&contar_palabras_censuradas($Marca)!=0){              $error['Marca']       = 'error/Edita la Marca, contiene palabras no permitidas'; }	
+	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){  $error['Descripcion'] = 'error/Edita la Descripcion, contiene palabras no permitidas'; }	
+	if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){            $error['Codigo']      = 'error/Edita Codigo, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -77,7 +88,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)){
-				$ndata_1 = db_select_nrows ('Nombre', 'insumos_listado', '', "Nombre='".$Nombre."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'insumos_listado', '', "Nombre='".$Nombre."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
@@ -108,7 +119,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `insumos_listado` (idCategoria,idUml,Nombre,
 				Marca,StockLimite,ValorIngreso,ValorEgreso,Descripcion,Codigo,idProveedor,Direccion_img,
 				FichaTecnica,HDS, idEstado, idProveedorFijo, idTipoImagen ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -146,7 +157,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idProducto)){
-				$ndata_1 = db_select_nrows ('Nombre', 'insumos_listado', '', "Nombre='".$Nombre."' AND idProducto!='".$idProducto."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'insumos_listado', '', "Nombre='".$Nombre."' AND idProducto!='".$idProducto."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
@@ -207,7 +218,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["Direccion_img"]["error"] > 0){
-				$error['Direccion_img']       = 'error/Ha ocurrido un error';
+				$error['Direccion_img'] = 'error/'.uploadPHPError($_FILES["Direccion_img"]["error"]);
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
@@ -587,7 +598,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["FichaTecnica"]["error"] > 0){
-				$error['FichaTecnica']       = 'error/Ha ocurrido un error';
+				$error['FichaTecnica'] = 'error/'.uploadPHPError($_FILES["FichaTecnica"]["error"]);
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/pdf", "application/octet-stream", "application/x-real", "application/vnd.adobe.xfdf", "application/vnd.fdf", "binary/octet-stream");
@@ -649,7 +660,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["HDS"]["error"] > 0){
-				$error['HDS']       = 'error/Ha ocurrido un error';
+				$error['HDS'] = 'error/'.uploadPHPError($_FILES["HDS"]["error"]);
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/pdf", "application/octet-stream", "application/x-real", "application/vnd.adobe.xfdf", "application/vnd.fdf", "binary/octet-stream");
@@ -711,14 +722,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se obtiene el nombre del logo
-			$query = "SELECT Direccion_img
-			FROM `insumos_listado`
-			WHERE idProducto = {$_GET['del_img']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
-			
+			$rowdata = db_select_data (false, 'Direccion_img', 'insumos_listado', '', 'idProducto = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `insumos_listado` SET Direccion_img='', idTipoImagen=0 WHERE idProducto = '{$_GET['del_img']}'";
+			$query  = "UPDATE `insumos_listado` SET Direccion_img='', idTipoImagen=0 WHERE idProducto = '".$_GET['del_img']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -762,14 +769,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se obtiene el nombre del logo
-			$query = "SELECT FichaTecnica
-			FROM `insumos_listado`
-			WHERE idProducto = {$_GET['del_file']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'FichaTecnica', 'insumos_listado', '', 'idProducto = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `insumos_listado` SET FichaTecnica='' WHERE idProducto = '{$_GET['del_file']}'";
+			$query  = "UPDATE `insumos_listado` SET FichaTecnica='' WHERE idProducto = '".$_GET['del_file']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -813,14 +816,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se obtiene el nombre del logo
-			$query = "SELECT HDS
-			FROM `insumos_listado`
-			WHERE idProducto = {$_GET['del_hds']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			$rowdata = db_select_data (false, 'HDS', 'insumos_listado', '', 'idProducto = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `insumos_listado` SET HDS='' WHERE idProducto = '{$_GET['del_hds']}'";
+			$query  = "UPDATE `insumos_listado` SET HDS='' WHERE idProducto = '".$_GET['del_hds']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -863,73 +862,87 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			// Se obtiene el nombre del logo
-			$query = "SELECT Direccion_img, FichaTecnica, HDS
-			FROM `insumos_listado`
-			WHERE idProducto = {$_GET['del']}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `insumos_listado` WHERE idProducto = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//Se elimina la imagen
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				//Se elimina el archivo adjunto
-				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['FichaTecnica']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//Se elimina el archivo adjunto
-				if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['HDS'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['HDS']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//Redirijo			
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'Direccion_img, FichaTecnica, HDS', 'insumos_listado', '', 'idProducto = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			
+				//se borran los datos
+				$resultado = db_delete_data (false, 'insumos_listado', 'idProducto = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//Se elimina la imagen
+					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['Direccion_img']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					//Se elimina el archivo adjunto
+					if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['FichaTecnica']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					//Se elimina el archivo adjunto
+					if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['HDS'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['HDS']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 			
 
 		break;							
@@ -940,9 +953,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idProducto  = $_GET['id'];
-			$estado      = $_GET['estado'];
-			$query  = "UPDATE insumos_listado SET idEstado = '$estado'	
-			WHERE idProducto    = '$idProducto'";
+			$idEstado    = simpleDecode($_GET['estado'], fecha_actual());
+			$query  = "UPDATE insumos_listado SET idEstado = '".$idEstado."'	
+			WHERE idProducto    = '".$idProducto."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta

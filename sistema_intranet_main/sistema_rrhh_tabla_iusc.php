@@ -33,18 +33,19 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Tipo de Amonestacion Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Tipo de Amonestacion Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tipo de Amonestacion borrado correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Tramos Impuesto Unico Creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Tramos Impuesto Unico Modificado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tramos Impuesto Unico borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
-?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT Tramo,UTM_Desde,UTM_Hasta,Tasa, Rebaja
 FROM `sistema_rrhh_tabla_iusc`
-WHERE idTablaImpuesto = {$_GET['id']}";
+WHERE idTablaImpuesto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -63,8 +64,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
-			<h5>Modificacion del Tipo de Amonestacion</h5>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Modificacion Tramos Impuesto Unico</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -78,19 +79,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Rebaja)) {     $x5  = $Rebaja;        }else{$x5  = Cantidades_decimales_justos($rowdata['Rebaja']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Tramo', 'Tramo', $x1, 2);
-				$Form_Imputs->form_input_number('Desde', 'UTM_Desde', $x2, 1);
-				$Form_Imputs->form_input_number('Hasta', 'UTM_Hasta', $x3, 2);
-				$Form_Imputs->form_input_number('Tasa', 'Tasa', $x4, 1);
-				$Form_Imputs->form_input_number('Rebaja', 'Rebaja', $x5, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Tramo', 'Tramo', $x1, 2);
+				$Form_Inputs->form_input_number('Desde', 'UTM_Desde', $x2, 1);
+				$Form_Inputs->form_input_number('Hasta', 'UTM_Hasta', $x3, 2);
+				$Form_Inputs->form_input_number('Tasa', 'Tasa', $x4, 1);
+				$Form_Inputs->form_input_number('Rebaja', 'Rebaja', $x5, 1);
 					
-				$Form_Imputs->form_input_hidden('idTablaImpuesto', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idTablaImpuesto', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -128,7 +129,7 @@ array_push( $arrAmonestacion,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Tramos Cargas Familiares</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Tramos Impuesto Unico</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -152,7 +153,7 @@ array_push( $arrAmonestacion,$row );
 						<td><?php echo Cantidades_decimales_justos($amon['Rebaja']); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'?id='.$amon['idTablaImpuesto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'?id='.$amon['idTablaImpuesto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

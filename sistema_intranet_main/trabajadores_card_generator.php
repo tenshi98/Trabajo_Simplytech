@@ -33,7 +33,7 @@ card_listado.idCardType,
 card_listado.idPosition
 
 FROM `card_listado`
-WHERE card_listado.idCard = {$_GET['idCard']}";
+WHERE card_listado.idCard = ".$_GET['idCard'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -66,7 +66,7 @@ core_sistemas.Nombre AS Sistema
 FROM `trabajadores_listado`
 LEFT JOIN `core_sexo`       ON core_sexo.idSexo         = trabajadores_listado.idSexo
 LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema  = trabajadores_listado.idSistema
-WHERE trabajadores_listado.idTrabajador = {$_GET['idTrabajador']}";
+WHERE trabajadores_listado.idTrabajador = ".$_GET['idTrabajador'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -366,7 +366,7 @@ switch ($rowCard['idCardType']) {
 <div class="row no-print">
 	<div class="col-xs-12">
 		<a target="new" href="trabajadores_card_generator_to_print.php<?php echo '?idTrabajador='.$_GET['idTrabajador'].'&idCard='.$_GET['idCard'] ?>" class="btn btn-default pull-right" style="margin-right: 5px;">
-			<i class="fa fa-print"></i> Imprimir
+			<i class="fa fa-print" aria-hidden="true"></i> Imprimir
 		</a>
 	</div>
 </div>
@@ -376,14 +376,14 @@ switch ($rowCard['idCardType']) {
  
 <div id="identification_card" class="fcenter">
 	
-	<?php if ($rowCard['idPosition']==1 or $rowCard['idPosition']==4 or $rowCard['idPosition']==7 or $rowCard['idPosition']==2 or $rowCard['idPosition']==5 or $rowCard['idPosition']==8) { ?>
+	<?php if ($rowCard['idPosition']==1 OR $rowCard['idPosition']==4 OR $rowCard['idPosition']==7 OR $rowCard['idPosition']==2 OR $rowCard['idPosition']==5 OR $rowCard['idPosition']==8) { ?>
 		<div id="card_text">
 			<table>
-				<tr><td><b>Nombre</b></td><td><b>: <?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?></b></td></tr>
-				<tr><td><b>Rut</b></td><td>: <?php echo $rowTrabajador['Rut']; ?></td></tr>
-				<tr><td><b>Sexo</b></td><td>: <?php echo $rowTrabajador['Sexo']; ?></td></tr>
-				<tr><td><b>Fono</b></td><td>: <?php echo $rowTrabajador['Fono']; ?></td></tr>
-				<tr><td><b>Email</b></td><td>: <?php echo $rowTrabajador['email']; ?></td></tr>
+				<tr><td><strong>Nombre</strong></td><td><strong>: <?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?></strong></td></tr>
+				<tr><td><strong>Rut</strong></td><td>: <?php echo $rowTrabajador['Rut']; ?></td></tr>
+				<tr><td><strong>Sexo</strong></td><td>: <?php echo $rowTrabajador['Sexo']; ?></td></tr>
+				<tr><td><strong>Fono</strong></td><td>: <?php echo $rowTrabajador['Fono']; ?></td></tr>
+				<tr><td><strong>Email</strong></td><td>: <?php echo $rowTrabajador['email']; ?></td></tr>
 			</table> 
 		</div>
 	<?php } ?>
@@ -392,9 +392,9 @@ switch ($rowCard['idCardType']) {
 		<?php if ($rowCard['idPosition']!=2 && $rowCard['idPosition']!=5 && $rowCard['idPosition']!=8) { ?>
 			<div id="card_box">
 				<?php if ($rowTrabajador['Direccion_img']=='') { ?>
-					<img width="80px" height="100px" style="border:1px solid black;" src="<?php echo DB_SITE ?>/LIB_assets/img/usr.png"><br>
+					<img width="80px" height="100px" style="border:1px solid black;" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png"><br/>
 				<?php }else{  ?>
-					<img width="80px" height="100px" style="border:1px solid black;"  src="upload/<?php echo $rowTrabajador['Direccion_img']; ?>"><br>
+					<img width="80px" height="100px" style="border:1px solid black;"  src="upload/<?php echo $rowTrabajador['Direccion_img']; ?>"><br/>
 				<?php }?>			
 				<div id="card_ID">
 					ID : <?php echo n_doc($_GET['idTrabajador'],5); ?>
@@ -403,14 +403,14 @@ switch ($rowCard['idCardType']) {
 		<?php } ?>
 	<?php } ?>
 	
-	<?php if ($rowCard['idPosition']==3 or $rowCard['idPosition']==6 or $rowCard['idPosition']==9) { ?>
+	<?php if ($rowCard['idPosition']==3 OR $rowCard['idPosition']==6 OR $rowCard['idPosition']==9) { ?>
 		<div id="card_text">
 			<table>
-				<tr><td><b>Nombre</b></td><td><b>: <?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?></b></td></tr>
-				<tr><td><b>Rut</b></td><td>: <?php echo $rowTrabajador['Rut']; ?></td></tr>
-				<tr><td><b>Sexo</b></td><td>: <?php echo $rowTrabajador['Sexo']; ?></td></tr>
-				<tr><td><b>Fono</b></td><td>: <?php echo $rowTrabajador['Fono']; ?></td></tr>
-				<tr><td><b>Email</b></td><td>: <?php echo $rowTrabajador['email']; ?></td></tr>
+				<tr><td><strong>Nombre</strong></td><td><strong>: <?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?></strong></td></tr>
+				<tr><td><strong>Rut</strong></td><td>: <?php echo $rowTrabajador['Rut']; ?></td></tr>
+				<tr><td><strong>Sexo</strong></td><td>: <?php echo $rowTrabajador['Sexo']; ?></td></tr>
+				<tr><td><strong>Fono</strong></td><td>: <?php echo $rowTrabajador['Fono']; ?></td></tr>
+				<tr><td><strong>Email</strong></td><td>: <?php echo $rowTrabajador['email']; ?></td></tr>
 			</table> 
 		</div>
 	<?php } ?>
@@ -419,20 +419,20 @@ switch ($rowCard['idCardType']) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
  ?>			
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Filtro de busqueda</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -444,9 +444,9 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idCard)) {        $x2  = $idCard;        }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select_filter('Tarjeta','idCard', $x2, 2, 'idCard', 'Nombre', 'card_listado', 0, '', $dbConn);	
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Tarjeta','idCard', $x2, 2, 'idCard', 'Nombre', 'card_listado', 0, '', $dbConn);	
 				
 				?>        
 	   

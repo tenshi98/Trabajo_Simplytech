@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 //se recorre deacuerdo a la cantidad de sensores
 $aa = '';
 $Nsens = 6;
@@ -34,6 +47,7 @@ for ($i = 1; $i <= $Nsens; $i++) {
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,
+cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.f_termino,
 
 cross_predios_listado.Nombre AS PredioNombre,
@@ -71,7 +85,7 @@ LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_list
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
 
-WHERE cross_solicitud_aplicacion_listado_tractores.idTractores = {$_GET['view']} ";
+WHERE cross_solicitud_aplicacion_listado_tractores.idTractores = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -82,15 +96,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
@@ -128,15 +135,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrMediciones,$row );
@@ -152,13 +152,12 @@ ORDER BY idUbicaciones ASC";
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 					
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
@@ -172,7 +171,7 @@ array_push( $arrPuntos,$row );
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['idSolicitud'], 7); ?>.
+				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 7); ?>.
 				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino'])?></small>
 			</h2>
 		</div>   
@@ -191,29 +190,29 @@ array_push( $arrPuntos,$row );
 				<div class="col-sm-4 invoice-col">
 					<strong>Identificacion</strong>
 					<address>
-						Predio: '.$row_data['PredioNombre'].'<br>
-						Especie: '.$row_data['VariedadCat'].'<br>
-						Variedad: '.$row_data['VariedadNombre'].'<br>
-						Cuartel: '.$row_data['CuartelNombre'].'<br>
-						Tractor: '.$row_data['TractorNombre'].'<br>
-						Nebulizador: '.$row_data['NebNombre'].'<br>
+						Predio: '.$row_data['PredioNombre'].'<br/>
+						Especie: '.$row_data['VariedadCat'].'<br/>
+						Variedad: '.$row_data['VariedadNombre'].'<br/>
+						Cuartel: '.$row_data['CuartelNombre'].'<br/>
+						Tractor: '.$row_data['TractorNombre'].'<br/>
+						Nebulizador: '.$row_data['NebNombre'].'<br/>
 					</address>
 				</div>
 				<div class="col-sm-4 invoice-col">
 					<strong>Velocidad Tractores (Km/hr)</strong>
 					<address>
-						Minima: '.Cantidades($row_data['GeoVelocidadMin'], 2).'<br>
-						Maxima: '.Cantidades($row_data['GeoVelocidadMax'], 2).'<br>
-						Promedio: '.Cantidades($row_data['GeoVelocidadProm'], 2).'<br>
-						Programada: '.Cantidades($row_data['VelTractor'], 2).'<br>
+						Minima: '.Cantidades($row_data['GeoVelocidadMin'], 2).'<br/>
+						Maxima: '.Cantidades($row_data['GeoVelocidadMax'], 2).'<br/>
+						Promedio: '.Cantidades($row_data['GeoVelocidadProm'], 2).'<br/>
+						Programada: '.Cantidades($row_data['VelTractor'], 2).'<br/>
 					</address>
 				</div>
 				<div class="col-sm-4 invoice-col">
 					<strong>Distancia Recorrida(Metros)</strong>
 					<address>
-						Recorrida: '.Cantidades($row_data['GeoDistance']*1000, 2).'<br>
-						Estimada: '.Cantidades($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'], 2).'<br>
-						Faltante: '.Cantidades(($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas']) - ($row_data['GeoDistance']*1000), 2).'<br>
+						Recorrida: '.Cantidades($row_data['GeoDistance'], 2).'<br/>
+						Estimada: '.Cantidades($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'], 2).'<br/>
+						Faltante: '.Cantidades(($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas']) - ($row_data['GeoDistance']), 2).'<br/>
 				</div>';
 		?>
 
@@ -414,10 +413,11 @@ array_push( $arrPuntos,$row );
 			<?php
 			//Si no existe una ID se utiliza una por defecto
 			if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-				echo '<p>No ha ingresado Una API de Google Maps</p>';
+				$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+				alert_post_data(4,2,2, $Alert_Text);
 			}else{
 				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-				<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
+				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
 											
 				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 				
@@ -497,13 +497,31 @@ array_push( $arrPuntos,$row );
       
 </section>
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
  
 <?php
 /**********************************************************************************************************************************/

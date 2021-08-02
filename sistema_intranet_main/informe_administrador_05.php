@@ -77,7 +77,7 @@ echo '<h3 class="supertittle text-primary">Aerosan</h3>';
 //Variables
 $arreglo = array();
 $arreglo[1] = 'si'; //recorrerlo
-$arreglo[2] = 'http://aerosan.exilon360.com/upload/'; //carpeta de imagenes del sitio
+$arreglo[2] = 'https://aerosan.exilon360.com/upload/'; //carpeta de imagenes del sitio
 //Se llama a los widget
 echo widget_Equipos('Equipo', 2, 0,'#', 1, 1, 1, $dbConn1);
 echo widget_Resumen_equipo('Ultimas Mediciones del equipo', 2, 0, $arreglo[2], 1, 1, 1, $dbConn1);
@@ -87,7 +87,7 @@ echo '<h3 class="supertittle text-primary">Agrofruta</h3>';
 //Variables
 $arreglo = array();
 $arreglo[1] = 'si'; //recorrerlo
-$arreglo[2] = 'http://agrofruta.exilon360.com/upload/'; //carpeta de imagenes del sitio
+$arreglo[2] = 'https://agrofruta.exilon360.com/upload/'; //carpeta de imagenes del sitio
 //Se llama a los widget
 echo widget_Equipos('Equipo', 2, 0,'#', 1, 1, 1, $dbConn2);
 echo widget_Resumen_equipo('Ultimas Mediciones del equipo', 2, 0, $arreglo[2], 1, 1, 1, $dbConn2);
@@ -103,7 +103,7 @@ echo '<h3 class="supertittle text-primary">Ironmountain</h3>';
 //Variables
 $arreglo = array();
 $arreglo[1] = 'si'; //recorrerlo
-$arreglo[2] = 'http://ironmountain.exilon360.com/upload/'; //carpeta de imagenes del sitio
+$arreglo[2] = 'https://ironmountain.exilon360.com/upload/'; //carpeta de imagenes del sitio
 //Se llama a los widget
 echo widget_Equipos('Equipo', 2, 0,'#', 1, 1, 1, $dbConn4);
 echo widget_Resumen_equipo('Ultimas Mediciones del equipo', 2, 0, $arreglo[2], 1, 1, 1, $dbConn4);
@@ -119,7 +119,7 @@ echo '<h3 class="supertittle text-primary">Storbox</h3>';
 //Variables
 $arreglo = array();
 $arreglo[1] = 'si'; //recorrerlo
-$arreglo[2] = 'http://storbox.exilon360.com/upload/'; //carpeta de imagenes del sitio
+$arreglo[2] = 'https://storbox.exilon360.com/upload/'; //carpeta de imagenes del sitio
 //Se llama a los widget
 echo widget_Equipos('Equipo', 2, 0,'#', 1, 1, 1, $dbConn6);
 echo widget_Resumen_equipo('Ultimas Mediciones del equipo', 2, 0, $arreglo[2], 1, 1, 1, $dbConn6);

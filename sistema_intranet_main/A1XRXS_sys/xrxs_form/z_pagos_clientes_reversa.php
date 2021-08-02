@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -27,11 +31,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idCliente':      if(empty($idCliente)){       $error['idCliente']      = 'error/No ha ingresado el id';}break;
 			case 'idDocPago':      if(empty($idDocPago)){       $error['idDocPago']      = 'error/No ha seleccionado el documento de pago';}break;
 			case 'N_DocPago':      if(empty($N_DocPago)){       $error['N_DocPago']      = 'error/No ha ingresado numero de documento de pago';}break;
@@ -45,7 +49,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
-					
+				
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -59,513 +63,502 @@ if( ! defined('XMBCXRXSKGC')) {
 /*******************************************************************************************************************/		
 		case 'del_pagos':
 			
-			//validaciones
-			if(!isset($_GET['del_idDocPago']) OR $_GET['del_idDocPago']==''){
-				$error['idDocPago'] = 'error/No ha seleccionado un documento';
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/************************************************************/
+			//verifico si se envia un entero
+			if((!validarNumero($indice1) OR !validaEntero($indice1))&&$indice1!=''){
+				$indice1 = simpleDecode($indice1, fecha_actual());
+			}else{
+				$indice1 = $indice1;
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 			}
-			if(!isset($_GET['del_N_DocPago']) OR $_GET['del_N_DocPago']==''){
-				$error['idDocPago'] = 'error/No ha seleccionado un numero de documento';
+			if((!validarNumero($indice2) OR !validaEntero($indice2))&&$indice2!=''){
+				$indice2 = simpleDecode($indice2, fecha_actual());
+			}else{
+				$indice2 = $indice2;
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 			}
 			
-			/*******************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			/************************************************************/
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice1)&&$indice1!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice1 ('.$indice1.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice1)&&$indice1!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice1 ('.$indice1.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice2)&&$indice2!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice2 ('.$indice2.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice2)&&$indice2!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice2 ('.$indice2.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			/************************************************************/
+			if($errorn==0){
 				
-				$NDocsubmit_filter1   = '';
-				if(isset($_GET['del_idDocPago'])&&$_GET['del_idDocPago']!=''){
-					$NDocsubmit_filter1 .= ' AND pagos_facturas_clientes.idDocPago='.$_GET['del_idDocPago'];
+				//validaciones
+				if(!isset($indice1) OR $indice1==''){
+					$error['idDocPago'] = 'error/No ha seleccionado un documento';
 				}
-				if(isset($_GET['del_N_DocPago'])&&$_GET['del_N_DocPago']!=''){
-					$NDocsubmit_filter1 .= ' AND pagos_facturas_clientes.N_DocPago='.$_GET['del_N_DocPago'];
+				if(!isset($indice2) OR $indice2==''){
+					$error['idDocPago'] = 'error/No ha seleccionado un numero de documento';
 				}
 				
-				//Variable con el total del documento pagado
-				$Valor_Doc = 0;
+				/*******************************************************************/
+				// si no hay errores ejecuto el codigo	
+				if ( empty($error) ) {
+					
+					$NDocsubmit_filter1  = '';
+					$NDocsubmit_filter1 .= ' AND pagos_facturas_clientes.idDocPago='.$indice1;
+					$NDocsubmit_filter1 .= ' AND pagos_facturas_clientes.N_DocPago='.$indice2;
+					
+					//Variable con el total del documento pagado
+					$Valor_Doc = 0;
 
-				//consulto todos los documentos relacionados al cliente
-				$arrTipo1 = array();
-				$query = "SELECT 
-				pagos_facturas_clientes.idPago, 
-				pagos_facturas_clientes.idTipo, 
-				pagos_facturas_clientes.idFacturacion,
-				pagos_facturas_clientes.idFacturacion AS idddd,
-				pagos_facturas_clientes.MontoPagado,
-				(SELECT SUM(MontoPagado) FROM `pagos_facturas_clientes`WHERE idFacturacion = idddd AND idTipo=1 LIMIT 1)AS MontoTotal_1,
-				(SELECT SUM(MontoPagado) FROM `pagos_facturas_clientes`WHERE idFacturacion = idddd AND idTipo=2 LIMIT 1)AS MontoTotal_2,
-				(SELECT SUM(MontoPagado) FROM `pagos_facturas_clientes`WHERE idFacturacion = idddd AND idTipo=3 LIMIT 1)AS MontoTotal_3,
-				(SELECT SUM(MontoPagado) FROM `pagos_facturas_clientes`WHERE idFacturacion = idddd AND idTipo=4 LIMIT 1)AS MontoTotal_4
-				FROM `pagos_facturas_clientes`				
-				LEFT JOIN `bodegas_arriendos_facturacion`  ON bodegas_arriendos_facturacion.idFacturacion    = pagos_facturas_clientes.idFacturacion
-				LEFT JOIN `bodegas_insumos_facturacion`    ON bodegas_insumos_facturacion.idFacturacion      = pagos_facturas_clientes.idFacturacion
-				LEFT JOIN `bodegas_productos_facturacion`  ON bodegas_productos_facturacion.idFacturacion    = pagos_facturas_clientes.idFacturacion
-				LEFT JOIN `bodegas_servicios_facturacion`  ON bodegas_servicios_facturacion.idFacturacion    = pagos_facturas_clientes.idFacturacion
-				WHERE (bodegas_arriendos_facturacion.idTipo=2
-				".$NDocsubmit_filter1.")
-				OR (bodegas_insumos_facturacion.idTipo=2
-				".$NDocsubmit_filter1.")			
-				OR (bodegas_productos_facturacion.idTipo=2
-				".$NDocsubmit_filter1.")
-				OR (bodegas_servicios_facturacion.idTipo=2
-				".$NDocsubmit_filter1.")
-				OR (bodegas_arriendos_facturacion.idTipo=12
-				".$NDocsubmit_filter1.")
-				OR (bodegas_insumos_facturacion.idTipo=12
-				".$NDocsubmit_filter1.")			
-				OR (bodegas_productos_facturacion.idTipo=12
-				".$NDocsubmit_filter1.")
-				OR (bodegas_servicios_facturacion.idTipo=12
-				".$NDocsubmit_filter1.")";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrTipo1,$row );
-				}
+					//consulto todos los documentos relacionados al cliente
+					$SIS_query = '
+					pagos_facturas_clientes.idPago, 
+					pagos_facturas_clientes.idTipo, 
+					pagos_facturas_clientes.idFacturacion,
+					pagos_facturas_clientes.idFacturacion AS idddd,
+					pagos_facturas_clientes.MontoPagado,
+					(SELECT SUM(MontoPagado) FROM `pagos_facturas_clientes`WHERE idFacturacion = idddd AND idTipo=1 LIMIT 1)AS MontoTotal_1,
+					(SELECT SUM(MontoPagado) FROM `pagos_facturas_clientes`WHERE idFacturacion = idddd AND idTipo=2 LIMIT 1)AS MontoTotal_2,
+					(SELECT SUM(MontoPagado) FROM `pagos_facturas_clientes`WHERE idFacturacion = idddd AND idTipo=3 LIMIT 1)AS MontoTotal_3,
+					(SELECT SUM(MontoPagado) FROM `pagos_facturas_clientes`WHERE idFacturacion = idddd AND idTipo=4 LIMIT 1)AS MontoTotal_4';
+					$SIS_join  = '
+					LEFT JOIN `bodegas_arriendos_facturacion`  ON bodegas_arriendos_facturacion.idFacturacion    = pagos_facturas_clientes.idFacturacion
+					LEFT JOIN `bodegas_insumos_facturacion`    ON bodegas_insumos_facturacion.idFacturacion      = pagos_facturas_clientes.idFacturacion
+					LEFT JOIN `bodegas_productos_facturacion`  ON bodegas_productos_facturacion.idFacturacion    = pagos_facturas_clientes.idFacturacion
+					LEFT JOIN `bodegas_servicios_facturacion`  ON bodegas_servicios_facturacion.idFacturacion    = pagos_facturas_clientes.idFacturacion';
+					$SIS_where = '(bodegas_arriendos_facturacion.idTipo=2 '.$NDocsubmit_filter1.')
+					OR (bodegas_insumos_facturacion.idTipo=2 '.$NDocsubmit_filter1.')			
+					OR (bodegas_productos_facturacion.idTipo=2 '.$NDocsubmit_filter1.')
+					OR (bodegas_servicios_facturacion.idTipo=2 '.$NDocsubmit_filter1.')
+					OR (bodegas_arriendos_facturacion.idTipo=12 '.$NDocsubmit_filter1.')
+					OR (bodegas_insumos_facturacion.idTipo=12 '.$NDocsubmit_filter1.')			
+					OR (bodegas_productos_facturacion.idTipo=12 '.$NDocsubmit_filter1.')
+					OR (bodegas_servicios_facturacion.idTipo=12 '.$NDocsubmit_filter1.')';
+					$SIS_order = 'pagos_facturas_clientes.idPago ASC';
+					$arrReversa = array();
+					$arrReversa = db_select_array (false, $SIS_query, 'pagos_facturas_clientes', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+												
+					/**********************************************************************/
+					if(isset($arrReversa)){
+						foreach ($arrReversa as $tipo){
+							
+							switch ($tipo['idTipo']) {
+								/**********************************************************************/
+								//Factura Insumos
+								case 1:
+									
+									//calculo el nuevo saldo
+									$nuevoMonto  = $tipo['MontoTotal_1'] - $tipo['MontoPagado'];
+									//sumo al total de la reversa
+									$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
+									
+									//Actualizo el pago
+									$a  = "idUsuarioPago=''" ;
+									$a .= ",idDocPago=''" ;
+									$a .= ",N_DocPago=''" ;
+									$a .= ",F_Pago=''" ;
+									$a .= ",F_Pago_dia=''" ;
+									$a .= ",F_Pago_mes=''" ;
+									$a .= ",F_Pago_ano=''" ;
+									$a .= ",MontoPagado='".$nuevoMonto."'" ;
+									$a .= ",idEstado='1'" ;
 				
-				/**********************************************************************/
-				if(isset($arrTipo1)){
-					foreach ($arrTipo1 as $tipo){
-						
-						switch ($tipo['idTipo']) {
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+									/*********************************************************************/		
+									//Se guarda en historial la accion
+									if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
+									$a .= ",'".fecha_actual()."'" ;           
+									$a .= ",'1'";                                                    //Creacion Satisfactoria
+									$a .= ",'Se realiza reversa del pago'";                          //Observacion
+									$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+									
+												
+									// inserto los datos de registro en la db
+									$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
+									VALUES (".$a.")";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+									/**********************************************************************/
+									//se borran los datos
+									$resultado = db_delete_data (false, 'pagos_facturas_clientes', 'idPago = "'.$tipo['idPago'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
+									/**********************************************************************/
+									//Actualizo las notas de credito
+									$a  = "idFacturacionRelacionado=''" ;
+									$a .= ",idEstado='1'" ;
+				
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+									break;
+								/**********************************************************************/
+								//Factura Productos
+								case 2:
+									
+									//calculo el nuevo saldo
+									$nuevoMonto  = $tipo['MontoTotal_2'] - $tipo['MontoPagado'];
+									//sumo al total de la reversa
+									$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
+									
+									//Actualizo el pago
+									$a  = "idUsuarioPago=''" ;
+									$a .= ",idDocPago=''" ;
+									$a .= ",N_DocPago=''" ;
+									$a .= ",F_Pago=''" ;
+									$a .= ",F_Pago_dia=''" ;
+									$a .= ",F_Pago_mes=''" ;
+									$a .= ",F_Pago_ano=''" ;
+									$a .= ",MontoPagado='".$nuevoMonto."'" ;
+									$a .= ",idEstado='1'" ;
+				
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `bodegas_productos_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+									/*********************************************************************/		
+									//Se guarda en historial la accion
+									if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
+									$a .= ",'".fecha_actual()."'" ;           
+									$a .= ",'1'";                                                    //Creacion Satisfactoria
+									$a .= ",'Se realiza reversa del pago'";                          //Observacion
+									$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+									
+												
+									// inserto los datos de registro en la db
+									$query  = "INSERT INTO `bodegas_productos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
+									VALUES (".$a.")";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+									/**********************************************************************/
+									//elimino el registro del pago
+									$resultado = db_delete_data (false, 'pagos_facturas_clientes', 'idPago = "'.$tipo['idPago'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
+									/**********************************************************************/
+									//Actualizo las notas de credito
+									$a  = "idFacturacionRelacionado=''" ;
+									$a .= ",idEstado='1'" ;
+				
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `bodegas_productos_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+												
+									break;
+								/**********************************************************************/
+								//Factura Servicios
+								case 3:
+									
+									//calculo el nuevo saldo
+									$nuevoMonto  = $tipo['MontoTotal_3'] - $tipo['MontoPagado'];
+									//sumo al total de la reversa
+									$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
+									
+									//Actualizo el pago
+									$a  = "idUsuarioPago=''" ;
+									$a .= ",idDocPago=''" ;
+									$a .= ",N_DocPago=''" ;
+									$a .= ",F_Pago=''" ;
+									$a .= ",F_Pago_dia=''" ;
+									$a .= ",F_Pago_mes=''" ;
+									$a .= ",F_Pago_ano=''" ;
+									$a .= ",MontoPagado='".$nuevoMonto."'" ;
+									$a .= ",idEstado='1'" ;
+				
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `bodegas_servicios_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+									/*********************************************************************/		
+									//Se guarda en historial la accion
+									if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
+									$a .= ",'".fecha_actual()."'" ;           
+									$a .= ",'1'";                                                    //Creacion Satisfactoria
+									$a .= ",'Se realiza reversa del pago'";                          //Observacion
+									$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+									
+												
+									// inserto los datos de registro en la db
+									$query  = "INSERT INTO `bodegas_servicios_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
+									VALUES (".$a.")";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+									/**********************************************************************/
+									//elimino el registro del pago
+									$resultado = db_delete_data (false, 'pagos_facturas_clientes', 'idPago = "'.$tipo['idPago'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
+									/**********************************************************************/
+									//Actualizo las notas de credito
+									$a  = "idFacturacionRelacionado=''" ;
+									$a .= ",idEstado='1'" ;
+				
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `bodegas_servicios_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+											
+									break;
+								/**********************************************************************/
+								//Factura Arriendos
+								case 4:
+									
+									//calculo el nuevo saldo
+									$nuevoMonto  = $tipo['MontoTotal_4'] - $tipo['MontoPagado'];
+									//sumo al total de la reversa
+									$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
+									
+									//Actualizo el pago
+									$a  = "idUsuarioPago=''" ;
+									$a .= ",idDocPago=''" ;
+									$a .= ",N_DocPago=''" ;
+									$a .= ",F_Pago=''" ;
+									$a .= ",F_Pago_dia=''" ;
+									$a .= ",F_Pago_mes=''" ;
+									$a .= ",F_Pago_ano=''" ;
+									$a .= ",MontoPagado='".$nuevoMonto."'" ;
+									$a .= ",idEstado='1'" ;
+				
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `bodegas_arriendos_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+									/*********************************************************************/		
+									//Se guarda en historial la accion
+									if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
+									$a .= ",'".fecha_actual()."'" ;           
+									$a .= ",'1'";                                                    //Creacion Satisfactoria
+									$a .= ",'Se realiza reversa del pago'";                          //Observacion
+									$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+									
+												
+									// inserto los datos de registro en la db
+									$query  = "INSERT INTO `bodegas_arriendos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
+									VALUES (".$a.")";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+									
+									/**********************************************************************/
+									//elimino el registro del pago
+									$resultado = db_delete_data (false, 'pagos_facturas_clientes', 'idPago = "'.$tipo['idPago'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
+									/**********************************************************************/
+									//Actualizo las notas de credito
+									$a  = "idFacturacionRelacionado=''" ;
+									$a .= ",idEstado='1'" ;
+				
+									// inserto los datos de registro en la db
+									$query  = "UPDATE `bodegas_arriendos_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
+									//Consulta
+									$resultado = mysqli_query ($dbConn, $query);
+									//Si ejecuto correctamente la consulta
+									if(!$resultado){
+										//Genero numero aleatorio
+										$vardata = genera_password(8,'alfanumerico');
+										
+										//Guardo el error en una variable temporal
+										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+									}
+										
+									break;
+							}
+										
 							/**********************************************************************/
-							//Factura Insumos
-							case 1:
-								
-								//Actualizacion de variables
-								$nuevoMonto  = $tipo['MontoTotal_1'] - $tipo['MontoPagado'];
-								$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
-								
-								//Actualizo el pago
-								$a  = "idUsuarioPago=''" ;
-								$a .= ",idDocPago=''" ;
-								$a .= ",N_DocPago=''" ;
-								$a .= ",F_Pago=''" ;
-								$a .= ",F_Pago_dia=''" ;
-								$a .= ",F_Pago_mes=''" ;
-								$a .= ",F_Pago_ano=''" ;
-								$a .= ",MontoPagado='".$nuevoMonto."'" ;
-								$a .= ",idEstado='1'" ;
-			
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								
-								/*********************************************************************/		
-								//Se guarda en historial la accion
-								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
-								$a .= ",'".fecha_actual()."'" ;           
-								$a .= ",'1'";                                                    //Creacion Satisfactoria
-								$a .= ",'Se realiza reversa del pago'";                          //Observacion
-								$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-								
-											
-								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-								VALUES ({$a} )";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								
-								/**********************************************************************/
-								//elimino el registro del pago
-								$query  = "DELETE FROM `pagos_facturas_clientes` WHERE idPago = '".$tipo['idPago']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-										
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-								}
-								
-								/**********************************************************************/
-								//Actualizo las notas de credito
-								$a  = "idFacturacionRelacionado=''" ;
-								$a .= ",idEstado='1'" ;
-			
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								
-								break;
-							/**********************************************************************/
-							//Factura Productos
-							case 2:
-								
-								//Actualizacion de variables
-								$nuevoMonto  = $tipo['MontoTotal_2'] - $tipo['MontoPagado'];
-								$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
-								
-								//Actualizo el pago
-								$a  = "idUsuarioPago=''" ;
-								$a .= ",idDocPago=''" ;
-								$a .= ",N_DocPago=''" ;
-								$a .= ",F_Pago=''" ;
-								$a .= ",F_Pago_dia=''" ;
-								$a .= ",F_Pago_mes=''" ;
-								$a .= ",F_Pago_ano=''" ;
-								$a .= ",MontoPagado='".$nuevoMonto."'" ;
-								$a .= ",idEstado='1'" ;
-			
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `bodegas_productos_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								
-								/*********************************************************************/		
-								//Se guarda en historial la accion
-								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
-								$a .= ",'".fecha_actual()."'" ;           
-								$a .= ",'1'";                                                    //Creacion Satisfactoria
-								$a .= ",'Se realiza reversa del pago'";                          //Observacion
-								$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-								
-											
-								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `bodegas_productos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-								VALUES ({$a} )";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								
-								/**********************************************************************/
-								//elimino el registro del pago
-								$query  = "DELETE FROM `pagos_facturas_clientes` WHERE idPago = '".$tipo['idPago']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-										
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-								}
-								
-								/**********************************************************************/
-								//Actualizo las notas de credito
-								$a  = "idFacturacionRelacionado=''" ;
-								$a .= ",idEstado='1'" ;
-			
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `bodegas_productos_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-											
-								break;
-							/**********************************************************************/
-							//Factura Servicios
-							case 3:
-								
-								//Actualizacion de variables
-								$nuevoMonto  = $tipo['MontoTotal_3'] - $tipo['MontoPagado'];
-								$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
-								
-								//Actualizo el pago
-								$a  = "idUsuarioPago=''" ;
-								$a .= ",idDocPago=''" ;
-								$a .= ",N_DocPago=''" ;
-								$a .= ",F_Pago=''" ;
-								$a .= ",F_Pago_dia=''" ;
-								$a .= ",F_Pago_mes=''" ;
-								$a .= ",F_Pago_ano=''" ;
-								$a .= ",MontoPagado='".$nuevoMonto."'" ;
-								$a .= ",idEstado='1'" ;
-			
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `bodegas_servicios_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								
-								/*********************************************************************/		
-								//Se guarda en historial la accion
-								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
-								$a .= ",'".fecha_actual()."'" ;           
-								$a .= ",'1'";                                                    //Creacion Satisfactoria
-								$a .= ",'Se realiza reversa del pago'";                          //Observacion
-								$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-								
-											
-								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `bodegas_servicios_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-								VALUES ({$a} )";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								
-								/**********************************************************************/
-								//elimino el registro del pago
-								$query  = "DELETE FROM `pagos_facturas_clientes` WHERE idPago = '".$tipo['idPago']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-										
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-								}
-								
-								/**********************************************************************/
-								//Actualizo las notas de credito
-								$a  = "idFacturacionRelacionado=''" ;
-								$a .= ",idEstado='1'" ;
-			
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `bodegas_servicios_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-										
-								break;
-							/**********************************************************************/
-							//Factura Arriendos
-							case 4:
-								
-								//Actualizacion de variables
-								$nuevoMonto  = $tipo['MontoTotal_4'] - $tipo['MontoPagado'];
-								$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
-								
-								//Actualizo el pago
-								$a  = "idUsuarioPago=''" ;
-								$a .= ",idDocPago=''" ;
-								$a .= ",N_DocPago=''" ;
-								$a .= ",F_Pago=''" ;
-								$a .= ",F_Pago_dia=''" ;
-								$a .= ",F_Pago_mes=''" ;
-								$a .= ",F_Pago_ano=''" ;
-								$a .= ",MontoPagado='".$nuevoMonto."'" ;
-								$a .= ",idEstado='1'" ;
-			
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `bodegas_arriendos_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								
-								/*********************************************************************/		
-								//Se guarda en historial la accion
-								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
-								$a .= ",'".fecha_actual()."'" ;           
-								$a .= ",'1'";                                                    //Creacion Satisfactoria
-								$a .= ",'Se realiza reversa del pago'";                          //Observacion
-								$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-								
-											
-								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `bodegas_arriendos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-								VALUES ({$a} )";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								
-								/**********************************************************************/
-								//elimino el registro del pago
-								$query  = "DELETE FROM `pagos_facturas_clientes` WHERE idPago = '".$tipo['idPago']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-										
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-								}
-								
-								/**********************************************************************/
-								//Actualizo las notas de credito
-								$a  = "idFacturacionRelacionado=''" ;
-								$a .= ",idEstado='1'" ;
-			
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `bodegas_arriendos_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-									
-								break;
+							
+				
 						}
-									
-						/**********************************************************************/
-						
-			
 					}
+					/**********************************************************************/
+					//Inserto el registro de la reversa
+					$a  = "'".$_SESSION['usuario']['basic_data']['idUsuario']."'" ;  //idUsuario
+					$a .= ",'".$_SESSION['usuario']['basic_data']['idSistema']."'";  //idSistema
+					$a .= ",'".fecha_actual()."'" ;                                  //Fecha        
+					$a .= ",'".hora_actual()."'" ;                                   //Hora       
+					$a .= ",'".$indice1."'" ;                          //idDocPago
+					$a .= ",'".$indice2."'" ;                          //N_DocPago
+					$a .= ",'".$Valor_Doc."'" ;                                      //Monto
+												
+					// inserto los datos de registro en la db
+					$query  = "INSERT INTO `pagos_facturas_clientes_reversa` (idUsuario, 
+					idSistema, Fecha, Hora, idDocPago, N_DocPago, Monto) 
+					VALUES (".$a.")";
+					//Consulta
+					$resultado = mysqli_query ($dbConn, $query);
+					//Si ejecuto correctamente la consulta
+					if(!$resultado){
+						//Genero numero aleatorio
+						$vardata = genera_password(8,'alfanumerico');
+										
+						//Guardo el error en una variable temporal
+						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+										
+					}else{
+						//redirijo
+						header( 'Location: '.$location.'?reversa=true' );
+						die;
+					}
+					
+					
 				}
-				/**********************************************************************/
-				//Inserto el registro de la reversa
-				$a  = "'".$_SESSION['usuario']['basic_data']['idUsuario']."'" ;  //idUsuario
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idSistema']."'";  //idSistema
-				$a .= ",'".fecha_actual()."'" ;                                  //Fecha        
-				$a .= ",'".hora_actual()."'" ;                                   //Hora       
-				$a .= ",'".$_GET['del_idDocPago']."'" ;                          //idDocPago
-				$a .= ",'".$_GET['del_N_DocPago']."'" ;                          //N_DocPago
-				$a .= ",'".$Valor_Doc."'" ;                                      //Monto
-											
-				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `pagos_facturas_clientes_reversa` (idUsuario, 
-				idSistema, Fecha, Hora, idDocPago, N_DocPago, Monto) 
-				VALUES ({$a} )";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}else{
-					//redirijo
-					header( 'Location: '.$location.'?reversa=true' );
-					die;
-				}
-				
-				
+			
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
 			}
+			
 			
 			
 		

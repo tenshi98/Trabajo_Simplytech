@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 //se recorre deacuerdo a la cantidad de sensores
 $aa = '';
 $Nsens = 6;
@@ -34,6 +47,7 @@ for ($i = 1; $i <= $Nsens; $i++) {
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,
+cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.f_termino,
 
 cross_predios_listado.Nombre AS PredioNombre,
@@ -71,7 +85,7 @@ LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_list
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
 
-WHERE cross_solicitud_aplicacion_listado_tractores.idTractores = {$_GET['view']} ";
+WHERE cross_solicitud_aplicacion_listado_tractores.idTractores = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -82,15 +96,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
@@ -127,15 +134,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrMediciones,$row );
@@ -145,7 +145,7 @@ array_push( $arrMediciones,$row );
 $arrPuntos = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud
 FROM `cross_predios_listado_zonas_ubicaciones`
-WHERE idZona = {$row_data['idZona']}
+WHERE idZona = ".$row_data['idZona']."
 ORDER BY idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -166,23 +166,31 @@ array_push( $arrPuntos,$row );
 
 ?>
 
+<style>
+#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+</style>
+<div id="loading"></div>
+<script>
+//oculto el loader
+document.getElementById("loading").style.display = "none";
+</script>
+
+
+<div class="col-sm-12" style="margin-top:15px;">
+	<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>	
+</div>
+<div class="clearfix"></div> 
+
 <section class="invoice">
 	
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['idSolicitud'], 7); ?>.
+				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 7); ?>.
 				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino'])?></small>
 			</h2>
 		</div>   
 	</div>
-	
-	
-
-
-
-
-
 
 	<div class="row invoice-info">
 		
@@ -190,29 +198,29 @@ array_push( $arrPuntos,$row );
 				<div class="col-sm-4 invoice-col">
 					<strong>Identificacion</strong>
 					<address>
-						Predio: '.$row_data['PredioNombre'].'<br>
-						Especie: '.$row_data['VariedadCat'].'<br>
-						Variedad: '.$row_data['VariedadNombre'].'<br>
-						Cuartel: '.$row_data['CuartelNombre'].'<br>
-						Tractor: '.$row_data['TractorNombre'].'<br>
-						Nebulizador: '.$row_data['NebNombre'].'<br>
+						Predio: '.$row_data['PredioNombre'].'<br/>
+						Especie: '.$row_data['VariedadCat'].'<br/>
+						Variedad: '.$row_data['VariedadNombre'].'<br/>
+						Cuartel: '.$row_data['CuartelNombre'].'<br/>
+						Tractor: '.$row_data['TractorNombre'].'<br/>
+						Nebulizador: '.$row_data['NebNombre'].'<br/>
 					</address>
 				</div>
 				<div class="col-sm-4 invoice-col">
 					<strong>Velocidad Tractores (Km/hr)</strong>
 					<address>
-						Minima: '.Cantidades($row_data['GeoVelocidadMin'], 2).'<br>
-						Maxima: '.Cantidades($row_data['GeoVelocidadMax'], 2).'<br>
-						Promedio: '.Cantidades($row_data['GeoVelocidadProm'], 2).'<br>
-						Programada: '.Cantidades($row_data['VelTractor'], 2).'<br>
+						Minima: '.Cantidades($row_data['GeoVelocidadMin'], 2).'<br/>
+						Maxima: '.Cantidades($row_data['GeoVelocidadMax'], 2).'<br/>
+						Promedio: '.Cantidades($row_data['GeoVelocidadProm'], 2).'<br/>
+						Programada: '.Cantidades($row_data['VelTractor'], 2).'<br/>
 					</address>
 				</div>
 				<div class="col-sm-4 invoice-col">
 					<strong>Distancia Recorrida(KM)</strong>
 					<address>
-						Recorrida: '.Cantidades($row_data['GeoDistance'], 2).'<br>
-						Estimada: '.Cantidades(($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000, 2).'<br>
-						Faltante: '.Cantidades((($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000) - $row_data['GeoDistance'], 2).'<br>
+						Recorrida: '.Cantidades($row_data['GeoDistance'], 2).'<br/>
+						Estimada: '.Cantidades(($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000, 2).'<br/>
+						Faltante: '.Cantidades((($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000) - $row_data['GeoDistance'], 2).'<br/>
 				</div>';
 		?>
 
@@ -292,16 +300,15 @@ array_push( $arrPuntos,$row );
 						var chart1 = new google.visualization.LineChart(document.getElementById("chart_caudales"));
 							chart1.draw(data_caud, options);
 					}
-				</script> 
-				<div id="chart_caudales" style="height: 300px; width: 100%;"></div>';
+				</script> ';
 				
 				/********************************************************************/
 				//Nivel Estanque
 				echo '
 				<script>				
-					google.charts.setOnLoadCallback(drawChart_caudales);
+					google.charts.setOnLoadCallback(drawChart_niveles);
 
-					function drawChart_caudales() {
+					function drawChart_niveles() {
 						var data_caud = new google.visualization.DataTable();
 						data_caud.addColumn("string", "Hora"); 
 						data_caud.addColumn("number", "Nivel Estanque");
@@ -328,8 +335,7 @@ array_push( $arrPuntos,$row );
 						var chart1 = new google.visualization.LineChart(document.getElementById("chart_niveles"));
 							chart1.draw(data_caud, options);
 					}
-				</script> 
-				<div id="chart_niveles" style="height: 300px; width: 100%;"></div>';
+				</script> ';
 				
 				/********************************************************************/
 				//Velocidades
@@ -365,7 +371,12 @@ array_push( $arrPuntos,$row );
 							chart1.draw(data_vel, options);
 					}
 				</script> 
-				<div id="chart_velocidades" style="height: 300px; width: 100%;"></div>';
+				<div id="charts">
+					<div id="chart_caudales"     style="height: 300px; width: 100%;"></div>
+					<div id="chart_niveles"      style="height: 300px; width: 100%;"></div>
+					<div id="chart_velocidades"  style="height: 300px; width: 100%;"></div>
+				</div>
+				';
 				
 				
 			?>
@@ -373,102 +384,87 @@ array_push( $arrPuntos,$row );
 		</div>
 	</div>
 	
-	
-	<div class="row">
-		<div class="col-xs-12" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
-			<?php
-			//Si no existe una ID se utiliza una por defecto
-			if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-				echo '<p>No ha ingresado Una API de Google Maps</p>';
-			}else{
-				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-				<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
-											
-				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-				
-				<script>
-					
-					var myLatlng = new google.maps.LatLng(<?php echo $arrPuntos[0]['Latitud']; ?>, <?php echo $arrPuntos[0]['Longitud']; ?>);
-
-					var myOptions = {
-						zoom: 15,
-						center: myLatlng,
-						mapTypeId: 'satellite'
-					};
-					map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								
-								
-					/* Data points defined as a mixture of WeightedLocation and LatLng objects */
-					var heatMapData = [
-						<?php
-						//recorro los resultados
-						foreach ($arrMediciones as $med) {
-							$pres = $med['Sensor_1'] + $med['Sensor_2'];
-							echo '{location: new google.maps.LatLng('.$med['GeoLatitud'].', '.$med['GeoLongitud'].'), weight: '.$pres.'},';
-						}?>
-					];
-
-					
-					
-
-					var heatmap = new google.maps.visualization.HeatmapLayer({
-					  data: heatMapData
-					});
-					heatmap.setMap(map);
-					dibuja_zona();
-					/* ************************************************************************** */
-					function dibuja_zona() {
-								
-						var triangleCoords = [
-							<?php 
-							//Variables con la primera posicion
-							$Latitud_x = '';
-							$Longitud_x = '';
-							//recorrer
-							foreach ($arrPuntos as $puntos) {
-								echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
-								';
-								if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'){
-									$Latitud_x = $puntos['Latitud'];
-									$Longitud_x = $puntos['Longitud'];
-								}
-							}
-							//se cierra la figura
-							if(isset($Longitud_x)&&$Longitud_x!=''){
-								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
-							}	
-							?>
-						];
-							
-								
-								
-									// Construct the polygon.
-									var bermudaTriangle = new google.maps.Polygon({
-										paths: triangleCoords,
-										strokeColor: '#FF0000',
-										strokeOpacity: 0.8,
-										strokeWeight: 2,
-										fillColor: '#FF0000',
-										fillOpacity: 0
-									});
-									bermudaTriangle.setMap(map);
-
-							}
-
-				</script>
-			<?php } ?>
-		</div>
+	<div class="col-sm-12" style="margin-top:20px;">
+		<?php
+		$Alert_Text = '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($row_data['idTelemetria'], fecha_actual()).'&idSolicitud='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary fright margin_width"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';
+		alert_post_data(4,2,2, $Alert_Text);
+		?>
 	</div>
-      
+
 </section>
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+
+<div class="col-sm-12" style="display: none;">
+
+	<form method="post" id="make_pdf" action="view_solicitud_aplicacion_detalles_to_pdf.php">
+		<input type="hidden" name="img_adj" id="img_adj" />
+			
+		<input type="hidden" name="idSistema"  id="idSistema"  value="<?php echo simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual()); ?>" />
+		<input type="hidden" name="view"       id="view"       value="<?php echo $_GET['view']; ?>" />
+			
+		<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
+		
+	</form>
+
+	<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>		
+	<script>
+		var node = document.getElementById('charts');
+					
+		function sendDatatoSRV(img) {
+			$('#img_adj').val(img);
+			//$('#img_adj').val($('#img-out').html());
+			$('#make_pdf').submit();
+			//oculto el loader
+			document.getElementById("loading").style.display = "none";
+		}
+		function Export() {
+			//muestro el loader
+			document.getElementById("loading").style.display = "block";
+			//Exporto
+			setTimeout(
+				function(){
+					domtoimage.toPng(node)
+					.then(function (dataUrl) {
+						var img = new Image();
+						img.src = dataUrl;
+						//document.getElementById('img-out').appendChild(img);
+						//alert(img.src);
+						sendDatatoSRV(img.src);
+					})
+					.catch(function (error) {
+						console.error('oops, something went wrong!', error);
+					});		
+				}
+			, 3000);
+		}
+	</script>	
+</div>
+
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
  
 <?php
 /**********************************************************************************************************************************/

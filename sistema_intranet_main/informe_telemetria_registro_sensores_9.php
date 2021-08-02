@@ -53,45 +53,42 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$row_data = mysqli_fetch_assoc ($resultado);
 	/*****************************************/
 	//Se escribe el dato
-	echo '
-	<div class="alert alert-success" role="alert">
-		Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0).'			
-	</div>';
-
+	$Alert_Text  = 'Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0);
+	alert_post_data(1,1,1, $Alert_Text);
+		
 	$total_files = ceil($row_data['Total']/5000);
 	for ($i = 1; $i <= $total_files; $i++) { 
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
-		$datosx  = '?idTelemetria='.$_GET['idTelemetria'];
+		$datosx  = '&idTelemetria='.$_GET['idTelemetria'];
 		$datosx .= '&f_inicio='.$_GET['f_inicio'];
 		$datosx .= '&f_termino='.$_GET['f_termino'];
 		$datosx .= '&num='.$i;
-		echo '
-		<div class="alert alert-info" role="alert">
-			<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>
-			<a target="new" href="informe_telemetria_registro_sensores_9_to_excel.php'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			<div class="clearfix"></div>			
-		</div>';  
+		
+		$Alert_Text  = '<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
+		$Alert_Text .= '<a target="new" href="informe_telemetria_registro_sensores_9_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
+		$Alert_Text .= '<div class="clearfix"></div>';
+		alert_post_data(2,1,1, $Alert_Text);
+		 
 	}
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
 }else{
 	//Inicia variable
-	$z="WHERE telemetria_listado.idTelemetria>0"; 
-	$z.=" AND telemetria_listado.id_Geo='1'";
-	$datosx  = '?f_inicio='.$_GET['f_inicio'];
+	$z = "WHERE telemetria_listado.idTelemetria>0"; 
+	$z.= " AND telemetria_listado.id_Geo='1'";
+	$z.= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+	$datosx  = '&f_inicio='.$_GET['f_inicio'];
 	$datosx .= '&f_termino='.$_GET['f_termino'];
 	$datosx .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+	$datosx .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$datosx .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 
 	//Verifico el tipo de usuario que esta ingresando
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-		$z.=" AND telemetria_listado.idSistema>=0";
 		$join = "";	
 	}else{
-		$z.=" AND telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 		$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$z.=" AND usuarios_equipos_telemetria.idUsuario={$_SESSION['usuario']['basic_data']['idUsuario']}";
-		$datosx .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-		$datosx .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];	
+		$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
 	
 	/*********************************************/
@@ -122,7 +119,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	
 	/*********************************************/
 	$s_max = 0;
-	echo '<div class="alert alert-success" role="alert">';
+	$Alert_Text  = '';
 	foreach ($arrEquipos as $equipo) {
 		//Se traen todos los registros
 		$query = "SELECT 
@@ -143,14 +140,14 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 							
 		}
 		$row_data = mysqli_fetch_assoc ($resultado);
-
-		echo 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($row_data['Total'], 0).'<br/>';
+		
+		$Alert_Text .= 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($row_data['Total'], 0).'<br/>';
 		//verifico el valor maximo
 		if($s_max<$row_data['Total']){
 			$s_max=$row_data['Total'];
 		}
 	}
-	echo '</div>';
+	alert_post_data(2,1,1, $Alert_Text);
 	
 	
 	/*****************************************/
@@ -161,12 +158,12 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$reg_fin = 5000*$i;
 		
 		$datosx .= '&num='.$i;
-		echo '
-		<div class="alert alert-info" role="alert">
-			<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>
-			<a target="new" href="informe_telemetria_registro_sensores_9_to_excel.php'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			<div class="clearfix"></div>			
-		</div>';  
+		
+		$Alert_Text  = '<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
+		$Alert_Text .= '<a target="new" href="informe_telemetria_registro_sensores_9_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
+		$Alert_Text .= '<div class="clearfix"></div>';
+		alert_post_data(2,1,1, $Alert_Text);
+		 
 	}
 
 }
@@ -178,24 +175,23 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='1'";	 
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "telemetria_listado.idSistema>=0 AND telemetria_listado.id_Geo='1'";
-}else{
-	$z = "telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_equipos_telemetria.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']} AND telemetria_listado.id_Geo='1'";		
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
 }
  ?>			
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Filtro de busqueda</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -208,14 +204,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idTelemetria)) {  $x3  = $idTelemetria; }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Imputs->form_select_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
 				}else{
-					$Form_Imputs->form_select_join_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
+					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				?>        
 	   

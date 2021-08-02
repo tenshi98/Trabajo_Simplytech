@@ -21,11 +21,24 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+$X_type = simpleDecode($_GET['type'], fecha_actual());
+/**************************************************************/
 $arrProducto = array();
 
 //Filtro el tipo de documento
-switch ($_GET['type']) {
+switch ($X_type) {
     /********************************************************/
     //Producto
     case 1:
@@ -41,7 +54,7 @@ switch ($_GET['type']) {
 		LEFT JOIN productos_listado                ON productos_listado.idProducto                   = bodegas_productos_facturacion_existencias.idProducto
 		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_productos_facturacion_existencias.idProveedor
 
-		WHERE bodegas_productos_facturacion_existencias.idProducto={$_GET['view']}
+		WHERE bodegas_productos_facturacion_existencias.idProducto=".$X_Puntero."
 		AND bodegas_productos_facturacion.idTipo = 1 
 		ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha DESC 
 		LIMIT 40";
@@ -55,15 +68,8 @@ switch ($_GET['type']) {
 			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 			//generar log
-			error_log("========================================================================================================================================", 0);
-			error_log("Usuario: ". $NombreUsr, 0);
-			error_log("Transaccion: ". $Transaccion, 0);
-			error_log("-------------------------------------------------------------------", 0);
-			error_log("Error code: ". mysqli_errno($dbConn), 0);
-			error_log("Error description: ". mysqli_error($dbConn), 0);
-			error_log("Error query: ". $query, 0);
-			error_log("-------------------------------------------------------------------", 0);
-							
+			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 		}
 		while ( $row = mysqli_fetch_assoc ($resultado)) {
 		array_push( $arrProducto,$row );
@@ -84,7 +90,7 @@ switch ($_GET['type']) {
 		LEFT JOIN insumos_listado                  ON insumos_listado.idProducto                     = bodegas_insumos_facturacion_existencias.idProducto
 		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_insumos_facturacion_existencias.idProveedor
 
-		WHERE bodegas_insumos_facturacion_existencias.idProducto={$_GET['view']}
+		WHERE bodegas_insumos_facturacion_existencias.idProducto=".$X_Puntero."
 		AND bodegas_insumos_facturacion.idTipo = 1 
 		ORDER BY bodegas_insumos_facturacion_existencias.Creacion_fecha DESC 
 		LIMIT 40";
@@ -98,15 +104,8 @@ switch ($_GET['type']) {
 			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 			//generar log
-			error_log("========================================================================================================================================", 0);
-			error_log("Usuario: ". $NombreUsr, 0);
-			error_log("Transaccion: ". $Transaccion, 0);
-			error_log("-------------------------------------------------------------------", 0);
-			error_log("Error code: ". mysqli_errno($dbConn), 0);
-			error_log("Error description: ". mysqli_error($dbConn), 0);
-			error_log("Error query: ". $query, 0);
-			error_log("-------------------------------------------------------------------", 0);
-							
+			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 		}
 		while ( $row = mysqli_fetch_assoc ($resultado)) {
 		array_push( $arrProducto,$row );
@@ -127,7 +126,7 @@ switch ($_GET['type']) {
 		LEFT JOIN equipos_arriendo_listado         ON equipos_arriendo_listado.idEquipo              = bodegas_arriendos_facturacion_existencias.idEquipo
 		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_arriendos_facturacion_existencias.idProveedor
 
-		WHERE bodegas_arriendos_facturacion_existencias.idEquipo={$_GET['view']}
+		WHERE bodegas_arriendos_facturacion_existencias.idEquipo=".$X_Puntero."
 		AND bodegas_arriendos_facturacion.idTipo = 1 
 		ORDER BY bodegas_arriendos_facturacion_existencias.Creacion_fecha DESC 
 		LIMIT 40";
@@ -141,15 +140,8 @@ switch ($_GET['type']) {
 			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 			//generar log
-			error_log("========================================================================================================================================", 0);
-			error_log("Usuario: ". $NombreUsr, 0);
-			error_log("Transaccion: ". $Transaccion, 0);
-			error_log("-------------------------------------------------------------------", 0);
-			error_log("Error code: ". mysqli_errno($dbConn), 0);
-			error_log("Error description: ". mysqli_error($dbConn), 0);
-			error_log("Error query: ". $query, 0);
-			error_log("-------------------------------------------------------------------", 0);
-							
+			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 		}
 		while ( $row = mysqli_fetch_assoc ($resultado)) {
 		array_push( $arrProducto,$row );
@@ -170,7 +162,7 @@ switch ($_GET['type']) {
 		LEFT JOIN servicios_listado                ON servicios_listado.idServicio                   = bodegas_servicios_facturacion_existencias.idServicio
 		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_servicios_facturacion_existencias.idProveedor
 
-		WHERE bodegas_servicios_facturacion_existencias.idServicio={$_GET['view']}
+		WHERE bodegas_servicios_facturacion_existencias.idServicio=".$X_Puntero."
 		AND bodegas_servicios_facturacion.idTipo = 1 
 		ORDER BY bodegas_servicios_facturacion_existencias.Creacion_fecha DESC 
 		LIMIT 40";
@@ -184,15 +176,8 @@ switch ($_GET['type']) {
 			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 			//generar log
-			error_log("========================================================================================================================================", 0);
-			error_log("Usuario: ". $NombreUsr, 0);
-			error_log("Transaccion: ". $Transaccion, 0);
-			error_log("-------------------------------------------------------------------", 0);
-			error_log("Error code: ". mysqli_errno($dbConn), 0);
-			error_log("Error description: ". mysqli_error($dbConn), 0);
-			error_log("Error query: ". $query, 0);
-			error_log("-------------------------------------------------------------------", 0);
-							
+			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 		}
 		while ( $row = mysqli_fetch_assoc ($resultado)) {
 		array_push( $arrProducto,$row );
@@ -205,7 +190,7 @@ if(!empty($arrProducto)){?>
 	<div class="col-sm-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Variacion Precios de <?php echo $arrProducto[0]['Producto']; ?></h5>
 			</header>
 			<div id="div-3" class="tab-content">
@@ -291,7 +276,7 @@ if(!empty($arrProducto)){?>
 									<tr class="odd">
 										<td><?php echo Fecha_estandar($prod['Creacion_fecha']); ?></td>
 										<td><?php echo $prod['Proveedor']; ?></td>
-										<td><?php echo valores($prod['Precio'], 0); ?></td>
+										<td align="right"><?php echo valores($prod['Precio'], 0); ?></td>
 									</tr>
 								<?php } ?>                     
 								</tbody>
@@ -304,9 +289,36 @@ if(!empty($arrProducto)){?>
 	</div>
 
 <?php }else{
-	echo '<div class="col-sm-12" style="margin-top:15px;"><div class="alert alert-danger" role="alert">No existen datos</div></div>';
+	echo '<div class="col-sm-12" style="margin-top:15px;">';
+		$Alert_Text  = 'No existen datos';
+		alert_post_data(4,1,1, $Alert_Text);
+	echo '</div>';
 }?>
-
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

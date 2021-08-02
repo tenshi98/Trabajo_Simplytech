@@ -27,12 +27,15 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 //se verifica si se ingreso la hora, es un dato optativo
 $z='';
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.=" WHERE (TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" WHERE (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
+
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
 $consql = '';
-for ($i = 1; $i <= 50; $i++) {
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
     $consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
     $consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
     $consql .= ',telemetria_listado.SensoresMedMin_'.$i.' AS SensoresMedMin_'.$i;
@@ -54,7 +57,8 @@ LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemet
 
 ".$z."
 ORDER BY telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema ASC,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema ASC";
+telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema ASC
+LIMIT 10000";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -64,15 +68,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrRutas,$row );
@@ -91,15 +88,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowGrupo = mysqli_fetch_assoc ($resultado);
 
@@ -217,6 +207,34 @@ $arrData[97] = "CU";
 $arrData[98] = "CV";
 $arrData[99] = "CW";
 $arrData[100] = "CX";
+$arrData[101] = "CY";
+$arrData[102] = "CZ";
+$arrData[103] = "DA";
+$arrData[104] = "DB";
+$arrData[105] = "DC";
+$arrData[106] = "DD";
+$arrData[107] = "DE";
+$arrData[108] = "DF";
+$arrData[109] = "DG";
+$arrData[110] = "DH";
+$arrData[111] = "DI";
+$arrData[112] = "DJ";
+$arrData[113] = "DK";
+$arrData[114] = "DL";
+$arrData[115] = "DM";
+$arrData[116] = "DN";
+$arrData[117] = "DO";
+$arrData[118] = "DP";
+$arrData[119] = "DQ";
+$arrData[120] = "DR";
+$arrData[121] = "DS";
+$arrData[122] = "DT";
+$arrData[123] = "DU";
+$arrData[124] = "DV";
+$arrData[125] = "DW";
+$arrData[126] = "DX";
+$arrData[127] = "DY";
+$arrData[128] = "DZ";
 
 
          
@@ -280,7 +298,7 @@ foreach ($arrRutas as $rutas) {
             
 	for ($i = 1; $i <= $rutas['cantSensores']; $i++) { 
 		if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){	
-			if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]!=999){
+			if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
 				$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]);
 			}else{
 				$xdata='Sin Datos';

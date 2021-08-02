@@ -32,7 +32,7 @@ LEFT JOIN `insumos_listado`    ON insumos_listado.idProducto    = bodegas_insumo
 LEFT JOIN `sistema_productos_uml`        ON sistema_productos_uml.idUml             = insumos_listado.idUml
 LEFT JOIN `bodegas_insumos_listado`    ON bodegas_insumos_listado.idBodega      = bodegas_insumos_facturacion_existencias.idBodega
 
-WHERE bodegas_insumos_facturacion_existencias.idBodega={$_GET['idBodega']}
+WHERE bodegas_insumos_facturacion_existencias.idBodega=".$_GET['idBodega']."
 GROUP BY bodegas_insumos_facturacion_existencias.idProducto";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -43,15 +43,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+				
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProductos,$row );

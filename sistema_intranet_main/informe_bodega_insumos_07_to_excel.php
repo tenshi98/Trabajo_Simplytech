@@ -36,14 +36,13 @@ WHERE idBodega=".$_GET['idBodegaOrigen'];
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 $rowBodega = mysqli_fetch_assoc ($resultado);
 /****************************************************/
@@ -54,14 +53,13 @@ FROM `sistema_productos_categorias`";
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrCategoria,$row );
@@ -74,21 +72,20 @@ FROM `bodegas_insumos_listado`";
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrBodega,$row );
 }
 // Se trae un listado con los valores de las existencias actuales	
 $año_pasado = ano_actual()-1;
-$z = "WHERE bodegas_insumos_facturacion_existencias.idSistema='{$_SESSION['usuario']['basic_data']['idSistema']}'";
+$z = "WHERE bodegas_insumos_facturacion_existencias.idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
 $z.= " AND bodegas_insumos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
 
 $z.= " AND bodegas_insumos_facturacion_existencias.idTipo = 6";
@@ -121,14 +118,13 @@ insumos_listado.idCategoria ASC
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrExistenciasMain,$row );
@@ -171,10 +167,8 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 
 /****************************************************************************************/
 // Se trae un listado con los valores de las existencias actuales	
-$z = "WHERE bodegas_insumos_facturacion_existencias.idSistema>=0";
+$z = "WHERE bodegas_insumos_facturacion_existencias.idTipo = 6";
 $z.= " AND bodegas_insumos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
-
-$z.= " AND bodegas_insumos_facturacion_existencias.idTipo = 6";
 $z.= " AND bodegas_insumos_facturacion.idBodegaOrigen = ".$_GET['idBodegaOrigen'];
 $z.= " AND bodegas_insumos_facturacion.idBodegaDestino != ".$_GET['idBodegaOrigen'];
 //Verificar si es por concepto de ingreso o egreso de bodega
@@ -211,14 +205,13 @@ insumos_listado.idCategoria ASC
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrExistencias,$row );

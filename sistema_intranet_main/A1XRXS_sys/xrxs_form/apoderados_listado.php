@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -44,11 +48,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idApoderado':                 if(empty($idApoderado)){                  $error['idApoderado']                  = 'error/No ha ingresado el id';}break;
 			case 'idSistema':                   if(empty($idSistema)){                    $error['idSistema']                    = 'error/No ha seleccionado el sistema al cual pertenece';}break;
 			case 'idEstado':                    if(empty($idEstado)){                     $error['idEstado']                     = 'error/No ha seleccionado el estado';}break;
@@ -86,6 +90,12 @@ if( ! defined('XMBCXRXSKGC')) {
 	if(isset($Fono2)&&!validarNumero($Fono2)) {  $error['Fono2']   = 'error/Ingrese un numero telefonico valido'; }
 	//if(isset($Rut)&&!validarRut($Rut)){       $error['Rut']    = 'error/El Rut ingresado no es valido'; }
 
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){  $error['ApellidoPat'] = 'error/Edita Apellido Pat, contiene palabras no permitidas'; }	
+	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){  $error['ApellidoMat'] = 'error/Edita Apellido Mat, contiene palabras no permitidas'; }	
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){      $error['Direccion']   = 'error/Edita Direccion, contiene palabras no permitidas'; }	
+	if(isset($Password)&&contar_palabras_censuradas($Password)!=0){        $error['Password']    = 'error/Edita la Password, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -103,10 +113,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'apoderados_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'apoderados_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Rut)&&isset($idSistema)){
-				$ndata_2 = db_select_nrows ('Rut', 'apoderados_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'Rut', 'apoderados_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El apoderado que intenta ingresar ya existe en el sistema';}
@@ -151,7 +161,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				ApellidoMat, Fono1, Fono2, FNacimiento, Rut, idCiudad, idComuna, Direccion, 
 				F_Inicio_Contrato, F_Termino_Contrato, Password, dispositivo, IMEI, GSM, GeoLatitud, GeoLongitud,
 				idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -188,10 +198,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($ApellidoPat)&&isset($ApellidoMat)&&isset($idSistema)&&isset($idApoderado)){
-				$ndata_1 = db_select_nrows ('Nombre', 'apoderados_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."' AND idApoderado!='".$idApoderado."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'apoderados_listado', '', "Nombre='".$Nombre."' AND ApellidoPat='".$ApellidoPat."' AND ApellidoMat='".$ApellidoMat."' AND idSistema='".$idSistema."' AND idApoderado!='".$idApoderado."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Rut)&&isset($idSistema)&&isset($idApoderado)){
-				$ndata_2 = db_select_nrows ('Rut', 'apoderados_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idApoderado!='".$idApoderado."'", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'Rut', 'apoderados_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idApoderado!='".$idApoderado."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El apoderado que intenta ingresar ya existe en el sistema';}
@@ -261,56 +271,76 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data ('Direccion_img, File_Contrato', 'apoderados_listado', '', "idApoderado = ".$_GET['del'], $dbConn);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `apoderados_listado` WHERE idApoderado = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//se elimina la foto
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//se elimina el contrato
-				if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['File_Contrato'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['File_Contrato']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del archivo
+				$rowdata = db_select_data (false, 'Direccion_img, File_Contrato', 'apoderados_listado', '', "idApoderado = ".$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
+				//se borran los datos
+				$resultado = db_delete_data (false, 'apoderados_listado', 'idApoderado = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina la foto
+					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['Direccion_img']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//se elimina el contrato
+					if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['File_Contrato'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['File_Contrato']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 			
 
 		break;	
@@ -322,9 +352,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idApoderado  = $_GET['id'];
-			$idEstado      = $_GET['estado'];
-			$query  = "UPDATE apoderados_listado SET idEstado = '$idEstado'	
-			WHERE idApoderado    = '$idApoderado'";
+			$idEstado     = simpleDecode($_GET['estado'], fecha_actual());
+			$query  = "UPDATE apoderados_listado SET idEstado = '".$idEstado."'	
+			WHERE idApoderado = '".$idApoderado."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -354,7 +384,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["Direccion_img"]["error"] > 0){ 
-				$error['Direccion_img']     = 'error/Ha ocurrido un error'; 
+				$error['Direccion_img'] = 'error/'.uploadPHPError($_FILES["Direccion_img"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
@@ -481,13 +511,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idApoderado = $_GET['del_img'];
 			// Se obtiene el nombre del logo
-			$rowdata = db_select_data ('Direccion_img', 'apoderados_listado', '', "idApoderado = ".$idApoderado, $dbConn);
+			$rowdata = db_select_data (false, 'Direccion_img', 'apoderados_listado', '', "idApoderado = ".$_GET['del_img'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `apoderados_listado` SET Direccion_img='' WHERE idApoderado = '{$idApoderado}'";
+			$query  = "UPDATE `apoderados_listado` SET Direccion_img='' WHERE idApoderado = '".$_GET['del_img']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -531,7 +559,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["File_Contrato"]["error"] > 0){ 
-				$error['File_Contrato']     = 'error/Ha ocurrido un error'; 
+				$error['File_Contrato'] = 'error/'.uploadPHPError($_FILES["File_Contrato"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/msword",
@@ -609,13 +637,11 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idApoderado = $_GET['del_File_Contrato'];
 			// Se obtiene el nombre del logo
-			$rowdata = db_select_data ('File_Contrato', 'apoderados_listado', '', "idApoderado = ".$idApoderado, $dbConn);
+			$rowdata = db_select_data (false, 'File_Contrato', 'apoderados_listado', '', "idApoderado = ".$_GET['del_File_Contrato'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			//se borra el dato de la base de datos
-			$query  = "UPDATE `apoderados_listado` SET File_Contrato='' WHERE idApoderado = '{$idApoderado}'";
+			$query  = "UPDATE `apoderados_listado` SET File_Contrato='' WHERE idApoderado = '".$_GET['del_File_Contrato']."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta

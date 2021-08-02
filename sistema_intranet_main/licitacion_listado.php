@@ -60,9 +60,11 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Contrato creada cor
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Contrato editada correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Contrato borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['id']) ) { 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['id']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn); 
 //se traen los datos basicos de la licitacion
 $query = "SELECT 
 licitacion_listado.Codigo, 
@@ -93,7 +95,7 @@ LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema             
 LEFT JOIN `core_licitacion_tipos`        ON core_licitacion_tipos.idTipoLicitacion   = licitacion_listado.idTipoLicitacion
 LEFT JOIN `core_sistemas_opciones`       ON core_sistemas_opciones.idOpciones        = licitacion_listado.idOpcionItem
 
-WHERE licitacion_listado.idLicitacion={$_GET['id']} ";
+WHERE licitacion_listado.idLicitacion=".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -123,26 +125,19 @@ usuarios_listado.Nombre AS Usuario
 FROM `licitacion_listado_historial` 
 LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = licitacion_listado_historial.idTipo
 LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = licitacion_listado_historial.idUsuario
-WHERE licitacion_listado_historial.idLicitacion = {$_GET['id']} 
+WHERE licitacion_listado_historial.idLicitacion = ".$_GET['id']." 
 ORDER BY licitacion_listado_historial.idHistorial ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
+					
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
@@ -178,7 +173,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	".$z."
 	FROM `licitacion_listado_level_1`
 	".$leftjoin."
-	WHERE licitacion_listado_level_1.idLicitacion={$_GET['id']}
+	WHERE licitacion_listado_level_1.idLicitacion=".$_GET['id']."
 	ORDER BY licitacion_listado_level_1.Codigo ASC ".$orderby."
 
 	";
@@ -382,21 +377,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Contrato</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -405,17 +386,17 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'licitacion_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'licitacion_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'licitacion_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
+				<li class="active"><a href="<?php echo 'licitacion_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'licitacion_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'licitacion_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
-							<li class=""><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Itemizado</a></li>
+							<li class=""><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Itemizado</a></li>
 						<?php } ?> 
-						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Observaciones</a></li>
-						<li class=""><a href="<?php echo 'licitacion_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivos</a></li>
+						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'licitacion_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 					</ul>
 				</li> 
                          
@@ -458,13 +439,13 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==1){ ?>
 								<tr class="odd">
 									<td>Valor Mensual</td>
-									<td><?php echo Valores($rowdata['ValorMensual'], 0);?></td>
+									<td align="right"><?php echo Valores($rowdata['ValorMensual'], 0);?></td>
 								</tr>
 							<?php } ?>
 							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==2){ ?>
 								<tr class="odd">
 									<td>Presupuesto</td>
-									<td><?php echo Valores($rowdata['Presupuesto'], 0);?></td>
+									<td align="right"><?php echo Valores($rowdata['Presupuesto'], 0);?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
@@ -541,22 +522,26 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-	<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+	<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
 </div>
 
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) {  
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //verifico que sea un administrador
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";		 
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		 
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Contrato</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -577,25 +562,25 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($idOpcionItem)) {          $x11 = $idOpcionItem;        }else{$x11 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x2, 1); 
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x3, 2); 
-				$Form_Imputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x4, 1); 
-				$Form_Imputs->form_date('Fecha de Termino Contrato','FechaTermino', $x5, 1); 
-				$Form_Imputs->form_select('Tipo Contrato','idTipoLicitacion', $x6, 2, 'idTipoLicitacion', 'Nombre', 'core_licitacion_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_values('Valor Fijo Mensual', 'ValorMensual', $x7, 1);
-				$Form_Imputs->form_values('Presupuesto', 'Presupuesto', $x8, 1);
-				$Form_Imputs->form_select('Bodega Productos','idBodegaProd', $x9, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select('Bodega Insumos','idBodegaIns', $x10, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z, '', $dbConn);
-				$Form_Imputs->form_select('Utilizar Itemizado','idOpcionItem', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2); 
+				$Form_Inputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x4, 1); 
+				$Form_Inputs->form_date('Fecha de Termino Contrato','FechaTermino', $x5, 1); 
+				$Form_Inputs->form_select('Tipo Contrato','idTipoLicitacion', $x6, 2, 'idTipoLicitacion', 'Nombre', 'core_licitacion_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_values('Valor Fijo Mensual', 'ValorMensual', $x7, 1);
+				$Form_Inputs->form_values('Presupuesto', 'Presupuesto', $x8, 1);
+				$Form_Inputs->form_select('Bodega Productos','idBodegaProd', $x9, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select('Bodega Insumos','idBodegaIns', $x10, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select('Utilizar Itemizado','idOpcionItem', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
-				$Form_Imputs->form_input_hidden('idAprobado', 2, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idAprobado', 2, 2);
 				
 				
 				?> 
@@ -628,7 +613,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_Licitacion"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -677,8 +662,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/ 
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-$z = "WHERE licitacion_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "WHERE licitacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){       $z .= " AND licitacion_listado.idCliente=".$_GET['idCliente'];}
@@ -752,7 +737,7 @@ array_push( $arrArea,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -781,20 +766,20 @@ array_push( $arrArea,$row );
 				if(isset($idAprobado)) {            $x9  = $idAprobado;          }else{$x9  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_text( 'Codigo', 'Codigo', $x1, 1); 
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x2, 1); 
-				$Form_Imputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x3, 1); 
-				$Form_Imputs->form_date('Fecha de Termino Contrato','FechaTermino', $x4, 1); 
-				$Form_Imputs->form_values('Presupuesto', 'Presupuesto', $x5, 1);
-				$Form_Imputs->form_select('Bodega Productos','idBodegaProd', $x6, 1, 'idBodega', 'Nombre', 'bodegas_productos_listado', $w, '', $dbConn);
-				$Form_Imputs->form_select('Bodega Insumos','idBodegaIns', $x7, 1, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $w, '', $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x8, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				$Form_Imputs->form_select('Estado Aprobacion','idAprobado', $x9, 1, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1); 
+				$Form_Inputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x3, 1); 
+				$Form_Inputs->form_date('Fecha de Termino Contrato','FechaTermino', $x4, 1); 
+				$Form_Inputs->form_values('Presupuesto', 'Presupuesto', $x5, 1);
+				$Form_Inputs->form_select('Bodega Productos','idBodegaProd', $x6, 1, 'idBodega', 'Nombre', 'bodegas_productos_listado', $w, '', $dbConn);
+				$Form_Inputs->form_select('Bodega Insumos','idBodegaIns', $x7, 1, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $w, '', $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x8, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+				$Form_Inputs->form_select('Estado Aprobacion','idAprobado', $x9, 1, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -812,7 +797,7 @@ array_push( $arrArea,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Contratos</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Contratos</h5>	
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -826,36 +811,36 @@ array_push( $arrArea,$row );
 						<th>
 							<div class="pull-left">Cliente</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=cliente_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=cliente_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=cliente_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=cliente_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="160">
 							<div class="pull-left">Codigo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=codigo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=codigo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=codigo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=codigo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Estado Aprobacion</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=aprobado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=aprobado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=aprobado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=aprobado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -873,12 +858,12 @@ array_push( $arrArea,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>		
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_licitacion.php?view='.$area['idLicitacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$area['idLicitacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_licitacion.php?view='.simpleEncode($area['idLicitacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$area['idLicitacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$area['idLicitacion'];
+									$ubicacion = $location.'&del='.simpleEncode($area['idLicitacion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>	

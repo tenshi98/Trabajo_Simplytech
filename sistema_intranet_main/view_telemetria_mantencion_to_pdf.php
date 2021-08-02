@@ -17,63 +17,62 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
-//Se buscan la imagen i el tipo de PDF
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
-	//Consulta
-	$query = "SELECT Config_imgLogo, idOpcionesGen_5	
-	FROM `core_sistemas` 
-	WHERE idSistema = '{$_GET['idSistema']}'  ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-	$rowEmpresa = mysqli_fetch_array ($resultado);
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
-/********************************************************************/// Se traen todos los datos de mi usuario
+/**************************************************************/
+//Se buscan la imagen i el tipo de PDF
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSistema'], fecha_actual())!=0){
+	//Consulta
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema ='.simpleDecode($_GET['idSistema'], fecha_actual()), $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+}
+/********************************************************************/
+// Se traen todos los datos de mi usuario
 $query = "SELECT 
-
-sistema_origen.Nombre AS SistemaOrigen,
+core_sistemas.Nombre AS SistemaOrigen,
 sis_or_ciudad.Nombre AS SistemaOrigenCiudad,
 sis_or_comuna.Nombre AS SistemaOrigenComuna,
-sistema_origen.Direccion AS SistemaOrigenDireccion,
-sistema_origen.Contacto_Fono1 AS SistemaOrigenFono,
-sistema_origen.email_principal AS SistemaOrigenEmail,
-sistema_origen.Rut AS SistemaOrigenRut,
-sistema_origen.Contacto_Nombre AS SistemaContacto,
+core_sistemas.Direccion AS SistemaOrigenDireccion,
+core_sistemas.Contacto_Fono1 AS SistemaOrigenFono,
+core_sistemas.email_principal AS SistemaOrigenEmail,
+core_sistemas.Rut AS SistemaOrigenRut,
+core_sistemas.Contacto_Nombre AS SistemaContacto,
 
 usuarios_listado.Nombre AS NombreEncargado,
 
 telemetria_historial_mantencion.Fecha, 
+telemetria_historial_mantencion.h_Inicio, 
+telemetria_historial_mantencion.h_Termino, 
 telemetria_historial_mantencion.Duracion, 
 telemetria_historial_mantencion.Resumen, 
 telemetria_historial_mantencion.Resolucion,
+telemetria_historial_mantencion.idOpciones_1,
+telemetria_historial_mantencion.idOpciones_2,
+telemetria_historial_mantencion.idOpciones_3,
+telemetria_historial_mantencion.Recepcion_Nombre, 
+telemetria_historial_mantencion.Recepcion_Rut, 
+telemetria_historial_mantencion.Recepcion_Email,
+telemetria_historial_mantencion.Path_Firma,
 
-telemetria_listado.Nombre AS Equipo
+core_telemetria_servicio_tecnico.Nombre AS Servicio
 
 FROM `telemetria_historial_mantencion`
-LEFT JOIN `core_sistemas`   sistema_origen          ON sistema_origen.idSistema                     = telemetria_historial_mantencion.idSistema
-LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                       = sistema_origen.idCiudad
-LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = sistema_origen.idComuna
 LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                   = telemetria_historial_mantencion.idUsuario
-LEFT JOIN `telemetria_listado`                      ON telemetria_listado.idTelemetria              = telemetria_historial_mantencion.idTelemetria
+LEFT JOIN `core_telemetria_servicio_tecnico`        ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio
+LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                      = telemetria_historial_mantencion.idSistema
+LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                       = core_sistemas.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = core_sistemas.idComuna
 
-WHERE telemetria_historial_mantencion.idMantencion = {$_GET['view']}";
+WHERE telemetria_historial_mantencion.idMantencion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -84,24 +83,16 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado); 
 
-/************************************************************/
-// Se traen los archivos
-$arrArchivos = array();
-$query = "SELECT Nombre
-FROM `telemetria_historial_mantencion_archivos`
-WHERE idMantencion = {$_GET['view']}";
+/**********************************/				
+$arrOpciones = array();
+$query = "SELECT idOpciones, Nombre
+FROM `core_telemetria_servicio_tecnico_opciones`
+ORDER BY Nombre ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -111,15 +102,61 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 					
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrOpciones,$row );
+}
+/**********************************/
+$arrOpcionesDisplay = array();
+foreach ($arrOpciones as $mant) {
+	$arrOpcionesDisplay[$mant['idOpciones']]['Nombre'] = $mant['Nombre'];
+}
+/*************************************************************************/
+//Se buscan todos los archivos relacionados
+$arrEquipos = array();
+$query = "SELECT 
+telemetria_listado.Identificador AS Identificador,
+telemetria_listado.Nombre AS Equipo
+
+FROM `telemetria_historial_mantencion_equipos`
+LEFT JOIN `telemetria_listado`  ON telemetria_listado.idTelemetria  = telemetria_historial_mantencion_equipos.idTelemetria
+WHERE telemetria_historial_mantencion_equipos.idMantencion = ".$X_Puntero;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrEquipos,$row );
+}
+/*************************************************************************/
+//Se buscan todos los archivos relacionados
+$arrArchivos = array();
+$query = "SELECT Nombre
+FROM `telemetria_historial_mantencion_archivos`
+WHERE idMantencion = ".$X_Puntero;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrArchivos,$row );
@@ -144,67 +181,112 @@ $html .= '
 				<table style="text-align: left; width: 100%;border: 1px solid #f4f4f4;"  cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="oddrow">
-							<td colspan="4" rowspan="1" style="text-align: center;background-color:#DDD;padding:5px;"><br/><strong>Mantenciones.</strong></td>
+							<td colspan="4" rowspan="1" style="text-align: center;background-color:#DDD;padding:5px;"><br/><strong>Empresa Visitada.</strong></td>
 						</tr>
-						<tr class="oddrow">
-							<td colspan="4" rowspan="1" style="vertical-align: top;background-color:#FFF"></td>
-						</tr>
-						
-						
-						
 						
 						<tr>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;">Empresa Visitada</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaOrigen'].'</td>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;">Tecnico a Cargo</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['NombreEncargado'].'</td>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Nombre</td>
+							<td style="vertical-align: top; width:80%;" colspan="3">'.$row_data['SistemaOrigen'].'</td>
 						</tr>
-						
-
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Ubicacion</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'</td>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;">Fecha</td>
-							<td style="vertical-align: top; width:30%;">'.Fecha_estandar($row_data['Fecha']).'</td>
-						</tr>
-						<tr>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;">Direccion</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaOrigenDireccion'].'</td>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;">Horas</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['Duracion'].'</td>
+							<td style="vertical-align: top; width:80%;" colspan="3">'.$row_data['SistemaOrigenDireccion'].', '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Fono Fijo</td>
 							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaOrigenFono'].'</td>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;">Equipo</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['Equipo'].'</td>
-						</tr>
-						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Rut</td>
 							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaOrigenRut'].'</td>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;"></td>
-							<td style="vertical-align: top; width:30%;"></td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Email</td>
 							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaOrigenEmail'].'</td>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;"></td>
-							<td style="vertical-align: top; width:30%;"></td>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Persona contacto</td>
+							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaContacto'].'</td>
 						</tr>
 						<tr>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;">Contacto</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaContacto'].'</td>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Aprobador Nombre</td>
+							<td style="vertical-align: top; width:30%;">'.$row_data['Recepcion_Nombre'].'</td>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Aprobador Rut</td>
+							<td style="vertical-align: top; width:30%;">'.$row_data['Recepcion_Rut'].'</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Aprobador Email</td>
+							<td style="vertical-align: top; width:30%;">'.$row_data['Recepcion_Email'].'</td>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;"></td>
 							<td style="vertical-align: top; width:30%;"></td>
 						</tr>
-						
+					</tbody>
+				</table>
+				
+				<table style="text-align: left; width: 100%;border: 1px solid #f4f4f4;"  cellpadding="0" cellspacing="0">
+					<tbody>
+						<tr class="oddrow">
+							<td colspan="4" rowspan="1" style="text-align: center;background-color:#DDD;padding:5px;"><br/><strong>Tecnico a Cargo</strong></td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Nombre</td>
+							<td style="vertical-align: top; width:80%;" colspan="3">'.$row_data['NombreEncargado'].'</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Fecha</td>
+							<td style="vertical-align: top; width:30%;">'.Fecha_estandar($row_data['Fecha']).'</td>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Hora Inicio</td>
+							<td style="vertical-align: top; width:30%;">'.$row_data['h_Inicio'].'</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Hora Termino</td>
+							<td style="vertical-align: top; width:30%;">'.$row_data['h_Termino'].'</td>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Duracion</td>
+							<td style="vertical-align: top; width:30%;">'.$row_data['Duracion'].'</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<table style="text-align: left; width: 100%;border: 1px solid #f4f4f4;"  cellpadding="0" cellspacing="0">
+					<tbody>
+						<tr class="oddrow">
+							<td colspan="2" rowspan="1" style="text-align: center;background-color:#DDD;padding:5px;"><br/><strong>Trabajo</strong></td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Servicio</td>
+							<td style="vertical-align: top; width:80%;">'.$row_data['Servicio'].'</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Opciones</td>
+							<td style="vertical-align: top; width:80%;">';
+								$ntot = 0;
+								if(isset($row_data['idOpciones_1'])&&$row_data['idOpciones_1']==2){if($ntot!=0){$html .= ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{$html .= $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
+								if(isset($row_data['idOpciones_2'])&&$row_data['idOpciones_2']==2){if($ntot!=0){$html .= ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{$html .= $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
+								if(isset($row_data['idOpciones_3'])&&$row_data['idOpciones_3']==2){if($ntot!=0){$html .= ' - '.$arrOpcionesDisplay[3]['Nombre'];$ntot++;}else{$html .= $arrOpcionesDisplay[3]['Nombre'];$ntot++;}}
+								$html .= '
+							</td>
+						</tr>
 					</tbody>
 				</table>
 				
 				<br/>
 				<br/>
 				<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
-					<tbody><tr><td style="vertical-align: top;">Resumen:</td></tr></tbody>
+					<tbody><tr><td style="vertical-align: top;">Equipos:</td></tr></tbody>
+				</table>
+				<table style="text-align: left; width: 100%;margin-top:20px;" cellpadding="5" cellspacing="0">
+					<tbody>
+						<tr>
+							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">';
+							foreach ($arrEquipos as $archivos) {
+								$html .= $archivos['Identificador'].' - '.$archivos['Equipo'].'<br/>';
+							}
+							$html .= '
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<br/>
+				<br/>
+				<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
+					<tbody><tr><td style="vertical-align: top;">Diagnostico tecnico y acciones realizadas:</td></tr></tbody>
 				</table>
 				<table style="text-align: left; width: 100%;margin-top:20px;" cellpadding="5" cellspacing="0">
 					<tbody>
@@ -217,7 +299,7 @@ $html .= '
 				<br/>
 				<br/>
 				<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
-					<tbody><tr><td style="vertical-align: top;">Resolucion:</td></tr></tbody>
+					<tbody><tr><td style="vertical-align: top;">Resumen de Visita:</td></tr></tbody>
 				</table>
 				<table style="text-align: left; width: 100%;margin-top:20px;" cellpadding="5" cellspacing="0">
 					<tbody>
@@ -242,9 +324,9 @@ $html .= '
 							
 						$xn_col = 1;
 						foreach ($arrArchivos as $arch) {
-							$html .= '<td style="vertical-align: top; width:12%;"><img src="upload/'.$arch['Nombre'].'"></td>';
+							$html .= '<td style="vertical-align: top; width:20%;"><img src="upload/'.$arch['Nombre'].'"></td>';
 							$xn_col++;
-							if($xn_col>8){
+							if($xn_col>5){
 								$html .= '</tr><tr>';
 								$xn_col=1;
 							}
@@ -256,22 +338,43 @@ $html .= '
 					</tbody>
 				</table>';
 				
-				
+				$html .= '
+					<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
+						<tbody>
+							<tr>
+								<td style="vertical-align: top;text-align:center;width:50%;">';
+								if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){
+									$html .= '<img style="" alt="User Picture" src="upload/'.$row_data['Path_Firma'].'">';
+								}
+								$html .= '
+								</td>
+								<td style="vertical-align: top;text-align:center;width:50%;">
+								
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;text-align:center;">Firma Aprobador</td>
+								<td style="vertical-align: top;text-align:center;">Firma Trabajador</td>
+							</tr>
+						</tbody>
+					</table>';
 				
 
 			$html .= '</td>
 		</tr>
 	</tbody>
 </table>';
+
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/
 //Config
-$pdf_titulo     = 'Mantencion Equipo '.$row_data['Equipo'];
-$pdf_subtitulo  = '';
-$pdf_file       = 'Mantencion Equipo '.$row_data['Equipo'].'.pdf';
+$pdf_titulo     = 'Visita Tecnica N° '.n_doc($X_Puntero, 7).'.';
+$pdf_subtitulo  = 'Mantencion '.$row_data['Servicio'];
+$pdf_file       = 'Mantencion N° '.n_doc($X_Puntero, 7).'.pdf';
 $OpcDom         = "'A4', 'landscape'";
-$OpcTcp         = "'L', 'A4'";
+$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
+$OpcTcpPg       = "A4"; //Tipo de Hoja
 /********************************************************************************/
 //Se verifica que este configurado el motor de pdf
 if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
@@ -293,14 +396,14 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->SetKeywords('');
 
 			// set default header data
-			if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
+			if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSistema'], fecha_actual())!=0){
 				if(isset($rowEmpresa['Config_imgLogo'])&&$rowEmpresa['Config_imgLogo']!=''){
-					$logo = '../../../../'.DB_EMPRESA_PATH.'/upload/'.$rowEmpresa['Config_imgLogo'];
+					$logo = '../../../../'.DB_SITE_MAIN_PATH.'/upload/'.$rowEmpresa['Config_imgLogo'];
 				}else{
-					$logo = '../../../../LIB_assets/img/logo_empresa.jpg';
+					$logo = '../../../../Legacy/gestion_modular/img/logo_empresa.jpg';
 				}
 			}else{
-				$logo = '../../../../LIB_assets/img/logo_empresa.jpg';
+				$logo = '../../../../Legacy/gestion_modular/img/logo_empresa.jpg';
 			}
 			$pdf->SetHeaderData($logo, 40, $pdf_titulo, $pdf_subtitulo);
 
@@ -330,7 +433,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 
 			//Se crea el archivo
 			$pdf->SetFont('helvetica', '', 10);
-			$pdf->AddPage($AddPageL, AddPageA);
+			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output($pdf_file, 'I');

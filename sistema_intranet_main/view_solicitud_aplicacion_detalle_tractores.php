@@ -21,21 +21,35 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 //Variable de busqueda
 $z = "WHERE cross_solicitud_aplicacion_listado.idSolicitud!=0";
 $z .= " AND cross_solicitud_aplicacion_listado.idEstado=3";//solo terminadas
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND cross_solicitud_aplicacion_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){ $z .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".$_GET['idSolicitud'];}
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){       $z .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){           $z .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".$_GET['idZona'];}
+if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){ $z .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".simpleDecode($_GET['idSolicitud'], fecha_actual());}
+if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){       $z .= " AND cross_solicitud_aplicacion_listado.idPredio=".simpleDecode($_GET['idPredio'], fecha_actual());}
+if(isset($_GET['idZona']) && $_GET['idZona'] != ''){           $z .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".simpleDecode($_GET['idZona'], fecha_actual());}
 /**********************************************************/
 // Se trae un listado con todos los datos separados por tractores
 $arrOTS = array();
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,
+cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
 
 cross_predios_listado.Nombre AS PredioNombre,
@@ -104,7 +118,7 @@ filtrar($arrOTS, 'idTelemetria');
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Detalle Tractores</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Detalle Tractores</h5>
 			<ul class="nav nav-tabs pull-right">
 				<?php 
 				$ssx = 0;
@@ -159,7 +173,7 @@ filtrar($arrOTS, 'idTelemetria');
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($subcategorias as $ot) { ?>
 									<tr class="odd">		
-										<td><?php echo n_doc($ot['idSolicitud'], 5); ?></td>
+										<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>
 										<td><?php echo Fecha_estandar($ot['f_cierre']); ?></td>
 										<td><?php echo $ot['PredioNombre']; ?></td>
 										<td><?php echo $ot['CuartelNombre']; ?></td>
@@ -219,7 +233,7 @@ filtrar($arrOTS, 'idTelemetria');
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($subcategorias as $ot) { ?>
 									<tr class="odd">		
-										<td><?php echo n_doc($ot['idSolicitud'], 5); ?></td>
+										<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>
 										<td><?php echo Fecha_estandar($ot['f_cierre']); ?></td>
 										<td><?php echo $ot['PredioNombre']; ?></td>
 										<td><?php echo $ot['CuartelNombre']; ?></td>
@@ -251,14 +265,31 @@ filtrar($arrOTS, 'idTelemetria');
 </div>
 
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
- 
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

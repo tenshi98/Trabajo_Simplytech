@@ -26,7 +26,7 @@ $meses=array(1=>"Enero",
 			);
 //verifico el tipo de usuario
 $z = 'WHERE idOT!=0';	
-$z.=" AND idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 //verifica las ot generadas dentro del mes y que esten programadas
 if(isset($_GET["estado"])&&$_GET["estado"]==1){
@@ -140,7 +140,7 @@ array_push( $arrOT,$row );
 														<?php 
 														foreach ($arrOT as $evento) { 
 															if ($evento['progDia']==$Dia&&$evento['progMes']==$Mes) {
-																$ver = 'view_orden_trabajo.php?view='.$evento['idOT'];
+																$ver = 'view_orden_trabajo.php?view='.simpleEncode($evento['idOT'], fecha_actual());
 																switch ($evento['idEstado']) {
 																	case 1: $calcolor = 'evcal_color4'; break;
 																	case 2: $calcolor = 'evcal_color2'; break;

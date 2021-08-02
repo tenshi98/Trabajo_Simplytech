@@ -48,7 +48,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 // Se traen todos los datos de mi usuario
 $query = "SELECT Direccion_img, Nombre
 FROM `usuarios_listado`
-WHERE idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";
+WHERE idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -92,21 +92,7 @@ for ($i = 1; $i <= 4; $i++) {
 $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Perfil</span>
-				<span class="info-box-number"><?php echo $_SESSION['usuario']['basic_data']['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Imagen Perfil</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Perfil', $_SESSION['usuario']['basic_data']['Nombre'], 'Editar Imagen Perfil');?>
 </div>
 <div class="clearfix"></div>
 
@@ -114,134 +100,121 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'principal_datos.php';?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'principal_datos_datos.php';?>" >Datos Personales</a></li>
-				<li class="active"><a href="<?php echo 'principal_datos_imagen.php';?>" >Cambiar Imagen</a></li>
+				<li class=""><a href="<?php echo 'principal_datos.php';?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'principal_datos_datos.php';?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Personales</a></li>
+				<li class="active"><a href="<?php echo 'principal_datos_imagen.php';?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Cambiar Imagen</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'principal_datos_password.php';?>" >Cambiar Contraseña</a></li>
+						<li class=""><a href="<?php echo 'principal_datos_password.php';?>" ><i class="fa fa-key" aria-hidden="true"></i> Cambiar Contraseña</a></li>
 						<?php if($Count_pagos!=0){ ?>
-							<li class=""><a href="<?php echo 'principal_datos_documentos_pago.php'?>" >Documentos Pago</a></li>
+							<li class=""><a href="<?php echo 'principal_datos_documentos_pago.php'?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Documentos Pago</a></li>
 						<?php } ?>
 					</ul>
                 </li>           
 			</ul>	
 		</header>
         <div class="table-responsive">
-			<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
-			
-				<div class="col-sm-10 fcenter">
-					<img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" class="img-thumbnail" > 
-				</div><br/>
-				<a href="<?php echo $location.'&id_usuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&del_img=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
-				<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
-				<div class="clearfix"></div>
-			
-			<?php }else{?>
+			<div class="col-sm-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
+				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
+				
+					<div class="col-sm-10 fcenter">
+						<img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" class="img-thumbnail" > 
+						<br/>
+						<a href="<?php echo $location.'&id_usuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&del_img=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
+					</div>
+					<div class="clearfix"></div>
+				
+				<?php }else{ ?>
 
-				<div class="col-sm-8 fcenter">
-					
-					<link rel="stylesheet" href="<?php echo DB_SITE ?>/LIBS_js/upload_and_crop_image/croppie.css">
-					<script src="<?php echo DB_SITE ?>/LIBS_js/upload_and_crop_image/croppie.js"></script>
-					
-					
+					<link rel="stylesheet" href="<?php echo DB_SITE_REPO ?>/LIBS_js/upload_and_crop_image/croppie.css">
+					<script src="<?php echo DB_SITE_REPO ?>/LIBS_js/upload_and_crop_image/croppie.js"></script>
+						
 					<div class="fileUpload btn btn-primary">
 						<span><i class="fa fa-search" aria-hidden="true"></i> Seleccionar Imagen</span>
 						<input name="upload_image" id="upload_image" type="file" class="upload" />
 					</div>
+						
 					
-					 
-				</div>
-				
-				
-				
-                    
-				
-				
-				
-		
-				
-				
-				
-				<div id="uploadimageModal" class="modal" role="dialog">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Seleccionar Zona</h4>
-							</div>
-							<div class="modal-body">
-								<div class="row">
-									<div class="col-md-8 text-center">
-										  <div id="image_demo" style="width:350px; margin-top:30px"></div>
-									</div>
-									<div class="col-md-4" style="padding-top:30px;">
-										<br/>
-										<br/>
-										<br/>
-										  <button class="btn btn-success crop_image">Cortar y Subir Imagen</button>
+					<div id="uploadimageModal" class="modal" role="dialog">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Seleccionar Zona</h4>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-md-8 text-center">
+											  <div id="image_demo" style="width:350px; margin-top:30px"></div>
+										</div>
+										<div class="col-md-4" style="padding-top:30px;">
+											<br/>
+											<br/>
+											<br/>
+											  <button class="btn btn-success crop_image">Cortar y Subir Imagen</button>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				
-				<script>  
-					$(document).ready(function(){
+					
+					<script>  
+						$(document).ready(function(){
 
-						$image_crop = $('#image_demo').croppie({
-							enableExif: true,
-							viewport: {
-								width:200,
-								height:200,
-								type:'square' //circle
-							},
-							boundary:{
-								width:300,
-								height:300
-							}
-						});
+							$image_crop = $('#image_demo').croppie({
+								enableExif: true,
+								viewport: {
+									width:200,
+									height:200,
+									type:'square' //circle
+								},
+								boundary:{
+									width:300,
+									height:300
+								}
+							});
 
-						$('#upload_image').on('change', function(){
-							var reader = new FileReader();
-							reader.onload = function (event) {
-								$image_crop.croppie('bind', {
-									url: event.target.result
-								}).then(function(){
-									console.log('jQuery bind complete');
-								});
-							}
-							reader.readAsDataURL(this.files[0]);
-							$('#uploadimageModal').modal('show');
-						});
+							$('#upload_image').on('change', function(){
+								var reader = new FileReader();
+								reader.onload = function (event) {
+									$image_crop.croppie('bind', {
+										url: event.target.result
+									}).then(function(){
+										console.log('jQuery bind complete');
+									});
+								}
+								reader.readAsDataURL(this.files[0]);
+								$('#uploadimageModal').modal('show');
+							});
 
-						$('.crop_image').click(function(event){
-							$image_crop.croppie('result', {
-								type: 'canvas',
-								size: 'viewport'
-							}).then(function(response){
-								$.ajax({
-									url:"principal_datos_imagen_upload.php",
-									type: "POST",
-									data:{"image": response},
-									success:function(data){
-										$('#uploadimageModal').modal('hide');
-										location.reload(); 
-										//alert('listo');
-									}
-								});
-							})
-						});
+							$('.crop_image').click(function(event){
+								$image_crop.croppie('result', {
+									type: 'canvas',
+									size: 'viewport'
+								}).then(function(response){
+									$.ajax({
+										url:"principal_datos_imagen_upload.php",
+										type: "POST",
+										data:{"image": response},
+										success:function(data){
+											$('#uploadimageModal').modal('hide');
+											location.reload(); 
+											//alert('listo');
+										}
+									});
+								})
+							});
 
-					});  
-				</script>
-				
-			<?php }?>
+						});  
+					</script>
+					
+				<?php }?>
+			</div>
 		</div>	
 	</div>
 </div>

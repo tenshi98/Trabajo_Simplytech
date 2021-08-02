@@ -1,13 +1,7 @@
 <?php
 /**********************************************************/
 //Variable con la ubicacion
-$z="WHERE caja_chica_facturacion.idTipo!=0";//Solo egresos
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z.=" AND caja_chica_facturacion.idSistema>=0";	
-}else{
-	$z.=" AND caja_chica_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-}
+$z="WHERE caja_chica_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idCajaChica']) && $_GET['idCajaChica'] != ''){                            $z .= " AND caja_chica_facturacion.idCajaChica=".$_GET['idCajaChica'];}
@@ -63,7 +57,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Movimientos de <?php echo $arrTipo[0]['Caja']?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Movimientos de <?php echo $arrTipo[0]['Caja']?></h5>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -94,34 +88,34 @@ array_push( $arrTipo,$row );
 							switch ($tipo['idTipo']) {
 								//Ingreso Caja Chica
 								case 1:
-									echo '<td>'.Valores($tipo['MovSum'], 0).'</td>';
-									echo '<td></td>';
-									echo '<td></td>';
+									echo '<td align="right">'.Valores($tipo['MovSum'], 0).'</td>';
+									echo '<td align="right"></td>';
+									echo '<td align="right"></td>';
 									break;
 								//Egreso Caja Chica
 								case 2:
-									echo '<td></td>';
-									echo '<td>'.Valores($tipo['MovSum'], 0).'</td>';
-									echo '<td></td>';
+									echo '<td align="right"></td>';
+									echo '<td align="right">'.Valores($tipo['MovSum'], 0).'</td>';
+									echo '<td align="right"></td>';
 									break;
 								//Rendicion Caja Chica
 								case 3:
-									echo '<td>'.Valores($tipo['MovSum'], 0).'</td>';
-									echo '<td></td>';
-									echo '<td>'.Valores($tipo['DevSum'], 0).'</td>';
+									echo '<td align="right">'.Valores($tipo['MovSum'], 0).'</td>';
+									echo '<td align="right"></td>';
+									echo '<td align="right">'.Valores($tipo['DevSum'], 0).'</td>';
 									break;
 							}
 							
 							?>
-							<td><strong><?php echo Valores($tipo['Valor'], 0); ?></strong></td>
+							<td align="right"><strong><?php echo Valores($tipo['Valor'], 0); ?></strong></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo 'view_mov_caja_chica.php?view='.$tipo['ID'].'&return=true'; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_mov_caja_chica.php?view='.simpleEncode($tipo['ID'], fecha_actual()).'&return=true'; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									<?php
 									//solo si es rendicion
 									if(isset($tipo['idTipo'])&&$tipo['idTipo']==3){
-										echo '<a href="view_mov_caja_chica.php?view='.$tipo['idFacturacionRelacionada'].'&return=true" title="Ver Documento Relacionado" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>';	
+										echo '<a href="view_mov_caja_chica.php?view='.simpleEncode($tipo['idFacturacionRelacionada'], fecha_actual()).'&return=true" title="Ver Documento Relacionado" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';	
 									}
 									?>
 								</div>

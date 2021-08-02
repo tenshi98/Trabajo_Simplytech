@@ -25,6 +25,19 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos
 $query = "SELECT  
 usuarios_listado.Nombre AS NombreUsuario,
@@ -36,7 +49,7 @@ vehiculos_facturacion_listado.fCreacion
 FROM `vehiculos_facturacion_listado`
 LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario   = vehiculos_facturacion_listado.idUsuario
 LEFT JOIN `core_sistemas`     ON core_sistemas.idSistema      = vehiculos_facturacion_listado.idSistema
-WHERE vehiculos_facturacion_listado.idFacturacion = {$_GET['view']} ";
+WHERE vehiculos_facturacion_listado.idFacturacion = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -47,15 +60,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowFacturacion = mysqli_fetch_assoc ($resultado);
 
@@ -122,7 +128,7 @@ LEFT JOIN `vehiculos_listado`   vehiculo_5      ON vehiculo_5.idVehiculo        
 LEFT JOIN `apoderados_listado`                  ON apoderados_listado.idApoderado    = vehiculos_facturacion_listado_detalle.idApoderado
 LEFT JOIN `core_estado_facturacion`                  ON core_estado_facturacion.idEstado    = vehiculos_facturacion_listado_detalle.idEstado
 
-WHERE vehiculos_facturacion_listado_detalle.idFacturacion = '{$_GET['view']}'  ";
+WHERE vehiculos_facturacion_listado_detalle.idFacturacion = '".$X_Puntero."'  ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -133,15 +139,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrHijos,$row );
@@ -227,7 +226,7 @@ array_push( $arrHijos,$row );
 							<td class="item-name"><?php echo $hijo['Estado']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.$hijo['idFacturacionDetalle'].'&return=true' ?>" title="Ver Datos Apoderado" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Datos Apoderado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>	
@@ -241,7 +240,7 @@ array_push( $arrHijos,$row );
 							<td class="item-name"><?php echo $hijo['Estado']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.$hijo['idFacturacionDetalle'].'&return=true' ?>" title="Ver Datos Apoderado" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Datos Apoderado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>	
@@ -255,7 +254,7 @@ array_push( $arrHijos,$row );
 							<td class="item-name"><?php echo $hijo['Estado']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.$hijo['idFacturacionDetalle'].'&return=true' ?>" title="Ver Datos Apoderado" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Datos Apoderado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>	
@@ -269,7 +268,7 @@ array_push( $arrHijos,$row );
 							<td class="item-name"><?php echo $hijo['Estado']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.$hijo['idFacturacionDetalle'].'&return=true' ?>" title="Ver Datos Apoderado" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Datos Apoderado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>	
@@ -283,7 +282,7 @@ array_push( $arrHijos,$row );
 							<td class="item-name"><?php echo $hijo['Estado']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.$hijo['idFacturacionDetalle'].'&return=true' ?>" title="Ver Boleta" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Boleta" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>	
@@ -334,11 +333,31 @@ array_push( $arrHijos,$row );
  
           
 
-<div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
-</div>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

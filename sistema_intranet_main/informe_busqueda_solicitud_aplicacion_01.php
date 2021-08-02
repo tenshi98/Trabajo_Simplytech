@@ -24,16 +24,16 @@ if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $location 
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $location .= "&idUsuario=".$_GET['idUsuario'];            $search .= "&idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $location .= "&idEstado=".$_GET['idEstado'];              $search .= "&idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
-	$search .="&f_programacion_desde={$_GET['f_programacion_desde']}";
-	$search .="&f_programacion_hasta={$_GET['f_programacion_hasta']}";
+	$search .="&f_programacion_desde=".$_GET['f_programacion_desde'];
+	$search .="&f_programacion_hasta=".$_GET['f_programacion_hasta'];
 }
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
-	$search .="&f_ejecucion_desde={$_GET['f_ejecucion_desde']}";
-	$search .="&f_ejecucion_hasta={$_GET['f_ejecucion_hasta']}";
+	$search .="&f_ejecucion_desde=".$_GET['f_ejecucion_desde'];
+	$search .="&f_ejecucion_hasta=".$_GET['f_ejecucion_hasta'];
 }
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
-	$search .="&f_termino_desde={$_GET['f_termino_desde']}";
-	$search .="&f_termino_hasta={$_GET['f_termino_hasta']}";
+	$search .="&f_termino_desde=".$_GET['f_termino_desde'];
+	$search .="&f_termino_hasta=".$_GET['f_termino_hasta'];
 }
 			     
 //Verifico los permisos del usuario sobre la transaccion
@@ -66,26 +66,27 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'id_asc':        $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.idSolicitud ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> ID Ascendente'; break;
-		case 'id_desc':       $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';break;
+		case 'id_asc':        $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.NSolicitud ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Solicitud Ascendente'; break;
+		case 'id_desc':       $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.NSolicitud DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';break;
 		case 'fprog_asc':     $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.f_programacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Programacion Ascendente';break;
 		case 'fprog_desc':    $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Programacion Descendente';break;
 		case 'predio_asc':    $order_by = 'ORDER BY cross_predios_listado.Nombre ASC ';                       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Predio Ascendente'; break;
 		case 'predio_desc':   $order_by = 'ORDER BY cross_predios_listado.Nombre DESC ';                      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Predio Descendente';break;
 		
-		default: $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Solicitud Descendente';
+		default: $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.NSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Solicitud Descendente';
+	$order_by = 'ORDER BY cross_solicitud_aplicacion_listado.NSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
 $z = "WHERE cross_solicitud_aplicacion_listado.idSolicitud!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND cross_solicitud_aplicacion_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".$_GET['idSolicitud'];}
+if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $z .= " AND cross_solicitud_aplicacion_listado.NSolicitud=".$_GET['NSolicitud'];}
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $z .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
 if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
 if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idEstadoFen=".$_GET['idEstadoFen'];}
@@ -94,13 +95,13 @@ if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $z .= " AN
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AND cross_solicitud_aplicacion_listado.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $z .= " AND cross_solicitud_aplicacion_listado.idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
-	$z.=" AND bodegas_arriendos_facturacion.f_programacion BETWEEN '{$_GET['f_programacion_desde']}' AND '{$_GET['f_programacion_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '".$_GET['f_programacion_desde']."' AND '".$_GET['f_programacion_hasta']."'";
 }
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
-	$z.=" AND bodegas_arriendos_facturacion.f_ejecucion BETWEEN '{$_GET['f_ejecucion_desde']}' AND '{$_GET['f_ejecucion_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '".$_GET['f_ejecucion_desde']."' AND '".$_GET['f_ejecucion_hasta']."'";
 }
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
-	$z.=" AND bodegas_arriendos_facturacion.f_termino BETWEEN '{$_GET['f_termino_desde']}' AND '{$_GET['f_termino_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '".$_GET['f_termino_desde']."' AND '".$_GET['f_termino_hasta']."'";
 }
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -127,6 +128,7 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 $arrOTS = array();
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,
+cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.f_programacion,
 cross_predios_listado.Nombre AS NombrePredio
 
@@ -166,7 +168,7 @@ array_push( $arrOTS,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Solicitudes de Aplicacion</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Solicitudes de Aplicacion</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -180,22 +182,22 @@ array_push( $arrOTS,$row );
 						<th width="100">
 							<div class="pull-left">#</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=id_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=id_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=id_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=id_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">F Prog</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fprog_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fprog_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fprog_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fprog_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Predio</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=predio_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=predio_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=predio_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=predio_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -204,12 +206,12 @@ array_push( $arrOTS,$row );
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrOTS as $ot) { ?>
 					<tr class="odd">		
-						<td><?php echo n_doc($ot['idSolicitud'], 5); ?></td>	
+						<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>	
 						<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>	
 						<td><?php echo $ot['NombrePredio']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.$ot['idSolicitud']; ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>	
 					</tr>
@@ -227,21 +229,26 @@ array_push( $arrOTS,$row );
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 $y = "idEstado=1";
-$x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -249,7 +256,7 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idSolicitud)) {            $x1  = $idSolicitud;            }else{$x1  = '';}
+				if(isset($NSolicitud)) {             $x1  = $NSolicitud;             }else{$x1  = '';}
 				if(isset($idPredio)) {               $x2  = $idPredio;               }else{$x2  = '';}
 				if(isset($idTemporada)) {            $x3  = $idTemporada;            }else{$x3  = '';}
 				if(isset($idEstadoFen)) {            $x4  = $idEstadoFen;            }else{$x4  = '';}
@@ -265,22 +272,22 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idEstado)) {               $x14 = $idEstado;               }else{$x14 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_number('N° Solicitud','idSolicitud', $x1, 1);
-				$Form_Imputs->form_select_filter('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, '', $dbConn);
-				$Form_Imputs->form_select_filter('Temporada','idTemporada', $x3, 1, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
-				$Form_Imputs->form_select_filter('Estado Fenológico','idEstadoFen', $x4, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x5, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_number('N° Solicitud','NSolicitud', $x1, 1);
+				$Form_Inputs->form_select_filter('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, '', $dbConn);
+				$Form_Inputs->form_select_filter('Temporada','idTemporada', $x3, 1, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
+				$Form_Inputs->form_select_filter('Estado Fenológico','idEstadoFen', $x4, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x5, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x6, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_date('Fecha Programada Desde','f_programacion_desde', $x7, 1);
-				$Form_Imputs->form_date('Fecha Programada Hasta','f_programacion_hasta', $x8, 1);
-				$Form_Imputs->form_date('Fecha Ejecutada Desde','f_ejecucion_desde', $x9, 1);
-				$Form_Imputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x10, 1);
-				$Form_Imputs->form_date('Fecha Terminada Desde','f_termino_desde', $x11, 1);
-				$Form_Imputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x12, 1);
-				$Form_Imputs->form_select_join_filter('Usuario Creador','idUsuario', $x13, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x14, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Programada Desde','f_programacion_desde', $x7, 1);
+				$Form_Inputs->form_date('Fecha Programada Hasta','f_programacion_hasta', $x8, 1);
+				$Form_Inputs->form_date('Fecha Ejecutada Desde','f_ejecucion_desde', $x9, 1);
+				$Form_Inputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x10, 1);
+				$Form_Inputs->form_date('Fecha Terminada Desde','f_termino_desde', $x11, 1);
+				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x12, 1);
+				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x13, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x14, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
 						
 				?> 
 

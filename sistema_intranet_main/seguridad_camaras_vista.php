@@ -19,8 +19,8 @@ $location .='?pagina='.$_GET['pagina'];
 //Variables para filtro y paginacion
 $search = '';
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){
-	$location .= "&Nombre=".$_GET['Nombre'] ;
-	$search .= "&Nombre=".$_GET['Nombre'] ;  	
+	$location .= "&Nombre=".$_GET['Nombre'];
+	$search .= "&Nombre=".$_GET['Nombre'];  	
 }
 /********************************************************************/
 
@@ -39,7 +39,7 @@ if ( ! empty($_GET['idCamara']) ) {
 $query = "SELECT Nombre, idSubconfiguracion, idTipoCamara, Config_usuario, Config_Password,
 Config_IP, Config_Puerto, Config_Web
 FROM `seguridad_camaras_listado`
-WHERE idCamara = {$_GET['idCamara']}";
+WHERE idCamara = ".$_GET['idCamara'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -55,86 +55,111 @@ if(!$resultado){
 }
 $rowCamara = mysqli_fetch_assoc ($resultado);
              
-//Si existe subconfiguracion
-if(isset($rowCamara['idSubconfiguracion'])&&$rowCamara['idSubconfiguracion']==1){
-	// Se trae un listado con todos los impuestos existentes
-	$arrCamaras = array();
-	$query = "SELECT Nombre, idTipoCamara, Config_usuario, Config_Password,
-	Config_IP, Config_Puerto, Config_Web
-	FROM `seguridad_camaras_listado_canales`
-	WHERE idCamara = {$_GET['idCamara']}";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
+
+// Se trae un listado con todos los impuestos existentes
+$arrCamaras = array();
+$query = "SELECT Nombre, idTipoCamara, Config_usuario, Config_Password,
+Config_IP, Config_Puerto, Config_Web, Chanel
+FROM `seguridad_camaras_listado_canales`
+WHERE idCamara = ".$_GET['idCamara'];
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	//Genero numero aleatorio
+	$vardata = genera_password(8,'alfanumerico');
 						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+	//Guardo el error en una variable temporal
+	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrCamaras,$row );
-	}
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrCamaras,$row );
 }
 ?>
-
-
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Camaras de Seguridad</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Camaras de Seguridad</h5>
 		</header>
 		<div class="table-responsive">   
 			<?php
 			//recorro las camaras
 			foreach ($arrCamaras as $camara) {
+				//canal utilizado
+				$SIS_Config_Chanel    = $camara['Chanel'];
+					
 				//si existe subconfiguracion
 				if(isset($rowCamara['idSubconfiguracion'])&&$rowCamara['idSubconfiguracion']==1){
-					//Verifico el tipo de camara
-					switch ($camara['idTipoCamara']) {
-						//Dahua
-						case 1:
-							echo '<img name="main" id="main" border="0" width="640" height="480" src="http://'.$camara['Config_usuario'].':'.$camara['Config_Password'].'@'.$camara['Config_IP'].'/cgi-bin/mjpg/video.cgi?channel=1&subtype=1">';
-							break;
-						//otra
-						case 2:
-							echo '<img name="main" id="main" border="0" width="640" height="480" >';
-							break;
-					}
+					
+					//Variables
+					$SIS_Config_usuario   = $camara['Config_usuario'];
+					$SIS_Config_Password  = $camara['Config_Password'];
+					$SIS_Config_IP        = $camara['Config_IP'];
+					$SIS_Config_Puerto    = $camara['Config_Puerto'];
+					$SIS_TipoCamara       = $camara['idTipoCamara'];
+					
+					//se crea la direccion web
+					$direccion  = 'http://';
+					$direccion .= $SIS_Config_usuario;
+					$direccion .= ':'.$SIS_Config_Password;
+					$direccion .= '@'.$SIS_Config_IP;
+					if(isset($SIS_Config_Puerto)&&$SIS_Config_Puerto!=''){$direccion .= ':'.$SIS_Config_Puerto;}
+					
 				//si no existe subconfihuracion
 				}elseif(isset($rowCamara['idSubconfiguracion'])&&$rowCamara['idSubconfiguracion']==2){
+					
+					//Variables
+					$SIS_Config_usuario   = $rowCamara['Config_usuario'];
+					$SIS_Config_Password  = $rowCamara['Config_Password'];
+					$SIS_Config_IP        = $rowCamara['Config_IP'];
+					$SIS_Config_Puerto    = $rowCamara['Config_Puerto'];
+					$SIS_TipoCamara       = $rowCamara['idTipoCamara'];
+					
+					//se crea la direccion web
+					$direccion  = 'http://';
+					$direccion .= $SIS_Config_usuario;
+					$direccion .= ':'.$SIS_Config_Password;
+					$direccion .= '@'.$SIS_Config_IP;
+					if(isset($SIS_Config_Puerto)&&$SIS_Config_Puerto!=''){$direccion .= ':'.$SIS_Config_Puerto;}
+					
+				}
+				
+				/****************************************************/
+				//si esta configurado
+				if($SIS_Config_usuario!=''&&$SIS_Config_Password!=''&&$SIS_Config_IP!=''){
 					//Verifico el tipo de camara
-					switch ($rowCamara['idTipoCamara']) {
+					switch ($SIS_TipoCamara) {
 						//Dahua
 						case 1:
-							echo '<img name="main" id="main" border="0" width="640" height="480" src="http://'.$rowCamara['Config_usuario'].':'.$rowCamara['Config_Password'].'@'.$rowCamara['Config_IP'].'/cgi-bin/mjpg/video.cgi?channel=1&subtype=1">';
+							echo '<div class="col-sm-6">';
+								echo '<img class="img-thumbnail" name="main" id="main" border="0" width="100%" height="100%" src="'.$direccion.'/cgi-bin/mjpg/video.cgi?channel='.$SIS_Config_Chanel.'&subtype=1">';
+							echo '</div>';
 							break;
 						//otra
 						case 2:
-							echo '<img name="main" id="main" border="0" width="640" height="480" >';
+							//echo '<img name="main" id="main" border="0" width="640" height="480" >';
 							break;
 					}
+				}else{
+					echo '<div class="col-xs-12" style="margin-top:15px;">';
+						$Alert_Text = 'La camara compartida del canal '.$SIS_Config_Chanel.' no esta completamente configurada';
+						alert_post_data(4,3,1, $Alert_Text);
+					echo '</div>';
 				}	
 			}
-				
-			
 			?>
-			
 			
 		</div>
 	</div>
 </div>
 
-
-
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
@@ -170,13 +195,12 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Variable con la ubicacion
-$z    = "WHERE seguridad_camaras_listado.idCamara!=0";
+$z  = "WHERE seguridad_camaras_listado.idCamara!=0";
+$z .= " AND seguridad_camaras_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z .= " AND seguridad_camaras_listado.idEstado=1";//activo
 $join = "";
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z.=" AND seguridad_camaras_listado.idSistema>=0";	
-}else{
-	$z.=" AND seguridad_camaras_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z.=" AND usuarios_camaras.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 	$join = "INNER JOIN `usuarios_camaras` ON usuarios_camaras.idCamara = seguridad_camaras_listado.idCamara";	
 }
@@ -242,7 +266,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Camaras</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Grupos de Camaras</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -256,8 +280,8 @@ array_push( $arrTipo,$row );
 						<th>
 							<div class="pull-left">Camara</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=camara_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=camara_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=camara_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=camara_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -271,7 +295,7 @@ array_push( $arrTipo,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&idCamara='.$tipo['idCamara']; ?>" title="Ver Camara" class="btn btn-primary btn-sm tooltip"><i class="fa fa-video-camera"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&idCamara='.$tipo['idCamara']; ?>" title="Ver Camara" class="btn btn-primary btn-sm tooltip"><i class="fa fa-video-camera" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

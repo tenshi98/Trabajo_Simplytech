@@ -17,7 +17,7 @@ require_once 'core/Web.Header.Main.php';
 // Se traen todos los datos de mi usuario
 $query = "SELECT  Nombre, LimiteVelocidad, GeoLatitud, GeoLongitud, GeoVelocidad, LastUpdateFecha, LastUpdateHora
 FROM `telemetria_listado`
-WHERE idTelemetria = {$_GET['view']}
+WHERE idTelemetria = ".$_GET['view']."
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -40,7 +40,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['Nombre']; ?></h5>	
 		</header>
         <div class="table-responsive">
@@ -49,7 +49,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			$explanation .= '<strong>Equipo: </strong>'.$rowdata['Nombre'].'<br/>';
 			$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowdata['GeoVelocidad'], 0).'/'.Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h<br/>';
 					
-			echo mapa1($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'])?>
+			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
 			
         </div>	
 	</div>
@@ -60,8 +60,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -67,7 +67,7 @@ if ( ! empty($_GET['edit']) ) {
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre
 FROM `centrocosto_listado_level_".$_GET['lvl']."`
-WHERE idLevel_".$_GET['lvl']." = {$_GET['edit']}";
+WHERE idLevel_".$_GET['lvl']." = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -87,7 +87,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Rama</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -98,25 +98,25 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Nombre)) {            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
 				
-				$Form_Imputs->form_input_hidden('idLevel_'.$_GET['lvl'], $_GET['edit'], 2);
-				$Form_Imputs->form_input_hidden('lvl', $_GET['lvl'], 2);  
+				$Form_Inputs->form_input_hidden('idLevel_'.$_GET['lvl'], $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);  
 				
 				
-				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Imputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
-				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Imputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
-				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Imputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
-				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Imputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
-				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Imputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
+				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
+				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
+				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
+				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
+				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
 				  	 
 				?>    
 				 
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -126,12 +126,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { ?>
+}elseif ( ! empty($_GET['new']) ) {
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);  ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Rama</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -142,18 +144,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Nombre)) {            $x1  = $Nombre;             }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
 				
-				$Form_Imputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idCentroCosto', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('lvl', $_GET['lvl'], 2);
+				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idCentroCosto', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 				
-				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Imputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
-				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Imputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
-				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Imputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
-				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Imputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
-				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Imputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
+				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
+				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
+				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
+				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
+				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
 					
 					
 				?> 
@@ -163,7 +165,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -180,7 +182,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 // tomo los datos del usuario
 $query = "SELECT Nombre, idSistema
 FROM `centrocosto_listado`
-WHERE idCentroCosto = {$_GET['id']}";
+WHERE idCentroCosto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -221,7 +223,7 @@ centrocosto_listado_level_1.idLevel_1 AS bla
 ".$z."
 FROM `centrocosto_listado_level_1`
 ".$leftjoin."
-WHERE centrocosto_listado_level_1.idCentroCosto={$_GET['id']}
+WHERE centrocosto_listado_level_1.idCentroCosto=".$_GET['id']."
 ORDER BY centrocosto_listado_level_1.Nombre ASC ".$orderby."
 
 ";
@@ -304,13 +306,13 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 			echo '<div class="btn-group pull-right" >';
 				//Boton editar
 				if ($rowlevel>=2){
-					echo '<a href="'.$loc.'&edit='.$value['id'].'&lvl='.$lv.'" title="Editar Esta Rama" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>';
+					echo '<a href="'.$loc.'&edit='.$value['id'].'&lvl='.$lv.'" title="Editar Esta Rama" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
 				}
 				//Boton Borrar
 				if ($rowlevel>=3){
-					$ubicacion = $loc.'&del_idLevel='.$value['id'].'&lvl='.$lv.'&nmax='.$nmax;
+					$ubicacion = $loc.'&del_idLevel='.simpleEncode($value['id'], fecha_actual()).'&lvl='.$lv.'&nmax='.$nmax;
 					$dialogo   = '¿Realmente deseas eliminar todos los datos relacionados a esta Rama?';
-					echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar Esta Rama" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>';
+					echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar Esta Rama" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
 				}
 			echo '</div>';
 			//Boton para crear nueva subrama condicionado a solo si no se utiliza
@@ -319,7 +321,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 				if ($rowlevel>=1){
 					$xc = $lv + 1;
 					if($lv<$nmax){
-						echo '<a href="'.$loc.'&new=true&lvl='.$xc.'" title="Crear sub-Rama" class="btn btn-primary btn-sm tooltip"><i class="fa fa-file-o"></i></a>';
+						echo '<a href="'.$loc.'&new=true&lvl='.$xc.'" title="Crear sub-Rama" class="btn btn-primary btn-sm tooltip"><i class="fa fa-file-o" aria-hidden="true"></i></a>';
 					}
 				}
 			echo '</div>';
@@ -340,21 +342,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Centro de Costo</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Itemizado</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Centro de Costo', $rowdata['Nombre'], 'Itemizado');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php }?>
 	</div>
@@ -365,13 +353,13 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'centrocosto_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'centrocosto_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'centrocosto_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
+				<li class=""><a href="<?php echo 'centrocosto_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'centrocosto_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'centrocosto_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class="active"><a href="<?php echo 'centrocosto_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Itemizado</a></li>
+						<li class="active"><a href="<?php echo 'centrocosto_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Itemizado</a></li>
 					</ul>
                 </li>           
 			</ul>	
@@ -389,8 +377,8 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

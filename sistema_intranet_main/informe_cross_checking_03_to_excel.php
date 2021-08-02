@@ -25,40 +25,19 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$query = "SELECT Nombre	
-FROM `core_sistemas` 
-WHERE idSistema = '{$_GET['idSistema']}'  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
-	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
-}
-$rowEmpresa = mysqli_fetch_array ($resultado);
 
 /**********************************************************/
 //Variable de busqueda
 $z = "WHERE cross_solicitud_aplicacion_listado.idSolicitud!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND cross_solicitud_aplicacion_listado.idSistema={$_GET['idSistema']}";	
+$z.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_GET['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".$_GET['idSolicitud'];}
+if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $z .= " AND cross_solicitud_aplicacion_listado.NSolicitud=".$_GET['NSolicitud'];}
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $z .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){                  $z .= " AND cross_solicitud_aplicacion_listado.idZona=".$_GET['idZona'];}
+if(isset($_GET['idZona']) && $_GET['idZona'] != ''){                  $z .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".$_GET['idZona'];}
 if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
 if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idEstadoFen=".$_GET['idEstadoFen'];}
 if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idCategoria=".$_GET['idCategoria'];}
@@ -66,19 +45,20 @@ if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $z .= " AN
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AND cross_solicitud_aplicacion_listado.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $z .= " AND cross_solicitud_aplicacion_listado.idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '{$_GET['f_programacion_desde']}' AND '{$_GET['f_programacion_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '".$_GET['f_programacion_desde']."' AND '".$_GET['f_programacion_hasta']."'";
 }
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '{$_GET['f_ejecucion_desde']}' AND '{$_GET['f_ejecucion_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '".$_GET['f_ejecucion_desde']."' AND '".$_GET['f_ejecucion_hasta']."'";
 }
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '{$_GET['f_termino_desde']}' AND '{$_GET['f_termino_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '".$_GET['f_termino_desde']."' AND '".$_GET['f_termino_hasta']."'";
 }
 /**********************************************************/
 // Se trae un listado con todos los usuarios
 $arrOTS = array();
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,
+cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.f_creacion,
 cross_solicitud_aplicacion_listado.f_programacion,
 cross_solicitud_aplicacion_listado.f_ejecucion,
@@ -186,15 +166,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrOTS,$row );
@@ -228,7 +201,7 @@ $nn=2;
 //Titulo columnas
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Predio')
-            ->setCellValue('B'.$nn, 'Nro.Solicitud')
+            ->setCellValue('B'.$nn, 'Nro. Solicitud')
             ->setCellValue('C'.$nn, 'Fecha creación')
             ->setCellValue('D'.$nn, 'Solicitud Fecha Inicio')
             ->setCellValue('E'.$nn, 'Solicitud Fecha Termino')
@@ -240,7 +213,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('K'.$nn, 'Especie')
             ->setCellValue('L'.$nn, 'Variedad')
             ->setCellValue('M'.$nn, 'Cuartel')
-            ->setCellValue('N'.$nn, 'Nro.Plantas')
+            ->setCellValue('N'.$nn, 'Nro. Plantas')
             ->setCellValue('O'.$nn, 'Hectareas')
             ->setCellValue('P'.$nn, 'Año Plantacion')
             ->setCellValue('Q'.$nn, 'Estado Fenologico')
@@ -316,12 +289,23 @@ foreach ($arrOTS as $ot) {
 	}else{
 		$sdata4 = 'Capacidad con valor 0';
 	}
-	
+	//Especie
+	if(isset($ot['VariedadCat'])&&$ot['VariedadCat']!=''){
+		$VariedadCat = $ot['VariedadCat'];
+	}else{
+		$VariedadCat = 'Todas las especies';
+	}
+	//Variedad
+	if(isset($ot['VariedadNombre'])&&$ot['VariedadNombre']!=''){
+		$VariedadNombre = $ot['VariedadNombre'];
+	}else{
+		$VariedadNombre = 'Todas las variedades';
+	}
 	
 	/**************************************************************/
 	$objPHPExcel->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $ot['NombrePredio'])
-				->setCellValue('B'.$nn, $ot['idSolicitud'])
+				->setCellValue('B'.$nn, $ot['NSolicitud'])
 				->setCellValue('C'.$nn, fecha_estandar($ot['f_creacion']))
 				->setCellValue('D'.$nn, fecha_estandar($ot['f_programacion']).' '.$ot['horaProg'])
 				->setCellValue('E'.$nn, fecha_estandar($ot['f_programacion_fin']).' '.$ot['horaProg_fin'])
@@ -330,8 +314,8 @@ foreach ($arrOTS as $ot) {
 				->setCellValue('H'.$nn, fecha_estandar($ot['f_termino']).' '.$ot['horaTermino'])
 				->setCellValue('I'.$nn, fecha_estandar($ot['f_termino_fin']).' '.$ot['horaTermino_fin'])
 				->setCellValue('J'.$nn, $ot['NombreUsuario'])
-				->setCellValue('K'.$nn, $ot['VariedadCat'])
-				->setCellValue('L'.$nn, $ot['VariedadNombre'])
+				->setCellValue('K'.$nn, $VariedadCat)
+				->setCellValue('L'.$nn, $VariedadNombre)
 				->setCellValue('M'.$nn, $ot['CuartelNombre'])
 				->setCellValue('N'.$nn, $ot['CuartelPlantas'])
 				->setCellValue('O'.$nn, $ot['CuartelHectareas'])

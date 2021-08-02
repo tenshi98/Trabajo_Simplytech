@@ -13,8 +13,6 @@ require_once 'core/Load.Utils.Web.php';
 //Cargamos la ubicacion 
 $original = "documentacion_repositorio_archivos.php";
 $location = $original;
-//Se agregan ubicaciones
-$location .='?pagina='.$_GET['pagina'];
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -33,7 +31,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 
 <?php 
 	//Se dibuja el explorador de archivos
-	echo file_explorer(2, 'connector_repositorio', DB_EMPRESA_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 3); ?>
+	echo file_explorer(2, 'connector_repositorio', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 3); ?>
 
 
 

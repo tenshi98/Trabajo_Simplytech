@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -25,11 +29,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idEvento':       if(empty($idEvento)){        $error['idEvento']       = 'error/No ha ingresado el id';}break;
 			case 'idSistema':      if(empty($idSistema)){       $error['idSistema']      = 'error/No ha seleccionado un sistema';}break;
 			case 'idUsuario':      if(empty($idUsuario)){       $error['idUsuario']      = 'error/No ha seleccionado un usuario';}break;
@@ -39,6 +43,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita la Observacion, contiene palabras no permitidas'; }	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -63,7 +71,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `seguridad_eventos_listado` ( idSistema, idUsuario, Fecha, Hora, Observacion) VALUES ({$a} )";
+				$query  = "INSERT INTO `seguridad_eventos_listado` ( idSistema, idUsuario, Fecha, Hora, Observacion) VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -136,55 +144,71 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Listado de archivos
-			$arrArchivos = array();
-			$query = "SELECT Nombre 
-			FROM `seguridad_eventos_listado_archivos`
-			WHERE idEvento = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-								
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-			}
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-			array_push( $arrArchivos,$row );
-			}
+			//Variable
+			$errorn = 0;
 			
-			
-			//se borran los permisos del usuario
-			$query  = "DELETE FROM `seguridad_eventos_listado` WHERE idEvento = {$_GET['del']}";
-			$resultado = mysqli_query ($dbConn, $query);
-			$query  = "DELETE FROM `seguridad_eventos_listado_archivos` WHERE idEvento = {$_GET['del']}";
-			$resultado = mysqli_query ($dbConn, $query);
-			
-			//se borran los archivos relacionados
-			foreach ($arrArchivos as $tipo) {
-				//se elimina el archivo
-				if(isset($tipo['Nombre'])&&$tipo['Nombre']!=''){
-					try {
-						if(!is_writable('upload/'.$tipo['Nombre'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$tipo['Nombre']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
 			
-			//se redirige
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//Listado de archivos
+				$SIS_query = 'Nombre';
+				$SIS_join  = '';
+				$SIS_where = 'idEvento = '.$indice;
+				$SIS_order = 0;
+				$arrArchivos = array();
+				$arrArchivos = db_select_array (false, $SIS_query, 'seguridad_eventos_listado_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				//se borran los datos
+				$resultado_1 = db_delete_data (false, 'seguridad_eventos_listado', 'idEvento = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'seguridad_eventos_listado_archivos', 'idEvento = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado_1==true OR $resultado_2==true){
+					
+					//se borran los archivos relacionados
+					foreach ($arrArchivos as $tipo) {
+						//se elimina el archivo
+						if(isset($tipo['Nombre'])&&$tipo['Nombre']!=''){
+							try {
+								if(!is_writable('upload/'.$tipo['Nombre'])){
+									//throw new Exception('File not writable');
+								}else{
+									unlink('upload/'.$tipo['Nombre']);
+								}
+							}catch(Exception $e) { 
+								//guardar el dato en un archivo log
+							}
+						}
+						
+					}
+				
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
 			
 			
 			
@@ -198,7 +222,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["event_file"]["error"] > 0){ 
-				$error['event_file']     = 'error/Ha ocurrido un error'; 
+				$error['event_file'] = 'error/'.uploadPHPError($_FILES["event_file"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
 				$permitidos = array("application/msword",
@@ -238,7 +262,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$a .= ",'".$sufijo.$_FILES['event_file']['name']."'" ;
 							
 							//se ejecuta la consulta
-							$query  = "INSERT INTO `seguridad_eventos_listado_archivos` ( idEvento, Nombre) VALUES ({$a} )";
+							$query  = "INSERT INTO `seguridad_eventos_listado_archivos` ( idEvento, Nombre) VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -278,50 +302,62 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Usuario
-			$idArchivo = $_GET['del_file'];
-			// Se obtiene el nombre del logo
-			$query = "SELECT Nombre
-			FROM `seguridad_eventos_listado_archivos`
-			WHERE idArchivo = {$idArchivo}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowdata = mysqli_fetch_assoc ($resultado);
+			//Variable
+			$errorn = 0;
 			
-			//se borra el dato de la base de datos
-			$query  = "DELETE FROM `seguridad_eventos_listado_archivos` WHERE idArchivo = {$idArchivo}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//se elimina el archivo
-				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
-					try {
-						if(!is_writable('upload/'.$rowdata['Nombre'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowdata['Nombre']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//Redirijo			
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_file']) OR !validaEntero($_GET['del_file']))&&$_GET['del_file']!=''){
+				$indice = simpleDecode($_GET['del_file'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_file'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del logo
+				$rowdata = db_select_data (false, 'Nombre', 'seguridad_eventos_listado_archivos', '', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+				//se borran los datos
+				$resultado = db_delete_data (false, 'seguridad_eventos_listado_archivos', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina el archivo
+					if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['Nombre'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['Nombre']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 			
 
 		break;							

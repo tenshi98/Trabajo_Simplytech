@@ -24,7 +24,7 @@ $meses=array(1=>"Enero",
 				"Diciembre"
 			);
 //verifico el tipo de usuario
-$z=" AND telemetria_carga_bam.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z=" AND telemetria_carga_bam.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 //Traigo los eventos guardados en la base de datos
 $arrEventos = array();
@@ -35,7 +35,7 @@ telemetria_carga_bam.Dia
 
 FROM `telemetria_carga_bam`
 LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_carga_bam.idTelemetria
-WHERE telemetria_carga_bam.Ano='{$Ano}' AND telemetria_carga_bam.Mes='{$Mes}' ".$z." 
+WHERE telemetria_carga_bam.Ano='".$Ano."' AND telemetria_carga_bam.Mes='".$Mes."' ".$z." 
 ORDER BY telemetria_carga_bam.FechaVencimiento ASC  ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);

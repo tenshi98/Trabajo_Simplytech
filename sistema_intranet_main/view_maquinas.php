@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 //se traen los datos basicos de la licitacion
 $query = "SELECT 
 maquinas_listado.Codigo, 
@@ -61,7 +74,7 @@ LEFT JOIN `ubicacion_listado_level_4`     ON ubicacion_listado_level_4.idLevel_4
 LEFT JOIN `ubicacion_listado_level_5`     ON ubicacion_listado_level_5.idLevel_5   = maquinas_listado.idUbicacion_lvl_5
 LEFT JOIN `clientes_listado`              ON clientes_listado.idCliente            = maquinas_listado.idCliente
 
-WHERE maquinas_listado.idMaquina={$_GET['view']} ";
+WHERE maquinas_listado.idMaquina=".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -72,15 +85,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
@@ -116,7 +122,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	".$z."
 	FROM `maquinas_listado_level_1`
 	".$leftjoin."
-	WHERE maquinas_listado_level_1.idMaquina={$_GET['view']}
+	WHERE maquinas_listado_level_1.idMaquina=".$X_Puntero."
 	ORDER BY maquinas_listado_level_1.Codigo ASC ".$orderby."
 
 	";
@@ -130,15 +136,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrItemizado,$row );
@@ -160,15 +159,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrTipos,$row );
@@ -181,7 +173,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	}
 	/*********************************************************************/
 	//Verifico el tipo de usuario que esta ingresando
-	$z="WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+	$z="WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 	//Se crea el arreglo
 	$Trabajo = array();
 	//Creo el arreglo para saber los datos de las licitaciones
@@ -201,15 +193,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 			//generar log
-			error_log("========================================================================================================================================", 0);
-			error_log("Usuario: ". $NombreUsr, 0);
-			error_log("Transaccion: ". $Transaccion, 0);
-			error_log("-------------------------------------------------------------------", 0);
-			error_log("Error code: ". mysqli_errno($dbConn), 0);
-			error_log("Error description: ". mysqli_error($dbConn), 0);
-			error_log("Error query: ". $query, 0);
-			error_log("-------------------------------------------------------------------", 0);
-							
+			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 		}
 		while ( $row = mysqli_fetch_assoc ($resultado)) {
 		array_push( $arrTrabajo,$row );
@@ -524,7 +509,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			if (isset($value['Nombre'])) {
 				echo '<li><div class="blum">';
 					echo '<div class="pull-left">';
-						if(isset($value['Imagen'])&&$value['Imagen']!=''){echo '<div class="btn-group" style="width: 35px;" ><a href="#" title="Click Preview Imagen" class="btn btn-primary btn-sm tooltip pop" src="upload/'.$value['Imagen'].'"><i class="fa fa-picture-o"></i></a></div>';}
+						if(isset($value['Imagen'])&&$value['Imagen']!=''){echo '<div class="btn-group" style="width: 35px;" ><a href="#" title="Click Preview Imagen" class="btn btn-primary btn-sm tooltip pop" src="upload/'.$value['Imagen'].'"><i class="fa fa-picture-o" aria-hidden="true"></i></a></div>';}
 						echo '<strong>'.$TipoMaq[$value['Tipo']]['Nombre'].':</strong> ';
 						if(isset($value['Codigo'])&&$value['Codigo']!=''){echo ' '.$value['Codigo'].' - ';}
 						echo $value['Nombre'];
@@ -561,7 +546,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Ver Datos de la <?php echo $x_column_maquina_sing; ?></h5>	
 		</header>
 		<div id="div-3" class="tab-content">
@@ -570,7 +555,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 				<div class="wmd-panel">
 					<div class="col-sm-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/maquina.jpg">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
@@ -613,11 +598,11 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<?php 
 							//Ficha Tecnica
 							if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
-								echo '<a href="1download.php?dir=upload&file='.$rowdata['FichaTecnica'].'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download"></i> Descargar Ficha Tecnica</a>';
+								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Ficha Tecnica</a>';
 							}
 							//Hoja de seguridad
 							if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
-								echo '<a href="1download.php?dir=upload&file='.$rowdata['HDS'].'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download"></i> Descargar Hoja de Seguridad</a>';
+								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
 							}
 							?>
 						
@@ -675,14 +660,31 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	</div>
 </div>	
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
-
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

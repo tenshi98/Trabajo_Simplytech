@@ -32,13 +32,13 @@ if ( ! empty($_GET['submit_filter']) ) {
 //Solo las que correspondan		
 $z     = "WHERE quiz_realizadas.idQuizRealizadas!=0"; 
 //Tipo de usuario
-$z.= " AND quiz_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-if(isset($_GET['idCurso'])&&$_GET['idCurso']!=''){                     $z.=" AND alumnos_listado.idCurso={$_GET['idCurso']}";}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                   $z.=" AND quiz_listado.idEstado={$_GET['idEstado']}";}
-if(isset($_GET['idQuiz'])&&$_GET['idQuiz']!=''){                       $z.=" AND quiz_realizadas.idQuiz={$_GET['idQuiz']}";}
-if(isset($_GET['idTipoEvaluacion'])&&$_GET['idTipoEvaluacion']!=''){   $z.=" AND quiz_listado.idTipoEvaluacion={$_GET['idTipoEvaluacion']}";}
-if(isset($_GET['idTipoQuiz'])&&$_GET['idTipoQuiz']!=''){               $z.=" AND quiz_listado.idTipoQuiz={$_GET['idTipoQuiz']}";}
-if(isset($_GET['idLimiteTiempo'])&&$_GET['idLimiteTiempo']!=''){       $z.=" AND quiz_listado.idLimiteTiempo={$_GET['idLimiteTiempo']}";}
+$z.= " AND quiz_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+if(isset($_GET['idCurso'])&&$_GET['idCurso']!=''){                     $z.=" AND alumnos_listado.idCurso=".$_GET['idCurso'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                   $z.=" AND quiz_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idQuiz'])&&$_GET['idQuiz']!=''){                       $z.=" AND quiz_realizadas.idQuiz=".$_GET['idQuiz'];}
+if(isset($_GET['idTipoEvaluacion'])&&$_GET['idTipoEvaluacion']!=''){   $z.=" AND quiz_listado.idTipoEvaluacion=".$_GET['idTipoEvaluacion'];}
+if(isset($_GET['idTipoQuiz'])&&$_GET['idTipoQuiz']!=''){               $z.=" AND quiz_listado.idTipoQuiz=".$_GET['idTipoQuiz'];}
+if(isset($_GET['idLimiteTiempo'])&&$_GET['idLimiteTiempo']!=''){       $z.=" AND quiz_listado.idLimiteTiempo=".$_GET['idLimiteTiempo'];}
 			
 /*************************************************************************************************/
 //Evaluaciones
@@ -146,8 +146,8 @@ foreach ($arrTemporal as $temp) {
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#netos" data-toggle="tab">Graficos Generales</a></li>
-				<li class=""><a href="#totales" data-toggle="tab">Informacion Alumnos</a></li>          
+				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Generales</a></li>
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Informacion Alumnos</a></li>          
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -255,8 +255,8 @@ foreach ($arrTemporal as $temp) {
 
  
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 	
@@ -265,13 +265,13 @@ foreach ($arrTemporal as $temp) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -288,16 +288,16 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
 				if(isset($idLimiteTiempo)) {   $x7  = $idLimiteTiempo;    }else{$x7  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_depend1('Clientes','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $z, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_depend1('Clientes','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $z, 0,
 										'Grupo','idCurso', $x2, 2, 'idCurso', 'Nombre', 'alumnos_cursos', 'idEstado=1', 0, 
 										$dbConn, 'form1');
-				$Form_Imputs->form_select_depend1('Estado','idEstado', $x3, 1, 'idEstado', 'Nombre', 'core_estados', 0, 0,
+				$Form_Inputs->form_select_depend1('Estado','idEstado', $x3, 1, 'idEstado', 'Nombre', 'core_estados', 0, 0,
 										'Evaluacion','idQuiz', $x4, 1, 'idQuiz', 'Nombre', 'quiz_listado', $z, 0, 
 										$dbConn, 'form1');
-				$Form_Imputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x5, 1, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x6, 1, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
-				$Form_Imputs->form_select('Tiempo Limite','idLimiteTiempo', $x7, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x5, 1, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x6, 1, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tiempo Limite','idLimiteTiempo', $x7, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 								
 				?> 
 

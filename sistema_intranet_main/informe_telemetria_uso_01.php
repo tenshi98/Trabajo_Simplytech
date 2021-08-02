@@ -31,7 +31,7 @@ if ( ! empty($_GET['submit_filter']) ) {
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre, cantSensores, Direccion_img
 FROM `telemetria_listado`
-WHERE idTelemetria = {$_GET['idTelemetria']}";
+WHERE idTelemetria = ".$_GET['idTelemetria'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -58,12 +58,13 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	$aa .= ',SensoresAccionMedC_'.$i;
 	$aa .= ',SensoresAccionMedT_'.$i;
 	$aa .= ',SensoresAccionAlerta_'.$i;
+	$aa .= ',SensoresActivo_'.$i;
 }
 // tomo los datos del usuario
 $query = "SELECT Nombre
 ".$aa."
 FROM `telemetria_listado`
-WHERE idTelemetria = {$_GET['idTelemetria']}";
+WHERE idTelemetria = ".$_GET['idTelemetria'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -88,28 +89,14 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Equipo</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Uso del Equipo</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Uso del Equipo');?>
 </div>
 <div class="clearfix"></div>
 
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Sensores Supervisados</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Sensores Supervisados</h5>
 		</header>
 		<div class="table-responsive">    
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -131,19 +118,22 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 					if(isset($rowcount)&&$rowcount!=0){
 						for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
 							//Se verifica si el sensor esta habilitado para la supervision
-							if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){ ?>
-								<tr class="odd">
-									<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
-									<td><?php echo fecha_estandar($rowMed['SensoresFechaUso_'.$i]); ?></td>
-									<td><?php echo Cantidades($rowMed['SensoresAccionC_'.$i], 2);?></td>		
-									<td><?php echo Cantidades($rowMed['SensoresAccionMedC_'.$i], 2);?></td>		
-									<td><?php if(isset($rowMed['SensoresAccionC_'.$i])&&$rowMed['SensoresAccionC_'.$i]!=0){echo porcentaje($rowMed['SensoresAccionMedC_'.$i]/$rowMed['SensoresAccionC_'.$i]);} ?></td>
-									<td><?php echo Cantidades($rowMed['SensoresAccionT_'.$i]/3600, 2);?></td>		
-									<td><?php echo Cantidades($rowMed['SensoresAccionMedT_'.$i]/3600, 2);?></td>		
-									<td><?php if(isset($rowMed['SensoresAccionT_'.$i])&&$rowMed['SensoresAccionT_'.$i]!=0){echo porcentaje($rowMed['SensoresAccionMedT_'.$i]/$rowMed['SensoresAccionT_'.$i]);} ?></td>
-									<td><?php echo Cantidades($rowMed['SensoresAccionAlerta_'.$i], 2);?></td>		
-								</tr>
-							<?php 	
+							if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){
+								//verifico si esta activo el sensor
+								if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){  ?>
+									<tr class="odd">
+										<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
+										<td><?php echo fecha_estandar($rowMed['SensoresFechaUso_'.$i]); ?></td>
+										<td><?php echo Cantidades($rowMed['SensoresAccionC_'.$i], 2);?></td>		
+										<td><?php echo Cantidades($rowMed['SensoresAccionMedC_'.$i], 2);?></td>		
+										<td><?php if(isset($rowMed['SensoresAccionC_'.$i])&&$rowMed['SensoresAccionC_'.$i]!=0){echo porcentaje($rowMed['SensoresAccionMedC_'.$i]/$rowMed['SensoresAccionC_'.$i]);} ?></td>
+										<td><?php echo Cantidades($rowMed['SensoresAccionT_'.$i]/3600, 2);?></td>		
+										<td><?php echo Cantidades($rowMed['SensoresAccionMedT_'.$i]/3600, 2);?></td>		
+										<td><?php if(isset($rowMed['SensoresAccionT_'.$i])&&$rowMed['SensoresAccionT_'.$i]!=0){echo porcentaje($rowMed['SensoresAccionMedT_'.$i]/$rowMed['SensoresAccionT_'.$i]);} ?></td>
+										<td><?php echo Cantidades($rowMed['SensoresAccionAlerta_'.$i], 2);?></td>		
+									</tr>
+								<?php
+								} 	
 							}
 						}
 					} ?>                    
@@ -158,25 +148,24 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
+$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$w = "telemetria_listado.idSistema>=0";
-}else{
-	$w = "telemetria_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_equipos_telemetria.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']} ";		
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
 }
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -187,15 +176,15 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idTelemetria)) {  $x1  = $idTelemetria;  }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
+				$Form_Inputs = new Form_Inputs();
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Imputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
 				}else{
-					$Form_Imputs->form_select_join_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
 				
-				$Form_Imputs->form_input_hidden('pagina', 1, 2);
+				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>        
 	   
 				<div class="form-group">

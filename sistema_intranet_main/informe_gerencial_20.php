@@ -29,7 +29,7 @@ if ( ! empty($_GET['submit_filter']) ) {
 //Consulto el nombre del cliente
 $query = "SELECT Nombre, RazonSocial
 FROM `clientes_listado`
-WHERE idCliente={$_GET['idCliente']}";
+WHERE idCliente=".$_GET['idCliente'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -47,12 +47,12 @@ $rowCliente = mysqli_fetch_assoc ($resultado);
 
 
 //Filtros
-$z= "WHERE orden_trabajo_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+$z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.= " AND orden_trabajo_listado.f_creacion BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+	$z.= " AND orden_trabajo_listado.f_creacion BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
-	$z.= " AND orden_trabajo_listado.idCliente={$_GET['idCliente']}";
+	$z.= " AND orden_trabajo_listado.idCliente=".$_GET['idCliente'];
 }
 // Se cuentan las OT por estado
 $arrCountOT = array();
@@ -139,12 +139,12 @@ array_push( $arrCountMaq,$row );
 }
 
 //filtros 
-$z= "WHERE orden_trabajo_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}  AND orden_trabajo_listado_trabajos.idEstado=2";
+$z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."  AND orden_trabajo_listado_trabajos.idEstado=2";
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.= " AND orden_trabajo_listado_trabajos.f_termino BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+	$z.= " AND orden_trabajo_listado_trabajos.f_termino BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
-	$z.= " AND orden_trabajo_listado.idCliente={$_GET['idCliente']}";
+	$z.= " AND orden_trabajo_listado.idCliente=".$_GET['idCliente'];
 }
 
 
@@ -223,12 +223,12 @@ array_push( $arrOT2,$row );
 }
 
 //filtros
-$z= "WHERE orden_trabajo_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND orden_trabajo_listado.idEstado=2";
+$z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND orden_trabajo_listado.idEstado=2";
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.= " AND orden_trabajo_listado.f_termino BETWEEN '{$_GET['f_inicio']}' AND '{$_GET['f_termino']}'";
+	$z.= " AND orden_trabajo_listado.f_termino BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
-	$z.= " AND orden_trabajo_listado.idCliente={$_GET['idCliente']}";
+	$z.= " AND orden_trabajo_listado.idCliente=".$_GET['idCliente'];
 }
 // Se trae un listado con todos los usuarios
 $arrInsumos = array();
@@ -303,7 +303,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen por Estado</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por Estado</h5>
 			</header>
 			 <div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -337,7 +337,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Graficos</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Graficos</h5>
 			</header>
 			 <div class="table-responsive">
 				<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -373,7 +373,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen por Tipo</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por Tipo</h5>
 			</header>
 			 <div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -408,7 +408,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Graficos</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Graficos</h5>
 			</header>
 			<div class="table-responsive">
 				<script type="text/javascript">
@@ -443,7 +443,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen por <?php echo $x_column_maquina_sing; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por <?php echo $x_column_maquina_sing; ?></h5>
 			</header>
 			 <div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -478,7 +478,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
 			</header>
 			<div class="table-responsive">
 				<script type="text/javascript">
@@ -513,7 +513,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Consumo General de Productos Valorizado</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo General de Productos Valorizado</h5>
 			</header>
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -538,7 +538,7 @@ array_push( $arrInsumos2,$row );
 								<tr class="odd">
 									<td><?php echo $consumos['Producto']; ?></td>
 									<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml'];?></td>
-									<td><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
+									<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 								</tr>
 						<?php 
 							} 
@@ -552,7 +552,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
 			</header>
 			<div class="table-responsive">
 				<script type="text/javascript">
@@ -596,7 +596,7 @@ array_push( $arrInsumos2,$row );
 		<div class="col-sm-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>Consumo de Productos Detallado</h5>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo de Productos Detallado</h5>
 				</header>
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -625,8 +625,8 @@ array_push( $arrInsumos2,$row );
 										<tr class="odd">
 											<td><?php echo $consumos['Producto']; ?></td>
 											<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml'];?></td>
-											<td><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
-											<td><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
+											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
+											<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
 								<?php 
 									} 
@@ -647,7 +647,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Consumo General de Insumos Valorizado</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo General de Insumos Valorizado</h5>
 			</header>
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -666,7 +666,7 @@ array_push( $arrInsumos2,$row );
 							<tr class="odd">
 								<td><?php echo $consumos['NombreInsumo']; ?></td>
 								<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad'];?></td>
-								<td><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
+								<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 							</tr>
 						<?php }  ?>                    
 					</tbody>
@@ -678,7 +678,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
 			</header>
 			<div class="table-responsive">
 				<script type="text/javascript">
@@ -712,7 +712,7 @@ array_push( $arrInsumos2,$row );
 		<div class="col-sm-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table"></i></div><h5>Consumo de Insumos Detallado</h5>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo de Insumos Detallado</h5>
 				</header>
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -737,8 +737,8 @@ array_push( $arrInsumos2,$row );
 											<td><?php echo $consumos['Maquina']; ?></td>
 											<td><?php echo $consumos['NombreInsumo']; ?></td>
 											<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad'];?></td>
-											<td><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
-											<td><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
+											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
+											<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
 								<?php
 								}
@@ -754,20 +754,20 @@ array_push( $arrInsumos2,$row );
 <?php } ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -780,10 +780,10 @@ $w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idCliente)) {     $x3  = $idCliente;   }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x2, 2);
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x3, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x3, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 						
 				?>        
 	   

@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -24,11 +28,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idArchivos':     if(empty($idArchivos)){      $error['idArchivos']     = 'error/No ha ingresado el id';}break;
 			case 'idTelemetria':   if(empty($idTelemetria)){    $error['idTelemetria']   = 'error/No ha seleccionado el equipo de telemetria';}break;
 			case 'idUsuario':      if(empty($idUsuario)){       $error['idUsuario']      = 'error/No ha seleccionado un usuario';}break;
@@ -37,6 +41,10 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Detalle)&&contar_palabras_censuradas($Detalle)!=0){  $error['Detalle'] = 'error/Edita Detalle, contiene palabras no permitidas'; }	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -50,17 +58,20 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			if ($_FILES["NombreArchivo"]["error"] > 0){ 
-				$error['NombreArchivo']     = 'error/Ha ocurrido un error'; 
+				$error['NombreArchivo'] = 'error/'.uploadPHPError($_FILES["NombreArchivo"]["error"]); 
 			} else {
 				//Se verifican las extensiones de los archivos
-				$permitidos = array("application/x-rar-compressed",
-				                    "application/x-rar",
-				                    
-				                    "application/zip",
-				                    "application/x-zip-compressed",
-				                    "multipart/x-zip",
-				                    
-				                    "application/octet-stream"
+				$permitidos = array(
+									"application/x-zip-compressed",
+									"application/zip",
+									"multipart/x-zip",			
+									"application/x-7z-compressed",
+									"application/x-rar-compressed",
+									"application/gzip",
+									"application/x-gzip",
+									"application/x-gtar",
+									"application/x-tgz",
+									"application/octet-stream"
 									);
 											
 				//Se verifica que el archivo subido no exceda los 100 kb
@@ -86,7 +97,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							if(isset($Detalle) && $Detalle != ''){              $a .= ",'".$Detalle."'" ;       }else{$a .= ",''";}
 				
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `telemetria_listado_archivos` (NombreArchivo, idTelemetria, idUsuario, Fecha_ingreso, Detalle) VALUES ({$a} )";
+							$query  = "INSERT INTO `telemetria_listado_archivos` (NombreArchivo, idTelemetria, idUsuario, Fecha_ingreso, Detalle) VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -127,54 +138,63 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//Variables
-			$idArchivos  = $_GET['del_archivo'];
+			//Variable
+			$errorn = 0;
 			
-			// Se obtiene el nombre del documento a borrar
-			$query = "SELECT NombreArchivo
-			FROM `telemetria_listado_archivos`
-			WHERE idArchivos = {$idArchivos}";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowMantencion = mysqli_fetch_assoc ($resultado);
-			
-			/*************************************************/
-			//se borran los datos seleccionados
-			$query  = "DELETE FROM `telemetria_listado_archivos` WHERE idArchivos = {$idArchivos}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			
-			
-			//Si ejecuto correctamente la consulta
-			if($resultado){
-				
-				//se elimina el archivo
-				if(isset($rowMantencion['NombreArchivo'])&&$rowMantencion['NombreArchivo']!=''){
-					try {
-						if(!is_writable('upload/'.$rowMantencion['NombreArchivo'])){
-							//throw new Exception('File not writable');
-						}else{
-							unlink('upload/'.$rowMantencion['NombreArchivo']);
-						}
-					}catch(Exception $e) { 
-						//guardar el dato en un archivo log
-					}
-				}
-				
-				//Redirijo			
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
-				
-			//si da error, guardar en el log de errores una copia
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_archivo']) OR !validaEntero($_GET['del_archivo']))&&$_GET['del_archivo']!=''){
+				$indice = simpleDecode($_GET['del_archivo'], fecha_actual());
 			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				$indice = $_GET['del_archivo'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				// Se obtiene el nombre del documento a borrar
+				$rowdata = db_select_data (false, 'NombreArchivo', 'telemetria_listado_archivos', '', 'idArchivos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+				//se borran los datos
+				$resultado = db_delete_data (false, 'telemetria_listado_archivos', 'idArchivos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//se elimina el archivo
+					if(isset($rowdata['NombreArchivo'])&&$rowdata['NombreArchivo']!=''){
+						try {
+							if(!is_writable('upload/'.$rowdata['NombreArchivo'])){
+								//throw new Exception('File not writable');
+							}else{
+								unlink('upload/'.$rowdata['NombreArchivo']);
+							}
+						}catch(Exception $e) { 
+							//guardar el dato en un archivo log
+						}
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+			
 			
 
 		break;							

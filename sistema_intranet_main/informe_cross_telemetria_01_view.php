@@ -27,8 +27,8 @@ if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $search .= "&i
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){          $search .= "&idPredio=".$_GET['idPredio'];}
 if(isset($_GET['idZona']) && $_GET['idZona'] != ''){              $search .= "&idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$search .="&fecha_desde={$_GET['fecha_desde']}";
-	$search .="&fecha_hasta={$_GET['fecha_hasta']}";
+	$search .="&fecha_desde=".$_GET['fecha_desde'];
+	$search .="&fecha_hasta=".$_GET['fecha_hasta'];
 }
 //Variable de busqueda
 $z = "WHERE telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
@@ -37,7 +37,7 @@ $z = "WHERE telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabl
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $z .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
 if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $z .= " AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$z.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '{$_GET['fecha_desde']}' AND '{$_GET['fecha_hasta']}'";
+	$z.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
 /**********************************************************/
 //Numero del sensor
@@ -60,9 +60,15 @@ LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria    
 
 ".$z."
 
+GROUP BY cross_predios_listado_zonas.idPredio, 
+telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona,
+telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
+
 ORDER BY cross_predios_listado_zonas.idPredio ASC, 
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona ASC,
 telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria ASC
+
+LIMIT 10000
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -86,7 +92,7 @@ array_push( $arrMediciones,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen Mediciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen Mediciones</h5>
 		</header>
 		<div class="table-responsive">    
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -108,7 +114,7 @@ array_push( $arrMediciones,$row );
 							<td><?php echo $med['CantidadMuestra']; ?></td>			
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'informe_cross_telemetria_01_view_map.php?idTabla='.$med['idTabla'].$search.'&return=true'; ?>" title="Ver Mapa" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-map"></i></a>
+									<a href="<?php echo 'informe_cross_telemetria_01_view_map.php?idTabla='.$med['idTabla'].$search.'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Mapa" class="btn btn-primary btn-sm tooltip"><i class="fa fa-map" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -122,8 +128,8 @@ array_push( $arrMediciones,$row );
 
 <?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
 	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div>
 <?php } ?>

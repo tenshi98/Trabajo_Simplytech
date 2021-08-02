@@ -21,6 +21,21 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+$X_idQuiz = simpleDecode($_GET['idQuiz'], fecha_actual());
+
+/**************************************************************/
 // Se traen todos los datos de la pregunta
 $query = "SELECT
 quiz_listado.Nombre,
@@ -251,7 +266,7 @@ LEFT JOIN `quiz_escala`  esc_2      ON esc_2.idEscala                           
 LEFT JOIN `quiz_tipo_evaluacion`    ON quiz_tipo_evaluacion.idTipoEvaluacion     = quiz_listado.idTipoEvaluacion
 LEFT JOIN `quiz_tipo_quiz`          ON quiz_tipo_quiz.idTipoQuiz                 = quiz_listado.idTipoQuiz
 
-WHERE quiz_realizadas.idQuizRealizadas = {$_GET['view']}";
+WHERE quiz_realizadas.idQuizRealizadas = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -262,15 +277,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);		 
 
@@ -293,7 +301,7 @@ quiz_categorias.Nombre AS Categoria
 FROM `quiz_listado_preguntas`
 LEFT JOIN `quiz_tipo`        ON quiz_tipo.idTipo              = quiz_listado_preguntas.idTipo
 LEFT JOIN `quiz_categorias`  ON quiz_categorias.idCategoria   = quiz_listado_preguntas.idCategoria
-WHERE quiz_listado_preguntas.idQuiz = {$_GET['idQuiz']}
+WHERE quiz_listado_preguntas.idQuiz = ".$X_idQuiz."
 ORDER BY quiz_listado_preguntas.idCategoria ASC
 ";
 //Consulta
@@ -306,15 +314,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrPreguntas,$row );
@@ -332,15 +333,18 @@ foreach ($arrPreguntas as $preg) {
 <div class="row no-print">
 	<div class="col-xs-12">
 		<a target="new" href="view_quiz_respondida_to_print.php<?php echo '?view='.$_GET['view'].'&idQuiz='.$_GET['idQuiz'] ?>" class="btn btn-default pull-right" style="margin-right: 5px;">
-			<i class="fa fa-print"></i> Imprimir
+			<i class="fa fa-print" aria-hidden="true"></i> Imprimir
 		</a>
 	</div>
 </div>
 
 <?php if(isset($count)&&$count==0){ ?>
 		
-	<div class="col-sm-12">
-		<div class="alert alert-danger" role="alert" style="margin-top:20px;">No tiene preguntas asignadas a la Quiz</div>
+	<div class="col-sm-12" style="margin-top:20px;">
+		<?php
+		$Alert_Text  = 'No tiene preguntas asignadas a la Quiz';
+		alert_post_data(4,1,1, $Alert_Text);
+		?>
 	</div>
 
 <?php } ?>
@@ -350,9 +354,9 @@ foreach ($arrPreguntas as $preg) {
 	<div class="col-sm-12">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Datos Basicos</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Basicos</h5>
 			</header>
-			<div class="tab-content">
+			<div>
 				<div class="table-responsive">    
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -430,9 +434,9 @@ foreach ($arrPreguntas as $preg) {
 	<div class="col-sm-12">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Preguntas</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Preguntas</h5>
 			</header>
-			<div class="tab-content">
+			<div>
 				<div class="table-responsive">    
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -479,17 +483,31 @@ foreach ($arrPreguntas as $preg) {
 	
 
 
-
- 
-          
-
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright margin_width" data-original-title="" title="">Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 	
 <?php

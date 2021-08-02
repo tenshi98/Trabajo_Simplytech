@@ -1,0 +1,92 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Web.php';
+/** Include PHPExcel */
+require_once '../LIBS_php/PHPExcel/PHPExcel/IOFactory.php';
+/**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Cargamos la ubicacion 
+$original = "aguas_facturacion_listado_archivos.php";
+$location = $original;
+/********************************************************************/
+//Variables para filtro y paginacion
+/********************************************************************/
+//Verifico los permisos del usuario sobre la transaccion
+require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//formulario para crear
+if ( !empty($_POST['submit']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'upload';
+	require_once 'A1XRXS_sys/xrxs_form/aguas_facturacion_listado_archivos.php';
+}
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Main.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Listado de errores no manejables
+if (isset($_GET['filUp'])) {$error['usuario'] 	  = 'sucess/Se han subido correctamente '.$_GET['filUp'].' archivos';}
+//Manejador de errores
+if(isset($error)&&$error!=''){echo notifications_list($error);};?>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if ( ! empty($_GET['modBase']) ) {?>
+
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } else  { 
+//cuadro para descargar	 
+$Alert_Text  = 'Todos los archivos deben tener como nombre el identificador del cliente (100101-100.pdf por ejemplo) sin espacios ni otros caracteres';
+alert_post_data(2,1,2, $Alert_Text);	 
+?>
+
+		
+ <div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Subir boletas escaneadas</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
+        	
+				<?php 
+				//Se verifican si existen los datos
+				
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Upload', 100, '"pdf"');
+				
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				
+				?>
+				
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+				</div>
+                      
+			</form> 
+            <?php widget_validator(); ?>        
+		</div>
+	</div>
+</div>
+<?php } ?>           
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Main.php';
+?>

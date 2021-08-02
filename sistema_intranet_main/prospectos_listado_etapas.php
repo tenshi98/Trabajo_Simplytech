@@ -41,12 +41,12 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_prospectos_etapa_fidelizacion.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
-	//Agregamos nuevas direcciones
-	$location=$new_location;
+if ( !empty($_GET['del_archivo']) )     {
+	//Nueva ubicacion
+	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
-	$form_trabajo= 'del';
+	$form_trabajo= 'del_archivo';
 	require_once 'A1XRXS_sys/xrxs_form/z_prospectos_etapa_fidelizacion.php';	
 }
 /**********************************************************************************************************************************/
@@ -60,14 +60,15 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Etapa creada correctamente';}
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Etapa editada correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Etapa borrada correctamente';}
+if (isset($_GET['del_arch'])) {$error['usuario'] 	  = 'sucess/Archivo borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 //Obtengo los datos de una observacion
-$query = "SELECT Observacion, idEtapa
+$query = "SELECT Observacion, idEtapa, Archivo
 FROM `prospectos_etapa_fidelizacion`
-WHERE idEtapaFide = {$_GET['edit']}";
+WHERE idEtapaFide = ".$_GET['edit'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -87,11 +88,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Editar Etapa</h5>	
 		</header>	
 		<div id="div-1" class="body">	
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
 
 				<?php 
 				//Se verifican si existen los datos
@@ -99,17 +100,32 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Observacion)) {  $x2  = $Observacion;    }else{$x2  = $rowdata['Observacion'];}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Etapa Fidelizacion','idEtapa', $x1, 2, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
-				$Form_Imputs->form_ckeditor('Observacion', 'Observacion', $x2, 2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Etapa Fidelizacion','idEtapa', $x1, 2, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
+				$Form_Inputs->form_ckeditor('Observacion', 'Observacion', $x2, 2, 2);
+				//si existe archivo se mustra previsualizador
+				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){?>
+        
+					<div class="col-sm-10 fcenter">
+						<h3>Archivo</h3>
+						<?php echo preview_docs('upload', $rowdata['Archivo'], '', '', ''); ?>
+					</div>
+					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_archivo='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
+					<div class="clearfix"></div>
+					
+				<?php }else{
+					$Form_Inputs->form_multiple_upload('Seleccionar Archivo','Archivo', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
+				}
 				
-				
-				$Form_Imputs->form_input_hidden('idEtapaFide', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('idEtapaFide', $_GET['edit'], 2);
+				$Form_Inputs->form_input_hidden('FModificacion', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);
+				$Form_Inputs->form_input_hidden('idUsuarioMod', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 				
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -118,16 +134,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { ?>
+}elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Modificar Etapa</h5>	
 		</header>	
 		<div id="div-1" class="body">	
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
    
 				<?php 
 				//Se verifican si existen los datos
@@ -135,19 +153,23 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($Observacion)) {  $x2  = $Observacion;    }else{$x2  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Etapa Fidelizacion','idEtapa', $x1, 2, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
-				$Form_Imputs->form_ckeditor('Observacion', 'Observacion', $x2, 2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Etapa Fidelizacion','idEtapa', $x1, 2, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
+				$Form_Inputs->form_ckeditor('Observacion', 'Observacion', $x2, 2, 2);
+				$Form_Inputs->form_multiple_upload('Seleccionar Archivo','Archivo', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
 				
 				
-				$Form_Imputs->form_input_hidden('idProspecto', $_GET['id'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('Fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idProspecto', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('FModificacion', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);
+				$Form_Inputs->form_input_hidden('idUsuarioMod', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 
 				<div class="form-group">		
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -161,7 +183,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 // tomo los datos del usuario
 $query = "SELECT Nombre
 FROM `prospectos_listado`
-WHERE idProspecto = {$_GET['id']}";
+WHERE idProspecto = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -189,7 +211,7 @@ FROM `prospectos_etapa_fidelizacion`
 LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario         = prospectos_etapa_fidelizacion.idUsuario
 LEFT JOIN `prospectos_etapa`     ON prospectos_etapa.idEtapa           = prospectos_etapa_fidelizacion.idEtapa
 
-WHERE prospectos_etapa_fidelizacion.idProspecto = {$_GET['id']}
+WHERE prospectos_etapa_fidelizacion.idProspecto = ".$_GET['id']."
 ORDER BY prospectos_etapa.Nombre DESC ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -212,23 +234,9 @@ array_push( $arrEtapa,$row );
 
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Prospecto</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Etapa Fidelizacion</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Etapa Fidelizacion');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Modificar Etapa Fidelizacion</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar Etapa Fidelizacion</a><?php }?>
 	</div>
 </div>
 <div class="clearfix"></div>   
@@ -237,18 +245,19 @@ array_push( $arrEtapa,$row );
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'prospectos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'prospectos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'prospectos_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Contacto</a></li>
+				<li class=""><a href="<?php echo 'prospectos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'prospectos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'prospectos_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">Ver mas <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'prospectos_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Persona Contacto</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Comerciales</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_fidelizacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado Fidelizacion</a></li>
-						<li class="active"><a href="<?php echo 'prospectos_listado_etapas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Etapa Fidelizacion</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-						<li class=""><a href="<?php echo 'prospectos_listado_etapa.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >etapa</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_fidelizacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Estado Fidelizacion</a></li>
+						<li class="active"><a href="<?php echo 'prospectos_listado_etapas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sort-amount-asc" aria-hidden="true"></i> Etapa Fidelizacion</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'prospectos_listado_crear_cliente.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Crear Cliente</a></li>
 					</ul>
                 </li>           
 			</ul>	
@@ -271,8 +280,8 @@ array_push( $arrEtapa,$row );
 						<td><?php echo $etapa['Etapa']; ?></td>	
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_prospecto_etapa.php?view='.$etapa['idEtapaFide']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$etapa['idEtapaFide']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>							
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_prospecto_etapa.php?view='.simpleEncode($etapa['idEtapaFide'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$etapa['idEtapaFide']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>							
 							</div>
 						</td>	
 					</tr>
@@ -284,8 +293,8 @@ array_push( $arrEtapa,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

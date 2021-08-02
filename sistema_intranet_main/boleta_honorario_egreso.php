@@ -65,19 +65,6 @@ if ( !empty($_GET['del_servicios']) )     {
 	require_once 'A1XRXS_sys/xrxs_form/z_boleta_honorario.php';	
 }
 /**********************************************/
-//se borra un dato
-if ( !empty($_GET['add_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'add_obs_eg';
-	require_once 'A1XRXS_sys/xrxs_form/z_boleta_honorario.php';	
-}
-//se borra un dato
-if ( !empty($_GET['del_obs']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'del_obs_eg';
-	require_once 'A1XRXS_sys/xrxs_form/z_boleta_honorario.php';	
-}
-/**********************************************/
 //formulario para crear
 if ( !empty($_POST['submit_file']) )  { 
 	//Llamamos al formulario
@@ -121,7 +108,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -129,14 +116,14 @@ if ( ! empty($_GET['addFile']) ) { ?>
 			
 				<?php           
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 					
 				?> 
 
 				<div class="form-group">
 					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -151,7 +138,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Servicios</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -163,17 +150,17 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($vTotal)) {  $x2  = $vTotal;  }else{$x2  = Cantidades_decimales_justos($_SESSION['boleta_eg_servicios'][$_GET['editOtros']]['vTotal']);}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Descripcion','Nombre', $x1, 2, 160);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Descripcion','Nombre', $x1, 2, 160);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
 				
-				$Form_Imputs->form_input_hidden('oldidProducto', $_SESSION['boleta_eg_servicios'][$_GET['editOtros']]['idServicio'], 2);
+				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['boleta_eg_servicios'][$_GET['editOtros']]['idServicio'], 2);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_servicios"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -187,7 +174,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Servicios</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -199,15 +186,15 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				if(isset($vTotal)) {  $x2  = $vTotal;  }else{$x2  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_textarea('Descripcion','Nombre', $x1, 2, 160);
-				$Form_Imputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_textarea('Descripcion','Nombre', $x1, 2, 160);
+				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
 
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicios"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -219,14 +206,14 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos del Ingreso</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -234,28 +221,30 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {          $x1  = $idCliente;        }else{$x1  = $_SESSION['boleta_eg_basicos']['idCliente'];}
-				if(isset($N_Doc)) {              $x2  = $N_Doc;            }else{$x2  = $_SESSION['boleta_eg_basicos']['N_Doc'];}
-				if(isset($Creacion_fecha)) {     $x3  = $Creacion_fecha;   }else{$x3  = $_SESSION['boleta_eg_basicos']['Creacion_fecha'];}
+				if(isset($idCliente)) {          $x1 = $idCliente;        }else{$x1 = $_SESSION['boleta_eg_basicos']['idCliente'];}
+				if(isset($N_Doc)) {              $x2 = $N_Doc;            }else{$x2 = $_SESSION['boleta_eg_basicos']['N_Doc'];}
+				if(isset($Creacion_fecha)) {     $x3 = $Creacion_fecha;   }else{$x3 = $_SESSION['boleta_eg_basicos']['Creacion_fecha'];}
+				if(isset($Observaciones)) {      $x4 = $Observaciones;    }else{$x4 = $_SESSION['boleta_eg_basicos']['Observaciones'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
-				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
+				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idTipo', 2, 2);
-				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', 2, 2);
+				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?> 
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -265,18 +254,18 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) {  
-$Form_Imputs = new Inputs();
+$Form_Inputs = new Inputs();
 ?>
 
  
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
+<div class="col-sm-12" style="margin-bottom:30px">
 
 	<?php 		
 	$ubicacion = $location.'&view=true&eg_bodega=true';
 	$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
 	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
 
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<?php 
 	$ubicacion = $location.'&clear_all=true';
@@ -286,7 +275,7 @@ $Form_Imputs = new Inputs();
 	<div class="clearfix"></div>
 </div> 
 
-<div class="col-sm-12 fcenter">
+<div class="col-sm-12">
 
 	<div id="page-wrap">
 		<div id="header"> <?php echo $_SESSION['boleta_eg_basicos']['TipoDocumento']; ?></div>
@@ -298,7 +287,7 @@ $Form_Imputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Cliente</td>
@@ -347,11 +336,11 @@ $Form_Imputs = new Inputs();
 							</td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo $location.'&editOtros='.$producto['idServicio']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a>
+									<a href="<?php echo $location.'&editOtros='.$producto['idServicio']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php 
 									$ubicacion = $location.'&del_servicios='.$producto['idServicio'];
 									$dialogo   = '¿Realmente deseas eliminar  '.$producto['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								</div>
 							</td>
 						</tr> 
@@ -365,8 +354,8 @@ $Form_Imputs = new Inputs();
 				<?php
 				//Calculo totales
 				$_SESSION['boleta_eg_basicos']['valor_neto']   = $vtotal_neto;
-				$_SESSION['boleta_eg_basicos']['valor_imp']    = $vtotal_neto * 0.10;
-				$_SESSION['boleta_eg_basicos']['valor_total']  = $vtotal_neto - ($vtotal_neto * 0.10);
+				$_SESSION['boleta_eg_basicos']['valor_imp']    = $vtotal_neto * ($_SESSION['boleta_eg_basicos']['Porc_Impuesto']/100);
+				$_SESSION['boleta_eg_basicos']['valor_total']  = $vtotal_neto - ($vtotal_neto * ($_SESSION['boleta_eg_basicos']['Porc_Impuesto']/100));
 				?>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
 						<td colspan="4" align="right"><strong>Total Honorarios</strong></td> 
@@ -374,7 +363,7 @@ $Form_Imputs = new Inputs();
 						<td></td>
 					</tr>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td colspan="4" align="right"><strong>10% Impuesto Retenido</strong></td> 
+						<td colspan="4" align="right"><strong><?php echo $_SESSION['boleta_eg_basicos']['Porc_Impuesto'].'%'; ?> Impuesto Retenido</strong></td> 
 						<td align="right"><?php echo Valores($_SESSION['boleta_eg_basicos']['valor_imp'], 0);?></td>
 						<td></td>
 					</tr>
@@ -383,57 +372,17 @@ $Form_Imputs = new Inputs();
 						<td align="right"><?php echo Valores($_SESSION['boleta_eg_basicos']['valor_total'], 0);?></td>
 						<td></td>
 					</tr>
-					
-				
-				
-				
-				<tr>
-					<?php if(isset($_SESSION['boleta_eg_basicos']['Observaciones'])&&$_SESSION['boleta_eg_basicos']['Observaciones']!=''){ ?>
-					
-						<td colspan="5" class="blank word_break"> 
-							<?php echo $_SESSION['boleta_eg_basicos']['Observaciones'];?>
-						</td>
-						<td class="blank">
-							<div class="btn-group" style="width: 35px;" >
-								<?php 
-								$ubicacion = $location.'&view=true&del_obs=true';
-								$dialogo   = '¿Realmente deseas eliminar la observacion?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
-							</div>
-						</td>
-					
-					<?php }else{?>
-						<td colspan="5" class="blank"> 
-							<?php 
-							$non = '';
-							if(isset($_SESSION['boleta_eg_temporal'])&&$_SESSION['boleta_eg_temporal']!=''){
-								$non = $_SESSION['boleta_eg_temporal'];
-							}	
-								
-							$Form_Imputs->input_textarea_obs('Observaciones','Observaciones', 1,'width:100%; height: 200px;', $non);?>
-						</td>
-						<td class="blank">
-							<div class="btn-group" style="width: 35px;" >
-								<?php $ubicacion=$location.'&view=true&add_obs=true';?>			
-								<a onclick="add_obs('<?php echo $ubicacion ?>')" title="Agregar Observacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o"></i></a>
-							</div>
-						</td>
-						
-					<?php }?>	
-					
-					
-				</tr>
-				<tr>
-					<td colspan="6" class="blank"><p>Observaciones</p></td> 
-				</tr>
-				
-				
-							
-							
 				
 			</tbody>
 		</table>
     </div>
+    
+    <div class="row">
+		<div class="col-xs-12">
+			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['boleta_eg_basicos']['Observaciones'];?></p>
+		</div>
+	</div>
     
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
@@ -452,11 +401,11 @@ $Form_Imputs = new Inputs();
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$producto['Nombre']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a>
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 								<?php 
 								$ubicacion = $location.'&del_file='.$producto['idFile'];
 								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>								
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
 					</tr>
@@ -477,18 +426,16 @@ $Form_Imputs = new Inputs();
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "bodegas_insumos_listado.idSistema>=0";
-	$w = "idSistema>=0 AND idEstado=1";
-}else{
-	$z = "bodegas_insumos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_insumos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";		
-	$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
-} ?>
- <div class="col-sm-8 fcenter">
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	 
+ ?>
+ 
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingresar Boleta Honorarios</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -502,25 +449,25 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($Observaciones)) {      $x4  = $Observaciones;    }else{$x4  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
-				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
-				$Form_Imputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
+				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Imputs->form_input_hidden('idTipo', 2, 2);
-				$Form_Imputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', 2, 2);
+				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 						
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -558,6 +505,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'fecha_desc':      $order_by = 'ORDER BY boleta_honorarios_facturacion.Creacion_fecha DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		case 'doc_asc':         $order_by = 'ORDER BY boleta_honorarios_facturacion.N_Doc ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Documento Ascendente';break;
 		case 'doc_desc':        $order_by = 'ORDER BY boleta_honorarios_facturacion.N_Doc DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Documento Descendente';break;
+		case 'valor_asc':       $order_by = 'ORDER BY boleta_honorarios_facturacion.ValorTotal ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente';break;
+		case 'valor_desc':      $order_by = 'ORDER BY boleta_honorarios_facturacion.ValorTotal DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
 		
 		default: $order_by = 'ORDER BY boleta_honorarios_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
@@ -568,8 +517,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable con la ubicacion
 $z="WHERE boleta_honorarios_facturacion.idTipo=2";//Solo egresos
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND boleta_honorarios_facturacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$z.=" AND boleta_honorarios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 
 /**********************************************************/
 //Se aplican los filtros
@@ -581,7 +530,7 @@ if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AN
 $query = "SELECT idFacturacion FROM `boleta_honorarios_facturacion` 
 LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema      = boleta_honorarios_facturacion.idSistema
 LEFT JOIN `clientes_listado`    ON clientes_listado.idCliente   = boleta_honorarios_facturacion.idCliente
-".$z."";
+".$z;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -604,6 +553,7 @@ $query = "SELECT
 boleta_honorarios_facturacion.idFacturacion,
 boleta_honorarios_facturacion.Creacion_fecha,
 boleta_honorarios_facturacion.N_Doc,
+boleta_honorarios_facturacion.ValorTotal,
 core_sistemas.Nombre AS Sistema,
 clientes_listado.Nombre AS Cliente
 
@@ -633,7 +583,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -666,13 +616,13 @@ array_push( $arrTipo,$row );
 				if(isset($Creacion_fecha)) {     $x3  = $Creacion_fecha;   }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_filter('Cliente','idCliente', $x1, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Imputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 1);
-				$Form_Imputs->form_date('Fecha Documento','Creacion_fecha', $x3, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 1);
+				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 1);
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -690,7 +640,7 @@ array_push( $arrTipo,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Boletas de Honorarios</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Boletas de Honorarios</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -704,22 +654,29 @@ array_push( $arrTipo,$row );
 						<th>
 							<div class="pull-left">Cliente</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=Cliente_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=Cliente_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=Cliente_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=Cliente_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Documento</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=doc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=doc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=doc_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=doc_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Fecha</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fecha_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
+							<div class="pull-left">Valor</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=valor_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=valor_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -733,14 +690,15 @@ array_push( $arrTipo,$row );
 						<td><?php echo $tipo['Cliente']; ?></td>
 						<td><?php echo 'Boleta N° '.$tipo['N_Doc']; ?></td>
 						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
+						<td align="right"><?php echo valores($tipo['ValorTotal'], 0); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_boleta_honorarios.php?view='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_boleta_honorarios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$tipo['idFacturacion'];
+									$ubicacion = $location.'&del='.simpleEncode($tipo['idFacturacion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la boleta de honorarios N° '.$tipo['N_Doc'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

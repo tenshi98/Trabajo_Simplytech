@@ -1,0 +1,293 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Views.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Header.Views.php';
+/**********************************************************************************************************************************/
+/*                                                   ejecucion de logica                                                          */
+/**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
+// Se traen todos los datos de mi usuario
+$query = "SELECT 
+seguridad_accesos_nominas.FechaProgramada,
+seguridad_accesos_nominas.HoraInicioProgramada,
+seguridad_accesos_nominas.HoraTerminoProgramada,
+core_sistemas.Nombre AS Sistema,
+usuarios_listado.Nombre AS Usuario,
+ubicacion_listado.Nombre AS Ubicacion,
+ubicacion_listado_level_1.Nombre AS UbicacionLVL_1,
+ubicacion_listado_level_2.Nombre AS UbicacionLVL_2,
+ubicacion_listado_level_3.Nombre AS UbicacionLVL_3,
+ubicacion_listado_level_4.Nombre AS UbicacionLVL_4,
+ubicacion_listado_level_5.Nombre AS UbicacionLVL_5,
+seguridad_accesos_nominas.PersonaReunion,
+core_estado_caja.Nombre AS Estado
+
+FROM `seguridad_accesos_nominas`
+LEFT JOIN `usuarios_listado`            ON usuarios_listado.idUsuario            = seguridad_accesos_nominas.idUsuario
+LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema               = seguridad_accesos_nominas.idSistema
+LEFT JOIN `ubicacion_listado`           ON ubicacion_listado.idUbicacion         = seguridad_accesos_nominas.idUbicacion
+LEFT JOIN `ubicacion_listado_level_1`   ON ubicacion_listado_level_1.idLevel_1   = seguridad_accesos_nominas.idUbicacion_lvl_1
+LEFT JOIN `ubicacion_listado_level_2`   ON ubicacion_listado_level_2.idLevel_2   = seguridad_accesos_nominas.idUbicacion_lvl_2
+LEFT JOIN `ubicacion_listado_level_3`   ON ubicacion_listado_level_3.idLevel_3   = seguridad_accesos_nominas.idUbicacion_lvl_3
+LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4   = seguridad_accesos_nominas.idUbicacion_lvl_4
+LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = seguridad_accesos_nominas.idUbicacion_lvl_5
+LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado
+
+WHERE seguridad_accesos_nominas.idAcceso = ".$X_Puntero;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
+}
+$row_data = mysqli_fetch_assoc ($resultado);
+
+
+/*****************************************/		
+// Se trae un listado con todos los otros
+$arrPersonas = array();
+$query = "SELECT 
+seguridad_accesos_nominas_listado.Fecha, 
+seguridad_accesos_nominas_listado.HoraEntrada, 
+seguridad_accesos_nominas_listado.HoraSalida, 
+seguridad_accesos_nominas_listado.Nombre, 
+seguridad_accesos_nominas_listado.Rut, 
+seguridad_accesos_nominas_listado.NDocCedula,
+core_estado_nomina_asistencia.Nombre AS Estado
+
+FROM `seguridad_accesos_nominas_listado` 
+LEFT JOIN `core_estado_nomina_asistencia`   ON core_estado_nomina_asistencia.idEstado  = seguridad_accesos_nominas_listado.idEstado
+WHERE seguridad_accesos_nominas_listado.idAcceso = ".$X_Puntero;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrPersonas,$row );
+}
+
+/*****************************************/		
+// Se trae un listado con todos los archivos adjuntos
+$arrArchivo = array();
+$query = "SELECT Nombre
+FROM `seguridad_accesos_nominas_archivos` 
+WHERE idAcceso = ".$X_Puntero;
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+//Si ejecuto correctamente la consulta
+if(!$resultado){
+	
+	//variables
+	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
+	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+
+	//generar log
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
+}
+while ( $row = mysqli_fetch_assoc ($resultado)) {
+array_push( $arrArchivo,$row );
+}
+?>
+	
+
+
+
+<section class="invoice">
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<i class="fa fa-globe" aria-hidden="true"></i> Nomina de Control de Accesos.
+				<small class="pull-right">Nomina N°: <?php echo n_doc($X_Puntero, 8) ?></small>
+			</h2>
+		</div>   
+	</div>
+	
+	<div class="row invoice-info">
+		
+		<?php
+		echo '
+		<div class="col-sm-6 invoice-col">
+			Datos Basicos
+			<address>
+				<strong>Usuario:</strong> '.$row_data['Usuario'].'<br/>
+				<strong>Sistema:</strong> '.$row_data['Sistema'].'<br/>
+				<strong>Ubicacion:</strong> ';
+				echo $row_data['Ubicacion'];
+				if(isset($row_data['UbicacionLVL_1'])&&$row_data['UbicacionLVL_1']!=''){echo ' - '.$row_data['UbicacionLVL_1'];}
+				if(isset($row_data['UbicacionLVL_2'])&&$row_data['UbicacionLVL_2']!=''){echo ' - '.$row_data['UbicacionLVL_2'];}
+				if(isset($row_data['UbicacionLVL_3'])&&$row_data['UbicacionLVL_3']!=''){echo ' - '.$row_data['UbicacionLVL_3'];}
+				if(isset($row_data['UbicacionLVL_4'])&&$row_data['UbicacionLVL_4']!=''){echo ' - '.$row_data['UbicacionLVL_4'];}
+				if(isset($row_data['UbicacionLVL_5'])&&$row_data['UbicacionLVL_5']!=''){echo ' - '.$row_data['UbicacionLVL_5'];}
+				echo '<br/>
+				<strong>Persona Reunion:</strong> '.$row_data['PersonaReunion'].'<br/>
+				<strong>Estado:</strong> '.$row_data['Estado'].'<br/>
+			</address>
+		</div>
+				
+		<div class="col-sm-6 invoice-col">
+			Programacion
+			<address>
+				<strong>Fecha:</strong> '.Fecha_estandar($row_data['FechaProgramada']).'<br/>
+				<strong>Hora Inicio:</strong> '.$row_data['HoraInicioProgramada'].'<br/>
+				<strong>Hora Termino:</strong> '.$row_data['HoraTerminoProgramada'].'<br/>
+			</address>
+		</div>';
+		?>
+		
+	</div>
+	
+	
+	<div class="">
+		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th colspan="6">Detalle</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if ($arrPersonas) { ?>
+						<?php foreach ($arrPersonas as $otro) { ?>
+							<tr>
+								<td><?php echo $otro['Nombre'];?></td>
+								<td><?php echo $otro['Rut'];?></td>
+								<td><?php echo $otro['NDocCedula'];?></td>
+								<td><?php echo Fecha_estandar($otro['Fecha']);?></td>
+								<td><?php echo $otro['HoraEntrada'].' - '.$otro['HoraSalida'];?></td>
+								<td><?php echo $otro['Estado'];?></td>
+							</tr>
+						<?php } ?>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	
+
+
+
+	<?php
+	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
+	$zz .= '&view='.$_GET['view'];
+	?>
+	<div class="row no-print">
+		<br/>
+		<div class="col-xs-12">
+			<a target="new" href="view_seguridad_accesos_nominas_to_print.php<?php echo $zz ?>" class="btn btn-default">
+				<i class="fa fa-print" aria-hidden="true"></i> Imprimir
+			</a>
+
+			<a target="new" href="view_seguridad_accesos_nominas_to_pdf.php<?php echo $zz ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
+				<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF
+			</a>
+		</div>
+	</div>
+      
+</section>
+
+
+<div class="col-xs-12" style="margin-bottom:15px;">
+	
+	<?php if ($arrArchivo){ ?>
+		<table id="items" style="margin-bottom: 20px;">
+			<tbody>
+				<tr>
+					<th colspan="6">Archivos Adjuntos</th>
+				</tr>		  
+				<?php foreach ($arrArchivo as $producto){?>
+					<tr class="item-row">
+						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
+						<td width="160">
+							<div class="btn-group" style="width: 70px;" >
+								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a>
+							</div>
+						</td>
+					</tr>
+				<?php } ?>
+			</tbody>
+		</table>
+    <?php } ?>
+    
+</div>
+
+
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
+ 
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Views.php';
+?>

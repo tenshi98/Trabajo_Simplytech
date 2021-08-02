@@ -23,9 +23,9 @@ telemetria_listado.Nombre AS NombreEquipo
 
 FROM `telemetria_listado_errores`
 LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria
-WHERE telemetria_listado_errores.idErrores = {$_GET['view']}
+WHERE telemetria_listado_errores.idErrores = ".simpleDecode($_GET['view'], fecha_actual())."
 AND telemetria_listado_errores.idTipo!='999'
-AND telemetria_listado_errores.Valor!='999'
+AND telemetria_listado_errores.Valor<'99900'
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -54,7 +54,7 @@ require_once 'core/Web.Header.Views.php';
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
 						
 		</header>
@@ -65,7 +65,7 @@ require_once 'core/Web.Header.Views.php';
 			$explanation .= $rowdata['Descripcion'].'<br/>';
 			$explanation .= '<strong>Valor: </strong>'.Cantidades_decimales_justos($rowdata['Valor']).'<br/>';
 							
-			echo mapa1($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'])?>
+			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
 		</div>	
 	</div>
 </div>

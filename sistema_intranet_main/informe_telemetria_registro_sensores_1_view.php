@@ -17,23 +17,23 @@ require_once 'core/Web.Header.Views.php';
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.SensoresNombre_".$_GET['sensorn']." AS SensorNombre,
-telemetria_listado.SensoresMedMin_".$_GET['sensorn']." AS SensorMinMed,
-telemetria_listado.SensoresMedMax_".$_GET['sensorn']." AS SensorMaxMed,
+telemetria_listado.SensoresNombre_".simpleDecode($_GET['sensorn'], fecha_actual())." AS SensorNombre,
+telemetria_listado.SensoresMedMin_".simpleDecode($_GET['sensorn'], fecha_actual())." AS SensorMinMed,
+telemetria_listado.SensoresMedMax_".simpleDecode($_GET['sensorn'], fecha_actual())." AS SensorMaxMed,
 
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoLatitud,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoLongitud,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']." AS SensorValue,
+telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".idTabla,
+telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".FechaSistema,
+telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".HoraSistema,
+telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".GeoLatitud,
+telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".GeoLongitud,
+telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".Sensor_".simpleDecode($_GET['sensorn'], fecha_actual())." AS SensorValue,
 telemetria_listado_unidad_medida.Nombre AS Unimed
 
-FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria            = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-LEFT JOIN `telemetria_listado_unidad_medida`  ON telemetria_listado_unidad_medida.idUniMed  = telemetria_listado.SensoresUniMed_".$_GET['sensorn']."
+FROM `telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual())."`
+LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria            = telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".idTelemetria
+LEFT JOIN `telemetria_listado_unidad_medida`  ON telemetria_listado_unidad_medida.idUniMed  = telemetria_listado.SensoresUniMed_".simpleDecode($_GET['sensorn'], fecha_actual())."
 
-WHERE telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla = {$_GET['view']} ";
+WHERE telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".idTabla = ".simpleDecode($_GET['view'], fecha_actual());
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -55,7 +55,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>	
 		</header>
         <div class="table-responsive">
@@ -67,7 +67,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			$explanation .= '<strong>Minimo: </strong>'.Cantidades_decimales_justos($rowdata['SensorMinMed']).' '.$rowdata['Unimed'].'<br/>';
 			$explanation .= '<strong>Maximo: </strong>'.Cantidades_decimales_justos($rowdata['SensorMaxMed']).' '.$rowdata['Unimed'].'<br/>';
 					
-			echo mapa1($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'])?>
+			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
 			
 
         </div>	

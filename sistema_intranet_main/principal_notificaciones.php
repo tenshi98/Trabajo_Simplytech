@@ -15,7 +15,7 @@ $original = "principal_notificaciones.php";
 $location = $original;
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
-if(isset($_GET['filtersender']) && $_GET['filtersender'] != ''){   $location .= "&filtersender=".$_GET['filtersender'] ; 	}
+if(isset($_GET['filtersender']) && $_GET['filtersender'] != ''){   $location .= "&filtersender=".$_GET['filtersender']; 	}
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
@@ -31,6 +31,12 @@ if ( !empty($_GET['all']) )     {
 	$form_trabajo= 'aprobar_todos';
 	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';	
 }
+//se indica que no hay que molestar
+if ( !empty($_GET['noMolestar']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'noMolestar';
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_mnt_correos_list.php';	
+}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -43,16 +49,22 @@ if (isset($_GET['aprobar_uno']))    {$error['aprobar_uno'] 	  = 'sucess/Se ha ma
 if (isset($_GET['aprobar_todos']))  {$error['aprobar_todos']  = 'sucess/Se han marcado como visto todos los elementos';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
-
-//Include de la presentacion
+//Si esta activo el nomolestar
+if(isset($_GET['noMol'])&&$_GET['noMol']!=''){
+	//mostrar la alerta
+	$Alert_Text  = 'Se han desactivado las alertas por '.$_GET['noMol'].' Horas.';
+	alert_post_data(2,1,1, $Alert_Text);
+}
+//Include de la notificacion
 include '1include_principal_notificaciones.php';
 ?>
   							
                             
 
+
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
        

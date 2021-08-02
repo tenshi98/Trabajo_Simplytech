@@ -17,6 +17,7 @@ $location = $original;
 $search ='&submit_filter=Filtrar';
 $location .= "?submit_filter=Filtrar";
 if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){        $location .= "&idSolicitud=".$_GET['idSolicitud'];        $search .= "&idSolicitud=".$_GET['idSolicitud'];}
+if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $location .= "&NSolicitud=".$_GET['NSolicitud'];          $search .= "&NSolicitud=".$_GET['NSolicitud'];}
 if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $location .= "&idPredio=".$_GET['idPredio'];              $search .= "&idPredio=".$_GET['idPredio'];}
 if(isset($_GET['idZona']) && $_GET['idZona'] != ''){                  $location .= "&idZona=".$_GET['idZona'];                  $search .= "&idZona=".$_GET['idZona'];}
 if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $location .= "&idTemporada=".$_GET['idTemporada'];        $search .= "&idTemporada=".$_GET['idTemporada'];}
@@ -27,16 +28,16 @@ if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $location 
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $location .= "&idEstado=".$_GET['idEstado'];              $search .= "&idEstado=".$_GET['idEstado'];}
 
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
-	$search .="&f_programacion_desde={$_GET['f_programacion_desde']}";
-	$search .="&f_programacion_hasta={$_GET['f_programacion_hasta']}";
+	$search .="&f_programacion_desde=".$_GET['f_programacion_desde'];
+	$search .="&f_programacion_hasta=".$_GET['f_programacion_hasta'];
 }
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
-	$search .="&f_ejecucion_desde={$_GET['f_ejecucion_desde']}";
-	$search .="&f_ejecucion_hasta={$_GET['f_ejecucion_hasta']}";
+	$search .="&f_ejecucion_desde=".$_GET['f_ejecucion_desde'];
+	$search .="&f_ejecucion_hasta=".$_GET['f_ejecucion_hasta'];
 }
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
-	$search .="&f_termino_desde={$_GET['f_termino_desde']}";
-	$search .="&f_termino_hasta={$_GET['f_termino_hasta']}";
+	$search .="&f_termino_desde=".$_GET['f_termino_desde'];
+	$search .="&f_termino_hasta=".$_GET['f_termino_hasta'];
 }			     
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -53,10 +54,11 @@ if ( ! empty($_GET['submit_filter']) ) {
 //Variable de busqueda
 $z = "WHERE cross_solicitud_aplicacion_listado.idSolicitud!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND cross_solicitud_aplicacion_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".$_GET['idSolicitud'];}
+if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $z .= " AND cross_solicitud_aplicacion_listado.NSolicitud=".$_GET['NSolicitud'];}
 if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
 if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idEstadoFen=".$_GET['idEstadoFen'];}
 if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idCategoria=".$_GET['idCategoria'];}
@@ -65,19 +67,20 @@ if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AN
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $z .= " AND cross_solicitud_aplicacion_listado.idEstado=".$_GET['idEstado'];}
 
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '{$_GET['f_programacion_desde']}' AND '{$_GET['f_programacion_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '".$_GET['f_programacion_desde']."' AND '".$_GET['f_programacion_hasta']."'";
 }
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '{$_GET['f_ejecucion_desde']}' AND '{$_GET['f_ejecucion_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '".$_GET['f_ejecucion_desde']."' AND '".$_GET['f_ejecucion_hasta']."'";
 }
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '{$_GET['f_termino_desde']}' AND '{$_GET['f_termino_hasta']}'";
+	$z.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '".$_GET['f_termino_desde']."' AND '".$_GET['f_termino_hasta']."'";
 }
 /**********************************************************/
 // Se trae un listado con todos los usuarios
 $arrSolicitudes = array();
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,
+cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.f_ejecucion,
 cross_solicitud_aplicacion_listado.f_ejecucion_fin,
 cross_solicitud_aplicacion_listado.f_termino,
@@ -100,7 +103,9 @@ WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD ) AS N_Hectar
 FROM `cross_solicitud_aplicacion_listado`
 LEFT JOIN `core_estado_solicitud`   ON core_estado_solicitud.idEstado   = cross_solicitud_aplicacion_listado.idEstado
 
-".$z."";
+".$z."
+
+ORDER BY cross_solicitud_aplicacion_listado.f_termino ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -123,9 +128,9 @@ array_push( $arrSolicitudes,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Resumen de Solicitudes de Aplicacion</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen de Solicitudes de Aplicacion</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#data_main" data-toggle="tab">Resumen Solicitudes</a></li>
+				<li class="active"><a href="#data_main" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen Solicitudes</a></li>
 
 			</ul>
 
@@ -155,7 +160,7 @@ array_push( $arrSolicitudes,$row );
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php foreach ($arrSolicitudes as $ot) { ?>
 								<tr class="odd">		
-									<td><?php echo n_doc($ot['idSolicitud'], 5); ?></td>
+									<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>
 									<td><?php echo $ot['Estado']; ?></td>
 									<td><?php echo $ot['N_Cuarteles']; ?></td>
 									<td><?php echo $ot['N_Cuarteles_Cerrados']; ?></td>
@@ -167,11 +172,11 @@ array_push( $arrSolicitudes,$row );
 									<td></td>
 									<td>
 										<div class="btn-group" style="width: 140px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.$ot['idSolicitud']; ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion_detalle.php?view='.$ot['idSolicitud']; ?>" title="Ver Detalle Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-keyboard-o"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion_detalle.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Detalle Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-keyboard-o" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($ot['idEstado']==3){?>
-												<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_02.php?idSolicitud='.$ot['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Ver Monitor de Dispositivos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-industry"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_04.php?idSolicitud='.$ot['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Ver Trazabilidad de la aplicacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_02.php?idSolicitud='.$ot['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Ver Monitor de Dispositivos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-industry" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_04.php?idSolicitud='.$ot['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Ver Trazabilidad de la aplicacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
 											<?php } ?>
 										</div>
 									</td>	
@@ -190,21 +195,27 @@ array_push( $arrSolicitudes,$row );
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 $y = "idEstado=1";
-$x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";	
+$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
  
- ?>
+?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -212,7 +223,7 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idSolicitud)) {            $x1  = $idSolicitud;            }else{$x1  = '';}
+				if(isset($NSolicitud)) {             $x1  = $NSolicitud;             }else{$x1  = '';}
 				if(isset($idPredio)) {               $x2  = $idPredio;               }else{$x2  = '';}
 				if(isset($idZona)) {                 $x3  = $idZona;                 }else{$x3  = '';}
 				if(isset($idCategoria)) {            $x4  = $idCategoria;            }else{$x4  = '';}
@@ -231,27 +242,27 @@ $x = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1
 				if(isset($idUsuario)) {              $x15 = $idUsuario;              }else{$x15 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_number('N° Solicitud','idSolicitud', $x1, 1);
-				$Form_Imputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_number('N° Solicitud','NSolicitud', $x1, 1);
+				$Form_Inputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
 										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select_depend1('Especie','idCategoria', $x4, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
+				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x5, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
 		
 		
 		
-				$Form_Imputs->form_select_filter('Temporada','idTemporada', $x7, 1, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
-				$Form_Imputs->form_select_filter('Estado Fenológico','idEstadoFen', $x8, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
-				$Form_Imputs->form_date('Fecha Programada Desde','f_programacion_desde', $x9, 1);
-				$Form_Imputs->form_date('Fecha Programada Hasta','f_programacion_hasta', $x10, 1);
-				$Form_Imputs->form_date('Fecha Ejecutada Desde','f_ejecucion_desde', $x11, 1);
-				$Form_Imputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x12, 1);
-				$Form_Imputs->form_date('Fecha Terminada Desde','f_termino_desde', $x13, 1);
-				$Form_Imputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x14, 1);
-				$Form_Imputs->form_select_join_filter('Usuario Creador','idUsuario', $x15, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_filter('Temporada','idTemporada', $x7, 1, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
+				$Form_Inputs->form_select_filter('Estado Fenológico','idEstadoFen', $x8, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Programada Desde','f_programacion_desde', $x9, 1);
+				$Form_Inputs->form_date('Fecha Programada Hasta','f_programacion_hasta', $x10, 1);
+				$Form_Inputs->form_date('Fecha Ejecutada Desde','f_ejecucion_desde', $x11, 1);
+				$Form_Inputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x12, 1);
+				$Form_Inputs->form_date('Fecha Terminada Desde','f_termino_desde', $x13, 1);
+				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x14, 1);
+				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x15, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 						
 				?> 
 

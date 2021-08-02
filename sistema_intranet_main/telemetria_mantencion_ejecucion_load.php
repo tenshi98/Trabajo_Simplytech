@@ -10,9 +10,12 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                               Ejecucion del codigo                                                             */
 /**********************************************************************************************************************************/
+
+//numero sensores equipo
+$N_Maximo_Sensores = 72; 
 //Traigo todos los valores	
 $subquery = '';
-for ($i = 1; $i <= 50; $i++) {
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Tel_Sensor_Nombre_'.$i;
 	$subquery .= ',telemetria_listado.SensoresMant_'.$i.' AS Tel_Sensor_Valor_'.$i;
 	$subquery .= ',telemetria_listado.SensoresTipo_'.$i.' AS Tel_Sensor_Tipo_'.$i;
@@ -39,7 +42,7 @@ telemetria_mantencion_matriz.cantPuntos AS Matriz_Puntos
 FROM `telemetria_listado`
 LEFT JOIN `telemetria_mantencion_matriz` ON telemetria_mantencion_matriz.idMatriz = telemetria_listado.idMatriz
 
-WHERE idTelemetria = {$_GET['verify']}";
+WHERE idTelemetria = ".$_GET['verify'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -100,7 +103,7 @@ if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $location .=
 		<div class="row">
 			<div class="col-xs-12">
 				<h2 class="page-header">
-					<i class="fa fa-globe"></i> <?php echo $rowdata['Tel_Equipo'].' ('.$rowdata['Tel_Identificador'].')'; ?>.
+					<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowdata['Tel_Equipo'].' ('.$rowdata['Tel_Identificador'].')'; ?>.
 					<small class="pull-right"> <?php echo $rowdata['Matriz_Nombre'] ?></small>
 				</h2>
 			</div>   

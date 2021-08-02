@@ -1,14 +1,9 @@
 <?php
 //Variables
 $z = " WHERE idNoti!=0 AND idEstado='1' ";
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z.= ' AND idSistema>=0';	
-	$z.= ' AND idUsuario>=0';	
-}else{
-	$z.= ' AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-	$z.= ' AND idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];	
-}
+$z.= " AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z.= " AND idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
 $query = "SELECT COUNT(idNoti) AS Notificacion FROM principal_notificaciones_ver ".$z; 
 $resultado = mysqli_query($dbConn, $query);	
@@ -25,30 +20,30 @@ $notificaciones = mysqli_fetch_assoc($resultado);
             <i class="fa fa-arrows-alt" aria-hidden="true"></i>
         </a> 
         <a onClick="setVsual()" title="Ocultar Menu" class="btn btn-default btn-sm tooltip" >
-            <i class="fa fa-bars "></i>
+            <i class="fa fa-bars" aria-hidden="true"></i>
         </a>
     </div>
               
     <div class="btn-group">
         <a href="principal_notificaciones.php?pagina=1" title="Notificaciones" class="btn btn-default btn-sm tooltip">
-            <i class="fa fa-commenting-o <?php if($notificaciones['Notificacion']!=0){ echo 'faa-horizontal animated'; } ?>"></i>
+            <i class="fa fa-commenting-o <?php if($notificaciones['Notificacion']!=0){ echo 'faa-horizontal animated'; } ?>" aria-hidden="true"></i>
             <?php if(isset($notificaciones['Notificacion'])&&$notificaciones['Notificacion']!=0){echo '<span class="label label-danger">'.$notificaciones['Notificacion'].'</span>';}?>
         </a> 
         
         <a href="principal_ayuda.php" title="Ayuda" class="btn btn-default btn-sm tooltip">
-            <i class="fa fa-question"></i>
+            <i class="fa fa-question" aria-hidden="true"></i>
         </a>
         
         <a href="principal_procedimientos.php" title="Procedimientos" class="btn btn-default btn-sm tooltip">
-            <i class="fa fa-file-word-o"></i>
+            <i class="fa fa-file-word-o" aria-hidden="true"></i>
         </a>
         
         <a href="principal_agenda_telefonica.php?pagina=1" title="Agenda" class="btn btn-default btn-sm tooltip">
-            <i class="fa fa-phone"></i>
+            <i class="fa fa-phone" aria-hidden="true"></i>
         </a>
         
         <a href="principal_calendario.php?pagina=1" title="Calendario" data-toggle="modal" class="btn btn-default btn-sm tooltip" >
-            <i class="fa fa-calendar"></i>
+            <i class="fa fa-calendar" aria-hidden="true"></i>
         </a> 
     </div>
     
@@ -59,14 +54,14 @@ $notificaciones = mysqli_fetch_assoc($resultado);
     <div class="btn-group">
 		<?php if((isset($_SESSION['usuario']['basic_data']['COunt'])&&$_SESSION['usuario']['basic_data']['COunt']>1) OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
 			<a href="index_select.php?bla=true" title="Cambio Sistema" data-toggle="modal" class="btn btn-primary btn-sm tooltip" >
-				<i class="fa fa-exchange"></i>
+				<i class="fa fa-exchange" aria-hidden="true"></i>
 			</a> 
 		<?php } ?>
 		<?php 
 		$ubicacion = $original.'?salir=true';
 		$dialogo   = '¿Realmente desea cerrar su sesion?';?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Cerrar sesion" class="btn btn-metis-1 btn-sm tooltip">
-            <i class="fa fa-power-off"></i>
+            <i class="fa fa-power-off" aria-hidden="true"></i>
         </a> 
     </div>
     

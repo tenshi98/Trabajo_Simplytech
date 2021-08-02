@@ -88,7 +88,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
 		//FILTRO
 		$filtro = '';
-		if ($filter!='0'){$filtro .="WHERE ".$filter." ";	}
+		if ($filter!='0'){$filtro .="WHERE ".$filter;	}
 		
 		//se trae un listado con todas las categorias
 		$arrSelect = array();
@@ -163,7 +163,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
 		//Filtro para el where
 		$filtro = '';
-		if ($filter!='0'){$filtro .="WHERE ".$filter." ";	}
+		if ($filter!='0'){$filtro .="WHERE ".$filter;	}
 		//explode para poder crear cadena
 		$datos = explode(",", $data2);
 		if(count($datos)==1){

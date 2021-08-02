@@ -9,12 +9,8 @@ if($temp!=0) {
 	//Variable de busqueda
 	$z = "WHERE cross_shipping_consolidacion.Creacion_fecha>'".$FechaDesde."'";
 	$z.=" AND cross_shipping_consolidacion.idEstado=2";//solo las aprobadas
-	//Verifico el tipo de usuario que esta ingresando
-	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-		$z.=" AND cross_shipping_consolidacion.idSistema>=0";	
-	}else{
-		$z.=" AND cross_shipping_consolidacion.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
-	}
+	//sistema
+	$z.=" AND cross_shipping_consolidacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 
 	// Se trae un listado con todos los usuarios
@@ -215,20 +211,20 @@ if($temp!=0) {
 									echo '					
 									<tr>
 										<td class="text-muted">
-											<a href="#" class="iframe"><i class="fa fa-database color-blue"></i> Optimo</a>
+											<a href="#" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> Optimo</a>
 										</td>
 										<td class="text-right color-blue" style="font-weight: 700;">'.$Med_optimo.'</td>
 									</tr>
 									
 									<tr>
 										<td class="text-muted">
-											<a href="#" class="iframe"><i class="fa fa-database color-yellow-light"></i> Critico</a>
+											<a href="#" class="iframe"><i class="fa fa-database color-yellow-light" aria-hidden="true"></i> Critico</a>
 										</td>
 										<td class="text-right color-yellow-light" style="font-weight: 700;"><i class="fa fa-arrow-down" aria-hidden="true"></i> '.$Med_critico_inf.'/<i class="fa fa-arrow-up" aria-hidden="true"></i> '.$Med_critico_sup.'</td>
 									</tr>
 									<tr>
 										<td class="text-muted">
-											<a href="#" class="iframe"><i class="fa fa-database color-red"></i> Fuera Rango</a>
+											<a href="#" class="iframe"><i class="fa fa-database color-red" aria-hidden="true"></i> Fuera Rango</a>
 										</td>
 										<td class="text-right color-red" style="font-weight: 700;"><i class="fa fa-arrow-down" aria-hidden="true"></i> '.$Med_fuera_inf.'/<i class="fa fa-arrow-up" aria-hidden="true"></i> '.$Med_fuera_sup.'</td>
 									</tr>	
@@ -303,7 +299,7 @@ if($temp!=0) {
 									/**********************************/
 									$mes_ini = mes_actual()+1;
 									echo '<tr>';
-									echo '<td class="text-muted"><a href="#" class="iframe"><i class="fa fa-database color-blue"></i> Optimo</a></td>';
+									echo '<td class="text-muted"><a href="#" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> Optimo</a></td>';
 									for ($i = 1; $i <= 12; $i++) {
 										if(isset($arrCrossGeneral[$mes_ini]['Normal'])&&$arrCrossGeneral[$mes_ini]['Normal']!=''){ $Med_optimo = $arrCrossGeneral[$mes_ini]['Normal']; }else{$Med_optimo = 0;}
 										echo '<td class="text-right color-blue" style="font-weight: 700;">'.$Med_optimo.'</td>';
@@ -314,7 +310,7 @@ if($temp!=0) {
 									/**********************************/
 									$mes_ini = mes_actual()+1;
 									echo '<tr>';
-									echo '<td class="text-muted"><a href="#" class="iframe"><i class="fa fa-database color-yellow-light"></i> Critico</a></td>';
+									echo '<td class="text-muted"><a href="#" class="iframe"><i class="fa fa-database color-yellow-light" aria-hidden="true"></i> Critico</a></td>';
 									for ($i = 1; $i <= 12; $i++) {
 										if(isset($arrCrossGeneral[$mes_ini]['Critico_inf'])&&$arrCrossGeneral[$mes_ini]['Critico_inf']!=''){                $Med_critico_inf  = $arrCrossGeneral[$mes_ini]['Critico_inf'];         }else{$Med_critico_inf  = 0;}
 										if(isset($arrCrossGeneral[$mes_ini]['Critico_sup'])&&$arrCrossGeneral[$mes_ini]['Critico_sup']!=''){                $Med_critico_sup  = $arrCrossGeneral[$mes_ini]['Critico_sup'];         }else{$Med_critico_sup  = 0;}
@@ -326,7 +322,7 @@ if($temp!=0) {
 									/**********************************/
 									$mes_ini = mes_actual()+1;
 									echo '<tr>';
-									echo '<td class="text-muted"><a href="#" class="iframe"><i class="fa fa-database color-red"></i> Fuera Rango</a></td>';
+									echo '<td class="text-muted"><a href="#" class="iframe"><i class="fa fa-database color-red" aria-hidden="true"></i> Fuera Rango</a></td>';
 									for ($i = 1; $i <= 12; $i++) {
 										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf']!=''){  $Med_fuera_inf    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
 										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup']!=''){  $Med_fuera_sup    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
@@ -382,7 +378,8 @@ if($temp!=0) {
 											title: \'Meses\',
 										},
 										vAxis: {
-											title: \'Cantidad\'
+											title: \'Cantidad\', 
+											minValue: 0
 										},
 										colors:[\'#3399cc\',\'#f5b75f\',\'#ed7a53\']
 									};
@@ -436,7 +433,7 @@ if($temp!=0) {
 											echo '					
 											<tr>
 												<td class="text-muted">
-													<a href="#" class="iframe"><i class="fa fa-database color-blue"></i> '.$merc['Nombre'].'</a>
+													<a href="#" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> '.$merc['Nombre'].'</a>
 												</td>
 												<td class="text-right color-blue" style="font-weight: 700;">'.$arrCrossGeneral[$merc['idMercado']]['Cantidad'].'</td>
 											</tr>';

@@ -59,7 +59,7 @@ if ( ! empty($_GET['new_file']) ) { ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Nuevo Archivo</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -67,15 +67,15 @@ if ( ! empty($_GET['new_file']) ) { ?>
 					
 				<?php 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_multiple_upload('Seleccionar archivo','event_file', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','event_file', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 				
-				$Form_Imputs->form_input_hidden('idEvento', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idEvento', $_GET['id'], 2);
 				?> 
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf093; Subir Archivo" name="submit_file"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 							  
 			</form> 
@@ -92,7 +92,7 @@ seguridad_eventos_listado.Fecha,
 seguridad_eventos_listado.Hora
 
 FROM `seguridad_eventos_listado`
-WHERE seguridad_eventos_listado.idEvento = {$_GET['id']}";
+WHERE seguridad_eventos_listado.idEvento = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -112,7 +112,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $arrArchivos = array();
 $query = "SELECT idArchivo, Nombre 
 FROM `seguridad_eventos_listado_archivos`
-WHERE idEvento = {$_GET['id']}";
+WHERE idEvento = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -135,23 +135,10 @@ array_push( $arrArchivos,$row );
 ?>
 
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-cog faa-spin animated " aria-hidden="true"></i></span>
-			<div class="info-box-content">
-				<span class="info-box-text">Evento</span>
-				<span class="info-box-number"><?php echo fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs'; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Editar Archivos</span>
-			</div>
-		</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Editar Archivos');?>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new_file='.$_GET['id']; ?>" class="btn btn-default fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Nuevo Archivo</a>
 	</div>
-	
-	<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new_file='.$_GET['id']; ?>" class="btn btn-default fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Nuevo Archivo</a>
-
 </div>
 <div class="clearfix"></div>
 
@@ -159,9 +146,9 @@ array_push( $arrArchivos,$row );
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'seguridad_eventos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'seguridad_eventos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class="active"><a href="<?php echo 'seguridad_eventos_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Archivos Adjuntos</a></li>          
+				<li class=""><a href="<?php echo 'seguridad_eventos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'seguridad_eventos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="<?php echo 'seguridad_eventos_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos Adjuntos</a></li>          
 			</ul>	
 		</header>
         <div class="table-responsive">
@@ -178,12 +165,12 @@ array_push( $arrArchivos,$row );
 							<td><?php echo $tipo['Nombre']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<a href="<?php echo 'view_doc_preview.php?path=upload&file='.$tipo['Nombre']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
-									<a href="1download.php?dir=upload&file=<?php echo $tipo['Nombre']; ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download"></i></a>
+									<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Nombre'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 									<?php 
-									$ubicacion = $new_location.'&id='.$_GET['id'].'&del_file='.$tipo['idArchivo'];
+									$ubicacion = $new_location.'&id='.$_GET['id'].'&del_file='.simpleEncode($tipo['idArchivo'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el documento '.$tipo['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>							
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>			
 							</td>
 						</tr>
@@ -200,8 +187,8 @@ array_push( $arrArchivos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

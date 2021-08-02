@@ -55,13 +55,15 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Ruta creada correct
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Ruta editada correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Ruta borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT Nombre, idRuta
 FROM `vehiculos_ruta_alternativa`
-WHERE idRutaAlt = {$_GET['id']}";
+WHERE idRutaAlt = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -104,7 +106,7 @@ array_push( $arrRutas,$row );
 $arrRutasAlt = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud, direccion
 FROM `vehiculos_ruta_alternativa_ubicaciones`
-WHERE idRutaAlt = {$_GET['id']}
+WHERE idRutaAlt = ".$_GET['id']."
 ORDER BY idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -124,29 +126,16 @@ array_push( $arrRutasAlt,$row );
 }
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-truck" aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Ruta Alternativa</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowdata['Nombre'], 'Resumen');?>
 </div>
+<div class="clearfix"></div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'vehiculos_ruta_alternativa.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
+				<li class="active"><a href="<?php echo 'vehiculos_ruta_alternativa.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
 			</ul>	
@@ -158,10 +147,11 @@ array_push( $arrRutasAlt,$row );
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
 
@@ -284,7 +274,7 @@ array_push( $arrRutasAlt,$row );
 									position	: new google.maps.LatLng(marcadores[i].position.lat, marcadores[i].position.lng),
 									map			: map,
 									animation 	: google.maps.Animation.DROP,
-									icon      	: "<?php echo DB_SITE ?>/LIB_assets/img/map-icons/1_series_orange.png"
+									icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								  });
 								  (function(marker, contenido) {
 									google.maps.event.addListener(marker, 'click', function() {
@@ -357,19 +347,23 @@ array_push( $arrRutasAlt,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//se crea filtro
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	?>
- <div class="col-sm-8 fcenter">
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Ruta Alternativa</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -386,19 +380,19 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	?>
 				if(isset($Nombre)) {          $x7  = $Nombre;           }else{$x7  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Basicos</h3>';
-				$Form_Imputs->form_select('Ruta','idRuta', $x1, 2, 'idRuta', 'Nombre', 'vehiculos_rutas', $z, '', $dbConn);
-				$Form_Imputs->form_select('Tipo de Ruta','idTipo', $x2, 2, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_date('Fecha','Fecha', $x3, 1);
-				$Form_Imputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
-				$Form_Imputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
-				$Form_Imputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
-				$Form_Imputs->form_input_text( 'Nombre de la Ruta', 'Nombre', $x7, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_select('Ruta','idRuta', $x1, 2, 'idRuta', 'Nombre', 'vehiculos_rutas', $z, '', $dbConn);
+				$Form_Inputs->form_select('Tipo de Ruta','idTipo', $x2, 2, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha','Fecha', $x3, 1);
+				$Form_Inputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
+				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
+				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
+				$Form_Inputs->form_input_text('Nombre de la Ruta', 'Nombre', $x7, 2);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 				
 					<script>
@@ -426,7 +420,7 @@ $z = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	?>
 							
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -474,12 +468,12 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Variable de busqueda
 $z="WHERE vehiculos_ruta_alternativa.idRutaAlt!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND vehiculos_ruta_alternativa.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND vehiculos_ruta_alternativa.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idRuta']) && $_GET['idRuta'] != ''){            $z .= " AND vehiculos_ruta_alternativa.idRuta=".$_GET['idRuta'];}
@@ -551,7 +545,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -577,17 +571,17 @@ array_push( $arrUsers,$row );
 				if(isset($Nombre)) {          $x7  = $Nombre;           }else{$x7  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select('Ruta','idRuta', $x1, 1, 'idRuta', 'Nombre', 'vehiculos_rutas', $w, '', $dbConn);
-				$Form_Imputs->form_select('Tipo de Ruta','idTipo', $x2, 1, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
-				$Form_Imputs->form_date('Fecha','Fecha', $x3, 1);
-				$Form_Imputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
-				$Form_Imputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
-				$Form_Imputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
-				$Form_Imputs->form_input_text( 'Nombre de la Ruta', 'Nombre', $x7, 1);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select('Ruta','idRuta', $x1, 1, 'idRuta', 'Nombre', 'vehiculos_rutas', $w, '', $dbConn);
+				$Form_Inputs->form_select('Tipo de Ruta','idTipo', $x2, 1, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha','Fecha', $x3, 1);
+				$Form_Inputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
+				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
+				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
+				$Form_Inputs->form_input_text('Nombre de la Ruta', 'Nombre', $x7, 1);
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -609,7 +603,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Rutas</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Rutas</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -623,43 +617,43 @@ array_push( $arrUsers,$row );
 						<th>
 							<div class="pull-left">Tipo</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Ruta</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=ruta_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=ruta_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=ruta_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=ruta_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Lapso</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=lapso_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=lapso_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=lapso_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=lapso_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Hora Inicio</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=hinicio_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=hinicio_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=hinicio_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=hinicio_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Hora Termino</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=htermino_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=htermino_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=htermino_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=htermino_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -685,13 +679,13 @@ array_push( $arrUsers,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>			
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_vehiculos_ruta_alternativa.php?view='.$usuarios['idRutaAlt']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idRutaAlt']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_vehiculos_ruta_alternativa.php?view='.simpleEncode($usuarios['idRutaAlt'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idRutaAlt']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
-									$ubicacion = $location.'&del='.$usuarios['idRutaAlt'];
+									$ubicacion = $location.'&del='.simpleEncode($usuarios['idRutaAlt'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el equipo '.$usuarios['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

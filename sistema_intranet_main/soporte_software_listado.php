@@ -21,8 +21,6 @@ $search = '';
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                 $location .= "&Nombre=".$_GET['Nombre'];                 $search .= "&Nombre=".$_GET['Nombre'];}
 if(isset($_GET['Descripcion']) && $_GET['Descripcion'] != ''){       $location .= "&Descripcion=".$_GET['Descripcion'];       $search .= "&Descripcion=".$_GET['Descripcion'];}
 if(isset($_GET['idLicencia']) && $_GET['idLicencia'] != ''){         $location .= "&idLicencia=".$_GET['idLicencia'];         $search .= "&idLicencia=".$_GET['idLicencia'];}
-if(isset($_GET['Peso']) && $_GET['Peso'] != ''){                     $location .= "&Peso=".$_GET['Peso'];                     $search .= "&Peso=".$_GET['Peso'];}
-if(isset($_GET['idMedidaPeso']) && $_GET['idMedidaPeso'] != ''){     $location .= "&idMedidaPeso=".$_GET['idMedidaPeso'];     $search .= "&idMedidaPeso=".$_GET['idMedidaPeso'];}
 if(isset($_GET['SitioWeb']) && $_GET['SitioWeb'] != ''){             $location .= "&SitioWeb=".$_GET['SitioWeb'];             $search .= "&SitioWeb=".$_GET['SitioWeb'];}
 if(isset($_GET['SitioDescarga']) && $_GET['SitioDescarga'] != ''){   $location .= "&SitioDescarga=".$_GET['SitioDescarga'];   $search .= "&SitioDescarga=".$_GET['SitioDescarga'];}
 if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){       $location .= "&idCategoria=".$_GET['idCategoria'];       $search .= "&idCategoria=".$_GET['idCategoria'];}
@@ -62,14 +60,16 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Aplicacion Creada c
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Aplicacion Modificada correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Aplicacion borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
-$query = "SELECT Nombre, Descripcion, idLicencia, Peso, idMedidaPeso, SitioWeb, SitioDescarga,
+$query = "SELECT Nombre, Descripcion, idLicencia, SitioWeb, SitioDescarga,
 idCategoria
 FROM `soporte_software_listado`
-WHERE idSoftware = {$_GET['id']}";
+WHERE idSoftware = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -88,7 +88,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de la Aplicacion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -100,30 +100,26 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Nombre)) {         $x1  = $Nombre;         }else{$x1  = $rowdata['Nombre'];}
 				if(isset($Descripcion)) {    $x2  = $Descripcion;    }else{$x2  = $rowdata['Descripcion'];}
 				if(isset($idLicencia)) {     $x3  = $idLicencia;     }else{$x3  = $rowdata['idLicencia'];}
-				if(isset($Peso)) {           $x4  = $Peso;           }else{$x4  = $rowdata['Peso'];}
-				if(isset($idMedidaPeso)) {   $x5  = $idMedidaPeso;   }else{$x5  = $rowdata['idMedidaPeso'];}
 				if(isset($SitioWeb)) {       $x6  = $SitioWeb;       }else{$x6  = $rowdata['SitioWeb'];}
 				if(isset($SitioDescarga)) {  $x7  = $SitioDescarga;  }else{$x7  = $rowdata['SitioDescarga'];}
 				if(isset($idCategoria)) {    $x8  = $idCategoria;    }else{$x8  = $rowdata['idCategoria'];}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
-				$Form_Imputs->form_select('Licencia','idLicencia', $x3, 2, 'idLicencia', 'Nombre', 'soporte_software_listado_licencias', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('Peso', 'Peso', $x4, 2);
-				$Form_Imputs->form_select('Medida Peso','idMedidaPeso', $x5, 2, 'idMedidaPeso', 'Nombre', 'soporte_software_listado_medidas', 0, '', $dbConn);
-				$Form_Imputs->form_input_icon( 'Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
-				$Form_Imputs->form_input_icon( 'Descargar', 'SitioDescarga', $x7, 2,'fa fa-internet-explorer');
-				$Form_Imputs->form_select('Categoria','idCategoria', $x8, 2, 'idCategoria', 'Nombre', 'soporte_software_listado_categorias', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
+				$Form_Inputs->form_select('Licencia','idLicencia', $x3, 2, 'idLicencia', 'Nombre', 'soporte_software_listado_licencias', 0, '', $dbConn);
+				$Form_Inputs->form_input_icon('Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
+				$Form_Inputs->form_input_icon('Descargar', 'SitioDescarga', $x7, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_select('Categoria','idCategoria', $x8, 2, 'idCategoria', 'Nombre', 'soporte_software_listado_categorias', 0, '', $dbConn);
 				
 				
-				$Form_Imputs->form_input_hidden('idSoftware', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idSoftware', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -133,11 +129,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Aplicacion</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -148,28 +147,24 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if(isset($Nombre)) {         $x1  = $Nombre;         }else{$x1  = '';}
 				if(isset($Descripcion)) {    $x2  = $Descripcion;    }else{$x2  = '';}
 				if(isset($idLicencia)) {     $x3  = $idLicencia;     }else{$x3  = '';}
-				if(isset($Peso)) {           $x4  = $Peso;           }else{$x4  = '';}
-				if(isset($idMedidaPeso)) {   $x5  = $idMedidaPeso;   }else{$x5  = '';}
 				if(isset($SitioWeb)) {       $x6  = $SitioWeb;       }else{$x6  = '';}
 				if(isset($SitioDescarga)) {  $x7  = $SitioDescarga;  }else{$x7  = '';}
 				if(isset($idCategoria)) {    $x8  = $idCategoria;    }else{$x8  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 2);
-				$Form_Imputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
-				$Form_Imputs->form_select('Licencia','idLicencia', $x3, 2, 'idLicencia', 'Nombre', 'soporte_software_listado_licencias', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('Peso', 'Peso', $x4, 2);
-				$Form_Imputs->form_select('Medida Peso','idMedidaPeso', $x5, 2, 'idMedidaPeso', 'Nombre', 'soporte_software_listado_medidas', 0, '', $dbConn);
-				$Form_Imputs->form_input_icon( 'Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
-				$Form_Imputs->form_input_icon( 'Descargar', 'SitioDescarga', $x7, 2,'fa fa-internet-explorer');
-				$Form_Imputs->form_select('Categoria','idCategoria', $x8, 2, 'idCategoria', 'Nombre', 'soporte_software_listado_categorias', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
+				$Form_Inputs->form_select('Licencia','idLicencia', $x3, 2, 'idLicencia', 'Nombre', 'soporte_software_listado_licencias', 0, '', $dbConn);
+				$Form_Inputs->form_input_icon('Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
+				$Form_Inputs->form_input_icon('Descargar', 'SitioDescarga', $x7, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_select('Categoria','idCategoria', $x8, 2, 'idCategoria', 'Nombre', 'soporte_software_listado_categorias', 0, '', $dbConn);
 				
 				?>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
 			</form> 
@@ -219,8 +214,6 @@ $z = "WHERE soporte_software_listado.idSoftware!=0";
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){               $z .= " AND soporte_software_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
 if(isset($_GET['Descripcion']) && $_GET['Descripcion'] != ''){     $z .= " AND soporte_software_listado.Descripcion LIKE '%".$_GET['Descripcion']."%'";}
 if(isset($_GET['idLicencia']) && $_GET['idLicencia'] != ''){       $z .= " AND soporte_software_listado.idLicencia=".$_GET['idLicencia'];}
-if(isset($_GET['Peso']) && $_GET['Peso'] != ''){                   $z .= " AND soporte_software_listado.Peso LIKE '%".$_GET['Peso']."%'";}
-if(isset($_GET['idMedidaPeso']) && $_GET['idMedidaPeso'] != ''){   $z .= " AND soporte_software_listado.idMedidaPeso=".$_GET['idMedidaPeso'];}
 if(isset($_GET['SitioWeb']) && $_GET['SitioWeb'] != ''){           $z .= " AND soporte_software_listado.SitioWeb LIKE '%".$_GET['SitioWeb']."%'";}
 if(isset($_GET['SitioDescarga']) && $_GET['SitioDescarga'] != ''){ $z .= " AND soporte_software_listado.SitioDescarga LIKE '%".$_GET['SitioDescarga']."%'";}
 if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){     $z .= " AND soporte_software_listado.idCategoria=".$_GET['idCategoria'];}
@@ -274,7 +267,7 @@ array_push( $arrImpuestos,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -294,25 +287,21 @@ array_push( $arrImpuestos,$row );
 				if(isset($Nombre)) {         $x1  = $Nombre;         }else{$x1  = '';}
 				if(isset($Descripcion)) {    $x2  = $Descripcion;    }else{$x2  = '';}
 				if(isset($idLicencia)) {     $x3  = $idLicencia;     }else{$x3  = '';}
-				if(isset($Peso)) {           $x4  = $Peso;           }else{$x4  = '';}
-				if(isset($idMedidaPeso)) {   $x5  = $idMedidaPeso;   }else{$x5  = '';}
 				if(isset($SitioWeb)) {       $x6  = $SitioWeb;       }else{$x6  = '';}
 				if(isset($SitioDescarga)) {  $x7  = $SitioDescarga;  }else{$x7  = '';}
 				if(isset($idCategoria)) {    $x8  = $idCategoria;    }else{$x8  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre', 'Nombre', $x1, 1);
-				$Form_Imputs->form_textarea('Descripcion', 'Descripcion', $x2, 1, 160);
-				$Form_Imputs->form_select('Licencia','idLicencia', $x3, 1, 'idLicencia', 'Nombre', 'soporte_software_listado_licencias', 0, '', $dbConn);
-				$Form_Imputs->form_input_number('Peso', 'Peso', $x4, 1);
-				$Form_Imputs->form_select('Medida Peso','idMedidaPeso', $x5, 1, 'idMedidaPeso', 'Nombre', 'soporte_software_listado_medidas', 0, '', $dbConn);
-				$Form_Imputs->form_input_icon( 'Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
-				$Form_Imputs->form_input_icon( 'Descargar', 'SitioDescarga', $x7, 1,'fa fa-internet-explorer');
-				$Form_Imputs->form_select('Categoria','idCategoria', $x8, 1, 'idCategoria', 'Nombre', 'soporte_software_listado_categorias', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 1, 160);
+				$Form_Inputs->form_select('Licencia','idLicencia', $x3, 1, 'idLicencia', 'Nombre', 'soporte_software_listado_licencias', 0, '', $dbConn);
+				$Form_Inputs->form_input_icon('Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
+				$Form_Inputs->form_input_icon('Descargar', 'SitioDescarga', $x7, 1,'fa fa-internet-explorer');
+				$Form_Inputs->form_select('Categoria','idCategoria', $x8, 1, 'idCategoria', 'Nombre', 'soporte_software_listado_categorias', 0, '', $dbConn);
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -332,7 +321,7 @@ array_push( $arrImpuestos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Aplicaciones</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Aplicaciones</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -346,15 +335,15 @@ array_push( $arrImpuestos,$row );
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="120">
 							<div class="pull-left">Licencia</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=licencia_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=licencia_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=licencia_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=licencia_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th width="10">Acciones</th>
@@ -368,12 +357,12 @@ array_push( $arrImpuestos,$row );
 						<td><?php echo $imp['Licencia']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_software.php?view='.$imp['idSoftware']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$imp['idSoftware']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_software.php?view='.simpleEncode($imp['idSoftware'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$imp['idSoftware']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.$imp['idSoftware'];
+									$ubicacion = $location.'&del='.simpleEncode($imp['idSoftware'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la Aplicacion '.$imp['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>	
 							</div>
 						</td>

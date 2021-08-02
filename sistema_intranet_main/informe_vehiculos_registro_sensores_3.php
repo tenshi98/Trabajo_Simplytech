@@ -53,43 +53,35 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	$row_data = mysqli_fetch_assoc ($resultado);
 	/*****************************************/
 	//Se escribe el dato
-	echo '
-	<div class="alert alert-success" role="alert">
-		Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0).'			
-	</div>';
-
+	$Alert_Text  = 'Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0);
+	alert_post_data(1,1,1, $Alert_Text);
+	
 	$total_files = ceil($row_data['Total']/5000);
 	for ($i = 1; $i <= $total_files; $i++) { 
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
-		$datosx  = '?idVehiculo='.$_GET['idVehiculo'];
+		$datosx  = '&idVehiculo='.$_GET['idVehiculo'];
 		$datosx .= '&f_inicio='.$_GET['f_inicio'];
 		$datosx .= '&f_termino='.$_GET['f_termino'];
 		$datosx .= '&num='.$i;
-		echo '
-		<div class="alert alert-info" role="alert">
-			<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>
-			<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			<div class="clearfix"></div>			
-		</div>';  
+		
+		$Alert_Text  = '<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
+		$Alert_Text .= '<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
+		$Alert_Text .= '<div class="clearfix"></div>';
+		alert_post_data(2,1,1, $Alert_Text);
+		 
 	}
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
 }else{
 	//Inicia variable
-	$z="WHERE vehiculos_listado.idVehiculo>0"; 
-	$datosx  = '?f_inicio='.$_GET['f_inicio'];
+	$z = "WHERE vehiculos_listado.idVehiculo>0"; 
+	$z.= " AND vehiculos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+	$datosx  = '&f_inicio='.$_GET['f_inicio'];
 	$datosx .= '&f_termino='.$_GET['f_termino'];
 	$datosx .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+	$datosx .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$datosx .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 
-	//Verifico el tipo de usuario que esta ingresando
-	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-		$z.=" AND vehiculos_listado.idSistema>=0";
-	}else{
-		$z.=" AND vehiculos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
-		$datosx .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-		$datosx .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];	
-	}
-	
 	/*********************************************/
 	// Se trae un listado con todos los usuarios
 	$arrEquipos = array();
@@ -120,7 +112,8 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	
 	/*********************************************/
 	$s_max = 0;
-	echo '<div class="alert alert-success" role="alert">';
+	$Alert_Text  = '';
+
 	foreach ($arrEquipos as $equipo) {
 		//Se traen todos los registros
 		$query = "SELECT 
@@ -142,13 +135,13 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		}
 		$row_data = mysqli_fetch_assoc ($resultado);
 
-		echo 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($row_data['Total'], 0).'<br/>';
+		$Alert_Text .= 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($row_data['Total'], 0).'<br/>';
 		//verifico el valor maximo
 		if($s_max<$row_data['Total']){
 			$s_max=$row_data['Total'];
 		}
 	}
-	echo '</div>';
+	alert_post_data(2,1,1, $Alert_Text);
 	
 	
 	/*****************************************/
@@ -159,12 +152,12 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		$reg_fin = 5000*$i;
 		
 		$datosx .= '&num='.$i;
-		echo '
-		<div class="alert alert-info" role="alert">
-			<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>
-			<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-			<div class="clearfix"></div>			
-		</div>';  
+		
+		$Alert_Text  = '<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
+		$Alert_Text .= '<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
+		$Alert_Text .= '<div class="clearfix"></div>';
+		alert_post_data(2,1,1, $Alert_Text);
+		 
 	}
 
 }
@@ -176,20 +169,20 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  ?>			
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Filtro de busqueda</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -202,10 +195,10 @@ $w="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND idEstado=1";
 				if(isset($idVehiculo)) {    $x3  = $idVehiculo;   }else{$x3  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
-				$Form_Imputs->form_date('Fecha Termino','f_termino', $x2, 2);
-				$Form_Imputs->form_select_filter('Vehiculo','idVehiculo', $x3, 1, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
+				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x3, 1, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
 				
 				?>        
 	   

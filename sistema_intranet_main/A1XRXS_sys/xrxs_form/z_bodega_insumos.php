@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
@@ -54,6 +58,9 @@ if( ! defined('XMBCXRXSKGC')) {
 	if ( !empty($_POST['idLevel_3']) )         $idLevel_3           = $_POST['idLevel_3'];
 	if ( !empty($_POST['idLevel_4']) )         $idLevel_4           = $_POST['idLevel_4'];
 	if ( !empty($_POST['idLevel_5']) )         $idLevel_5           = $_POST['idLevel_5'];
+	if ( !empty($_POST['fecha_fact_desde']) )  $fecha_fact_desde    = $_POST['fecha_fact_desde'];
+	if ( !empty($_POST['fecha_fact_hasta']) )  $fecha_fact_hasta    = $_POST['fecha_fact_hasta'];
+	if ( !empty($_POST['idUsoIVA']) )          $idUsoIVA            = $_POST['idUsoIVA'];
 	
 	
 /*******************************************************************************************************************/
@@ -62,11 +69,11 @@ if( ! defined('XMBCXRXSKGC')) {
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idDocumentos':      if(empty($idDocumentos)){      $error['idDocumentos']     = 'error/No ha ingresado el id';}break;
 			case 'N_Doc':             if(empty($N_Doc)){             $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}break;
 			case 'idBodega':          if(empty($idBodega)){          $error['idBodega']         = 'error/No ha seleccionado la bodega';}break;
@@ -112,8 +119,18 @@ if( ! defined('XMBCXRXSKGC')) {
 			case 'idLevel_4':         if(empty($idLevel_4)){         $error['idLevel_4']        = 'error/No ha seleccionado el Nivel 4';}break;
 			case 'idLevel_5':         if(empty($idLevel_5)){         $error['idLevel_5']        = 'error/No ha seleccionado el Nivel 5';}break;
 			
+			case 'fecha_fact_desde':  if(empty($fecha_fact_desde)){  $error['fecha_fact_desde'] = 'error/No ha ingresado la fecha desde de facturacion';}break;
+			case 'fecha_fact_hasta':  if(empty($fecha_fact_hasta)){  $error['fecha_fact_hasta'] = 'error/No ha ingresado la fecha hasta de facturacion';}break;
+			case 'idUsoIVA':          if(empty($idUsoIVA)){          $error['idUsoIVA']         = 'error/No ha seleccionado el uso del IVA';}break;
+			
 		}
 	}	
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -137,7 +154,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -174,144 +191,22 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_ing_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['insumos_ing_basicos']['idDocumentos']    = $idDocumentos;
-				$_SESSION['insumos_ing_basicos']['N_Doc']           = $N_Doc;
-				$_SESSION['insumos_ing_basicos']['idBodega']        = $idBodega;
-				$_SESSION['insumos_ing_basicos']['Observaciones']   = $Observaciones;
-				$_SESSION['insumos_ing_basicos']['idSistema']       = $idSistema;
-				$_SESSION['insumos_ing_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['insumos_ing_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['insumos_ing_basicos']['idTipo']          = $idTipo;
-				$_SESSION['insumos_ing_basicos']['idProveedor']     = $idProveedor;
-				$_SESSION['insumos_ing_basicos']['fecha_auto']      = $fecha_auto;
-				$_SESSION['insumos_ing_basicos']['Pago_fecha']      = '0000-00-00';
-				$_SESSION['insumos_ing_basicos']['idOcompra']       = '';
-				
-				//Se agrega el impuesto
-				$_SESSION['insumos_ing_impuestos'][1]['idImpuesto'] = 1;
-				
-				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_basicos']['Documento'] = $rowDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_basicos']['Documento'] = '';
-				}
-				/****************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_basicos']['TipoDocumento'] = '';
-				}
-				/****************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_basicos']['Bodega'] = $rowBodega['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_basicos']['Bodega'] = '';
-				}
-				/****************************************************/
-				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_basicos']['Proveedor'] = $rowProveedor['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_basicos']['Proveedor'] = '';
-				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_ing_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_ing_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_ing_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_ing_basicos']['N_Doc']             = '';}
+				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_ing_basicos']['idBodega']          = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_ing_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_ing_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_ing_basicos']['idUsuario']         = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_ing_basicos']['Creacion_fecha']    = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_ing_basicos']['idTipo']            = '';}
+				if(isset($idProveedor) && $idProveedor != ''){             $_SESSION['insumos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['insumos_ing_basicos']['idProveedor']       = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_ing_basicos']['fecha_auto']        = '';}
+				if(isset($fecha_fact_desde) && $fecha_fact_desde != ''){   $_SESSION['insumos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['insumos_ing_basicos']['fecha_fact_desde']  = '';}
+				if(isset($fecha_fact_hasta) && $fecha_fact_hasta != ''){   $_SESSION['insumos_ing_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['insumos_ing_basicos']['fecha_fact_hasta']  = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){                   $_SESSION['insumos_ing_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['insumos_ing_basicos']['idUsoIVA']          = '';}
+				//datos basicos vacios
+				$_SESSION['insumos_ing_basicos']['Pago_fecha']        = '0000-00-00';
+				$_SESSION['insumos_ing_basicos']['idOcompra']         = '';
 				
 				/***********************************/
 				//Centro de Costo vacio
@@ -322,6 +217,61 @@ if( ! defined('XMBCXRXSKGC')) {
 				$_SESSION['insumos_ing_basicos']['idLevel_3']     = 0;
 				$_SESSION['insumos_ing_basicos']['idLevel_4']     = 0;
 				$_SESSION['insumos_ing_basicos']['idLevel_5']     = 0;
+				
+				//En caso de que no sea una factura, eliminar los datos previamente rellenados
+				if(isset($idDocumentos) && $idDocumentos != ''&& $idDocumentos != 2){
+					$_SESSION['insumos_ing_basicos']['fecha_fact_desde'] = '0000-00-00';
+					$_SESSION['insumos_ing_basicos']['fecha_fact_hasta'] = '0000-00-00';
+				}
+				
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_ing_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_ing_impuestos'][1]['idImpuesto'] = 1;
+				}
+				
+				/********************************************************************************/
+				if(isset($idDocumentos) && $idDocumentos != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_basicos']['Documento'] = $rowDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_basicos']['Documento'] = '';
+				}
+				/****************************************************/
+				if(isset($idTipo) && $idTipo != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_basicos']['TipoDocumento'] = '';
+				}
+				/****************************************************/
+				if(isset($idBodega) && $idBodega != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_basicos']['Bodega'] = $rowBodega['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_basicos']['Bodega'] = '';
+				}
+				/****************************************************/
+				if(isset($idProveedor) && $idProveedor != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_basicos']['Proveedor'] = $rowProveedor['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_basicos']['Proveedor'] = '';
+				}
+				
 				
 				
 				
@@ -378,7 +328,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -396,41 +346,44 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_ing_descuentos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['insumos_ing_basicos']['idDocumentos']    = $idDocumentos;
-				$_SESSION['insumos_ing_basicos']['N_Doc']           = $N_Doc;
-				$_SESSION['insumos_ing_basicos']['idBodega']        = $idBodega;
-				$_SESSION['insumos_ing_basicos']['idSistema']       = $idSistema;
-				$_SESSION['insumos_ing_basicos']['idUsuario']       = $idUsuario;
-				$_SESSION['insumos_ing_basicos']['Creacion_fecha']  = $Creacion_fecha;
-				$_SESSION['insumos_ing_basicos']['idTipo']          = $idTipo;
-				$_SESSION['insumos_ing_basicos']['idProveedor']     = $idProveedor;
-				$_SESSION['insumos_ing_basicos']['fecha_auto']      = $fecha_auto;
-				$_SESSION['insumos_ing_basicos']['Pago_fecha']      = '0000-00-00';
-				$_SESSION['insumos_ing_basicos']['idOcompra']       = '';
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_ing_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_ing_basicos']['N_Doc']             = '';}
+				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_ing_basicos']['idBodega']          = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_ing_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_ing_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_ing_basicos']['idUsuario']         = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_ing_basicos']['Creacion_fecha']    = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_ing_basicos']['idTipo']            = '';}
+				if(isset($idProveedor) && $idProveedor != ''){             $_SESSION['insumos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['insumos_ing_basicos']['idProveedor']       = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_ing_basicos']['fecha_auto']        = '';}
+				if(isset($fecha_fact_desde) && $fecha_fact_desde != ''){   $_SESSION['insumos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['insumos_ing_basicos']['fecha_fact_desde']  = '';}
+				if(isset($fecha_fact_hasta) && $fecha_fact_hasta != ''){   $_SESSION['insumos_ing_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['insumos_ing_basicos']['fecha_fact_hasta']  = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){                   $_SESSION['insumos_ing_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['insumos_ing_basicos']['idUsoIVA']          = '';}
+				//datos basicos vacios
+				$_SESSION['insumos_ing_basicos']['Pago_fecha']        = '0000-00-00';
+				$_SESSION['insumos_ing_basicos']['idOcompra']         = '';
 				
-				//Se agrega el impuesto
-				$_SESSION['insumos_ing_impuestos'][1]['idImpuesto'] = 1;
+				//En caso de que no sea una factura, eliminar los datos previamente rellenados
+				if(isset($idDocumentos) && $idDocumentos != ''&& $idDocumentos != 2){
+					$_SESSION['insumos_ing_basicos']['fecha_fact_desde'] = '0000-00-00';
+					$_SESSION['insumos_ing_basicos']['fecha_fact_hasta'] = '0000-00-00';
+				}
+				
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_ing_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_ing_impuestos'][1]['idImpuesto'] = 1;
+				}
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['Documento'] = $rowDocumento['Nombre'];
 				}else{
@@ -439,23 +392,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -464,23 +401,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['Bodega'] = $rowBodega['Nombre'];
 				}else{
@@ -489,50 +410,13 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
+					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['Proveedor'] = $rowProveedor['Nombre'];
 				}else{
 					$_SESSION['insumos_ing_basicos']['Proveedor'] = '';
 				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_ing_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_ing_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+				
 				
 				
 				
@@ -559,23 +443,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_ing_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -583,23 +451,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_basicos']['idLevel_1']    = $idLevel_1;
@@ -607,23 +459,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_basicos']['idLevel_2']    = $idLevel_2;
@@ -631,23 +467,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_basicos']['idLevel_3']    = $idLevel_3;
@@ -655,23 +475,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_basicos']['idLevel_4']    = $idLevel_4;
@@ -679,23 +483,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_basicos']['idLevel_5']    = $idLevel_5;
@@ -774,29 +562,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
-				$query = "SELECT 
-				insumos_listado.idProducto, 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idEstado=1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrProductos,$row );
-				}
+				$arrProductos = db_select_array (false, 'insumos_listado.idProducto, insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -842,26 +609,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen los datos del producto
-				$query = "SELECT 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto = db_select_data (false, 'insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Guardo variables si existe una OC
 				$temp_idExistencia     = 0;
@@ -925,24 +673,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//Se traen los datos de la guia seleccionada
-				$query = "SELECT N_Doc, ValorNeto
-				FROM `bodegas_insumos_facturacion`
-				WHERE idFacturacion = ".$idGuia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowGuia = mysqli_fetch_assoc ($resultado);
-
+				$rowGuia = db_select_data (false, 'N_Doc, ValorNeto', 'bodegas_insumos_facturacion', '', 'idFacturacion = "'.$idGuia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				$_SESSION['insumos_ing_guias'][$idGuia]['idGuia']     = $idGuia;
 				$_SESSION['insumos_ing_guias'][$idGuia]['N_Doc']      = $rowGuia['N_Doc'];
@@ -983,24 +714,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = ".$idImpuesto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				
+				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = '.$idImpuesto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se guarda dato
 				$_SESSION['insumos_ing_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 				$_SESSION['insumos_ing_impuestos'][$idImpuesto]['Nombre']     = $rowImpuesto['Nombre'];
@@ -1026,39 +740,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			die;
 
 		break;	
-/*******************************************************************************************************************/		
-		case 'add_obs_ing':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
 
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_ing_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_ing_temporal'] = $_SESSION['insumos_ing_basicos']['Observaciones'];
-			$_SESSION['insumos_ing_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'new_file_ing':
 			
@@ -1081,7 +763,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -1234,13 +916,13 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
 			if(isset($idOcompra)){
-				$ndata_1 = db_select_nrows ('idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1==0) {$error['ndata_1'] = 'error/No existen Ordenes de Compra con ese numero';}
 			//Si la OC existe se verifica si tiene productos para asignar
 			if($ndata_1!=0) {
-				$ndata_2 = db_select_nrows ('idOcompra', 'ocompra_listado_existencias_insumos', '', "idOcompra='".$idOcompra."' AND Cantidad > cant_ingresada", $dbConn);
+				$ndata_2 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_insumos', '', "idOcompra='".$idOcompra."' AND Cantidad > cant_ingresada", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				if($ndata_2==0) {$error['ndata_2'] = 'error/No existen Insumos a asignar';}
 			}
 			/*******************************************************************/
@@ -1253,13 +935,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				//Se traen los productos utilizados
 				$arrProductos = array();
-				$query = "SELECT idExistencia, idProducto, Cantidad, vUnitario, vTotal, cant_ingresada 
-				FROM ocompra_listado_existencias_insumos 
-				WHERE idOcompra='".$idOcompra."' AND Cantidad > cant_ingresada ";
-				$resultado = mysqli_query($dbConn, $query);
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrProductos,$row );
-				}
+				$arrProductos = db_select_array (false, 'ocompra_listado_existencias_insumos.idExistencia, ocompra_listado_existencias_insumos.idProducto, ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vUnitario, ocompra_listado_existencias_insumos.vTotal, ocompra_listado_existencias_insumos.cant_ingresada, insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml','ocompra_listado_existencias_insumos.idOcompra='.$idOcompra.' AND ocompra_listado_existencias_insumos.Cantidad > ocompra_listado_existencias_insumos.cant_ingresada', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Guardo la OC
 				$_SESSION['insumos_ing_basicos']['idOcompra'] = $idOcompra;
@@ -1273,8 +949,11 @@ if( ! defined('XMBCXRXSKGC')) {
 					$_SESSION['insumos_ing_productos'][$prod['idProducto']]['ValorTotal']     = $prod['vTotal'];
 					$_SESSION['insumos_ing_productos'][$prod['idProducto']]['cant_ingresada'] = $prod['cant_ingresada'];
 					$_SESSION['insumos_ing_productos'][$prod['idProducto']]['cant_max']       = $prod['Cantidad'];
+					$_SESSION['insumos_ing_productos'][$prod['idProducto']]['Nombre']         = $prod['Nombre'];
+					$_SESSION['insumos_ing_productos'][$prod['idProducto']]['Unimed']         = $prod['Unimed'];
 				}
-
+				
+				//redirijo
 				header( 'Location: '.$location.'&view=true' );
 				die;	
 			}
@@ -1293,23 +972,28 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_ing_basicos'])){
-				if(!isset($_SESSION['insumos_ing_basicos']['idDocumentos']) or $_SESSION['insumos_ing_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha seleccionado el documento';}
-				if(!isset($_SESSION['insumos_ing_basicos']['N_Doc']) or $_SESSION['insumos_ing_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['insumos_ing_basicos']['idBodega']) or $_SESSION['insumos_ing_basicos']['idBodega']=='' ){             $error['idBodega']         = 'error/No ha seleccionado la bodega';}
-				if(!isset($_SESSION['insumos_ing_basicos']['Observaciones']) or $_SESSION['insumos_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['insumos_ing_basicos']['idSistema']) or $_SESSION['insumos_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['insumos_ing_basicos']['idUsuario']) or $_SESSION['insumos_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['insumos_ing_basicos']['Creacion_fecha']) or $_SESSION['insumos_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['insumos_ing_basicos']['idTipo']) or $_SESSION['insumos_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['insumos_ing_basicos']['idDocumentos']) OR $_SESSION['insumos_ing_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha seleccionado el documento';}
+				if(!isset($_SESSION['insumos_ing_basicos']['N_Doc']) OR $_SESSION['insumos_ing_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
+				if(!isset($_SESSION['insumos_ing_basicos']['idBodega']) OR $_SESSION['insumos_ing_basicos']['idBodega']=='' ){             $error['idBodega']         = 'error/No ha seleccionado la bodega';}
+				if(!isset($_SESSION['insumos_ing_basicos']['Observaciones']) OR $_SESSION['insumos_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['insumos_ing_basicos']['idSistema']) OR $_SESSION['insumos_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['insumos_ing_basicos']['idUsuario']) OR $_SESSION['insumos_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['insumos_ing_basicos']['Creacion_fecha']) OR $_SESSION['insumos_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['insumos_ing_basicos']['idTipo']) OR $_SESSION['insumos_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['insumos_ing_basicos']['idUsoIVA']) OR $_SESSION['insumos_ing_basicos']['idUsoIVA']=='' ){             $error['idUsoIVA']         = 'error/No ha seleccionado la exencion de IVA';}
 				//compruebo que sea una factura y que tenga fecha de pago
 				if(isset($_SESSION['insumos_ing_basicos']['idDocumentos']) && $_SESSION['insumos_ing_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['insumos_ing_basicos']['Pago_fecha']) or $_SESSION['insumos_ing_basicos']['Pago_fecha']=='' or $_SESSION['insumos_ing_basicos']['Pago_fecha']=='0000-00-00' ){     
+					if(!isset($_SESSION['insumos_ing_basicos']['Pago_fecha']) OR $_SESSION['insumos_ing_basicos']['Pago_fecha']=='' OR $_SESSION['insumos_ing_basicos']['Pago_fecha']=='0000-00-00' ){     
 						$error['Pago_fecha']  = 'error/No ha ingresado la fecha de vencimiento de la factura';
 					}
 				}
-				if(!isset($_SESSION['insumos_ing_impuestos']) ){     
-					$error['impuesto']  = 'error/No ha seleccionado un impuesto';
+				//se verifica el uso del iva
+				if(isset($_SESSION['insumos_ing_basicos']['idUsoIVA'])&&$_SESSION['insumos_ing_basicos']['idUsoIVA']==2){
+					if(!isset($_SESSION['insumos_ing_impuestos']) ){     
+						$error['impuesto']  = 'error/No ha seleccionado un impuesto';
+					}
 				}
+				
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de bodega';
 			}
@@ -1374,34 +1058,37 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				$a .= ",'1'";
 				$a .= ",''";
-				if(isset($_SESSION['insumos_ing_basicos']['fecha_auto']) && $_SESSION['insumos_ing_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['insumos_ing_basicos']['fecha_auto']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['valor_neto_fact'])&&$_SESSION['insumos_ing_basicos']['valor_neto_fact']!=''){    $a .= ",'".$_SESSION['insumos_ing_basicos']['valor_neto_fact']."'";     }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['valor_neto_imp'])&&$_SESSION['insumos_ing_basicos']['valor_neto_imp']!=''){      $a .= ",'".$_SESSION['insumos_ing_basicos']['valor_neto_imp']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['valor_total_fact'])&&$_SESSION['insumos_ing_basicos']['valor_total_fact']!=''){  $a .= ",'".$_SESSION['insumos_ing_basicos']['valor_total_fact']."'";    }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_impuestos'][1]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_impuestos'][1]['valor']."'";          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_impuestos'][2]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_impuestos'][2]['valor']."'";          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_impuestos'][3]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_impuestos'][3]['valor']."'";          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_impuestos'][4]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_impuestos'][4]['valor']."'";          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_impuestos'][5]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_impuestos'][5]['valor']."'";          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_impuestos'][6]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_impuestos'][6]['valor']."'";          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_impuestos'][7]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_impuestos'][7]['valor']."'";          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_impuestos'][8]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_impuestos'][8]['valor']."'";          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_impuestos'][9]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_impuestos'][9]['valor']."'";          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_impuestos'][10]['valor']!=''){            $a .= ",'".$_SESSION['insumos_ing_impuestos'][10]['valor']."'";         }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idOcompra']) && $_SESSION['insumos_ing_basicos']['idOcompra'] != ''){            $a .= ",'".$_SESSION['insumos_ing_basicos']['idOcompra']."'" ;          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_basicos']['idCentroCosto'] != ''){    $a .= ",'".$_SESSION['insumos_ing_basicos']['idCentroCosto']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_1']) && $_SESSION['insumos_ing_basicos']['idLevel_1'] != ''){            $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_1']."'" ;          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_2']) && $_SESSION['insumos_ing_basicos']['idLevel_2'] != ''){            $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_2']."'" ;          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_3']) && $_SESSION['insumos_ing_basicos']['idLevel_3'] != ''){            $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_3']."'" ;          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_4']) && $_SESSION['insumos_ing_basicos']['idLevel_4'] != ''){            $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_4']."'" ;          }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_5']) && $_SESSION['insumos_ing_basicos']['idLevel_5'] != ''){            $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_5']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['fecha_auto']) && $_SESSION['insumos_ing_basicos']['fecha_auto'] != ''){               $a .= ",'".$_SESSION['insumos_ing_basicos']['fecha_auto']."'" ;         }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['valor_neto_fact'])&&$_SESSION['insumos_ing_basicos']['valor_neto_fact']!=''){         $a .= ",'".$_SESSION['insumos_ing_basicos']['valor_neto_fact']."'";     }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['valor_neto_imp'])&&$_SESSION['insumos_ing_basicos']['valor_neto_imp']!=''){           $a .= ",'".$_SESSION['insumos_ing_basicos']['valor_neto_imp']."'";      }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['valor_total_fact'])&&$_SESSION['insumos_ing_basicos']['valor_total_fact']!=''){       $a .= ",'".$_SESSION['insumos_ing_basicos']['valor_total_fact']."'";    }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_impuestos'][1]['valor']!=''){                   $a .= ",'".$_SESSION['insumos_ing_impuestos'][1]['valor']."'";          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_impuestos'][2]['valor']!=''){                   $a .= ",'".$_SESSION['insumos_ing_impuestos'][2]['valor']."'";          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_impuestos'][3]['valor']!=''){                   $a .= ",'".$_SESSION['insumos_ing_impuestos'][3]['valor']."'";          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_impuestos'][4]['valor']!=''){                   $a .= ",'".$_SESSION['insumos_ing_impuestos'][4]['valor']."'";          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_impuestos'][5]['valor']!=''){                   $a .= ",'".$_SESSION['insumos_ing_impuestos'][5]['valor']."'";          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_impuestos'][6]['valor']!=''){                   $a .= ",'".$_SESSION['insumos_ing_impuestos'][6]['valor']."'";          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_impuestos'][7]['valor']!=''){                   $a .= ",'".$_SESSION['insumos_ing_impuestos'][7]['valor']."'";          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_impuestos'][8]['valor']!=''){                   $a .= ",'".$_SESSION['insumos_ing_impuestos'][8]['valor']."'";          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_impuestos'][9]['valor']!=''){                   $a .= ",'".$_SESSION['insumos_ing_impuestos'][9]['valor']."'";          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_impuestos'][10]['valor']!=''){                 $a .= ",'".$_SESSION['insumos_ing_impuestos'][10]['valor']."'";         }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idOcompra']) && $_SESSION['insumos_ing_basicos']['idOcompra'] != ''){                 $a .= ",'".$_SESSION['insumos_ing_basicos']['idOcompra']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_basicos']['idCentroCosto'] != ''){         $a .= ",'".$_SESSION['insumos_ing_basicos']['idCentroCosto']."'" ;      }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_1']) && $_SESSION['insumos_ing_basicos']['idLevel_1'] != ''){                 $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_1']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_2']) && $_SESSION['insumos_ing_basicos']['idLevel_2'] != ''){                 $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_2']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_3']) && $_SESSION['insumos_ing_basicos']['idLevel_3'] != ''){                 $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_3']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_4']) && $_SESSION['insumos_ing_basicos']['idLevel_4'] != ''){                 $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_4']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_5']) && $_SESSION['insumos_ing_basicos']['idLevel_5'] != ''){                 $a .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_5']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['fecha_fact_desde']) && $_SESSION['insumos_ing_basicos']['fecha_fact_desde'] != ''){   $a .= ",'".$_SESSION['insumos_ing_basicos']['fecha_fact_desde']."'" ;   }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['fecha_fact_hasta']) && $_SESSION['insumos_ing_basicos']['fecha_fact_hasta'] != ''){   $a .= ",'".$_SESSION['insumos_ing_basicos']['fecha_fact_hasta']."'" ;   }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_basicos']['idUsoIVA'] != ''){                   $a .= ",'".$_SESSION['insumos_ing_basicos']['idUsoIVA']."'" ;           }else{$a .= ",''";}
 					
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `bodegas_insumos_facturacion` (idDocumentos,N_Doc, idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, 
 				Creacion_Semana, Creacion_mes, Creacion_ano, idProveedor, Pago_fecha, Pago_dia, Pago_Semana, Pago_mes, Pago_ano, idEstado, DocRel, fecha_auto,
 				ValorNeto, ValorNetoImp,ValorTotal,Impuesto_01,Impuesto_02,Impuesto_03,Impuesto_04,Impuesto_05,Impuesto_06,Impuesto_07,Impuesto_08,Impuesto_09,
-				Impuesto_10, idOcompra, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5) 
-				VALUES ({$a} )";
+				Impuesto_10, idOcompra, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, fecha_fact_desde, fecha_fact_hasta, idUsoIVA) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -1450,7 +1137,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, 
 							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing, Valor, ValorTotal, idProveedor, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1475,7 +1162,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							}
 					
 							// inserto los datos de registro en la db
-							$query  = "UPDATE `insumos_listado` SET ".$a." WHERE idProducto = '{$producto['idProducto']}'";
+							$query  = "UPDATE `insumos_listado` SET ".$a." WHERE idProducto = '".$producto['idProducto']."'";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1499,7 +1186,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								$a .= ",cant_ingresada='".$nueva_cant."'" ;
 								
 								// inserto los datos de registro en la db
-								$query  = "UPDATE `ocompra_listado_existencias_insumos` SET ".$a." WHERE idExistencia = '{$producto['idExistencia']}'";
+								$query  = "UPDATE `ocompra_listado_existencias_insumos` SET ".$a." WHERE idExistencia = '".$producto['idExistencia']."'";
 								//Consulta
 								$resultado = mysqli_query ($dbConn, $query);
 								//Si ejecuto correctamente la consulta
@@ -1543,7 +1230,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_descuentos` (idFacturacion, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1584,7 +1271,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_archivos` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -1611,7 +1298,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								$a  = "DocRel='".$ultimo_id."'" ;    
 								$a .= ",idEstado='2'";
 
-								$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacion = '{$guias['idGuia']}'";
+								$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacion = '".$guias['idGuia']."'";
 								//Consulta
 								$resultado = mysqli_query ($dbConn, $query);
 								//Si ejecuto correctamente la consulta
@@ -1643,7 +1330,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -1717,35 +1404,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_egr_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_egr_basicos']['idBodega'] = $idBodega;}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_egr_basicos']['Observaciones'] = $Observaciones;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_egr_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_egr_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_egr_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_egr_basicos']['idTipo'] = $idTipo;}
-				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['insumos_egr_basicos']['idTrabajador'] = $idTrabajador;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_egr_basicos']['fecha_auto'] = $fecha_auto;}
+				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_egr_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['insumos_egr_basicos']['idBodega']       = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_egr_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['insumos_egr_basicos']['Observaciones']  = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_egr_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['insumos_egr_basicos']['idSistema']      = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_egr_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['insumos_egr_basicos']['idUsuario']      = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_egr_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['insumos_egr_basicos']['Creacion_fecha'] = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_egr_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['insumos_egr_basicos']['idTipo']         = '';}
+				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['insumos_egr_basicos']['idTrabajador']    = $idTrabajador;    }else{$_SESSION['insumos_egr_basicos']['idTrabajador']   = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_egr_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['insumos_egr_basicos']['fecha_auto']     = '';}
 				
 				/********************************************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -1754,23 +1425,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['Bodega'] = $rowBodega['Nombre'];
 				}else{
@@ -1779,23 +1434,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 				}else{
@@ -1871,34 +1510,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_egr_descuentos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_egr_basicos']['idBodega'] = $idBodega;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_egr_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_egr_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_egr_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_egr_basicos']['idTipo'] = $idTipo;}
-				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['insumos_egr_basicos']['idTrabajador'] = $idTrabajador;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_egr_basicos']['fecha_auto'] = $fecha_auto;}
+				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_egr_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['insumos_egr_basicos']['idBodega']       = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_egr_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['insumos_egr_basicos']['Observaciones']  = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_egr_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['insumos_egr_basicos']['idSistema']      = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_egr_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['insumos_egr_basicos']['idUsuario']      = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_egr_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['insumos_egr_basicos']['Creacion_fecha'] = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_egr_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['insumos_egr_basicos']['idTipo']         = '';}
+				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['insumos_egr_basicos']['idTrabajador']    = $idTrabajador;    }else{$_SESSION['insumos_egr_basicos']['idTrabajador']   = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_egr_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['insumos_egr_basicos']['fecha_auto']     = '';}
 				
 				/********************************************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -1907,23 +1531,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['Bodega'] = $rowBodega['Nombre'];
 				}else{
@@ -1932,23 +1540,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTrabajador = mysqli_fetch_assoc ($resultado);
+					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 				}else{
@@ -1977,23 +1569,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_egr_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -2001,23 +1577,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_basicos']['idLevel_1']    = $idLevel_1;
@@ -2025,23 +1585,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_basicos']['idLevel_2']    = $idLevel_2;
@@ -2049,23 +1593,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_basicos']['idLevel_3']    = $idLevel_3;
@@ -2073,23 +1601,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_basicos']['idLevel_4']    = $idLevel_4;
@@ -2097,23 +1609,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_basicos']['idLevel_5']    = $idLevel_5;
@@ -2150,19 +1646,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				//Se verifica si la existencia alcanza
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$query = "SELECT 
-					insumos_listado.ValorIngreso,, 
+					$SIS_query = '
+					insumos_listado.ValorIngreso,
 					insumos_listado.Nombre AS InsumoNombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso
-					FROM `bodegas_insumos_facturacion_existencias`
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
+					$SIS_join = '
 					LEFT JOIN `insumos_listado`        ON insumos_listado.idProducto    = bodegas_insumos_facturacion_existencias.idProducto
-					LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml   = insumos_listado.idUml 
-					WHERE bodegas_insumos_facturacion_existencias.idProducto = ".$idProducto[$j1]." 
-					AND bodegas_insumos_facturacion_existencias.idBodega=".$_SESSION['insumos_egr_basicos']['idBodega'];
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
+					LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml   = insumos_listado.idUml ';
+					$SIS_where = 'bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_egr_basicos']['idBodega'];
+					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//Sumo los egresos
 					$Total_egresos = $rowResultado['egreso'] + $Number[$j1];
 					//Verifico si los egresos son inferiores a los ingresos
@@ -2213,19 +1709,19 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen los totales de los productos
-			$query = "SELECT 
+			$SIS_query = '
 			SUM(Cantidad_ing) AS ingreso, 
 			SUM(Cantidad_eg) AS egreso, 
 			insumos_listado.Nombre AS InsumoNombre,
-			sistema_productos_uml.Nombre AS Unimed
-			FROM `bodegas_insumos_facturacion_existencias`
+			sistema_productos_uml.Nombre AS Unimed';
+			$SIS_join = '
 			LEFT JOIN `insumos_listado`        ON insumos_listado.idProducto    = bodegas_insumos_facturacion_existencias.idProducto
-			LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml   = insumos_listado.idUml 
-			WHERE idProducto = {$idProducto} AND idBodega={$_SESSION['insumos_egr_basicos']['idBodega']} ";
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
+			LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml   = insumos_listado.idUml';
+			$SIS_where = 'idProducto = '.$idProducto.' AND idBodega='.$_SESSION['insumos_egr_basicos']['idBodega'];
+			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 			//Sumo los egresos
-			$Total_egresos = $rowResultado['egreso'] + $Number;
+			$Total_egresos     = $rowResultado['egreso'] + $Number;
 			$Total_existencias = $rowResultado['ingreso'] - $rowResultado['egreso'];
 			//Se guardan datos		
 			$Ins_Nombre    = $rowResultado['InsumoNombre'];
@@ -2273,39 +1769,6 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;	
 /*******************************************************************************************************************/		
-		case 'add_obs_egr':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_egr_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_egr':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_egr_temporal'] = $_SESSION['insumos_egr_basicos']['Observaciones'];
-			$_SESSION['insumos_egr_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_egr':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -2327,7 +1790,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -2479,20 +1942,20 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_egr_basicos'])){
-				if(!isset($_SESSION['insumos_egr_basicos']['idBodega']) or $_SESSION['insumos_egr_basicos']['idBodega']=='' ){             $error['idBodega']         = 'error/No ha seleccionado la bodega';}
-				if(!isset($_SESSION['insumos_egr_basicos']['Observaciones']) or $_SESSION['insumos_egr_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['insumos_egr_basicos']['idSistema']) or $_SESSION['insumos_egr_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['insumos_egr_basicos']['idUsuario']) or $_SESSION['insumos_egr_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['insumos_egr_basicos']['Creacion_fecha']) or $_SESSION['insumos_egr_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['insumos_egr_basicos']['idTipo']) or $_SESSION['insumos_egr_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['insumos_egr_basicos']['idTrabajador']) or $_SESSION['insumos_egr_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado un trabajador';}
+				if(!isset($_SESSION['insumos_egr_basicos']['idBodega']) OR $_SESSION['insumos_egr_basicos']['idBodega']=='' ){             $error['idBodega']         = 'error/No ha seleccionado la bodega';}
+				if(!isset($_SESSION['insumos_egr_basicos']['Observaciones']) OR $_SESSION['insumos_egr_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['insumos_egr_basicos']['idSistema']) OR $_SESSION['insumos_egr_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['insumos_egr_basicos']['idUsuario']) OR $_SESSION['insumos_egr_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['insumos_egr_basicos']['Creacion_fecha']) OR $_SESSION['insumos_egr_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['insumos_egr_basicos']['idTipo']) OR $_SESSION['insumos_egr_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['insumos_egr_basicos']['idTrabajador']) OR $_SESSION['insumos_egr_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado un trabajador';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al egreso de bodega';
 			}
 			//productos
 			if (isset($_SESSION['insumos_egr_productos'])){
 				foreach ($_SESSION['insumos_egr_productos'] as $key => $producto){
-					if(!isset($producto['idProducto']) or $producto['idProducto'] == ''){  $error['idProducto']   = 'error/No ha ingresado un insumo para egresar a bodega';}
+					if(!isset($producto['idProducto']) OR $producto['idProducto'] == ''){  $error['idProducto']   = 'error/No ha ingresado un insumo para egresar a bodega';}
 					$n_data1++;
 				}
 			}else{
@@ -2537,7 +2000,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `bodegas_insumos_facturacion` (idBodegaOrigen, Observaciones, 
 				idSistema, idUsuario, idTipo, idTrabajador, Creacion_fecha, Creacion_Semana, Creacion_mes, 
 				Creacion_ano, fecha_auto, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -2587,7 +2050,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, 
 							Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg,idTrabajador, Valor, ValorTotal, idCliente, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2611,7 +2074,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							}
 					
 							// inserto los datos de registro en la db
-							$query  = "UPDATE `insumos_listado` SET ".$a." WHERE idProducto = '{$producto['idProducto']}'";
+							$query  = "UPDATE `insumos_listado` SET ".$a." WHERE idProducto = '".$producto['idProducto']."'";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2653,7 +2116,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_descuentos` (idFacturacion, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2694,7 +2157,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_archivos` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -2726,7 +2189,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -2781,7 +2244,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idCliente)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -2799,39 +2262,22 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_traspaso_temporal']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspaso_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspaso_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_traspaso_basicos']['Observaciones'] = $Observaciones;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspaso_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspaso_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspaso_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspaso_basicos']['idTipo'] = $idTipo;}
-				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen'] = $idBodegaOrigen;}
-				if(isset($idBodegaDestino) && $idBodegaDestino != ''){     $_SESSION['insumos_traspaso_basicos']['idBodegaDestino'] = $idBodegaDestino;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspaso_basicos']['idCliente'] = $idCliente;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspaso_basicos']['fecha_auto'] = $fecha_auto;}
-				
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspaso_basicos']['idDocumentos']    = $idDocumentos;     }else{$_SESSION['insumos_traspaso_basicos']['idDocumentos']     = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspaso_basicos']['N_Doc']           = $N_Doc;            }else{$_SESSION['insumos_traspaso_basicos']['N_Doc']            = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_traspaso_basicos']['Observaciones']   = $Observaciones;    }else{$_SESSION['insumos_traspaso_basicos']['Observaciones']    = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspaso_basicos']['idSistema']       = $idSistema;        }else{$_SESSION['insumos_traspaso_basicos']['idSistema']        = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspaso_basicos']['idUsuario']       = $idUsuario;        }else{$_SESSION['insumos_traspaso_basicos']['idUsuario']        = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspaso_basicos']['Creacion_fecha']  = $Creacion_fecha;   }else{$_SESSION['insumos_traspaso_basicos']['Creacion_fecha']   = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspaso_basicos']['idTipo']          = $idTipo;           }else{$_SESSION['insumos_traspaso_basicos']['idTipo']           = '';}
+				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']  = $idBodegaOrigen;   }else{$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']   = '';}
+				if(isset($idBodegaDestino) && $idBodegaDestino != ''){     $_SESSION['insumos_traspaso_basicos']['idBodegaDestino'] = $idBodegaDestino;  }else{$_SESSION['insumos_traspaso_basicos']['idBodegaDestino']  = '';}
+				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspaso_basicos']['idCliente']       = $idCliente;        }else{$_SESSION['insumos_traspaso_basicos']['idCliente']        = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspaso_basicos']['fecha_auto']      = $fecha_auto;       }else{$_SESSION['insumos_traspaso_basicos']['fecha_auto']       = '';}
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -2840,23 +2286,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaOrigen;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaOrigen = mysqli_fetch_assoc ($resultado);
+					$rowBodegaOrigen = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaOrigen.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['BodegaOrigen'] = $rowBodegaOrigen['Nombre'];
 				}else{
@@ -2865,23 +2296,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaDestino) && $idBodegaDestino != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaDestino = mysqli_fetch_assoc ($resultado);
+					$rowBodegaDestino = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['BodegaDestino'] = $rowBodegaDestino['Nombre'];
 				}else{
@@ -2944,37 +2359,22 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_traspaso_productos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspaso_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspaso_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspaso_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspaso_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspaso_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspaso_basicos']['idTipo'] = $idTipo;}
-				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen'] = $idBodegaOrigen;}
-				if(isset($idBodegaDestino) && $idBodegaDestino != ''){     $_SESSION['insumos_traspaso_basicos']['idBodegaDestino'] = $idBodegaDestino;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspaso_basicos']['idCliente'] = $idCliente;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspaso_basicos']['fecha_auto'] = $fecha_auto;}
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspaso_basicos']['idDocumentos']    = $idDocumentos;     }else{$_SESSION['insumos_traspaso_basicos']['idDocumentos']     = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspaso_basicos']['N_Doc']           = $N_Doc;            }else{$_SESSION['insumos_traspaso_basicos']['N_Doc']            = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_traspaso_basicos']['Observaciones']   = $Observaciones;    }else{$_SESSION['insumos_traspaso_basicos']['Observaciones']    = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspaso_basicos']['idSistema']       = $idSistema;        }else{$_SESSION['insumos_traspaso_basicos']['idSistema']        = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspaso_basicos']['idUsuario']       = $idUsuario;        }else{$_SESSION['insumos_traspaso_basicos']['idUsuario']        = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspaso_basicos']['Creacion_fecha']  = $Creacion_fecha;   }else{$_SESSION['insumos_traspaso_basicos']['Creacion_fecha']   = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspaso_basicos']['idTipo']          = $idTipo;           }else{$_SESSION['insumos_traspaso_basicos']['idTipo']           = '';}
+				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']  = $idBodegaOrigen;   }else{$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']   = '';}
+				if(isset($idBodegaDestino) && $idBodegaDestino != ''){     $_SESSION['insumos_traspaso_basicos']['idBodegaDestino'] = $idBodegaDestino;  }else{$_SESSION['insumos_traspaso_basicos']['idBodegaDestino']  = '';}
+				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspaso_basicos']['idCliente']       = $idCliente;        }else{$_SESSION['insumos_traspaso_basicos']['idCliente']        = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspaso_basicos']['fecha_auto']      = $fecha_auto;       }else{$_SESSION['insumos_traspaso_basicos']['fecha_auto']       = '';}
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -2983,23 +2383,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaOrigen;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaOrigen = mysqli_fetch_assoc ($resultado);
+					$rowBodegaOrigen = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaOrigen.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['BodegaOrigen'] = $rowBodegaOrigen['Nombre'];
 				}else{
@@ -3008,23 +2393,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaDestino) && $idBodegaDestino != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaDestino = mysqli_fetch_assoc ($resultado);
+					$rowBodegaDestino = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['BodegaDestino'] = $rowBodegaDestino['Nombre'];
 				}else{
@@ -3054,23 +2423,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_traspaso_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -3078,23 +2431,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspaso_basicos']['idLevel_1']    = $idLevel_1;
@@ -3102,23 +2439,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspaso_basicos']['idLevel_2']    = $idLevel_2;
@@ -3126,23 +2447,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspaso_basicos']['idLevel_3']    = $idLevel_3;
@@ -3150,23 +2455,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspaso_basicos']['idLevel_4']    = $idLevel_4;
@@ -3174,23 +2463,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspaso_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspaso_basicos']['idLevel_5']    = $idLevel_5;
@@ -3227,19 +2500,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				//Se verifica si la existencia alcanza
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$query = "SELECT 
+					$SIS_query = '
 					insumos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					insumos_listado.ValorIngreso,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso
-					FROM `bodegas_insumos_facturacion_existencias`
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
+					$SIS_join = '
 					LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
-					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml
-					WHERE bodegas_insumos_facturacion_existencias.idProducto = ".$idProducto[$j1]." 
-					AND bodegas_insumos_facturacion_existencias.idBodega=".$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen'];
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
+					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
+					$SIS_where = '
+					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen'];
+					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
 					$Total_egresos = $rowResultado['egreso'] + $Number[$j1];
 					//Verifico si los egresos son inferiores a los ingresos
@@ -3289,18 +2562,18 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen los totales de los productos
-			$query = "SELECT 
+			$SIS_query = '
 			insumos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
 			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
-			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso
-			FROM `bodegas_insumos_facturacion_existencias`
+			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
+			$SIS_join = '
 			LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
-			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml
-			WHERE bodegas_insumos_facturacion_existencias.idProducto = ".$idProducto."
-			AND bodegas_insumos_facturacion_existencias.idBodega=".$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen'];
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
+			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
+			$SIS_where = '
+			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.' 
+			AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen'];
+			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
 			$Total_egresos     = $rowResultado['egreso'] + $Number;
 			$Total_existencias = $rowResultado['ingreso'] - $rowResultado['egreso'];
@@ -3348,39 +2621,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			die;
 
 		break;	
-/*******************************************************************************************************************/		
-		case 'add_obs_traspaso':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
 
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_traspaso_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_traspaso':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_traspaso_temporal'] = $_SESSION['insumos_traspaso_basicos']['Observaciones'];
-			$_SESSION['insumos_traspaso_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'traspaso_bodega':
 			
@@ -3393,20 +2634,20 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_traspaso_basicos'])){
-				if(!isset($_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']) or $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']=='' ){    $error['idBodegaOrigen']   = 'error/No ha seleccionado la bodega de origen';}
-				if(!isset($_SESSION['insumos_traspaso_basicos']['idBodegaDestino']) or $_SESSION['insumos_traspaso_basicos']['idBodegaDestino']=='' ){  $error['idBodegaDestino']  = 'error/No ha seleccionado la bodega de destino';}
-				if(!isset($_SESSION['insumos_traspaso_basicos']['Observaciones']) or $_SESSION['insumos_traspaso_basicos']['Observaciones']=='' ){      $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['insumos_traspaso_basicos']['idSistema']) or $_SESSION['insumos_traspaso_basicos']['idSistema']=='' ){              $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['insumos_traspaso_basicos']['idUsuario']) or $_SESSION['insumos_traspaso_basicos']['idUsuario']=='' ){              $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['insumos_traspaso_basicos']['Creacion_fecha']) or $_SESSION['insumos_traspaso_basicos']['Creacion_fecha']=='' ){    $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['insumos_traspaso_basicos']['idTipo']) or $_SESSION['insumos_traspaso_basicos']['idTipo']=='' ){                    $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']) OR $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']=='' ){    $error['idBodegaOrigen']   = 'error/No ha seleccionado la bodega de origen';}
+				if(!isset($_SESSION['insumos_traspaso_basicos']['idBodegaDestino']) OR $_SESSION['insumos_traspaso_basicos']['idBodegaDestino']=='' ){  $error['idBodegaDestino']  = 'error/No ha seleccionado la bodega de destino';}
+				if(!isset($_SESSION['insumos_traspaso_basicos']['Observaciones']) OR $_SESSION['insumos_traspaso_basicos']['Observaciones']=='' ){      $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['insumos_traspaso_basicos']['idSistema']) OR $_SESSION['insumos_traspaso_basicos']['idSistema']=='' ){              $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['insumos_traspaso_basicos']['idUsuario']) OR $_SESSION['insumos_traspaso_basicos']['idUsuario']=='' ){              $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['insumos_traspaso_basicos']['Creacion_fecha']) OR $_SESSION['insumos_traspaso_basicos']['Creacion_fecha']=='' ){    $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['insumos_traspaso_basicos']['idTipo']) OR $_SESSION['insumos_traspaso_basicos']['idTipo']=='' ){                    $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al traspaso de bodega';
 			}
 			//productos
 			if (isset($_SESSION['insumos_traspaso_productos'])){
 				foreach ($_SESSION['insumos_traspaso_productos'] as $key => $producto){
-					if(!isset($producto['idProducto']) or $producto['idProducto'] == ''){  $error['idProducto']   = 'error/No ha ingresado un insumo para traspaso a bodega';}
+					if(!isset($producto['idProducto']) OR $producto['idProducto'] == ''){  $error['idProducto']   = 'error/No ha ingresado un insumo para traspaso a bodega';}
 					$n_data1++;
 				}
 			}else{
@@ -3453,7 +2694,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `bodegas_insumos_facturacion` (idDocumentos,N_Doc, idBodegaOrigen, idBodegaDestino, 
 				Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, 
 				fecha_auto, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -3503,7 +2744,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, 
 							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
 							idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -3547,7 +2788,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, 
 							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
 							idTipo, idProducto, Cantidad_ing, Valor, ValorTotal, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -3579,7 +2820,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -3637,7 +2878,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idCliente)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -3655,39 +2896,23 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_traspasoempresa_temporal']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspasoempresa_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspasoempresa_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_traspasoempresa_basicos']['Observaciones'] = $Observaciones;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspasoempresa_basicos']['idTipo'] = $idTipo;}
-				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen'] = $idBodegaOrigen;}
-				if(isset($idBodegaDestino) && $idBodegaDestino != ''){     $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino'] = $idBodegaDestino;}
-				if(isset($idSistemaDestino) && $idSistemaDestino != ''){   $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino'] = $idSistemaDestino;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idCliente'] = $idCliente;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto'] = $fecha_auto;}
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']     = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']            = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_traspasoempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_traspasoempresa_basicos']['Observaciones']    = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idSistema']        = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']        = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']   = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasoempresa_basicos']['idTipo']           = '';}
+				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']   = '';}
+				if(isset($idBodegaDestino) && $idBodegaDestino != ''){     $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']   = $idBodegaDestino;   }else{$_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']  = '';}
+				if(isset($idSistemaDestino) && $idSistemaDestino != ''){   $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino'] = '';}
+				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idCliente']        = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']       = '';}
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -3696,23 +2921,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaOrigen;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaOrigen = mysqli_fetch_assoc ($resultado);
+					$rowBodegaOrigen = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaOrigen.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['BodegaOrigen'] = $rowBodegaOrigen['Nombre'];
 				}else{
@@ -3721,23 +2931,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaDestino) && $idBodegaDestino != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaDestino = mysqli_fetch_assoc ($resultado);
+					$rowBodegaDestino = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['BodegaDestino'] = $rowBodegaDestino['Nombre'];
 				}else{
@@ -3746,23 +2940,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idSistemaDestino) && $idSistemaDestino != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_sistemas`
-					WHERE idSistema = ".$idSistemaDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSistemaDestino = mysqli_fetch_assoc ($resultado);
+					$rowSistemaDestino = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema = "'.$idSistemaDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['SistemaDestino'] = $rowSistemaDestino['Nombre'];
 				}else{
@@ -3824,38 +3003,23 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_traspasoempresa_productos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspasoempresa_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspasoempresa_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspasoempresa_basicos']['idTipo'] = $idTipo;}
-				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen'] = $idBodegaOrigen;}
-				if(isset($idBodegaDestino) && $idBodegaDestino != ''){     $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino'] = $idBodegaDestino;}
-				if(isset($idSistemaDestino) && $idSistemaDestino != ''){   $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino'] = $idSistemaDestino;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idCliente'] = $idCliente;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto'] = $fecha_auto;}
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']     = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']            = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_traspasoempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_traspasoempresa_basicos']['Observaciones']    = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idSistema']        = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']        = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']   = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasoempresa_basicos']['idTipo']           = '';}
+				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']   = '';}
+				if(isset($idBodegaDestino) && $idBodegaDestino != ''){     $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']   = $idBodegaDestino;   }else{$_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']  = '';}
+				if(isset($idSistemaDestino) && $idSistemaDestino != ''){   $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino'] = '';}
+				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspasoempresa_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idCliente']        = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']       = '';}
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -3864,23 +3028,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaOrigen;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaOrigen = mysqli_fetch_assoc ($resultado);
+					$rowBodegaOrigen = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaOrigen.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['BodegaOrigen'] = $rowBodegaOrigen['Nombre'];
 				}else{
@@ -3889,23 +3038,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaDestino) && $idBodegaDestino != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaDestino = mysqli_fetch_assoc ($resultado);
+					$rowBodegaDestino = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['BodegaDestino'] = $rowBodegaDestino['Nombre'];
 				}else{
@@ -3914,23 +3047,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idSistemaDestino) && $idSistemaDestino != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_sistemas`
-					WHERE idSistema = ".$idSistemaDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSistemaDestino = mysqli_fetch_assoc ($resultado);
+					$rowSistemaDestino = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema = "'.$idSistemaDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['SistemaDestino'] = $rowSistemaDestino['Nombre'];
 				}else{
@@ -3960,23 +3078,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_traspasoempresa_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -3984,23 +3086,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasoempresa_basicos']['idLevel_1']    = $idLevel_1;
@@ -4008,23 +3094,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasoempresa_basicos']['idLevel_2']    = $idLevel_2;
@@ -4032,23 +3102,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasoempresa_basicos']['idLevel_3']    = $idLevel_3;
@@ -4056,23 +3110,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasoempresa_basicos']['idLevel_4']    = $idLevel_4;
@@ -4080,23 +3118,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasoempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasoempresa_basicos']['idLevel_5']    = $idLevel_5;
@@ -4133,19 +3155,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				//Se verifica si la existencia alcanza
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$query = "SELECT 
+					$SIS_query = '
 					insumos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					insumos_listado.ValorIngreso,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso
-					FROM `bodegas_insumos_facturacion_existencias`
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
+					$SIS_join = '
 					LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
-					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml
-					WHERE bodegas_insumos_facturacion_existencias.idProducto = ".$idProducto[$j1]." 
-					AND bodegas_insumos_facturacion_existencias.idBodega=".$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen'];
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
+					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
+					$SIS_where = '
+					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen'];
+					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
 					$Total_egresos = $rowResultado['egreso'] + $Number[$j1];
 					//Verifico si los egresos son inferiores a los ingresos
@@ -4194,18 +3216,18 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen los totales de los productos
-			$query = "SELECT 
+			$SIS_query = '
 			insumos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
 			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
-			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso
-			FROM `bodegas_insumos_facturacion_existencias`
+			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
+			$SIS_join = '
 			LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
-			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml
-			WHERE bodegas_insumos_facturacion_existencias.idProducto = ".$idProducto." 
-			AND bodegas_insumos_facturacion_existencias.idBodega=".$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen'];
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
+			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
+			$SIS_where = '
+			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.' 
+			AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen'];
+			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
 			$Total_egresos     = $rowResultado['egreso'] + $Number;
 			$Total_existencias = $rowResultado['ingreso'] - $rowResultado['egreso'];
@@ -4253,39 +3275,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			die;
 
 		break;	
-/*******************************************************************************************************************/		
-		case 'add_obs_traspasoempresa':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
 
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_traspasoempresa_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_traspasoempresa':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_traspasoempresa_temporal'] = $_SESSION['insumos_traspasoempresa_basicos']['Observaciones'];
-			$_SESSION['insumos_traspasoempresa_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'traspaso_otra_empresa':
 	
@@ -4298,21 +3288,21 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_traspasoempresa_basicos'])){
-				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']) or $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']=='' ){      $error['idBodegaOrigen']    = 'error/No ha seleccionado la bodega de origen';}
-				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']) or $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']=='' ){    $error['idBodegaDestino']   = 'error/No ha seleccionado la bodega de destino';}
-				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']) or $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']=='' ){  $error['idSistemaDestino']  = 'error/No ha seleccionado el sistema de destino';}
-				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['Observaciones']) or $_SESSION['insumos_traspasoempresa_basicos']['Observaciones']=='' ){        $error['Observaciones']     = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idSistema']) or $_SESSION['insumos_traspasoempresa_basicos']['idSistema']=='' ){                $error['idSistema']         = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idUsuario']) or $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']=='' ){                $error['idUsuario']         = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']) or $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']=='' ){      $error['Creacion_fecha']    = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idTipo']) or $_SESSION['insumos_traspasoempresa_basicos']['idTipo']=='' ){                      $error['idTipo']            = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']) OR $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']=='' ){      $error['idBodegaOrigen']    = 'error/No ha seleccionado la bodega de origen';}
+				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']) OR $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']=='' ){    $error['idBodegaDestino']   = 'error/No ha seleccionado la bodega de destino';}
+				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']) OR $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']=='' ){  $error['idSistemaDestino']  = 'error/No ha seleccionado el sistema de destino';}
+				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['Observaciones']) OR $_SESSION['insumos_traspasoempresa_basicos']['Observaciones']=='' ){        $error['Observaciones']     = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idSistema']) OR $_SESSION['insumos_traspasoempresa_basicos']['idSistema']=='' ){                $error['idSistema']         = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idUsuario']) OR $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']=='' ){                $error['idUsuario']         = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']) OR $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']=='' ){      $error['Creacion_fecha']    = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['insumos_traspasoempresa_basicos']['idTipo']) OR $_SESSION['insumos_traspasoempresa_basicos']['idTipo']=='' ){                      $error['idTipo']            = 'error/No ha seleccionado el tipo';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al traspaso de bodega';
 			}
 			//productos
 			if (isset($_SESSION['insumos_traspasoempresa_productos'])){
 				foreach ($_SESSION['insumos_traspasoempresa_productos'] as $key => $producto){
-					if(!isset($producto['idProducto']) or $producto['idProducto'] == ''){  $error['idProducto']   = 'error/No ha ingresado un insumo para traspaso a bodega';}
+					if(!isset($producto['idProducto']) OR $producto['idProducto'] == ''){  $error['idProducto']   = 'error/No ha ingresado un insumo para traspaso a bodega';}
 					$n_data1++;
 				}
 			}else{
@@ -4360,7 +3350,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `bodegas_insumos_facturacion` (idDocumentos,N_Doc, idBodegaOrigen, idBodegaDestino, 
 				idSistemaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, 
 				Creacion_ano, fecha_auto, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -4410,7 +3400,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, 
 							idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, 
 							Cantidad_eg, Valor, ValorTotal, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -4454,7 +3444,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, 
 							idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, 
 							Cantidad_ing, Valor, ValorTotal, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -4474,23 +3464,13 @@ if( ! defined('XMBCXRXSKGC')) {
 					/*********************************************************************/
 					//Busco los usuarios que posean el permiso a la bodega
 					$Direccionbase = "bodegas_insumos_stock.php";
-					$Notificacion  = '<div class= "btn-group" ><a href= "view_mov_insumos.php?view='.$ultimo_id.'" title= "Ver Informacion" class= "btn btn-primary btn-sm tooltip"><i class= "fa fa-list"></i></a></div>';
-					$Notificacion .= 'Se ha realizado un traspaso de insumoa desde otra empresa';
+					$Notificacion  = '<div class="btn-group" ><a href="view_mov_insumos.php?view='.simpleEncode($ultimo_id, fecha_actual()).'" title= "Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class= "fa fa-list"></i></a></div>';
+					$Notificacion .= ' Se ha realizado un traspaso de insumos desde otra empresa';
 					$Estado = '1';
 					
 					$arrPermiso = array();
-					$query = "SELECT usuarios_permisos.idUsuario
-					FROM usuarios_permisos 
-					INNER JOIN core_permisos_listado    ON core_permisos_listado.idAdmpm     = usuarios_permisos.idAdmpm 
-					INNER JOIN usuarios_listado         ON usuarios_listado.idUsuario        = usuarios_permisos.idUsuario 
-					INNER JOIN usuarios_sistemas        ON usuarios_sistemas.idUsuario       = usuarios_permisos.idUsuario 
-					WHERE core_permisos_listado.Direccionbase = '".$Direccionbase."' 
-					AND usuarios_sistemas.idSistema = '{$_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']}'";
-					$resultado = mysqli_query($dbConn, $query);
-					while ( $row = mysqli_fetch_assoc ($resultado)) {
-					array_push( $arrPermiso,$row );
-					}
-
+					$arrPermiso = db_select_array (false, 'usuarios_permisos.idUsuario', 'usuarios_permisos', 'INNER JOIN core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm INNER JOIN usuarios_listado ON usuarios_listado.idUsuario = usuarios_permisos.idUsuario INNER JOIN usuarios_sistemas ON usuarios_sistemas.idUsuario = usuarios_permisos.idUsuario ', 'core_permisos_listado.Direccionbase = "'.$Direccionbase.'" AND usuarios_sistemas.idSistema = '.$_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino'], 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					/*********************************************************************/
 					//Inserto el mensaje de entrega de materiales
 					if(isset($arrPermiso)){	
@@ -4500,9 +3480,11 @@ if( ! defined('XMBCXRXSKGC')) {
 							if(isset($Notificacion) && $Notificacion != ''){                                                                                                         $a .= ",'".$Notificacion."'" ;                                         }else{$a .= ",''";}
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha'] != ''){       $a .= ",'".$_SESSION['insumos_egr_basicos']['Creacion_fecha']."'" ;    }else{$a .= ",''";}
 							if(isset($Estado) && $Estado != ''){                                                                                                                     $a .= ",'".$Estado."'" ;                                               }else{$a .= ",''";}
+							$a .= ",'".hora_actual()."'" ; 
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado) VALUES ({$a} )";
+							$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, Hora) 
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -4534,7 +3516,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -4594,38 +3576,22 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_traspasomanualempresa_temporal']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones'] = $Observaciones;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo'] = $idTipo;}
-				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'] = $idBodegaOrigen;}
-				if(isset($idSistemaDestino) && $idSistemaDestino != ''){   $_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino'] = $idSistemaDestino;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idCliente'] = $idCliente;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto'] = $fecha_auto;}
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']             = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']    = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = '';}
+				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']    = '';}
+				if(isset($idSistemaDestino) && $idSistemaDestino != ''){   $_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']  = '';}
+				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idCliente']         = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']        = '';}
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -4634,23 +3600,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaOrigen;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaOrigen = mysqli_fetch_assoc ($resultado);
+					$rowBodegaOrigen = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaOrigen.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['BodegaOrigen'] = $rowBodegaOrigen['Nombre'];
 				}else{
@@ -4659,23 +3610,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idSistemaDestino) && $idSistemaDestino != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_sistemas`
-					WHERE idSistema = ".$idSistemaDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSistemaDestino = mysqli_fetch_assoc ($resultado);
+					$rowSistemaDestino = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema = "'.$idSistemaDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['SistemaDestino'] = $rowSistemaDestino['Nombre'];
 				}else{
@@ -4729,37 +3665,22 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_traspasomanualempresa_productos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo'] = $idTipo;}
-				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'] = $idBodegaOrigen;}
-				if(isset($idSistemaDestino) && $idSistemaDestino != ''){   $_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino'] = $idSistemaDestino;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idCliente'] = $idCliente;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto'] = $fecha_auto;}
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']             = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']    = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = '';}
+				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){       $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']    = '';}
+				if(isset($idSistemaDestino) && $idSistemaDestino != ''){   $_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']  = '';}
+				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idCliente']         = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']        = '';}
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -4768,23 +3689,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodegaOrigen) && $idBodegaOrigen != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodegaOrigen;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodegaOrigen = mysqli_fetch_assoc ($resultado);
+					$rowBodegaOrigen = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodegaOrigen.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['BodegaOrigen'] = $rowBodegaOrigen['Nombre'];
 				}else{
@@ -4793,23 +3699,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idSistemaDestino) && $idSistemaDestino != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_sistemas`
-					WHERE idSistema = ".$idSistemaDestino;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowSistemaDestino = mysqli_fetch_assoc ($resultado);
+					$rowSistemaDestino = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema = "'.$idSistemaDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['SistemaDestino'] = $rowSistemaDestino['Nombre'];
 				}else{
@@ -4840,23 +3731,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_traspasomanualempresa_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -4864,23 +3739,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_1']    = $idLevel_1;
@@ -4888,23 +3747,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_2']    = $idLevel_2;
@@ -4912,23 +3755,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_3']    = $idLevel_3;
@@ -4936,23 +3763,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_4']    = $idLevel_4;
@@ -4960,23 +3771,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_traspasomanualempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_5']    = $idLevel_5;
@@ -5013,19 +3808,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				//Se verifica si la existencia alcanza
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$query = "SELECT 
+					$SIS_query = '
 					insumos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					insumos_listado.ValorIngreso,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso
-					FROM `bodegas_insumos_facturacion_existencias`
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
+					$SIS_join = '
 					LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
-					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml
-					WHERE bodegas_insumos_facturacion_existencias.idProducto = ".$idProducto[$j1]." 
-					AND bodegas_insumos_facturacion_existencias.idBodega=".$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'];
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
+					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
+					$SIS_where = '
+					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'];
+					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
 					$Total_egresos = $rowResultado['egreso'] + $Number[$j1];
 					//Verifico si los egresos son inferiores a los ingresos
@@ -5075,18 +3870,18 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen los totales de los productos
-			$query = "SELECT 
+			$SIS_query = '
 			insumos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
 			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
-			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso
-			FROM `bodegas_insumos_facturacion_existencias`
+			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
+			$SIS_join = '
 			LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
-			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml
-			WHERE bodegas_insumos_facturacion_existencias.idProducto = ".$idProducto." 
-			AND bodegas_insumos_facturacion_existencias.idBodega=".$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'];
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
+			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
+			$SIS_where = '
+			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.' 
+			AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'];
+			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
 			$Total_egresos     = $rowResultado['egreso'] + $Number;
 			$Total_existencias = $rowResultado['ingreso'] - $rowResultado['egreso'];
@@ -5134,39 +3929,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			die;
 
 		break;	
-/*******************************************************************************************************************/		
-		case 'add_obs_traspasomanualempresa':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
 
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_traspasomanualempresa':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_traspasomanualempresa_temporal'] = $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones'];
-			$_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'traspasomanual_otra_empresa':
 	
@@ -5179,20 +3942,20 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_traspasomanualempresa_basicos'])){
-				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']) or $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']=='' ){      $error['idBodegaOrigen']    = 'error/No ha seleccionado la bodega de origen';}
-				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']) or $_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']=='' ){  $error['idSistemaDestino']  = 'error/No ha seleccionado el sistema de destino';}
-				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']) or $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']=='' ){        $error['Observaciones']     = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']) or $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']=='' ){                $error['idSistema']         = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']) or $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']=='' ){                $error['idUsuario']         = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']) or $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']=='' ){      $error['Creacion_fecha']    = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']) or $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']=='' ){                      $error['idTipo']            = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']) OR $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']=='' ){      $error['idBodegaOrigen']    = 'error/No ha seleccionado la bodega de origen';}
+				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']) OR $_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']=='' ){  $error['idSistemaDestino']  = 'error/No ha seleccionado el sistema de destino';}
+				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']) OR $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']=='' ){        $error['Observaciones']     = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']) OR $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']=='' ){                $error['idSistema']         = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']) OR $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']=='' ){                $error['idUsuario']         = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']) OR $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']=='' ){      $error['Creacion_fecha']    = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']) OR $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']=='' ){                      $error['idTipo']            = 'error/No ha seleccionado el tipo';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al traspaso de bodega';
 			}
 			//productos
 			if (isset($_SESSION['insumos_traspasomanualempresa_productos'])){
 				foreach ($_SESSION['insumos_traspasomanualempresa_productos'] as $key => $producto){
-					if(!isset($producto['idProducto']) or $producto['idProducto'] == ''){  $error['idProducto']   = 'error/No ha ingresado un insumo para traspaso a bodega';}
+					if(!isset($producto['idProducto']) OR $producto['idProducto'] == ''){  $error['idProducto']   = 'error/No ha ingresado un insumo para traspaso a bodega';}
 					$n_data1++;
 				}
 			}else{
@@ -5239,7 +4002,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `bodegas_insumos_facturacion` (idDocumentos,N_Doc, idBodegaOrigen, idSistemaDestino, 
 				Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, 
 				fecha_auto, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -5289,7 +4052,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, 
 							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
 							idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -5320,7 +4083,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -5463,117 +4226,18 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_ing_manual_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['insumos_ing_manual_basicos']['idBodega']         = $idBodega;
-				$_SESSION['insumos_ing_manual_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['insumos_ing_manual_basicos']['idSistema']        = $idSistema;
-				$_SESSION['insumos_ing_manual_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['insumos_ing_manual_basicos']['idTipo']           = $idTipo;
-				$_SESSION['insumos_ing_manual_basicos']['idProveedor']      = $idProveedor;
-				$_SESSION['insumos_ing_manual_basicos']['fecha_auto']       = $fecha_auto;
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_ing_manual_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_manual_basicos']['idBodega']        = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_ing_manual_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_manual_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_ing_manual_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_manual_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_ing_manual_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_manual_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_ing_manual_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_manual_basicos']['idTipo']          = '';}
+				if(isset($idProveedor) && $idProveedor != ''){        $_SESSION['insumos_ing_manual_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_manual_basicos']['idProveedor']     = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_ing_manual_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_manual_basicos']['fecha_auto']      = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_ing_manual_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_manual_basicos']['idUsoIVA']        = '';}
+				//datos basicos vacios
 				$_SESSION['insumos_ing_manual_basicos']['Pago_fecha']       = '0000-00-00';
 				$_SESSION['insumos_ing_manual_basicos']['idOcompra']        = '';
-				
-				//Se agrega el impuesto
-				$_SESSION['insumos_ing_manual_impuestos'][1]['idImpuesto'] = 1;
-				
-				/****************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_manual_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_manual_basicos']['TipoDocumento'] = '';
-				}
-				/****************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_manual_basicos']['Bodega'] = $rowBodega['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_manual_basicos']['Bodega'] = '';
-				}
-				/****************************************************/
-				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_manual_basicos']['Proveedor'] = $rowProveedor['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_manual_basicos']['Proveedor'] = '';
-				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_ing_manual_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_ing_manual_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 				
 				/***********************************/
 				//Centro de Costo vacio
@@ -5585,7 +4249,44 @@ if( ! defined('XMBCXRXSKGC')) {
 				$_SESSION['insumos_ing_manual_basicos']['idLevel_4']     = 0;
 				$_SESSION['insumos_ing_manual_basicos']['idLevel_5']     = 0;
 				
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_manual_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_ing_manual_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_ing_manual_impuestos'][1]['idImpuesto'] = 1;
+				}
 				
+				/****************************************************/
+				if(isset($idTipo) && $idTipo != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_manual_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_manual_basicos']['TipoDocumento'] = '';
+				}
+				/****************************************************/
+				if(isset($idBodega) && $idBodega != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_manual_basicos']['Bodega'] = $rowBodega['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_manual_basicos']['Bodega'] = '';
+				}
+				/****************************************************/
+				if(isset($idProveedor) && $idProveedor != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_manual_basicos']['Proveedor'] = $rowProveedor['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_manual_basicos']['Proveedor'] = '';
+				}
 				
 				
 				//Se redirije
@@ -5635,43 +4336,35 @@ if( ! defined('XMBCXRXSKGC')) {
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				//Borro todas las sesiones
-				unset($_SESSION['insumos_ing_manual_basicos']);
-				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['insumos_ing_manual_basicos']['idBodega']         = $idBodega;
-				$_SESSION['insumos_ing_manual_basicos']['idSistema']        = $idSistema;
-				$_SESSION['insumos_ing_manual_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['insumos_ing_manual_basicos']['idTipo']           = $idTipo;
-				$_SESSION['insumos_ing_manual_basicos']['idProveedor']      = $idProveedor;
-				$_SESSION['insumos_ing_manual_basicos']['fecha_auto']       = $fecha_auto;
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_ing_manual_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_manual_basicos']['idBodega']        = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_ing_manual_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_manual_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_ing_manual_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_manual_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_ing_manual_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_manual_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_ing_manual_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_manual_basicos']['idTipo']          = '';}
+				if(isset($idProveedor) && $idProveedor != ''){        $_SESSION['insumos_ing_manual_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_manual_basicos']['idProveedor']     = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_ing_manual_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_manual_basicos']['fecha_auto']      = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_ing_manual_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_manual_basicos']['idUsoIVA']        = '';}
+				//datos basicos vacios
 				$_SESSION['insumos_ing_manual_basicos']['Pago_fecha']       = '0000-00-00';
 				$_SESSION['insumos_ing_manual_basicos']['idOcompra']        = '';
 				
-				//Se agrega el impuesto
-				$_SESSION['insumos_ing_manual_impuestos'][1]['idImpuesto'] = 1;
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_manual_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_ing_manual_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_ing_manual_impuestos'][1]['idImpuesto'] = 1;
+				}
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_manual_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -5680,23 +4373,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_manual_basicos']['Bodega'] = $rowBodega['Nombre'];
 				}else{
@@ -5705,52 +4382,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
+					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_manual_basicos']['Proveedor'] = $rowProveedor['Nombre'];
 				}else{
 					$_SESSION['insumos_ing_manual_basicos']['Proveedor'] = '';
 				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_ing_manual_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_ing_manual_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
-				
-				
 				
 				
 				//Se redirije
@@ -5775,23 +4412,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_manual_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_ing_manual_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -5799,23 +4420,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_manual_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_manual_basicos']['idLevel_1']    = $idLevel_1;
@@ -5823,23 +4428,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_manual_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_manual_basicos']['idLevel_2']    = $idLevel_2;
@@ -5847,23 +4436,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_manual_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_manual_basicos']['idLevel_3']    = $idLevel_3;
@@ -5871,23 +4444,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_manual_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_manual_basicos']['idLevel_4']    = $idLevel_4;
@@ -5895,23 +4452,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_manual_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_manual_basicos']['idLevel_5']    = $idLevel_5;
@@ -5950,29 +4491,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
-				$query = "SELECT 
-				insumos_listado.idProducto, 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idEstado=1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrProductos,$row );
-				}
+				$arrProductos = db_select_array (false, 'insumos_listado.idProducto, insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -6013,26 +4533,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen los datos del producto
-				$query = "SELECT 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto = db_select_data (false, 'insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Borro el producto
 				unset($_SESSION['insumos_ing_manual_productos'][$oldItemID]);
@@ -6079,24 +4580,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = ".$idImpuesto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				
+				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = '.$idImpuesto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se guarda dato
 				$_SESSION['insumos_ing_manual_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 				$_SESSION['insumos_ing_manual_impuestos'][$idImpuesto]['Nombre']     = $rowImpuesto['Nombre'];
@@ -6122,39 +4606,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			die;
 
 		break;	
-/*******************************************************************************************************************/		
-		case 'add_obs_ing_manual':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
 
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_ing_manual_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing_manual':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_ing_manual_temporal'] = $_SESSION['insumos_ing_manual_basicos']['Observaciones'];
-			$_SESSION['insumos_ing_manual_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'new_file_ing_manual':
 			
@@ -6177,7 +4629,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -6279,13 +4731,18 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_ing_manual_basicos'])){
-				if(!isset($_SESSION['insumos_ing_manual_basicos']['idBodega']) or $_SESSION['insumos_ing_manual_basicos']['idBodega']=='' ){             $error['idBodega']         = 'error/No ha seleccionado la bodega';}
-				if(!isset($_SESSION['insumos_ing_manual_basicos']['Observaciones']) or $_SESSION['insumos_ing_manual_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['insumos_ing_manual_basicos']['idSistema']) or $_SESSION['insumos_ing_manual_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['insumos_ing_manual_basicos']['idUsuario']) or $_SESSION['insumos_ing_manual_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']) or $_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
-				if(!isset($_SESSION['insumos_ing_manual_basicos']['idTipo']) or $_SESSION['insumos_ing_manual_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['insumos_ing_manual_impuestos']) ){                                                                                  $error['impuesto']         = 'error/No ha seleccionado un impuesto'; }
+				if(!isset($_SESSION['insumos_ing_manual_basicos']['idBodega']) OR $_SESSION['insumos_ing_manual_basicos']['idBodega']=='' ){             $error['idBodega']         = 'error/No ha seleccionado la bodega';}
+				if(!isset($_SESSION['insumos_ing_manual_basicos']['Observaciones']) OR $_SESSION['insumos_ing_manual_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['insumos_ing_manual_basicos']['idSistema']) OR $_SESSION['insumos_ing_manual_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['insumos_ing_manual_basicos']['idUsuario']) OR $_SESSION['insumos_ing_manual_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
+				if(!isset($_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']) OR $_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['insumos_ing_manual_basicos']['idTipo']) OR $_SESSION['insumos_ing_manual_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				//se verifica el uso del iva
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idUsoIVA'])&&$_SESSION['insumos_ing_manual_basicos']['idUsoIVA']==2){
+					if(!isset($_SESSION['insumos_ing_manual_impuestos']) ){     
+						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
+					}
+				}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de bodega';
 			}
@@ -6302,7 +4759,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			}
 			//Se verifica el minimo de trabajos
 			if(isset($n_data1)&&$n_data1==0){
-				$error['trabajos'] = 'error/No se han asignado insumos';
+				$error['idProducto'] = 'error/No se han asignado insumos';
 			}
 
 			/*********************************************************************/
@@ -6348,14 +4805,15 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_3']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_3'] != ''){              $a .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_3']."'" ;          }else{$a .= ",''";}
 				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_4']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_4'] != ''){              $a .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_4']."'" ;          }else{$a .= ",''";}
 				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_5']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_5'] != ''){              $a .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_5']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_manual_basicos']['idUsoIVA'] != ''){                $a .= ",'".$_SESSION['insumos_ing_manual_basicos']['idUsoIVA']."'" ;           }else{$a .= ",''";}
 					
 					
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `bodegas_insumos_facturacion` (idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, 
 				Creacion_Semana, Creacion_mes, Creacion_ano, idProveedor, idEstado, DocRel, fecha_auto, ValorNeto,ValorTotal,Impuesto_01,Impuesto_02,Impuesto_03,
 				Impuesto_04,Impuesto_05,Impuesto_06,Impuesto_07,Impuesto_08,Impuesto_09,Impuesto_10, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, 
-				idLevel_4, idLevel_5) 
-				VALUES ({$a} )";
+				idLevel_4, idLevel_5, idUsoIVA) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -6402,7 +4860,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, 
 							Creacion_mes, Creacion_ano, idTipo, idProducto, Cantidad_ing, Valor, ValorTotal, idProveedor,fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -6443,7 +4901,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_archivos` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -6474,7 +4932,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -6529,7 +4987,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idCliente)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -6567,172 +5025,23 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_vent_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_vent_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_vent_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_vent_basicos']['idBodega'] = $idBodega;}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_vent_basicos']['Observaciones'] = $Observaciones;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_vent_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_vent_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_vent_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_vent_basicos']['idTipo'] = $idTipo;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_vent_basicos']['idCliente'] = $idCliente;}
-				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['insumos_vent_basicos']['idTrabajador'] = $idTrabajador;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_vent_basicos']['fecha_auto'] = $fecha_auto;}
-				if(isset($OC_Ventas) && $OC_Ventas != ''){                 $_SESSION['insumos_vent_basicos']['OC_Ventas'] = $OC_Ventas;}
-				
-				//fecha de venta
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_vent_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_vent_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_vent_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_vent_basicos']['N_Doc']             = '';}
+				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_vent_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_vent_basicos']['idBodega']          = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_vent_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_vent_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_vent_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_vent_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_vent_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_vent_basicos']['idUsuario']         = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_vent_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_vent_basicos']['Creacion_fecha']    = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_vent_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_vent_basicos']['idTipo']            = '';}
+				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_vent_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_vent_basicos']['idCliente']         = '';}
+				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['insumos_vent_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['insumos_vent_basicos']['idTrabajador']      = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_vent_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_vent_basicos']['fecha_auto']        = '';}
+				if(isset($OC_Ventas) && $OC_Ventas != ''){                 $_SESSION['insumos_vent_basicos']['OC_Ventas']         = $OC_Ventas;         }else{$_SESSION['insumos_vent_basicos']['OC_Ventas']         = '';}
+				if(isset($fecha_fact_desde) && $fecha_fact_desde != ''){   $_SESSION['insumos_vent_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['insumos_vent_basicos']['fecha_fact_desde']  = '';}
+				if(isset($fecha_fact_hasta) && $fecha_fact_hasta != ''){   $_SESSION['insumos_vent_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']  = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){                   $_SESSION['insumos_vent_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['insumos_vent_basicos']['idUsoIVA']          = '';}
+				//datos basicos vacios
 				$_SESSION['insumos_vent_basicos']['Pago_fecha']      = '0000-00-00';
-				
-				//Se agrega el impuesto
-				$_SESSION['insumos_vent_impuestos'][1]['idImpuesto'] = 1;
-				
-				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_vent_basicos']['Documento'] = $rowDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_vent_basicos']['Documento'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_vent_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_vent_basicos']['TipoDocumento'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_vent_basicos']['Bodega'] = $rowBodega['Nombre'];
-				}else{
-					$_SESSION['insumos_vent_basicos']['Bodega'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `clientes_listado`
-					WHERE idCliente = ".$idCliente;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCliente = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_vent_basicos']['Cliente'] = $rowCliente['Nombre'];
-				}else{
-					$_SESSION['insumos_vent_basicos']['Cliente'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowVendedor = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_vent_basicos']['Vendedor'] = $rowVendedor['Nombre'].' '.$rowVendedor['ApellidoPat'].' '.$rowVendedor['ApellidoMat'];
-				}else{
-					$_SESSION['insumos_vent_basicos']['Vendedor'] = '';
-				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_vent_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_vent_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 				
 				/***********************************/
 				//Centro de Costo vacio
@@ -6745,8 +5054,68 @@ if( ! defined('XMBCXRXSKGC')) {
 				$_SESSION['insumos_vent_basicos']['idLevel_5']     = 0;
 				
 				
+				//En caso de que no sea una factura, eliminar los datos previamente rellenados
+				if(isset($idDocumentos) && $idDocumentos != ''&& $idDocumentos != 2){
+					$_SESSION['insumos_vent_basicos']['fecha_fact_desde'] = '0000-00-00';
+					$_SESSION['insumos_vent_basicos']['fecha_fact_hasta'] = '0000-00-00';
+				}
 				
-				
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_vent_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_vent_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_vent_impuestos'][1]['idImpuesto'] = 1;
+				}
+					
+				/********************************************************************************/
+				if(isset($idDocumentos) && $idDocumentos != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_vent_basicos']['Documento'] = $rowDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_vent_basicos']['Documento'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idTipo) && $idTipo != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_vent_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_vent_basicos']['TipoDocumento'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idBodega) && $idBodega != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_vent_basicos']['Bodega'] = $rowBodega['Nombre'];
+				}else{
+					$_SESSION['insumos_vent_basicos']['Bodega'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idCliente) && $idCliente != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_vent_basicos']['Cliente'] = $rowCliente['Nombre'];
+				}else{
+					$_SESSION['insumos_vent_basicos']['Cliente'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idTrabajador) && $idTrabajador != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowVendedor = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_vent_basicos']['Vendedor'] = $rowVendedor['Nombre'].' '.$rowVendedor['ApellidoPat'].' '.$rowVendedor['ApellidoMat'];
+				}else{
+					$_SESSION['insumos_vent_basicos']['Vendedor'] = '';
+				}
 				
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -6816,44 +5185,45 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_vent_descuentos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_vent_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_vent_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_vent_basicos']['idBodega'] = $idBodega;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_vent_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_vent_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_vent_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_vent_basicos']['idTipo'] = $idTipo;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_vent_basicos']['idCliente'] = $idCliente;}
-				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['insumos_vent_basicos']['idTrabajador'] = $idTrabajador;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_vent_basicos']['fecha_auto'] = $fecha_auto;}
-				if(isset($OC_Ventas) && $OC_Ventas != ''){                 $_SESSION['insumos_vent_basicos']['OC_Ventas'] = $OC_Ventas;}
-				
-				//fecha de venta
+				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_vent_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_vent_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_vent_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_vent_basicos']['N_Doc']             = '';}
+				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_vent_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_vent_basicos']['idBodega']          = '';}
+				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_vent_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_vent_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_vent_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_vent_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_vent_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_vent_basicos']['idUsuario']         = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_vent_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_vent_basicos']['Creacion_fecha']    = '';}
+				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_vent_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_vent_basicos']['idTipo']            = '';}
+				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_vent_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_vent_basicos']['idCliente']         = '';}
+				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['insumos_vent_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['insumos_vent_basicos']['idTrabajador']      = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_vent_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_vent_basicos']['fecha_auto']        = '';}
+				if(isset($OC_Ventas) && $OC_Ventas != ''){                 $_SESSION['insumos_vent_basicos']['OC_Ventas']         = $OC_Ventas;         }else{$_SESSION['insumos_vent_basicos']['OC_Ventas']         = '';}
+				if(isset($fecha_fact_desde) && $fecha_fact_desde != ''){   $_SESSION['insumos_vent_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['insumos_vent_basicos']['fecha_fact_desde']  = '';}
+				if(isset($fecha_fact_hasta) && $fecha_fact_hasta != ''){   $_SESSION['insumos_vent_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']  = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){                   $_SESSION['insumos_vent_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['insumos_vent_basicos']['idUsoIVA']          = '';}
+				//datos basicos vacios
 				$_SESSION['insumos_vent_basicos']['Pago_fecha']      = '0000-00-00';
 				
-				//Se agrega el impuesto
-				$_SESSION['insumos_vent_impuestos'][1]['idImpuesto'] = 1;
+				//En caso de que no sea una factura, eliminar los datos previamente rellenados
+				if(isset($idDocumentos) && $idDocumentos != ''&& $idDocumentos != 2){
+					$_SESSION['insumos_vent_basicos']['fecha_fact_desde'] = '0000-00-00';
+					$_SESSION['insumos_vent_basicos']['fecha_fact_hasta'] = '0000-00-00';
+				}
 				
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_vent_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_vent_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_vent_impuestos'][1]['idImpuesto'] = 1;
+				}
+					
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['Documento'] = $rowDocumento['Nombre'];
 				}else{
@@ -6862,23 +5232,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -6887,23 +5241,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['Bodega'] = $rowBodega['Nombre'];
 				}else{
@@ -6912,23 +5250,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `clientes_listado`
-					WHERE idCliente = ".$idCliente;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCliente = mysqli_fetch_assoc ($resultado);
+					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['Cliente'] = $rowCliente['Nombre'];
 				}else{
@@ -6937,51 +5259,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre, ApellidoPat, ApellidoMat
-					FROM `trabajadores_listado`
-					WHERE idTrabajador = ".$idTrabajador;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowVendedor = mysqli_fetch_assoc ($resultado);
+					$rowVendedor = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['Vendedor'] = $rowVendedor['Nombre'].' '.$rowVendedor['ApellidoPat'].' '.$rowVendedor['ApellidoMat'];
 				}else{
 					$_SESSION['insumos_vent_basicos']['Vendedor'] = '';
 				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_vent_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_vent_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
-				
 				
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -7006,23 +5289,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_vent_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -7030,23 +5297,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_vent_basicos']['idLevel_1']    = $idLevel_1;
@@ -7054,23 +5305,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_vent_basicos']['idLevel_2']    = $idLevel_2;
@@ -7078,23 +5313,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_vent_basicos']['idLevel_3']    = $idLevel_3;
@@ -7102,23 +5321,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_vent_basicos']['idLevel_4']    = $idLevel_4;
@@ -7126,23 +5329,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_vent_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_vent_basicos']['idLevel_5']    = $idLevel_5;
@@ -7171,23 +5358,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT N_Doc, ValorNeto
-				FROM `bodegas_insumos_facturacion`
-				WHERE idFacturacion = ".$idGuia;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowGuias = mysqli_fetch_assoc ($resultado);
+				$rowGuias = db_select_data (false, 'N_Doc, ValorNeto', 'bodegas_insumos_facturacion', '', 'idFacturacion = "'.$idGuia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//se guarda dato
 				$_SESSION['insumos_vent_guias'][$idGuia]['N_Doc']     = $rowGuias['N_Doc'];
 				$_SESSION['insumos_vent_guias'][$idGuia]['ValorNeto'] = $rowGuias['ValorNeto'];
@@ -7228,24 +5400,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = ".$idImpuesto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				
+				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = '.$idImpuesto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se guarda dato
 				$_SESSION['insumos_vent_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 				$_SESSION['insumos_vent_impuestos'][$idImpuesto]['Nombre']     = $rowImpuesto['Nombre'];
@@ -7335,18 +5490,18 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				//Se verifica si la existencia alcanza
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$query = "SELECT 
+					$SIS_query = '
 					insumos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso
-					FROM `bodegas_insumos_facturacion_existencias`
-					LEFT JOIN `insumos_listado`        ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
-					LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml    = insumos_listado.idUml
-					WHERE bodegas_insumos_facturacion_existencias.idProducto = ".$idProducto[$j1]." 
-					AND bodegas_insumos_facturacion_existencias.idBodega=".$_SESSION['insumos_vent_basicos']['idBodega'];
-					$resultado = mysqli_query($dbConn, $query);
-					$rowResultado = mysqli_fetch_assoc ($resultado);
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
+					$SIS_join = '
+					LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
+					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
+					$SIS_where = '
+					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_vent_basicos']['idBodega'];
+					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
 					$Total_egresos = $rowResultado['egreso'] + $Number[$j1];
 					//Verifico si los egresos son inferiores a los ingresos
@@ -7394,18 +5549,18 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			// Se traen los totales de los productos
-			$query = "SELECT 
+			$SIS_query = '
 			insumos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
 			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
-			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso
-			FROM `bodegas_insumos_facturacion_existencias`
-			LEFT JOIN `insumos_listado`        ON insumos_listado.idProducto   = bodegas_insumos_facturacion_existencias.idProducto
-			LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml  = insumos_listado.idUml
-			WHERE bodegas_insumos_facturacion_existencias.idProducto = ".$idProducto." 
-			AND bodegas_insumos_facturacion_existencias.idBodega=".$_SESSION['insumos_vent_basicos']['idBodega'];
-			$resultado = mysqli_query($dbConn, $query);
-			$rowResultado = mysqli_fetch_assoc ($resultado);
+			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
+			$SIS_join = '
+			LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
+			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
+			$SIS_where = '
+			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.' 
+			AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_vent_basicos']['idBodega'];
+			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
 			$Total_egresos     = $rowResultado['egreso'] + $Number;
 			$Total_existencias = $rowResultado['ingreso'] - $rowResultado['egreso'];
@@ -7453,39 +5608,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			die;
 
 		break;	
-/*******************************************************************************************************************/		
-		case 'add_obs_Ventas':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
 
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_vent_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_Ventas':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_vent_temporal'] = $_SESSION['insumos_vent_basicos']['Observaciones'];
-			$_SESSION['insumos_vent_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'new_file_Ventas':
 			
@@ -7508,7 +5631,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -7661,25 +5784,30 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_vent_basicos'])){
-				if(!isset($_SESSION['insumos_vent_basicos']['idDocumentos']) or $_SESSION['insumos_vent_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha seleccionado el documentoa';}
-				if(!isset($_SESSION['insumos_vent_basicos']['N_Doc']) or $_SESSION['insumos_vent_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['insumos_vent_basicos']['idBodega']) or $_SESSION['insumos_vent_basicos']['idBodega']=='' ){             $error['idBodega']         = 'error/No ha seleccionado la bodega';}
-				if(!isset($_SESSION['insumos_vent_basicos']['Observaciones']) or $_SESSION['insumos_vent_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['insumos_vent_basicos']['idSistema']) or $_SESSION['insumos_vent_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['insumos_vent_basicos']['idUsuario']) or $_SESSION['insumos_vent_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
-				if(!isset($_SESSION['insumos_vent_basicos']['Creacion_fecha']) or $_SESSION['insumos_vent_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
-				if(!isset($_SESSION['insumos_vent_basicos']['idTipo']) or $_SESSION['insumos_vent_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['insumos_vent_basicos']['idCliente']) or $_SESSION['insumos_vent_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
-				if(!isset($_SESSION['insumos_vent_basicos']['idTrabajador']) or $_SESSION['insumos_vent_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el vendedor';}
+				if(!isset($_SESSION['insumos_vent_basicos']['idDocumentos']) OR $_SESSION['insumos_vent_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha seleccionado el documentoa';}
+				if(!isset($_SESSION['insumos_vent_basicos']['N_Doc']) OR $_SESSION['insumos_vent_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
+				if(!isset($_SESSION['insumos_vent_basicos']['idBodega']) OR $_SESSION['insumos_vent_basicos']['idBodega']=='' ){             $error['idBodega']         = 'error/No ha seleccionado la bodega';}
+				if(!isset($_SESSION['insumos_vent_basicos']['Observaciones']) OR $_SESSION['insumos_vent_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['insumos_vent_basicos']['idSistema']) OR $_SESSION['insumos_vent_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['insumos_vent_basicos']['idUsuario']) OR $_SESSION['insumos_vent_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
+				if(!isset($_SESSION['insumos_vent_basicos']['Creacion_fecha']) OR $_SESSION['insumos_vent_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['insumos_vent_basicos']['idTipo']) OR $_SESSION['insumos_vent_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['insumos_vent_basicos']['idCliente']) OR $_SESSION['insumos_vent_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
+				if(!isset($_SESSION['insumos_vent_basicos']['idTrabajador']) OR $_SESSION['insumos_vent_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el vendedor';}
+				if(!isset($_SESSION['insumos_vent_basicos']['idUsoIVA']) OR $_SESSION['insumos_vent_basicos']['idUsoIVA']=='' ){             $error['idUsoIVA']         = 'error/No ha seleccionado la exencion del IVA';}
 				//compruebo que sea una factura y que tenga fecha de pago
 				if(isset($_SESSION['insumos_vent_basicos']['idDocumentos']) && $_SESSION['insumos_vent_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['insumos_vent_basicos']['Pago_fecha']) or $_SESSION['insumos_vent_basicos']['Pago_fecha']=='' or $_SESSION['insumos_vent_basicos']['Pago_fecha']=='0000-00-00' ){     
+					if(!isset($_SESSION['insumos_vent_basicos']['Pago_fecha']) OR $_SESSION['insumos_vent_basicos']['Pago_fecha']=='' OR $_SESSION['insumos_vent_basicos']['Pago_fecha']=='0000-00-00' ){     
 						$error['Pago_fecha']  = 'error/No ha ingresado la fecha de vencimiento de la factura';
 					}	
 				}
-				if(!isset($_SESSION['insumos_vent_impuestos']) ){     
-					$error['impuestos']  = 'error/No ha seleccionado un impuesto';
+				//se verifica el uso del iva
+				if(isset($_SESSION['insumos_vent_basicos']['idUsoIVA'])&&$_SESSION['insumos_vent_basicos']['idUsoIVA']==2){
+					if(!isset($_SESSION['insumos_vent_impuestos']) ){     
+						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
+					}
 				}
+				
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al egreso de bodega';
 			}
@@ -7758,13 +5886,16 @@ if( ! defined('XMBCXRXSKGC')) {
 					$a .= ",''";
 				}
 				$a .= ",'1'";
-				if(isset($_SESSION['insumos_vent_basicos']['OC_Ventas']) && $_SESSION['insumos_vent_basicos']['OC_Ventas'] != ''){             $a .= ",'".$_SESSION['insumos_vent_basicos']['OC_Ventas']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idCentroCosto']) && $_SESSION['insumos_vent_basicos']['idCentroCosto'] != ''){     $a .= ",'".$_SESSION['insumos_vent_basicos']['idCentroCosto']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_1']) && $_SESSION['insumos_vent_basicos']['idLevel_1'] != ''){             $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_1']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_2']) && $_SESSION['insumos_vent_basicos']['idLevel_2'] != ''){             $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_2']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_3']) && $_SESSION['insumos_vent_basicos']['idLevel_3'] != ''){             $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_3']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_4']) && $_SESSION['insumos_vent_basicos']['idLevel_4'] != ''){             $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_4']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_5']) && $_SESSION['insumos_vent_basicos']['idLevel_5'] != ''){             $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_5']."'" ;      }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['OC_Ventas']) && $_SESSION['insumos_vent_basicos']['OC_Ventas'] != ''){                 $a .= ",'".$_SESSION['insumos_vent_basicos']['OC_Ventas']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idCentroCosto']) && $_SESSION['insumos_vent_basicos']['idCentroCosto'] != ''){         $a .= ",'".$_SESSION['insumos_vent_basicos']['idCentroCosto']."'" ;      }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_1']) && $_SESSION['insumos_vent_basicos']['idLevel_1'] != ''){                 $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_1']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_2']) && $_SESSION['insumos_vent_basicos']['idLevel_2'] != ''){                 $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_2']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_3']) && $_SESSION['insumos_vent_basicos']['idLevel_3'] != ''){                 $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_3']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_4']) && $_SESSION['insumos_vent_basicos']['idLevel_4'] != ''){                 $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_4']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_5']) && $_SESSION['insumos_vent_basicos']['idLevel_5'] != ''){                 $a .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_5']."'" ;          }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['fecha_fact_desde']) && $_SESSION['insumos_vent_basicos']['fecha_fact_desde'] != ''){   $a .= ",'".$_SESSION['insumos_vent_basicos']['fecha_fact_desde']."'" ;   }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['fecha_fact_hasta']) && $_SESSION['insumos_vent_basicos']['fecha_fact_hasta'] != ''){   $a .= ",'".$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']."'" ;   }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idUsoIVA']) && $_SESSION['insumos_vent_basicos']['idUsoIVA'] != ''){                   $a .= ",'".$_SESSION['insumos_vent_basicos']['idUsoIVA']."'" ;           }else{$a .= ",''";}
 					
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `bodegas_insumos_facturacion` (idDocumentos,N_Doc, idBodegaOrigen, 
@@ -7772,8 +5903,9 @@ if( ! defined('XMBCXRXSKGC')) {
 				idCliente, idTrabajador, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, 
 				Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, 
 				Impuesto_10, Pago_fecha, Pago_dia, Pago_Semana, Pago_mes, Pago_ano, idEstado,OC_Ventas, 
-				idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5) 
-				VALUES ({$a} )";
+				idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, fecha_fact_desde,
+				fecha_fact_hasta, idUsoIVA) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -7823,7 +5955,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, 
 							idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, 
 							Valor, ValorTotal, idCliente, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -7846,7 +5978,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							}
 					
 							// inserto los datos de registro en la db
-							$query  = "UPDATE `insumos_listado` SET ".$a." WHERE idProducto = '{$producto['idProducto']}'";
+							$query  = "UPDATE `insumos_listado` SET ".$a." WHERE idProducto = '".$producto['idProducto']."'";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -7874,7 +6006,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								$a  = "DocRel='".$ultimo_id."'" ;    
 								$a .= ",idEstado='2'";
 
-								$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacion = '{$guias['idGuia']}'";
+								$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacion = '".$guias['idGuia']."'";
 								//Consulta
 								$resultado = mysqli_query ($dbConn, $query);
 								//Si ejecuto correctamente la consulta
@@ -7917,7 +6049,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_descuentos` (idFacturacion, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -7959,7 +6091,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_archivos` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -7990,7 +6122,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -8038,7 +6170,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -8074,143 +6206,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_ing_nd_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['insumos_ing_nd_basicos']['idProveedor']      = $idProveedor;
-				$_SESSION['insumos_ing_nd_basicos']['idDocumentos']     = $idDocumentos;
-				$_SESSION['insumos_ing_nd_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['insumos_ing_nd_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['insumos_ing_nd_basicos']['idSistema']        = $idSistema;
-				$_SESSION['insumos_ing_nd_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['insumos_ing_nd_basicos']['idTipo']           = $idTipo;
+				if(isset($idProveedor) && $idProveedor != ''){        $_SESSION['insumos_ing_nd_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_nd_basicos']['idProveedor']     = '';}
+				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['insumos_ing_nd_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['insumos_ing_nd_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['insumos_ing_nd_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_ing_nd_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_nd_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_nd_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nd_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_nd_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nd_basicos']['idBodega']        = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_ing_nd_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_nd_basicos']['idUsoIVA']        = '';}
+				//datos basicos vacios
 				$_SESSION['insumos_ing_nd_basicos']['Pago_fecha']       = '0000-00-00';
-				$_SESSION['insumos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['insumos_ing_nd_basicos']['idBodega']         = $idBodega;
-				
-				//Se agrega el impuesto
-				$_SESSION['insumos_ing_nd_impuestos'][1]['idImpuesto'] = 1;
-				
-				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_nd_basicos']['Documento'] = '';
-				}
-				/****************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_nd_basicos']['TipoDocumento'] = '';
-				}
-				/****************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_nd_basicos']['Bodega'] = $rowBodega['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_nd_basicos']['Bodega'] = '';
-				}
-				/****************************************************/
-				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_nd_basicos']['Proveedor'] = $rowProveedor['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_nd_basicos']['Proveedor'] = '';
-				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_ing_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_ing_nd_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 				
 				/***********************************/
 				//Centro de Costo vacio
@@ -8221,6 +6229,54 @@ if( ! defined('XMBCXRXSKGC')) {
 				$_SESSION['insumos_ing_nd_basicos']['idLevel_3']     = 0;
 				$_SESSION['insumos_ing_nd_basicos']['idLevel_4']     = 0;
 				$_SESSION['insumos_ing_nd_basicos']['idLevel_5']     = 0;
+								
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_ing_nd_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_ing_nd_impuestos'][1]['idImpuesto'] = 1;
+				}
+				
+				/********************************************************************************/
+				if(isset($idDocumentos) && $idDocumentos != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_nd_basicos']['Documento'] = '';
+				}
+				/****************************************************/
+				if(isset($idTipo) && $idTipo != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_nd_basicos']['TipoDocumento'] = '';
+				}
+				/****************************************************/
+				if(isset($idBodega) && $idBodega != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nd_basicos']['Bodega'] = $rowBodega['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_nd_basicos']['Bodega'] = '';
+				}
+				/****************************************************/
+				if(isset($idProveedor) && $idProveedor != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nd_basicos']['Proveedor'] = $rowProveedor['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_nd_basicos']['Proveedor'] = '';
+				}
 				
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -8275,7 +6331,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -8293,39 +6349,32 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_ing_nd_otros']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['insumos_ing_nd_basicos']['idDocumentos']     = $idDocumentos;
-				$_SESSION['insumos_ing_nd_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['insumos_ing_nd_basicos']['idSistema']        = $idSistema;
-				$_SESSION['insumos_ing_nd_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['insumos_ing_nd_basicos']['idTipo']           = $idTipo;
-				$_SESSION['insumos_ing_nd_basicos']['idProveedor']      = $idProveedor;
-				$_SESSION['insumos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['insumos_ing_nd_basicos']['idBodega']         = $idBodega;
-				
-				//Se agrega el impuesto
-				$_SESSION['insumos_ing_nd_impuestos'][1]['idImpuesto'] = 1;
+				if(isset($idProveedor) && $idProveedor != ''){        $_SESSION['insumos_ing_nd_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_nd_basicos']['idProveedor']     = '';}
+				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['insumos_ing_nd_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['insumos_ing_nd_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['insumos_ing_nd_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_ing_nd_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_nd_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_nd_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nd_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_nd_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nd_basicos']['idBodega']        = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_ing_nd_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_nd_basicos']['idUsoIVA']        = '';}
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_ing_nd_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_ing_nd_impuestos'][1]['idImpuesto'] = 1;
+				}
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
 				}else{
@@ -8334,23 +6383,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -8359,23 +6392,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['Bodega'] = $rowBodega['Nombre'];
 				}else{
@@ -8384,50 +6401,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
+					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['Proveedor'] = $rowProveedor['Nombre'];
 				}else{
 					$_SESSION['insumos_ing_nd_basicos']['Proveedor'] = '';
 				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_ing_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_ing_nd_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 				
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -8452,23 +6431,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nd_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -8476,23 +6439,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nd_basicos']['idLevel_1']    = $idLevel_1;
@@ -8500,23 +6447,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nd_basicos']['idLevel_2']    = $idLevel_2;
@@ -8524,23 +6455,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nd_basicos']['idLevel_3']    = $idLevel_3;
@@ -8548,23 +6463,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nd_basicos']['idLevel_4']    = $idLevel_4;
@@ -8572,23 +6471,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nd_basicos']['idLevel_5']    = $idLevel_5;
@@ -8627,29 +6510,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
-				$query = "SELECT 
-				insumos_listado.idProducto, 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idEstado=1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrProductos,$row );
-				}
+				$arrProductos = db_select_array (false, 'insumos_listado.idProducto, insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -8690,26 +6552,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 					
 				// Se traen los datos del producto
-				$query = "SELECT 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);	
+				$rowProducto = db_select_data (false, 'insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Borro el producto
 				unset($_SESSION['insumos_ing_nd_productos'][$oldItemID]); 
@@ -8819,24 +6662,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = ".$idImpuesto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				
+				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = '.$idImpuesto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se guarda dato
 				$_SESSION['insumos_ing_nd_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 				$_SESSION['insumos_ing_nd_impuestos'][$idImpuesto]['Nombre']     = $rowImpuesto['Nombre'];
@@ -8862,39 +6688,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			die;
 
 		break;	
-/*******************************************************************************************************************/		
-		case 'add_obs_ing_nd':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
 
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_ing_nd_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing_nd':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_ing_nd_temporal'] = $_SESSION['insumos_ing_nd_basicos']['Observaciones'];
-			$_SESSION['insumos_ing_nd_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'new_file_ing_nd':
 			
@@ -8917,7 +6711,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -9021,17 +6815,17 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_ing_nd_basicos'])){
-				if(!isset($_SESSION['insumos_ing_nd_basicos']['idDocumentos']) or $_SESSION['insumos_ing_nd_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha ingresado el id del sistema';}
-				if(!isset($_SESSION['insumos_ing_nd_basicos']['N_Doc']) or $_SESSION['insumos_ing_nd_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha seleccionado el area';}
-				if(!isset($_SESSION['insumos_ing_nd_basicos']['Observaciones']) or $_SESSION['insumos_ing_nd_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha seleccionado la maquina';}
-				if(!isset($_SESSION['insumos_ing_nd_basicos']['idSistema']) or $_SESSION['insumos_ing_nd_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha ingresado el id del usuario';}
-				if(!isset($_SESSION['insumos_ing_nd_basicos']['idUsuario']) or $_SESSION['insumos_ing_nd_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha ingresado el id del estado';}
-				if(!isset($_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']) or $_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la prioridad';}
-				if(!isset($_SESSION['insumos_ing_nd_basicos']['idTipo']) or $_SESSION['insumos_ing_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
-				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idDocumentos']) && $_SESSION['insumos_ing_nd_basicos']['idDocumentos']==2 ){     
+				if(!isset($_SESSION['insumos_ing_nd_basicos']['idDocumentos']) OR $_SESSION['insumos_ing_nd_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha ingresado el id del sistema';}
+				if(!isset($_SESSION['insumos_ing_nd_basicos']['N_Doc']) OR $_SESSION['insumos_ing_nd_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha seleccionado el area';}
+				if(!isset($_SESSION['insumos_ing_nd_basicos']['Observaciones']) OR $_SESSION['insumos_ing_nd_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha seleccionado la maquina';}
+				if(!isset($_SESSION['insumos_ing_nd_basicos']['idSistema']) OR $_SESSION['insumos_ing_nd_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha ingresado el id del usuario';}
+				if(!isset($_SESSION['insumos_ing_nd_basicos']['idUsuario']) OR $_SESSION['insumos_ing_nd_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha ingresado el id del estado';}
+				if(!isset($_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']) OR $_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la prioridad';}
+				if(!isset($_SESSION['insumos_ing_nd_basicos']['idTipo']) OR $_SESSION['insumos_ing_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
+				//se verifica el uso del iva
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idUsoIVA'])&&$_SESSION['insumos_ing_nd_basicos']['idUsoIVA']==2){
 					if(!isset($_SESSION['insumos_ing_nd_impuestos']) ){     
-						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
+						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}	
 			}else{
@@ -9056,7 +6850,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$valor = $n_data1 + $n_data2;
 			//Se verifica el minimo de trabajos
 			if(isset($valor)&&$valor==0){
-				$error['trabajos'] = 'error/No se han asignado insumos ni guias';
+				$error['idProducto'] = 'error/No se han asignado insumos ni guias';
 			}
 			
 			/*********************************************************************/
@@ -9117,6 +6911,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_3']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_3'] != ''){            $a .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_3']."'" ;         }else{$a .= ",''";}
 				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_4']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_4'] != ''){            $a .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_4']."'" ;         }else{$a .= ",''";}
 				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_5']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_5'] != ''){            $a .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_5']."'" ;         }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_nd_basicos']['idUsoIVA'] != ''){              $a .= ",'".$_SESSION['insumos_ing_nd_basicos']['idUsoIVA']."'" ;          }else{$a .= ",''";}
 					
 				
 				// inserto los datos de registro en la db
@@ -9124,8 +6919,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idProveedor, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes, 
 				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, 
 				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto, 
-				idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5	) 
-				VALUES ({$a} )";
+				idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, idUsoIVA	) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -9176,7 +6971,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, idUsuario,
 							Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing, Valor, ValorTotal,
 							idProveedor, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -9218,7 +7013,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_otros` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -9260,7 +7055,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_archivos` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -9292,7 +7087,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -9343,7 +7138,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -9380,142 +7175,17 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_ing_nc_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_ing_nc_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_ing_nc_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_ing_nc_basicos']['Observaciones'] = $Observaciones;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_ing_nc_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_ing_nc_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_ing_nc_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_ing_nc_basicos']['idTipo'] = $idTipo;}
-				if(isset($idProveedor) && $idProveedor != ''){             $_SESSION['insumos_ing_nc_basicos']['idProveedor'] = $idProveedor;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_ing_nc_basicos']['fecha_auto'] = $fecha_auto;}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_ing_nc_basicos']['idBodega'] = $idBodega;}
-				 
-				//Se agrega el impuesto
-				$_SESSION['insumos_ing_nc_impuestos'][1]['idImpuesto'] = 1;
-				
-				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_nc_basicos']['Documento'] = '';
-				}
-				/****************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_nc_basicos']['TipoDocumento'] = '';
-				}
-				/****************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_nc_basicos']['Bodega'] = $rowBodega['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_nc_basicos']['Bodega'] = '';
-				}
-				/****************************************************/
-				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_ing_nc_basicos']['Proveedor'] = $rowProveedor['Nombre'];
-				}else{
-					$_SESSION['insumos_ing_nc_basicos']['Proveedor'] = '';
-				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_ing_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_ing_nc_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['insumos_ing_nc_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['insumos_ing_nc_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['insumos_ing_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_ing_nc_basicos']['N_Doc']           = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_ing_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_nc_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_ing_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_nc_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_ing_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nc_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_ing_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nc_basicos']['idTipo']          = '';}
+				if(isset($idProveedor) && $idProveedor != ''){        $_SESSION['insumos_ing_nc_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_nc_basicos']['idProveedor']     = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_ing_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_nc_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_ing_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nc_basicos']['idBodega']        = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_ing_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_nc_basicos']['idUsoIVA']        = '';}
 				
 				/***********************************/
 				//Centro de Costo vacio
@@ -9528,6 +7198,55 @@ if( ! defined('XMBCXRXSKGC')) {
 				$_SESSION['insumos_ing_nc_basicos']['idLevel_5']     = 0;
 				
 				
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_ing_nc_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_ing_nc_impuestos'][1]['idImpuesto'] = 1;
+				}
+				
+				/********************************************************************************/
+				if(isset($idDocumentos) && $idDocumentos != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_nc_basicos']['Documento'] = '';
+				}
+				/****************************************************/
+				if(isset($idTipo) && $idTipo != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_nc_basicos']['TipoDocumento'] = '';
+				}
+				/****************************************************/
+				if(isset($idBodega) && $idBodega != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nc_basicos']['Bodega'] = $rowBodega['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_nc_basicos']['Bodega'] = '';
+				}
+				/****************************************************/
+				if(isset($idProveedor) && $idProveedor != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowProveedor = mysqli_fetch_assoc ($resultado);
+					//se guarda dato
+					$_SESSION['insumos_ing_nc_basicos']['Proveedor'] = $rowProveedor['Nombre'];
+				}else{
+					$_SESSION['insumos_ing_nc_basicos']['Proveedor'] = '';
+				}
+				
+			
 				
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -9587,39 +7306,32 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_ing_nc_otros']);
 			
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_ing_nc_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_ing_nc_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_ing_nc_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_ing_nc_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_ing_nc_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_ing_nc_basicos']['idTipo'] = $idTipo;}
-				if(isset($idProveedor) && $idProveedor != ''){             $_SESSION['insumos_ing_nc_basicos']['idProveedor'] = $idProveedor;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_ing_nc_basicos']['fecha_auto'] = $fecha_auto;}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_ing_nc_basicos']['idBodega'] = $idBodega;}
-				
-				//Se agrega el impuesto
-				$_SESSION['insumos_ing_nc_impuestos'][1]['idImpuesto'] = 1;
+				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['insumos_ing_nc_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['insumos_ing_nc_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['insumos_ing_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_ing_nc_basicos']['N_Doc']           = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_ing_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_nc_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_ing_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_nc_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_ing_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nc_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_ing_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nc_basicos']['idTipo']          = '';}
+				if(isset($idProveedor) && $idProveedor != ''){        $_SESSION['insumos_ing_nc_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_nc_basicos']['idProveedor']     = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_ing_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_nc_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_ing_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nc_basicos']['idBodega']        = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_ing_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_nc_basicos']['idUsoIVA']        = '';}
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_ing_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_ing_nc_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_ing_nc_impuestos'][1]['idImpuesto'] = 1;
+				}
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
 				}else{
@@ -9628,23 +7340,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -9653,23 +7349,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['Bodega'] = $rowBodega['Nombre'];
 				}else{
@@ -9678,51 +7358,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `proveedor_listado`
-					WHERE idProveedor = ".$idProveedor;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowProveedor = mysqli_fetch_assoc ($resultado);
+					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['Proveedor'] = $rowProveedor['Nombre'];
 				}else{
 					$_SESSION['insumos_ing_nc_basicos']['Proveedor'] = '';
 				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_ing_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_ing_nc_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
-				
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -9746,23 +7387,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nc_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -9770,23 +7395,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nc_basicos']['idLevel_1']    = $idLevel_1;
@@ -9794,23 +7403,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nc_basicos']['idLevel_2']    = $idLevel_2;
@@ -9818,23 +7411,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nc_basicos']['idLevel_3']    = $idLevel_3;
@@ -9842,23 +7419,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nc_basicos']['idLevel_4']    = $idLevel_4;
@@ -9866,23 +7427,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nc_basicos']['idLevel_5']    = $idLevel_5;
@@ -9921,29 +7466,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
-				$query = "SELECT 
-				insumos_listado.idProducto, 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idEstado=1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrProductos,$row );
-				}
+				$arrProductos = db_select_array (false, 'insumos_listado.idProducto, insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -9984,26 +7508,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 					
 				// Se traen los datos del producto
-				$query = "SELECT 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);	
+				$rowProducto = db_select_data (false, 'insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Borro el producto
 				unset($_SESSION['insumos_ing_nc_productos'][$oldItemID]); 
@@ -10112,24 +7617,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = ".$idImpuesto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				
+				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = '.$idImpuesto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se guarda dato
 				$_SESSION['insumos_ing_nc_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 				$_SESSION['insumos_ing_nc_impuestos'][$idImpuesto]['Nombre']     = $rowImpuesto['Nombre'];
@@ -10157,39 +7645,6 @@ if( ! defined('XMBCXRXSKGC')) {
 		break;	
 
 /*******************************************************************************************************************/		
-		case 'add_obs_ing_nc':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
-
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_ing_nc_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_ing_nc':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_ing_nc_temporal'] = $_SESSION['insumos_ing_nc_basicos']['Observaciones'];
-			$_SESSION['insumos_ing_nc_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
-/*******************************************************************************************************************/		
 		case 'new_file_ing_nc':
 			
 			//Se elimina la restriccion del sql 5.7
@@ -10211,7 +7666,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -10315,18 +7770,18 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_ing_nc_basicos'])){
-				if(!isset($_SESSION['insumos_ing_nc_basicos']['idDocumentos']) or $_SESSION['insumos_ing_nc_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha seleccionado el documentoa';}
-				if(!isset($_SESSION['insumos_ing_nc_basicos']['N_Doc']) or $_SESSION['insumos_ing_nc_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['insumos_ing_nc_basicos']['Observaciones']) or $_SESSION['insumos_ing_nc_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['insumos_ing_nc_basicos']['idSistema']) or $_SESSION['insumos_ing_nc_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['insumos_ing_nc_basicos']['idUsuario']) or $_SESSION['insumos_ing_nc_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
-				if(!isset($_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']) or $_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
-				if(!isset($_SESSION['insumos_ing_nc_basicos']['idTipo']) or $_SESSION['insumos_ing_nc_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['insumos_ing_nc_basicos']['idProveedor']) or $_SESSION['insumos_ing_nc_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado el proveedor';}
-				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idDocumentos']) && $_SESSION['insumos_ing_nc_basicos']['idDocumentos']==2 ){     
+				if(!isset($_SESSION['insumos_ing_nc_basicos']['idDocumentos']) OR $_SESSION['insumos_ing_nc_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha seleccionado el documentoa';}
+				if(!isset($_SESSION['insumos_ing_nc_basicos']['N_Doc']) OR $_SESSION['insumos_ing_nc_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
+				if(!isset($_SESSION['insumos_ing_nc_basicos']['Observaciones']) OR $_SESSION['insumos_ing_nc_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['insumos_ing_nc_basicos']['idSistema']) OR $_SESSION['insumos_ing_nc_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['insumos_ing_nc_basicos']['idUsuario']) OR $_SESSION['insumos_ing_nc_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
+				if(!isset($_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']) OR $_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['insumos_ing_nc_basicos']['idTipo']) OR $_SESSION['insumos_ing_nc_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['insumos_ing_nc_basicos']['idProveedor']) OR $_SESSION['insumos_ing_nc_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado el proveedor';}
+				//se verifica el uso del iva
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idUsoIVA'])&&$_SESSION['insumos_ing_nc_basicos']['idUsoIVA']==2){
 					if(!isset($_SESSION['insumos_ing_nc_impuestos']) ){     
-						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
+						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
 			}else{
@@ -10351,7 +7806,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$valor = $n_data1 + $n_data2;
 			//Se verifica el minimo de trabajos
 			if(isset($valor)&&$valor==0){
-				$error['trabajos']   = 'error/No se han asignado ni insumos ni guias';
+				$error['idProducto']   = 'error/No se han asignado ni insumos ni guias';
 			}
 			
 			/*********************************************************************/
@@ -10393,12 +7848,13 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($_SESSION['insumos_ing_nc_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][9]['valor']!=''){              $a .= ",'".$_SESSION['insumos_ing_nc_impuestos'][9]['valor']."'";        }else{$a .= ",''";}
 				if(isset($_SESSION['insumos_ing_nc_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][10]['valor']!=''){            $a .= ",'".$_SESSION['insumos_ing_nc_impuestos'][10]['valor']."'";       }else{$a .= ",''";}
 				$a .= ",'1'";
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_nc_basicos']['idCentroCosto'] != ''){     $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idCentroCosto']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_1']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_1'] != ''){             $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_1']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_2']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_2'] != ''){             $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_2']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_3']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_3'] != ''){             $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_3']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_4']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_4'] != ''){             $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_4']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_5']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_5'] != ''){             $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_5']."'" ;      }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_nc_basicos']['idCentroCosto'] != ''){    $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idCentroCosto']."'" ;    }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_1']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_1'] != ''){            $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_1']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_2']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_2'] != ''){            $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_2']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_3']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_3'] != ''){            $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_3']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_4']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_4'] != ''){            $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_4']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_5']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_5'] != ''){            $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_5']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_nc_basicos']['idUsoIVA'] != ''){              $a .= ",'".$_SESSION['insumos_ing_nc_basicos']['idUsoIVA']."'" ;         }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `bodegas_insumos_facturacion` (idDocumentos,N_Doc, Observaciones, 
@@ -10406,8 +7862,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				Creacion_ano, idProveedor, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01, 
 				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, 
 				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, 
-				idLevel_4, idLevel_5) 
-				VALUES ({$a} )";
+				idLevel_4, idLevel_5, idUsoIVA) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -10456,7 +7912,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, 
 							idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, Valor,ValorTotal,	 idProveedor, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -10499,7 +7955,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_otros` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -10541,7 +7997,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_archivos` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -10572,7 +8028,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -10622,7 +8078,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idCliente)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -10658,143 +8114,19 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_egr_nd_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['insumos_egr_nd_basicos']['idCliente']        = $idCliente;
-				$_SESSION['insumos_egr_nd_basicos']['idDocumentos']     = $idDocumentos;
-				$_SESSION['insumos_egr_nd_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['insumos_egr_nd_basicos']['Observaciones']    = $Observaciones;
-				$_SESSION['insumos_egr_nd_basicos']['idSistema']        = $idSistema;
-				$_SESSION['insumos_egr_nd_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['insumos_egr_nd_basicos']['idTipo']           = $idTipo;
+				if(isset($idCliente) && $idCliente != ''){            $_SESSION['insumos_egr_nd_basicos']['idCliente']        = $idCliente;        }else{$_SESSION['insumos_egr_nd_basicos']['idCliente']       = '';}
+				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['insumos_egr_nd_basicos']['idDocumentos']     = $idDocumentos;     }else{$_SESSION['insumos_egr_nd_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['insumos_egr_nd_basicos']['N_Doc']            = $N_Doc;            }else{$_SESSION['insumos_egr_nd_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;   }else{$_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_egr_nd_basicos']['Observaciones']    = $Observaciones;    }else{$_SESSION['insumos_egr_nd_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_egr_nd_basicos']['idSistema']        = $idSistema;        }else{$_SESSION['insumos_egr_nd_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_egr_nd_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['insumos_egr_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_egr_nd_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['insumos_egr_nd_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;       }else{$_SESSION['insumos_egr_nd_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_egr_nd_basicos']['idBodega']         = $idBodega;         }else{$_SESSION['insumos_egr_nd_basicos']['idBodega']        = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_egr_nd_basicos']['idUsoIVA']         = $idUsoIVA;         }else{$_SESSION['insumos_egr_nd_basicos']['idUsoIVA']        = '';}
+				//datos basicos vacios
 				$_SESSION['insumos_egr_nd_basicos']['Pago_fecha']       = '0000-00-00';
-				$_SESSION['insumos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['insumos_egr_nd_basicos']['idBodega']         = $idBodega;
-				
-				//Se agrega el impuesto
-				$_SESSION['insumos_egr_nd_impuestos'][1]['idImpuesto'] = 1;
-				
-				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_egr_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_egr_nd_basicos']['Documento'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_egr_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_egr_nd_basicos']['TipoDocumento'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_egr_nd_basicos']['Bodega'] = $rowBodega['Nombre'];
-				}else{
-					$_SESSION['insumos_egr_nd_basicos']['Bodega'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `clientes_listado`
-					WHERE idCliente = ".$idCliente;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCliente = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_egr_nd_basicos']['Cliente'] = $rowCliente['Nombre'];
-				}else{
-					$_SESSION['insumos_egr_nd_basicos']['Cliente'] = '';
-				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_egr_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_egr_nd_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 				
 				/***********************************/
 				//Centro de Costo vacio
@@ -10805,7 +8137,54 @@ if( ! defined('XMBCXRXSKGC')) {
 				$_SESSION['insumos_egr_nd_basicos']['idLevel_3']     = 0;
 				$_SESSION['insumos_egr_nd_basicos']['idLevel_4']     = 0;
 				$_SESSION['insumos_egr_nd_basicos']['idLevel_5']     = 0;
+								
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_egr_nd_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_egr_nd_impuestos'][1]['idImpuesto'] = 1;
+				}
 				
+				/********************************************************************************/
+				if(isset($idDocumentos) && $idDocumentos != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_egr_nd_basicos']['Documento'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idTipo) && $idTipo != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_egr_nd_basicos']['TipoDocumento'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idBodega) && $idBodega != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nd_basicos']['Bodega'] = $rowBodega['Nombre'];
+				}else{
+					$_SESSION['insumos_egr_nd_basicos']['Bodega'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idCliente) && $idCliente != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nd_basicos']['Cliente'] = $rowCliente['Nombre'];
+				}else{
+					$_SESSION['insumos_egr_nd_basicos']['Cliente'] = '';
+				}
 				
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -10860,7 +8239,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idCliente)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -10878,39 +8257,35 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_egr_nd_otros']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				$_SESSION['insumos_egr_nd_basicos']['idDocumentos']     = $idDocumentos;
-				$_SESSION['insumos_egr_nd_basicos']['N_Doc']            = $N_Doc;
-				$_SESSION['insumos_egr_nd_basicos']['idSistema']        = $idSistema;
-				$_SESSION['insumos_egr_nd_basicos']['idUsuario']        = $idUsuario;
-				$_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;
-				$_SESSION['insumos_egr_nd_basicos']['idTipo']           = $idTipo;
-				$_SESSION['insumos_egr_nd_basicos']['idCliente']        = $idCliente;
-				$_SESSION['insumos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;
-				$_SESSION['insumos_egr_nd_basicos']['idBodega']         = $idBodega;
+				if(isset($idCliente) && $idCliente != ''){            $_SESSION['insumos_egr_nd_basicos']['idCliente']        = $idCliente;        }else{$_SESSION['insumos_egr_nd_basicos']['idCliente']       = '';}
+				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['insumos_egr_nd_basicos']['idDocumentos']     = $idDocumentos;     }else{$_SESSION['insumos_egr_nd_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['insumos_egr_nd_basicos']['N_Doc']            = $N_Doc;            }else{$_SESSION['insumos_egr_nd_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;   }else{$_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_egr_nd_basicos']['Observaciones']    = $Observaciones;    }else{$_SESSION['insumos_egr_nd_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_egr_nd_basicos']['idSistema']        = $idSistema;        }else{$_SESSION['insumos_egr_nd_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_egr_nd_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['insumos_egr_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_egr_nd_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['insumos_egr_nd_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;       }else{$_SESSION['insumos_egr_nd_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_egr_nd_basicos']['idBodega']         = $idBodega;         }else{$_SESSION['insumos_egr_nd_basicos']['idBodega']        = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_egr_nd_basicos']['idUsoIVA']         = $idUsoIVA;         }else{$_SESSION['insumos_egr_nd_basicos']['idUsoIVA']        = '';}
+				//datos basicos vacios
+				$_SESSION['insumos_egr_nd_basicos']['Pago_fecha']       = '0000-00-00';
 				
-				//Se agrega el impuesto
-				$_SESSION['insumos_egr_nd_impuestos'][1]['idImpuesto'] = 1;
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_egr_nd_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_egr_nd_impuestos'][1]['idImpuesto'] = 1;
+				}
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
 				}else{
@@ -10919,23 +8294,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -10944,23 +8303,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['Bodega'] = $rowBodega['Nombre'];
 				}else{
@@ -10969,50 +8312,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `clientes_listado`
-					WHERE idCliente = ".$idCliente;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCliente = mysqli_fetch_assoc ($resultado);
+					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['Cliente'] = $rowCliente['Nombre'];
 				}else{
 					$_SESSION['insumos_egr_nd_basicos']['Cliente'] = '';
 				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_egr_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_egr_nd_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 				
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -11037,23 +8342,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nd_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -11061,23 +8350,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nd_basicos']['idLevel_1']    = $idLevel_1;
@@ -11085,23 +8358,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nd_basicos']['idLevel_2']    = $idLevel_2;
@@ -11109,23 +8366,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nd_basicos']['idLevel_3']    = $idLevel_3;
@@ -11133,23 +8374,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nd_basicos']['idLevel_4']    = $idLevel_4;
@@ -11157,23 +8382,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nd_basicos']['idLevel_5']    = $idLevel_5;
@@ -11212,29 +8421,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
-				$query = "SELECT 
-				insumos_listado.idProducto, 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idEstado=1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrProductos,$row );
-				}
+				$arrProductos = db_select_array (false, 'insumos_listado.idProducto, insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -11276,26 +8464,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto = db_select_data (false, 'insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Borro el producto
 				unset($_SESSION['insumos_egr_nd_productos'][$oldItemID]); 
@@ -11404,24 +8573,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = ".$idImpuesto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				
+				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = '.$idImpuesto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se guarda dato
 				$_SESSION['insumos_egr_nd_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 				$_SESSION['insumos_egr_nd_impuestos'][$idImpuesto]['Nombre']     = $rowImpuesto['Nombre'];
@@ -11447,39 +8599,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			die;
 
 		break;	
-/*******************************************************************************************************************/		
-		case 'add_obs_egr_nd':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
 
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_egr_nd_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_egr_nd':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_egr_nd_temporal'] = $_SESSION['insumos_egr_nd_basicos']['Observaciones'];
-			$_SESSION['insumos_egr_nd_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'new_file_egr_nd':
 			
@@ -11502,7 +8622,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -11606,17 +8726,17 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_egr_nd_basicos'])){
-				if(!isset($_SESSION['insumos_egr_nd_basicos']['idDocumentos']) or $_SESSION['insumos_egr_nd_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha ingresado el id del sistema';}
-				if(!isset($_SESSION['insumos_egr_nd_basicos']['N_Doc']) or $_SESSION['insumos_egr_nd_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha seleccionado el area';}
-				if(!isset($_SESSION['insumos_egr_nd_basicos']['Observaciones']) or $_SESSION['insumos_egr_nd_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha seleccionado la maquina';}
-				if(!isset($_SESSION['insumos_egr_nd_basicos']['idSistema']) or $_SESSION['insumos_egr_nd_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha ingresado el id del usuario';}
-				if(!isset($_SESSION['insumos_egr_nd_basicos']['idUsuario']) or $_SESSION['insumos_egr_nd_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha ingresado el id del estado';}
-				if(!isset($_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']) or $_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la prioridad';}
-				if(!isset($_SESSION['insumos_egr_nd_basicos']['idTipo']) or $_SESSION['insumos_egr_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
-				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idDocumentos']) && $_SESSION['insumos_egr_nd_basicos']['idDocumentos']==2 ){     
+				if(!isset($_SESSION['insumos_egr_nd_basicos']['idDocumentos']) OR $_SESSION['insumos_egr_nd_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha ingresado el id del sistema';}
+				if(!isset($_SESSION['insumos_egr_nd_basicos']['N_Doc']) OR $_SESSION['insumos_egr_nd_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha seleccionado el area';}
+				if(!isset($_SESSION['insumos_egr_nd_basicos']['Observaciones']) OR $_SESSION['insumos_egr_nd_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha seleccionado la maquina';}
+				if(!isset($_SESSION['insumos_egr_nd_basicos']['idSistema']) OR $_SESSION['insumos_egr_nd_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha ingresado el id del usuario';}
+				if(!isset($_SESSION['insumos_egr_nd_basicos']['idUsuario']) OR $_SESSION['insumos_egr_nd_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha ingresado el id del estado';}
+				if(!isset($_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']) OR $_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la prioridad';}
+				if(!isset($_SESSION['insumos_egr_nd_basicos']['idTipo']) OR $_SESSION['insumos_egr_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
+				//se verifica el uso del iva
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idUsoIVA'])&&$_SESSION['insumos_egr_nd_basicos']['idUsoIVA']==2){
 					if(!isset($_SESSION['insumos_egr_nd_impuestos']) ){     
-						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
+						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}	
 			}else{
@@ -11641,7 +8761,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$valor = $n_data1 + $n_data2;
 			//Se verifica el minimo de trabajos
 			if(isset($valor)&&$valor==0){
-				$error['trabajos'] = 'error/No se han asignado insumos ni guias';
+				$error['idProducto'] = 'error/No se han asignado insumos ni guias';
 			}
 			
 			/*********************************************************************/
@@ -11702,6 +8822,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_3']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_3'] != ''){            $a .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_3']."'" ;         }else{$a .= ",''";}
 				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_4']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_4'] != ''){            $a .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_4']."'" ;         }else{$a .= ",''";}
 				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_5']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_5'] != ''){            $a .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_5']."'" ;         }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idUsoIVA']) && $_SESSION['insumos_egr_nd_basicos']['idUsoIVA'] != ''){              $a .= ",'".$_SESSION['insumos_egr_nd_basicos']['idUsoIVA']."'" ;          }else{$a .= ",''";}
 					
 				
 				// inserto los datos de registro en la db
@@ -11709,8 +8830,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idCliente, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes, 
 				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, 
 				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto, 
-				idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5	) 
-				VALUES ({$a} )";
+				idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, idUsoIVA	) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -11761,7 +8882,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, idUsuario,
 							Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, Valor, ValorTotal,
 							idCliente, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -11804,7 +8925,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_otros` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -11846,7 +8967,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_archivos` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -11878,7 +8999,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -11929,7 +9050,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idCliente)&&isset($idDocumentos)&&isset($N_Doc)){
-				$ndata_1 = db_select_nrows ('idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', "idCliente='".$idCliente."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
@@ -11966,142 +9087,17 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_egr_nc_archivos']);
 				
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_egr_nc_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_egr_nc_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['insumos_egr_nc_basicos']['Observaciones'] = $Observaciones;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_egr_nc_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_egr_nc_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_egr_nc_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_egr_nc_basicos']['idTipo'] = $idTipo;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_egr_nc_basicos']['idCliente'] = $idCliente;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_egr_nc_basicos']['fecha_auto'] = $fecha_auto;}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_egr_nc_basicos']['idBodega'] = $idBodega;}
-				
-				//Se agrega el impuesto
-				$_SESSION['insumos_egr_nc_impuestos'][1]['idImpuesto'] = 1;
-				
-				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_egr_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_egr_nc_basicos']['Documento'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_egr_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
-				}else{
-					$_SESSION['insumos_egr_nc_basicos']['TipoDocumento'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `clientes_listado`
-					WHERE idCliente = ".$idCliente;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCliente = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_egr_nc_basicos']['Cliente'] = $rowCliente['Nombre'];
-				}else{
-					$_SESSION['insumos_egr_nc_basicos']['Cliente'] = '';
-				}
-				/********************************************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
-					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
-					//se guarda dato
-					$_SESSION['insumos_egr_nc_basicos']['Bodega'] = $rowBodega['Nombre'];
-				}else{
-					$_SESSION['insumos_egr_nc_basicos']['Bodega'] = '';
-				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_egr_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_egr_nc_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['insumos_egr_nc_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['insumos_egr_nc_basicos']['idDocumentos']   = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['insumos_egr_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_egr_nc_basicos']['N_Doc']          = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_egr_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_egr_nc_basicos']['Observaciones']  = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_egr_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_egr_nc_basicos']['idSistema']      = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_egr_nc_basicos']['idUsuario']      = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_egr_nc_basicos']['Creacion_fecha'] = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_egr_nc_basicos']['idTipo']         = '';}
+				if(isset($idCliente) && $idCliente != ''){            $_SESSION['insumos_egr_nc_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['insumos_egr_nc_basicos']['idCliente']      = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_egr_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_egr_nc_basicos']['fecha_auto']     = '';}
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_egr_nc_basicos']['idBodega']       = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_egr_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_egr_nc_basicos']['idUsoIVA']       = '';}
 				
 				/***********************************/
 				//Centro de Costo vacio
@@ -12112,6 +9108,54 @@ if( ! defined('XMBCXRXSKGC')) {
 				$_SESSION['insumos_egr_nc_basicos']['idLevel_3']     = 0;
 				$_SESSION['insumos_egr_nc_basicos']['idLevel_4']     = 0;
 				$_SESSION['insumos_egr_nc_basicos']['idLevel_5']     = 0;
+								
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_egr_nc_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_egr_nc_impuestos'][1]['idImpuesto'] = 1;
+				}
+				
+				/********************************************************************************/
+				if(isset($idDocumentos) && $idDocumentos != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_egr_nc_basicos']['Documento'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idTipo) && $idTipo != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
+				}else{
+					$_SESSION['insumos_egr_nc_basicos']['TipoDocumento'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idCliente) && $idCliente != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nc_basicos']['Cliente'] = $rowCliente['Nombre'];
+				}else{
+					$_SESSION['insumos_egr_nc_basicos']['Cliente'] = '';
+				}
+				/********************************************************************************/
+				if(isset($idBodega) && $idBodega != ''){ 
+					// Se traen todos los datos de mi usuario
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nc_basicos']['Bodega'] = $rowBodega['Nombre'];
+				}else{
+					$_SESSION['insumos_egr_nc_basicos']['Bodega'] = '';
+				}
 				
 				
 				header( 'Location: '.$location.'&view=true' );
@@ -12171,39 +9215,32 @@ if( ! defined('XMBCXRXSKGC')) {
 				unset($_SESSION['insumos_egr_nc_otros']);
 			
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['insumos_egr_nc_basicos']['idDocumentos'] = $idDocumentos;}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['insumos_egr_nc_basicos']['N_Doc'] = $N_Doc;}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['insumos_egr_nc_basicos']['idSistema'] = $idSistema;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['insumos_egr_nc_basicos']['idUsuario'] = $idUsuario;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['insumos_egr_nc_basicos']['Creacion_fecha'] = $Creacion_fecha;}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['insumos_egr_nc_basicos']['idTipo'] = $idTipo;}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['insumos_egr_nc_basicos']['idCliente'] = $idCliente;}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['insumos_egr_nc_basicos']['fecha_auto'] = $fecha_auto;}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['insumos_egr_nc_basicos']['idBodega'] = $idBodega;}
-				
-				//Se agrega el impuesto
-				$_SESSION['insumos_egr_nc_impuestos'][1]['idImpuesto'] = 1;
+				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['insumos_egr_nc_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['insumos_egr_nc_basicos']['idDocumentos']   = '';}
+				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['insumos_egr_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_egr_nc_basicos']['N_Doc']          = '';}
+				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['insumos_egr_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_egr_nc_basicos']['Observaciones']  = '';}
+				if(isset($idSistema) && $idSistema != ''){            $_SESSION['insumos_egr_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_egr_nc_basicos']['idSistema']      = '';}
+				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['insumos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_egr_nc_basicos']['idUsuario']      = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_egr_nc_basicos']['Creacion_fecha'] = '';}
+				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['insumos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_egr_nc_basicos']['idTipo']         = '';}
+				if(isset($idCliente) && $idCliente != ''){            $_SESSION['insumos_egr_nc_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['insumos_egr_nc_basicos']['idCliente']      = '';}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['insumos_egr_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_egr_nc_basicos']['fecha_auto']     = '';}
+				if(isset($idBodega) && $idBodega != ''){              $_SESSION['insumos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_egr_nc_basicos']['idBodega']       = '';}
+				if(isset($idUsoIVA) && $idUsoIVA != ''){              $_SESSION['insumos_egr_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_egr_nc_basicos']['idUsoIVA']       = '';}
+				//Se agrega el impuesto en caso de ser utilizado
+				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
+					/****************************************************/
+					// Se traen todos los datos de mi usuario
+					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//se guarda dato
+					$_SESSION['insumos_egr_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
+					$_SESSION['insumos_egr_nc_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
+					$_SESSION['insumos_egr_nc_impuestos'][1]['idImpuesto'] = 1;
+				}
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `core_documentos_mercantiles`
-					WHERE idDocumentos = ".$idDocumentos;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowDocumento = mysqli_fetch_assoc ($resultado);
+					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
 				}else{
@@ -12212,23 +9249,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_facturacion_tipo`
-					WHERE idTipo = ".$idTipo;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowTipoDocumento = mysqli_fetch_assoc ($resultado);
+					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -12237,23 +9258,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `clientes_listado`
-					WHERE idCliente = ".$idCliente;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCliente = mysqli_fetch_assoc ($resultado);
+					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['Cliente'] = $rowCliente['Nombre'];
 				}else{
@@ -12262,50 +9267,12 @@ if( ! defined('XMBCXRXSKGC')) {
 				/********************************************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `bodegas_insumos_listado`
-					WHERE idBodega = ".$idBodega;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowBodega = mysqli_fetch_assoc ($resultado);
+					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['Bodega'] = $rowBodega['Nombre'];
 				}else{
 					$_SESSION['insumos_egr_nc_basicos']['Bodega'] = '';
 				}
-				/****************************************************/
-				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = 1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				//se guarda dato
-				$_SESSION['insumos_egr_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
-				$_SESSION['insumos_egr_nc_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 				
 				
 				
@@ -12331,23 +9298,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado`
-					WHERE idCentroCosto = ".$idCentroCosto;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['CentroCosto']   = $rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nc_basicos']['idCentroCosto'] = $idCentroCosto;
@@ -12355,23 +9306,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_1`
-					WHERE idLevel_1 = ".$idLevel_1;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nc_basicos']['idLevel_1']    = $idLevel_1;
@@ -12379,23 +9314,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_2`
-					WHERE idLevel_2 = ".$idLevel_2;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nc_basicos']['idLevel_2']    = $idLevel_2;
@@ -12403,23 +9322,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_3`
-					WHERE idLevel_3 = ".$idLevel_3;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nc_basicos']['idLevel_3']    = $idLevel_3;
@@ -12427,23 +9330,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_4`
-					WHERE idLevel_4 = ".$idLevel_4;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nc_basicos']['idLevel_4']    = $idLevel_4;
@@ -12451,23 +9338,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
 					// Se traen todos los datos de mi usuario
-					$query = "SELECT Nombre
-					FROM `centrocosto_listado_level_5`
-					WHERE idLevel_5 = ".$idLevel_5;
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					$rowCentro = mysqli_fetch_assoc ($resultado);
+					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nc_basicos']['idLevel_5']    = $idLevel_5;
@@ -12506,29 +9377,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
-				$query = "SELECT 
-				insumos_listado.idProducto, 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idEstado=1";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrProductos,$row );
-				}
+				$arrProductos = db_select_array (false, 'insumos_listado.idProducto, insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -12569,26 +9419,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				
 				//Se trae informacion
-				$query = "SELECT 
-				insumos_listado.Nombre,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado` 
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE insumos_listado.idProducto=".$idProducto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				$rowProducto = mysqli_fetch_assoc ($resultado);
+				$rowProducto = db_select_data (false, 'insumos_listado.Nombre, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Borro el producto
 				unset($_SESSION['insumos_egr_nc_productos'][$oldItemID]); 
@@ -12697,24 +9528,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/****************************************************/
 				// Se traen todos los datos de mi usuario
-				$query = "SELECT Nombre, Porcentaje
-				FROM `sistema_impuestos`
-				WHERE idImpuesto = ".$idImpuesto;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowImpuesto = mysqli_fetch_assoc ($resultado);
-				
+				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = '.$idImpuesto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se guarda dato
 				$_SESSION['insumos_egr_nc_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 				$_SESSION['insumos_egr_nc_impuestos'][$idImpuesto]['Nombre']     = $rowImpuesto['Nombre'];
@@ -12741,39 +9555,7 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		break;	
 
-/*******************************************************************************************************************/		
-		case 'add_obs_egr_nc':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$Observacion      = $_GET['val_select'];
-			
-			//valido que no esten vacios
-			if(empty($Observacion)){  $error['Observacion']  = 'error/No ha ingresado una observacion';}
 
-			if ( empty($error) ) {
-				//Datos a actualizar
-				$_SESSION['insumos_egr_nc_basicos']['Observaciones'] = $Observacion;
-
-				header( 'Location: '.$location.'&view=true#Ancla_obs' );
-				die;
-			}
-		
-		break;		
-/*******************************************************************************************************************/		
-		case 'del_obs_egr_nc':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			$_SESSION['insumos_egr_nc_temporal'] = $_SESSION['insumos_egr_nc_basicos']['Observaciones'];
-			$_SESSION['insumos_egr_nc_basicos']['Observaciones'] = '';
-			
-			header( 'Location: '.$location.'&view=true#Ancla_obs' );
-			die;
-
-		break;
 /*******************************************************************************************************************/		
 		case 'new_file_egr_nc':
 			
@@ -12796,7 +9578,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile']     = 'error/Ha ocurrido un error'; 
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
@@ -12900,18 +9682,18 @@ if( ! defined('XMBCXRXSKGC')) {
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['insumos_egr_nc_basicos'])){
-				if(!isset($_SESSION['insumos_egr_nc_basicos']['idDocumentos']) or $_SESSION['insumos_egr_nc_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha seleccionado el documentoa';}
-				if(!isset($_SESSION['insumos_egr_nc_basicos']['N_Doc']) or $_SESSION['insumos_egr_nc_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['insumos_egr_nc_basicos']['Observaciones']) or $_SESSION['insumos_egr_nc_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['insumos_egr_nc_basicos']['idSistema']) or $_SESSION['insumos_egr_nc_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
-				if(!isset($_SESSION['insumos_egr_nc_basicos']['idUsuario']) or $_SESSION['insumos_egr_nc_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
-				if(!isset($_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']) or $_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
-				if(!isset($_SESSION['insumos_egr_nc_basicos']['idTipo']) or $_SESSION['insumos_egr_nc_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
-				if(!isset($_SESSION['insumos_egr_nc_basicos']['idCliente']) or $_SESSION['insumos_egr_nc_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
-				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idDocumentos']) && $_SESSION['insumos_egr_nc_basicos']['idDocumentos']==2 ){     
+				if(!isset($_SESSION['insumos_egr_nc_basicos']['idDocumentos']) OR $_SESSION['insumos_egr_nc_basicos']['idDocumentos']=='' ){     $error['idDocumentos']     = 'error/No ha seleccionado el documentoa';}
+				if(!isset($_SESSION['insumos_egr_nc_basicos']['N_Doc']) OR $_SESSION['insumos_egr_nc_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
+				if(!isset($_SESSION['insumos_egr_nc_basicos']['Observaciones']) OR $_SESSION['insumos_egr_nc_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
+				if(!isset($_SESSION['insumos_egr_nc_basicos']['idSistema']) OR $_SESSION['insumos_egr_nc_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
+				if(!isset($_SESSION['insumos_egr_nc_basicos']['idUsuario']) OR $_SESSION['insumos_egr_nc_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
+				if(!isset($_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']) OR $_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['insumos_egr_nc_basicos']['idTipo']) OR $_SESSION['insumos_egr_nc_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
+				if(!isset($_SESSION['insumos_egr_nc_basicos']['idCliente']) OR $_SESSION['insumos_egr_nc_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
+				//se verifica el uso del iva
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idUsoIVA'])&&$_SESSION['insumos_egr_nc_basicos']['idUsoIVA']==2){
 					if(!isset($_SESSION['insumos_egr_nc_impuestos']) ){     
-						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
+						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
 			}else{
@@ -12936,7 +9718,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$valor = $n_data1 + $n_data2;
 			//Se verifica el minimo de trabajos
 			if(isset($valor)&&$valor==0){
-				$error['trabajos']   = 'error/No se han asignado ni insumos ni guias';
+				$error['idProducto']   = 'error/No se han asignado ni insumos ni guias';
 			}
 			
 			/*********************************************************************/
@@ -12978,12 +9760,13 @@ if( ! defined('XMBCXRXSKGC')) {
 				if(isset($_SESSION['insumos_egr_nc_impuestos'][9]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][9]['valor']!=''){              $a .= ",'".$_SESSION['insumos_egr_nc_impuestos'][9]['valor']."'";        }else{$a .= ",''";}
 				if(isset($_SESSION['insumos_egr_nc_impuestos'][10]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][10]['valor']!=''){            $a .= ",'".$_SESSION['insumos_egr_nc_impuestos'][10]['valor']."'";       }else{$a .= ",''";}
 				$a .= ",'1'";
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idCentroCosto']) && $_SESSION['insumos_egr_nc_basicos']['idCentroCosto'] != ''){     $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idCentroCosto']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_1']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_1'] != ''){             $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_1']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_2']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_2'] != ''){             $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_2']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_3']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_3'] != ''){             $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_3']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_4']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_4'] != ''){             $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_4']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_5']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_5'] != ''){             $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_5']."'" ;      }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idCentroCosto']) && $_SESSION['insumos_egr_nc_basicos']['idCentroCosto'] != ''){    $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idCentroCosto']."'" ;    }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_1']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_1'] != ''){            $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_1']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_2']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_2'] != ''){            $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_2']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_3']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_3'] != ''){            $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_3']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_4']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_4'] != ''){            $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_4']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_5']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_5'] != ''){            $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_5']."'" ;        }else{$a .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idUsoIVA']) && $_SESSION['insumos_egr_nc_basicos']['idUsoIVA'] != ''){              $a .= ",'".$_SESSION['insumos_egr_nc_basicos']['idUsoIVA']."'" ;         }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `bodegas_insumos_facturacion` (idDocumentos,N_Doc, Observaciones, 
@@ -12991,8 +9774,8 @@ if( ! defined('XMBCXRXSKGC')) {
 				Creacion_ano, idCliente, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01, 
 				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, 
 				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, 
-				idLevel_4, idLevel_5) 
-				VALUES ({$a} )";
+				idLevel_4, idLevel_5, idUsoIVA) 
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -13041,7 +9824,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_existencias` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, 
 							idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing, Valor,ValorTotal, idCliente, fecha_auto) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -13084,7 +9867,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_otros` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre, vTotal) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -13126,7 +9909,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							// inserto los datos de registro en la db
 							$query  = "INSERT INTO `bodegas_insumos_facturacion_archivos` (idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES ({$a} )";
+							VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
 							//Si ejecuto correctamente la consulta
@@ -13157,7 +9940,7 @@ if( ! defined('XMBCXRXSKGC')) {
 								
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `bodegas_insumos_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta

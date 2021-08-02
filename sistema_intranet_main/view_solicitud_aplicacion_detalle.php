@@ -21,9 +21,23 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT
 cross_solicitud_aplicacion_listado.idSolicitud, 
+cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.idEstado,
 cross_solicitud_aplicacion_listado.f_creacion,
 cross_solicitud_aplicacion_listado.f_programacion,
@@ -43,6 +57,7 @@ cross_solicitud_aplicacion_listado.VelTractor,
 cross_solicitud_aplicacion_listado.VelViento, 
 cross_solicitud_aplicacion_listado.TempMin, 
 cross_solicitud_aplicacion_listado.TempMax,
+cross_solicitud_aplicacion_listado.HumTempMax,
 
 usuarios_listado.Nombre AS NombreUsuario,
 
@@ -87,7 +102,7 @@ LEFT JOIN `core_cross_prioridad`                           ON core_cross_priorid
 LEFT JOIN `trabajadores_listado`                           ON trabajadores_listado.idTrabajador                          = cross_solicitud_aplicacion_listado.idDosificador
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
 
-WHERE cross_solicitud_aplicacion_listado.idSolicitud = {$_GET['view']} 
+WHERE cross_solicitud_aplicacion_listado.idSolicitud = ".$X_Puntero." 
 GROUP BY cross_solicitud_aplicacion_listado.idSolicitud";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -99,15 +114,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
@@ -118,6 +126,8 @@ $query = "SELECT
 cross_solicitud_aplicacion_listado_cuarteles.idEstado,
 cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
 cross_predios_listado_zonas.Nombre AS CuartelNombre,
+sistema_variedades_categorias.Nombre AS CuartelEspecie,
+variedades_listado.Nombre AS CuartelVariedad,
 cross_predios_listado_zonas.AnoPlantacion AS CuartelAnoPlantacion,
 cross_predios_listado_zonas.Hectareas AS CuartelHectareas,
 cross_predios_listado_zonas.Hileras AS CuartelHileras,
@@ -126,6 +136,7 @@ cross_predios_listado_zonas.DistanciaPlant AS CuartelDistanciaPlant,
 cross_predios_listado_zonas.DistanciaHileras AS CuartelDistanciaHileras,
 cross_solicitud_aplicacion_listado_cuarteles.idZona,
 SUM(cross_solicitud_aplicacion_listado_tractores.Diferencia) AS Litros,
+cross_solicitud_aplicacion_listado_cuarteles.idEjecucion AS CuartelidEjecucion,
 
 
 AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm!=0,cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm,0),0)) AS GeoVelocidadProm,
@@ -138,8 +149,10 @@ AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom!=0,cros
 FROM `cross_solicitud_aplicacion_listado_cuarteles` 
 LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
+LEFT JOIN `sistema_variedades_categorias`                  ON sistema_variedades_categorias.idCategoria                  = cross_solicitud_aplicacion_listado_cuarteles.idCategoria
+LEFT JOIN `variedades_listado`                             ON variedades_listado.idProducto                              = cross_solicitud_aplicacion_listado_cuarteles.idProducto
 
-WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud = {$_GET['view']} 
+WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud = ".$X_Puntero." 
 GROUP BY cross_solicitud_aplicacion_listado_cuarteles.idZona
 ORDER BY cross_predios_listado_zonas.Nombre ASC";
 //Consulta
@@ -152,15 +165,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrCuarteles,$row );
@@ -173,7 +179,7 @@ array_push( $arrCuarteles,$row );
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['idSolicitud'], 7); ?>.
+				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 5); ?>.
 				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino'])?></small>
 			</h2>
 		</div>   
@@ -192,38 +198,39 @@ array_push( $arrCuarteles,$row );
 				<div class="col-sm-4 invoice-col">
 					<strong>Datos Empresa</strong>
 					<address>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br>
-						Empresa: '.$row_data['SistemaOrigen'].'<br>
-						Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br>
-						Direccion: '.$row_data['SistemaOrigenDireccion'].'<br>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br>
+						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
+						Empresa: '.$row_data['SistemaOrigen'].'<br/>
+						Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
+						Direccion: '.$row_data['SistemaOrigenDireccion'].'<br/>
+						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
 				<div class="col-sm-4 invoice-col">
 					<strong>Identificacion</strong>
 					<address>
-						Predio: '.$row_data['NombrePredio'].'<br>
-						Estado: '.$row_data['Estado'].'<br>
-						Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br>
-						Estado Fenologico: '.$row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre'].'<br>
-						Especie: '.$row_data['VariedadCat'].'<br>
-						Variedad: '.$row_data['VariedadNombre'].'<br>
+						Predio: '.$row_data['NombrePredio'].'<br/>
+						Estado: '.$row_data['Estado'].'<br/>
+						Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br/>
+						Estado Fenologico: '.$row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre'].'<br/>';
+						if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){        echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
+						if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){  echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>'; }else{echo 'Variedad: Todas las Variedades<br/>';}
+						echo '
 					</address>
 				</div>
 				<div class="col-sm-4 invoice-col">
 					<strong>Datos de Solicitud</strong>
 					<address>
-						Prioridad: '.$row_data['NombrePrioridad'].'<br>
-						N° Solicitud: '.n_doc($row_data['idSolicitud'], 5).'<br>
-						Fecha inicio requerido: '.fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg'].'<br>
-						Fecha termino requerido: '.fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin'].'<br>';
-						if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br>';}
-						if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br>';}
-						if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br>';}
-						if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){ echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br>';}
+						Prioridad: '.$row_data['NombrePrioridad'].'<br/>
+						N° Solicitud: '.n_doc($row_data['NSolicitud'], 5).'<br/>
+						Fecha inicio requerido: '.fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg'].'<br/>
+						Fecha termino requerido: '.fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin'].'<br/>';
+						if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
+						if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
+						if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
+						if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){ echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
 						echo 'Agrónomo: '.$row_data['NombreUsuario'];
-						if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br>';}
+						if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
 						
 						echo '
 					</address>
@@ -234,20 +241,21 @@ array_push( $arrCuarteles,$row );
 				<div class="col-sm-4 invoice-col">
 					<strong>Parámetros de Aplicación</strong>
 					<address>
-						Mojamiento: '.Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha<br>
-						Vel. Tractor: '.Cantidades_decimales_justos($row_data['VelTractor']).' Km/hr<br>
-						Vel. Viento: '.Cantidades_decimales_justos($row_data['VelViento']).' Km/hr<br>
-						Temp Min: '.Cantidades_decimales_justos($row_data['TempMin']).' °<br>
-						Temp Max: '.Cantidades_decimales_justos($row_data['TempMax']).' °<br>
+						Mojamiento: '.Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha<br/>
+						Velocidad Tractor: '.Cantidades_decimales_justos($row_data['VelTractor']).' Km/hr<br/>
+						Velocidad Viento: '.Cantidades_decimales_justos($row_data['VelViento']).' Km/hr<br/>
+						Temperatura Min: '.Cantidades_decimales_justos($row_data['TempMin']).' °<br/>
+						Temperatura Max: '.Cantidades_decimales_justos($row_data['TempMax']).' °<br/>
+						Humedad: '.Cantidades_decimales_justos($row_data['HumTempMax']).' %<br/>
 						
 					</address>
 				</div>
 				<div class="col-sm-4 invoice-col">
 					<strong>Cumplimiento</strong>
 					<address>
-						N° Cuarteles Programados: '.$row_data['N_Cuarteles'].'<br>
-						N° Cuarteles Cerrados: '.$row_data['N_Cuarteles_Cerrados'].'<br>
-						Avance %: '.porcentaje($row_data['N_Cuarteles_Cerrados']/$row_data['N_Cuarteles']).'<br>
+						N° Cuarteles Programados: '.$row_data['N_Cuarteles'].'<br/>
+						N° Cuarteles Cerrados: '.$row_data['N_Cuarteles_Cerrados'].'<br/>
+						Avance %: '.porcentaje($row_data['N_Cuarteles_Cerrados']/$row_data['N_Cuarteles']).'<br/>
 						
 					</address>
 				</div>';
@@ -273,6 +281,7 @@ array_push( $arrCuarteles,$row );
 						</tr>
 						<tr class="active">
 							<td><strong>Cuarteles</strong></td>
+							<td><strong>Variedad - Especie</strong></td>
 							<td><strong>N° Plantas</strong></td>
 							<td><strong>Hectareas</strong></td>
 							<td><strong>Año Plantacion</strong></td>
@@ -281,11 +290,15 @@ array_push( $arrCuarteles,$row );
 							<td><strong>Distancia Hileras</strong></td>
 							
 							<th><strong>Promedio</strong></th>
+							
 							<th><strong>Faltante</strong></th>
+							
 							<th><strong>Derecho</strong></th>
 							<th><strong>Izquierdo</strong></th>
+							
 							<th><strong>Litros Aplicados</strong></th>
 							<th><strong>Litros x Hectarea</strong></th>
+							
 							<th><strong>Pendientes</strong></th>
 							
 							<th></th>
@@ -295,16 +308,33 @@ array_push( $arrCuarteles,$row );
 						<?php 
 						//recorro el lsiatdo entregado por la base de datos
 						if ($arrCuarteles) {
-							foreach ($arrCuarteles as $cuartel) { ?>
+							foreach ($arrCuarteles as $cuartel) { 
+								if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ $cierre = ' (Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';}else{$cierre = '';}
+								
+								//defino el icono y su color
+								switch ($cuartel['CuartelidEjecucion']) {
+									case 0:
+										$s_Icon = '';
+										break;
+									case 1:
+										$s_Icon = '<span style="color: #dd4b39;"><i class="fa fa-rss" aria-hidden="true"></i></span>';
+										break;
+									case 2:
+										$s_Icon = '<span style="color: #5cb85c;"><i class="fa fa-rss" aria-hidden="true"></i></span>';
+										break;
+								}
+									
+								?>
 								
 								<tr class="item-row linea_punteada">
-									<td class="item-name"><?php echo $cuartel['CuartelNombre'];if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ echo '(Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';} ?></td>
-									<td class="item-name"><?php echo $cuartel['NPlantas']; ?></td>
-									<td class="item-name"><?php echo $cuartel['CuartelHectareas']; ?></td>
-									<td class="item-name"><?php echo $cuartel['CuartelAnoPlantacion']; ?></td>
-									<td class="item-name"><?php echo $cuartel['CuartelHileras']; ?></td>
-									<td class="item-name"><?php echo $cuartel['CuartelDistanciaPlant']; ?></td>
-									<td class="item-name"><?php echo $cuartel['CuartelDistanciaHileras']; ?></td>
+									<td class="item-name"><?php echo $s_Icon.' '.$cuartel['CuartelNombre'].$cierre ?></td>
+									<td class="item-name"><?php echo $cuartel['CuartelEspecie'].' '.$cuartel['CuartelVariedad']; ?></td>
+									<td class="item-name"><?php echo Cantidades($cuartel['NPlantas'], 0); ?></td>
+									<td class="item-name"><?php echo Cantidades($cuartel['CuartelHectareas'], 2); ?></td>
+									<td class="item-name"><?php echo Cantidades($cuartel['CuartelAnoPlantacion'], 0); ?></td>
+									<td class="item-name"><?php echo Cantidades($cuartel['CuartelHileras'], 0); ?></td>
+									<td class="item-name"><?php echo Cantidades($cuartel['CuartelDistanciaPlant'], 1); ?></td>
+									<td class="item-name"><?php echo Cantidades($cuartel['CuartelDistanciaHileras'], 1); ?></td>
 									
 									<td class="item-name"><?php echo Cantidades($cuartel['GeoVelocidadProm'], 1); ?></td>
 									<td class="item-name">
@@ -331,7 +361,7 @@ array_push( $arrCuarteles,$row );
 									</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="<?php echo 'view_solicitud_aplicacion_detalle_tractores.php?idSolicitud='.$_GET['view'].'&idZona='.$cuartel['idZona'].'&return=true'; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a>
+											<a href="<?php echo 'view_solicitud_aplicacion_detalle_tractores.php?idSolicitud='.$_GET['view'].'&idZona='.simpleEncode($cuartel['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 									
@@ -355,13 +385,31 @@ array_push( $arrCuarteles,$row );
  
 </section>
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
  
 <?php
 /**********************************************************************************************************************************/

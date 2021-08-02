@@ -8,6 +8,35 @@ define('XMBCXRXSKGC', 1);
 /**********************************************************************************************************************************/
 require_once 'core/Load.Utils.Views.php';
 /**********************************************************************************************************************************/
+/*                                          Modulo de identificacion del documento                                                */
+/**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+//Cargamos la ubicacion 
+$original = "view_notificacion.php";
+$location = $original;
+//Se agregan ubicaciones
+$location .='?view='.$X_Puntero;
+/**********************************************************************************************************************************/
+/*                                          Se llaman a las partes de los formularios                                             */
+/**********************************************************************************************************************************/
+//se indica que no hay que molestar
+if ( !empty($_GET['noMolestar']) )     {
+	//Llamamos al formulario
+	$form_trabajo= 'noMolestar';
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_mnt_correos_list.php';	
+}
+/**********************************************************************************************************************************/
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
@@ -21,17 +50,21 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+
+
+/**************************************************************/
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 principal_notificaciones_listado.Titulo,
 principal_notificaciones_listado.Notificacion,
 principal_notificaciones_listado.Fecha,
+principal_notificaciones_listado.NoMolestar,
 usuarios_listado.Nombre,
 usuarios_listado.Direccion_img
 
 FROM `principal_notificaciones_listado` 
 LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = principal_notificaciones_listado.idUsuario
-WHERE idNotificaciones = {$_GET['view']} ";
+WHERE idNotificaciones = ".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -42,15 +75,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
@@ -59,7 +85,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Notificacion</h5>	
 		</header>
         <div id="div-3" class="tab-content">
@@ -69,7 +95,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 					
 					<div class="col-sm-4" style="margin-bottom:5px;">
 						<?php if ($row_data['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE ?>/LIB_assets/img/usr.png">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $row_data['Direccion_img']; ?>">
 						<?php }?>
@@ -85,7 +111,43 @@ $row_data = mysqli_fetch_assoc ($resultado);
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Mensaje</h2>
 						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Notificacion'];?></p>
 					
-					
+						<?php
+						//Si esta activo el nomolestar
+						if(isset($_GET['noMol'])&&$_GET['noMol']!=''){
+							//mostrar la alerta
+							$Alert_Text  = 'Se han desactivado las alertas por '.simpleDecode($_GET['noMol'], fecha_actual()).' Horas.';
+							alert_post_data(2,1,1, $Alert_Text);
+						}
+				
+						//verifico que exista el no molestar
+						if(isset($row_data['NoMolestar'])&&$row_data['NoMolestar']!=''&&$row_data['NoMolestar']!=0){
+							switch ($row_data['NoMolestar']) {
+								//No molestar de crosstech
+								case 1:
+									echo '
+									<table id="items" style="margin-bottom: 20px;margin-top: 20px;">
+										<tbody>
+											<tr class="item-row">
+												<td>No Molestar</td>
+												<td width="10">
+													<div class="btn-group" style="width: 110px;">
+														<a href="'.$location.'&noMolestar=1&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].'" title="Desactivar Email por 1 Hora" class="btn btn-primary btn-sm tooltip"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+														<a href="'.$location.'&noMolestar=2&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].'" title="Desactivar Email por 2 Horas" class="btn btn-primary btn-sm tooltip"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+														<a href="'.$location.'&noMolestar=3&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].'" title="Desactivar Email por 3 Horas" class="btn btn-primary btn-sm tooltip"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>';
+
+									break;
+								//nada de momento
+								case 2:
+									
+									break;
+							}
+						}
+						?>
 					
 					</div>	
 					<div class="clearfix"></div>
@@ -99,13 +161,31 @@ $row_data = mysqli_fetch_assoc ($resultado);
 
 
 	
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>	
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 
 

@@ -54,9 +54,11 @@ if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Predio creado corre
 if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Predio editado correctamente';}
 if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Predio borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se traen todos los datos de mi usuario
 $query = "SELECT 
 cross_predios_listado.Nombre,
@@ -67,7 +69,7 @@ core_ubicacion_comunas.Nombre AS Comuna
 FROM `cross_predios_listado`
 LEFT JOIN `core_ubicacion_ciudad`                    ON core_ubicacion_ciudad.idCiudad                  = cross_predios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna
-WHERE cross_predios_listado.idPredio = {$_GET['id']}";
+WHERE cross_predios_listado.idPredio = ".$_GET['id'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -100,7 +102,7 @@ LEFT JOIN `cross_predios_listado`                    ON cross_predios_listado.id
 LEFT JOIN `core_ubicacion_ciudad`                    ON core_ubicacion_ciudad.idCiudad                  = cross_predios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna
 
-WHERE cross_predios_listado_zonas.idPredio = {$_GET['id']}
+WHERE cross_predios_listado_zonas.idPredio = ".$_GET['id']."
 ORDER BY cross_predios_listado_zonas.idZona ASC, 
 cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC";
 //Consulta
@@ -145,47 +147,76 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 
 ?>
 <div class="col-sm-12">
-	<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
-		<div class="info-box bg-aqua">
-			<span class="info-box-icon"><i class="fa fa-map-o" aria-hidden="true"></i></span>
-
-			<div class="info-box-content">
-				<span class="info-box-text">Predio</span>
-				<span class="info-box-number"><?php echo $rowdata['Nombre']; ?></span>
-
-				<div class="progress">
-					<div class="progress-bar" style="width: 100%"></div>
-				</div>
-				<span class="progress-description">Resumen</span>
-			</div>
-		</div>
-	</div>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Resumen');?>
 </div>
+<div class="clearfix"></div>
 
 <div class="col-sm-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="<?php echo 'cross_predios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Resumen</a></li>
-				<li class=""><a href="<?php echo 'cross_predios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'cross_predios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Estado</a></li>
-				<li class=""><a href="<?php echo 'cross_predios_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Cuarteles</a></li>
+				<li class="active"><a href="<?php echo 'cross_predios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'cross_predios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'cross_predios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+				<li class=""><a href="<?php echo 'cross_predios_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Editar Cuarteles</a></li>
 			</ul>	
 		</header>
         <div id="div-3" class="tab-content">
-			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-						echo '<p>No ha ingresado Una API de Google Maps</p>';
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						
+						<style>
+							.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
+							.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
+						</style>
+			
+						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
 							
+							/* ************************************************************************** */
+							class MyMarker extends google.maps.OverlayView {
+								constructor(params) {
+									super();
+									this.position = params.position;
+
+									const content = document.createElement('div');
+									content.classList.add('my_marker');
+									content.textContent = params.label;
+									content.style.position = 'absolute';
+									content.style.transform = 'translate(-50%, -100%)';
+
+									const container = document.createElement('div');
+									container.style.position = 'absolute';
+									container.style.cursor = 'pointer';
+									container.appendChild(content);
+
+									this.container = container;
+								}
+
+								onAdd() {
+									this.getPanes().floatPane.appendChild(this.container);
+								}
+
+								onRemove() {
+									this.container.remove();
+								}
+
+								draw() {
+									const pos = this.getProjection().fromLatLngToDivPixel(this.position);
+									this.container.style.left = pos.x + 'px';
+									this.container.style.top = pos.y + 'px';
+								}
+							}
+  
+							/* ************************************************************************** */
 							var map;
 							var marker;
 							var geocoder = new google.maps.Geocoder();
@@ -212,16 +243,23 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 								var polygons = [];
 								<?php
 								//variables
-								$Latitud_z       = 0;
-								$Longitud_z      = 0;
-								$Latitud_z_prom  = 0;
-								$Longitud_z_prom = 0;
-								$zcounter        = 0; 
+								$Latitud_z        = 0;
+								$Longitud_z       = 0;
+								$Latitud_z_prom   = 0;
+								$Longitud_z_prom  = 0;
+								$zcounter         = 0; 
+								$zcounter2        = 0;
+								
 								//Se filtra por zona
 								filtrar($arrZonas, 'idZona');
 								//se recorre
 								foreach ($arrZonas as $todaszonas=>$zonas) {
 									
+									$Latitud_z_2       = 0;
+									$Longitud_z_2      = 0;
+									$Latitud_z_prom_2  = 0;
+									$Longitud_z_prom_2 = 0;
+									$zcounter3         = 0;
 									echo 'var path'.$todaszonas.' = [';
 
 									//Variables con la primera posicion
@@ -233,12 +271,15 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 											echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
 											';
 											if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){	
-												$Latitud_x = $puntos['Latitud'];
+												$Latitud_x  = $puntos['Latitud'];
 												$Longitud_x = $puntos['Longitud'];
 												//Calculos para centrar mapa
-												$Latitud_z  = $Latitud_z+$puntos['Latitud'];
-												$Longitud_z = $Longitud_z+$puntos['Longitud'];
+												$Latitud_z    = $Latitud_z+$puntos['Latitud'];
+												$Longitud_z   = $Longitud_z+$puntos['Longitud'];
+												$Latitud_z_2  = $Latitud_z_2+$puntos['Latitud'];
+												$Longitud_z_2 = $Longitud_z_2+$puntos['Longitud'];
 												$zcounter++;
+												$zcounter3++;
 											}
 										}
 									}
@@ -267,7 +308,36 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 										echo 'codeAddress();';
 									}*/
 									
-										
+									if($zcounter3!=0){
+										$Latitud_z_prom_2  = $Latitud_z_2/$zcounter3;
+										$Longitud_z_prom_2 = $Longitud_z_2/$zcounter3;
+									}
+									// The label that pops up when the mouse moves within each polygon.
+									echo '
+									myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
+									
+									var marker = new MyMarker({
+										position: myLatlng,
+										label: "'.$zonas[0]['Nombre'].'"
+									});
+									marker.setMap(map);
+  
+									// When the mouse moves within the polygon, display the label and change the BG color.
+									google.maps.event.addListener(polygons['.$zcounter2.'], "mousemove", function(event) {
+										polygons['.$zcounter2.'].setOptions({
+											fillColor: "#00FF00"
+										});
+									});
+
+									// WHen the mouse moves out of the polygon, hide the label and change the BG color.
+									google.maps.event.addListener(polygons['.$zcounter2.'], "mouseout", function(event) {
+										polygons['.$zcounter2.'].setOptions({
+											fillColor: "#FF0000"
+										});
+									});
+									';
+									
+									$zcounter2++;	
 								}
 								//Centralizado del mapa
 								if($zcounter!=0){
@@ -284,6 +354,11 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 								
 								
 								 ?>
+								 
+								 
+
+  
+  
 							}
 							/* ************************************************************************** */
 							function codeAddress() {
@@ -314,17 +389,20 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
- <div class="col-sm-8 fcenter">
+ } elseif ( ! empty($_GET['new']) ) { 
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+
+<div class="col-sm-8 fcenter">
 	<div class="box dark">	
 		<header>		
-			<div class="icons"><i class="fa fa-edit"></i></div>		
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
 			<h5>Crear Predio</h5>	
 		</header>	
 		<div id="div-1" class="body">	
@@ -335,19 +413,19 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 				if(isset($Nombre)) {          $x1  = $Nombre;           }else{$x1  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre del Predio', 'Nombre', $x1, 2);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre del Predio', 'Nombre', $x1, 2);
 				
 				
-				$Form_Imputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
-				$Form_Imputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Imputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 					
 				?>
 			
 				<div class="form-group">	
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
 				</div>
 			</form>
 			<?php widget_validator(); ?> 
@@ -389,7 +467,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $z="WHERE cross_predios_listado.idPredio!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND cross_predios_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";	
+$z.=" AND cross_predios_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Se aplican los filtros
@@ -454,7 +532,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
@@ -479,17 +557,17 @@ array_push( $arrUsers,$row );
 				if(isset($Direccion)) {       $x6  = $Direccion;    }else{$x6  = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_input_text( 'Nombre del Predio', 'Nombre', $x1, 1);
-				$Form_Imputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				$Form_Imputs->form_select_country('Pais','idPais', $x3, 1, $dbConn);
-				$Form_Imputs->form_select_depend1('Ciudad','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_input_text('Nombre del Predio', 'Nombre', $x1, 1);
+				$Form_Inputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+				$Form_Inputs->form_select_country('Pais','idPais', $x3, 1, $dbConn);
+				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x5, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');
-				$Form_Imputs->form_input_icon( 'Direccion', 'Direccion', $x6, 1,'fa fa-map'); 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x6, 1,'fa fa-map'); 
 				
 				
-				$Form_Imputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				
 				<div class="form-group">
@@ -511,7 +589,7 @@ array_push( $arrUsers,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Predios</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Predios</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -525,15 +603,15 @@ array_push( $arrUsers,$row );
 						<th>
 							<div class="pull-left">Nombre</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
-								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc"></i></a>
-								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -548,13 +626,13 @@ array_push( $arrUsers,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>			
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_predio.php?view='.$usuarios['idPredio']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idPredio']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_predio.php?view='.simpleEncode($usuarios['idPredio'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idPredio']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
-									$ubicacion = $location.'&del='.$usuarios['idPredio'];
+									$ubicacion = $location.'&del='.simpleEncode($usuarios['idPredio'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el Predio '.$usuarios['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>
 						</td>

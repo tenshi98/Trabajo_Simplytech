@@ -18,15 +18,15 @@ require_once 'core/Web.Header.Views.php';
 $query = "SELECT 
 vehiculos_listado.Nombre AS NombreEquipo,
 vehiculos_listado.LimiteVelocidad,
-vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".FechaSistema,
-vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".HoraSistema,
-vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".GeoLatitud,
-vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".GeoLongitud,
-vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".GeoVelocidad
+vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".FechaSistema,
+vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".HoraSistema,
+vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".GeoLatitud,
+vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".GeoLongitud,
+vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".GeoVelocidad
 
-FROM `vehiculos_listado_tablarelacionada_".$_GET['idVehiculo']."`
-LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".idVehiculo
- WHERE vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".idTabla = {$_GET['view']}
+FROM `vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual())."`
+LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".idVehiculo
+ WHERE vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".idTabla = ".simpleDecode($_GET['view'], fecha_actual())."
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -49,7 +49,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
 		</header>
         <div class="table-responsive">
@@ -58,7 +58,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			$explanation .= '<strong>Equipo: </strong>'.$rowdata['NombreEquipo'].'<br/>';
 			$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowdata['GeoVelocidad'], 0).'/'.Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h<br/>';
 					
-			echo mapa1($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'])?>
+			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
         </div>	
 	</div>
 </div>

@@ -21,6 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 //se traen los datos basicos de la licitacion
 $query = "SELECT 
 licitacion_listado.Codigo, 
@@ -51,7 +64,7 @@ LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema             
 LEFT JOIN `core_licitacion_tipos`        ON core_licitacion_tipos.idTipoLicitacion   = licitacion_listado.idTipoLicitacion
 LEFT JOIN `core_sistemas_opciones`       ON core_sistemas_opciones.idOpciones        = licitacion_listado.idOpcionItem
 
-WHERE licitacion_listado.idLicitacion={$_GET['view']} ";
+WHERE licitacion_listado.idLicitacion=".$X_Puntero;
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -62,15 +75,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
@@ -87,7 +93,7 @@ usuarios_listado.Nombre AS Usuario
 FROM `licitacion_listado_historial` 
 LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = licitacion_listado_historial.idTipo
 LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = licitacion_listado_historial.idUsuario
-WHERE licitacion_listado_historial.idLicitacion = {$_GET['view']} 
+WHERE licitacion_listado_historial.idLicitacion = ".$X_Puntero." 
 ORDER BY licitacion_listado_historial.idHistorial ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -99,15 +105,8 @@ if(!$resultado){
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 	//generar log
-	error_log("========================================================================================================================================", 0);
-	error_log("Usuario: ". $NombreUsr, 0);
-	error_log("Transaccion: ". $Transaccion, 0);
-	error_log("-------------------------------------------------------------------", 0);
-	error_log("Error code: ". mysqli_errno($dbConn), 0);
-	error_log("Error description: ". mysqli_error($dbConn), 0);
-	error_log("Error query: ". $query, 0);
-	error_log("-------------------------------------------------------------------", 0);
-					
+	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 }
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrHistorial,$row );
@@ -145,7 +144,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	".$z."
 	FROM `licitacion_listado_level_1`
 	".$leftjoin."
-	WHERE licitacion_listado_level_1.idLicitacion={$_GET['view']}
+	WHERE licitacion_listado_level_1.idLicitacion=".$X_Puntero."
 	ORDER BY licitacion_listado_level_1.Codigo ASC ".$orderby."
 
 	";
@@ -159,15 +158,8 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
 		//generar log
-		error_log("========================================================================================================================================", 0);
-		error_log("Usuario: ". $NombreUsr, 0);
-		error_log("Transaccion: ". $Transaccion, 0);
-		error_log("-------------------------------------------------------------------", 0);
-		error_log("Error code: ". mysqli_errno($dbConn), 0);
-		error_log("Error description: ". mysqli_error($dbConn), 0);
-		error_log("Error query: ". $query, 0);
-		error_log("-------------------------------------------------------------------", 0);
-						
+		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrLicitacion,$row );
@@ -359,7 +351,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Ver Datos del Contrato</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
@@ -402,13 +394,13 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==1){ ?>
 								<tr class="odd">
 									<td>Valor Mensual</td>
-									<td><?php echo Valores($rowdata['ValorMensual'], 0);?></td>
+									<td align="right"><?php echo Valores($rowdata['ValorMensual'], 0);?></td>
 								</tr>
 							<?php } ?>
 							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==2){ ?>
 								<tr class="odd">
 									<td>Presupuesto</td>
-									<td><?php echo Valores($rowdata['Presupuesto'], 0);?></td>
+									<td align="right"><?php echo Valores($rowdata['Presupuesto'], 0);?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
@@ -489,13 +481,31 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	</div>	
 <?php } ?>
 	
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
-	<div class="clearfix"></div>
-		<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<?php 
+//si se entrega la opcion de mostrar boton volver
+if(isset($_GET['return'])&&$_GET['return']!=''){ 
+	//para las versiones antiguas
+	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-	</div>
-<?php } ?>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+	<?php 
+	//para las versiones nuevas que indican donde volver
+	}else{ 
+		$string = basename($_SERVER["REQUEST_URI"], ".php");
+		$array  = explode("&return=", $string, 3);
+		$volver = $array[1];
+		?>
+		<div class="clearfix"></div>
+		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<div class="clearfix"></div>
+		</div>
+		
+	<?php }		
+} ?>
 
 <?php
 /**********************************************************************************************************************************/

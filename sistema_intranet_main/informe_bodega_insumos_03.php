@@ -34,9 +34,9 @@ $query = "SELECT
 insumos_listado.StockLimite,
 insumos_listado.Nombre AS NombreProd,
 sistema_productos_uml.Nombre AS UnidadMedida,
-(SELECT SUM(Cantidad_ing) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega={$_GET['idBodega']}  LIMIT 1) AS stock_entrada,
-(SELECT SUM(Cantidad_eg) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega={$_GET['idBodega']} LIMIT 1) AS stock_salida,
-(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega={$_GET['idBodega']} LIMIT 1) AS NombreBodega
+(SELECT SUM(Cantidad_ing) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega=".$_GET['idBodega']."  LIMIT 1) AS stock_entrada,
+(SELECT SUM(Cantidad_eg) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega=".$_GET['idBodega']." LIMIT 1) AS stock_salida,
+(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega=".$_GET['idBodega']." LIMIT 1) AS NombreBodega
 FROM `insumos_listado`
 LEFT JOIN `sistema_productos_uml`                ON sistema_productos_uml.idUml                        = insumos_listado.idUml
 
@@ -57,19 +57,20 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrProductos,$row );
 } ?>
+<div class="col-sm-12 clearfix">
+	<?php
+	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$zz .= '&idBodega='.$_GET['idBodega'];
+	?>			
+	<a target="new" href="<?php echo 'informe_bodega_insumos_03_to_excel.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+	<a target="new" href="<?php echo 'informe_bodega_insumos_03_to_pdf.php?bla=bla'.$zz ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
+	<a target="new" href="<?php echo 'informe_bodega_insumos_03_to_print.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-5 pull-right margin_width"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>
+</div>
+
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Listado de Insumos de la bodega <?php echo $arrProductos[0]['NombreBodega']; ?></h5>
-			<div class="toolbar">
-				<?php
-				$zz  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-				$zz .= '&idBodega='.$_GET['idBodega'];
-				?>
-				<a target="new" href="informe_bodega_insumos_03_to_excel.php<?php echo $zz ?>" class="btn btn-sm btn-metis-2"><i class="fa fa-file-excel-o"></i> Exportar a Excel</a>
-				<a target="new" href="informe_bodega_insumos_03_to_pdf.php<?php echo $zz ?>" class="btn btn-sm btn-metis-3"><i class="fa fa-file-pdf-o"></i> Exportar a PDF</a>
-				<a target="new" href="informe_bodega_insumos_03_to_print.php<?php echo $zz ?>" class="btn btn-sm btn-metis-5"><i class="fa fa-print"></i> Imprimir</a>
-			</div>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Insumos de la bodega <?php echo $arrProductos[0]['NombreBodega']; ?></h5>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -97,25 +98,24 @@ array_push( $arrProductos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+ } else  {
+$z = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		  
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z="bodegas_insumos_listado.idSistema>=0";	
-}else{
-	$z="bodegas_insumos_listado.idSistema={$_SESSION['usuario']['basic_data']['idSistema']} AND usuarios_bodegas_insumos.idUsuario = {$_SESSION['usuario']['basic_data']['idUsuario']}";	
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$z .= " AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
  
  ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -126,8 +126,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				if(isset($idBodega)) {      $x1  = $idBodega;    }else{$x1  = '';}
 
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				$Form_Imputs->form_select_join_filter('Bodega','idBodega', $x1, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z, $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_select_join_filter('Bodega','idBodega', $x1, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z, $dbConn);
 				?>        
 	   
 				<div class="form-group">

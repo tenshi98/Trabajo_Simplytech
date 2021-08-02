@@ -6,6 +6,10 @@ if( ! defined('XMBCXRXSKGC')) {
     die('No tienes acceso a esta carpeta o archivo.');
 }
 /*******************************************************************************************************************/
+/*                                          Verifica si la Sesion esta activa                                      */
+/*******************************************************************************************************************/
+require_once '0_validate_user_1.php';	
+/*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
@@ -68,45 +72,39 @@ if( ! defined('XMBCXRXSKGC')) {
 	if ( !empty($_POST['idLevel_24']) )     $idLevel[24]     = $_POST['idLevel_24'];
 	if ( !empty($_POST['idLevel_25']) )     $idLevel[25]     = $_POST['idLevel_25'];
 
-	
-	
-	
-	
-	
 
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
 
 	//limpio y separo los datos de la cadena de comprobacion
 	$form_obligatorios = str_replace(' ', '', $_SESSION['form_require']);
-	$piezas = explode(",", $form_obligatorios);
+	$INT_piezas = explode(",", $form_obligatorios);
 	//recorro los elementos
-	foreach ($piezas as $valor) {
+	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
-		switch ($valor) {
+		switch ($INT_valor) {
 			case 'idLicitacion':        if(empty($idLicitacion)){         $error['idLicitacion']          = 'error/No ha seleccionado la licitacion';}break;
 			case 'idSistema':           if(empty($idSistema)){            $error['idSistema']             = 'error/No ha seleccionado el sistema';}break;
 			case 'Codigo':              if(empty($Codigo)){               $error['Codigo']                = 'error/No ha ingresado el codigo';}break;
 			case 'Nombre':              if(empty($Nombre)){               $error['Nombre']                = 'error/No ha ingresado el nombre';}break;
 			case 'FechaInicio':         if(empty($FechaInicio)){          $error['FechaInicio']           = 'error/No ha ingresado la Fecha de inicio';}break;
 			case 'FechaTermino':        if(empty($FechaTermino)){         $error['FechaTermino']          = 'error/No ha ingresado la Fecha de termino';}break;
-			case 'Presupuesto':         if(empty($Presupuesto)){          $error['Presupuesto']           = 'error/No ha ingresado el presupuesto';}break;
+			case 'Presupuesto':         if(!isset($Presupuesto)){         $error['Presupuesto']           = 'error/No ha ingresado el presupuesto';}break;
 			case 'idEstado':            if(empty($idEstado)){             $error['idEstado']              = 'error/No ha seleccionado el estado';}break;
 			case 'idBodegaProd':        if(empty($idBodegaProd)){         $error['idBodegaProd']          = 'error/No ha seleccionado la bodega de productos';}break;
 			case 'idBodegaIns':         if(empty($idBodegaIns)){          $error['idBodegaIns']           = 'error/No ha seleccionado la bodega de insumos';}break;
 			case 'idAprobado':          if(empty($idAprobado)){           $error['idAprobado']            = 'error/No ha seleccionado el estado de aprobacion';}break;
 			case 'idCliente':           if(empty($idCliente)){            $error['idCliente']             = 'error/No ha seleccionado el cliente';}break;
 			case 'idTipoLicitacion':    if(empty($idTipoLicitacion)){     $error['idTipoLicitacion']      = 'error/No ha seleccionado el tipo de contrato';}break;
-			case 'ValorMensual':        if(empty($ValorMensual)){         $error['ValorMensual']          = 'error/No ha ingresado el valor mensual';}break;
+			case 'ValorMensual':        if(!isset($ValorMensual)){        $error['ValorMensual']          = 'error/No ha ingresado el valor mensual';}break;
 			case 'idOpcionItem':        if(empty($idOpcionItem)){         $error['idOpcionItem']          = 'error/No ha seleccionado la opcion de mostrar itemizado';}break;
 			
 			case 'idUtilizable':        if(empty($idUtilizable)){         $error['idUtilizable']          = 'error/No ha seleccionado si es utilizable';}break;
-			case 'idFrecuencia':        if(empty($idFrecuencia)){         $error['idFrecuencia']          = 'error/No ha seleccionado la unidad de medida';}break;
-			case 'Cantidad':            if(empty($Cantidad)){             $error['Cantidad']              = 'error/No ha ingresado la cantidad';}break;
-			case 'Valor':               if(empty($Valor)){                $error['Valor']                 = 'error/No ha ingresado el valor';}break;
-			case 'ValorTotal':          if(empty($ValorTotal)){           $error['ValorTotal']            = 'error/No ha ingresado el valor total';}break;
+			case 'idFrecuencia':        if(!isset($idFrecuencia)){        $error['idFrecuencia']          = 'error/No ha seleccionado la unidad de medida';}break;
+			case 'Cantidad':            if(!isset($Cantidad)){            $error['Cantidad']              = 'error/No ha ingresado la cantidad';}break;
+			case 'Valor':               if(!isset($Valor)){               $error['Valor']                 = 'error/No ha ingresado el valor';}break;
+			case 'ValorTotal':          if(!isset($ValorTotal)){          $error['ValorTotal']            = 'error/No ha ingresado el valor total';}break;
 			case 'TiempoProgramado':    if(empty($TiempoProgramado)){     $error['TiempoProgramado']      = 'error/No ha ingresado el tiempo programado';}break;
 			case 'idTrabajo':           if(empty($idTrabajo)){            $error['idTrabajo']             = 'error/No ha seleccionado el tipo de trabajo';}break;
 			case 'lvl':                 if(empty($lvl)){                  $error['lvl']                   = 'error/No ha ingresado el nivel';}break;
@@ -140,7 +138,12 @@ if( ! defined('XMBCXRXSKGC')) {
 
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/	
+	if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){  $error['Codigo'] = 'error/Edita Codigo, contiene palabras no permitidas'; }	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -157,7 +160,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'licitacion_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'licitacion_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre de la licitacion ya existe en el sistema';}
@@ -185,7 +188,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `licitacion_listado` (idSistema, Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto,
 				idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -204,7 +207,7 @@ if( ! defined('XMBCXRXSKGC')) {
 					
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -249,7 +252,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)&&isset($idLicitacion)){
-				$ndata_1 = db_select_nrows ('Nombre', 'licitacion_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idLicitacion!='".$idLicitacion."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'licitacion_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idLicitacion!='".$idLicitacion."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre de la licitacion ya existe en el sistema';}
@@ -260,24 +263,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
-				$query = "SELECT Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns,
-				idSistema, idAprobado, idCliente, idEstado, idTipoLicitacion, ValorMensual, idOpcionItem
-				FROM `licitacion_listado`
-				WHERE idLicitacion = ".$idLicitacion;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}
-				$rowdata = mysqli_fetch_assoc ($resultado);
+				$rowdata = db_select_data (false, 'Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns, idSistema, idAprobado, idCliente, idEstado, idTipoLicitacion, ValorMensual, idOpcionItem', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
@@ -338,7 +324,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -379,46 +365,50 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//maximo de registros
-			$nmax = 25;
-			//se borra la licitacion
-			$query  = "DELETE FROM `licitacion_listado` WHERE idLicitacion = {$_GET['del']}";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
+			//Variable
+			$errorn = 0;
 			
-			
-			//se borran los datos relacionados
-			for ($i = 1; $i <= $nmax; $i++) {
-				$query  = "DELETE FROM `licitacion_listado_level_".$i."` WHERE idLicitacion = {$_GET['del']}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-			}
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
+				$indice = simpleDecode($_GET['del'], fecha_actual());
+			}else{
+				$indice = $_GET['del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
-			//redirijo			
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//maximo de registros
+				$nmax = 25;
+				
+				//se borran los datos
+				$resultado = db_delete_data (false, 'licitacion_listado', 'idLicitacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				//se borran los datos relacionados
+				for ($i = 1; $i <= $nmax; $i++) {
+					$resultado = db_delete_data (false, 'licitacion_listado_level_'.$i, 'idLicitacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				}
+					
+				//redirijo			
+				header( 'Location: '.$location.'&deleted=true' );
+				die;
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
 
 		break;	
 				
@@ -434,7 +424,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($lvl)&&isset($Nombre)&&isset($idLicitacion)&&isset($idSistema)&&isset($Codigo)){
-				$ndata_1 = db_select_nrows ('Nombre', 'licitacion_listado_level_'.$lvl, '', "Nombre='".$Nombre."' AND idLicitacion='".$idLicitacion."' AND idSistema='".$idSistema."' AND Codigo='".$Codigo."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'licitacion_listado_level_'.$lvl, '', "Nombre='".$Nombre."' AND idLicitacion='".$idLicitacion."' AND idSistema='".$idSistema."' AND Codigo='".$Codigo."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El dato ya existe';}
@@ -470,7 +460,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				$query  = "INSERT INTO `licitacion_listado_level_".$lvl."` (idSistema,idLicitacion, idUtilizable,Nombre,Codigo,idFrecuencia,Cantidad,Valor,ValorTotal,
 				TiempoProgramado, idTrabajo
 				".$xbla." ) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -494,7 +484,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -537,24 +527,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			if ( empty($error) ) {
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
-				$query = "SELECT idSistema, idLicitacion, idUtilizable, Nombre, Codigo, 
-				idFrecuencia, Cantidad, Valor, ValorTotal, TiempoProgramado, idTrabajo
-				FROM `licitacion_listado_level_".$lvl."`
-				WHERE idLevel_".$lvl." = '".$idLevel[$lvl]."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-											
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-				}
-				$rowdata = mysqli_fetch_assoc ($resultado);
+				$rowdata = db_select_data (false, 'idSistema, idLicitacion, idUtilizable, Nombre, Codigo, idFrecuencia, Cantidad, Valor, ValorTotal, TiempoProgramado, idTrabajo', 'licitacion_listado_level_'.$lvl, '', 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				/*****************************************************/
 				//Filtros
@@ -607,7 +580,7 @@ if( ! defined('XMBCXRXSKGC')) {
 							
 						// inserto los datos de registro en la db
 						$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES ({$a} )";
+						VALUES (".$a.")";
 						//Consulta
 						$resultado = mysqli_query ($dbConn, $query);
 						//Si ejecuto correctamente la consulta
@@ -649,83 +622,84 @@ if( ! defined('XMBCXRXSKGC')) {
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los datos
-			for ($i = $_GET['lvl']; $i <= $_GET['nmax']; $i++) {
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_idLevel']) OR !validaEntero($_GET['del_idLevel']))&&$_GET['del_idLevel']!=''){
+				$indice = simpleDecode($_GET['del_idLevel'], fecha_actual());
+			}else{
+				$indice = $_GET['del_idLevel'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
-				/*****************************************************/
-				// Se traen todos los datos de la licitacion
-				$query = "SELECT Nombre
-				FROM `licitacion_listado_level_".$i."`
-				WHERE idLevel_".$_GET['lvl']." = {$_GET['del_idLevel']}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-											
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-				}
-				$rowdata = mysqli_fetch_assoc ($resultado);
-				
-				/*****************************************************/
-				// Se traen todos los datos de la licitacion
-				$query  = "DELETE FROM `licitacion_listado_level_".$i."` WHERE idLevel_".$_GET['lvl']." = {$_GET['del_idLevel']}";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			if($errorn==0){
+				//se borran los datos
+				for ($i = $_GET['lvl']; $i <= $_GET['nmax']; $i++) {
 					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-					
-				/*****************************************************/
-				//se crean el mensaje
-				$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
-				$hist_Observacion .= '-Se elimina el item '.$rowdata['Nombre'].'<br/>';
-					
-				/*****************************************************/
-				//se guarda el registro
-				if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
-					//Se guarda en historial la accion
-					$a  = "'".$idLicitacion."'";
-					$a .= ",'".fecha_actual()."'";
-					$a .= ",'3'";                                                    //Creacion Satisfactoria
-					$a .= ",'".$hist_Observacion."'";                                //Observacion
-					$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-							
-					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
+					/*****************************************************/
+					// Se traen todos los datos de la licitacion
+					$rowdata = db_select_data (false, 'Nombre', 'licitacion_listado_level_'.$i, '', 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+					/*****************************************************/
+					//se borran los datos
+					$resultado = db_delete_data (false, 'licitacion_listado_level_'.$i, 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
+					/*****************************************************/
+					//se crean el mensaje
+					$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
+					$hist_Observacion .= '-Se elimina el item '.$rowdata['Nombre'].'<br/>';
+						
+					/*****************************************************/
+					//se guarda el registro
+					if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
+						//Se guarda en historial la accion
+						$a  = "'".$idLicitacion."'";
+						$a .= ",'".fecha_actual()."'";
+						$a .= ",'3'";                                                    //Creacion Satisfactoria
+						$a .= ",'".$hist_Observacion."'";                                //Observacion
+						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
 								
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
+						// inserto los datos de registro en la db
+						$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
+						VALUES (".$a.")";
+						//Consulta
+						$resultado = mysqli_query ($dbConn, $query);
+						//Si ejecuto correctamente la consulta
+						if(!$resultado){
+							//Genero numero aleatorio
+							$vardata = genera_password(8,'alfanumerico');
+									
+							//Guardo el error en una variable temporal
+							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+									
+						}
 					}
 				}
+					
+				//redirijo			
+				header( 'Location: '.$location.'&deleted=true' );
+				die;
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
 			}
-				
-			//redirijo			
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			
 
 		break;							
 /*******************************************************************************************************************/
@@ -735,32 +709,16 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idLicitacion  = $_GET['id'];
-			$estado        = $_GET['estado'];
+			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
 			
 			/*****************************************************/
 			// Se traen todos los datos de la licitacion
-			$query = "SELECT idEstado
-			FROM `licitacion_listado`
-			WHERE idLicitacion = ".$idLicitacion;
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-										
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-			}
-			$rowdata = mysqli_fetch_assoc ($resultado);
-				
+			$rowdata = db_select_data (false, 'idEstado', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 			/*****************************************************/
 			// Se traen todos los datos de la licitacion
-			$query  = "UPDATE licitacion_listado SET idEstado = '$estado'	
-			WHERE idLicitacion    = '$idLicitacion'";
+			$query  = "UPDATE licitacion_listado SET idEstado = '".$idEstado."'	
+			WHERE idLicitacion = '".$idLicitacion."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
@@ -770,7 +728,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				//se crean el mensaje
 				$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
 					
-				if(isset($estado) && $estado != $rowdata['idEstado']){   $hist_Observacion .= '-Se cambia el Estado<br/>';}
+				if(isset($idEstado) && $idEstado != $rowdata['idEstado']){   $hist_Observacion .= '-Se cambia el Estado<br/>';}
 				
 				/*****************************************************/
 				//se guarda el registro
@@ -784,7 +742,7 @@ if( ! defined('XMBCXRXSKGC')) {
 						
 					// inserto los datos de registro en la db
 					$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES ({$a} )";
+					VALUES (".$a.")";
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					//Si ejecuto correctamente la consulta
@@ -830,7 +788,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($Nombre)&&isset($idSistema)){
-				$ndata_1 = db_select_nrows ('Nombre', 'licitacion_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn);
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'licitacion_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre de la licitacion ya existe en el sistema';}
@@ -855,7 +813,7 @@ if( ! defined('XMBCXRXSKGC')) {
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `licitacion_listado` (idSistema, Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto,
 				idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente) 
-				VALUES ({$a} )";
+				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
 				//Si ejecuto correctamente la consulta
@@ -890,9 +848,9 @@ if( ! defined('XMBCXRXSKGC')) {
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idLicitacion  = $_GET['status'];
-			$estado        = $_GET['estado'];
-			$query  = "UPDATE licitacion_listado SET idEstado = '$estado'	
-			WHERE idLicitacion    = '$idLicitacion'";
+			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
+			$query  = "UPDATE licitacion_listado SET idEstado = '".$idEstado."'	
+			WHERE idLicitacion = '".$idLicitacion."'";
 			//Consulta
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta

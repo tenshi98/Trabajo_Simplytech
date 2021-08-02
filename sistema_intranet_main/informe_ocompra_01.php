@@ -40,7 +40,7 @@ if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){       $z .= " AND oco
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){       $z .= " AND ocompra_listado.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){         $z .= " AND ocompra_listado.idEstado=".$_GET['idEstado'];}
 if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin'] != ''){   
-	$z .= " AND ocompra_listado.Creacion_fecha BETWEEN '{$_GET['Creacion_fecha_ini']}' AND '{$_GET['Creacion_fecha_fin']}'" ;
+	$z .= " AND ocompra_listado.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'" ;
 }
 /**************************************************************/
 if(isset($_GET['idServicio']) && $_GET['idServicio'] != ''){ $z1 .= " AND ocompra_listado_existencias_servicios.idServicio=".$_GET['idServicio'];}
@@ -182,7 +182,7 @@ array_push( $arrProductos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table"></i></div><h5>Ordenes de Compra Incompletas</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ordenes de Compra Incompletas</h5>
 		</header>
 		<div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -209,8 +209,8 @@ array_push( $arrProductos,$row );
 							<td><?php echo Cantidades_decimales_justos($productos['Cantidad']-$productos['cant_ingresada']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_busqueda_general_01.php?idOcompra='.$productos['idOcompra'].'&type=1&submit_filter=Filtrar'; ?>" title="Ver Documentos Relacionados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_busqueda_general_01.php?idOcompra='.$productos['idOcompra'].'&type=1&submit_filter=Filtrar'; ?>" title="Ver Documentos Relacionados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -225,8 +225,8 @@ array_push( $arrProductos,$row );
 							<td><?php echo Cantidades_decimales_justos($productos['Cantidad']-$productos['cant_ingresada']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_busqueda_general_01.php?idOcompra='.$productos['idOcompra'].'&type=1&submit_filter=Filtrar'; ?>" title="Ver Documentos Relacionados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_busqueda_general_01.php?idOcompra='.$productos['idOcompra'].'&type=1&submit_filter=Filtrar'; ?>" title="Ver Documentos Relacionados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -241,8 +241,8 @@ array_push( $arrProductos,$row );
 							<td><?php echo Cantidades_decimales_justos($productos['Cantidad']-$productos['cant_ingresada']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_busqueda_general_01.php?idOcompra='.$productos['idOcompra'].'&type=1&submit_filter=Filtrar'; ?>" title="Ver Documentos Relacionados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_busqueda_general_01.php?idOcompra='.$productos['idOcompra'].'&type=1&submit_filter=Filtrar'; ?>" title="Ver Documentos Relacionados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -257,8 +257,8 @@ array_push( $arrProductos,$row );
 							<td><?php echo Cantidades_decimales_justos($productos['Cantidad']-$productos['cant_ingresada']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.$productos['idOcompra']; ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_busqueda_general_01.php?idOcompra='.$productos['idOcompra'].'&type=1&submit_filter=Filtrar'; ?>" title="Ver Documentos Relacionados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_busqueda_general_01.php?idOcompra='.$productos['idOcompra'].'&type=1&submit_filter=Filtrar'; ?>" title="Ver Documentos Relacionados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -271,16 +271,21 @@ array_push( $arrProductos,$row );
 <?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12 fcenter" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-sm-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 //Verifico el tipo de usuario que esta ingresando
-$z="idSistema={$_SESSION['usuario']['basic_data']['idSistema']} ";	
-$usrfil = 'usuarios_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+//Verifico el tipo de usuario que esta ingresando
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+}
 
 //filtro
 $zx1 = "idProducto=0";
@@ -288,7 +293,7 @@ $zx1 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_productos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -314,7 +319,7 @@ $zx2 = "idProducto=0";
 $arrPermisos = array();
 $query = "SELECT idProducto
 FROM `core_sistemas_insumos`
-WHERE idSistema={$_SESSION['usuario']['basic_data']['idSistema']}";
+WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -339,7 +344,7 @@ foreach ($arrPermisos as $prod) {
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
-			<div class="icons"><i class="fa fa-edit"></i></div>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div id="div-1" class="body">
@@ -360,21 +365,21 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idProducto)) {          $x11 = $idProducto;          }else{$x11 = '';}
 				
 				//se dibujan los inputs
-				$Form_Imputs = new Form_Inputs();
-				echo '<h3>Datos Basicos</h3>';
-				$Form_Imputs->form_input_number('Numero OC', 'idOcompra', $x1, 1);
-				$Form_Imputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
-				$Form_Imputs->form_date('F Creacion Ini','Creacion_fecha_ini', $x3, 1);
-				$Form_Imputs->form_date('F Creacion Fin','Creacion_fecha_fin', $x4, 1);
-				$Form_Imputs->form_select('Sistema Origen','idSistema', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Imputs->form_select_join_filter('Usuario Creador','idUsuario', $x6, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Imputs->form_select('Estado','idEstado', $x7, 1, 'idEstado', 'Nombre', 'core_oc_estado', 0, '', $dbConn);
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_input_number('Numero OC', 'idOcompra', $x1, 1);
+				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
+				$Form_Inputs->form_date('F Creacion Ini','Creacion_fecha_ini', $x3, 1);
+				$Form_Inputs->form_date('F Creacion Fin','Creacion_fecha_fin', $x4, 1);
+				$Form_Inputs->form_select('Sistema Origen','idSistema', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x6, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select('Estado','idEstado', $x7, 1, 'idEstado', 'Nombre', 'core_oc_estado', 0, '', $dbConn);
 				
-				echo '<h3>Contenido</h3>';
-				$Form_Imputs->form_select_filter('Servicio','idServicio', $x8, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_select_filter('Equipos','idEquipo', $x9, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
-				$Form_Imputs->form_select_filter('Insumo','idInsumo', $x10, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
-				$Form_Imputs->form_select_filter('Producto','idProducto', $x11, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_tittle(3, 'Contenido');
+				$Form_Inputs->form_select_filter('Servicio','idServicio', $x8, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x9, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
+				$Form_Inputs->form_select_filter('Insumo','idInsumo', $x10, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x11, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 
 				
 				?>        
