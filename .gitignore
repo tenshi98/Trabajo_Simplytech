@@ -1,4 +1,10 @@
-
+### Archivos Temporales
 desktop.ini
-ShedkoFolderico4_10901000.ico
+Thumbs.db
+*.ico
 .gitignore
+### Archivos Especificos
+/sistema_intranet_main/0cron_*.*
+/sistema_intranet_main/0test*.*
+/sistema_intranet_main/1_logs_*.*
+/sistema_intranet_main/error_log.*
