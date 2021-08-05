@@ -113,13 +113,12 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$a = "idTipoPago='".$idTipoPago."'" ;
 				if(isset($Nombre) && $Nombre != ''){  $a .= ",Nombre='".$Nombre."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_tipos_pago` SET ".$a." WHERE idTipoPago = '$idTipoPago'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_tipos_pago', 'idTipoPago = "'.$idTipoPago.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

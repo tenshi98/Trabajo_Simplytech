@@ -132,12 +132,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Direccion_img) && $Direccion_img != ''){     $a .= ",Direccion_img='".$Direccion_img."'" ;}
 				if(isset($FichaTecnica) && $FichaTecnica != ''){       $a .= ",FichaTecnica='".$FichaTecnica."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `bodegas_arriendos_listado` SET ".$a." WHERE idBodega = '$idBodega'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'bodegas_arriendos_listado', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -249,13 +248,12 @@ require_once '0_validate_user_1.php';
 							
 							//Filtro para idSistema		
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `bodegas_arriendos_listado` SET ".$a." WHERE idBodega = '$idBodega'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'bodegas_arriendos_listado', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location.'&img_id='.$idBodega );
 								die;
@@ -311,13 +309,12 @@ require_once '0_validate_user_1.php';
 								
 							//Filtro para idSistema		
 							$a = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `bodegas_arriendos_listado` SET ".$a." WHERE idBodega = '$idBodega'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'bodegas_arriendos_listado', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -353,13 +350,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'bodegas_arriendos_listado', '', "idBodega = ".$_GET['del_img'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `bodegas_arriendos_listado` SET Direccion_img='' WHERE idBodega = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'bodegas_arriendos_listado', 'idBodega = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -400,13 +397,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'FichaTecnica', 'bodegas_arriendos_listado', '', "idBodega = ".$_GET['del_file'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `bodegas_arriendos_listado` SET FichaTecnica='' WHERE idBodega = '".$_GET['del_file']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "FichaTecnica=''" ;
+			$resultado = db_update_data (false, $a, 'bodegas_arriendos_listado', 'idBodega = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){

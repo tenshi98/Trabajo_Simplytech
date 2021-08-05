@@ -278,12 +278,11 @@ require_once '0_validate_user_1.php';
 									if(isset($Observacion) && $Observacion != ''){            $a .= ",Observacion='".$Observacion."'" ;}
 									$a .= ",File_Amonestacion='".$sufijo.$_FILES['File_Amonestacion']['name']."'" ;
 									
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `trabajadores_cartas_amonestacion` SET ".$a." WHERE idCartaAmo = '$idCartaAmo'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$idCartaAmo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
-									if($resultado){
+									if($resultado==true){
 										
 										header( 'Location: '.$location.'&edited=true' );
 										die;
@@ -322,12 +321,11 @@ require_once '0_validate_user_1.php';
 					if(isset($idAmonestaciones) && $idAmonestaciones != ''){  $a .= ",idAmonestaciones='".$idAmonestaciones."'" ;}
 					if(isset($Observacion) && $Observacion != ''){            $a .= ",Observacion='".$Observacion."'" ;}
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `trabajadores_cartas_amonestacion` SET ".$a." WHERE idCartaAmo = '$idCartaAmo'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$idCartaAmo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if($resultado){
+					if($resultado==true){
 						
 						header( 'Location: '.$location.'&edited=true' );
 						die;
@@ -425,12 +423,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'File_Amonestacion', 'trabajadores_cartas_amonestacion', '', 'idCartaAmo = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_cartas_amonestacion` SET File_Amonestacion='' WHERE idCartaAmo = '".$_GET['del_file']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "File_Amonestacion=''" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['File_Amonestacion'])&&$rowdata['File_Amonestacion']!=''){

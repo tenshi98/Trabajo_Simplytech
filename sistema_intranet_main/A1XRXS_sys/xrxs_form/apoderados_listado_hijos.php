@@ -368,13 +368,12 @@ require_once '0_validate_user_1.php';
 									if(isset($idPlan) && $idPlan != ''){                $a .= ",idPlan='".$idPlan."'" ;}						
 									if(isset($idVehiculo) && $idVehiculo != ''){        $a .= ",idVehiculo='".$idVehiculo."'" ;}						
 									$a .= ",Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-										
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `apoderados_listado_hijos` SET ".$a." WHERE idHijos = '$idHijos'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
+									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$idHijos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
-									if($resultado){
+									if($resultado==true){
 										
 										header( 'Location: '.$location.'&edited=true' );
 										die;
@@ -413,13 +412,12 @@ require_once '0_validate_user_1.php';
 					if(isset($FNacimiento) && $FNacimiento != ''){      $a .= ",FNacimiento='".$FNacimiento."'" ;}	
 					if(isset($idPlan) && $idPlan != ''){                $a .= ",idPlan='".$idPlan."'" ;}								
 					if(isset($idVehiculo) && $idVehiculo != ''){        $a .= ",idVehiculo='".$idVehiculo."'" ;}						
-										
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `apoderados_listado_hijos` SET ".$a." WHERE idHijos = '$idHijos'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$idHijos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if($resultado){
+					if($resultado==true){
 						
 						header( 'Location: '.$location.'&edited=true' );
 						die;
@@ -515,12 +513,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'apoderados_listado_hijos', '', "idHijos = ".$_GET['del_img'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `apoderados_listado_hijos` SET Direccion_img='' WHERE idHijos = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){

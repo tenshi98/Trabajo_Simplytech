@@ -134,13 +134,12 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre != ''){            $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Direccion) && $Direccion != ''){      $a .= ",Direccion='".$Direccion."'" ;}
 				if(isset($Channel_ID) && $Channel_ID != ''){    $a .= ",Channel_ID='".$Channel_ID."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_canales_listado` SET ".$a." WHERE idCanal = '$idCanal'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seg_vecinal_canales_listado', 'idCanal = "'.$idCanal.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

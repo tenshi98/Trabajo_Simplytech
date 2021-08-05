@@ -35,10 +35,9 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$a = "idLeido='1'" ;
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado_errores` SET ".$a." WHERE idErrores = '".$idErrores."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_listado_errores', 'idErrores = "'.$idErrores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************************************/
 				//Recuento la cantidad de errores existentes
@@ -47,14 +46,11 @@ require_once '0_validate_user_1.php';
 				$rowCuenta = db_select_data (false, $SIS_query, 'telemetria_listado_errores', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************************************/
-				//Actualizo con los errores actuales
-				$query  = "UPDATE `telemetria_listado` SET NAlertas='".$rowCuenta['NAlertas']."' WHERE idTelemetria = '".$idTelemetria."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-
-
+				//se actualizan los datos
+				$a = "NAlertas='".$rowCuenta['NAlertas']."'" ;
+				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&silenciar_uno=true' );
 					die;
@@ -85,22 +81,17 @@ require_once '0_validate_user_1.php';
 				$idTelemetria = $_GET['idTelemetria'];
 				$idSistema    = $_SESSION['usuario']['basic_data']['idSistema'];
 				
-				//Filtros
+				/*******************************************************/
+				//se actualizan los datos
 				$a = "idLeido='1'" ;
+				$resultado = db_update_data (false, $a, 'telemetria_listado_errores', 'idLeido = "0" AND idTelemetria="'.$idTelemetria.'" AND idSistema="'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado_errores` SET ".$a." WHERE idLeido = '0' AND idTelemetria='".$idTelemetria."' AND idSistema='".$idSistema."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				
-				/******************************************************************/
-				//Actualizo con los errores actuales
-				$query  = "UPDATE `telemetria_listado` SET NAlertas='0' WHERE idTelemetria = '".$idTelemetria."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				
+				/*******************************************************/
+				//se actualizan los datos
+				$a = "NAlertas='0'" ;
+				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&silenciar_todos=true' );
 					die;

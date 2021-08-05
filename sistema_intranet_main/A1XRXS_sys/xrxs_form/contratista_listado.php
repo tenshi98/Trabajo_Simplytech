@@ -222,12 +222,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Giro) && $Giro!= ''){                            $a .= ",Giro='".$Giro."'" ;}
 				if(isset($FormaPago) && $FormaPago!= ''){                  $a .= ",FormaPago='".$FormaPago."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `contratista_listado` SET ".$a." WHERE idContratista = '$idContratista'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'contratista_listado', 'idContratista = "'.$idContratista.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -307,12 +306,12 @@ require_once '0_validate_user_1.php';
 			
 			$idContratista  = $_GET['id'];
 			$idEstado       = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE contratista_listado SET idEstado = '".$idEstado."'	
-			WHERE idContratista = '".$idContratista."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'contratista_listado', 'idContratista = "'.$idContratista.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;

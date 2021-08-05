@@ -86,13 +86,13 @@ require_once '0_validate_user_1.php';
 					if(isset($FModificacion) && $FModificacion!= ''){  $a .= ",FModificacion='".$FModificacion."'" ;}
 					if(isset($HModificacion) && $HModificacion!= ''){  $a .= ",HModificacion='".$HModificacion."'" ;}
 					if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $a .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
-						
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `prospectos_listado` SET ".$a." WHERE idProspecto = '$idProspecto'";
-					//Consulta
-					$resultado2 = mysqli_query ($dbConn, $query);
+					
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado2 = db_update_data (false, $a, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if($resultado2){
+					if($resultado2==true){
+						
 						header( 'Location: '.$location.'&created=true' );
 						die;	
 					//si da error, guardar en el log de errores una copia
@@ -134,26 +134,25 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
 				if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `prospectos_observaciones` SET ".$a." WHERE idObservacion = '$idObservacion'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'prospectos_observaciones', 'idObservacion = "'.$idObservacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					//Actualizo los datos
 					$a = "idProspecto='".$idProspecto."'" ;
 					if(isset($FModificacion) && $FModificacion!= ''){  $a .= ",FModificacion='".$FModificacion."'" ;}
 					if(isset($HModificacion) && $HModificacion!= ''){  $a .= ",HModificacion='".$HModificacion."'" ;}
 					if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $a .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
-						
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `prospectos_listado` SET ".$a." WHERE idProspecto = '$idProspecto'";
-					//Consulta
-					$resultado2 = mysqli_query ($dbConn, $query);
+					
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado2 = db_update_data (false, $a, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if($resultado2){
+					if($resultado2==true){
+						
 						header( 'Location: '.$location.'&edited=true' );
 						die;	
 					//si da error, guardar en el log de errores una copia

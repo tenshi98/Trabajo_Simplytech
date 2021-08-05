@@ -125,13 +125,12 @@ require_once '0_validate_user_1.php';
 				$a = "idSitio='".$idSitio."'" ;
 				if(isset($Nombre) && $Nombre != ''){        $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Direccion) && $Direccion != ''){  $a .= ",Direccion='".$Direccion."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_sitios_listado` SET ".$a." WHERE idSitio = '$idSitio'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seg_vecinal_sitios_listado', 'idSitio = "'.$idSitio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

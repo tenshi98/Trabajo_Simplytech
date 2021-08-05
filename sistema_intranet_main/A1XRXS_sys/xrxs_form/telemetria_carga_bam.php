@@ -139,12 +139,11 @@ require_once '0_validate_user_1.php';
 				if(isset($N_DocPago) && $N_DocPago != ''){                   $a .= ",N_DocPago='".$N_DocPago."'" ;}
 				if(isset($Monto) && $Monto != ''){                           $a .= ",Monto='".$Monto."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_carga_bam` SET ".$a." WHERE idCarga = '$idCarga'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_carga_bam', 'idCarga = "'.$idCarga.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

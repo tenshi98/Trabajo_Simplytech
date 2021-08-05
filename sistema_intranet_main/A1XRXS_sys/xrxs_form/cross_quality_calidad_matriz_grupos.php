@@ -119,12 +119,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre != ''){    $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Totales) && $Totales != ''){  $a .= ",Totales='".$Totales."'" ;}
 					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_quality_calidad_matriz_grupos` SET ".$a." WHERE idGrupo = '$idGrupo'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_quality_calidad_matriz_grupos', 'idGrupo = "'.$idGrupo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

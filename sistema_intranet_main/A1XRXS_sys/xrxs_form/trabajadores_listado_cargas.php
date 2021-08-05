@@ -142,13 +142,12 @@ require_once '0_validate_user_1.php';
 				if(isset($idSexo) && $idSexo != ''){                $a .= ",idSexo='".$idSexo."'" ;}
 				if(isset($FNacimiento) && $FNacimiento != ''){      $a .= ",FNacimiento='".$FNacimiento."'" ;}							
 				if(isset($idEstado) && $idEstado != ''){            $a .= ",idEstado='".$idEstado."'" ;}							
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `trabajadores_listado_cargas` SET ".$a." WHERE idCarga = '$idCarga'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'trabajadores_listado_cargas', 'idCarga = "'.$idCarga.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

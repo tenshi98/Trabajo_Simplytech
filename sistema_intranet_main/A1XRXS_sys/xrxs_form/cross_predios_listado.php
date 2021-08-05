@@ -145,12 +145,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idComuna) && $idComuna != ''){      $a .= ",idComuna='".$idComuna."'" ;}
 				if(isset($Direccion) && $Direccion != ''){    $a .= ",Direccion='".$Direccion."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_predios_listado` SET ".$a." WHERE idPredio = '$idPredio'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -231,12 +230,12 @@ require_once '0_validate_user_1.php';
 			
 			$idPredio   = $_GET['id'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE cross_predios_listado SET idEstado = '".$idEstado."'	
-			WHERE idPredio = '".$idPredio."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;

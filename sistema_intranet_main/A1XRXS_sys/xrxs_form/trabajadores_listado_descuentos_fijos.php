@@ -123,13 +123,12 @@ require_once '0_validate_user_1.php';
 				if(isset($idDescuentoFijo) && $idDescuentoFijo != ''){  $a .= ",idDescuentoFijo='".$idDescuentoFijo."'" ;}
 				if(isset($idAFP) && $idAFP != ''){                      $a .= ",idAFP='".$idAFP."'" ;}
 				if(isset($Monto) && $Monto != ''){                      $a .= ",Monto='".$Monto."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `trabajadores_listado_descuentos_fijos` SET ".$a." WHERE idDescuento = '$idDescuento'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'trabajadores_listado_descuentos_fijos', 'idDescuento = "'.$idDescuento.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

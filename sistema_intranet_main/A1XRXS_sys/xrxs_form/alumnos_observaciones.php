@@ -104,14 +104,13 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
 				if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_observaciones` SET ".$a." WHERE idObservacion = '$idObservacion'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'alumnos_observaciones', 'idObservacion = "'.$idObservacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($resultado==true){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					

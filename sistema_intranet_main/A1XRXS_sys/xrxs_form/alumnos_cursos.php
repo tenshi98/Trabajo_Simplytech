@@ -141,13 +141,12 @@ require_once '0_validate_user_1.php';
 				if(isset($F_termino) && $F_termino != ''){  $a .= ",F_termino='".$F_termino."'" ;}
 				if(isset($idEstado) && $idEstado != ''){    $a .= ",idEstado='".$idEstado."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_cursos` SET ".$a." WHERE idCurso = '$idCurso'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'alumnos_cursos', 'idCurso = "'.$idCurso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($resultado==true){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$idCurso.'&edited=true' );
 					die;
 					
@@ -254,12 +253,12 @@ require_once '0_validate_user_1.php';
 			
 			$idCurso    = $_GET['id'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE alumnos_cursos SET idEstado = '".$idEstado."'	
-			WHERE idCurso = '".$idCurso."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'alumnos_cursos', 'idCurso = "'.$idCurso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+				if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 

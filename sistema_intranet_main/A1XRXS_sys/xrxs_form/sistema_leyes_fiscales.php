@@ -221,12 +221,11 @@ require_once '0_validate_user_1.php';
 				if(isset($IMPRENT_idLevel_5) && $IMPRENT_idLevel_5 != ''){               $a .= ",IMPRENT_idLevel_5='".$IMPRENT_idLevel_5."'" ;}
 				if(isset($Porcentaje_Ret_Boletas) && $Porcentaje_Ret_Boletas != ''){     $a .= ",Porcentaje_Ret_Boletas='".$Porcentaje_Ret_Boletas."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_leyes_fiscales` SET ".$a." WHERE idMantenedor = '$idMantenedor'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_leyes_fiscales', 'idMantenedor = "'.$idMantenedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'?edited=true' );
 					die;

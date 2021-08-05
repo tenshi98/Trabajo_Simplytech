@@ -270,12 +270,11 @@ require_once '0_validate_user_1.php';
 				if(isset($NCuentaBanco) && $NCuentaBanco!= ''){                      $a .= ",NCuentaBanco='".$NCuentaBanco."'" ;}
 				if(isset($MailBanco) && $MailBanco!= ''){                            $a .= ",MailBanco='".$MailBanco."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `transportes_listado` SET ".$a." WHERE idTransporte = '$idTransporte'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'transportes_listado', 'idTransporte = "'.$idTransporte.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -354,12 +353,12 @@ require_once '0_validate_user_1.php';
 			
 			$idTransporte  = $_GET['id'];
 			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE transportes_listado SET idEstado = '".$idEstado."'	
-			WHERE idTransporte = '".$idTransporte."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'transportes_listado', 'idTransporte = "'.$idTransporte.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;

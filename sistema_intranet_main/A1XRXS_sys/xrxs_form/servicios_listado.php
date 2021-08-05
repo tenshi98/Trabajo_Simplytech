@@ -123,13 +123,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre != ''){       $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($idEstado) && $idEstado != ''){   $a .= ",idEstado='".$idEstado."'" ;}
 											
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `servicios_listado` SET ".$a." WHERE idServicio = '$idServicio'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'servicios_listado', 'idServicio = "'.$idServicio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -205,12 +203,12 @@ require_once '0_validate_user_1.php';
 			
 			$idServicio  = $_GET['id'];
 			$idEstado    = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE servicios_listado SET idEstado = '".$idEstado."'	
-			WHERE idServicio = '".$idServicio."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'servicios_listado', 'idServicio = "'.$idServicio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 

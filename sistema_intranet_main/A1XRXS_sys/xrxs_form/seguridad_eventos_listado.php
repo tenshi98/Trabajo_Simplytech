@@ -111,13 +111,12 @@ require_once '0_validate_user_1.php';
 				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
 				if(isset($Hora) && $Hora != ''){                 $a .= ",Hora='".$Hora."'" ;}
 				if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seguridad_eventos_listado` SET ".$a." WHERE idEvento = '$idEvento'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seguridad_eventos_listado', 'idEvento = "'.$idEvento.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

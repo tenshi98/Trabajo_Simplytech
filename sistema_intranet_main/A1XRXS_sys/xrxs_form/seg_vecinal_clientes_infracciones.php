@@ -87,10 +87,10 @@ require_once '0_validate_user_1.php';
 						/******************************************************************/
 						//desactivo al usuario creador del post
 						$a = "idEstado='".$idEstado."'" ;
-							
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `seg_vecinal_clientes_listado` SET ".$a." WHERE idCliente = '".$idCliente."' ";
-						$resultado = mysqli_query($dbConn, $query);
+						
+						/*******************************************************/
+						//se actualizan los datos
+						$resultado = db_update_data (false, $a, 'seg_vecinal_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						/****************************************/
 						// Se trae un listado con todas las ip
@@ -163,12 +163,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Descripcion) && $Descripcion != ''){   $a .= ",Descripcion='".$Descripcion."'" ;}
 				if(isset($idCliente) && $idCliente != ''){       $a .= ",idCliente='".$idCliente."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_clientes_infracciones` SET ".$a." WHERE idInfraccion = '$idInfraccion'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seg_vecinal_clientes_infracciones', 'idInfraccion = "'.$idInfraccion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

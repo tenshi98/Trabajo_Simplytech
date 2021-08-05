@@ -152,12 +152,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Rut) && $Rut != ''){                   $a .= ",Rut='".$Rut."'" ;}
 				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `vehiculos_listado_peonetas` SET ".$a." WHERE idPeoneta = '$idPeoneta'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'vehiculos_listado_peonetas', 'idPeoneta = "'.$idPeoneta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

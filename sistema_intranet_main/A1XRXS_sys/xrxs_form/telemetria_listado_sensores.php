@@ -122,12 +122,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Funcion) && $Funcion != ''){                    $a .= ",Funcion='".$Funcion."'" ;}
 				if(isset($idSensorFuncion) && $idSensorFuncion != ''){    $a .= ",idSensorFuncion='".$idSensorFuncion."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado_sensores` SET ".$a." WHERE idSensores = '$idSensores'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_listado_sensores', 'idSensores = "'.$idSensores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -117,8 +117,21 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<tr class="odd"><td style="background-color:#DDD" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>">Arriendos</td></tr>
-					<?php foreach ($arrTipo1 as $tipo) { ?>
+					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Arriendos</strong></td></tr>
+					<?php 
+						//variables
+						$Total_ValorTotal  = 0;
+						$Total_MontoPagado = 0;
+						$Sub_ValorTotal    = 0;
+						$Sub_MontoPagado   = 0;
+						//se recorre
+						foreach ($arrTipo1 as $tipo) { 
+						//Sumo
+						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
+						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
+						?>
 						<tr class="odd">
 							<td><?php echo $tipo['Cliente']; ?></td>
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -134,8 +147,27 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 							</td>
 						</tr>
 					<?php } ?>
-					<tr class="odd"><td style="background-color:#DDD" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>">Insumos</td></tr>
-					<?php foreach ($arrTipo2 as $tipo) { ?>
+					<tr style="background-color:#DDD">
+						<td colspan="4">Subtotal</td>
+						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr>
+					
+					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Insumos</strong></td></tr>
+					<?php 
+						//variables
+						$Sub_ValorTotal    = 0;
+						$Sub_MontoPagado   = 0;
+						//se recorre
+						foreach ($arrTipo2 as $tipo) { 
+						//Sumo
+						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
+						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
+						?>
 						<tr class="odd">
 							<td><?php echo $tipo['Cliente']; ?></td>
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -150,9 +182,28 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
-					<tr class="odd"><td style="background-color:#DDD" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>">Productos</td></tr>
-					<?php foreach ($arrTipo3 as $tipo) { ?>
+					<?php } ?>
+					<tr style="background-color:#DDD">
+						<td colspan="4">Subtotal</td>
+						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr>
+					 
+					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Productos</strong></td></tr>
+					<?php 
+						//variables
+						$Sub_ValorTotal    = 0;
+						$Sub_MontoPagado   = 0;
+						//se recorre
+						foreach ($arrTipo3 as $tipo) { 
+						//Sumo
+						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
+						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
+						?>
 						<tr class="odd">
 							<td><?php echo $tipo['Cliente']; ?></td>
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -168,8 +219,27 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 							</td>
 						</tr>
 					<?php } ?> 
-					<tr class="odd"><td style="background-color:#DDD" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>">Servicios</td></tr>
-					<?php foreach ($arrTipo4 as $tipo) { ?>
+					<tr style="background-color:#DDD">
+						<td colspan="4">Subtotal</td>
+						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr>
+					
+					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Servicios</strong></td></tr>
+					<?php 
+						//variables
+						$Sub_ValorTotal    = 0;
+						$Sub_MontoPagado   = 0;
+						//se recorre
+						foreach ($arrTipo4 as $tipo) { 
+						//Sumo
+						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
+						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
+						?>
 						<tr class="odd">
 							<td><?php echo $tipo['Cliente']; ?></td>
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -184,7 +254,22 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                  
+					<?php } ?>
+					<tr style="background-color:#DDD">
+						<td colspan="4">Subtotal</td>
+						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr>
+					<tr style="background-color:#DDD">
+						<td colspan="4">Total</td>
+						<td><?php echo Valores($Total_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Total_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr> 
+					                 
 				</tbody>
 			</table>
 		</div>

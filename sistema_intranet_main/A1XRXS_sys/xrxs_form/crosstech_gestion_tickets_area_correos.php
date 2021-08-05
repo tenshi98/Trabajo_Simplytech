@@ -116,13 +116,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idArea) && $idArea != ''){         $a .= ",idArea='".$idArea."'" ;}
 				if(isset($idUsuario) && $idUsuario != ''){   $a .= ",idUsuario='".$idUsuario."'" ;}
 				
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `crosstech_gestion_tickets_area_correos` SET ".$a." WHERE idCorreos = '$idCorreos'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'crosstech_gestion_tickets_area_correos', 'idCorreos = "'.$idCorreos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -181,12 +181,11 @@ if(isset($Principal)&&contar_palabras_censuradas($Principal)!=0){          $erro
 				if(isset($Habilita) && $Habilita != ''){            $a .= ",Habilita='".$Habilita."'" ;           }else{$a .= ",Habilita=''" ;}
 				if(isset($Principal) && $Principal != ''){          $a .= ",Principal='".$Principal."'" ;         }else{$a .= ",Principal=''" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `core_permisos_listado` SET ".$a." WHERE idAdmpm = '$idAdmpm'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'core_permisos_listado', 'idAdmpm = "'.$idAdmpm.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					/************************************************************/
 					//Variable

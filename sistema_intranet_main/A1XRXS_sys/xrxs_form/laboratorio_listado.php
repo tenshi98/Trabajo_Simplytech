@@ -219,12 +219,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idPais) && $idPais!= ''){                        $a .= ",idPais='".$idPais."'" ;}
 				if(isset($Giro) && $Giro!= ''){                            $a .= ",Giro='".$Giro."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `laboratorio_listado` SET ".$a." WHERE idLaboratorio = '$idLaboratorio'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'laboratorio_listado', 'idLaboratorio = "'.$idLaboratorio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -305,12 +304,12 @@ require_once '0_validate_user_1.php';
 			
 			$idLaboratorio  = $_GET['id'];
 			$idEstado       = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE laboratorio_listado SET idEstado = '".$idEstado."'	
-			WHERE idLaboratorio = '".$idLaboratorio."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'laboratorio_listado', 'idLaboratorio = "'.$idLaboratorio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;

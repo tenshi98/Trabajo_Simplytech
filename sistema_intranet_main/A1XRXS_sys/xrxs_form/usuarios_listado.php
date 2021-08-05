@@ -303,12 +303,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Direccion_img) && $Direccion_img != ''){  $a .= ",Direccion_img='".$Direccion_img."'" ;}
 				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $a .= ",Ultimo_acceso='".$Ultimo_acceso."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `usuarios_listado` SET ".$a." WHERE idUsuario = '$idUsuario'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					//Si se cambia la password se actualiza el dato de session
 					if(isset($password) && $password != ''&&$idUsuario==$_SESSION['usuario']['basic_data']['idUsuario']){
@@ -411,12 +410,12 @@ require_once '0_validate_user_1.php';
 			
 			$idUsuario  = $_GET['id'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE usuarios_listado SET idEstado = '".$idEstado."'	
-			WHERE idUsuario = '".$idUsuario."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
@@ -1046,14 +1045,14 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			$mod    = $_GET['mod'];
-			$perm   = $_GET['perm'];
-			$query  = "UPDATE usuarios_permisos SET level = '$mod'	
-			WHERE idPermisos    = '$perm'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			$level      = $_GET['mod'];
+			$idPermisos = $_GET['perm'];
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "level='".$level."'" ;
+			$resultado = db_update_data (false, $a, 'usuarios_permisos', 'idPermisos = "'.$idPermisos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location );
 				die;
@@ -1103,13 +1102,12 @@ require_once '0_validate_user_1.php';
 											
 							//Filtro para idSistema
 							$a = "Direccion_img='".$sufijo.$_FILES['imgLogo']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `usuarios_listado` SET ".$a." WHERE idUsuario = '$idUsuario'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								//Seteo la variable de sesion si existe
 								if(isset($_SESSION['usuario']['basic_data']['Direccion_img'])){
@@ -1151,13 +1149,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'usuarios_listado', '', 'idUsuario = "'.$_GET['id_usuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `usuarios_listado` SET Direccion_img='' WHERE idUsuario = '".$_GET['id_usuario']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$_GET['id_usuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -1275,10 +1273,12 @@ require_once '0_validate_user_1.php';
 					//Verifico que el usuario identificado este activo
 					if($rowUser['idEstado']==1){
 						
-						/**************************************************************/
-						//Actualizo la tabla de los usuarios
-						$query = "UPDATE usuarios_listado SET Ultimo_acceso='".$fecha."', IP_Client='".$IP_Client."', Agent_Transp='".$Agent_Transp."' WHERE idUsuario='".$rowUser['idUsuario']."' ";
-						$resultado = mysqli_query($dbConn, $query);
+						/*******************************************************/
+						//se actualizan los datos
+						$a = "Ultimo_acceso='".$fecha."'" ;
+						$a .= ",IP_Client='".$IP_Client."'" ;
+						$a .= ",Agent_Transp='".$Agent_Transp."'" ;
+						$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$rowUser['idUsuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						//busca si la ip del usuario ya existe
 						$n_ip = db_select_nrows (false, 'idIpUsuario', 'usuarios_listado_ip', '', "IP_Client='".$IP_Client."' AND idUsuario='".$rowUser['idUsuario']."'", $dbConn, 'Login-form', $original, $form_trabajo);
@@ -1773,10 +1773,11 @@ require_once '0_validate_user_1.php';
 					$num_caracteres = "10"; //cantidad de caracteres de la clave
 					$clave = substr(md5(rand()),0,$num_caracteres); //generador aleatorio de claves 
 					$nueva_clave = md5($clave);//se codifica la clave 
-						
-					//Actualizacion de la clave en la base de datos
-					$query  = "UPDATE `usuarios_listado` SET password='".$nueva_clave."' WHERE email='".$email."'  ";
-					$result = mysqli_query($dbConn, $query);
+					
+					/*******************************************************/
+					//se actualizan los datos
+					$a = "password='".$nueva_clave."'" ;
+					$resultado = db_update_data (false, $a, 'usuarios_listado', 'email = "'.$email.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Envio de correo
 					$texto = '<p>Se ha generado una nueva contraseña para el usuario '.$email.', su nueva contraseña es: '.$nueva_clave.'</p>';

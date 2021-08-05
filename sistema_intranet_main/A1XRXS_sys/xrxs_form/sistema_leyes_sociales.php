@@ -186,12 +186,11 @@ require_once '0_validate_user_1.php';
 				if(isset($SEGURIDAD_idLevel_4) && $SEGURIDAD_idLevel_4 != ''){               $a .= ",SEGURIDAD_idLevel_4='".$SEGURIDAD_idLevel_4."'" ;}
 				if(isset($SEGURIDAD_idLevel_5) && $SEGURIDAD_idLevel_5 != ''){               $a .= ",SEGURIDAD_idLevel_5='".$SEGURIDAD_idLevel_5."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_leyes_sociales` SET ".$a." WHERE idMantenedor = '$idMantenedor'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_leyes_sociales', 'idMantenedor = "'.$idMantenedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'?edited=true' );
 					die;

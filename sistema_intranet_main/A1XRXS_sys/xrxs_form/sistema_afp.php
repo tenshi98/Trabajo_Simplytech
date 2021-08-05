@@ -130,12 +130,11 @@ require_once '0_validate_user_1.php';
 				if(isset($PorcentajeIndependiente) && $PorcentajeIndependiente != ''){  $a .= ",PorcentajeIndependiente='".$PorcentajeIndependiente."'" ;}
 				if(isset($idEstado) && $idEstado != ''){                                $a .= ",idEstado='".$idEstado."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_afp` SET ".$a." WHERE idAFP = '$idAFP'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_afp', 'idAFP = "'.$idAFP.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

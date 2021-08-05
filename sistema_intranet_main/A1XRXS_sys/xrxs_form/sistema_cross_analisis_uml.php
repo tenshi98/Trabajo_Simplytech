@@ -114,13 +114,12 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$a = "idUml='".$idUml."'" ;
 				if(isset($Nombre) && $Nombre != ''){    $a .= ",Nombre='".$Nombre."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_cross_analisis_uml` SET ".$a." WHERE idUml = '$idUml'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_cross_analisis_uml', 'idUml = "'.$idUml.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -455,12 +455,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Social_youtube) ){                                                       $a .= ",Social_youtube='".$Social_youtube."'" ;}
 				if(isset($Social_tumblr) ){                                                        $a .= ",Social_tumblr='".$Social_tumblr."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `core_sistemas` SET ".$a." WHERE idSistema = '$idSistema'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					//Si se ejecuta correctamente se actualizan los datos
 					if(isset($Social_idUso) ){      $_SESSION['usuario']['basic_data']['Social_idUso'] = $Social_idUso;}
 					if(isset($Social_facebook) ){   $_SESSION['usuario']['basic_data']['Social_facebook'] = $Social_facebook;}
@@ -656,12 +655,11 @@ require_once '0_validate_user_1.php';
 									
 							$a = "Config_imgLogo='".$sufijo.$_FILES['Config_imgLogo']['name']."'" ;
 
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `core_sistemas` SET ".$a." WHERE idSistema = '$idSistema'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location.'&img_id='.$idSistema );
 								die;
@@ -699,12 +697,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Config_imgLogo', 'core_sistemas', '', 'idSistema = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `core_sistemas` SET Config_imgLogo='' WHERE idSistema = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Config_imgLogo=''" ;
+			$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Config_imgLogo'])&&$rowdata['Config_imgLogo']!=''){
@@ -754,12 +752,11 @@ require_once '0_validate_user_1.php';
 				$a = "idSistema='".$idSistema."'" ;
 				if(isset($Config_idTheme) && $Config_idTheme != ''){    $a .= ",Config_idTheme='".$Config_idTheme."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `core_sistemas` SET ".$a." WHERE idSistema = '$idSistema'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					//Seteo la variable de sesion si existe
 					if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])){
@@ -1148,12 +1145,12 @@ require_once '0_validate_user_1.php';
 			
 			$idSistema  = $_GET['id'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE core_sistemas SET idEstado = '".$idEstado."'	
-			WHERE idSistema = '".$idSistema."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
@@ -1205,12 +1202,11 @@ require_once '0_validate_user_1.php';
 					$a .= ",CrossTech_FechaUnidadFrio='".$CrossTech_FechaUnidadFrio."'" ;
 				}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `core_sistemas` SET ".$a." WHERE idSistema = '$idSistema'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					/*************************************************************/
 					//se trae el ultimo registro
@@ -1239,12 +1235,11 @@ require_once '0_validate_user_1.php';
 							$a .= ",CrossTech_FechaUnidadFrio='".$CrossTech_FechaUnidadFrio."'" ;
 							$a .= ",UnidadesFrio='0'" ;
 						}
-				
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `telemetria_listado_aux` SET ".$a." WHERE idAuxiliar = '".$rowAux['idAuxiliar']."'";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-				
+						
+						/*******************************************************/
+						//se actualizan los datos
+						$resultado = db_update_data (false, $a, 'telemetria_listado_aux', 'idAuxiliar = "'.$rowAux['idAuxiliar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 						//redirijo
 						header( 'Location: '.$location.'&edited=true' );
 						die;

@@ -132,12 +132,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Temp_optima_max) && $Temp_optima_max != ''){                        $a .= ",Temp_optima_max='".$Temp_optima_max."'" ;}
 				if(isset($Temp_optima_margen_critico) && $Temp_optima_margen_critico != ''){  $a .= ",Temp_optima_margen_critico='".$Temp_optima_margen_critico."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_variedades_categorias` SET ".$a." WHERE idCategoria = '$idCategoria'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_variedades_categorias', 'idCategoria = "'.$idCategoria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -249,12 +249,11 @@ require_once '0_validate_user_1.php';
 				if(isset($HoraInicio) && $HoraInicio!= ''){      $a .= ",HoraInicio='".$HoraInicio."'" ;}
 				if(isset($HoraTermino) && $HoraTermino!= ''){    $a .= ",HoraTermino='".$HoraTermino."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_servicios_listado` SET ".$a." WHERE idServicio = '$idServicio'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seg_vecinal_servicios_listado', 'idServicio = "'.$idServicio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -33,16 +33,17 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
 /**********************************************************/
+
 //Variable de busqueda
-$z1 = "WHERE bodegas_arriendos_facturacion.idEstado=1";
-$z2 = "WHERE bodegas_insumos_facturacion.idEstado=1";
-$z3 = "WHERE bodegas_productos_facturacion.idEstado=1";
-$z4 = "WHERE bodegas_servicios_facturacion.idEstado=1";
+$z1 = "bodegas_arriendos_facturacion.idEstado=1";
+$z2 = "bodegas_insumos_facturacion.idEstado=1";
+$z3 = "bodegas_productos_facturacion.idEstado=1";
+$z4 = "bodegas_servicios_facturacion.idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
 $z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 $z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 $z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Verifico que sean solo compras
 $z1.=" AND (bodegas_arriendos_facturacion.idTipo=1 OR bodegas_arriendos_facturacion.idTipo=10)";
 $z2.=" AND (bodegas_insumos_facturacion.idTipo=1 OR bodegas_insumos_facturacion.idTipo=10)";
@@ -74,146 +75,26 @@ if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GE
 	$z4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 }
 
-/*************************************************************************************/
-// Se trae un listado con todos los usuarios
+
+$table_1 = 'bodegas_arriendos_facturacion';
+$table_2 = 'bodegas_insumos_facturacion';
+$table_3 = 'bodegas_productos_facturacion';
+$table_4 = 'bodegas_servicios_facturacion';
+
 $arrTipo1 = array();
-$query = "SELECT 
-bodegas_arriendos_facturacion.idFacturacion,
-bodegas_arriendos_facturacion.Creacion_fecha,
-bodegas_arriendos_facturacion.Pago_fecha,
-bodegas_arriendos_facturacion.N_Doc,
-core_sistemas.Nombre AS Sistema,
-core_documentos_mercantiles.Nombre AS Documento,
-proveedor_listado.Nombre AS Proveedor,
-bodegas_arriendos_facturacion.MontoPagado,
-bodegas_arriendos_facturacion.ValorTotal
-
-FROM `bodegas_arriendos_facturacion`
-LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema                     = bodegas_arriendos_facturacion.idSistema
-LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos    = bodegas_arriendos_facturacion.idDocumentos
-LEFT JOIN `proveedor_listado`            ON proveedor_listado.idProveedor               = bodegas_arriendos_facturacion.idProveedor
-".$z1;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo1,$row );
-}
-/*************************************************************************************/
-// Se trae un listado con todos los usuarios
 $arrTipo2 = array();
-$query = "SELECT 
-bodegas_insumos_facturacion.idFacturacion,
-bodegas_insumos_facturacion.Creacion_fecha,
-bodegas_insumos_facturacion.Pago_fecha,
-bodegas_insumos_facturacion.N_Doc,
-core_sistemas.Nombre AS Sistema,
-core_documentos_mercantiles.Nombre AS Documento,
-proveedor_listado.Nombre AS Proveedor,
-bodegas_insumos_facturacion.MontoPagado,
-bodegas_insumos_facturacion.ValorTotal
-
-FROM `bodegas_insumos_facturacion`
-LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema                     = bodegas_insumos_facturacion.idSistema
-LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos    = bodegas_insumos_facturacion.idDocumentos
-LEFT JOIN `proveedor_listado`            ON proveedor_listado.idProveedor               = bodegas_insumos_facturacion.idProveedor
-".$z2;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo2,$row );
-}
-/*************************************************************************************/
-// Se trae un listado con todos los usuarios
 $arrTipo3 = array();
-$query = "SELECT 
-bodegas_productos_facturacion.idFacturacion,
-bodegas_productos_facturacion.Creacion_fecha,
-bodegas_productos_facturacion.Pago_fecha,
-bodegas_productos_facturacion.N_Doc,
-core_sistemas.Nombre AS Sistema,
-core_documentos_mercantiles.Nombre AS Documento,
-proveedor_listado.Nombre AS Proveedor,
-bodegas_productos_facturacion.MontoPagado,
-bodegas_productos_facturacion.ValorTotal
-
-FROM `bodegas_productos_facturacion`
-LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema                     = bodegas_productos_facturacion.idSistema
-LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos    = bodegas_productos_facturacion.idDocumentos
-LEFT JOIN `proveedor_listado`            ON proveedor_listado.idProveedor               = bodegas_productos_facturacion.idProveedor
-".$z3;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo3,$row );
-}
-/*************************************************************************************/
-// Se trae un listado con todos los usuarios
 $arrTipo4 = array();
-$query = "SELECT 
-bodegas_servicios_facturacion.idFacturacion,
-bodegas_servicios_facturacion.Creacion_fecha,
-bodegas_servicios_facturacion.Pago_fecha,
-bodegas_servicios_facturacion.N_Doc,
-core_sistemas.Nombre AS Sistema,
-core_documentos_mercantiles.Nombre AS Documento,
-proveedor_listado.Nombre AS Proveedor,
-bodegas_servicios_facturacion.MontoPagado,
-bodegas_servicios_facturacion.ValorTotal
 
-FROM `bodegas_servicios_facturacion`
-LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema                     = bodegas_servicios_facturacion.idSistema
-LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos    = bodegas_servicios_facturacion.idDocumentos
-LEFT JOIN `proveedor_listado`            ON proveedor_listado.idProveedor               = bodegas_servicios_facturacion.idProveedor
-".$z4;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo4,$row );
-}
+$arrTipo1 = db_select_array (false, $table_1.'.idFacturacion,'.$table_1.'.Creacion_fecha,'.$table_1.'.Pago_fecha,'.$table_1.'.N_Doc,core_sistemas.Nombre AS Sistema,core_documentos_mercantiles.Nombre AS Documento,proveedor_listado.Nombre AS Proveedor,'.$table_1.'.MontoPagado,'.$table_1.'.ValorTotal', $table_1, 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = '.$table_1.'.idSistema LEFT JOIN `core_documentos_mercantiles` ON core_documentos_mercantiles.idDocumentos = '.$table_1.'.idDocumentos LEFT JOIN `proveedor_listado` ON proveedor_listado.idProveedor = '.$table_1.'.idProveedor', $z1, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo1');
+$arrTipo2 = db_select_array (false, $table_2.'.idFacturacion,'.$table_2.'.Creacion_fecha,'.$table_2.'.Pago_fecha,'.$table_2.'.N_Doc,core_sistemas.Nombre AS Sistema,core_documentos_mercantiles.Nombre AS Documento,proveedor_listado.Nombre AS Proveedor,'.$table_2.'.MontoPagado,'.$table_2.'.ValorTotal', $table_2, 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = '.$table_2.'.idSistema LEFT JOIN `core_documentos_mercantiles` ON core_documentos_mercantiles.idDocumentos = '.$table_2.'.idDocumentos LEFT JOIN `proveedor_listado` ON proveedor_listado.idProveedor = '.$table_2.'.idProveedor', $z2, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo2');
+$arrTipo3 = db_select_array (false, $table_3.'.idFacturacion,'.$table_3.'.Creacion_fecha,'.$table_3.'.Pago_fecha,'.$table_3.'.N_Doc,core_sistemas.Nombre AS Sistema,core_documentos_mercantiles.Nombre AS Documento,proveedor_listado.Nombre AS Proveedor,'.$table_3.'.MontoPagado,'.$table_3.'.ValorTotal', $table_3, 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = '.$table_3.'.idSistema LEFT JOIN `core_documentos_mercantiles` ON core_documentos_mercantiles.idDocumentos = '.$table_3.'.idDocumentos LEFT JOIN `proveedor_listado` ON proveedor_listado.idProveedor = '.$table_3.'.idProveedor', $z3, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo3');
+$arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creacion_fecha,'.$table_4.'.Pago_fecha,'.$table_4.'.N_Doc,core_sistemas.Nombre AS Sistema,core_documentos_mercantiles.Nombre AS Documento,proveedor_listado.Nombre AS Proveedor,'.$table_4.'.MontoPagado,'.$table_4.'.ValorTotal', $table_4, 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = '.$table_4.'.idSistema LEFT JOIN `core_documentos_mercantiles` ON core_documentos_mercantiles.idDocumentos = '.$table_4.'.idDocumentos LEFT JOIN `proveedor_listado` ON proveedor_listado.idProveedor = '.$table_4.'.idProveedor', $z4, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo4');
+
+
+
+
+
 
 ?>
 
@@ -239,8 +120,21 @@ array_push( $arrTipo4,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<tr class="odd"><td style="background-color:#DDD" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>">Arriendos</td></tr>
-					<?php foreach ($arrTipo1 as $tipo) { ?>
+					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Arriendos</strong></td></tr>
+					<?php 
+						//variables
+						$Total_ValorTotal  = 0;
+						$Total_MontoPagado = 0;
+						$Sub_ValorTotal    = 0;
+						$Sub_MontoPagado   = 0;
+						//se recorre
+						foreach ($arrTipo1 as $tipo) { 
+						//Sumo
+						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
+						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
+						?>
 						<tr class="odd">
 							<td><?php echo $tipo['Proveedor']; ?></td>
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -256,8 +150,27 @@ array_push( $arrTipo4,$row );
 							</td>
 						</tr>
 					<?php } ?>
-					<tr class="odd"><td style="background-color:#DDD" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>">Insumos</td></tr>
-					<?php foreach ($arrTipo2 as $tipo) { ?>
+					<tr style="background-color:#DDD">
+						<td colspan="4">Subtotal</td>
+						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr>
+					
+					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Insumos</strong></td></tr>
+					<?php 
+						//variables
+						$Sub_ValorTotal    = 0;
+						$Sub_MontoPagado   = 0;
+						//se recorre
+						foreach ($arrTipo2 as $tipo) { 
+						//Sumo
+						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
+						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
+						?>
 						<tr class="odd">
 							<td><?php echo $tipo['Proveedor']; ?></td>
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -272,9 +185,28 @@ array_push( $arrTipo4,$row );
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
-					<tr class="odd"><td style="background-color:#DDD" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>">Productos</td></tr>
-					<?php foreach ($arrTipo3 as $tipo) { ?>
+					<?php } ?>
+					<tr style="background-color:#DDD">
+						<td colspan="4">Subtotal</td>
+						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr> 
+					
+					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Productos</strong></td></tr>
+					<?php 
+						//variables
+						$Sub_ValorTotal    = 0;
+						$Sub_MontoPagado   = 0;
+						//se recorre
+						foreach ($arrTipo3 as $tipo) { 
+						//Sumo
+						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
+						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
+						?>
 						<tr class="odd">
 							<td><?php echo $tipo['Proveedor']; ?></td>
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -290,8 +222,27 @@ array_push( $arrTipo4,$row );
 							</td>
 						</tr>
 					<?php } ?> 
-					<tr class="odd"><td style="background-color:#DDD" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>">Servicios</td></tr>
-					<?php foreach ($arrTipo4 as $tipo) { ?>
+					<tr style="background-color:#DDD">
+						<td colspan="4">Subtotal</td>
+						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr>
+					
+					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Servicios</strong></td></tr>
+					<?php 
+						//variables
+						$Sub_ValorTotal    = 0;
+						$Sub_MontoPagado   = 0;
+						//se recorre
+						foreach ($arrTipo4 as $tipo) { 
+						//Sumo
+						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
+						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
+						?>
 						<tr class="odd">
 							<td><?php echo $tipo['Proveedor']; ?></td>
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -306,7 +257,24 @@ array_push( $arrTipo4,$row );
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                  
+					<?php } ?> 
+					<tr style="background-color:#DDD">
+						<td colspan="4">Subtotal</td>
+						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr>
+					<tr style="background-color:#DDD">
+						<td colspan="4">Total</td>
+						<td><?php echo Valores($Total_ValorTotal, 0); ?></td>
+						<td><?php echo Valores($Total_MontoPagado, 0); ?></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
+						<td></td>
+					</tr> 
+					
+					
+					                 
 				</tbody>
 			</table>
 		</div>

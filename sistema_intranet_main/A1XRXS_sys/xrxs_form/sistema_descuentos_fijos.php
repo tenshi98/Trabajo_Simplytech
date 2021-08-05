@@ -114,12 +114,11 @@ require_once '0_validate_user_1.php';
 				$a = "idDescuentoFijo='".$idDescuentoFijo."'" ;
 				if(isset($Nombre) && $Nombre != ''){  $a .= ",Nombre='".$Nombre."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_descuentos_fijos` SET ".$a." WHERE idDescuentoFijo = '$idDescuentoFijo'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_descuentos_fijos', 'idDescuentoFijo = "'.$idDescuentoFijo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

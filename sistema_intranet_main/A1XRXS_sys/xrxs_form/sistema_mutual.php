@@ -123,12 +123,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Porcentaje) && $Porcentaje != ''){  $a .= ",Porcentaje='".$Porcentaje."'" ;}
 				if(isset($idEstado) && $idEstado != ''){      $a .= ",idEstado='".$idEstado."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_mutual` SET ".$a." WHERE idMutual = '$idMutual'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_mutual', 'idMutual = "'.$idMutual.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -125,13 +125,12 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario != ''){   $a .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($Nombre) && $Nombre != ''){         $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Fono) && $Fono != ''){             $a .= ",Fono='".$Fono."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `principal_agenda_telefonica` SET ".$a." WHERE idAgenda = '$idAgenda'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'principal_agenda_telefonica', 'idAgenda = "'.$idAgenda.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

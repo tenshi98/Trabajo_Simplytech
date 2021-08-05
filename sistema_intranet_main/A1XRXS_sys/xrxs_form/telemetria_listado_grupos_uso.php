@@ -123,12 +123,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Valor) && $Valor != ''){                  $a .= ",Valor='".$Valor."'" ;}
 				if(isset($idSupervisado) && $idSupervisado != ''){  $a .= ",idSupervisado='".$idSupervisado."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado_grupos_uso` SET ".$a." WHERE idGrupo = '$idGrupo'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_listado_grupos_uso', 'idGrupo = "'.$idGrupo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

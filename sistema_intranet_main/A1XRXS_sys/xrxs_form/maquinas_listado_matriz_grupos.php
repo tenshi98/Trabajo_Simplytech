@@ -119,13 +119,12 @@ require_once '0_validate_user_1.php';
 				$a = "idGrupo='".$idGrupo."'" ;
 				if(isset($idTipo) && $idTipo != ''){  $a .= ",idTipo='".$idTipo."'" ;}
 				if(isset($Nombre) && $Nombre != ''){  $a .= ",Nombre='".$Nombre."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `maquinas_listado_matriz_grupos` SET ".$a." WHERE idGrupo = '$idGrupo'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'maquinas_listado_matriz_grupos', 'idGrupo = "'.$idGrupo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -121,12 +121,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre != ''){  $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Valor) && $Valor != ''){    $a .= ",Valor='".$Valor."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `core_horas_extras_turnos` SET ".$a." WHERE idTurnos = '$idTurnos'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'core_horas_extras_turnos', 'idTurnos = "'.$idTurnos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

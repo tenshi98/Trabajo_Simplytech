@@ -160,13 +160,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idTurnos) && $idTurnos != ''){              $a .= ",idTurnos='".$idTurnos."'" ;}
 				if(isset($idUso) && $idUso != ''){                    $a .= ",idUso='".$idUso."'" ;}
 				
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `trabajadores_horas_extras_facturacion_turnos` SET ".$a." WHERE idServicios = '$idServicios'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'trabajadores_horas_extras_facturacion_turnos', 'idServicios = "'.$idServicios.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

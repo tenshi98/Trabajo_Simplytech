@@ -148,12 +148,11 @@ require_once '0_validate_user_1.php';
 				if(isset($NErroresMax) && $NErroresMax != ''){              $a .= ",NErroresMax='".$NErroresMax."'" ;         }else{$a .= ",NErroresMax='0'" ;}
 				if(isset($NErroresActual) && $NErroresActual != ''){        $a .= ",NErroresActual='".$NErroresActual."'" ;   }else{$a .= ",NErroresActual='0'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado_alarmas_perso` SET ".$a." WHERE idAlarma = '$idAlarma'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_listado_alarmas_perso', 'idAlarma = "'.$idAlarma.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

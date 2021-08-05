@@ -1193,27 +1193,10 @@ require_once '0_validate_user_1.php';
 						if(isset($Cuenta_correcto)&&$Cuenta_correcto!=0){
 							$a = "idFacturado='2'";
 							if(isset($ultimo_id) && $ultimo_id != ''){  $a .= ",idFacturacion='".$ultimo_id."'" ;}
-							$query  = "UPDATE `aguas_mediciones_datos_detalle` SET ".$a." 
-							WHERE aguas_mediciones_datos_detalle.idSistema = '".$idSistema."'
-							AND aguas_mediciones_datos_detalle.Ano = '".$Ano."'
-							AND aguas_mediciones_datos_detalle.idMes = '".$idMes."'
-							AND aguas_mediciones_datos_detalle.idFacturacion='0'
-							";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-										
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-							}
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'aguas_mediciones_datos_detalle', 'aguas_mediciones_datos_detalle.idSistema = '.$idSistema.' AND aguas_mediciones_datos_detalle.Ano = '.$Ano.' AND aguas_mediciones_datos_detalle.idMes = '.$idMes.' AND aguas_mediciones_datos_detalle.idFacturacion=0', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
-						
 							//borro todo		
 							unset($_SESSION['Facturacion_basicos']);
 							unset($_SESSION['Facturacion_clientes']);
@@ -1259,11 +1242,11 @@ require_once '0_validate_user_1.php';
 			}
 			
 			if($errorn==0){
-				// actualizo los datos de registro en la db
-				$query  = "UPDATE `aguas_mediciones_datos_detalle` SET `idFacturacion`='0' WHERE (`idFacturacion`='".$indice."')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-
+				
+				//se actualizan los datos
+				$a = "idFacturacion`='0'" ;
+				$resultado = db_update_data (false, $a, 'aguas_mediciones_datos_detalle', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//borro los datos
 				$resultado_1 = db_delete_data (false, 'aguas_facturacion_listado', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$resultado_2 = db_delete_data (false, 'aguas_facturacion_listado_detalle', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1320,12 +1303,10 @@ require_once '0_validate_user_1.php';
 								$a .= ",SII_NDoc='".$arrPostClientes[$i]['SII_NDoc']."'" ;
 							}
 							
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `aguas_facturacion_listado_detalle` SET ".$a." WHERE idFacturacionDetalle = '".$arrPostClientes[$i]['idFacturacionDetalle']."'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'aguas_facturacion_listado_detalle', 'idFacturacionDetalle = "'.$arrPostClientes[$i]['idFacturacionDetalle'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								$n_apro++;
 								

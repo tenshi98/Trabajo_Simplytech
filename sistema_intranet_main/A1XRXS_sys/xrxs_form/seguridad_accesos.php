@@ -398,12 +398,11 @@ require_once '0_validate_user_1.php';
 									if(isset($idEstado) && $idEstado != ''){                    $a .= ",idEstado='".$idEstado."'" ;}
 									$a .= ",Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 									
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `seguridad_accesos` SET ".$a." WHERE idAcceso = '$idAcceso'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
-									if($resultado){
+									if($resultado==true){
 										
 										header( 'Location: '.$location.'&edited=true' );
 										die;
@@ -452,12 +451,11 @@ require_once '0_validate_user_1.php';
 					if(isset($PersonaReunion) && $PersonaReunion != ''){        $a .= ",PersonaReunion='".$PersonaReunion."'" ;}
 					if(isset($idEstado) && $idEstado != ''){                    $a .= ",idEstado='".$idEstado."'" ;}
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `seguridad_accesos` SET ".$a." WHERE idAcceso = '$idAcceso'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if($resultado){
+					if($resultado==true){
 						
 						header( 'Location: '.$location.'&edited=true' );
 						die;
@@ -557,12 +555,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'seguridad_accesos', '', "idAcceso = ".$idAcceso, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `seguridad_accesos` SET Direccion_img='' WHERE idAcceso = '".$idAcceso."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){

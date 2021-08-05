@@ -149,13 +149,12 @@ require_once '0_validate_user_1.php';
 				if(isset($TasaDia) && $TasaDia != ''){                 $a .= ",TasaDia='".$TasaDia."'" ;}
 				if(isset($MC) && $MC != ''){                           $a .= ",MC='".$MC."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `aguas_mediciones_tasas_interes` SET ".$a." WHERE idTasasInteres = '$idTasasInteres'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'aguas_mediciones_tasas_interes', 'idTasasInteres = "'.$idTasasInteres.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($resultado==true){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					

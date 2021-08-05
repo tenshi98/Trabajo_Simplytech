@@ -134,13 +134,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idPosition) && $idPosition != ''){    $a .= ",idPosition='".$idPosition."'" ;}
 				if(isset($Nombre) && $Nombre != ''){            $a .= ",Nombre='".$Nombre."'" ;}
 											
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `card_listado` SET ".$a." WHERE idCard = '$idCard'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'card_listado', 'idCard = "'.$idCard.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -253,12 +251,11 @@ require_once '0_validate_user_1.php';
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 							if(isset($idCardImageImagen) && $idCardImageImagen != ''){       $a .= ",idCardImageImagen='".$idCardImageImagen."'" ;}
 							
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `card_listado` SET ".$a." WHERE idCard = '$idCard'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'card_listado', 'idCard = "'.$idCard.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location.'&img_id='.$idCard );
 								die;
@@ -296,13 +293,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'card_listado', '', "idCard = ".$_GET['del_img'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `card_listado` SET Direccion_img='' WHERE idCard = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'card_listado', 'idCard = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){

@@ -159,12 +159,11 @@ require_once '0_validate_user_1.php';
 				if(isset($IMEI) && $IMEI != ''){                $a .= ",IMEI='".$IMEI."'" ;}
 				if(isset($GSM) && $GSM != ''){                  $a .= ",GSM='".$GSM."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `apoderados_subcuentas` SET ".$a." WHERE idSubcuenta = '$idSubcuenta'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'apoderados_subcuentas', 'idSubcuenta = "'.$idSubcuenta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

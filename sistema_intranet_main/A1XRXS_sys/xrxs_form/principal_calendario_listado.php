@@ -148,12 +148,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Cuerpo) && $Cuerpo != ''){         $a .= ",Cuerpo='".$Cuerpo."'" ;}
 				if(isset($idUsuario) && $idUsuario != ''){   $a .= ",idUsuario='".$idUsuario."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `principal_calendario_listado` SET ".$a." WHERE idCalendario = '$idCalendario'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'principal_calendario_listado', 'idCalendario = "'.$idCalendario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

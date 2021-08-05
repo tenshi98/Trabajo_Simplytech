@@ -123,13 +123,11 @@ require_once '0_validate_user_1.php';
 				if(isset($CasaEstudios) && $CasaEstudios != ''){        $a .= ",CasaEstudios='".$CasaEstudios."'" ;}
 				if(isset($Descripcion) && $Descripcion != ''){          $a .= ",Descripcion='".$Descripcion."'" ;}
 				
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `postulantes_listado_cursos` SET ".$a." WHERE idEstudioPost = '$idEstudioPost'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'postulantes_listado_cursos', 'idEstudioPost = "'.$idEstudioPost.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

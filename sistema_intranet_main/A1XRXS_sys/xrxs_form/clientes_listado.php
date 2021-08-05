@@ -402,12 +402,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idTab_14) && $idTab_14!= ''){                                            $a .= ",idTab_14='".$idTab_14."'" ;}
 				if(isset($idTab_15) && $idTab_15!= ''){                                            $a .= ",idTab_15='".$idTab_15."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `clientes_listado` SET ".$a." WHERE idCliente = '$idCliente'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					//Se crea la carpeta del cliente
 					if(isset($new_folder)&&$new_folder!=''&&$new_folder==1){
@@ -522,12 +521,12 @@ require_once '0_validate_user_1.php';
 			
 			$idCliente  = $_GET['id'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE clientes_listado SET idEstado = '".$idEstado."'	
-			WHERE idCliente = '".$idCliente."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;

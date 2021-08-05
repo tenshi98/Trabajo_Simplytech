@@ -133,13 +133,12 @@ require_once '0_validate_user_1.php';
 				if(isset($RangoMinimo) && $RangoMinimo != ''){     $a .= ",RangoMinimo='".$RangoMinimo."'" ;}
 				if(isset($RangoMaximo) && $RangoMaximo != ''){     $a .= ",RangoMaximo='".$RangoMaximo."'" ;}
 				if(isset($idFuncion) && $idFuncion != ''){         $a .= ",idFuncion='".$idFuncion."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado_definicion_operacional` SET ".$a." WHERE idDefinicion = '$idDefinicion'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_listado_definicion_operacional', 'idDefinicion = "'.$idDefinicion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

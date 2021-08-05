@@ -238,14 +238,12 @@ require_once '0_validate_user_1.php';
 				if(isset($idOpciones_4) && $idOpciones_4 != ''){               $a .= ",idOpciones_4='".$idOpciones_4."'" ;}
 				if(isset($idOpciones_5) && $idOpciones_5 != ''){               $a .= ",idOpciones_5='".$idOpciones_5."'" ;}
 				
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `apoderados_listado` SET ".$a." WHERE idApoderado = '$idApoderado'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($resultado==true){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					
@@ -353,12 +351,13 @@ require_once '0_validate_user_1.php';
 			
 			$idApoderado  = $_GET['id'];
 			$idEstado     = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE apoderados_listado SET idEstado = '".$idEstado."'	
-			WHERE idApoderado = '".$idApoderado."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
@@ -470,13 +469,12 @@ require_once '0_validate_user_1.php';
 								
 							//Filtro para idSistema
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `apoderados_listado` SET ".$a." WHERE idApoderado = '$idApoderado'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -513,13 +511,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'apoderados_listado', '', "idApoderado = ".$_GET['del_img'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `apoderados_listado` SET Direccion_img='' WHERE idApoderado = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -596,13 +594,12 @@ require_once '0_validate_user_1.php';
 								
 							//Filtro para idSistema
 							$a = "File_Contrato='".$sufijo.$_FILES['File_Contrato']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `apoderados_listado` SET ".$a." WHERE idApoderado = '$idApoderado'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -639,13 +636,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'File_Contrato', 'apoderados_listado', '', "idApoderado = ".$_GET['del_File_Contrato'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `apoderados_listado` SET File_Contrato='' WHERE idApoderado = '".$_GET['del_File_Contrato']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "File_Contrato=''" ;
+			$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){

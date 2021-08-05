@@ -96,13 +96,12 @@ require_once '0_validate_user_1.php';
 				$a = "idLog='".$idLog."'" ;
 				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
 				if(isset($Descripcion) && $Descripcion != ''){   $a .= ",Descripcion='".$Descripcion."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_actualizaciones` SET ".$a." WHERE idLog = '$idLog'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seg_vecinal_actualizaciones', 'idLog = "'.$idLog.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

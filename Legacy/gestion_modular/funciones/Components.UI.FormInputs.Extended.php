@@ -253,15 +253,12 @@ class Form_Inputs extends Basic_Form_Inputs{
 		if($value==''){$w='';}else{$w=$value;}
 		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}	
 		
-		//filtrado de teclas
-		$input = $this->solo_letras($name);
-			
 		//generacion del input
-		$input .= '
+		$input = '
 			<div class="form-group" id="div_'.$name.'">
 				<label class="control-label col-sm-4" id="label_'.$name.'">'.$placeholder.'</label>
 				<div class="col-sm-8 field autocomplete">
-					<input type="text" placeholder="'.$placeholder.'" class="form-control"  name="'.$name.'" id="'.$name.'" value="'.$w.'"  '.$x.' onkeypress="return soloLetras_'.$name.'(event)" autocomplete="off">
+					<input type="text" placeholder="'.$placeholder.'" class="form-control"  name="'.$name.'" id="'.$name.'" value="'.$w.'"  '.$x.' onkeypress="return soloLetras(event)" autocomplete="off">
 					<input type="hidden" name="rev_'.$name.'" id="rev_'.$name.'" value="'.$aValidar.'" >
 				</div>
 			</div>';	

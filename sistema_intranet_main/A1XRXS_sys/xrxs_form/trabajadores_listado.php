@@ -348,12 +348,11 @@ require_once '0_validate_user_1.php';
 				if(isset($PorcCotSaludExtra) && $PorcCotSaludExtra != ''){                      $a .= ",PorcCotSaludExtra='".$PorcCotSaludExtra."'" ;}
 				if(isset($MontoCotSaludExtra) && $MontoCotSaludExtra != ''){                    $a .= ",MontoCotSaludExtra='".$MontoCotSaludExtra."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -519,12 +518,12 @@ require_once '0_validate_user_1.php';
 			
 			$idTrabajador  = $_GET['id'];
 			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE trabajadores_listado SET idEstado = '".$idEstado."'	
-			WHERE idTrabajador = '".$idTrabajador."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
@@ -635,13 +634,12 @@ require_once '0_validate_user_1.php';
 											
 							//Filtro para idSistema
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -679,13 +677,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET Direccion_img='' WHERE idTrabajador = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -763,13 +761,12 @@ require_once '0_validate_user_1.php';
 					
 							//Filtro para idSistema
 							$a = "File_Curriculum='".$sufijo.$_FILES['File_Curriculum']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -809,12 +806,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'File_Curriculum', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Curriculum='' WHERE idTrabajador = '".$_GET['del_File_Curriculum']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "File_Curriculum=''" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
@@ -892,13 +889,12 @@ require_once '0_validate_user_1.php';
 					
 							//Filtro para idSistema
 							$a = "File_Antecedentes='".$sufijo.$_FILES['File_Antecedentes']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -938,12 +934,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'File_Antecedentes', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Antecedentes'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Antecedentes='' WHERE idTrabajador = '".$_GET['del_File_Antecedentes']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "File_Antecedentes=''" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Antecedentes'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['File_Antecedentes'])&&$rowdata['File_Antecedentes']!=''){
@@ -1020,13 +1016,12 @@ require_once '0_validate_user_1.php';
 					
 							//Filtro para idSistema
 							$a = "File_Carnet='".$sufijo.$_FILES['File_Carnet']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1066,12 +1061,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'File_Carnet', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Carnet'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Carnet='' WHERE idTrabajador = '".$_GET['del_File_Carnet']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "File_Carnet=''" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Carnet'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['File_Carnet'])&&$rowdata['File_Carnet']!=''){
@@ -1149,13 +1144,12 @@ require_once '0_validate_user_1.php';
 					
 							//Filtro para idSistema
 							$a = "File_Contrato='".$sufijo.$_FILES['File_Contrato']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1194,12 +1188,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'File_Contrato', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Contrato='' WHERE idTrabajador = '".$_GET['del_File_Contrato']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "File_Contrato=''" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
@@ -1250,12 +1244,10 @@ require_once '0_validate_user_1.php';
 				if(isset($LicenciaFechaControl) && $LicenciaFechaControl != ''){                $a .= ",LicenciaFechaControl='".$LicenciaFechaControl."'" ;}
 				if(isset($LicenciaFechaControlUltimo) && $LicenciaFechaControlUltimo != ''){    $a .= ",LicenciaFechaControlUltimo='".$LicenciaFechaControlUltimo."'" ;}
 				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
-				$result = mysqli_query($dbConn, $query);
-				
-			
 				if ($_FILES["File_Licencia"]["error"] > 0){ 
 					$error['File_Licencia'] = 'error/'.uploadPHPError($_FILES["File_Licencia"]["error"]); 
 				} else {
@@ -1294,13 +1286,12 @@ require_once '0_validate_user_1.php';
 						
 								//Filtro para idSistema
 								$a = "File_Licencia='".$sufijo.$_FILES['File_Licencia']['name']."'" ;
-
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
+								
+								/*******************************************************/
+								//se actualizan los datos
+								$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//Si ejecuto correctamente la consulta
-								if($resultado){
+								if($resultado==true){
 									
 									header( 'Location: '.$location );
 									die;
@@ -1340,12 +1331,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'File_Licencia', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Licencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_Licencia='' WHERE idTrabajador = '".$_GET['del_File_Licencia']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "File_Licencia=''" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Licencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
@@ -1425,12 +1416,11 @@ require_once '0_validate_user_1.php';
 							$a = "File_RHTM='".$sufijo.$_FILES['File_RHTM']['name']."'" ;
 							if(isset($File_RHTM_Fecha) && $File_RHTM_Fecha != ''){   $a .= ",File_RHTM_Fecha='".$File_RHTM_Fecha."'" ;}
 							
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_listado` SET ".$a." WHERE idTrabajador = '$idTrabajador'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1470,12 +1460,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'File_RHTM', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_RHTM'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_listado` SET File_RHTM='', File_RHTM_Fecha='' WHERE idTrabajador = '".$_GET['del_File_RHTM']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "File_RHTM='', File_RHTM_Fecha=''" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_RHTM'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){

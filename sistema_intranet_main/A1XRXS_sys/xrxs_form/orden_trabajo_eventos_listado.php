@@ -122,12 +122,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idMaquina) && $idMaquina != ''){         $a .= ",idMaquina='".$idMaquina."'" ;}
 				if(isset($idTrabajador) && $idTrabajador != ''){   $a .= ",idTrabajador='".$idTrabajador."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `orden_trabajo_eventos_listado` SET ".$a." WHERE idEvento = '$idEvento'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_eventos_listado', 'idEvento = "'.$idEvento.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

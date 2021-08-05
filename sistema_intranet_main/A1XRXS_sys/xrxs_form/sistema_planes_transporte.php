@@ -130,12 +130,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Valor_Anual) && $Valor_Anual != ''){      $a .= ",Valor_Anual='".$Valor_Anual."'" ;}
 				if(isset($N_Hijos) && $N_Hijos != ''){              $a .= ",N_Hijos='".$N_Hijos."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_planes_transporte` SET ".$a." WHERE idPlan = '$idPlan'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_planes_transporte', 'idPlan = "'.$idPlan.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

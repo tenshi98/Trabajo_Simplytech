@@ -352,13 +352,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idTab_14) && $idTab_14!= ''){                              $a .= ",idTab_14='".$idTab_14."'" ;}
 				if(isset($idTab_15) && $idTab_15!= ''){                              $a .= ",idTab_15='".$idTab_15."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `prospectos_listado` SET ".$a." WHERE idProspecto = '$idProspecto'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -441,17 +439,15 @@ require_once '0_validate_user_1.php';
 			$HModificacion  = hora_actual();
 			$idUsuarioMod   = $_SESSION['usuario']['basic_data']['idUsuario'];
 			
-			//consulta
-			$query  = "UPDATE prospectos_listado SET 
-			idEstado = '".$idEstado."',
-			FModificacion = '".$FModificacion."',
-			HModificacion = '".$HModificacion."',
-			idUsuarioMod = '".$idUsuarioMod."'
-			WHERE idProspecto = '".$idProspecto."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a  = "idEstado='".$idEstado."'" ;
+			$a .= ",FModificacion='".$FModificacion."'" ;
+			$a .= ",HModificacion='".$HModificacion."'" ;
+			$a .= ",idUsuarioMod='".$idUsuarioMod."'" ;
+			$resultado = db_update_data (false, $a, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
@@ -575,12 +571,11 @@ require_once '0_validate_user_1.php';
 						$a .= ",idEstado='".$idEstado."'";
 						$a .= ",password='".md5($password)."'";
 						
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `clientes_listado` SET ".$a." WHERE idCliente = '".$rowCliente['idCliente']."'";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
+						/*******************************************************/
+						//se actualizan los datos
+						$resultado = db_update_data (false, $a, 'clientes_listado', 'idCliente = "'.$rowCliente['idCliente'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Si ejecuto correctamente la consulta
-						if($resultado){
+						if($resultado==true){
 							
 							//Se crea la carpeta del cliente
 							if(isset($new_folder)&&$new_folder!=''&&$new_folder==1){

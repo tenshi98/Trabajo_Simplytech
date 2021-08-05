@@ -124,12 +124,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Codigo) && $Codigo != ''){      $a .= ",Codigo='".$Codigo."'" ;}
 				if(isset($idEstado) && $idEstado != ''){  $a .= ",idEstado='".$idEstado."'" ;}
 					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_checking_temporada` SET ".$a." WHERE idTemporada = '$idTemporada'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_checking_temporada', 'idTemporada = "'.$idTemporada.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

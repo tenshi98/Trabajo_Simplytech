@@ -610,14 +610,13 @@ require_once '0_validate_user_1.php';
 				if(isset($idTipoMedicion) && $idTipoMedicion != ''){          $a .= ",idTipoMedicion='".$idTipoMedicion."'" ;}
 				if(isset($idMarcadoresUsado) && $idMarcadoresUsado != ''){    $a .= ",idMarcadoresUsado='".$idMarcadoresUsado."'" ;}
 				if(isset($ConsumoMedidor) && $ConsumoMedidor != ''){          $a .= ",ConsumoMedidor='".$ConsumoMedidor."'" ;}
-							
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `aguas_mediciones_datos` SET ".$a." WHERE idDatos = '".$idDatos."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'aguas_mediciones_datos', 'idDatos = "'.$idDatos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($resultado==true){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					
@@ -647,14 +646,13 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$a = "idDatosDetalle='".$idDatosDetalle."'" ;
 				if(isset($Consumo) && $Consumo != ''){    $a .= ",Consumo='".$Consumo."'" ;}
-							
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `aguas_mediciones_datos_detalle` SET ".$a." WHERE idDatosDetalle = '".$idDatosDetalle."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'aguas_mediciones_datos_detalle', 'idDatosDetalle = "'.$idDatosDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($resultado==true){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					

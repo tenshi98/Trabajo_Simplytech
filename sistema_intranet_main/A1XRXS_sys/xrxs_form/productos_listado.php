@@ -292,13 +292,11 @@ require_once '0_validate_user_1.php';
 				if(isset($EfectoRetroactivo) && $EfectoRetroactivo != ''){    $a .= ",EfectoRetroactivo='".$EfectoRetroactivo."'" ;}
 				if(isset($CarenciaExportador) && $CarenciaExportador != ''){  $a .= ",CarenciaExportador='".$CarenciaExportador."'" ;}
 											
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `productos_listado` SET ".$a." WHERE idProducto = '$idProducto'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -666,12 +664,11 @@ require_once '0_validate_user_1.php';
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 							if(isset($idTipoImagen) && $idTipoImagen != ''){       $a .= ",idTipoImagen='".$idTipoImagen."'" ;}
 							
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `productos_listado` SET ".$a." WHERE idProducto = '$idProducto'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location.'&img_id='.$idProducto );
 								die;
@@ -727,13 +724,12 @@ require_once '0_validate_user_1.php';
 								
 							//Filtro para idSistema		
 							$a = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `productos_listado` SET ".$a." WHERE idProducto = '$idProducto'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -788,13 +784,12 @@ require_once '0_validate_user_1.php';
 								
 							//Filtro para idSistema		
 							$a = "HDS='".$sufijo.$_FILES['HDS']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `productos_listado` SET ".$a." WHERE idProducto = '$idProducto'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -830,13 +825,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'productos_listado', '', 'idProducto = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `productos_listado` SET Direccion_img='', idTipoImagen=0 WHERE idProducto = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img='', idTipoImagen=0" ;
+			$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -877,12 +872,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'FichaTecnica', 'productos_listado', '', 'idProducto = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `productos_listado` SET FichaTecnica='' WHERE idProducto = '".$_GET['del_file']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "FichaTecnica=''" ;
+			$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
@@ -924,12 +919,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'HDS', 'productos_listado', '', 'idProducto = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `productos_listado` SET HDS='' WHERE idProducto = '".$_GET['del_hds']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "HDS=''" ;
+			$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
@@ -1239,12 +1234,12 @@ require_once '0_validate_user_1.php';
 			
 			$idProducto  = $_GET['id'];
 			$idEstado    = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE productos_listado SET idEstado = '".$idEstado."'	
-			WHERE idProducto = '".$idProducto."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
@@ -1316,13 +1311,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idProductoRel) && $idProductoRel != ''){   $a .= ",idProductoRel='".$idProductoRel."'" ;}
 				if(isset($Cantidad) && $Cantidad != ''){             $a .= ",Cantidad='".$Cantidad."'" ;}
 											
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `productos_recetas` SET ".$a." WHERE idReceta = '$idReceta'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'productos_recetas', 'idReceta = "'.$idReceta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -1374,13 +1367,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idProductoRel) && $idProductoRel != ''){   $a .= ",idProductoRel='".$idProductoRel."'" ;}
 				if(isset($Number) && $Number != ''){                 $a .= ",Cantidad='".$Number."'" ;}
 											
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `productos_recetas` SET ".$a." WHERE idReceta = '$idReceta'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'productos_recetas', 'idReceta = "'.$idReceta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

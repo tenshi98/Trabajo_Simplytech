@@ -144,13 +144,12 @@ require_once '0_validate_user_1.php';
 				if(isset($Acumulado) && $Acumulado != ''){       $a .= ",Acumulado='".$Acumulado."'" ;}
 				if(isset($DoceMeses) && $DoceMeses != ''){       $a .= ",DoceMeses='".$DoceMeses."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `aguas_mediciones_ipc` SET ".$a." WHERE idIPC = '$idIPC'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'aguas_mediciones_ipc', 'idIPC = "'.$idIPC.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($resultado==true){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					

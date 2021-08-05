@@ -288,13 +288,11 @@ require_once '0_validate_user_1.php';
 									if(isset($idUso) && $idUso != ''){                    $a .= ",idUso='".$idUso."'" ;}
 									$a .= ",File_Licencia='".$sufijo.$_FILES['File_Licencia']['name']."'" ;
 									
-									
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `trabajadores_licencias` SET ".$a." WHERE idLicencia = '$idLicencia'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'trabajadores_licencias', 'idLicencia = "'.$idLicencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
-									if($resultado){
+									if($resultado==true){
 										
 										header( 'Location: '.$location.'&edited=true' );
 										die;
@@ -335,13 +333,11 @@ require_once '0_validate_user_1.php';
 					if(isset($Observacion) && $Observacion != ''){        $a .= ",Observacion='".$Observacion."'" ;}
 					if(isset($idUso) && $idUso != ''){                    $a .= ",idUso='".$idUso."'" ;}
 					
-					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `trabajadores_licencias` SET ".$a." WHERE idLicencia = '$idLicencia'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'trabajadores_licencias', 'idLicencia = "'.$idLicencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if($resultado){
+					if($resultado==true){
 						
 						header( 'Location: '.$location.'&edited=true' );
 						die;
@@ -440,12 +436,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'File_Licencia', 'trabajadores_licencias', '', 'idLicencia = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `trabajadores_licencias` SET File_Licencia='' WHERE idLicencia = '".$_GET['del_file']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "File_Licencia=''" ;
+			$resultado = db_update_data (false, $a, 'trabajadores_licencias', 'idLicencia = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){

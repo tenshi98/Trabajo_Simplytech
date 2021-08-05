@@ -146,12 +146,11 @@ require_once '0_validate_user_1.php';
 				if(isset($SitioDescarga) && $SitioDescarga != ''){     $a .= ",SitioDescarga='".$SitioDescarga."'" ;}
 				if(isset($idCategoria) && $idCategoria != ''){         $a .= ",idCategoria='".$idCategoria."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `soporte_software_listado` SET ".$a." WHERE idSoftware = '$idSoftware'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'soporte_software_listado', 'idSoftware = "'.$idSoftware.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -134,13 +134,11 @@ require_once '0_validate_user_1.php';
 				if(isset($HoraInicio) && $HoraInicio != ''){     $a .= ",HoraInicio='".$HoraInicio."'" ;}
 				if(isset($HoraTermino) && $HoraTermino != ''){   $a .= ",HoraTermino='".$HoraTermino."'" ;}
 				
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `comunicaciones_streaming_listado` SET ".$a." WHERE idStreaming = '$idStreaming'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'comunicaciones_streaming_listado', 'idStreaming = "'.$idStreaming.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

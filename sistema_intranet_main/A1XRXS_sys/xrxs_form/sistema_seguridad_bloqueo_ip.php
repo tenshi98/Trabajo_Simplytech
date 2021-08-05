@@ -127,12 +127,11 @@ require_once '0_validate_user_1.php';
 				if(isset($IP_Client) && $IP_Client != ''){  $a .= ",IP_Client='".$IP_Client."'" ;}
 				if(isset($Motivo) && $Motivo != ''){        $a .= ",Motivo='".$Motivo."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_seguridad_bloqueo_ip` SET ".$a." WHERE idBloqueo = '$idBloqueo'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_seguridad_bloqueo_ip', 'idBloqueo = "'.$idBloqueo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -130,12 +130,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Observaciones) && $Observaciones != ''){         $a .= ",Observaciones='".$Observaciones."'" ;}
 				if(isset($FechaQueja) && $FechaQueja != ''){               $a .= ",FechaQueja='".$FechaQueja."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `gestion_quejas` SET ".$a." WHERE idQueja = '$idQueja'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'gestion_quejas', 'idQueja = "'.$idQueja.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

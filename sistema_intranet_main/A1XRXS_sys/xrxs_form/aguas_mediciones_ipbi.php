@@ -123,13 +123,12 @@ require_once '0_validate_user_1.php';
 				if(isset($Ano) && $Ano != ''){               $a .= ",Ano='".$Ano."'" ;}
 				if(isset($Valor) && $Valor != ''){           $a .= ",Valor='".$Valor."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `aguas_mediciones_ipbi` SET ".$a." WHERE idIPBI = '$idIPBI'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'aguas_mediciones_ipbi', 'idIPBI = "'.$idIPBI.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($resultado==true){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					

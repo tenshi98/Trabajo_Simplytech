@@ -40,31 +40,31 @@ require_once '0_validate_user_1.php';
 					$a = "idComentario='".$idComentario."'" ;
 					if(isset($idValidado) && $idValidado != ''){  $a .= ",idValidado='".$idValidado."'" ;}
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `seg_vecinal_peligros_listado_comentarios` SET ".$a." WHERE idComentario = '".$idComentario."'";
-					$resultado = mysqli_query($dbConn, $query);
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'seg_vecinal_peligros_listado_comentarios', 'idComentario = "'.$idComentario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 				//evento	
 				}elseif(isset($idTipo)&&$idTipo==2){
 					//Filtros
 					$a = "idComentario='".$idComentario."'" ;
 					if(isset($idValidado) && $idValidado != ''){  $a .= ",idValidado='".$idValidado."'" ;}
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `seg_vecinal_eventos_listado_comentarios` SET ".$a." WHERE idComentario = '".$idComentario."'";
-					$resultado = mysqli_query($dbConn, $query);
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'seg_vecinal_eventos_listado_comentarios', 'idComentario = "'.$idComentario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 				}
 					
 				/******************************************************************/
 				//descarto los reportes
 				$a = "idRevisado='".$idRevisado."'" ;
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_reportes_comment_listado` SET ".$a." WHERE idEventoPeligro = '".$idEventoPeligro."' AND idTipo = '".$idTipo."' AND idComentario = '".$idComentario."'";
-				$resultado = mysqli_query($dbConn, $query);
 				
-				/******************************************************************/
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seg_vecinal_reportes_comment_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'" AND idComentario = "'.$idComentario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -104,22 +104,21 @@ require_once '0_validate_user_1.php';
 				/******************************************************************/
 				//desactivo al usuario creador del post
 				$a = "idEstado='".$idEstado."'" ;
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_clientes_listado` SET ".$a." WHERE idCliente = '".$idCliente."' ";
-				$resultado = mysqli_query($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seg_vecinal_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				/******************************************************************/
 				//descarto los reportes
 				$a = "idRevisado='".$idRevisado."'" ;
 					
 				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_reportes_comment_listado` SET ".$a." WHERE idEventoPeligro = '".$idEventoPeligro."' AND idTipo = '".$idTipo."' AND idComentario = '".$idComentario."'";
-				$resultado = mysqli_query($dbConn, $query);
+				$resultado = db_update_data (false, $a, 'seg_vecinal_reportes_comment_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'" AND idComentario = "'.$idComentario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************************************/
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -161,10 +160,10 @@ require_once '0_validate_user_1.php';
 				/******************************************************************/
 				//desactivo al usuario creador del comentario
 				$a = "idEstado='".$idEstado."'" ;
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_clientes_listado` SET ".$a." WHERE idCliente = '".$idCliente."' ";
-				$resultado = mysqli_query($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seg_vecinal_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/****************************************/
 				// Se trae un listado con todas las ip
@@ -205,14 +204,14 @@ require_once '0_validate_user_1.php';
 				/******************************************************************/
 				//descarto los reportes
 				$a = "idRevisado='".$idRevisado."'" ;
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seg_vecinal_reportes_comment_listado` SET ".$a." WHERE idEventoPeligro = '".$idEventoPeligro."' AND idTipo = '".$idTipo."' AND idComentario = '".$idComentario."'";
-				$resultado = mysqli_query($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seg_vecinal_reportes_comment_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'" AND idComentario = "'.$idComentario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************************************/
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

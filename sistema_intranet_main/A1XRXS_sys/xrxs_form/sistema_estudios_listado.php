@@ -122,12 +122,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre != ''){              $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($idEstudioCat) && $idEstudioCat != ''){  $a .= ",idEstudioCat='".$idEstudioCat."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_estudios_listado` SET ".$a." WHERE idEstudio = '$idEstudio'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_estudios_listado', 'idEstudio = "'.$idEstudio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

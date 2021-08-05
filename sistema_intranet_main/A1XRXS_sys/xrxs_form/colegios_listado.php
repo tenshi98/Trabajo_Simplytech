@@ -253,12 +253,11 @@ require_once '0_validate_user_1.php';
 				if(isset($GeoLatitud) && $GeoLatitud!= ''){     $a .= ",GeoLatitud='".$GeoLatitud."'" ;}
 				if(isset($GeoLongitud) && $GeoLongitud!= ''){   $a .= ",GeoLongitud='".$GeoLongitud."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `colegios_listado` SET ".$a." WHERE idColegio = '$idColegio'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'colegios_listado', 'idColegio = "'.$idColegio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -340,12 +339,12 @@ require_once '0_validate_user_1.php';
 			
 			$idColegio  = $_GET['id'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE colegios_listado SET idEstado = '".$idEstado."'	
-			WHERE idColegio = '".$idColegio."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'colegios_listado', 'idColegio = "'.$idColegio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;

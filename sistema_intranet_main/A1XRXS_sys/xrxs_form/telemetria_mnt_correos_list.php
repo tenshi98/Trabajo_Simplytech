@@ -125,12 +125,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario != ''){          $a .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($TimeStamp) && $TimeStamp != ''){          $a .= ",TimeStamp='".$TimeStamp."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_mnt_correos_list` SET ".$a." WHERE idCorreos = '$idCorreos'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_mnt_correos_list', 'idCorreos = "'.$idCorreos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -243,13 +242,11 @@ require_once '0_validate_user_1.php';
 					$a = "TimeStamp='".$Fecha_noMolestar." ".$Hora_noMolestar."'" ;
 				}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_mnt_correos_list` SET ".$a." WHERE idUsuario = '".$idUsuario."'
-				AND idSistema='".$idSistema."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_mnt_correos_list', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&noMol='.simpleEncode($h_noMolestar, fecha_actual()) );
 					die;

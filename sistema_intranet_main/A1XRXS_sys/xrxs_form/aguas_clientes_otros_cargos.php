@@ -329,18 +329,15 @@ require_once '0_validate_user_1.php';
 									if(isset($ValorCargo) && $ValorCargo!= ''){      $a .= ",ValorCargo='".$ValorCargo."'" ;}
 									$a .= ",Archivo='".$sufijo.$_FILES['Archivo']['name']."'" ;
 									
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `aguas_clientes_otros_cargos` SET ".$a." WHERE idOtrosCargos = '$idOtrosCargos'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'aguas_clientes_otros_cargos', 'idOtrosCargos = "'.$idOtrosCargos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
-									if($resultado){
-										
-										//redirijo	
+									if($resultado==true){
+										//redirijo
 										header( 'Location: '.$location.'&edited=true' );
-										die;	
-											
+										die;
+									
 									//si da error, guardar en el log de errores una copia
 									}else{
 										//Genero numero aleatorio
@@ -380,15 +377,12 @@ require_once '0_validate_user_1.php';
 					if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
 					if(isset($ValorCargo) && $ValorCargo!= ''){      $a .= ",ValorCargo='".$ValorCargo."'" ;}
 									
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `aguas_clientes_otros_cargos` SET ".$a." WHERE idOtrosCargos = '$idOtrosCargos'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'aguas_clientes_otros_cargos', 'idOtrosCargos = "'.$idOtrosCargos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if($resultado){
-										
-						//redirijo	
+					if($resultado==true){
+						//redirijo
 						header( 'Location: '.$location.'&edited=true' );
 						die;	
 											
@@ -415,12 +409,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el archivo relacionado
 			$rowdata = db_select_data (false, 'Archivo', 'aguas_clientes_otros_cargos', '', 'idOtrosCargos = "'.$_GET['del_Archivo'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `aguas_clientes_otros_cargos` SET Archivo='' WHERE idOtrosCargos = '".$_GET['del_Archivo']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Archivo=''" ;
+			$resultado = db_update_data (false, $a, 'aguas_clientes_otros_cargos', 'idOtrosCargos = "'.$_GET['del_Archivo'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){

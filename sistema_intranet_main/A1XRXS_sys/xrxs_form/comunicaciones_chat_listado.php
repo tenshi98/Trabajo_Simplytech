@@ -134,13 +134,11 @@ require_once '0_validate_user_1.php';
 				if(isset($HoraInicio) && $HoraInicio != ''){     $a .= ",HoraInicio='".$HoraInicio."'" ;}
 				if(isset($HoraTermino) && $HoraTermino != ''){   $a .= ",HoraTermino='".$HoraTermino."'" ;}
 				
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `comunicaciones_chat_listado` SET ".$a." WHERE idChat = '$idChat'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'comunicaciones_chat_listado', 'idChat = "'.$idChat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -168,13 +168,12 @@ require_once '0_validate_user_1.php';
 				if(isset($Fac_nEmergencia) && $Fac_nEmergencia != ''){             $a .= ",Fac_nEmergencia='".$Fac_nEmergencia."'";}
 				if(isset($Fac_nConsultas) && $Fac_nConsultas != ''){               $a .= ",Fac_nConsultas='".$Fac_nConsultas."'";}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `aguas_datos_valores` SET ".$a." WHERE idDato = '$idDato'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'aguas_datos_valores', 'idDato = "'.$idDato.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($resultado==true){
+					//redirijo
 					header( 'Location: '.$location.'?edited=true' );
 					die;
 					

@@ -113,13 +113,12 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$a = "idCorreosCat='".$idCorreosCat."'" ;
 				if(isset($Nombre) && $Nombre != ''){  $a .= ",Nombre='".$Nombre."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_mnt_correos_cat` SET ".$a." WHERE idCorreosCat = '$idCorreosCat'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_mnt_correos_cat', 'idCorreosCat = "'.$idCorreosCat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

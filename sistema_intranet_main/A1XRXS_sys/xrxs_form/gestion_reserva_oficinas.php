@@ -179,12 +179,11 @@ require_once '0_validate_user_1.php';
 				if(isset($CantidadAsistentes) && $CantidadAsistentes != ''){    $a .= ",CantidadAsistentes='".$CantidadAsistentes."'" ;}
 				if(isset($idOficina) && $idOficina != ''){                      $a .= ",idOficina='".$idOficina."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `gestion_reserva_oficinas` SET ".$a." WHERE idReserva = '$idReserva'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'gestion_reserva_oficinas', 'idReserva = "'.$idReserva.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

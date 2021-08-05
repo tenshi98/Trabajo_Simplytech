@@ -168,12 +168,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idEstadoFidelizacion) && $idEstadoFidelizacion!= ''){  $a .= ",idEstadoFidelizacion='".$idEstadoFidelizacion."'" ;}
 				if(isset($idEtapa) && $idEtapa!= ''){                            $a .= ",idEtapa='".$idEtapa."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `prospectos_transportistas_listado` SET ".$a." WHERE idProspecto = '$idProspecto'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'prospectos_transportistas_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

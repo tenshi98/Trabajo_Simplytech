@@ -46,9 +46,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Shield Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Shield Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Shield borrado correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Unidad Medida Creada correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Unidad Medida Modificada correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Unidad Medida borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -78,7 +78,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Modificacion Shield</h5>
+			<h5>Modificacion Unidad Medida</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -113,7 +113,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear Shield</h5>
+			<h5>Crear Unidad Medida</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -206,14 +206,14 @@ $search='';
 ?>
 
 <div class="col-sm-12">
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Shield</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Unidad Medida</a><?php } ?>
 </div>
                        
                          
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Shield</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Unidades Medidas</h5>
 			<div class="toolbar">
 				<?php 
 				//paginador

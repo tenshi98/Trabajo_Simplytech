@@ -119,13 +119,12 @@ require_once '0_validate_user_1.php';
 				if(isset($idTrabajador) && $idTrabajador != ''){    $a .= ",idTrabajador='".$idTrabajador."'" ;}
 				if(isset($idBonoFijo) && $idBonoFijo != ''){        $a .= ",idBonoFijo='".$idBonoFijo."'" ;}
 				if(isset($Monto) && $Monto != ''){                  $a .= ",Monto='".$Monto."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `trabajadores_listado_bonos_fijos` SET ".$a." WHERE idBono = '$idBono'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'trabajadores_listado_bonos_fijos', 'idBono = "'.$idBono.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

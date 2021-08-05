@@ -124,12 +124,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Codigo) && $Codigo != ''){        $a .= ",Codigo='".$Codigo."'" ;}
 				if(isset($idSistema) && $idSistema != ''){  $a .= ",idSistema='".$idSistema."'" ;}
 					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_shipping_plantas` SET ".$a." WHERE idPlantaDespacho = '$idPlantaDespacho'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_shipping_plantas', 'idPlantaDespacho = "'.$idPlantaDespacho.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

@@ -127,13 +127,12 @@ if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){  $error['Codigo'] = 
 				if(isset($Codigo) && $Codigo != ''){        $a .= ",Codigo='".$Codigo."'" ;}
 				if(isset($idEstado) && $idEstado != ''){    $a .= ",idEstado='".$idEstado."'" ;}
 				if(isset($idSistema) && $idSistema != ''){  $a .= ",idSistema='".$idSistema."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_checking_estado_fenologico` SET ".$a." WHERE idEstadoFen = '$idEstadoFen'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_checking_estado_fenologico', 'idEstadoFen = "'.$idEstadoFen.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

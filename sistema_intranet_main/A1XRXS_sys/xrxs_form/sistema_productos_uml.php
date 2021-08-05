@@ -120,12 +120,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre != ''){            $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Abreviatura) && $Abreviatura != ''){  $a .= ",Abreviatura='".$Abreviatura."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `sistema_productos_uml` SET ".$a." WHERE idUml = '$idUml'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'sistema_productos_uml', 'idUml = "'.$idUml.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

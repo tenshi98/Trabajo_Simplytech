@@ -141,12 +141,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idDia_6) && $idDia_6 != ''){          $a .= ",idDia_6='".$idDia_6."'" ;}
 				if(isset($idDia_7) && $idDia_7 != ''){          $a .= ",idDia_7='".$idDia_7."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cursos_listado_videoconferencia` SET ".$a." WHERE idVideoConferencia = '$idVideoConferencia'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cursos_listado_videoconferencia', 'idVideoConferencia = "'.$idVideoConferencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

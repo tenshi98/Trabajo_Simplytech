@@ -129,8 +129,9 @@ require_once '0_validate_user_1.php';
 							if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $a .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
 							if(isset($ultimo_id) && $ultimo_id != ''){          $a .= ",idPago='".$ultimo_id."'" ;}
 								
-							$query  = "UPDATE `aguas_facturacion_listado_detalle` SET ".$a." WHERE idFacturacionDetalle = '".$fac['idFacturacionDetalle']."'";
-							$resultado = mysqli_query ($dbConn, $query);
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'aguas_facturacion_listado_detalle', 'idFacturacionDetalle = "'.$fac['idFacturacionDetalle'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
 							/**************************************************************/
 							//Guardo los pagos relacionados
@@ -203,8 +204,9 @@ require_once '0_validate_user_1.php';
 					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $a .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
 					if(isset($ultimo_id) && $ultimo_id != ''){          $a .= ",idPago='".$ultimo_id."'" ;}
 								
-					$query  = "UPDATE `aguas_facturacion_listado_detalle` SET ".$a." WHERE idFacturacionDetalle = '".$idFacturacionDetalle."'";
-					$resultado = mysqli_query ($dbConn, $query);
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'aguas_facturacion_listado_detalle', 'idFacturacionDetalle = "'.$idFacturacionDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se actualiza el estado del cliente dependiendo del no pago
 					/*$a = "idCliente='".$idCliente."'" ;
@@ -223,14 +225,14 @@ require_once '0_validate_user_1.php';
 						case 11:  $a .= ",idEstadoPago='3'" ; break;
 						case 12:  $a .= ",idEstadoPago='3'" ; break;
 					}
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `clientes_listado` SET ".$a." WHERE idCliente = '".$idCliente."'";
-					$resultado = mysqli_query ($dbConn, $query);
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se actualiza el estado del cliente en caso de que el pago actual cubra la facturacion actual
 					if($ultimo_pago<=$montoPago){
-						$query  = "UPDATE `clientes_listado` SET idEstadoPago='1' WHERE idCliente = '".$idCliente."'";
-						$resultado = mysqli_query ($dbConn, $query);
+						//se actualizan los datos
+						$a = "idEstadoPago='1'" ;
+						$resultado = db_update_data (false, $a, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					}*/
 					
 					header( 'Location: '.$location.'&created=true' );

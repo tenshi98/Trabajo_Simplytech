@@ -142,12 +142,11 @@ require_once '0_validate_user_1.php';
 				if(isset($MontoActual) && $MontoActual != ''){         $a .= ",MontoActual='".$MontoActual."'" ;}
 				if(isset($MontoProgramado) && $MontoProgramado != ''){ $a .= ",MontoProgramado='".$MontoProgramado."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `caja_chica_listado` SET ".$a." WHERE idCajaChica = '$idCajaChica'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -259,13 +258,12 @@ require_once '0_validate_user_1.php';
 						
 							//Filtro para idSistema		
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `caja_chica_listado` SET ".$a." WHERE idCajaChica = '$idCajaChica'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location.'&img_id='.$idCajaChica );
 								die;
@@ -322,13 +320,12 @@ require_once '0_validate_user_1.php';
 								
 							//Filtro para idSistema		
 							$a = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `caja_chica_listado` SET ".$a." WHERE idCajaChica = '$idCajaChica'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -365,13 +362,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'caja_chica_listado', '', "idCajaChica = ".$_GET['del_img'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `caja_chica_listado` SET Direccion_img='' WHERE idCajaChica = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -412,13 +409,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'FichaTecnica', 'caja_chica_listado', '', "idCajaChica = ".$_GET['del_file'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `caja_chica_listado` SET FichaTecnica='' WHERE idCajaChica = '".$_GET['del_file']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "FichaTecnica=''" ;
+			$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 					
 				//se elimina el archivo
 				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){

@@ -394,12 +394,11 @@ require_once '0_validate_user_1.php';
 				if(isset($CapacidadPersonas) && $CapacidadPersonas != ''){                            $a .= ",CapacidadPersonas='".$CapacidadPersonas."'" ;}
 				if(isset($AlertLimiteVelocidad) && $AlertLimiteVelocidad != ''){                      $a .= ",AlertLimiteVelocidad='".$AlertLimiteVelocidad."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -591,12 +590,12 @@ require_once '0_validate_user_1.php';
 			
 			$idVehiculo  = $_GET['id'];
 			$idEstado    = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE vehiculos_listado SET idEstado = '".$idEstado."'	
-			WHERE idVehiculo = '".$idVehiculo."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
@@ -707,13 +706,12 @@ require_once '0_validate_user_1.php';
 				
 							//Filtro para idSistema
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -751,13 +749,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `vehiculos_listado` SET Direccion_img='' WHERE idVehiculo = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -803,12 +801,11 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$a = "idVehiculo='".$idVehiculo."'" ;
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `apoderados_listado_hijos` SET ".$a." WHERE idHijos = '$idHijos'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$idHijos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -839,12 +836,11 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$a = "idVehiculo='0'" ;
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `apoderados_listado_hijos` SET ".$a." WHERE idHijos = '".$_GET['del_pasajero']."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$_GET['del_pasajero'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
@@ -911,13 +907,12 @@ require_once '0_validate_user_1.php';
 							//Filtro para idSistema
 							$a = "doc_mantencion='".$sufijo.$_FILES['doc_mantencion']['name']."'" ;
 							if(isset($doc_fecha_mantencion) && $doc_fecha_mantencion != ''){   $a .= ",doc_fecha_mantencion='".$doc_fecha_mantencion."'" ;}
-				
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if(!$resultado){
+							if($resultado==true){
 								//Genero numero aleatorio
 								$vardata = genera_password(8,'alfanumerico');
 								
@@ -1015,10 +1010,10 @@ require_once '0_validate_user_1.php';
 				/*************************************************/
 				//Si coinciden ambos documentos se actualiza registro de la mantencion
 				if(isset($rowVehiculo['doc_mantencion'])&&isset($rowMantencion['doc_mantencion'])&&$rowVehiculo['doc_mantencion']==$rowMantencion['doc_mantencion']){
-					//se borra el dato de la base de datos
-					$query  = "UPDATE `vehiculos_listado` SET doc_mantencion='', doc_fecha_mantencion='' WHERE idVehiculo = '".$idVehiculo."'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					/*******************************************************/
+					//se actualizan los datos
+					$a = "doc_mantencion='', doc_fecha_mantencion=''" ;
+					$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*************************************************/
@@ -1099,13 +1094,12 @@ require_once '0_validate_user_1.php';
 							//Filtro para idSistema
 							$a = "doc_padron='".$sufijo.$_FILES['doc_padron']['name']."'" ;
 							if(isset($doc_fecha_padron) && $doc_fecha_padron != ''){   $a .= ",doc_fecha_padron='".$doc_fecha_padron."'" ;}
-				
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1142,13 +1136,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'doc_padron', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_padron'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `vehiculos_listado` SET doc_padron='', doc_fecha_padron='' WHERE idVehiculo = '".$_GET['del_doc_padron']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "doc_padron='', doc_fecha_padron=''" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_padron'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['doc_padron'])&&$rowdata['doc_padron']!=''){
@@ -1229,13 +1223,12 @@ require_once '0_validate_user_1.php';
 							//Filtro para idSistema
 							$a = "doc_permiso_circulacion='".$sufijo.$_FILES['doc_permiso_circulacion']['name']."'" ;
 							if(isset($doc_fecha_permiso_circulacion) && $doc_fecha_permiso_circulacion != ''){   $a .= ",doc_fecha_permiso_circulacion='".$doc_fecha_permiso_circulacion."'" ;}
-				
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1274,12 +1267,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'doc_permiso_circulacion', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_permiso_circulacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `vehiculos_listado` SET doc_permiso_circulacion='', doc_fecha_permiso_circulacion='' WHERE idVehiculo = '".$_GET['del_doc_permiso_circulacion']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "doc_permiso_circulacion='', doc_fecha_permiso_circulacion=''" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_permiso_circulacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['doc_permiso_circulacion'])&&$rowdata['doc_permiso_circulacion']!=''){
@@ -1358,13 +1351,12 @@ require_once '0_validate_user_1.php';
 							//Filtro para idSistema
 							$a = "doc_resolucion_sanitaria='".$sufijo.$_FILES['doc_resolucion_sanitaria']['name']."'" ;
 							if(isset($doc_fecha_resolucion_sanitaria) && $doc_fecha_resolucion_sanitaria != ''){   $a .= ",doc_fecha_resolucion_sanitaria='".$doc_fecha_resolucion_sanitaria."'" ;}
-				
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1402,12 +1394,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'doc_resolucion_sanitaria', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_resolucion_sanitaria'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `vehiculos_listado` SET doc_resolucion_sanitaria='', doc_fecha_resolucion_sanitaria='' WHERE idVehiculo = '".$_GET['del_doc_resolucion_sanitaria']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "doc_resolucion_sanitaria='', doc_fecha_resolucion_sanitaria=''" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_resolucion_sanitaria'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['doc_resolucion_sanitaria'])&&$rowdata['doc_resolucion_sanitaria']!=''){
@@ -1486,13 +1478,12 @@ require_once '0_validate_user_1.php';
 							//Filtro para idSistema
 							$a = "doc_revision_tecnica='".$sufijo.$_FILES['doc_revision_tecnica']['name']."'" ;
 							if(isset($doc_fecha_revision_tecnica) && $doc_fecha_revision_tecnica != ''){   $a .= ",doc_fecha_revision_tecnica='".$doc_fecha_revision_tecnica."'" ;}
-				
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1532,12 +1523,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'doc_revision_tecnica', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_revision_tecnica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `vehiculos_listado` SET doc_revision_tecnica='', doc_fecha_revision_tecnica='' WHERE idVehiculo = '".$_GET['del_doc_revision_tecnica']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "doc_revision_tecnica='', doc_fecha_revision_tecnica=''" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_revision_tecnica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['doc_revision_tecnica'])&&$rowdata['doc_revision_tecnica']!=''){
@@ -1618,13 +1609,12 @@ require_once '0_validate_user_1.php';
 							//Filtro para idSistema
 							$a = "doc_seguro_carga='".$sufijo.$_FILES['doc_seguro_carga']['name']."'" ;
 							if(isset($doc_fecha_seguro_carga) && $doc_fecha_seguro_carga != ''){   $a .= ",doc_fecha_seguro_carga='".$doc_fecha_seguro_carga."'" ;}
-				
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1662,12 +1652,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'doc_seguro_carga', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_seguro_carga'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `vehiculos_listado` SET doc_seguro_carga='', doc_fecha_seguro_carga='' WHERE idVehiculo = '".$_GET['del_doc_seguro_carga']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "doc_seguro_carga='', doc_fecha_seguro_carga=''" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_seguro_carga'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['doc_seguro_carga'])&&$rowdata['doc_seguro_carga']!=''){
@@ -1746,13 +1736,12 @@ require_once '0_validate_user_1.php';
 							//Filtro para idSistema
 							$a = "doc_soap='".$sufijo.$_FILES['doc_soap']['name']."'" ;
 							if(isset($doc_fecha_soap) && $doc_fecha_soap != ''){   $a .= ",doc_fecha_soap='".$doc_fecha_soap."'" ;}
-				
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1791,12 +1780,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'doc_soap', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_soap'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `vehiculos_listado` SET doc_soap='', doc_fecha_soap='' WHERE idVehiculo = '".$_GET['del_doc_soap']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "doc_soap='', doc_fecha_soap=''" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_soap'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['doc_soap'])&&$rowdata['doc_soap']!=''){
@@ -1876,12 +1865,11 @@ require_once '0_validate_user_1.php';
 							$a = "doc_cert_trans_personas='".$sufijo.$_FILES['doc_cert_trans_personas']['name']."'" ;
 							if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){   $a .= ",doc_fecha_cert_trans_personas='".$doc_fecha_cert_trans_personas."'" ;}
 							
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -1920,12 +1908,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'doc_cert_trans_personas', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_cert_trans_personas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `vehiculos_listado` SET doc_cert_trans_personas='', doc_fecha_cert_trans_personas='' WHERE idVehiculo = '".$_GET['del_doc_cert_trans_personas']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "doc_cert_trans_personas='', doc_fecha_cert_trans_personas=''" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_cert_trans_personas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['doc_cert_trans_personas'])&&$rowdata['doc_cert_trans_personas']!=''){
@@ -2206,12 +2194,11 @@ require_once '0_validate_user_1.php';
 							//Filtro para idSistema
 							$a = "doc_ficha_tecnica='".$sufijo.$_FILES['doc_ficha_tecnica']['name']."'" ;
 							
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `vehiculos_listado` SET ".$a." WHERE idVehiculo = '$idVehiculo'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
@@ -2249,12 +2236,12 @@ require_once '0_validate_user_1.php';
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'doc_ficha_tecnica', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_ficha'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `vehiculos_listado` SET doc_ficha_tecnica='' WHERE idVehiculo = '".$_GET['del_doc_ficha']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "doc_ficha_tecnica=''" ;
+			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_ficha'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['doc_ficha_tecnica'])&&$rowdata['doc_ficha_tecnica']!=''){

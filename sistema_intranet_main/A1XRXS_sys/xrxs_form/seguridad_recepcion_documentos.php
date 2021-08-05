@@ -126,12 +126,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Para) && $Para != ''){                    $a .= ",Para='".$Para."'" ;}
 				if(isset($Observaciones) && $Observaciones != ''){  $a .= ",Observaciones='".$Observaciones."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seguridad_recepcion_documentos` SET ".$a." WHERE idRecepcion = '$idRecepcion'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seguridad_recepcion_documentos', 'idRecepcion = "'.$idRecepcion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

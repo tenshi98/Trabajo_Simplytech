@@ -116,12 +116,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idStreaming) && $idStreaming != ''){   $a .= ",idStreaming='".$idStreaming."'" ;}
 				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `comunicaciones_streaming_listado_usuarios` SET ".$a." WHERE idUsers = '$idUsers'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'comunicaciones_streaming_listado_usuarios', 'idUsers = "'.$idUsers.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;

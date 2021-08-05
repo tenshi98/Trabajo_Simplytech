@@ -112,12 +112,11 @@ require_once '0_validate_user_1.php';
 				if(isset($Rango_fin) && $Rango_fin != ''){                $a .= ",Rango_fin='".$Rango_fin."'" ;}
 				if(isset($valor_especifico) && $valor_especifico != ''){  $a .= ",valor_especifico='".$valor_especifico."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado_alarmas_perso_items` SET ".$a." WHERE idItem = '$idItem'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_listado_alarmas_perso_items', 'idItem = "'.$idItem.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
