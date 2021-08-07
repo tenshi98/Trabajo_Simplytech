@@ -238,25 +238,14 @@ require_once '0_validate_user_1.php';
 				if(isset($Web) && $Web!= ''){                                        $a .= ",Web='".$Web."'" ;}
 				if(isset($password) && $password!= ''){                              $a .= ",password='".md5($password)."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_listado` SET ".$a." WHERE idAlumno = '$idAlumno'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'alumnos_listado', 'idAlumno = "'.$idAlumno.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -322,29 +311,17 @@ require_once '0_validate_user_1.php';
 			
 			$idAlumno  = $_GET['id'];
 			$idEstado  = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE alumnos_listado SET idEstado = '".$idEstado."'	
-			WHERE idAlumno = '".$idAlumno."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'alumnos_listado', 'idAlumno = "'.$idAlumno.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
 				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
-
-			
 
 
 		break;	
@@ -441,27 +418,16 @@ require_once '0_validate_user_1.php';
 						
 							//Filtro para idSistema
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `alumnos_listado` SET ".$a." WHERE idAlumno = '$idAlumno'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'alumnos_listado', 'idAlumno = "'.$idAlumno.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
 								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
 							}
 						} else {
 							$error['Direccion_img']     = 'error/Ocurrio un error al mover el archivo'; 
@@ -484,13 +450,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'alumnos_listado', '', 'idAlumno = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `alumnos_listado` SET Direccion_img='' WHERE idAlumno = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'alumnos_listado', 'idAlumno = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -509,16 +475,6 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&id_img=true' );
 				die;
 				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-			
 			}
 				
 			

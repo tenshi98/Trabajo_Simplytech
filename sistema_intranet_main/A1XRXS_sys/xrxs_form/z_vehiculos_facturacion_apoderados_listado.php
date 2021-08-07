@@ -464,53 +464,26 @@ require_once '0_validate_user_1.php';
 					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $a .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
 					if(isset($ultimo_id) && $ultimo_id != ''){          $a .= ",idPago='".$ultimo_id."'" ;}
 					
-					//se ejecuta consulta
-					$query  = "UPDATE `vehiculos_facturacion_apoderados_listado_detalle`  
-					SET ".$a."
-					WHERE idFacturacionDetalle = '".$idFacturacionDetalle."'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-							
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-					}
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'vehiculos_facturacion_apoderados_listado_detalle', 'idFacturacionDetalle = "'.$idFacturacionDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 					/****************************************************************************************************/
 					//actualizo todos los pagos y los dejo con pagos en 0
 					$a = "idEstadoPago='3'" ;
 					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $a .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
 					if(isset($ultimo_id) && $ultimo_id != ''){          $a .= ",idPago='".$ultimo_id."'" ;}
 					
-					//se ejecuta consulta
-					$query  = "UPDATE `vehiculos_facturacion_listado_detalle` 
-					SET ".$a."
-					WHERE idApoderado = '".$idApoderado."' AND idEstadoPago='1'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'vehiculos_facturacion_listado_detalle', 'idApoderado = "'.$idApoderado.'" AND idEstadoPago="1"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-							
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
+					if($resultado==true){
+						
+						//redirijo a la vista
+						header( 'Location: '.$location.'&created=true' );
+						die;
 					}
-					
-					
-					//redirijo a la vista
-					header( 'Location: '.$location.'&created=true' );
-					die;
 				}
-				
 			}
 
 	

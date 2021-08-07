@@ -889,27 +889,17 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				if(isset($idProveedor) && $idProveedor != ''){   $a = "idProveedor='".$idProveedor."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `solicitud_listado_existencias_productos` SET ".$a." WHERE idOcompra=0 AND idProducto='".$idProducto."' ";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$a = "idProducto='".$idProducto."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){  $a .= ",idProveedor='".$idProveedor."'" ;}
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_productos', 'idOcompra=0 AND idProducto="'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -925,27 +915,17 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				if(isset($idProveedor) && $idProveedor != ''){   $a = "idProveedor='".$idProveedor."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `solicitud_listado_existencias_insumos` SET ".$a." WHERE idOcompra=0 AND idProducto='".$idProducto."' ";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$a = "idProducto='".$idProducto."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){  $a .= ",idProveedor='".$idProveedor."'" ;}
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_insumos', 'idOcompra=0 AND idProducto="'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -961,27 +941,17 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				if(isset($idProveedor) && $idProveedor != ''){   $a = "idProveedor='".$idProveedor."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `solicitud_listado_existencias_arriendos` SET ".$a." WHERE idOcompra=0 AND idEquipo='".$idEquipo."' ";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$a = "idEquipo='".$idEquipo."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_arriendos', 'idOcompra=0 AND idEquipo="'.$idEquipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -997,27 +967,17 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				if(isset($idProveedor) && $idProveedor != ''){   $a = "idProveedor='".$idProveedor."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `solicitud_listado_existencias_servicios` SET ".$a." WHERE idOcompra=0 AND idServicio='".$idServicio."' ";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$a = "idServicio='".$idServicio."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_servicios', 'idOcompra=0 AND idServicio="'.$idServicio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -1032,27 +992,18 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				if(isset($idProveedor) && $idProveedor != ''){   $a = "idProveedor='".$idProveedor."'" ;}
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `solicitud_listado_existencias_otros` SET ".$a." WHERE idExistencia = '$idExistencia'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$a = "idExistencia='".$idExistencia."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				}
 			}
 		break;

@@ -118,29 +118,17 @@ require_once '0_validate_user_1.php';
 				$a = "idGrupo='".$idGrupo."'" ;
 				if(isset($Nombre) && $Nombre != ''){    $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Totales) && $Totales != ''){  $a .= ",Totales='".$Totales."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_quality_proceso_matriz_grupos` SET ".$a." WHERE idGrupo = '$idGrupo'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_quality_proceso_matriz_grupos', 'idGrupo = "'.$idGrupo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
 			}
 		
 	

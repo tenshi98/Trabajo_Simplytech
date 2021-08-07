@@ -310,25 +310,11 @@ require_once '0_validate_user_1.php';
 								VALUES (".$a.")";
 								$result = mysqli_query($dbConn, $query);
 								
-								/*****************/
-								//Se asigna el valor
-								$a = "idAsignadas=".$ultimo_id;
-						
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$MemoLastID[$pre['idAlumno']];
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
+								/*******************************************************/
+								//se actualizan los datos
+								$a = "idAsignadas='".$ultimo_id."'" ;
+								$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$MemoLastID[$pre['idAlumno']].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 								
 							}
 							
@@ -546,25 +532,11 @@ require_once '0_validate_user_1.php';
 						VALUES (".$a.")";
 						$result = mysqli_query($dbConn, $query);
 						
-						/*****************/
-						//Se actualiza
-						$a = "idAsignadas=".$ultimo_id;
+						/*******************************************************/
+						//se actualizan los datos
+						$a = "idAsignadas='".$ultimo_id."'" ;
+						$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$MemoLastID[$pre['idAlumno']].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$MemoLastID[$pre['idAlumno']];
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-									
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-						}
 					}
 					
 					header( 'Location: '.$location.'&created=true' );
@@ -774,25 +746,11 @@ require_once '0_validate_user_1.php';
 						VALUES (".$a.")";
 						$result = mysqli_query($dbConn, $query);
 						
-						/*****************/
-						//Se actualiza
-						$a = "idAsignadas=".$ultimo_id;
+						/*******************************************************/
+						//se actualizan los datos
+						$a = "idAsignadas='".$ultimo_id."'" ;
+						$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$MemoLastID[$pre['idAlumno']].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$MemoLastID[$pre['idAlumno']];
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-									
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-						}
 					}
 					
 					header( 'Location: '.$location.'&created=true' );
@@ -1129,50 +1087,18 @@ require_once '0_validate_user_1.php';
 					VALUES (".$a.")";
 					$result = mysqli_query($dbConn, $query);
 					
-					
-					/*****************/
-					//Se actualiza el dato para evitar conflicto en futuras busquedas
+					/*******************************************************/
+					//se actualizan los datos
 					$a = "idEstadoAprobacion='3'" ;
+					$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$pre['idQuizRealizadas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = ".$pre['idQuizRealizadas'];
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-								
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-					}
-
-			
 				}
 				
-				/************************************/
-				//Se actualiza el listado con alumnos reprobados
+				/*******************************************************/
+				//se actualizan los datos
 				$nuevo_valor = $N_Alumnos_Rep + $ndata_1;
 				$a = "N_Alumnos_Rep='".$nuevo_valor."'" ;
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_evaluaciones_asignadas` SET ".$a." WHERE idAsignadas = '$idAsignadas'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-							
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-				}
+				$resultado = db_update_data (false, $a, 'alumnos_evaluaciones_asignadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//redirijo
 				header( 'Location: '.$location.'&created=true' );
@@ -1237,26 +1163,15 @@ require_once '0_validate_user_1.php';
 				$a .= ",Respondido='".$Respondido."'" ;
 				$a .= ",Correctas='".$R_Correctas."'" ;
 				$a .= ",Rendimiento='".$Rendimiento."'" ;
-		
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = '$idQuizRealizadas'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$idQuizRealizadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -1297,25 +1212,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idAsignadas) && $idAsignadas != ''){                $a .= ",idAsignadas='".$idAsignadas."'" ;}
 				if(isset($Semana) && $Semana != ''){                          $a .= ",Semana='".$Semana."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idQuizRealizadas = '$idQuizRealizadas'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$idQuizRealizadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -1393,20 +1297,16 @@ require_once '0_validate_user_1.php';
 					$a .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'" ;
 					$a .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'" ; 
 				}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_evaluaciones_asignadas` SET ".$a." WHERE idAsignadas = '$idAsignadas'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'alumnos_evaluaciones_asignadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*************************************************************/
 				//tabla dependiente
 				$a = "Programada_fecha='".$Programada_fecha."'" ;
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_evaluaciones_asignadas_alumnos` SET ".$a." WHERE idAsignadas = '$idAsignadas'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'alumnos_evaluaciones_asignadas_alumnos', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*************************************************************/
 				//tabla con la prueba
@@ -1417,28 +1317,13 @@ require_once '0_validate_user_1.php';
 					$a .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'" ;
 					$a .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'" ; 
 				}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `quiz_realizadas` SET ".$a." WHERE idAsignadas = '$idAsignadas'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				
-				
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}

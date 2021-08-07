@@ -651,20 +651,10 @@ require_once '0_validate_user_1.php';
 					$nuevoMonto = $rowResultado['MontoActual'] + $_SESSION['caja_ing_basicos']['Valor'];
 					$a = "MontoActual='".$nuevoMonto."'" ;
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `caja_chica_listado` SET ".$a." WHERE idCajaChica = '".$_SESSION['caja_ing_basicos']['idCajaChica']."'";
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$_SESSION['caja_ing_basicos']['idCajaChica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
@@ -1294,20 +1284,10 @@ require_once '0_validate_user_1.php';
 					$nuevoMonto = $rowResultado['MontoActual'] - $_SESSION['caja_eg_basicos']['Valor'];
 					$a = "MontoActual='".$nuevoMonto."'" ;
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `caja_chica_listado` SET ".$a." WHERE idCajaChica = '".$_SESSION['caja_eg_basicos']['idCajaChica']."'";
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$_SESSION['caja_eg_basicos']['idCajaChica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 				
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
@@ -2074,20 +2054,10 @@ require_once '0_validate_user_1.php';
 					$nuevoMonto = $rowResultado['MontoActual'] + $subDevolucion;
 					$a = "MontoActual='".$nuevoMonto."'" ;
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `caja_chica_listado` SET ".$a." WHERE idCajaChica = '".$_SESSION['caja_rend_basicos']['idCajaChica']."'";
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$_SESSION['caja_rend_basicos']['idCajaChica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					
 					/*********************************************************************/		
 					//Consulto el documento relacionado para poder sumarle el valor de la devolucion
@@ -2101,20 +2071,9 @@ require_once '0_validate_user_1.php';
 						$a .= ",idEstado='2'" ;
 					}
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `caja_chica_facturacion` SET ".$a." WHERE idFacturacion = '".$_SESSION['caja_rend_basicos']['idFacturacionRelacionada']."'";
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'caja_chica_facturacion', 'idFacturacion = "'.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
@@ -2808,24 +2767,9 @@ require_once '0_validate_user_1.php';
 					$nuevoMonto = $rowResultado['MontoActual'] - $_SESSION['caja_rendida_basicos']['Valor'];
 					$a = "MontoActual='".$nuevoMonto."'" ;
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `caja_chica_listado` SET ".$a." WHERE idCajaChica = '".$_SESSION['caja_rendida_basicos']['idCajaChica']."'";
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
-					
-					
-					
-					
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$_SESSION['caja_rendida_basicos']['idCajaChica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					
 					//////////////////////////////////////////////////////////////////////////

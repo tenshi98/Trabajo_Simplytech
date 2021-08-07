@@ -204,25 +204,14 @@ require_once '0_validate_user_1.php';
 				if(isset($Config_Puerto) && $Config_Puerto != ''){              $a .= ",Config_Puerto='".$Config_Puerto."'" ;}
 				if(isset($Config_Web) && $Config_Web != ''){                    $a .= ",Config_Web='".$Config_Web."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seguridad_camaras_listado` SET ".$a." WHERE idCamara = '$idCamara'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seguridad_camaras_listado', 'idCamara = "'.$idCamara.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -288,26 +277,16 @@ require_once '0_validate_user_1.php';
 			
 			$idCamara   = $_GET['id'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE seguridad_camaras_listado SET idEstado = '".$idEstado."'	
-			WHERE idCamara = '".$idCamara."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'seguridad_camaras_listado', 'idCamara = "'.$idCamara.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;
 				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-			
 			}
 			
 
@@ -401,25 +380,14 @@ require_once '0_validate_user_1.php';
 				if(isset($Config_Web) && $Config_Web != ''){            $a .= ",Config_Web='".$Config_Web."'" ;}
 				if(isset($Chanel) && $Chanel != ''){                    $a .= ",Chanel='".$Chanel."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `seguridad_camaras_listado_canales` SET ".$a." WHERE idCanal = '$idCanal'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'seguridad_camaras_listado_canales', 'idCanal = "'.$idCanal.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}

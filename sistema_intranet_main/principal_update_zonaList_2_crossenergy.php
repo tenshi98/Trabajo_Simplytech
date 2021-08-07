@@ -214,7 +214,10 @@ foreach ($arrEquipo as $data) {
 	$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']             = $data['Nombre'];
 	$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']         = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
 	$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']  = '<a href="view_crossenergy_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
-			
+	$arrGruas[$xdanger][$data['idTelemetria']]['Vmonofasico']        = $data['SensoresMedActual_4'];
+	$arrGruas[$xdanger][$data['idTelemetria']]['VTrifasico']         = $data['SensoresMedActual_5'];
+	$arrGruas[$xdanger][$data['idTelemetria']]['Potencia']           = $data['SensoresMedActual_6'];
+							
 	/****************************************************/
 	//el resto de los botones					
 	$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']            = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
@@ -243,9 +246,9 @@ $Count_Ok          = 0;
 $Count_FueraLinea  = 0;
 $Count_Total       = 0;
 				
-if($arrGruas[2]){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
-if($arrGruas[1]){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
-if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
+if(isset($arrGruas[2])){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
+if(isset($arrGruas[1])){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
+if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
 
 ?>
 
@@ -261,7 +264,7 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 	<thead>
 		<tr role="row">
-			<th colspan="3">
+			<th colspan="6">
 				<div class="field">
 					<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >
 						<option value="9999" <?php if($idZona==9999){ echo 'selected="selected"';} ?>>Todas las Zonas</option>
@@ -277,12 +280,20 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 				</div>
 			</th>
 		</tr>
-		<?php echo widget_sherlock(1, 3); ?>
+		<?php echo widget_sherlock(1, 6); ?>
+		<tr role="row">
+			<th></th>
+			<th>Equipo</th>
+			<th>V. Trifasico</th>
+			<th>V. Monofasico</th>
+			<th>Potencia</th>
+			<th>Acciones</th>
+		</tr>
 	</thead>
 	<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 		
 		<?php 
-		if($arrGruas[2]){
+		if(isset($arrGruas[2])){
 			foreach ( $arrGruas[2] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
@@ -291,8 +302,11 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 					</div> 
 				</td>
 				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
+				<td><?php echo cantidades($grua['VTrifasico'], 1).' V';?></td>
+				<td><?php echo cantidades($grua['Vmonofasico'], 1).' V';?></td>
+				<td><?php echo cantidades($grua['Potencia'], 1).' kW';?></td>
 				<td width="10">
-					<div class="btn-group" style="width: 175px;" >
+					<div class="btn-group" style="width: 105px;" >
 						<?php
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
@@ -305,7 +319,7 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 		} ?> 
 		
 		<?php 
-		if($arrGruas[1]){
+		if(isset($arrGruas[1])){
 			foreach ( $arrGruas[1] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
@@ -314,8 +328,11 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 					</div> 
 				</td>
 				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
+				<td><?php echo cantidades($grua['VTrifasico'], 1).' V';?></td>
+				<td><?php echo cantidades($grua['Vmonofasico'], 1).' V';?></td>
+				<td><?php echo cantidades($grua['Potencia'], 1).' kW';?></td>
 				<td width="10">
-					<div class="btn-group" style="width: 175px;" >
+					<div class="btn-group" style="width: 105px;" >
 						<?php
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
@@ -328,7 +345,7 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 		} ?>
 		
 		<?php 
-		if($arrGruas[3]){
+		if(isset($arrGruas[3])){
 			foreach ( $arrGruas[3] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
@@ -337,8 +354,11 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 					</div> 
 				</td>
 				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
+				<td><?php echo cantidades($grua['VTrifasico'], 1).' V';?></td>
+				<td><?php echo cantidades($grua['Vmonofasico'], 1).' V';?></td>
+				<td><?php echo cantidades($grua['Potencia'], 1).' kW';?></td>
 				<td width="10">
-					<div class="btn-group" style="width: 175px;" >
+					<div class="btn-group" style="width: 105px;" >
 						<?php
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];

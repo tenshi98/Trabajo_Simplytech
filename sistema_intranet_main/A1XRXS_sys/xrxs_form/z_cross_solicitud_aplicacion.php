@@ -2038,21 +2038,11 @@ require_once '0_validate_user_1.php';
 					$a .= ",terAno_fin='".fecha2Ano($f_termino_fin)."'" ;
 				}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_solicitud_aplicacion_listado` SET ".$a." WHERE idSolicitud = '$idSolicitud'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
+				if($resultado==true){
 					
 					//se actualizan los datos internos de los cuarteles
 					$a = "idSolicitud='".$idSolicitud."'" ;
@@ -2063,21 +2053,11 @@ require_once '0_validate_user_1.php';
 					if(isset($TempMax) && $TempMax != ''){                 $a .= ",TempMax='".$TempMax."'" ;}
 					if(isset($HumTempMax) && $HumTempMax != ''){           $a .= ",HumTempMax='".$HumTempMax."'" ;}
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `cross_solicitud_aplicacion_listado_cuarteles` SET ".$a." WHERE idSolicitud = '".$idSolicitud."'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);	
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_cuarteles', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}else{
+					if($resultado==true){
 						
 						/******************************************/
 						//Historial
@@ -2153,12 +2133,10 @@ require_once '0_validate_user_1.php';
 										//calculo la distancia entre el punto actual y el anterior
 										if(isset($GeoLatitud) && $GeoLatitud != 0 && isset($GeoLongitud) && $GeoLongitud != 0 && isset($tel['GeoLatitud'])&&$tel['GeoLatitud']!=0 && isset($tel['GeoLongitud'])&&$tel['GeoLongitud']!=0 ){
 											$GeoMovimiento = obtenerDistancia( $GeoLatitud, $GeoLongitud, $tel['GeoLatitud'], $tel['GeoLongitud'] );
-											//actualizo los datos
-											$query  = "UPDATE `telemetria_listado_tablarelacionada_".$trac['idTelemetria']."` 
-											SET GeoMovimiento=".$GeoMovimiento." 
-											WHERE idTabla = '".$tel['idTabla']."'";
-											//Consulta
-											$resultado = mysqli_query ($dbConn, $query);
+											/*******************************************************/
+											//se actualizan los datos
+											$a = "GeoMovimiento='".$GeoMovimiento."'" ;
+											$resultado = db_update_data (false, $a, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idTabla = "'.$tel['idTabla'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 														
 										}
 										//actualizo variables
@@ -2182,10 +2160,10 @@ require_once '0_validate_user_1.php';
 										$a .= ",Diferencia='".$rowTablaRel['Diferencia']."'" ;
 									}
 																			
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `cross_solicitud_aplicacion_listado_tractores` SET ".$a." WHERE idTractores = '".$trac['idTractores']."'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$trac['idTractores'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 
 								}
 								/****************************************************/
@@ -2444,25 +2422,14 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata['idCategoria'])&&$rowdata['idCategoria']!=''){  $a .= ",idCategoria='".$rowdata['idCategoria']."'" ;}
 				if(isset($rowdata['idProducto'])&&$rowdata['idProducto']!=''){    $a .= ",idProducto='".$rowdata['idProducto']."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_solicitud_aplicacion_listado_cuarteles` SET ".$a." WHERE idCuarteles = '$idCuarteles'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&not_editprod=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -2506,23 +2473,13 @@ require_once '0_validate_user_1.php';
 						if(isset($VelPromedio)&&$VelPromedio!=''){           $a .= ",VelPromedio='".$VelPromedio."'";}
 						if(isset($LitrosAplicados)&&$LitrosAplicados!=''){   $a .= ",LitrosAplicados='".$LitrosAplicados."'";}
 						if(isset($T_Aplicacion)&&$T_Aplicacion!=''){         $a .= ",T_Aplicacion='".$T_Aplicacion."'";}
-								
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `cross_solicitud_aplicacion_listado_cuarteles` SET ".$a." WHERE idCuarteles = '".$idCuarteles."'";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
+						
+						/*******************************************************/
+						//se actualizan los datos
+						$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-									
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-									
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-						}else{
+						if($resultado==true){
+							
 							header( 'Location: '.$location.'&not_closecuartel=true' );
 							die;
 						}
@@ -2579,37 +2536,14 @@ require_once '0_validate_user_1.php';
 								$a = "idSolicitud='".$trac['idSolicitud']."'" ;
 									
 								//Actualizo los datos de cuando estaba dentro de la zona
-								$query  = "UPDATE `telemetria_listado_tablarelacionada_".$trac['idTelemetria']."` SET ".$a." WHERE idZona = ".$trac['idZona']." AND idSolicitud=0 AND (FechaSistema BETWEEN '".$f_ejecucion."' AND '".$f_ejecucion_fin."') AND (Sensor_1!=0 OR Sensor_2!=0) ";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								
+								$resultado = db_update_data (false, $a, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idZona = "'.$trac['idZona'].'"  AND idSolicitud=0 AND (FechaSistema BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'") AND (Sensor_1!=0 OR Sensor_2!=0)', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//Actualizo los datos de cuando estaba fuera de la zona
-								$query  = "UPDATE `telemetria_listado_tablarelacionada_".$trac['idTelemetria']."` SET ".$a." WHERE idZona = 0 AND idSolicitud=0 AND (FechaSistema BETWEEN '".$f_ejecucion."' AND '".$f_ejecucion_fin."') ";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								
+								$resultado = db_update_data (false, $a, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idZona = 0 AND idSolicitud=0 AND (FechaSistema BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//Actualizo las detenciones
-								$query  = "UPDATE `telemetria_listado_error_detenciones` SET ".$a." WHERE idTelemetria = ".$trac['idTelemetria']." AND idZona = ".$trac['idZona']." AND idSolicitud=0 AND (Fecha BETWEEN '".$f_ejecucion."' AND '".$f_ejecucion_fin."') ";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								
+								$resultado = db_update_data (false, $a, 'telemetria_listado_error_detenciones', 'idTelemetria = '.$trac['idTelemetria'].' AND idZona = '.$trac['idZona'].' AND idSolicitud=0 AND (Fecha BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//Actualizo los fuera de linea
-								$query  = "UPDATE `telemetria_listado_error_fuera_linea` SET ".$a." WHERE idTelemetria = ".$trac['idTelemetria']." AND idZona = ".$trac['idZona']." AND idSolicitud=0 AND (Fecha_inicio BETWEEN '".$f_ejecucion."' AND '".$f_ejecucion_fin."') ";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
+								$resultado = db_update_data (false, $a, 'telemetria_listado_error_fuera_linea', 'idTelemetria = '.$trac['idTelemetria'].' AND idZona = '.$trac['idZona'].' AND idSolicitud=0 AND (Fecha_inicio BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-										
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-										
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-								}
 							}
 							/******************************************************************/
 							//se corrige la geodistancia en la tabla relacionada
@@ -2626,12 +2560,10 @@ require_once '0_validate_user_1.php';
 									//calculo la distancia entre el punto actual y el anterior
 									if(isset($GeoLatitud) && $GeoLatitud != 0 && isset($GeoLongitud) && $GeoLongitud != 0 && isset($tel['GeoLatitud'])&&$tel['GeoLatitud']!=0 && isset($tel['GeoLongitud'])&&$tel['GeoLongitud']!=0 ){
 										$GeoMovimiento = obtenerDistancia( $GeoLatitud, $GeoLongitud, $tel['GeoLatitud'], $tel['GeoLongitud'] );
-										//actualizo los datos
-										$query  = "UPDATE `telemetria_listado_tablarelacionada_".$trac['idTelemetria']."` 
-										SET GeoMovimiento=".$GeoMovimiento." 
-										WHERE idTabla = '".$tel['idTabla']."'";
-										//Consulta
-										$resultado = mysqli_query ($dbConn, $query);
+										/*******************************************************/
+										//se actualizan los datos
+										$a = "GeoMovimiento='".$GeoMovimiento."'" ;
+										$resultado = db_update_data (false, $a, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idTabla = "'.$tel['idTabla'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 													
 									}
 									//actualizo variables
@@ -2715,22 +2647,10 @@ require_once '0_validate_user_1.php';
 									if(isset($rowTablaRel_out['Sensor_'.$i.'_Sum']) && $rowTablaRel_out['Sensor_'.$i.'_Sum'] != ''){     $a .= ",Sensor_out_".$i."_Sum='".$rowTablaRel_out['Sensor_'.$i.'_Sum']."'" ;}
 								}
 								
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `cross_solicitud_aplicacion_listado_tractores` SET ".$a." WHERE idTractores = '".$trac['idTractores']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
+								/*******************************************************/
+								//se actualizan los datos
+								$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$trac['idTractores'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							}
 							
 							/******************************************************************/
@@ -2743,23 +2663,11 @@ require_once '0_validate_user_1.php';
 							if(isset($idUsuario)&&$idUsuario!=''){        $a .= ",idUsuario='".$idUsuario."'";}
 							if(isset($idEjecucion)&&$idEjecucion!=''){    $a .= ",idEjecucion='".$idEjecucion."'";}
 							if(isset($In_Total_Seg)&&$In_Total_Seg!=''){  $a .= ",T_Aplicacion='".$In_Total_Seg."'";}
-								
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `cross_solicitud_aplicacion_listado_cuarteles` SET ".$a." WHERE idCuarteles = '".$idCuarteles."'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-									
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-									
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-							}
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							
 							header( 'Location: '.$location.'&not_closecuartel=true' );
 							die;
@@ -2883,25 +2791,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idVehiculo) && $idVehiculo != ''){       $a .= ",idVehiculo='".$idVehiculo."'" ;}
 				if(isset($idTrabajador) && $idTrabajador != ''){   $a .= ",idTrabajador='".$idTrabajador."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_solicitud_aplicacion_listado_tractores` SET ".$a." WHERE idTractores = '$idTractores'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$idTractores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&not_edittrac=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -3119,25 +3016,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idUml) && $idUml != ''){                        $a .= ",idUml='".$idUml."'" ;}
 				if(isset($Objetivo) && $Objetivo != ''){                  $a .= ",Objetivo='".$Objetivo."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_solicitud_aplicacion_listado_productos` SET ".$a." WHERE idProdQuim = '$idProdQuim'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_productos', 'idProdQuim = "'.$idProdQuim.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&not_editprod=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				

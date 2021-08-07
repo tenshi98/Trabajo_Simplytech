@@ -4,8 +4,15 @@ Thumbs.db
 *.ico
 .gitignore
 ### Archivos Especificos
-/sistema_intranet_main/0cron_*.*
-/sistema_intranet_main/0test*.*
-/sistema_intranet_main/1_logs_*.*
-/sistema_intranet_main/error_log.*
+sistema_intranet_main/0cron_*.*
+sistema_intranet_main/0test*.*
+sistema_intranet_main/1_logs_*.*
+sistema_intranet_main/error_log.*
+sistema_intranet_main/A1XRXS_sys/xrxs_configuracion/*.php
+Legacy/*.ffs_db
+*.ffs_db
+sistema_intranet_main/*.ffs_db
 /sistema_intranet_main/A1XRXS_sys/xrxs_configuracion/config.php
+sistema_intranet_main/templates/*.xlsx
+sistema_intranet_main/templates/*.docx
+sistema_intranet_main/A1XRXS_sys/xrxs_configuracion/config.php

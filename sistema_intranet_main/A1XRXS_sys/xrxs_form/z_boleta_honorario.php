@@ -805,14 +805,11 @@ require_once '0_validate_user_1.php';
 								//Actualizo 
 								$a = "idUso='2'" ;
 								
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `ocompra_listado_existencias_boletas` SET ".$a." WHERE idExistencia = '".$producto['idExistencia']."'";
-								$result = mysqli_query($dbConn, $query);
+								/*******************************************************/
+								//se actualizan los datos
+								$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
-							
-							
-							
 						}
 					}
 					
@@ -2109,9 +2106,9 @@ require_once '0_validate_user_1.php';
 								//Actualizo 
 								$a = "Total_Ingresado='".$nuevo_total."'" ;
 								
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `ocompra_listado_existencias_boletas_empresas` SET ".$a." WHERE idExistencia = '".$producto['idExistencia']."'";
-								$result = mysqli_query($dbConn, $query);
+								/*******************************************************/
+								//se actualizan los datos
+								$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
 						}
@@ -2268,8 +2265,9 @@ require_once '0_validate_user_1.php';
 							switch ($serv['idTipo']) {
 								//Boleta Trabajadores
 								case 1:
-									$query  = "UPDATE `ocompra_listado_existencias_boletas` SET idUso='1' WHERE idExistencia = '".$serv['idExistencia']."'";
-									$result = mysqli_query($dbConn, $query);
+									//se actualizan los datos
+									$a = "idUso='1'" ;
+									$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$serv['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									break;
 								//Boleta Clientes
 								case 2:
@@ -2280,9 +2278,9 @@ require_once '0_validate_user_1.php';
 									$nuevo_total = $serv['Total_Ingresado'] - $serv['vTotal'];
 									//Actualizo 
 									$a = "Total_Ingresado='".$nuevo_total."'" ;
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `ocompra_listado_existencias_boletas_empresas` SET ".$a." WHERE idExistencia = '".$serv['idExistencia']."'";
-									$result = mysqli_query($dbConn, $query);
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$serv['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									break;
 							}
 						}

@@ -128,7 +128,10 @@ foreach ($arrUnimed as $data) {
 						//verifico que sensor este activo
 						if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 							//Unidad medida
-							$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]]['Nombre'];
+							$unimed = ' ';
+							if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]]['Nombre'])){
+								$unimed .= $arrFinalUnimed[$data['SensoresUniMed_'.$i]]['Nombre'];
+							}
 							//cadena
 							if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
 							$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';

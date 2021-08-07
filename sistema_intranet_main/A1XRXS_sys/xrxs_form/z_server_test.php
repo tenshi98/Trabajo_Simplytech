@@ -14,9 +14,9 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['email']) )                    $email                     = $_POST['email'];
-	if ( !empty($_POST['texto']) )                    $texto                     = $_POST['texto'];
-	if ( !empty($_POST['email_principal']) )          $email_principal           = $_POST['email_principal'];
+	if ( !empty($_POST['email']) )            $email             = $_POST['email'];
+	if ( !empty($_POST['texto']) )            $texto             = $_POST['texto'];
+	if ( !empty($_POST['email_principal']) )  $email_principal   = $_POST['email_principal'];
 	if ( !empty($_POST['GmailUsuario']) )     $GmailUsuario      = $_POST['GmailUsuario'];
 	if ( !empty($_POST['GmailPassword']) )    $GmailPassword     = $_POST['GmailPassword'];
 	

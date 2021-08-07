@@ -1121,22 +1121,10 @@ require_once '0_validate_user_1.php';
 								$a .= ",idProveedor='".$_SESSION['servicios_ing_basicos']['idProveedor']."'" ;
 								$a .= ",ValorIngreso='".$producto['ValorIngreso']."'" ;
 							}
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'servicios_listado', 'idServicio = "'.$producto['idServicio'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `servicios_listado` SET ".$a." WHERE idServicio = '".$producto['idServicio']."'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
 							
 							/*******************************************************************/
 							//Actualizo lo entregado de la solicitud de la OC si esta existe
@@ -1145,23 +1133,11 @@ require_once '0_validate_user_1.php';
 								$a = "idExistencia='".$producto['idExistencia']."'" ;
 								$a .= ",cant_ingresada='".$nueva_cant."'" ;
 								
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `ocompra_listado_existencias_servicios` SET ".$a." WHERE idExistencia = '".$producto['idExistencia']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
+								/*******************************************************/
+								//se actualizan los datos
+								$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							}
-				
 						}
 					}
 					
@@ -1174,21 +1150,11 @@ require_once '0_validate_user_1.php';
 								
 								$a  = "DocRel='".$ultimo_id."'" ;    
 								$a .= ",idEstado='2'";
-
-								$query  = "UPDATE `bodegas_servicios_facturacion` SET ".$a." WHERE idFacturacion = '".$guias['idGuia']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
+								
+								/*******************************************************/
+								//se actualizan los datos
+								$resultado = db_update_data (false, $a, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							
 							}
 						}
@@ -2230,22 +2196,10 @@ require_once '0_validate_user_1.php';
 							if(isset($producto['ValorTotal']) && $producto['ValorTotal'] != ''){     
 								$a .= ",ValorEgreso='".$producto['ValorTotal']."'" ;
 							}
-					
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `servicios_listado` SET ".$a." WHERE idServicio = '".$producto['idServicio']."'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'servicios_listado', 'idServicio = "'.$producto['idServicio'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 				
 						}
 					}
@@ -2259,21 +2213,11 @@ require_once '0_validate_user_1.php';
 								
 								$a  = "DocRel='".$ultimo_id."'" ;    
 								$a .= ",idEstado='2'";
-
-								$query  = "UPDATE `bodegas_servicios_facturacion` SET ".$a." WHERE idFacturacion = '".$guias['idGuia']."'";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
+								
+								/*******************************************************/
+								//se actualizan los datos
+								$resultado = db_update_data (false, $a, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							
 							}
 						}

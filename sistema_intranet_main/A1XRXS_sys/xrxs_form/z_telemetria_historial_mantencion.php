@@ -206,27 +206,15 @@ require_once '0_validate_user_1.php';
 				if(isset($Recepcion_Email) && $Recepcion_Email != ''){    $a .= ",Recepcion_Email='".$Recepcion_Email."'" ;}
 				if(isset($Path_Firma) && $Path_Firma != ''){              $a .= ",Path_Firma='".$Path_Firma."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_historial_mantencion` SET ".$a." WHERE idMantencion = '$idMantencion'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_historial_mantencion', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
+				if($resultado==true){
 					//redirijo
 					header( 'Location: '.$location.'&id='.$idMantencion.'&edited=true' );
 					die;
 				}
-				
-				
 				
 
 			}
@@ -683,26 +671,15 @@ require_once '0_validate_user_1.php';
 						if ( !empty($_POST['idMantencion']) )    $idMantencion       = $_POST['idMantencion'];
 						
 						$a = "Path_Firma='".$sufijo.$_FILES['Path_Firma']['name']."'" ;
-
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `telemetria_historial_mantencion` SET ".$a." WHERE idMantencion = '$idMantencion'";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
+						
+						/*******************************************************/
+						//se actualizan los datos
+						$resultado = db_update_data (false, $a, 'telemetria_historial_mantencion', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
+						if($resultado==true){
+							header( 'Location: '.$location.'&id='.$idMantencion );
+							die;
 						}
-						
-						header( 'Location: '.$location.'&id='.$idMantencion );
-						die;
-						
 						
 					} else {
 					$error['Path_Firma']     = 'error/Ocurrio un error al mover el archivo'; 
@@ -725,13 +702,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Path_Firma', 'telemetria_historial_mantencion', '', 'idMantencion = "'.$_GET['del_firma'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `telemetria_historial_mantencion` SET Path_Firma='' WHERE idMantencion = '".$_GET['del_firma']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Path_Firma=''" ;
+			$resultado = db_update_data (false, $a, 'telemetria_historial_mantencion', 'idMantencion = "'.$_GET['del_firma'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Path_Firma'])&&$rowdata['Path_Firma']!=''){
@@ -749,16 +726,6 @@ require_once '0_validate_user_1.php';
 				//Redirijo			
 				header( 'Location: '.$location.'&id='.$_GET['del_firma'] );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 				

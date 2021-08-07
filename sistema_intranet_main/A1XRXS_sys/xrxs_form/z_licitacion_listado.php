@@ -283,14 +283,11 @@ require_once '0_validate_user_1.php';
 				if(isset($ValorMensual) && $ValorMensual != ''){          $a .= ",ValorMensual='".$ValorMensual."'" ;}
 				if(isset($idOpcionItem) && $idOpcionItem != ''){          $a .= ",idOpcionItem='".$idOpcionItem."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `licitacion_listado` SET ".$a." WHERE idLicitacion = '$idLicitacion'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					
+				if($resultado==true){
 					
 					/*****************************************************/
 					//se crean el mensaje
@@ -343,16 +340,6 @@ require_once '0_validate_user_1.php';
 
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -544,13 +531,11 @@ require_once '0_validate_user_1.php';
 				if(isset($TiempoProgramado) && $TiempoProgramado != ''){   $a .= ",TiempoProgramado='".$TiempoProgramado."'" ;}
 				if(isset($idTrabajo) && $idTrabajo != ''){                 $a .= ",idTrabajo='".$idTrabajo."'" ;}
 				
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `licitacion_listado_level_".$lvl."` SET ".$a." WHERE idLevel_".$lvl." = '".$idLevel[$lvl]."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'licitacion_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 						
 					/*****************************************************/
 					//se crean el mensaje
@@ -598,16 +583,6 @@ require_once '0_validate_user_1.php';
 				
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			
@@ -715,14 +690,12 @@ require_once '0_validate_user_1.php';
 			// Se traen todos los datos de la licitacion
 			$rowdata = db_select_data (false, 'idEstado', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-			/*****************************************************/
-			// Se traen todos los datos de la licitacion
-			$query  = "UPDATE licitacion_listado SET idEstado = '".$idEstado."'	
-			WHERE idLicitacion = '".$idLicitacion."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 					
 				/*****************************************************/
 				//se crean el mensaje
@@ -760,16 +733,6 @@ require_once '0_validate_user_1.php';
 					
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 
@@ -849,25 +812,15 @@ require_once '0_validate_user_1.php';
 			
 			$idLicitacion  = $_GET['status'];
 			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE licitacion_listado SET idEstado = '".$idEstado."'	
-			WHERE idLicitacion = '".$idLicitacion."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 

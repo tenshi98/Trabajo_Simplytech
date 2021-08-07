@@ -338,25 +338,14 @@ require_once '0_validate_user_1.php';
 					$a .= ",idUbicacion_lvl_5=''" ;
 				}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `maquinas_listado` SET ".$a." WHERE idMaquina = '$idMaquina'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -549,26 +538,15 @@ require_once '0_validate_user_1.php';
 								
 							//Filtro para idSistema		
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `maquinas_listado` SET ".$a." WHERE idMaquina = '$idMaquina'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location.'&img_id='.$idMaquina );
 								die;
-								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 								
 							}	
 						} else {
@@ -610,26 +588,15 @@ require_once '0_validate_user_1.php';
 								
 							//Filtro para idSistema		
 							$a = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `maquinas_listado` SET ".$a." WHERE idMaquina = '$idMaquina'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
-								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 								
 							}	
 									
@@ -672,26 +639,15 @@ require_once '0_validate_user_1.php';
 								
 							//Filtro para idSistema		
 							$a = "HDS='".$sufijo.$_FILES['HDS']['name']."'" ;
-
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `maquinas_listado` SET ".$a." WHERE idMaquina = '$idMaquina'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location );
 								die;
-								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 								
 							}	
 						} else {
@@ -714,13 +670,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado', '', 'idMaquina = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `maquinas_listado` SET Direccion_img='' WHERE idMaquina = '".$_GET['del_img']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -739,16 +695,6 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&id='.$_GET['del_img'] );
 				die;
 				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
 				
 			
@@ -764,13 +710,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'FichaTecnica', 'maquinas_listado', '', 'idMaquina = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `maquinas_listado` SET FichaTecnica='' WHERE idMaquina = '".$_GET['del_file']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "FichaTecnica=''" ;
+			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
@@ -789,16 +735,6 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&id='.$_GET['del_file'] );
 				die;
 				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
 				
 					
@@ -812,13 +748,13 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'HDS', 'maquinas_listado', '', 'idMaquina = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			//se borra el dato de la base de datos
-			$query  = "UPDATE `maquinas_listado` SET HDS='' WHERE idMaquina = '".$_GET['del_hds']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "HDS=''" ;
+			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				//se elimina el archivo
 				if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
@@ -837,16 +773,6 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&id='.$_GET['del_hds'] );
 				die;
 	
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
 				
 					
@@ -972,25 +898,14 @@ require_once '0_validate_user_1.php';
 				if(isset($Numero) && $Numero != ''){                            $a .= ",Numero='".$Numero."'" ;}
 				if(isset($idUml) && $idUml != ''){                              $a .= ",idUml='".$idUml."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `maquinas_listado_level_".$lvl."` SET ".$a." WHERE idLevel_".$lvl." = '".$idLevel[$lvl]."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			
@@ -1071,25 +986,15 @@ require_once '0_validate_user_1.php';
 			
 			$idMaquina  = $_GET['id'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE maquinas_listado SET idEstado = '".$idEstado."'	
-			WHERE idMaquina = '".$idMaquina."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die; 
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 
@@ -1138,26 +1043,14 @@ require_once '0_validate_user_1.php';
 				if(isset($level) && $level != ''){                 $a .= ",tabla='".$level."'" ;}
 				if(isset($xx) && $xx != ''){                       $a .= ",table_value='".$xx."'" ;}
 				
-
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `maquinas_listado_level_".$lvl."` SET ".$a." WHERE idLevel_".$lvl." = '".$addTrabajo."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$addTrabajo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&view=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -1239,25 +1132,14 @@ require_once '0_validate_user_1.php';
 				if(isset($PuntoidGrupo) && $PuntoidGrupo != ''){                  $a .= ",PuntoidGrupo_".$mod."='".$PuntoidGrupo."'" ;}
 				if(isset($idEstado) && $idEstado != ''){                          $a .= ",idEstado".$mod."='".$idEstado."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `maquinas_listado_matriz` SET ".$a." WHERE idMatriz = '$idMatriz'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'maquinas_listado_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -5445,25 +5327,14 @@ require_once '0_validate_user_1.php';
 			
 			$idMaquina  = $_GET['status'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
-			
-			$query  = "UPDATE maquinas_listado SET idEstado = '".$idEstado."'	
-			WHERE idMaquina    = '".$idMaquina."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 
@@ -5497,25 +5368,14 @@ require_once '0_validate_user_1.php';
 							//Filtros
 							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 							
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `maquinas_listado_level_".$lvl."` SET ".$a." WHERE idLevel_".$lvl." = '".$idLevel[$lvl]."'";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							/*******************************************************/
+							//se actualizan los datos
+							$resultado = db_update_data (false, $a, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
-							if($resultado){
+							if($resultado==true){
 								
 								header( 'Location: '.$location.'&edited=true' );
 								die;
-								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 								
 							}
 								
@@ -5540,39 +5400,31 @@ require_once '0_validate_user_1.php';
 			
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado_level_'.$_GET['lvl'], '', 'idLevel_'.$_GET['lvl'].' = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-			// inserto los datos de registro en la db
-			$query  = "UPDATE `maquinas_listado_level_".$_GET['lvl']."` SET Direccion_img='' WHERE idLevel_".$_GET['lvl']." = ".$_GET['del_img'];
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if(!$resultado){
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-					
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-			}
-				
-			//Se elimina la imagen
-			if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
-				try {
-					if(!is_writable('upload/'.$rowdata['Direccion_img'])){
-						//throw new Exception('File not writable');
-					}else{
-						unlink('upload/'.$rowdata['Direccion_img']);
-					}
-				}catch(Exception $e) { 
-					//guardar el dato en un archivo log
-				}
-			}
 			
-			//redirijo			
-			header( 'Location: '.$location.'&deleted=true' );
-			die;
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $a, 'maquinas_listado_level_'.$_GET['lvl'], 'idLevel_'.$_GET['lvl'].' = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			//Si ejecuto correctamente la consulta
+			if($resultado==true){
+			
+				//Se elimina la imagen
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					try {
+						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							//throw new Exception('File not writable');
+						}else{
+							unlink('upload/'.$rowdata['Direccion_img']);
+						}
+					}catch(Exception $e) { 
+						//guardar el dato en un archivo log
+					}
+				}
+				
+				//redirijo			
+				header( 'Location: '.$location.'&deleted=true' );
+				die;
+			}
 			
 
 		break;		

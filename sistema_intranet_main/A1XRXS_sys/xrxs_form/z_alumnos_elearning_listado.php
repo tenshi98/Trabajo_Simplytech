@@ -206,25 +206,14 @@ require_once '0_validate_user_1.php';
 				if(isset($Descripcion) && $Descripcion != ''){ $a .= ",Descripcion='".$Descripcion."'" ;}
 				if(isset($idEstado) && $idEstado != ''){       $a .= ",idEstado='".$idEstado."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_elearning_listado` SET ".$a." WHERE idElearning = '$idElearning'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado', 'idElearning = "'.$idElearning.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true&id_curso='.$idElearning );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -388,25 +377,14 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre != ''){           $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Duracion) && $Duracion != ''){       $a .= ",Duracion='".$Duracion."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_elearning_listado_unidades` SET ".$a." WHERE idUnidad = '$idUnidad'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado_unidades', 'idUnidad = "'.$idUnidad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true&id_curso='.$idElearning );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -568,33 +546,19 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre != ''){            $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($Contenido) && $Contenido != ''){      $a .= ",Contenido='".$Contenido."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_elearning_listado_unidades_contenido` SET ".$a." WHERE idContenido = '$idContenido'";
-				$result = mysqli_query($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado_unidades_contenido', 'idContenido = "'.$idContenido.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				//Actualizo la unidad del documento relacionado
+				/*******************************************************/
+				//se actualizan los datos
 				$a = "idUnidad='".$idUnidad."'" ;
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_elearning_listado_unidades_documentacion` SET ".$a." 
-				WHERE idContenido = '$idContenido'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado_unidades_documentacion', 'idContenido = "'.$idContenido.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true&id_curso='.$idElearning );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -953,25 +917,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idContenido) && $idContenido != ''){  $a .= ",idContenido='".$idContenido."'" ;}
 				if(isset($idQuiz) && $idQuiz != ''){            $a .= ",idQuiz='".$idQuiz."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `alumnos_elearning_listado_unidades_cuestionarios` SET ".$a." WHERE idCuestionario = '$idCuestionario'";
-				$result = mysqli_query($dbConn, $query);
-				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado_unidades_cuestionarios', 'idCuestionario = "'.$idCuestionario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true&id_curso='.$idElearning );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}

@@ -186,26 +186,15 @@ require_once '0_validate_user_1.php';
 				if(isset($idTipoEvaluacion) && $idTipoEvaluacion != ''){ $a .= ",idTipoEvaluacion='".$idTipoEvaluacion."'" ;}
 				if(isset($idTipoQuiz) && $idTipoQuiz != ''){             $a .= ",idTipoQuiz='".$idTipoQuiz."'" ;}
 				if(isset($idLimiteTiempo) && $idLimiteTiempo != ''){     $a .= ",idLimiteTiempo='".$idLimiteTiempo."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `quiz_listado` SET ".$a." WHERE idQuiz = '$idQuiz'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'quiz_listado', 'idQuiz = "'.$idQuiz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -335,26 +324,14 @@ require_once '0_validate_user_1.php';
 				if(isset($OpcionCorrecta) && $OpcionCorrecta != ''){    $a .= ",OpcionCorrecta='".$OpcionCorrecta."'" ;  }else{$a .= ",OpcionCorrecta='".$OpcionCorrecta."'" ;}
 				if(isset($idCategoria) && $idCategoria != ''){          $a .= ",idCategoria='".$idCategoria."'" ;  }else{$a .= ",OpcionCorrecta='".$OpcionCorrecta."'" ;}
 				
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `quiz_listado_preguntas` SET ".$a." WHERE idPregunta = '$idPregunta'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'quiz_listado_preguntas', 'idPregunta = "'.$idPregunta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}

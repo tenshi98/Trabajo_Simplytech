@@ -123,22 +123,11 @@ require_once '0_validate_user_1.php';
 						$a .= ",F_Pago_ano='".$rowBoleta['F_Pago_ano']."'" ;
 						$a .= ",MontoPagado='".$nuevoMonto."'" ;
 						$a .= ",idEstado='1'" ;
-				
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `boleta_honorarios_facturacion` SET ".$a." WHERE idFacturacion = '".$indice2."'";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-										
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-						}
+						
+						/*******************************************************/
+						//se actualizan los datos
+						$resultado = db_update_data (false, $a, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 						
 					//si es pago completo
 					}elseif($rowBoleta['MontoPagado']==$rowPago['MontoPagado']){
@@ -152,22 +141,11 @@ require_once '0_validate_user_1.php';
 						$a .= ",F_Pago_ano=''";
 						$a .= ",MontoPagado=''";
 						$a .= ",idEstado='1'" ;
-				
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `boleta_honorarios_facturacion` SET ".$a." WHERE idFacturacion = '".$indice2."'";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-										
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-						}
+						
+						/*******************************************************/
+						//se actualizan los datos
+						$resultado = db_update_data (false, $a, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 					
 					/**********************************************************************/

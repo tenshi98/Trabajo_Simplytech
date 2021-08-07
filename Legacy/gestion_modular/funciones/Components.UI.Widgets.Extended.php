@@ -9284,6 +9284,9 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 			$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']             = $data['Nombre'];
 			$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']         = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
 			$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']  = '<a href="view_crossenergy_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
+			$arrGruas[$xdanger][$data['idTelemetria']]['Vmonofasico']        = $data['SensoresMedActual_4'];
+			$arrGruas[$xdanger][$data['idTelemetria']]['VTrifasico']         = $data['SensoresMedActual_5'];
+			$arrGruas[$xdanger][$data['idTelemetria']]['Potencia']           = $data['SensoresMedActual_6'];
 			
 			/****************************************************/
 			//el resto de los botones
@@ -9313,9 +9316,9 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 		$Count_FueraLinea = 0;
 		$Count_Total      = 0;
 				
-		if($arrGruas[2]){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
-		if($arrGruas[1]){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
-		if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
+		if(isset($arrGruas[2])){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
+		if(isset($arrGruas[1])){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
+		if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
 		
 		$GPS = '';
 									
@@ -9339,13 +9342,13 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
 			</header>
 			<div class="table-responsive">
-				<div class="col-sm-6">
+				<div class="col-sm-7">
 					<div class="row">
 						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<thead>
 									<tr role="row">
-										<th colspan="3">
+										<th colspan="6">
 											<div class="field">
 												<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
 													//La opcion todos
@@ -9358,12 +9361,20 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 											</div>
 										</th>
 									</tr>';
-									$GPS .= widget_sherlock(1, 3);
+									$GPS .= widget_sherlock(1, 6);
 									$GPS .= '
+									<tr role="row">
+										<th></th>
+										<th>Equipo</th>
+										<th>V. Trifasico</th>
+										<th>V. Monofasico</th>
+										<th>Potencia</th>
+										<th>Acciones</th>
+									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
 									
-									if($arrGruas[2]){
+									if(isset($arrGruas[2])){
 										foreach ( $arrGruas[2] as $categoria=>$grua ) { 
 											$GPS .= '
 											<tr class="odd '.$grua['tr_color'].'">
@@ -9376,6 +9387,9 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 													'.$grua['Nombre'].'<br/>
 													'.$grua['LastUpdate'].'
 												</td>
+												<td>'.cantidades($grua['VTrifasico'], 1).' V</td>
+												<td>'.cantidades($grua['Vmonofasico'], 1).' V</td>
+												<td>'.cantidades($grua['Potencia'], 1).' kW</td>
 												<td width="10">
 													<div class="btn-group" style="width: 105px;" >';
 														$GPS .= $grua['NAlertas'];
@@ -9388,7 +9402,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 										}
 									}
 									
-									if($arrGruas[1]){
+									if(isset($arrGruas[1])){
 										foreach ( $arrGruas[1] as $categoria=>$grua ) { 
 											$GPS .= '
 											<tr class="odd '.$grua['tr_color'].'">
@@ -9401,6 +9415,9 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 													'.$grua['Nombre'].'<br/>
 													'.$grua['LastUpdate'].'
 												</td>
+												<td>'.cantidades($grua['VTrifasico'], 1).' V</td>
+												<td>'.cantidades($grua['Vmonofasico'], 1).' V</td>
+												<td>'.cantidades($grua['Potencia'], 1).' kW</td>
 												<td width="10">
 													<div class="btn-group" style="width: 105px;" >';
 														$GPS .= $grua['NAlertas'];
@@ -9413,7 +9430,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 										}
 									}
 									
-									if($arrGruas[3]){
+									if(isset($arrGruas[3])){
 										foreach ( $arrGruas[3] as $categoria=>$grua ) { 
 											$GPS .= '
 											<tr class="odd '.$grua['tr_color'].'">
@@ -9426,6 +9443,9 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 													'.$grua['Nombre'].'<br/>
 													'.$grua['LastUpdate'].'
 												</td>
+												<td>'.cantidades($grua['VTrifasico'], 1).' V</td>
+												<td>'.cantidades($grua['Vmonofasico'], 1).' V</td>
+												<td>'.cantidades($grua['Potencia'], 1).' kW</td>
 												<td width="10">
 													<div class="btn-group" style="width: 105px;" >';
 														$GPS .= $grua['NAlertas'];
@@ -9445,7 +9465,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-5">
 					<div class="row">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<div id="consulta"></div>
@@ -9484,7 +9504,10 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 					//verifico que sensor este activo
 					if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 						//Unidad medida
-						$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						$unimed = ' ';
+						if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]])){
+							$unimed .= $arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						}
 						//cadena
 						if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
 						$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';

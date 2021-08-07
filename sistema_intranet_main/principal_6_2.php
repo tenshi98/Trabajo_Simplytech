@@ -98,6 +98,10 @@ $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_6.php";              
 
 //CrossEnergy
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_7.php";              //42 - Alerta Sensores
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_18.php";   //43 - Trazabilidad Sensor 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_19.php";   //44 - Trazabilidad Grupo
+$x_nperm++; $trans[$x_nperm] = "informe_crossenergy_01.php";                    //45 - Resumen Dia
+$x_nperm++; $trans[$x_nperm] = "informe_crossenergy_02.php";                    //46 - Resumen Hora
 
 
 
@@ -132,7 +136,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 /*CrossWeather*/    $Tab_4 = $prm_x[36];
 /*CrossWater*/      $Tab_5 = 0;
 /*CrossCrane*/      $Tab_6 = $prm_x[37] + $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41];
-/*CrossEnergy*/     $Tab_7 = $prm_x[42];
+/*CrossEnergy*/     $Tab_7 = $prm_x[42] + $prm_x[43] + $prm_x[44] + $prm_x[45] + $prm_x[46];
 
 /************************************************************************************/
 // Listado con los nombres del tab

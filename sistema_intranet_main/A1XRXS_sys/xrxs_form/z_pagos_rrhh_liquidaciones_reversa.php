@@ -155,21 +155,11 @@ require_once '0_validate_user_1.php';
 								$a .= ",F_Pago_ano=''";
 								$a .= ",MontoPagado=''";
 								$a .= ",idEstado='1'" ;//abierto
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `rrhh_sueldos_facturacion_trabajadores` SET ".$a." WHERE idFactTrab = '".$tipo['idFactTrab']."'";
-								//Consulta
-								$resultado = mysqli_query($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-											
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-								}
+								
+								/*******************************************************/
+								//se actualizan los datos
+								$resultado = db_update_data (false, $a, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$tipo['idFactTrab'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 								
 							//si ya tiene un saldo anterior
 							}else{
@@ -178,21 +168,10 @@ require_once '0_validate_user_1.php';
 								$a .= ",MontoPagado='".$nuevoMonto."'" ;
 								$a .= ",idEstado='1'" ;//abierto
 								
-								// inserto los datos de registro en la db
-								$query  = "UPDATE `rrhh_sueldos_facturacion_trabajadores` SET ".$a." WHERE idFactTrab = '".$tipo['idFactTrab']."'";
-								//Consulta
-								$resultado = mysqli_query($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-											
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-								}
+								/*******************************************************/
+								//se actualizan los datos
+								$resultado = db_update_data (false, $a, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$tipo['idFactTrab'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							}
 							
 							//elimino el registro del pago en los trabajadores

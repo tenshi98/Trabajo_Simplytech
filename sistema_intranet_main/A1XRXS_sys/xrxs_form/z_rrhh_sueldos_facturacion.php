@@ -2067,153 +2067,26 @@ require_once '0_validate_user_1.php';
 											
 							/****************************************************/
 							//Inasistencias
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_inasistencias_dias` SET ".$a." 
-							WHERE idTrabajador = '".$producto['idTrabajador']."'
-							AND  idUso=1 AND Creacion_fecha BETWEEN '".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."' AND '".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'
-							";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-												
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-							}
+							$resultado = db_update_data (false, $a, 'trabajadores_inasistencias_dias', 'idTrabajador = "'.$producto['idTrabajador'].'" AND  idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							/****************************************************/
 							//Licencias
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_licencias` SET ".$a." 
-							WHERE idTrabajador = '".$producto['idTrabajador']."'
-							AND idUso=1 AND Fecha_inicio BETWEEN '".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."' AND '".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'
-							";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-												
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-							}				
+							$resultado = db_update_data (false, $a, 'trabajadores_licencias', 'idTrabajador = "'.$producto['idTrabajador'].'" AND idUso=1 AND Fecha_inicio BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							/****************************************************/
 							//Bonos por turno
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_horas_extras_facturacion_turnos` SET ".$a." 
-							WHERE idTrabajador = '".$producto['idTrabajador']."'
-							AND idUso=1 AND Creacion_fecha BETWEEN '".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."' AND '".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'
-							";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-												
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-							}
+							$resultado = db_update_data (false, $a, 'trabajadores_horas_extras_facturacion_turnos', 'idTrabajador = "'.$producto['idTrabajador'].'" AND idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							/****************************************************/
 							//Bonos temporales
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_bonos_temporales` SET ".$a." 
-							WHERE idTrabajador = '".$producto['idTrabajador']."'
-							AND idUso=1 AND Creacion_fecha BETWEEN '".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."' AND '".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'
-							";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-												
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-							}				
+							$resultado = db_update_data (false, $a, 'trabajadores_bonos_temporales', 'idTrabajador = "'.$producto['idTrabajador'].'" AND idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							/****************************************************/
 							//Horas extras
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_horas_extras_mensuales_facturacion_horas` SET ".$a." 
-							WHERE idTrabajador = '".$producto['idTrabajador']."'
-							AND idUso=1 AND Creacion_fecha BETWEEN '".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."' AND '".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'
-							";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-												
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-							}		
+							$resultado = db_update_data (false, $a, 'trabajadores_horas_extras_mensuales_facturacion_horas', 'idTrabajador = "'.$producto['idTrabajador'].'" AND idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							/****************************************************/
 							//Anticipos
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_descuentos_anticipos` SET ".$a." 
-							WHERE idTrabajador = '".$producto['idTrabajador']."'
-							AND idUso=1 AND Creacion_fecha BETWEEN '".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."' AND '".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'
-							";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-												
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-							}				
+							$resultado = db_update_data (false, $a, 'trabajadores_descuentos_anticipos', 'idTrabajador = "'.$producto['idTrabajador'].'" AND idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							/****************************************************/
 							//Descuento Cuota
-							// inserto los datos de registro en la db
-							$query  = "UPDATE `trabajadores_descuentos_cuotas_listado` SET ".$a." 
-							WHERE idTrabajador = '".$producto['idTrabajador']."'
-							AND idUso=1 AND Fecha BETWEEN '".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."' AND '".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'
-							";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-												
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-							}
+							$resultado = db_update_data (false, $a, 'trabajadores_descuentos_cuotas_listado', 'idTrabajador = "'.$producto['idTrabajador'].'" AND idUso=1 AND Fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
-						
 						}
 					}
 							

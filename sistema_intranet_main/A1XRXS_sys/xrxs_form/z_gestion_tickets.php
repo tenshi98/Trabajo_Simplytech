@@ -295,12 +295,11 @@ require_once '0_validate_user_1.php';
 				if(isset($FechaCancelacion) && $FechaCancelacion != ''){               $a .= ",FechaCancelacion='".$FechaCancelacion."'" ;}
 				if(isset($DescripcionCancelacion) && $DescripcionCancelacion != ''){   $a .= ",DescripcionCancelacion='".$DescripcionCancelacion."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `gestion_tickets` SET ".$a." WHERE idTicket = '$idTicket'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'gestion_tickets', 'idTicket = "'.$idTicket.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					/*********************************************************************/
 					//Ticket
@@ -484,16 +483,6 @@ require_once '0_validate_user_1.php';
 					//se redirecciona
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}

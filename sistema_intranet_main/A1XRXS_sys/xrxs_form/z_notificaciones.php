@@ -82,11 +82,17 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$query  = "UPDATE `principal_notificaciones_ver` SET idEstado=2, FechaVisto='".fecha_actual()."' WHERE idNoti = '$id'";
-				$result = mysqli_query($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$a = "idEstado=2, FechaVisto='".fecha_actual()."'" ;
+				$resultado = db_update_data (false, $a, 'principal_notificaciones_ver', 'idNoti = "'.$id.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					header( 'Location: '.$location.'&aprobar_uno=true' );
+					die;
 				
-				header( 'Location: '.$location.'&aprobar_uno=true' );
-				die;
+				}
 
 			}
 
@@ -99,12 +105,20 @@ require_once '0_validate_user_1.php';
 			
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$a = "idEstado=2, FechaVisto='".fecha_actual()."'" ;
+				$resultado = db_update_data (false, $a, 'principal_notificaciones_ver', 'idUsuario = "'.$all.'"  AND idEstado=1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
 					
-				$query  = "UPDATE `principal_notificaciones_ver` SET idEstado=2, FechaVisto='".fecha_actual()."' WHERE idUsuario = '$all' AND idEstado=1";
-				$result = mysqli_query($dbConn, $query);
+					header( 'Location: '.$location.'&aprobar_todos=true' );
+					die;
+				
+				}
 					
-				header( 'Location: '.$location.'&aprobar_todos=true' );
-				die;
+				
 			}
 
 		break;

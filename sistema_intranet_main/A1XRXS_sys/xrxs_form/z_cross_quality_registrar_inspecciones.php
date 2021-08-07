@@ -1343,25 +1343,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario != ''){                      $a .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($fecha_auto) && $fecha_auto != ''){                    $a .= ",fecha_auto='".$fecha_auto."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_quality_registrar_inspecciones` SET ".$a." WHERE idAnalisis = '$idAnalisis'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_quality_registrar_inspecciones', 'idAnalisis = "'.$idAnalisis.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -1882,26 +1871,14 @@ require_once '0_validate_user_1.php';
 					if(isset($Medida[$i])&&$Medida[$i]!= ''){   $a .= ",Medida_".$i."='".$Medida[$i]."'" ;   }
 				}
 				
-				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_quality_registrar_inspecciones_muestras` SET ".$a." WHERE idMuestras = '$idMuestras'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_quality_registrar_inspecciones_muestras', 'idMuestras = "'.$idMuestras.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}

@@ -1328,25 +1328,14 @@ require_once '0_validate_user_1.php';
 				if(isset($horaInicio) && $horaInicio != ''){            $a .= ",horaInicio='".$horaInicio."'" ;}
 				if(isset($horaTermino) && $horaTermino != ''){          $a .= ",horaTermino='".$horaTermino."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `orden_trabajo_listado` SET ".$a." WHERE idOT = '$idOT'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado', 'idOT = "'.$idOT.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -1437,25 +1426,14 @@ require_once '0_validate_user_1.php';
 				$a = "idResponsable='".$idResponsable."'" ;
 				if(isset($idTrabajador) && $idTrabajador != ''){    $a .= ",idTrabajador='".$idTrabajador."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `orden_trabajo_listado_responsable` SET ".$a." WHERE idResponsable = '$idResponsable'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_responsable', 'idResponsable = "'.$idResponsable.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edittrab=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 						
@@ -1595,25 +1573,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idProducto) && $idProducto != ''){    $a .= ",idProducto='".$idProducto."'" ;}
 				if(isset($Cantidad) && $Cantidad != ''){        $a .= ",Cantidad='".$Cantidad."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `orden_trabajo_listado_insumos` SET ".$a." WHERE idInsumos = '$idInsumos'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_insumos', 'idInsumos = "'.$idInsumos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&editins=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 						
@@ -1756,25 +1723,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idProducto) && $idProducto != ''){    $a .= ",idProducto='".$idProducto."'" ;}
 				if(isset($Cantidad) && $Cantidad != ''){        $a .= ",Cantidad='".$Cantidad."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `orden_trabajo_listado_productos` SET ".$a." WHERE idProductos = '$idProductos'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_productos', 'idProductos = "'.$idProductos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&editprod=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -1917,26 +1873,16 @@ require_once '0_validate_user_1.php';
 						$a .= ",Cantidad=''";		
 					break;
 				}
-							
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `orden_trabajo_listado_trabajos` SET ".$a." WHERE idTrabajoOT = '$idInterno'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_trabajos', 'idTrabajoOT = "'.$idInterno.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edittarea=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				}
 					
 				
@@ -1962,26 +1908,15 @@ require_once '0_validate_user_1.php';
 				if(isset($Grasa_relubricacion) && $Grasa_relubricacion!= ''){        $a .= ",Grasa_relubricacion='".$Grasa_relubricacion."'" ;  }else{$a .= ",Grasa_relubricacion=''" ;}
 				if(isset($Aceite) && $Aceite!= ''){                                  $a .= ",Aceite='".$Aceite."'" ;                            }else{$a .= ",Aceite=''" ;}
 				if(isset($Cantidad) && $Cantidad!= ''){                              $a .= ",Cantidad='".$Cantidad."'" ;                        }else{$a .= ",Cantidad=''" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `orden_trabajo_listado_trabajos` SET ".$a." WHERE idTrabajoOT = '$idInterno'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_trabajos', 'idTrabajoOT = "'.$idTrabajoOT.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 						
 					header( 'Location: '.$location.'&edittarea=true' );
 					die;
-						
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 				}	
 
@@ -2417,26 +2352,25 @@ require_once '0_validate_user_1.php';
 				$a = "idTrabajoOT='".$idInterno."'" ;
 				if(isset($idAnalisis) && $idAnalisis != ''){     $a .= ",idAnalisis='".$idAnalisis."'" ;}
 				if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `orden_trabajo_listado_trabajos` SET ".$a." WHERE idTrabajoOT = '$idInterno'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_trabajos', 'idTrabajoOT = "'.$idInterno.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					/******************************************************************/
 					//Guardo el numero de la OT en el analisis
 					if(isset($idAnalisis)){
 						$a = "idAnalisis='".$idAnalisis."'" ;
 						if(isset($idOT) && $idOT != ''){   $a .= ",idOT='".$idOT."'" ;}
-
-						// inserto los datos de registro en la db
-						$query  = "UPDATE `analisis_listado` SET ".$a." WHERE idAnalisis = '$idAnalisis'";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
+						
+						/*******************************************************/
+						//se actualizan los datos
+						$resultado = db_update_data (false, $a, 'analisis_listado', 'idAnalisis = "'.$idAnalisis.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Si ejecuto correctamente la consulta
-						if(!$resultado){
+						if($resultado==true){
+							
 							//Genero numero aleatorio
 							$vardata = genera_password(8,'alfanumerico');
 							
@@ -2450,16 +2384,6 @@ require_once '0_validate_user_1.php';
 						
 					header( 'Location: '.$location.'&edittarea=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -2704,86 +2628,17 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata['f_programacion']) && $rowdata['f_programacion']=='' && $rowdata['f_programacion']=='0000-00-00'){  $a .= ",f_programacion='".$rowdata['f_programacion']."'" ;}
 				if(isset($rowdata['f_termino']) && $rowdata['f_termino']=='' && $rowdata['f_termino']=='0000-00-00'){                 $a .= ",f_termino='".$rowdata['f_termino']."'" ;}
 				
-				// Actualizo la tabla principal
-				$query  = "UPDATE `orden_trabajo_listado` SET ".$a." WHERE idOT = '".$_GET['view']."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-				
-				// Actualizo los insumos
-				$query  = "UPDATE `orden_trabajo_listado_insumos` SET ".$a." WHERE idOT = '".$_GET['view']."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-				
-				// Actualizo los productos
-				$query  = "UPDATE `orden_trabajo_listado_productos` SET ".$a." WHERE idOT = '".$_GET['view']."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-				
-				// Actualizo los trabajadores
-				$query  = "UPDATE `orden_trabajo_listado_responsable` SET ".$a." WHERE idOT = '".$_GET['view']."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-				
-				// Actualizo los trabajos
-				$query  = "UPDATE `orden_trabajo_listado_trabajos` SET ".$a." WHERE idOT = '".$_GET['view']."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado', 'idOT = "'.$_GET['view'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_insumos', 'idOT = "'.$_GET['view'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_productos', 'idOT = "'.$_GET['view'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_responsable', 'idOT = "'.$_GET['view'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'orden_trabajo_listado_trabajos', 'idOT = "'.$_GET['view'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				/*********************************************************************/
 				// Se actualizan los analisis utilizados
 				$arrAnalisis = array();
@@ -2792,20 +2647,10 @@ require_once '0_validate_user_1.php';
 				//Se actualizan los registros
 				foreach ($arrAnalisis as $trab){
 					if(isset($trab['idAnalisis']) && $trab['idAnalisis'] == '' && $trab['idAnalisis'] == 0){  
-						$query  = "UPDATE `analisis_listado` SET idOT = '".$_GET['view']."' WHERE idAnalisis = '".$trab['idAnalisis']."'";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						/*******************************************************/
+						//se actualizan los datos
+						$a = "idOT='".$_GET['view']."'" ;
+						$resultado = db_update_data (false, $a, 'analisis_listado', 'idAnalisis = "'.$trab['idAnalisis'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					}
 				}	
 				

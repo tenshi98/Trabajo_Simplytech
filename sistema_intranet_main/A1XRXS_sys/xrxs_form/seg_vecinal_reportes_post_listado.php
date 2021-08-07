@@ -38,19 +38,15 @@ require_once '0_validate_user_1.php';
 					//Filtros
 					$a = "idPeligro='".$idEventoPeligro."'" ;
 					if(isset($idValidado) && $idValidado != ''){  $a .= ",idValidado='".$idValidado."'" ;}
-					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `seg_vecinal_peligros_listado` SET ".$a." WHERE idPeligro = '".$idEventoPeligro."'";
-					$resultado = mysqli_query($dbConn, $query);
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'seg_vecinal_peligros_listado', 'idPeligro = "'.$idEventoPeligro.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//evento	
 				}elseif(isset($idTipo)&&$idTipo==2){
 					//Filtros
 					$a = "idEvento='".$idEventoPeligro."'" ;
 					if(isset($idValidado) && $idValidado != ''){  $a .= ",idValidado='".$idValidado."'" ;}
-					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `seg_vecinal_eventos_listado` SET ".$a." WHERE idEvento = '".$idEventoPeligro."'";
-					$resultado = mysqli_query($dbConn, $query);
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'seg_vecinal_eventos_listado', 'idEvento = "'.$idEventoPeligro.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 					
 				/******************************************************************/
@@ -65,16 +61,6 @@ require_once '0_validate_user_1.php';
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -112,23 +98,11 @@ require_once '0_validate_user_1.php';
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $a, 'seg_vecinal_reportes_post_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-				/******************************************************************/
 				//Si ejecuto correctamente la consulta
 				if($resultado){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -204,23 +178,11 @@ require_once '0_validate_user_1.php';
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $a, 'seg_vecinal_reportes_post_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-				/******************************************************************/
 				//Si ejecuto correctamente la consulta
 				if($resultado){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}

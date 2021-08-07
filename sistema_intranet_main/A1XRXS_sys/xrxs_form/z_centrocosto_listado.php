@@ -14,15 +14,12 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Formulario para licitaciones
-	if ( !empty($_POST['idCentroCosto']) )        $idCentroCosto         = $_POST['idCentroCosto'];
+	if ( !empty($_POST['idCentroCosto']) )      $idCentroCosto       = $_POST['idCentroCosto'];
 	if ( !empty($_POST['idSistema']) )          $idSistema           = $_POST['idSistema'];
 	if ( !empty($_POST['Nombre']) )             $Nombre              = $_POST['Nombre'];
 	if ( !empty($_POST['idEstado']) )           $idEstado            = $_POST['idEstado'];
 	
-	
-	if ( !empty($_POST['lvl']) )                 $lvl                  = $_POST['lvl'];
-	
-	
+	if ( !empty($_POST['lvl']) )                $lvl                 = $_POST['lvl'];
 	
 	//formulariopara el itemizado
 	//Traspaso de valores input a variables
@@ -211,25 +208,14 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre != ''){                $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($idEstado) && $idEstado != ''){            $a .= ",idEstado='".$idEstado."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `centrocosto_listado` SET ".$a." WHERE idCentroCosto = '$idCentroCosto'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'centrocosto_listado', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 	
@@ -370,25 +356,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idCentroCosto) && $idCentroCosto != ''){   $a .= ",idCentroCosto='".$idCentroCosto."'" ;}
 				if(isset($Nombre) && $Nombre != ''){             $a .= ",Nombre='".$Nombre."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `centrocosto_listado_level_".$lvl."` SET ".$a." WHERE idLevel_".$lvl." = '".$idLevel[$lvl]."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'centrocosto_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			
@@ -453,25 +428,15 @@ require_once '0_validate_user_1.php';
 			
 			$idCentroCosto  = $_GET['id'];
 			$idEstado       = simpleDecode($_GET['estado'], fecha_actual());
-			$query  = "UPDATE centrocosto_listado SET idEstado = '".$idEstado."'	
-			WHERE idCentroCosto = '".$idCentroCosto."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'centrocosto_listado', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 
@@ -483,26 +448,16 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 			$idCentroCosto  = $_GET['status'];
-			$estado         = $_GET['estado'];
-			$query  = "UPDATE centrocosto_listado SET idEstado = '$estado'	
-			WHERE idCentroCosto    = '$idCentroCosto'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			$idEstado       = $_GET['estado'];
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'centrocosto_listado', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 

@@ -103,29 +103,15 @@ require_once '0_validate_user_1.php';
 					if(isset($F_Inicio) && $F_Inicio != ''){      $a .= ",F_Inicio='".$F_Inicio."'" ;}
 					if(isset($F_Termino) && $F_Termino != ''){    $a .= ",F_Termino='".$F_Termino."'" ;}
 					
-					// inserto los datos de registro en la db
-					$query  = "UPDATE `telemetria_listado` SET ".$a." WHERE idTelemetria = '$idTelemetria'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
+					if($resultado==true){
+						header( 'Location: '.$location.'&created=true' );
+						die;
 					}
-					
-					
-						
-					header( 'Location: '.$location.'&created=true' );
-					die;
 				}
-				
-				
 			}
 	
 		break;
@@ -156,22 +142,9 @@ require_once '0_validate_user_1.php';
 				if(isset($Codigo) && $Codigo != ''){                $a .= ",Codigo='".$Codigo."'" ;}
 				if(isset($F_Inicio) && $F_Inicio != ''){            $a .= ",F_Inicio='".$F_Inicio."'" ;}
 				if(isset($F_Termino) && $F_Termino != ''){          $a .= ",F_Termino='".$F_Termino."'" ;}
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado_contratos` SET ".$a." WHERE idContrato = '$idContrato'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_listado_contratos', 'idContrato = "'.$idContrato.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/***********************************************************/
 				//Actualizo la tabla de telemetria relacionado
@@ -181,25 +154,16 @@ require_once '0_validate_user_1.php';
 				if(isset($F_Inicio) && $F_Inicio != ''){      $a .= ",F_Inicio='".$F_Inicio."'" ;}
 				if(isset($F_Termino) && $F_Termino != ''){    $a .= ",F_Termino='".$F_Termino."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado` SET ".$a." WHERE idTelemetria = '$idTelemetria'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
+				if($resultado==true){
 					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					header( 'Location: '.$location.'&edited=true' );
+					die;
 					
 				}
-				
-				header( 'Location: '.$location.'&edited=true' );
-				die;
-				
 
 			}
 
@@ -246,25 +210,15 @@ require_once '0_validate_user_1.php';
 				$a .= ",Codigo=''" ;
 				$a .= ",F_Inicio=''" ;
 				$a .= ",F_Termino=''" ;
-					
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `telemetria_listado` SET ".$a." WHERE idContrato = ".$indice;
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idContrato = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
+				if($resultado==true){
+					header( 'Location: '.$location.'&deleted=true' );
+					die;
 				}
-							
-				header( 'Location: '.$location.'&deleted=true' );
-				die;
 				
 			}else{
 				//se valida hackeo

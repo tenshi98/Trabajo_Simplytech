@@ -194,16 +194,6 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 
 			}
@@ -564,16 +554,6 @@ require_once '0_validate_user_1.php';
 								header( 'Location: '.$location.'&img_id='.$idProducto );
 								die;
 								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
 							}
 								
 						} else {
@@ -624,16 +604,6 @@ require_once '0_validate_user_1.php';
 								
 								header( 'Location: '.$location );
 								die;
-								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 								
 							}
 									
@@ -686,16 +656,6 @@ require_once '0_validate_user_1.php';
 								header( 'Location: '.$location );
 								die;
 								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
 							}
 								
 						} else {
@@ -743,16 +703,6 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&id='.$_GET['del_img'] );
 				die;
 				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
 			
 
@@ -790,16 +740,6 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&id='.$_GET['del_file'] );
 				die;
 				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
 				
 
@@ -836,16 +776,6 @@ require_once '0_validate_user_1.php';
 				//Redirijo			
 				header( 'Location: '.$location.'&id='.$_GET['del_hds'] );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 					
@@ -958,16 +888,6 @@ require_once '0_validate_user_1.php';
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 			

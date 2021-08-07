@@ -1171,37 +1171,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $a .= ",Aprobacion_Fecha='".$Creacion_fecha."'" ;   }
 				if(isset($Creacion_hora) && $Creacion_hora != ''){    $a .= ",Aprobacion_Hora='".$Creacion_hora."'" ;   }
 				
-				// Actualizo los datos
-				$query  = "UPDATE `cross_shipping_consolidacion` SET ".$a." WHERE idConsolidacion = '".$idConsolidacion."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-				
-				// Actualizo los datos
-				$query  = "UPDATE `cross_shipping_consolidacion_archivos` SET ".$a." WHERE idConsolidacion = '".$idConsolidacion."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion_archivos', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				
 				header( 'Location: '.$location.'&edited=true' );
@@ -1222,21 +1195,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $a .= ",Aprobacion_Fecha='".$Creacion_fecha."'" ;   }
 				if(isset($Creacion_hora) && $Creacion_hora != ''){    $a .= ",Aprobacion_Hora='".$Creacion_hora."'" ;   }
 				
-				// Actualizo los datos
-				$query  = "UPDATE `cross_shipping_consolidacion` SET ".$a." WHERE idConsolidacion = '".$idConsolidacion."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				
 				
 				
@@ -1315,22 +1277,9 @@ require_once '0_validate_user_1.php';
 				if($napro_true>=1){
 					//Filtros
 					$a = "idEstado='2'" ;
-					
-					// Actualizo los datos
-					$query  = "UPDATE `cross_shipping_consolidacion` SET ".$a." WHERE idConsolidacion = '".$_GET['consolidacion_aprobar']."'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					}
-					
+					/*******************************************************/
+					//se actualizan los datos
+					$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['consolidacion_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					
 					/*********************************************************************/
@@ -1425,22 +1374,11 @@ require_once '0_validate_user_1.php';
 				
 				//Filtros
 				$a = "idEstado='2'" ;
-					
-				// Actualizo los datos
-				$query  = "UPDATE `cross_shipping_consolidacion` SET ".$a." WHERE idConsolidacion = '".$_GET['consolidacion_aprobar']."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['consolidacion_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 					
 				
 				header( 'Location: '.$location.'&edited=true' );
@@ -1559,25 +1497,14 @@ require_once '0_validate_user_1.php';
 				if(isset($Aprobacion_Fecha) && $Aprobacion_Fecha != ''){              $a .= ",Aprobacion_Fecha='".$Aprobacion_Fecha."'" ;}
 				if(isset($Aprobacion_Hora) && $Aprobacion_Hora != ''){                $a .= ",Aprobacion_Hora='".$Aprobacion_Hora."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_shipping_consolidacion` SET ".$a." WHERE idConsolidacion = '$idConsolidacion'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -1652,25 +1579,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idTermografo) && $idTermografo != ''){             $a .= ",idTermografo='".$idTermografo."'" ;}
 				if(isset($NSerieSensor) && $NSerieSensor != ''){             $a .= ",NSerieSensor='".$NSerieSensor."'" ;}
 				
-				// inserto los datos de registro en la db
-				$query  = "UPDATE `cross_shipping_consolidacion_estibas` SET ".$a." WHERE idEstibaListado = '$idEstibaListado'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion_estibas', 'idEstibaListado = "'.$idEstibaListado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($resultado==true){
 					
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -1918,25 +1834,15 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//se borran los permisos del usuario
-			$query  = "UPDATE `cross_shipping_consolidacion` SET idEstado=1 WHERE idConsolidacion = '".$_GET['edit']."'";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstado=1" ;
+			$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['edit'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
-			if($resultado){
+			if($resultado==true){
 				
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				
 			}
 			
@@ -1973,10 +1879,10 @@ require_once '0_validate_user_1.php';
 			}
 			
 			if($errorn==0){
-				//se reversa
-				$query  = "UPDATE `cross_shipping_consolidacion` SET idEstado=1 WHERE idConsolidacion = '".$indice."'";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				/*******************************************************/
+				//se actualizan los datos
+				$a = "idEstado=1" ;
+				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//se borran los datos
 				$resultado = db_delete_data (false, 'cross_shipping_consolidacion_aprobaciones', 'idConsolidacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

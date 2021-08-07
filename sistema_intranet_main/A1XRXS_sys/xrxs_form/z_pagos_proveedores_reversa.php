@@ -178,22 +178,11 @@ require_once '0_validate_user_1.php';
 									$a .= ",F_Pago_ano=''" ;
 									$a .= ",MontoPagado='".$nuevoMonto."'" ;
 									$a .= ",idEstado='1'" ;
-				
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'bodegas_insumos_facturacion', 'idFacturacion = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									
 									/*********************************************************************/		
 									//Se guarda en historial la accion
@@ -229,22 +218,11 @@ require_once '0_validate_user_1.php';
 									//Actualizo las notas de credito
 									$a  = "idFacturacionRelacionado=''" ;
 									$a .= ",idEstado='1'" ;
-				
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `bodegas_insumos_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'bodegas_insumos_facturacion', 'idFacturacionRelacionado = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									
 									break;
 								/**********************************************************************/
@@ -266,22 +244,11 @@ require_once '0_validate_user_1.php';
 									$a .= ",F_Pago_ano=''" ;
 									$a .= ",MontoPagado='".$nuevoMonto."'" ;
 									$a .= ",idEstado='1'" ;
-				
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `bodegas_productos_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'bodegas_productos_facturacion', 'idFacturacion = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									
 									/*********************************************************************/		
 									//Se guarda en historial la accion
@@ -317,22 +284,11 @@ require_once '0_validate_user_1.php';
 									//Actualizo las notas de credito
 									$a  = "idFacturacionRelacionado=''" ;
 									$a .= ",idEstado='1'" ;
-				
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `bodegas_productos_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'bodegas_productos_facturacion', 'idFacturacionRelacionado = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 												
 									break;
 								/**********************************************************************/
@@ -354,22 +310,11 @@ require_once '0_validate_user_1.php';
 									$a .= ",F_Pago_ano=''" ;
 									$a .= ",MontoPagado='".$nuevoMonto."'" ;
 									$a .= ",idEstado='1'" ;
-				
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `bodegas_servicios_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									
 									/*********************************************************************/		
 									//Se guarda en historial la accion
@@ -405,22 +350,11 @@ require_once '0_validate_user_1.php';
 									//Actualizo las notas de credito
 									$a  = "idFacturacionRelacionado=''" ;
 									$a .= ",idEstado='1'" ;
-				
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `bodegas_servicios_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'bodegas_servicios_facturacion', 'idFacturacionRelacionado = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 											
 									break;
 								/**********************************************************************/
@@ -442,22 +376,11 @@ require_once '0_validate_user_1.php';
 									$a .= ",F_Pago_ano=''" ;
 									$a .= ",MontoPagado='".$nuevoMonto."'" ;
 									$a .= ",idEstado='1'" ;
-				
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `bodegas_arriendos_facturacion` SET ".$a." WHERE idFacturacion = '".$tipo['idFacturacion']."'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'bodegas_arriendos_facturacion', 'idFacturacion = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									
 									/*********************************************************************/		
 									//Se guarda en historial la accion
@@ -493,22 +416,11 @@ require_once '0_validate_user_1.php';
 									//Actualizo las notas de credito
 									$a  = "idFacturacionRelacionado=''" ;
 									$a .= ",idEstado='1'" ;
-				
-									// inserto los datos de registro en la db
-									$query  = "UPDATE `bodegas_arriendos_facturacion` SET ".$a." WHERE idFacturacionRelacionado = '".$tipo['idFacturacion']."'";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									
+									/*******************************************************/
+									//se actualizan los datos
+									$resultado = db_update_data (false, $a, 'bodegas_arriendos_facturacion', 'idFacturacionRelacionado = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 										
 									break;
 							}

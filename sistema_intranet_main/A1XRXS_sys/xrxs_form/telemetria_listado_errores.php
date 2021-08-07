@@ -55,16 +55,6 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&silenciar_uno=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -81,30 +71,21 @@ require_once '0_validate_user_1.php';
 				$idTelemetria = $_GET['idTelemetria'];
 				$idSistema    = $_SESSION['usuario']['basic_data']['idSistema'];
 				
+				//Filtros
+				$a = "idLeido='1'" ;
+				
 				/*******************************************************/
 				//se actualizan los datos
-				$a = "idLeido='1'" ;
 				$resultado = db_update_data (false, $a, 'telemetria_listado_errores', 'idLeido = "0" AND idTelemetria="'.$idTelemetria.'" AND idSistema="'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$a = "NAlertas='0'" ;
 				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
 					header( 'Location: '.$location.'&silenciar_todos=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
