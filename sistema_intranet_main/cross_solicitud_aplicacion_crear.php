@@ -532,12 +532,12 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Tractor');
-				$Form_Inputs->form_select_filter('Tractor','idVehiculo', $x1, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $z, '', $dbConn);
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo Aplicacion','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
 				}else{
-					$Form_Inputs->form_select_join_filter('Equipo Aplicacion','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+					$Form_Inputs->form_select_join_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
+				$Form_Inputs->form_select_filter('Equipo Aplicacion','idVehiculo', $x1, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x3, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $x, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
@@ -589,12 +589,12 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Tractor');
-				$Form_Inputs->form_select_filter('Tractor','idVehiculo', $x1, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $z, '', $dbConn);
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo Aplicacion','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
 				}else{
-					$Form_Inputs->form_select_join_filter('Equipo Aplicacion','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+					$Form_Inputs->form_select_join_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
+				$Form_Inputs->form_select_filter('Equipo Aplicacion','idVehiculo', $x1, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x3, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $x, '', $dbConn);
 					
 				
@@ -892,16 +892,16 @@ array_push( $arrCuenta2,$row );
 	<div id="clone_tractor"> 	
 		<div class="col-sm-4 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Tractor','idVehiculo[]', 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>	
+			<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+				$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);	
+			}else{
+				$Form_Inputs->select_bodega('Tractor','idTelemetria[]', '', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+			} ?>
 			</div>
 		</div>
 		<div class="col-sm-4 nopadding">
 			<div class="form-group">
-			<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-				$Form_Inputs->select('Equipo Aplicacion','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);	
-			}else{
-				$Form_Inputs->select_bodega('Equipo Aplicacion','idTelemetria[]', '', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
-			} ?>
+				<?php $Form_Inputs->select('Equipo Aplicacion','idVehiculo[]', 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>	
 			</div>
 		</div>
 		<div class="col-sm-4 nopadding">
@@ -1856,16 +1856,16 @@ array_push( $arrCuenta2,$row );
 	<div id="clone_tractor"> 	
 		<div class="col-sm-4 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Tractor','idVehiculo[]', 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>	
+			<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+				$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);	
+			}else{
+				$Form_Inputs->select_bodega('Tractor','idTelemetria[]', '', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+			} ?>
 			</div>
 		</div>
 		<div class="col-sm-4 nopadding">
 			<div class="form-group">
-			<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-				$Form_Inputs->select('Equipo Aplicacion','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);	
-			}else{
-				$Form_Inputs->select_bodega('Equipo Aplicacion','idTelemetria[]', '', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
-			} ?>
+				<?php $Form_Inputs->select('Equipo Aplicacion','idVehiculo[]', 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>	
 			</div>
 		</div>
 		<div class="col-sm-4 nopadding">
