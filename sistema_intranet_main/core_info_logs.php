@@ -102,7 +102,7 @@ $Archivo3 = '1_logs_error_log_php.txt';
 									error_log("Ha ocurrido un error (".$e->getMessage().")", 0);
 								}
 							}else{
-								error_log("No existe el archivo (".$Archivo.")", 0);
+								error_log("No existe el archivo (".$Archivo1.")", 0);
 							}
 							?>
 													  
@@ -137,7 +137,7 @@ $Archivo3 = '1_logs_error_log_php.txt';
 									error_log("Ha ocurrido un error (".$e->getMessage().")", 0);
 								}
 							}else{
-								error_log("No existe el archivo (".$Archivo.")", 0);
+								error_log("No existe el archivo (".$Archivo2.")", 0);
 							}
 							?>
 													  
@@ -184,7 +184,7 @@ $Archivo3 = '1_logs_error_log_php.txt';
 									error_log("Ha ocurrido un error (".$e->getMessage().")", 0);
 								}
 							}else{
-								error_log("No existe el archivo (".$Archivo.")", 0);
+								error_log("No existe el archivo (".$Archivo3.")", 0);
 							}
 							?>
 													  
