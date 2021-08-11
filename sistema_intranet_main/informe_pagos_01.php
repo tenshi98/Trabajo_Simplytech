@@ -152,8 +152,8 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 					<?php } ?>
 					<tr style="background-color:#DDD">
 						<td colspan="4">Subtotal</td>
-						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
-						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<td align="right"><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td align="right"><?php echo Valores($Sub_MontoPagado, 0); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
 					</tr>
@@ -188,8 +188,8 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 					<?php } ?>
 					<tr style="background-color:#DDD">
 						<td colspan="4">Subtotal</td>
-						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
-						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<td align="right"><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td align="right"><?php echo Valores($Sub_MontoPagado, 0); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
 					</tr> 
@@ -224,8 +224,8 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 					<?php } ?> 
 					<tr style="background-color:#DDD">
 						<td colspan="4">Subtotal</td>
-						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
-						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<td align="right"><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td align="right"><?php echo Valores($Sub_MontoPagado, 0); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
 					</tr>
@@ -260,15 +260,15 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 					<?php } ?> 
 					<tr style="background-color:#DDD">
 						<td colspan="4">Subtotal</td>
-						<td><?php echo Valores($Sub_ValorTotal, 0); ?></td>
-						<td><?php echo Valores($Sub_MontoPagado, 0); ?></td>
+						<td align="right"><?php echo Valores($Sub_ValorTotal, 0); ?></td>
+						<td align="right"><?php echo Valores($Sub_MontoPagado, 0); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
 					</tr>
 					<tr style="background-color:#DDD">
 						<td colspan="4">Total</td>
-						<td><?php echo Valores($Total_ValorTotal, 0); ?></td>
-						<td><?php echo Valores($Total_MontoPagado, 0); ?></td>
+						<td align="right"><?php echo Valores($Total_ValorTotal, 0); ?></td>
+						<td align="right"><?php echo Valores($Total_MontoPagado, 0); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
 					</tr> 
