@@ -175,9 +175,9 @@ $x_seg = 300000;//5 minutos
 
 								var data = new google.visualization.DataTable();
 								data.addColumn('string', 'Hora'); 
-								data.addColumn('number', "Trifasico 1");
-								data.addColumn('number', "Trifasico 2");
-								data.addColumn('number', "Trifasico 3");
+								data.addColumn('number', "Fase 1");
+								data.addColumn('number', "Fase 2");
+								data.addColumn('number', "Fase 3");
 
 								data.addRows([
 									<?php 
@@ -194,12 +194,6 @@ $x_seg = 300000;//5 minutos
 								var materialOptions = {
 									chart: {
 										title: 'Comportamiento Lineas Trifasicas (Ultima Hora)'
-									},
-									series: {
-										// Gives each series an axis name that matches the Y-axis below.
-										0: {axis: 'Trifasico 1'},
-										1: {axis: 'Trifasico 2'},
-										2: {axis: 'Trifasico 3'}
 									}
 								};
 
