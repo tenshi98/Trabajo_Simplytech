@@ -276,6 +276,16 @@ foreach ($arrEquipo as $data) {
 	$arrGruas[$xdanger][$data['idTelemetria']]['status_icon']  = $status_icon;
 	$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']       = $data['Nombre'];
 	$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']   = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
+	if(isset($data['SensoresMedActual_37'])&&$data['SensoresMedActual_37']!=''&&$data['SensoresMedActual_37']!=0&&$data['SensoresMedActual_37']!=99900){
+		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).$arrFinalUnimed[$data['SensoresUniMed_37']];
+	}else{
+		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0'.$arrFinalUnimed[$data['SensoresUniMed_37']];
+	}
+	if(isset($data['SensoresMedActual_39'])&&$data['SensoresMedActual_39']!=''&&$data['SensoresMedActual_39']!=0){
+		$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).$arrFinalUnimed[$data['SensoresUniMed_39']];
+	}else{
+		$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = 'N/A';
+	}
 	//si tiene los permisos
 	if(isset($prm_xa)&&$prm_xa==1){												
 		switch ($in_sens_activ) {
@@ -370,7 +380,7 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 	<thead>
 		<tr role="row">
-			<th colspan="3">
+			<th colspan="5">
 				<div class="field">
 					<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >
 						<option value="9999" <?php if($idZona==9999){ echo 'selected="selected"';} ?>>Todas las Zonas</option>
@@ -386,7 +396,14 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 				</div>
 			</th>
 		</tr>
-		<?php echo widget_sherlock(1, 3); ?>
+		<?php echo widget_sherlock(1, 5); ?>
+		<tr role="row">
+			<th></th>
+			<th>Equipo</th>
+			<th>Voltaje</th>
+			<th>Viento</th>
+			<th>Acciones</th>
+		</tr>
 	</thead>
 	<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 		
@@ -400,6 +417,8 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 					</div> 
 				</td>
 				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
+				<td><?php echo $grua['Voltaje'];?></td>
+				<td><?php echo $grua['Viento'];?></td>
 				<td width="10">
 					<div class="btn-group" style="width: 175px;" >
 						<?php
@@ -425,6 +444,8 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 					</div> 
 				</td>
 				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
+				<td><?php echo $grua['Voltaje'];?></td>
+				<td><?php echo $grua['Viento'];?></td>
 				<td width="10">
 					<div class="btn-group" style="width: 175px;" >
 						<?php
@@ -450,6 +471,8 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 					</div> 
 				</td>
 				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
+				<td><?php echo $grua['Voltaje'];?></td>
+				<td><?php echo $grua['Viento'];?></td>
 				<td width="10">
 					<div class="btn-group" style="width: 175px;" >
 						<?php

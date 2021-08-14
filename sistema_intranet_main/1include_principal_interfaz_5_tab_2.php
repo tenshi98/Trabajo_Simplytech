@@ -479,7 +479,9 @@ array_push( $arrMediciones,$row );
 							redFrom: 16,
 							redTo: 100,
 							majorTicks: ["0","10","20","30","40","50", "60", "70", "80", "90", "100"],
-							minorTicks: 5
+							minorTicks: 5,
+							min:0,
+							max:100
 						};
 						//Formateo
 						/*var formatCalibracion = new google.visualization.NumberFormat({

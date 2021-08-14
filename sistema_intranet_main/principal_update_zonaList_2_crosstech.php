@@ -92,6 +92,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 $arrEquipo = array();
 $query = "SELECT 
 telemetria_listado.idTelemetria, 
+telemetria_listado.idTelemetria AS ID, 
 telemetria_listado.Nombre, 
 telemetria_listado.Identificador, 
 telemetria_listado.LastUpdateFecha,
@@ -104,7 +105,8 @@ telemetria_listado.TiempoFueraLinea,
 telemetria_listado.GeoErrores,
 telemetria_listado.NErrores,
 telemetria_listado.SensorActivacionID, 
-telemetria_listado.SensorActivacionValor
+telemetria_listado.SensorActivacionValor,
+(SELECT Helada FROM telemetria_listado_aux_equipo WHERE idTelemetria = ID ORDER BY idAuxiliar DESC LIMIT 1) AS TempProyectada
 
 ".$subquery."
 	
@@ -144,7 +146,7 @@ array_push( $arrEquipo,$row );
 <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 	<thead>
 		<tr role="row">
-			<th colspan="3">
+			<th colspan="8">
 				<div class="field">
 					<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >
 						<option value="9999" <?php if($idZona==9999){ echo 'selected="selected"';} ?>>Todas las Zonas</option>
@@ -160,7 +162,17 @@ array_push( $arrEquipo,$row );
 				</div>
 			</th>
 		</tr>
-		<?php echo widget_sherlock(1, 3); ?>
+		<?php echo widget_sherlock(1, 8); ?>
+		<tr role="row">
+			<th></th>
+			<th>Equipo</th>
+			<th>Temp.</th>
+			<th>Temp. Proyect.</th>
+			<th>Hum.</th>
+			<th>P. Rocio</th>
+			<th>Presion</th>
+			<th></th>
+		</tr>
 	</thead>
 	<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 		<?php 
@@ -292,11 +304,16 @@ array_push( $arrEquipo,$row );
 					echo $data['Nombre'];?><br/>
 					<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];?>
 				</td>
+				<td><?php echo cantidades($data['SensoresMedActual_1'], 1); ?>°C</td>
+				<td><?php echo cantidades($data['TempProyectada'], 1); ?>°C</td>
+				<td><?php echo cantidades($data['SensoresMedActual_2'], 0); ?>%</td>
+				<td><?php echo cantidades($data['SensoresMedActual_3'], 0); ?>°C</td>
+				<td><?php echo cantidades($data['SensoresMedActual_4'], 0); ?> hPa</td>
 				<td width="10">
 					<div class="btn-group" style="width: <?php echo $eq_act_med; ?>px;" >
 						<?php echo $eq_act_btn; ?>
+						<a href="view_crosstech_tel_data.php?idTelemetria=<?php echo simpleEncode($data['idTelemetria'], fecha_actual());?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud'];?>', '<?php echo $data['GeoLongitud'];?>', '<?php echo $nicon;?>')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-						<a href="view_crosstech_tel_data.php?idTelemetria=<?php echo simpleEncode($data['idTelemetria'], fecha_actual());?>" title="Ver Informacion" class="iframe btn btn-default btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 					</div>
 				</td>
 			</tr>

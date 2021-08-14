@@ -33,6 +33,8 @@ if (validarNumero($_GET['view'])){
 } else { 
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
+//Equipo
+$idTelemetria   = simpleDecode($_GET['idTelemetria'], fecha_actual());
 /**************************************************************/
 //Se definen las variables de tiempo
 $HoraActual   = hora_actual();
@@ -51,9 +53,10 @@ if($HoraActual<$TimeBack){
 $arrHistorial = array();
 $query = "SELECT Hora, HeladaDia, HeladaHora, Temperatura, Helada 
 
-FROM `telemetria_listado_aux` 
+FROM `telemetria_listado_aux_equipo` 
 WHERE (TimeStamp BETWEEN '".$FechaAnterior." ".$HoraAnterior ."' AND '".$FechaActual." ".$HoraActual."')
 AND idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
+AND idTelemetria = ".$idTelemetria ."
 ORDER BY idAuxiliar ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);

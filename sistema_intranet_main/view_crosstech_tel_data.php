@@ -203,10 +203,11 @@ if($in_eq_fueralinea!=0){
 		<div class="tab-content">
 			
 			<div class="">
-				<div class="col-sm-3"><div class="float_table" id="chart_gauge_2" ></div> </div>
-				<div class="col-sm-3"><div class="float_table" id="chart_gauge_3" ></div> </div>
-				<div class="col-sm-3"><div class="float_table" id="chart_gauge_1" ></div> </div>
-				<div class="col-sm-3"><div class="float_table" id="chart_gauge_4" ></div> </div>
+				<div class="col-sm-3"><div class="float_table" id="chart_gauge_2" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 1, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+				<div class="col-sm-3"><div class="float_table" id="chart_gauge_3" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 2, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+				<div class="col-sm-3"><div class="float_table" id="chart_gauge_1" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 3, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+				<div class="col-sm-3"><div class="float_table" id="chart_gauge_4" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 4, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+					
 			</div>
 			<?php
 			
@@ -254,7 +255,7 @@ if($in_eq_fueralinea!=0){
 						<div class="box-header with-border text-center">
 							<h3 class="box-title">Temperatura Proyectada</h3>
 							<div class="box-tools pull-right">
-								<a target="_blank" rel="noopener noreferrer" href="view_crosstech_historial_helada.php" class="btn btn-xs btn-primary btn-line cboxElement">Ver Mas</a>
+								<a target="_blank" rel="noopener noreferrer" href="view_crosstech_historial_helada.php?idTelemetria='.$_GET['idTelemetria'].'" class="btn btn-xs btn-primary btn-line cboxElement">Ver Mas</a>
 							</div>
 						</div>
 						<div class="box-body">
@@ -390,7 +391,9 @@ if($in_eq_fueralinea!=0){
 						width: 300, 
 						height: 150,
 						majorTicks: ["0","10","20","30","40", "50"],
-						minorTicks: 5
+						minorTicks: 5,
+						min:0,
+						max:50
 					};
 					//Formateo
 					var formatRocio = new google.visualization.NumberFormat({
@@ -425,7 +428,9 @@ if($in_eq_fueralinea!=0){
 						width: 300, 
 						height: 150,
 						majorTicks: ["0","10","20","30","40", "50"],
-						minorTicks: 10
+						minorTicks: 10,
+						min:0,
+						max:50
 					};
 					//Formateo
 					var formatTemp = new google.visualization.NumberFormat({
@@ -495,7 +500,9 @@ if($in_eq_fueralinea!=0){
 						width: 300, 
 						height: 150,
 						majorTicks: ["0","200","400","600","800", "1000", "1200", "1400"],
-						minorTicks: 5
+						minorTicks: 5,
+						min:0,
+						max:1400
 					};
 					//Formateo
 					var formatPresion = new google.visualization.NumberFormat({

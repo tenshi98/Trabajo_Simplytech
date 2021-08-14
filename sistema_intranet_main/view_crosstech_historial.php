@@ -23,7 +23,8 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-$X_Type = simpleDecode($_GET['Type'], fecha_actual());
+$X_Type        = simpleDecode($_GET['Type'], fecha_actual());
+$idTelemetria  = simpleDecode($_GET['idTelemetria'], fecha_actual());
 /**************************************************************/
 //Se definen las variables de tiempo
 $HoraActual   = hora_actual();
@@ -45,9 +46,10 @@ switch ($X_Type) {
 $arrHistorial = array();
 $query = "SELECT Fecha, Hora, TimeStamp ".$selected."
 
-FROM `telemetria_listado_aux` 
+FROM `telemetria_listado_aux_equipo` 
 WHERE (TimeStamp BETWEEN '".$FechaAnterior." ".$HoraAnterior ."' AND '".$FechaActual." ".$HoraActual."')
 AND idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
+AND idTelemetria = ".$idTelemetria ."
 ORDER BY idAuxiliar ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);

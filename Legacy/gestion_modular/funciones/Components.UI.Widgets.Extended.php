@@ -2135,7 +2135,7 @@ $GPS .= '
 														$xz = 0;
 														$dataex = '';
 														
-														$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+														$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 														for ($i = 1; $i <= $equip['cantSensores']; $i++) {
 															$xx = $equip['SensoresMedErrores_'.$i] - $equip['SensoresErrorActual_'.$i];
 															if($xx<0){$xy = 1;$eq_ok = '';}
@@ -2590,16 +2590,16 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 								/*******************************************************/
 								//se guardan estados
 								$danger = '';
-								if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
-								if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
-								if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
-								if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
-								if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+								if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido"       class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+								if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas"    class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+								if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta"  class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+								if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0"   class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+								if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea"        class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
 															
 								/*******************************************************/
 								//traspasan los estados
 								if($in_eq_ok==1){
-									$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+									$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 								}else{
 									$eq_ok = $dataex;
 								}
@@ -2633,7 +2633,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 								$xw = 0;
 								$dataex = '';
 											
-								$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+								$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 								for ($i = 1; $i <= $equip['cantSensores']; $i++) {
 									$xx = $equip['SensoresMedErrores_'.$i] - $equip['SensoresErrorActual_'.$i];
 									if($xx<0){$xy = 1;$eq_ok = '';}
@@ -2927,16 +2927,16 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 								/*******************************************************/
 								//se guardan estados
 								$danger = '';
-								if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
-								if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
-								if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
-								if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
-								if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
+								if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido"       class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+								if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas"    class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
+								if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta"  class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
+								if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0"   class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
+								if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea"        class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
 															
 								/*******************************************************/
 								//traspasan los estados
 								if($in_eq_ok==1){
-									$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+									$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 								}else{
 									$eq_ok = $dataex;
 								}
@@ -4348,7 +4348,7 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 										/*******************************************************/
 										//traspasan los estados
 										if($in_eq_ok==1){
-											$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+											$eq_ok_icon = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 										}else{
 											$eq_ok_icon = $dataex;
 										}
@@ -4880,7 +4880,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 										/*******************************************************/
 										//traspasan los estados
 										if($in_eq_ok==1){
-											$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+											$eq_ok_icon = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 										}else{
 											$eq_ok_icon = $dataex;
 										}
@@ -5448,7 +5448,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 												/*******************************************************/
 												//traspasan los estados
 												if($in_eq_ok==1){
-													$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+													$eq_ok_icon = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 												}else{
 													$eq_ok_icon = $dataex;
 												}
@@ -6033,7 +6033,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 												/*******************************************************/
 												//traspasan los estados
 												if($in_eq_ok==1){
-													$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+													$eq_ok_icon = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 												}else{
 													$eq_ok_icon = $dataex;
 												}
@@ -6863,17 +6863,6 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		$eq_fueralinea  = 0;
 		$eq_ok          = 0;
 		
-		//datos temporales para los widgets
-		$Gen_Rocio         = 0;
-		$Gen_Temperatura   = 0;
-		$Gen_Humedad       = 0;
-		$Gen_Presion       = 0;
-		$Total_Rocio       = 0;
-		$Total_Temperatura = 0;
-		$Total_Humedad     = 0;
-		$Total_Presion     = 0;
-		$Count_Data        = 0;
-
 		$google = $IDGoogle;
 			
 		//Variable
@@ -6901,7 +6890,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		}
 		
 		//numero sensores equipo
-		$N_Maximo_Sensores = 20;
+		$N_Maximo_Sensores = 10;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 			$subquery .= ',SensoresMedErrores_'.$i;
@@ -6915,6 +6904,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		$arrEquipo = array();
 		$query = "SELECT 
 		telemetria_listado.idTelemetria, 
+		telemetria_listado.idTelemetria AS ID, 
 		telemetria_listado.Nombre, 
 		telemetria_listado.Identificador, 
 		telemetria_listado.LastUpdateFecha,
@@ -6926,8 +6916,8 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		telemetria_listado.NErrores, 
 		telemetria_listado.id_Sensores,
 		telemetria_listado.SensorActivacionID, 
-		telemetria_listado.SensorActivacionValor
-		
+		telemetria_listado.SensorActivacionValor,
+		(SELECT Helada FROM telemetria_listado_aux_equipo WHERE idTelemetria = ID ORDER BY idAuxiliar DESC LIMIT 1) AS TempProyectada
 		".$subquery."
 	
 		FROM `telemetria_listado`
@@ -7007,33 +6997,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		$_SESSION['usuario']['zona']['idSistema']      = $idSistema;
 		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
 
-		/*************************************************************/
-		//se traen todas las zonas
-		$query = "SELECT Helada, UnidadesFrio, CrossTech_FechaUnidadFrio,
-		HorasSobreGrados, CrossTech_TempMax, CrossTech_FechaTempMax,
-		Dias_acumulado, Dias_anterior, CrossTech_DiasTempMin,
-		CrossTech_FechaDiasTempMin
-
-		FROM `telemetria_listado_aux` 
-		WHERE idSistema=".$idSistema." 
-		ORDER BY idAuxiliar DESC
-		LIMIT 1";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-							
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-		}
-		$rowAux = mysqli_fetch_assoc ($resultado);
-
-
+				
 		
 		$GPS = '
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
@@ -7049,13 +7013,13 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
 			</header>
 			<div class="table-responsive">
-				<div class="col-sm-4">
+				<div class="col-sm-7">
 					<div class="row">
 						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<thead>
 									<tr role="row">
-										<th colspan="3">
+										<th colspan="8">
 											<div class="field">
 												<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
 													//La opcion todos
@@ -7068,8 +7032,18 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 											</div>
 										</th>
 									</tr>';
-									$GPS .= widget_sherlock(1, 3);
+									$GPS .= widget_sherlock(1, 8);
 									$GPS .= '
+									<tr role="row">
+										<th></th>
+										<th>Equipo</th>
+										<th>Temp.</th>
+										<th>Temp. Proy.</th>
+										<th>Hum.</th>
+										<th>P. Rocio</th>
+										<th>Presion</th>
+										<th></th>
+									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
 									$nicon = 0;
@@ -7141,16 +7115,6 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 										$eq_ok          = $eq_ok + $in_eq_ok;
 										
 										/*******************************************************/
-										//Promedios de widgets
-										//verifico que este midiendo
-										if($in_eq_fueralinea==0){
-											$Total_Temperatura = $Total_Temperatura + $data['SensoresMedActual_1'];
-											$Total_Humedad     = $Total_Humedad + $data['SensoresMedActual_2'];
-											$Total_Rocio       = $Total_Rocio + $data['SensoresMedActual_3'];
-											$Total_Presion     = $Total_Presion + $data['SensoresMedActual_4'];
-											$Count_Data++;
-										}
-										/*******************************************************/
 										//Verifico que este activo si la configuracion esta correcta
 										$eq_act_btn = '';
 										$eq_act_med = 70;
@@ -7170,7 +7134,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 										/*******************************************************/
 										//traspasan los estados
 										if($in_eq_ok==1){
-											$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+											$eq_ok_icon = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 										}else{
 											$eq_ok_icon = $dataex;
 										}
@@ -7182,12 +7146,19 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 											<td>';
 												$GPS .= $data['Nombre'].'<br/>
 												'.fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'].'
-											</td>
+											</td>';
+											$GPS .= '<td>'.cantidades($data['SensoresMedActual_1'], 1).'°C</td>';
+											$GPS .= '<td>'.cantidades($data['TempProyectada'], 1).'°C</td>';
+											$GPS .= '<td>'.cantidades($data['SensoresMedActual_2'], 0).'%</td>';
+											$GPS .= '<td>'.cantidades($data['SensoresMedActual_3'], 0).'°C</td>';
+											$GPS .= '<td>'.cantidades($data['SensoresMedActual_4'], 0).' hPa</td>';
+											
+											$GPS .= '
 											<td width="10">
 												<div class="btn-group" style="width: '.$eq_act_med.'px;" >
 													'.$eq_act_btn.'
+													<a href="view_crosstech_tel_data.php?idTelemetria='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 													<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-													<a href="view_crosstech_tel_data.php?idTelemetria='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-default btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>';
@@ -7199,131 +7170,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-8">
-					<div class="row">
-						<div class="col-sm-3"><div class="float_table" id="chart_gauge_2" ></div> <div class="clearfix"></div><a href="view_crosstech_historial.php?Type='.simpleEncode( 1, fecha_actual()).'" class="iframe btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
-						<div class="col-sm-3"><div class="float_table" id="chart_gauge_3" ></div> <div class="clearfix"></div><a href="view_crosstech_historial.php?Type='.simpleEncode( 2, fecha_actual()).'" class="iframe btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
-						<div class="col-sm-3"><div class="float_table" id="chart_gauge_1" ></div> <div class="clearfix"></div><a href="view_crosstech_historial.php?Type='.simpleEncode( 3, fecha_actual()).'" class="iframe btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
-						<div class="col-sm-3"><div class="float_table" id="chart_gauge_4" ></div> <div class="clearfix"></div><a href="view_crosstech_historial.php?Type='.simpleEncode( 4, fecha_actual()).'" class="iframe btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
-					</div>';
-					
-					//verifico existencia de datos
-					$Helada                       = 0;
-					$UnidadFrio                   = 0;
-					$CrossTech_FechaUnidadFrio    = 0;
-					$HoraSobre                    = 0;
-					$CrossTech_TempMax            = 0;
-					$CrossTech_FechaTempMax       = 0;
-					$Dias_acumulado               = 0;
-					$Dias_anterior                = 0;
-					$CrossTech_DiasTempMin        = 0;
-					$CrossTech_FechaDiasTempMin   = 0;
-					
-					//declaracion
-					if(isset($rowAux['Helada'])&&$rowAux['Helada']!=''){                                          $Helada                       = $rowAux['Helada'];}
-					if(isset($rowAux['UnidadesFrio'])&&$rowAux['UnidadesFrio']!=''){                              $UnidadFrio                   = $rowAux['UnidadesFrio'];}
-					if(isset($rowAux['CrossTech_FechaUnidadFrio'])&&$rowAux['CrossTech_FechaUnidadFrio']!=''){    $CrossTech_FechaUnidadFrio    = $rowAux['CrossTech_FechaUnidadFrio'];}
-					if(isset($rowAux['HorasSobreGrados'])&&$rowAux['HorasSobreGrados']!=''){                      $HoraSobre                    = $rowAux['HorasSobreGrados'];}
-					if(isset($rowAux['CrossTech_TempMax'])&&$rowAux['CrossTech_TempMax']!=''){                    $CrossTech_TempMax            = cantidades($rowAux['CrossTech_TempMax'], 0);}
-					if(isset($rowAux['CrossTech_FechaTempMax'])&&$rowAux['CrossTech_FechaTempMax']!=''){          $CrossTech_FechaTempMax       = $rowAux['CrossTech_FechaTempMax'];}
-					if(isset($rowAux['Dias_acumulado'])&&$rowAux['Dias_acumulado']!=''){                          $Dias_acumulado               = cantidades($rowAux['Dias_acumulado'], 0);}
-					if(isset($rowAux['Dias_anterior'])&&$rowAux['Dias_anterior']!=''){                            $Dias_anterior                = cantidades($rowAux['Dias_anterior'], 0);}
-					if(isset($rowAux['CrossTech_DiasTempMin'])&&$rowAux['CrossTech_DiasTempMin']!=''){            $CrossTech_DiasTempMin        = cantidades($rowAux['CrossTech_DiasTempMin'], 0);}
-					if(isset($rowAux['CrossTech_FechaDiasTempMin'])&&$rowAux['CrossTech_FechaDiasTempMin']!=''){  $CrossTech_FechaDiasTempMin   = $rowAux['CrossTech_FechaDiasTempMin'];}
-					
-					
-					/*
-					$HoraBajo                = 0;
-					$CrossTech_TempMin       = 0;
-					$CrossTech_FechaTempMin  = 0;
-					if(isset($rowAux['HorasBajoGrados'])&&$rowAux['HorasBajoGrados']!=''){                 $HoraBajo                = $rowAux['HorasBajoGrados'];}
-					if(isset($rowAux['CrossTech_TempMin'])&&$rowAux['CrossTech_TempMin']!=''){             $CrossTech_TempMin       = cantidades($rowAux['CrossTech_TempMin'], 0);}
-					if(isset($rowAux['CrossTech_FechaTempMin'])&&$rowAux['CrossTech_FechaTempMin']!=''){   $CrossTech_FechaTempMin  = $rowAux['CrossTech_FechaTempMin'];}
-					*/
-					
-					//Dependiendo del valor de la helada se cambia el icono y el color
-					if($Helada>3){
-						$helIcon = '<span style="color:#00a65a;"><i class="fa fa-thermometer-full" aria-hidden="true"></i></span>';
-					}elseif($Helada<=2.9&&$Helada>=0.1){
-						$helIcon = '<span style="color:#FFCB19;"><i class="fa fa-thermometer-half" aria-hidden="true"></i></span>';
-					}elseif($Helada<0.1){
-						$helIcon = '<span style="color:#d9534f;"><i class="fa fa-thermometer-empty" aria-hidden="true"></i></span>';
-					}
-					
-					$GPS .= '
-					<div class="row">
-						
-						<div class="col-sm-7">
-							<div class="box box-blue box-solid ">
-								<div class="box-header with-border text-center">
-									<h3 class="box-title">Temperatura Proyectada</h3>
-									<div class="box-tools pull-right">
-										<a target="_blank" rel="noopener noreferrer" href="view_crosstech_historial_helada.php" class="iframe btn btn-xs btn-primary btn-line cboxElement">Ver Mas</a>
-									</div>
-								</div>
-								<div class="box-body">
-									<div class="value">
-										<span id="update_text_Helada_icon">'.$helIcon.'</span>
-										<span id="update_text_Helada">'.cantidades($Helada, 1).'</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-5">
-							<div title="Unidades de frio acumuladas de acuerdo a tabla de unidades de frío de la Universidad de Utah-USA (Modelo del Dr. Richardson) desde la fecha '.fecha_estandar($CrossTech_FechaUnidadFrio).'" class="box box-blue box-solid tooltip">
-								<div class="box-header with-border text-center">
-									<h3 class="box-title">Unidades de Frio</h3>
-								</div>
-								<div class="box-body">
-									<div class="value">
-										<span><i class="fa fa-snowflake-o" aria-hidden="true"></i></span>
-										<span id="update_text_UnidadFrio">'.cantidades($UnidadFrio, 0).'</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-					</div>
-					<div class="row">
-						
-						<div class="col-sm-4">
-							<div title="Horas acumuladas sobre '.$CrossTech_TempMax.'°C desde la fecha '.fecha_estandar($CrossTech_FechaTempMax).'" class="box box-blue box-solid tooltip">
-								<div class="box-header with-border text-center">
-									<h3 class="box-title">Horas <i class="fa fa-arrow-up" aria-hidden="true"></i> '.$CrossTech_TempMax.'°C</h3>
-								</div>
-								<div class="box-body">
-									<div class="value">
-										<span><i class="fa fa-sun-o" aria-hidden="true"></i></span>
-										<span id="update_text_HoraSobre">'.cantidades($HoraSobre, 2).'</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						
-						
-						
-						<div class="col-sm-8">
-							<div class="box box-blue box-solid">
-								<div class="box-header with-border text-center">
-									<h3 class="box-title">Dias - Grados C°</h3>
-								</div>
-								<div class="box-body">
-									<div title="Horas de temperaturas sobre '.$CrossTech_DiasTempMin.'°C acumuladas desde el '.fecha_estandar($CrossTech_FechaDiasTempMin).' a la fecha." class="col-sm-6 value tooltip tipnoabs">
-										<span><i class="fa fa-area-chart" aria-hidden="true"></i></span>
-										<span id="update_text_Dias_acumulado">'.cantidades($Dias_acumulado, 0).'</span>
-									</div>
-									<div title="Horas de temperaturas sobre '.$CrossTech_DiasTempMin.'°C de las últimas 24 horas" class="col-sm-6 value tooltip tipnoabs">
-										<span><i class="fa fa-pagelines" aria-hidden="true"></i></span>
-										<span id="update_text_Dias_anterior">'.cantidades($Dias_anterior, 0).'</span>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-							</div>
-						</div>
-			
-					</div>
+				<div class="col-sm-5">
 					<div class="row">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<div id="consulta"></div>
@@ -7346,214 +7193,6 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 </style>		
 	
 <script>
-	/* ************************************************************************** */
-	//Variables globales
-	var chart_gauge_1                 = "";
-	var chart_gauge_2                 = "";
-	var chart_gauge_3                 = "";
-	var chart_gauge_4                 = "";
-	
-	var data_gauge_1                  = "";
-	var data_gauge_2                  = "";
-	var data_gauge_3                  = "";
-	var data_gauge_4                  = "";
-	
-	var options_gauge_1               = "";
-	var options_gauge_2               = "";
-	var options_gauge_3               = "";
-	var options_gauge_4               = "";
-	
-	//carga de los graficos
-	google.charts.setOnLoadCallback(Chart_correccion_1);
-	google.charts.setOnLoadCallback(Chart_correccion_2);
-	google.charts.setOnLoadCallback(Chart_correccion_3);
-	google.charts.setOnLoadCallback(Chart_correccion_4);
-	';
-	/* ************************************************************************** */
-	//Calculos
-	if($Count_Data!=0){
-		$Gen_Temperatura   = Cantidades(($Total_Temperatura / $Count_Data), 2);
-		$Gen_Humedad       = Cantidades(($Total_Humedad / $Count_Data), 2);
-		$Gen_Rocio         = Cantidades(($Total_Rocio / $Count_Data), 2);
-		$Gen_Presion       = Cantidades(($Total_Presion / $Count_Data), 0);
-	}
-	
-	$GPS .= '
-	/* ************************************************************************** */
-	//Punto Rocio
-	function Chart_correccion_1() {
-		var data_correccion_rows_1 = '.str_replace(",", ".",$Gen_Rocio).';
-		//se llama funcion de dibujo
-		draw_correccion_1(data_correccion_rows_1);
-	}
-	//Temperatura
-	function Chart_correccion_2() {
-		var data_correccion_rows_2 = '.str_replace(",", ".",$Gen_Temperatura).';
-		//se llama funcion de dibujo
-		draw_correccion_2(data_correccion_rows_2);
-	}
-	//Humedad
-	function Chart_correccion_3() {
-		var data_correccion_rows_3 = '.str_replace(",", ".",$Gen_Humedad).';
-		//se llama funcion de dibujo
-		draw_correccion_3(data_correccion_rows_3);
-	}
-	//Presion Atmos
-	function Chart_correccion_4() {
-		var data_correccion_rows_4 = '.str_replace(",", ".",$Gen_Presion).';
-		//se llama funcion de dibujo
-		draw_correccion_4(data_correccion_rows_4);
-	}
-	/********************************************************************/
-	//Punto Rocio
-	function draw_correccion_1(data) {
-		//datos
-		data_gauge_1 = google.visualization.arrayToDataTable([
-			["Label", "Valor"],
-			["Pr", data]
-		]);
-		//opciones
-		options_gauge_1 = {
-			min:-10,
-			max:50,
-			width: 300, 
-			height: 150,
-			majorTicks: ["-10","0","10","20","30","40", "50"],
-			minorTicks: 10
-		};
-		//Formateo
-		var formatRocio = new google.visualization.NumberFormat({
-			suffix: \'°C\',
-			fractionDigits: 1
-		});
-		formatRocio.format(data_gauge_1, 1);
-		//dibujo
-		chart_gauge_1 = new google.visualization.Gauge(document.getElementById("chart_gauge_1"));
-		chart_gauge_1.draw(data_gauge_1, options_gauge_1);
-	}
-	function update_correccion_1(data) {
-		//Formateo
-		var formatRocio = new google.visualization.NumberFormat({
-			suffix: \'°C\',
-			fractionDigits: 1
-		});
-		data_gauge_1.setValue(0, 1, data);
-		formatRocio.format(data_gauge_1, 1);
-		chart_gauge_1.draw(data_gauge_1, options_gauge_1);
-	}
-    /*******************************************************/
-	//Temperatura
-	function draw_correccion_2(data) {
-		//datos
-		data_gauge_2 = google.visualization.arrayToDataTable([
-			["Label", "Valor"],
-			["Temp", data]
-		]);
-		//opciones
-		options_gauge_2 = {
-			min:-20,
-			max:50,
-			width: 300, 
-			height: 150,
-			majorTicks: ["-20","-10","0","10","20","30","40", "50"],
-			minorTicks: 10
-		};
-		//Formateo
-		var formatTemp = new google.visualization.NumberFormat({
-			suffix: \'°C\',
-			fractionDigits: 1
-		});
-		formatTemp.format(data_gauge_2, 1);
-		//dibujo
-		chart_gauge_2 = new google.visualization.Gauge(document.getElementById("chart_gauge_2"));
-		chart_gauge_2.draw(data_gauge_2, options_gauge_2);
-		
-	}
-	function update_correccion_2(data) {
-		//Formateo
-		var formatTemp = new google.visualization.NumberFormat({
-			suffix: \'°C\',
-			fractionDigits: 1
-		});
-		data_gauge_2.setValue(0, 1, data);
-		formatTemp.format(data_gauge_2, 1);
-		chart_gauge_2.draw(data_gauge_2, options_gauge_2);
-	}
-    /*******************************************************/
-	//Humedad
-	function draw_correccion_3(data) {
-		//datos
-		data_gauge_3 = google.visualization.arrayToDataTable([
-			["Label", "Valor"],
-			["Humedad", data]
-		]);
-		//opciones
-		options_gauge_3 = {
-			min:0,
-			max:100,
-			width: 300, 
-			height: 150,
-			majorTicks: ["0","20","40","60","80","100"],
-			minorTicks: 5
-		};
-		//Formateo
-		var formatHumid = new google.visualization.NumberFormat({
-			suffix: \'%\',
-			fractionDigits: 1
-		});
-		formatHumid.format(data_gauge_3, 1);
-		//dibujo
-		chart_gauge_3 = new google.visualization.Gauge(document.getElementById("chart_gauge_3"));
-		chart_gauge_3.draw(data_gauge_3, options_gauge_3);
-	}
-	function update_correccion_3(data) {
-		//Formateo
-		var formatHumid = new google.visualization.NumberFormat({
-			suffix: \'%\',
-			fractionDigits: 1
-		});
-		data_gauge_3.setValue(0, 1, data);
-		formatHumid.format(data_gauge_3, 1);
-		chart_gauge_3.draw(data_gauge_3, options_gauge_3);
-	}
-    /*******************************************************/
-	//Presion Atmos
-	function draw_correccion_4(data) {
-		//datos
-		data_gauge_4 = google.visualization.arrayToDataTable([
-			["Label", "Valor"],
-			["Pb", data]
-		]);
-		//opciones
-		options_gauge_4 = {
-			min:0,
-			max:1400,
-			width: 300, 
-			height: 150,
-			majorTicks: ["0","200","400","600","800", "1000", "1200", "1400"],
-			minorTicks: 5
-		};
-		//Formateo
-		var formatPresion = new google.visualization.NumberFormat({
-			suffix: \'hPa\',
-			fractionDigits: 0
-		});
-		formatPresion.format(data_gauge_4, 1);
-		//dibujo
-		chart_gauge_4 = new google.visualization.Gauge(document.getElementById("chart_gauge_4"));
-		chart_gauge_4.draw(data_gauge_4, options_gauge_4);
-	}
-	function update_correccion_4(data) {
-		//Formateo
-		var formatPresion = new google.visualization.NumberFormat({
-			suffix: \'hPa\',
-			fractionDigits: 0
-		});
-		data_gauge_4.setValue(0, 1, data);
-		formatPresion.format(data_gauge_4, 1);
-		chart_gauge_4.draw(data_gauge_4, options_gauge_4);
-	}
-    
 	
 	/* ************************************************************************** */
 	/* ************************************************************************** */
@@ -7580,8 +7219,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		//colorear el seleccionado
 		markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 	}
-
-
+	
 	/* ************************************************************************** */
 	function initialize() {
 		var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
@@ -7703,20 +7341,6 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 				setMarkers(map, new_locations, 2);											
 				//actualizo la hora de actualizacion
 				document.getElementById(\'update_text_HoraRefresco\').innerHTML=\'Hora Refresco: \'+HoraRefresco;					
-				//Actualizo widget
-				update_correccion_1(Gen_Rocio); //Punto Rocio
-				update_correccion_2(Gen_Temperatura);//Temperatura
-				update_correccion_3(Gen_Humedad);//Humedad
-				update_correccion_4(Gen_Presion);//Presion Atmos
-				//se actualizan los otros widgets
-				document.getElementById(\'update_text_Helada\').innerHTML=Dat_Helada;	
-				//document.getElementById(\'update_text_HoraBajo\').innerHTML=Dat_HoraBajo;					
-				document.getElementById(\'update_text_HoraSobre\').innerHTML=Dat_HoraSobre;					
-				document.getElementById(\'update_text_UnidadFrio\').innerHTML=Dat_UnidadFrio;					
-				document.getElementById(\'update_text_Helada_icon\').innerHTML=helIcon;					
-				document.getElementById(\'update_text_Dias_acumulado\').innerHTML=Dat_Dias_acumulado;					
-				document.getElementById(\'update_text_Dias_anterior\').innerHTML=Dat_Dias_anterior;					
-				
 				
 				break;		
 		}
@@ -7748,11 +7372,6 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
         markers = [];
     }
 
-
-	
-	
-	
-	
 	
 	/* ************************************************************************** */
 	google.maps.event.addDomListener(window, "load", initialize());
@@ -7801,6 +7420,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 
 	}
 }
+
 /*******************************************************************************************************************/
 //Muestra la gestion de equipos decrosscrane
 function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $idUsuario, $SegActual, $dbConn){
@@ -8053,7 +7673,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			/*******************************************************/
 			//traspasan los estados
 			if($in_eq_ok==1){
-				$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+				$eq_ok_icon = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 			}else{
 				$eq_ok_icon = $dataex;
 			}
@@ -8094,6 +7714,16 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			$arrGruas[$xdanger][$data['idTelemetria']]['status_icon']  = $status_icon;
 			$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']       = $data['Nombre'];
 			$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']   = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
+			if(isset($data['SensoresMedActual_37'])&&$data['SensoresMedActual_37']!=''&&$data['SensoresMedActual_37']!=0&&$data['SensoresMedActual_37']!=99900){
+				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).$arrFinalUnimed[$data['SensoresUniMed_37']];
+			}else{
+				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0'.$arrFinalUnimed[$data['SensoresUniMed_37']];
+			}
+			if(isset($data['SensoresMedActual_39'])&&$data['SensoresMedActual_39']!=''&&$data['SensoresMedActual_39']!=0){
+				$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).$arrFinalUnimed[$data['SensoresUniMed_39']];
+			}else{
+				$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = 'N/A';
+			}
 			//si tiene los permisos
 			if(isset($prm_xa)&&$prm_xa==1){												
 				switch ($in_sens_activ) {
@@ -8196,13 +7826,13 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
 			</header>
 			<div class="table-responsive">
-				<div class="col-sm-6">
+				<div class="col-sm-7">
 					<div class="row">
 						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<thead>
 									<tr role="row">
-										<th colspan="3">
+										<th colspan="5">
 											<div class="field">
 												<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
 													//La opcion todos
@@ -8215,8 +7845,15 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 											</div>
 										</th>
 									</tr>';
-									$GPS .= widget_sherlock(1, 3);
+									$GPS .= widget_sherlock(1, 5);
 									$GPS .= '
+									<tr role="row">
+										<th></th>
+										<th>Equipo</th>
+										<th>Voltaje</th>
+										<th>Viento</th>
+										<th>Acciones</th>
+									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
 									
@@ -8234,6 +7871,8 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 													'.$grua['Nombre'].'<br/>
 													'.$grua['LastUpdate'].'
 												</td>
+												<td>'.$grua['Voltaje'].'</td>
+												<td>'.$grua['Viento'].'</td>
 												<td width="10">
 													<div class="btn-group" style="width: 175px;" >';
 														$GPS .= $grua['in_sens_activ'];
@@ -8262,6 +7901,8 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 													'.$grua['Nombre'].'<br/>
 													'.$grua['LastUpdate'].'
 												</td>
+												<td>'.$grua['Voltaje'].'</td>
+												<td>'.$grua['Viento'].'</td>
 												<td width="10">
 													<div class="btn-group" style="width: 175px;" >';
 														$GPS .= $grua['in_sens_activ'];
@@ -8290,6 +7931,8 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 													'.$grua['Nombre'].'<br/>
 													'.$grua['LastUpdate'].'
 												</td>
+												<td>'.$grua['Voltaje'].'</td>
+												<td>'.$grua['Viento'].'</td>
 												<td width="10">
 													<div class="btn-group" style="width: 175px;" >';
 														$GPS .= $grua['in_sens_activ'];
@@ -8311,7 +7954,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-5">
 					<div class="row">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<div id="consulta"></div>
@@ -9271,7 +8914,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 			/*******************************************************/
 			//traspasan los estados
 			if($in_eq_ok==1){
-				$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+				$eq_ok_icon = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 			}else{
 				$eq_ok_icon = $dataex;
 			}
