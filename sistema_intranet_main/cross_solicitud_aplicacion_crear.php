@@ -180,7 +180,10 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['clone_idSolicitud']) ) { 
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 2, $dbConn);	
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
+//Busco los datos
+$rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_programacion_fin, horaProg_fin', 'cross_solicitud_aplicacion_listado', '', 'idSolicitud = '.$_GET['clone_idSolicitud'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
+					
 ?>
 								
 <div class="col-sm-8 fcenter">
@@ -194,11 +197,11 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($NSolicitud)) {           $x1 = $NSolicitud;           }else{$x1 = '';}
-				if(isset($f_programacion)) {       $x2 = $f_programacion;       }else{$x2 = '';}
-				if(isset($horaProg)) {             $x3 = $horaProg;             }else{$x3 = '';}
-				if(isset($f_programacion_fin)) {   $x4 = $f_programacion_fin;   }else{$x4 = '';}
-				if(isset($horaProg_fin)) {         $x5 = $horaProg_fin;         }else{$x5 = '';}
+				if(isset($NSolicitud)) {           $x1 = $NSolicitud;           }else{$x1 = $rowData['NSolicitud'];}
+				if(isset($f_programacion)) {       $x2 = $f_programacion;       }else{$x2 = $rowData['f_programacion'];}
+				if(isset($horaProg)) {             $x3 = $horaProg;             }else{$x3 = $rowData['horaProg'];}
+				if(isset($f_programacion_fin)) {   $x4 = $f_programacion_fin;   }else{$x4 = $rowData['f_programacion_fin'];}
+				if(isset($horaProg_fin)) {         $x5 = $horaProg_fin;         }else{$x5 = $rowData['horaProg_fin'];}
 				if(isset($Observaciones)) {        $x6 = $Observaciones;        }else{$x6 = '';}
 				
 				//se dibujan los inputs
@@ -217,6 +220,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['clone_idSolicitud'], 2);
+				$Form_Inputs->form_input_hidden('NSolicitudOld', $rowData['NSolicitud'], 2);
 				?> 
 				
 				<div class="form-group">
@@ -1539,8 +1543,8 @@ foreach ($arrPermisos as $prod) {
 								?>
 								
 								<tr class="item-row linea_punteada">
-									<td class="item-name" colspan="4"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo '<strong>Tractor: </strong>'.$tract['Vehiculo'];?></td>
-									<td class="item-name" colspan="2"><?php echo '<strong>Equipo Aplicación: </strong>'.$tract['Telemetria'];?></td>
+									<td class="item-name" colspan="2"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo '<strong>Tractor: </strong>'.$tract['Telemetria'];?></td>
+									<td class="item-name" colspan="4"><?php echo '<strong>Equipo Aplicación: </strong>'.$tract['Vehiculo'];?></td>
 									<td class="item-name" colspan="2"><?php echo '<strong>Trabajador: </strong>'.$tract['Trabajador'];?></td>
 									<td>
 										<div class="btn-group" style="width: 70px;" >

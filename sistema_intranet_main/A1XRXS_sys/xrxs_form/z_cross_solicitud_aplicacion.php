@@ -63,6 +63,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Nombre_cuartel']) )       $Nombre_cuartel          = $_POST['Nombre_cuartel'];
 	if ( !empty($_POST['ID_cuartel']) )           $ID_cuartel              = $_POST['ID_cuartel'];
 	if ( !empty($_POST['NSolicitud']) )           $NSolicitud              = $_POST['NSolicitud'];
+	if ( !empty($_POST['NSolicitudOld']) )        $NSolicitudOld           = $_POST['NSolicitudOld'];
 	
 
 	
@@ -151,6 +152,7 @@ require_once '0_validate_user_1.php';
 			case 'Creacion_fecha':        if(empty($Creacion_fecha)){         $error['Creacion_fecha']          = 'error/No ha ingresado la fecha de creacion';}break;
 			case 'idDosificador':         if(empty($idDosificador)){          $error['idDosificador']           = 'error/No ha seleccionado al dosificador';}break;
 			case 'NSolicitud':            if(empty($NSolicitud)){             $error['NSolicitud']              = 'error/No ha ingresado el numero de solicitud';}break;
+			case 'NSolicitudOld':         if(empty($NSolicitudOld)){          $error['NSolicitudOld']           = 'error/No ha ingresado el numero de solicitud';}break;
 			
 			
 			case 'idZona':                if(empty($idZona)){                 $error['idZona']                  = 'error/No ha seleccionado el cuartel';}break;
@@ -3183,6 +3185,13 @@ require_once '0_validate_user_1.php';
 			
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			/*******************************************************************/
+			//generacion de errores
+			if($NSolicitud == $NSolicitudOld) {$error['ndata_1'] = 'error/El numero de solicitud es el mismo que el de la solicitud clonada, favor ingresar uno nuevo';}
+			/*******************************************************************/
+			
+			
 			
 			if ( empty($error) ) {
 
