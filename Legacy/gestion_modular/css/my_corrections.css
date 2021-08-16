@@ -64,7 +64,12 @@ td .checkbox{margin-top: 0px;margin-bottom: 0px;}
 .media-object-vmove {display: inline;margin-bottom: 0px !important;width: 30px!important;height: auto!important;margin-right:5px!important;border-radius: 50%!important;padding: 0px!important;border: 1px solid #DC4F21;}
 .navbar-nav .dropdown-toggle {padding-top: 10px!important;padding-bottom: 15px;}
 .dropdown-menu-vmove {right: 0!important;left: initial!important;float: right!important;}
-
+.form-horizontal .form-group input{margin-right: 15px !important;}
+[required] {background:url(../img/required.png) no-repeat 5px center;background-color: #fff !important;}
+textarea {resize:none !important;	}
+textarea:required{background:url(../img/required.png) no-repeat 5px 10px !important;background-color: #fff !important;	}	
+input:required:valid , select:valid, textarea:valid{background:url() no-repeat left center !important; background-color: #fff !important;}
+.form-control , .chosen-single{padding-top: 6px;padding-right: 12px;padding-bottom: 6px;padding-left: 25px !important;} 
 @media (max-width:768px){
 	.navbar-nav{display: inline !important;}
 	.container_box {right: 70px !important;}
