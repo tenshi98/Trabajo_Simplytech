@@ -613,8 +613,8 @@ array_push( $arrHistorial,$row );
 							?>
 							
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo $tract['VehiculoNombre'];?></td>
-								<td class="item-name"><?php echo $tract['TelemetriaNombre'];?></td>
+								<td class="item-name"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo $tract['TelemetriaNombre'];?></td>
+								<td class="item-name"><?php echo $tract['VehiculoNombre'];?></td>
 								<td class="item-name"><?php echo $tract['Rut'].' '.$tract['Nombre'].' '.$tract['ApellidoPat'];?></td>
 								<td class="item-name"><?php echo $tract['Contratista'];?></td>
 								<td class="item-name"><?php echo Cantidades_decimales_justos($tract['TelemetriaCapacidad']);?></td>

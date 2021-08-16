@@ -1549,8 +1549,8 @@ array_push( $arrMateriales,$row );
 								foreach ($arrTrac[$cuartel['idCuarteles']] as $tract){?>
 									
 									<tr class="item-row linea_punteada">
-										<td class="item-name" colspan="4"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo '<strong>Tractor: </strong>'.$tract['VehiculoNombre'];?></td>
-										<td class="item-name" colspan="2"><?php echo '<strong>Equipo Aplicación: </strong>'.$tract['Nombre'];?></td>
+										<td class="item-name" colspan="2"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo '<strong>Tractor: </strong>'.$tract['Nombre'];?></td>
+										<td class="item-name" colspan="4"><?php echo '<strong>Equipo Aplicación: </strong>'.$tract['VehiculoNombre'];?></td>
 										<td class="item-name" colspan="2"><?php echo '<strong>Trabajador: </strong>'.$tract['Trabajador'];?></td>
 										<td>
 											<div class="btn-group" style="width: 70px;" >
