@@ -140,6 +140,27 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){?>
 			
 		</ul>
 	</li>
+	
+	<li class="">
+		<a href="javascript:;">
+			<i class="fa fa-cogs" aria-hidden="true"></i><span class="link-title"> Core - Recursos</span> 
+			<i class="fa fa-angle-right fright margin_width" aria-hidden="true"></i> 
+		</a>  
+		<ul>
+			<li><a href="core_recursos_bgcolor.php">      <i class="fa fa-cogs" aria-hidden="true"></i> Background Color</a></li>
+			<li><a href="core_recursos_bgimage.php">      <i class="fa fa-cogs" aria-hidden="true"></i> Background Image</a></li>
+			<li><a href="core_recursos_button.php">       <i class="fa fa-cogs" aria-hidden="true"></i> Buttons</a></li>
+			<li><a href="core_recursos_fonts.php">        <i class="fa fa-cogs" aria-hidden="true"></i> Iconos</a></li>
+			<li><a href="core_recursos_pricing.php">      <i class="fa fa-cogs" aria-hidden="true"></i> Pricing Table</a></li>
+			<li><a href="core_recursos_progress.php">     <i class="fa fa-cogs" aria-hidden="true"></i> Progress</a></li>
+			<li><a href="core_recursos_typography.php">   <i class="fa fa-cogs" aria-hidden="true"></i> Typography</a></li>
+			
+			
+			
+			
+			
+		</ul>
+	</li>
 			      
 
 <?php }?>                             

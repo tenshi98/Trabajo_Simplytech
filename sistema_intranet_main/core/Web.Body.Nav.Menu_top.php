@@ -111,6 +111,20 @@ echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
 				
 			</ul>
 		</li>';
+		
+		echo '<li class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Core - Recursos <i class="fa fa-angle-down" aria-hidden="true"></i></a> 
+			<ul class="dropdown-menu">
+				<li><a href="core_recursos_bgcolor.php">      <i class="fa fa-cogs" aria-hidden="true"></i> Background Color</a></li>
+				<li><a href="core_recursos_bgimage.php">      <i class="fa fa-cogs" aria-hidden="true"></i> Background Image</a></li>
+				<li><a href="core_recursos_button.php">       <i class="fa fa-cogs" aria-hidden="true"></i> Buttons</a></li>
+				<li><a href="core_recursos_fonts.php">        <i class="fa fa-cogs" aria-hidden="true"></i> Iconos</a></li>
+				<li><a href="core_recursos_pricing.php">      <i class="fa fa-cogs" aria-hidden="true"></i> Pricing Table</a></li>
+				<li><a href="core_recursos_progress.php">     <i class="fa fa-cogs" aria-hidden="true"></i> Progress</a></li>
+				<li><a href="core_recursos_typography.php">   <i class="fa fa-cogs" aria-hidden="true"></i> Typography</a></li>
+				
+			</ul>
+		</li>';
 	}                          
 	echo '</ul>'; 
               
