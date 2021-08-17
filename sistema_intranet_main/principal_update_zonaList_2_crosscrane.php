@@ -42,49 +42,12 @@ if(isset($_GET['idZona'])&&$_GET['idZona']!=''){
 	$idZona  = $_SESSION['usuario']['zona']['idZona'];
 }
 
-
+/************************************************/
 //se traen todas las zonas
 $arrZonas = array();
-$query = "SELECT idZona, Nombre
-FROM `telemetria_zonas` ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+$arrZonas = db_select_array (false, 'idZona, Nombre', 'vehiculos_zonas', '', '', 'idZona ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
 	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrZonas,$row );
-}
-
-/************************************************************************/		
-//Variable
-$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
-//solo los equipos que tengan el seguimiento activado
-$z .= " AND telemetria_listado.id_Geo = ".$id_Geo;
-//Filtro el sistema al cual pertenece	
-if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
-}
-//Verifico el tipo de usuario que esta ingresando y el id
-$join = "";	
-if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
-}
-//filtro la zona
-if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
-	$z .= " AND telemetria_listado.idZona = ".$idZona;
-}
-//Solo para plataforma CrossTech
-$z .= " AND telemetria_listado.idTab=6";//CrossCrane
-		
+/************************************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
@@ -94,8 +57,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 }	
 //Listar los equipos
-$arrEquipo = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado.idTelemetria, 
 telemetria_listado.Nombre, 
 telemetria_listado.Identificador, 
@@ -108,29 +70,27 @@ telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
 telemetria_listado.NAlertas, 
 telemetria_listado.SensorActivacionID, 
-telemetria_listado.SensorActivacionValor
-
-".$subquery."
-	
-FROM `telemetria_listado`
-".$join."
-".$z."
-ORDER BY telemetria_listado.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-							
+telemetria_listado.SensorActivacionValor'.$subquery;
+$SIS_join  = '';
+$SIS_where = 'telemetria_listado.idEstado = 1';           //solo equipos activos
+$SIS_where.= 'AND telemetria_listado.id_Geo = '.$id_Geo;  //solo los equipos que tengan el seguimiento activado
+$SIS_where.= 'AND telemetria_listado.idTab = 6';          //CrossCrane
+//Filtro el sistema al cual pertenece
+if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){ $SIS_where.= 'AND telemetria_listado.idSistema = '.$idSistema;}
+//Filtro la zona si existe
+if(isset($idZona)&&$idZona!=''&&$idZona!=9999){       $SIS_where.= 'AND telemetria_listado.idZona = '.$idZona;}
+//Filtro por el tipo de usuario
+if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	$SIS_join .= 'INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria';	
+	$SIS_where.= 'AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario; 	
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEquipo,$row );
-}
+$SIS_order = 'telemetria_listado.Nombre ASC';
+//Realizo la consulta
+$arrEquipo = array();
+$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
+
+
+
 /**************************************************************************/
 //variables
 $HoraSistema    = hora_actual(); 
@@ -369,6 +329,18 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 ?>
 
 <script>
+	<!--
+	$(document).ready(function() {
+		$('.tooltip').tooltipster({
+			animation: 'grow',
+			delay: 130,
+			maxWidth: 300
+		});
+	});
+	//-->
+</script>
+
+<script>
 	//se actualizan los widgets superiores
 	document.getElementById('updt_Count_Alerta').innerHTML=<?php echo $Count_Alerta; ?>;
 	document.getElementById('updt_Count_FueraLinea').innerHTML=<?php echo $Count_FueraLinea; ?>;
@@ -408,6 +380,8 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 	<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 		
 		<?php 
+		/*************************************************************/
+		//Alertas
 		if($arrGruas[2]){
 			foreach ( $arrGruas[2] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
@@ -432,9 +406,9 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 				</td>
 			</tr>
 		<?php }
-		} ?> 
-		
-		<?php 
+		} 
+		/*************************************************************/
+		//Ok
 		if($arrGruas[1]){
 			foreach ( $arrGruas[1] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
@@ -459,9 +433,9 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 				</td>
 			</tr>
 		<?php }
-		} ?>
-		
-		<?php 
+		} 
+		/*************************************************************/
+		//Fuera de linea
 		if($arrGruas[3]){
 			foreach ( $arrGruas[3] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">

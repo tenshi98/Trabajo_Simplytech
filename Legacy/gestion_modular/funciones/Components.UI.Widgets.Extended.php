@@ -571,37 +571,20 @@ function widget_bodega($titulo,
 	// Se trae un listado con los valores de las existencias actuales
 	$año_pasado = ano_actual()-1;
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-		$z = "WHERE idSistema>=0";
-		$z.= " AND Creacion_ano >= ".$año_pasado;
+		$z = "idSistema>=0 AND Creacion_ano >= ".$año_pasado;
 	}else{
-		$z = "WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
-		$z.= " AND Creacion_ano >= ".$año_pasado;
+		$z = "idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."' AND Creacion_ano >= ".$año_pasado;
 	}
-	//se consulta
+	
+	$SIS_query = 'Creacion_ano,Creacion_mes,idTipo,SUM(ValorTotal) AS Valor';
+	$SIS_join  = $join_1;
+	$SIS_where = $z.$where_1.'GROUP BY Creacion_ano,Creacion_mes,idTipo';
+	$SIS_order = 'Creacion_ano ASC, Creacion_mes ASC';	
+
 	$arrExistencias = array();
-	$query = "SELECT Creacion_ano,Creacion_mes,idTipo,SUM(ValorTotal) AS Valor
-	FROM `".$bodega_existencia."`
-	".$join_1."
-	".$z."
-	".$where_1."
-	GROUP BY Creacion_ano,Creacion_mes,idTipo
-	ORDER BY Creacion_ano ASC, Creacion_mes ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-					
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrExistencias,$row );
-	}
+	$arrExistencias = db_select_array (false, $SIS_query, $bodega_existencia, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrExistencias');
+												
+	
 	
 	/***********************************************************/
 	//Se verifica si existe tabla relacionada a los permisos
@@ -6012,13 +5995,6 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 												/*******************************************************/
 												//se guardan estados
 												$danger = '';
-												/*if($in_eq_detenidos>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
-												if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
-												if($in_eq_fueraruta>0){  $danger = 'success';  $dataex = '<a href="#" title="Equipo fuera de ruta" class="btn btn-danger btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
-												if($in_eq_gps_fuera>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo con GPS en 0" class="btn btn-danger btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
-												if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
-												*/
-												
 												if($in_eq_detenidos>0){  $danger = '';         $dataex = '<a href="#" title="Equipo Detenido"           class="btn btn-success btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
 												if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas"        class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
 												if($in_eq_fueraruta>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo fuera de ruta"      class="btn btn-warning btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
@@ -6067,7 +6043,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 														<td>'.Cantidades($data['GeoVelocidad'], 0).' km</td>
 														<td>'.$xdata_3.' %</td>
 														<td>'.$xdata_1.' l/min</td>
-														<td>'.$xdata_2.'l/min</td>';
+														<td>'.$xdata_2.' l/min</td>';
 													}else{
 														$GPS .= '
 														<td colspan="5">
