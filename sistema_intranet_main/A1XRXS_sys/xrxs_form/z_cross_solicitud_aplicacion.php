@@ -1791,7 +1791,7 @@ require_once '0_validate_user_1.php';
 						//En base al estado se hacen las consultas
 						$transaccion = 'cross_solicitud_aplicacion_ejecutar.php';
 						$xbody = '
-						<h3>Se ha creado la solicitud N° '.n_doc($ultimo_id, 5).'</h3>
+						<h3>Se ha creado la solicitud N° '.n_doc($_SESSION['sol_apli_basicos']['NSolicitud'], 5).'</h3>
 						<p>Se ha cambiado el estado a Programado en la siguiente solicitud</p>
 						<a href="'.DB_SITE_MAIN.'/view_solicitud_aplicacion.php?view='.simpleEncode($ultimo_id, fecha_actual()).'">Ver Aqui</a>';
 						
@@ -3482,7 +3482,7 @@ require_once '0_validate_user_1.php';
 						//En base al estado se hacen las consultas
 						$transaccion = 'cross_solicitud_aplicacion_ejecutar.php';
 						$xbody = '
-						<h3>Se ha creado la solicitud N° '.n_doc($ultimo_id, 5).'</h3>
+						<h3>Se ha creado la solicitud N° '.n_doc($NSolicitud, 5).'</h3>
 						<p>Se ha cambiado el estado a Programado en la siguiente solicitud</p>
 						<a href="'.DB_SITE_MAIN.'/view_solicitud_aplicacion.php?view='.simpleEncode($ultimo_id, fecha_actual()).'">Ver Aqui</a>';
 						
