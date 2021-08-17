@@ -44,6 +44,12 @@ require_once 'core/Web.Header.Views.php';
 
 /**************************************************************/
 //variables
+//Grupo Sensores
+$idGrupoVoltajeTrifasico = 87;
+$idGrupoPotencia         = 99;
+$idGrupoConsumoMesHabil  = 99;
+$idGrupoConsumoMesCurso  = 99;
+
 //Para el mes Habil
 $Habil_FechaInicio    = restarDias(fecha_actual(),30);
 $Habil_HoraInicio     = hora_actual();
@@ -77,22 +83,18 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery_1 .= ',SensoresGrupo_'.$i;
 	$subquery_1 .= ',SensoresMedActual_'.$i;
 	$subquery_1 .= ',SensoresActivo_'.$i;
-	$subquery_2 .= ',AVG(NULLIF(IF(Sensor_'.$i.'!=0,Sensor_'.$i.',0),0)) AS Med_'.$i;
+	$subquery_2 .= ',SUM(Sensor_'.$i.') AS Med_'.$i;
 }
 
 //Obtengo los datos
+$arrGraficos        = array();
+$arrGraficos        = db_select_array (false, 'HoraSistema, Sensor_1, Sensor_2, Sensor_3', 'telemetria_listado_tablarelacionada_'.$X_Puntero, '', '(TimeStamp BETWEEN "'.$Grafico_FechaInicio.' '.$Grafico_HoraInicio .'" AND "'.$Grafico_FechaTermino.' '.$Grafico_HoraTermino.'")', 'HoraSistema ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGraficos');
 $rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 $rowConsumoMesHabil = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Habil_FechaInicio.' '.$Habil_HoraInicio .'" AND "'.$Habil_FechaTermino.' '.$Habil_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 $rowConsumoMesCurso = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Curso_FechaInicio.' '.$Curso_HoraInicio .'" AND "'.$Curso_FechaTermino.' '.$Curso_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 $n_permisos         = db_select_data (false, 'idOpcionesGen_6', 'core_sistemas', '', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
-$arrGraficos = array();
-$arrGraficos = db_select_array (false, 'HoraSistema, Sensor_1, Sensor_2, Sensor_3', 'telemetria_listado_tablarelacionada_'.$X_Puntero, '', '(TimeStamp BETWEEN "'.$Grafico_FechaInicio.' '.$Grafico_HoraInicio .'" AND "'.$Grafico_FechaTermino.' '.$Grafico_HoraTermino.'")', 'HoraSistema ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGraficos');
 
-//Grupo Sensores
-$idGrupoVoltajeTrifasico = 87;
-$idGrupoPotencia         = 99;
-$idGrupoConsumoMesHabil  = 99;
-$idGrupoConsumoMesCurso  = 99;
+
 
 //Temporales
 $TempValue_1 = 0;
@@ -109,14 +111,14 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	//Si el sensor esta activo
 	if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
 		//Si pertenece al grupo
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoVoltajeTrifasico){
+		/*if($rowdata['SensoresGrupo_'.$i]==$idGrupoVoltajeTrifasico){
 			$TempValue_1 = $TempValue_1 + $rowdata['SensoresMedActual_'.$i];
 			$TempCount_1++;
 		}
 		if($rowdata['SensoresGrupo_'.$i]==$idGrupoPotencia){
 			$TempValue_2 = $TempValue_2 + $rowdata['SensoresMedActual_'.$i];
 			$TempCount_2++;
-		}
+		}*/
 		if($rowdata['SensoresGrupo_'.$i]==$idGrupoConsumoMesHabil){
 			$TempValue_3 = $TempValue_3 + $rowConsumoMesHabil['Med_'.$i];
 			$TempCount_3++;
@@ -135,6 +137,8 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 //if($TempCount_2!=0){$Potencia        = $TempValue_2/$TempCount_2;}else{$Potencia        = 0;}
 if($TempCount_3!=0){$ConsumoMesHabil = $TempValue_3/$TempCount_3;}else{$ConsumoMesHabil = 0;}
 if($TempCount_4!=0){$ConsumoMesCurso = $TempValue_4/$TempCount_4;}else{$ConsumoMesCurso = 0;}
+//$ConsumoMesHabil   = $TempValue_3;
+//$ConsumoMesCurso   = $TempValue_4;
 $Vmonofasico       = $rowdata['SensoresMedActual_4'];
 $VTrifasico        = $rowdata['SensoresMedActual_5'];
 $Potencia          = $rowdata['SensoresMedActual_6'];
@@ -268,7 +272,7 @@ $x_seg = 300000;//5 minutos
 					<div class="col-sm-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
-								<h3 class="box-title">Consumo Mes Habil</h3>
+								<h3 class="box-title">Consumo Mes Movil</h3>
 							</div>
 							<div class="box-body">
 								<div class="value">
