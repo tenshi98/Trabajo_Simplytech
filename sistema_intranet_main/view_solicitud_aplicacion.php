@@ -423,6 +423,7 @@ array_push( $arrHistorial,$row );
 						<td><strong>Especie - Variedad</strong></td>
 						<td><strong>Numero de<br/>solicitud</strong></td>
 						<td><strong>Cuarteles</strong></td>
+						<td><strong>Hectareas</strong></td>
 						<td><strong>Veloc.<br/>Promedio</strong></td>
 						<td><strong>Mojamiento<br/>solicitado</strong></td>
 						<td><strong>lts. Aplicados</strong></td>
@@ -479,15 +480,17 @@ array_push( $arrHistorial,$row );
 							}
 							
 							//Sumo Variables
-							$TotalMojamiento       = $TotalMojamiento + $cuartel['Mojamiento'];
-							$TotalLitrosAplicados  = $TotalLitrosAplicados + $S_LitrosAplicados;
-							$TotLitrosApliXhect    = $TotLitrosApliXhect + $LitrosApliXhect;
+							$TotalMojamiento         = $TotalMojamiento + $cuartel['Mojamiento'];
+							$TotalLitrosAplicados    = $TotalLitrosAplicados + $S_LitrosAplicados;
+							$TotLitrosApliXhect      = $TotLitrosApliXhect + $LitrosApliXhect;
+							$TotalCuartelHectareas   = $TotalCuartelHectareas + $cuartel['CuartelHectareas'];
 							?>
 							
 							<tr class="item-row linea_punteada">
 								<td><?php echo $cuartel['EspecieNombre'].' - '.$cuartel['VariedadNombre']; ?></td>
 								<td><?php echo $cuartel['NSolicitud']; ?></td>
 								<td><?php echo $s_Icon.' '.$cuartel['CuartelNombre'].$cierre; ?></td>
+								<td><?php echo $cuartel['CuartelHectareas']; ?></td>
 								<td><?php echo Cantidades($S_VelPromedio,1); ?></td>
 								<td><?php echo Cantidades($cuartel['Mojamiento'],0); ?></td>
 								<td><?php echo Cantidades($S_LitrosAplicados,1); ?></td>
@@ -522,6 +525,7 @@ array_push( $arrHistorial,$row );
 							<td class="item-name"><strong>Totales</strong></td>
 							<td class="item-name"><strong></strong></td>
 							<td class="item-name"><strong></strong></td>
+							<td class="item-name"><strong><?php echo Cantidades($TotalCuartelHectareas, 2); ?></strong></td>
 							<td class="item-name"><strong></strong></td>
 							<td class="item-name"><strong><?php echo Cantidades($TotalMojamiento, 0); ?></strong></td>
 							<td class="item-name"><strong><?php echo Cantidades($TotalLitrosAplicados, 1); ?></strong></td>
