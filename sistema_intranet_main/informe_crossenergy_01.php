@@ -184,21 +184,10 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 						data.addRows([<?php echo $chain; ?>]);
 
 						var materialOptions = {
-							/*chart: {
-								title: 'Informe Sensores'
-							},*/
-							/*series: {
-								// Gives each series an axis name that matches the Y-axis below.
-								0: {axis: 'Temperatura'},
-								1: {axis: 'Humedad'}
+							chart: {
+								title: 'Consumo'
 							},
-							axes: {
-								// Adds labels to each axis; they don't have to match the axis names.
-								y: {
-									Temps: {label: 'Temperatura (Celsius)'},
-									Daylight: {label: 'Humedad (Porcentaje)'}
-								}
-							}*/
+							
 						};
 
 						function drawMaterialChart() {
