@@ -213,7 +213,7 @@ array_push( $arrGrupo,$row );
 
 			echo '
 				<div class="col-sm-4 invoice-col">
-					'.$x_column_maquina_sing.'
+					Maquina
 					<address>
 						<strong>'.$rowMaquina['MaquinaNombre'].'</strong><br/>
 						Codigo: '.$rowMaquina['MaquinaCodigo'].'<br/>
@@ -453,7 +453,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
+				$Form_Inputs->form_select_depend1('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
 										 'Matriz de Analisis','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
 				$Form_Inputs->form_date('Fecha Muestreo Inicio','f_inicio', $x3, 2);

@@ -66,9 +66,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/'.$x_column_maquina_sing.' creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/'.$x_column_maquina_sing.' editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/'.$x_column_maquina_sing.' borrado correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Maquina creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Maquina editado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Maquina borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -627,7 +627,7 @@ array_push( $arrMatriz,$row );
 ?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_maquina_plur, $rowdata['Nombre'], 'Matriz Analisis');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Matriz Analisis');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Matriz</a><?php }?>
 	</div>
@@ -646,7 +646,7 @@ array_push( $arrMatriz,$row );
 					<ul class="dropdown-menu" role="menu">
 						<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_clientes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Clientes</a></li>
-							<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> <?php echo $x_column_ubicacion; ?></a></li>
+							<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>

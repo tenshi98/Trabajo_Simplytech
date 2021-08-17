@@ -105,11 +105,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 					//verifico el sistema
 					if($_SESSION['usuario']['basic_data']['idSistema']==11){
-						$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x2, 2, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
-												 $x_column_maquina_sing,'idMaquina', $x3, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $m, 0, 
+						$Form_Inputs->form_select_depend1('Cliente','idCliente', $x2, 2, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
+												 'Maquina','idMaquina', $x3, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $m, 0, 
 												  $dbConn, 'form1');
 					}else{
-						$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x3, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $m, '', $dbConn);
+						$Form_Inputs->form_select_filter('Maquina','idMaquina', $x3, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $m, '', $dbConn);
 					}
 					$Form_Inputs->form_date('Fecha','Fecha', $x4, 2);
 					$Form_Inputs->form_time('Hora','Hora', $x5, 2, 2);

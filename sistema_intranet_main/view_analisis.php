@@ -311,7 +311,7 @@ array_push( $arrFlashpoint,$row );
 
 				echo '
 				<div class="col-sm-4 invoice-col">
-					'.$x_column_maquina_sing.'
+					Maquina
 					<address>
 						<strong>'.$row_data['MaquinaNombre'].'</strong><br/>
 						Codigo: '.$row_data['MaquinaCodigo'].'<br/>

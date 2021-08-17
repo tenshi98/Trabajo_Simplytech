@@ -185,7 +185,7 @@ if ( ! empty($_GET['clone_idMaquina']) ) {
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Clonar <?php echo $x_column_maquina_sing.' '.$_GET['nombre_maquina']; ?></h5>
+			<h5>Clonar <?php echo 'Maquina '.$_GET['nombre_maquina']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -755,7 +755,7 @@ array_push( $arrMatriz,$row );
 ?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_maquina_sing, $rowdata['Nombre'], 'Matriz Analisis');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquina', $rowdata['Nombre'], 'Matriz Analisis');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&matriz='.$_GET['matriz'].'&new_matriz=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Matriz</a><?php }?>
 	</div>
@@ -2336,7 +2336,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 
 ?>
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_maquina_sing, $rowdata['Nombre'], 'Componentes');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquina', $rowdata['Nombre'], 'Componentes');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&componente='.$_GET['componente'].'&new_componente=true&lvl=1'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php }?>
 	</div>
@@ -2414,7 +2414,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Estado <?php echo $x_column_maquina_sing; ?></h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Estado Maquina</h5>	
 		</header>
         <div class="table-responsive"> 
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -2426,7 +2426,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd">			
-						<td><?php echo $x_column_maquina_sing.' '.$rowdata['Nombre'].' '.$rowdata['estado']; ?></td>		
+						<td><?php echo 'Maquina '.$rowdata['Nombre'].' '.$rowdata['estado']; ?></td>		
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	 
 								<?php if ($rowlevel['level']>=2){?> 
@@ -2546,7 +2546,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box dark">	
 		<header>		
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar <?php echo $x_column_maquina_sing; ?></h5>	
+			<h5>Editar Maquina</h5>	
 		</header>	
 		<div id="div-1" class="body">	
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -2602,7 +2602,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	<div class="box dark">	
 		<header>		
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Nueva <?php echo $x_column_maquina_sing; ?></h5>	
+			<h5>Crear Nueva Maquina</h5>	
 		</header>	
 		<div id="div-1" class="body">	
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -2700,9 +2700,9 @@ array_push( $arrMaquina,$row );
 
 ?>
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], $x_column_maquina_plur);?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Maquinas');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear <?php echo $x_column_maquina_sing; ?></a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php }?>
 	</div>
 </div>
 <div class="clearfix"></div> 

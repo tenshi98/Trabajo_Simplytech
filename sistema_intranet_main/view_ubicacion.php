@@ -185,7 +185,7 @@ function arrayToUL(array $array, $lv, $nmax)
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Ver Datos de la <?php echo $x_column_ubicacion; ?></h5>	
+			<h5>Ver Datos de la Ubicacion</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
 			
@@ -204,7 +204,7 @@ function arrayToUL(array $array, $lv, $nmax)
 								<td><?php echo $rowdata['Estado'];?></td>
 							</tr>
 							<tr>
-								<td colspan="2" style="background-color: #ccc;"><?php echo $x_column_ubicacion_item; ?></td>
+								<td colspan="2" style="background-color: #ccc;">Itemizado</td>
 							</tr>
 							<tr>
 								<td colspan="2">

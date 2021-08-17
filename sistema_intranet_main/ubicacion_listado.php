@@ -47,9 +47,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/'.$x_column_ubicacion.' creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/'.$x_column_ubicacion.' editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/'.$x_column_ubicacion.' borrada correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Ubicacion creada correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Ubicacion editada correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Ubicacion borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -208,7 +208,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_ubicacion, $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicacion', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -223,7 +223,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'ubicacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> <?php echo $x_column_ubicacion_item; ?></a></li>
+						<li class=""><a href="<?php echo 'ubicacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Itemizado</a></li>
 					</ul>
                 </li>           
 			</ul>	
@@ -244,7 +244,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 								<td><?php echo $rowdata['Estado'];?></td>
 							</tr>
 							<tr>
-								<td colspan="2" style="background-color: #ccc;"><?php echo $x_column_ubicacion_item; ?></td>
+								<td colspan="2" style="background-color: #ccc;">Itemizado</td>
 							</tr>
 							<tr>
 								<td colspan="2">
@@ -285,7 +285,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear <?php echo $x_column_ubicacion; ?></h5>
+			<h5>Crear Ubicacion</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -417,7 +417,7 @@ array_push( $arrArea,$row );
 		<?php } ?>		
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear <?php echo $x_column_ubicacion; ?></a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php }?>
 
 </div>
 <div class="clearfix"></div> 
@@ -454,7 +454,7 @@ array_push( $arrArea,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $x_column_ubicacion; ?></h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ubicacion</h5>	
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador

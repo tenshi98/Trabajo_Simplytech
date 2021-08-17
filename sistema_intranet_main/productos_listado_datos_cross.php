@@ -59,7 +59,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_producto_nombre_plur, $rowdata['Nombre'], 'Editar Datos Sistema Cross');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Datos Sistema Cross');?>
 </div>
 <div class="clearfix"></div>
 

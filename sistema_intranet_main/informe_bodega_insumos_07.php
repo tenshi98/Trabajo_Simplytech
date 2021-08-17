@@ -352,7 +352,7 @@ foreach ($arrBodega as $bod) {
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
 								<tr role="row">
-									<th><?php echo $x_column_producto_cat_sing; ?></th>
+									<th>Categoria</th>
 									<th><?php echo numero_a_mes_corto($graficoMain[1]['mes'])?></th>
 									<th><?php echo numero_a_mes_corto($graficoMain[2]['mes'])?></th>
 									<th><?php echo numero_a_mes_corto($graficoMain[3]['mes'])?></th>
@@ -511,7 +511,7 @@ foreach ($arrBodega as $bod) {
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
 								<tr role="row">
-									<th><?php echo $x_column_producto_cat_sing; ?></th>
+									<th>Categoria</th>
 									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][1]['mes'])?></th>
 									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][2]['mes'])?></th>
 									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][3]['mes'])?></th>

@@ -48,9 +48,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' borrado correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Producto creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Producto editado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Producto borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -75,7 +75,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_producto_nombre_plur, $rowdata['Nombre'], 'Editar Hoja de Seguridad');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Hoja de Seguridad');?>
 </div>
 <div class="clearfix"></div>
 

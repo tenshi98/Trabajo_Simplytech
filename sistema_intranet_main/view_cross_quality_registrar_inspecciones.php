@@ -522,7 +522,7 @@ array_push( $arrArchivos,$row );
 			<div class="col-sm-4 invoice-col">
 				Datos Basicos
 				<address>
-					<strong>'.$x_column_producto_nombre_sing.'</strong><br/>
+					<strong>Producto</strong><br/>
 					'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>
 					Ubicacion: '.$row_data['UbicacionNombre'];
 					if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}
@@ -575,7 +575,7 @@ array_push( $arrArchivos,$row );
 						<?php } ?>
 					<?php } ?>
 					<?php if ($arrMaquinas) { ?>
-						<tr class="active"><td colspan="6"><strong><?php echo $x_column_maquina_plur; ?> a Utilizar</strong></td></tr>
+						<tr class="active"><td colspan="6"><strong>Maquinas a Utilizar</strong></td></tr>
 						<?php foreach ($arrMaquinas as $maq) { ?>
 							<tr>
 								<td colspan="6"><?php echo $maq['Codigo'].' - '.$maq['Nombre'];?></td>

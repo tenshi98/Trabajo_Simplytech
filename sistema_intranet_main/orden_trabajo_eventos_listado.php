@@ -233,11 +233,11 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				//verifico el sistema
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x2, 2, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
-											$x_column_maquina_sing,'idMaquina', $x3, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $m, 0, 
+					$Form_Inputs->form_select_depend1('Cliente','idCliente', $x2, 2, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
+											'Maquina','idMaquina', $x3, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $m, 0, 
 											$dbConn, 'form1');
 				}else{
-					$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x3, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $m, '', $dbConn);
+					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x3, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $m, '', $dbConn);
 				}
 				$Form_Inputs->form_date('Fecha','Fecha', $x4, 2);
 				$Form_Inputs->form_time('Hora','Hora', $x5, 2, 2);
@@ -290,8 +290,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'fecha_desc':       $order_by = 'ORDER BY orden_trabajo_eventos_listado.Fecha DESC ';                                                                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		case 'trabajador_asc':   $order_by = 'ORDER BY trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Trabajador Ascendente'; break;
 		case 'trabajador_desc':  $order_by = 'ORDER BY trabajadores_listado.ApellidoPat DESC, trabajadores_listado.ApellidoMat DESC, trabajadores_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Trabajador Descendente';break;
-		case 'maquina_asc':      $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Ascendente'; break;
-		case 'maquina_desc':     $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Descendente';break;
+		case 'maquina_asc':      $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente'; break;
+		case 'maquina_desc':     $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
 		
 		default: $order_by = 'ORDER BY orden_trabajo_eventos_listado.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 	}
@@ -423,11 +423,11 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x2, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				//verifico el sistema
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x3, 1, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
-											 $x_column_maquina_sing,'idMaquina', $x4, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $m, 0, 
+					$Form_Inputs->form_select_depend1('Cliente','idCliente', $x3, 1, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
+											 'Maquina','idMaquina', $x4, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $m, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x4, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $m, '', $dbConn);
+					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x4, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $m, '', $dbConn);
 				}
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x5, 1);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x6, 1);
@@ -478,7 +478,7 @@ array_push( $arrTipo,$row );
 							</div>
 						</th>
 						<th>
-							<div class="pull-left"><?php echo $x_column_maquina_sing; ?></div>
+							<div class="pull-left">Maquina</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>

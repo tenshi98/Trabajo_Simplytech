@@ -55,10 +55,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/'.$x_column_maquina_sing.' creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/'.$x_column_maquina_sing.' editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/'.$x_column_maquina_sing.' borrada correctamente';}
-if (isset($_GET['clone']))   {$error['usuario'] 	  = 'sucess/'.$x_column_maquina_sing.' clonada correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Maquina creada correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Maquina editada correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Maquina borrada correctamente';}
+if (isset($_GET['clone']))   {$error['usuario'] 	  = 'sucess/Maquina clonada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -71,7 +71,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Clonar <?php echo $x_column_maquina_sing; ?> <?php echo $_GET['nombre_maquina']; ?></h5>
+			<h5>Clonar Maquina <?php echo $_GET['nombre_maquina']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -610,7 +610,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_maquina_plur, $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -627,7 +627,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 					<ul class="dropdown-menu" role="menu">
 						<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_clientes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Clientes</a></li>
-							<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-map-o" aria-hidden="true"></i> <?php echo $x_column_ubicacion; ?></a></li>
+							<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
@@ -670,7 +670,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
-								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){ echo '<strong>'.$x_column_ubicacion.' : </strong>'.$rowdata['Ubicacion'];}?>
+								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){ echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];}?>
 								<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_1'];}?>
 								<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_2'];}?>
 								<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_3'];}?>
@@ -800,7 +800,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear <?php echo $x_column_maquina_sing;?></h5>
+			<h5>Crear Maquina</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -863,8 +863,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'cliente_desc': $order_by = 'ORDER BY clientes_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
 		case 'codigo_asc':   $order_by = 'ORDER BY maquinas_listado.Codigo ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
 		case 'codigo_desc':  $order_by = 'ORDER BY maquinas_listado.Codigo DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
-		case 'nombre_asc':   $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Ascendente';break;
-		case 'nombre_desc':  $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Descendente';break;
+		case 'nombre_asc':   $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente';break;
+		case 'nombre_desc':  $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
 		case 'estado_asc':   $order_by = 'ORDER BY core_estados.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':  $order_by = 'ORDER BY core_estados.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
@@ -949,7 +949,7 @@ array_push( $arrMaquina,$row );
 		<?php } ?>		
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear <?php echo $x_column_maquina_sing; ?></a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php }?>
 
 </div>
 <div class="clearfix"></div> 
@@ -988,7 +988,7 @@ array_push( $arrMaquina,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de <?php echo $x_column_maquina_plur; ?></h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Maquinas</h5>	
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -1042,7 +1042,7 @@ array_push( $arrMaquina,$row );
 						<td>
 							<div class="btn-group" style="width: 140px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_maquinas.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.$maq['idMaquina']; ?>" title="Clonar <?php echo $x_column_maquina_sing; ?>" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.$maq['idMaquina']; ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$maq['idMaquina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($maq['idMaquina'], fecha_actual());

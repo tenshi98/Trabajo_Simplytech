@@ -166,9 +166,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowdata['Nombre'], 1);
 				$Form_Inputs->form_select('Tipo','PuntoidTipo', $rowdata['Tipo'], 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 0, '', $dbConn);	
 				
-				$Form_Inputs->form_input_number($x_column_puntomed_aceptable,'PuntoMedAceptable', Cantidades_decimales_justos($rowdata['Aceptable']), 1);
-				$Form_Inputs->form_input_number($x_column_puntomed_alerta,'PuntoMedAlerta', Cantidades_decimales_justos($rowdata['Alerta']), 1);
-				$Form_Inputs->form_input_number($x_column_puntomed_condenatorio,'PuntoMedCondenatorio', Cantidades_decimales_justos($rowdata['Condenatorio']), 1);
+				$Form_Inputs->form_input_number('Aceptable','PuntoMedAceptable', Cantidades_decimales_justos($rowdata['Aceptable']), 1);
+				$Form_Inputs->form_input_number('Alerta','PuntoMedAlerta', Cantidades_decimales_justos($rowdata['Alerta']), 1);
+				$Form_Inputs->form_input_number('Condenatorio','PuntoMedCondenatorio', Cantidades_decimales_justos($rowdata['Condenatorio']), 1);
 				$Form_Inputs->form_select('Unidad de Medida','PuntoUniMed', $rowdata['UniMed'], 1, 'idUml', 'Nombre', 'sistema_cross_analisis_uml', 0, '', $dbConn);	
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar', $rowdata['Validar'], 1);
 				

@@ -68,7 +68,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_maquina_plur, $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
@@ -115,7 +115,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_select_filter($x_column_cliente_sing,'idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+					$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 					$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1); 
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2); 
 					$Form_Inputs->form_input_text('Modelo', 'Modelo', $x4, 1); 

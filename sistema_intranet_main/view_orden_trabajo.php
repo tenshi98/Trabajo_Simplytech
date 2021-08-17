@@ -314,12 +314,12 @@ $zz .= '&view='.$_GET['view'];
 						</tr>
 						<?php if(isset($rowdata['ClienteNombre'])&&$rowdata['ClienteNombre']!=''){?>
 							<tr>
-								<td class="meta-head"><?php echo $x_column_cliente_sing; ?></td>
+								<td class="meta-head">Cliente</td>
 								<td><?php echo $rowdata['ClienteNombre'] ?></td>
 							</tr>
 						<?php }?>
 						<tr>
-							<td class="meta-head"><?php echo $x_column_maquina_sing; ?></td>
+							<td class="meta-head">Maquina</td>
 							<td><?php echo $rowdata['NombreMaquina']?></td>
 						</tr>
 						<tr>

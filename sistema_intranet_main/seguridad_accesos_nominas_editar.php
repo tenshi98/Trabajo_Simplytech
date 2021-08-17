@@ -254,11 +254,11 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_time('Hora Inicio','HoraInicioProgramada', $x2, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTerminoProgramada', $x3, 2, 2);
 				$Form_Inputs->form_select_depend5('Destino', 'idUbicacion',  $x4,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
-												  $x_column_ubicacion_lvl_1, 'idUbicacion_lvl_1',  $x5,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
-												  $x_column_ubicacion_lvl_2, 'idUbicacion_lvl_2',  $x6,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
-												  $x_column_ubicacion_lvl_3, 'idUbicacion_lvl_3',  $x7,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
-												  $x_column_ubicacion_lvl_4, 'idUbicacion_lvl_4',  $x8,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
-												  $x_column_ubicacion_lvl_5, 'idUbicacion_lvl_5',  $x9,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
+												  'Nivel 1', 'idUbicacion_lvl_1',  $x5,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+												  'Nivel 2', 'idUbicacion_lvl_2',  $x6,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
+												  'Nivel 3', 'idUbicacion_lvl_3',  $x7,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
+												  'Nivel 4', 'idUbicacion_lvl_4',  $x8,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
+												  'Nivel 5', 'idUbicacion_lvl_5',  $x9,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Persona Reunion', 'PersonaReunion', $x10, 2);
 				

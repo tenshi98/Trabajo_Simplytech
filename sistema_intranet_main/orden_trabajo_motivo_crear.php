@@ -626,11 +626,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
-												  $x_column_ubicacion_lvl_1, 'idUbicacion_lvl_1',  $x2,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
-												  $x_column_ubicacion_lvl_2, 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
-												  $x_column_ubicacion_lvl_3, 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
-												  $x_column_ubicacion_lvl_4, 'idUbicacion_lvl_4',  $x5,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
-												  $x_column_ubicacion_lvl_5, 'idUbicacion_lvl_5',  $x6,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
+												  'Nivel 1', 'idUbicacion_lvl_1',  $x2,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+												  'Nivel 2', 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
+												  'Nivel 3', 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
+												  'Nivel 4', 'idUbicacion_lvl_4',  $x5,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
+												  'Nivel 5', 'idUbicacion_lvl_5',  $x6,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 												  $dbConn, 'form1');
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x7, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x8, 2, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
@@ -879,11 +879,11 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
-												  $x_column_ubicacion_lvl_1, 'idUbicacion_lvl_1',  $x2,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
-												  $x_column_ubicacion_lvl_2, 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
-												  $x_column_ubicacion_lvl_3, 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
-												  $x_column_ubicacion_lvl_4, 'idUbicacion_lvl_4',  $x5,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
-												  $x_column_ubicacion_lvl_5, 'idUbicacion_lvl_5',  $x6,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
+												  'Nivel 1', 'idUbicacion_lvl_1',  $x2,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+												  'Nivel 2', 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
+												  'Nivel 3', 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
+												  'Nivel 4', 'idUbicacion_lvl_4',  $x5,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
+												  'Nivel 5', 'idUbicacion_lvl_5',  $x6,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 												  $dbConn, 'form1');
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x7, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x8, 2, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
@@ -1077,11 +1077,11 @@ array_push( $arrOTS,$row );
 				$Form_Inputs->form_input_number('OT','idOT', $x1, 1);
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x2, 1);
 				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x3,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
-												  $x_column_ubicacion_lvl_1, 'idUbicacion_lvl_1',  $x4,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
-												  $x_column_ubicacion_lvl_2, 'idUbicacion_lvl_2',  $x5,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
-												  $x_column_ubicacion_lvl_3, 'idUbicacion_lvl_3',  $x6,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
-												  $x_column_ubicacion_lvl_4, 'idUbicacion_lvl_4',  $x7,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
-												  $x_column_ubicacion_lvl_5, 'idUbicacion_lvl_5',  $x8,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
+												  'Nivel 1', 'idUbicacion_lvl_1',  $x4,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+												  'Nivel 2', 'idUbicacion_lvl_2',  $x5,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
+												  'Nivel 3', 'idUbicacion_lvl_3',  $x6,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
+												  'Nivel 4', 'idUbicacion_lvl_4',  $x7,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
+												  'Nivel 5', 'idUbicacion_lvl_5',  $x8,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 												  $dbConn, 'form1');
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x9, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x10, 1, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);

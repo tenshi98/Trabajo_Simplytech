@@ -605,7 +605,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_maquina_plur, $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div> 
 
@@ -651,7 +651,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 					<div class="col-sm-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
-							<strong><?php echo $x_column_cliente_sing; ?> : </strong><?php echo $rowdata['Cliente']; ?><br/>
+							<strong>Cliente : </strong><?php echo $rowdata['Cliente']; ?><br/>
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
 							<strong>Modelo : </strong><?php echo $rowdata['Modelo']; ?><br/>
@@ -789,7 +789,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear <?php echo $x_column_maquina_sing;?></h5>
+			<h5>Crear Maquina</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -802,7 +802,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter($x_column_cliente_sing,'idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1); 
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2); 
 				
@@ -847,19 +847,19 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'cliente_asc':  $order_by = 'ORDER BY clientes_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_cliente_sing.' Ascendente'; break;
-		case 'cliente_desc': $order_by = 'ORDER BY clientes_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_cliente_sing.' Descendente';break;
+		case 'cliente_asc':  $order_by = 'ORDER BY clientes_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente'; break;
+		case 'cliente_desc': $order_by = 'ORDER BY clientes_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
 		case 'codigo_asc':   $order_by = 'ORDER BY maquinas_listado.Codigo ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
 		case 'codigo_desc':  $order_by = 'ORDER BY maquinas_listado.Codigo DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
-		case 'nombre_asc':   $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Ascendente';break;
-		case 'nombre_desc':  $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Descendente';break;
+		case 'nombre_asc':   $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente';break;
+		case 'nombre_desc':  $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
 		case 'estado_asc':   $order_by = 'ORDER BY core_estados.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':  $order_by = 'ORDER BY core_estados.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY clientes_listado.Nombre ASC, maquinas_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_cliente_sing.', Contrato Ascendente';
+		default: $order_by = 'ORDER BY clientes_listado.Nombre ASC, maquinas_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente, Contrato Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY clientes_listado.Nombre ASC, maquinas_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_cliente_sing.', Contrato Ascendente';
+	$order_by = 'ORDER BY clientes_listado.Nombre ASC, maquinas_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente, Contrato Ascendente';
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
@@ -937,7 +937,7 @@ array_push( $arrMaquina,$row );
 		<?php } ?>		
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear <?php echo $x_column_maquina_sing; ?></a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php }?>
 
 </div>
 <div class="clearfix"></div> 
@@ -953,7 +953,7 @@ array_push( $arrMaquina,$row );
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter($x_column_cliente_sing,'idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1); 
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1); 
 				
@@ -976,7 +976,7 @@ array_push( $arrMaquina,$row );
 <div class="col-sm-12">
 	<div class="box">	
 		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $x_column_maquina_plur; ?></h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Unidades de Negocio</h5>	
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -988,7 +988,7 @@ array_push( $arrMaquina,$row );
 				<thead>
 					<tr role="row">
 						<th>
-							<div class="pull-left"><?php echo $x_column_cliente_sing; ?></div>
+							<div class="pull-left">Cliente</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=cliente_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=cliente_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>

@@ -18,14 +18,9 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                  $location .= "&Nombre=".$_GET['Nombre'];                   $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['idCardImage']) && $_GET['idCardImage'] != ''){                  $location .= "&idCardImage=".$_GET['idCardImage'];                   $search .= "&idCardImage=".$_GET['idCardImage'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $location .= "&Nombre=".$_GET['Nombre'];                 $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['idCardImage']) && $_GET['idCardImage'] != ''){      $location .= "&idCardImage=".$_GET['idCardImage'];       $search .= "&idCardImage=".$_GET['idCardImage'];}
 if(isset($_GET['idCardType']) && $_GET['idCardType'] != ''){        $location .= "&idCardType=".$_GET['idCardType'];         $search .= "&idCardType=".$_GET['idCardType'];}
-if(isset($_GET['Marca']) && $_GET['Marca'] != ''){                    $location .= "&Marca=".$_GET['Marca'];                     $search .= "&Marca=".$_GET['Marca'];}
-if(isset($_GET['idUml']) && $_GET['idUml'] != ''){                    $location .= "&idUml=".$_GET['idUml'];                     $search .= "&idUml=".$_GET['idUml'];}
-if(isset($_GET['idCardImageProducto']) && $_GET['idCardImageProducto'] != ''){  $location .= "&idCardImageProducto=".$_GET['idCardImageProducto'];   $search .= "&idCardImageProducto=".$_GET['idCardImageProducto'];}
-if(isset($_GET['idCardImageReceta']) && $_GET['idCardImageReceta'] != ''){      $location .= "&idCardImageReceta=".$_GET['idCardImageReceta'];       $search .= "&idCardImageReceta=".$_GET['idCardImageReceta'];}
-if(isset($_GET['idSubTipo']) && $_GET['idSubTipo'] != ''){            $location .= "&idSubTipo=".$_GET['idSubTipo'];             $search .= "&idSubTipo=".$_GET['idSubTipo'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -52,9 +47,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' borrado correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Tarjeta Creada correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Tarjeta Modificada correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tarjeta borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -392,7 +387,7 @@ array_push( $arrProductos,$row );
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prod['idCard']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prod['idCard'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el '.$x_column_producto_nombre_sing.' '.$prod['CardNombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el Tarjeta '.$prod['CardNombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>

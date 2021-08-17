@@ -52,9 +52,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/'.$x_column_producto_nombre_sing.' borrado correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Producto Creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Producto Modificado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Producto borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -154,7 +154,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 }
 ?>
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_producto_nombre_plur, $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
@@ -203,13 +203,13 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 						}?>
 					</div>
 					<div class="col-sm-8">
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de <?php echo $x_column_producto_nombre_sing; ?></h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Producto</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Marca : </strong><?php echo $rowdata['Marca']; ?><br/>
 							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-							<strong><?php echo $x_column_producto_cat_sing; ?> : </strong><?php echo $rowdata['Categoria']; ?><br/>
-							<strong><?php echo $x_column_producto_tipo_sing; ?> : </strong><?php echo $rowdata['Tipo']; ?><br/>
+							<strong>Categoria : </strong><?php echo $rowdata['Categoria']; ?><br/>
+							<strong>Tipo de Producto : </strong><?php echo $rowdata['Tipo']; ?><br/>
 							<strong>Tipo de Producto : </strong><?php echo $rowdata['TipoProd']; ?><br/>
 							<strong>Unidad de medida : </strong><?php echo $rowdata['Unidad']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
@@ -335,7 +335,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear <?php echo $x_column_producto_nombre_sing; ?></h5>
+			<h5>Crear Producto</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -354,8 +354,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_select_filter($x_column_producto_tipo_sing,'idTipo', $x2, 2, 'idTipo', 'Nombre', 'sistema_productos_tipo', 0, '', $dbConn);
-				$Form_Inputs->form_select_filter($x_column_producto_cat_sing,'idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Tipo de Producto','idTipo', $x2, 2, 'idTipo', 'Nombre', 'sistema_productos_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Categoria','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Marca', 'Marca', $x4, 1);
 				$Form_Inputs->form_select_filter('Unidad de Medida','idUml', $x5, 2, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo Producto','idTipoProducto', $x6, 2, 'idTipoProducto', 'Nombre', 'core_tipo_producto', 0, '', $dbConn);
@@ -458,10 +458,10 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
 		case 'nombre_asc':      $order_by = 'ORDER BY productos_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
 		case 'nombre_desc':     $order_by = 'ORDER BY productos_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'categoria_asc':   $order_by = 'ORDER BY sistema_productos_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_producto_cat_sing.' Ascendente';break;
-		case 'categoria_desc':  $order_by = 'ORDER BY sistema_productos_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_producto_cat_sing.' Descendente';break;
-		case 'tipo_asc':        $order_by = 'ORDER BY sistema_productos_tipo.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_producto_tipo_sing.' Ascendente';break;
-		case 'tipo_desc':       $order_by = 'ORDER BY sistema_productos_tipo.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_producto_tipo_sing.' Descendente';break;
+		case 'categoria_asc':   $order_by = 'ORDER BY sistema_productos_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente';break;
+		case 'categoria_desc':  $order_by = 'ORDER BY sistema_productos_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
+		case 'tipo_asc':        $order_by = 'ORDER BY sistema_productos_tipo.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo de Producto Ascendente';break;
+		case 'tipo_desc':       $order_by = 'ORDER BY sistema_productos_tipo.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo de Producto Descendente';break;
 		case 'unidad_asc':      $order_by = 'ORDER BY sistema_productos_uml.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Unidad Medida Ascendente';break;
 		case 'unidad_desc':     $order_by = 'ORDER BY sistema_productos_uml.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Unidad Medida Descendente';break;
 		case 'tipoprod_asc':    $order_by = 'ORDER BY core_tipo_producto.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Producto Ascendente';break;
@@ -557,7 +557,7 @@ array_push( $arrProductos,$row );
 		<?php } ?>		
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear <?php echo $x_column_producto_nombre_sing; ?></a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Producto</a><?php } ?>
 
 </div>
 <div class="clearfix"></div> 
@@ -580,8 +580,8 @@ array_push( $arrProductos,$row );
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
-				$Form_Inputs->form_select_filter($x_column_producto_tipo_sing,'idTipo', $x2, 1, 'idTipo', 'Nombre', 'sistema_productos_tipo', 0, '', $dbConn);
-				$Form_Inputs->form_select_filter($x_column_producto_cat_sing,'idCategoria', $x3, 1, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Tipo de Producto','idTipo', $x2, 1, 'idTipo', 'Nombre', 'sistema_productos_tipo', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Categoria','idCategoria', $x3, 1, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Marca', 'Marca', $x4, 1);
 				$Form_Inputs->form_select_filter('Unidad de Medida','idUml', $x5, 1, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo Producto','idTipoProducto', $x6, 1, 'idTipoProducto', 'Nombre', 'core_tipo_producto', 0, '', $dbConn);
@@ -609,7 +609,7 @@ array_push( $arrProductos,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de <?php echo $x_column_producto_nombre_plur; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -622,14 +622,14 @@ array_push( $arrProductos,$row );
 					<tr role="row">
 						<th width="70">Foto</th>
 						<th>
-							<div class="pull-left"><?php echo $x_column_producto_cat_sing; ?></div>
+							<div class="pull-left">Categoria</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=categoria_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=categoria_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
 						<th>
-							<div class="pull-left"><?php echo $x_column_producto_tipo_sing; ?></div>
+							<div class="pull-left">Tipo de Producto</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=tipo_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=tipo_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
@@ -720,7 +720,7 @@ array_push( $arrProductos,$row );
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prod['idProducto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prod['idProducto'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el '.$x_column_producto_nombre_sing.' '.$prod['NombreProd'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el Producto '.$prod['NombreProd'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>

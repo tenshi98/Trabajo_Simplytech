@@ -797,7 +797,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Agregar <?php echo $x_column_maquina_sing; ?></h5>
+			<h5>Agregar Maquina</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -808,7 +808,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Codigo,Nombre', 'maquinas_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Codigo,Nombre', 'maquinas_listado', $z, '', $dbConn);
 				?>
 			  
 				<div class="form-group">
@@ -953,12 +953,12 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', $zx1, 0,
 										 'Variedad','idProducto', $x5, 2, 'idProducto', 'Nombre', 'variedades_listado', $zx2, 0, 
 										 $dbConn, 'form1');
-				$Form_Inputs->form_select_depend5($x_column_ubicacion, 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
-							                 $x_column_ubicacion_lvl_1, 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
-							                 $x_column_ubicacion_lvl_2, 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
-							                 $x_column_ubicacion_lvl_3, 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
-							                 $x_column_ubicacion_lvl_4, 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
-							                 $x_column_ubicacion_lvl_5, 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
+				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
+							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
+							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
+							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
+							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
 				
@@ -1017,11 +1017,11 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
-						<td class="meta-head"><?php echo $x_column_producto_nombre_sing; ?></td>
+						<td class="meta-head">Producto</td>
 						<td><?php echo $_SESSION['cross_quality_reg_insp_basicos']['Producto']; ?></td>
 					</tr>
 					<tr>
-						<td class="meta-head"><?php echo $x_column_ubicacion; ?></td>
+						<td class="meta-head">Ubicacion</td>
 						<td>
 							<?php echo $_SESSION['cross_quality_reg_insp_basicos']['Ubicacion']; 
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_1'])&&$_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_1']!=''){echo $_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_1'];}
@@ -1087,9 +1087,9 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/ ?>
 				<tr class="item-row fact_tittle">
-					<td colspan="5"><?php echo $x_column_maquina_plur; ?> a Utilizar</td>
+					<td colspan="5">Maquinas a Utilizar</td>
 					<td>
-						<a href="<?php echo $location.'&addMaquina=true' ?>" title="Agregar <?php echo $x_column_maquina_sing; ?>" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar <?php echo $x_column_maquina_sing; ?></a>
+						<a href="<?php echo $location.'&addMaquina=true' ?>" title="Agregar Maquina" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Maquina</a>
 					</td>
 				</tr>
 				<?php 
@@ -1102,8 +1102,8 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 								<div class="btn-group" style="width: 35px;" >
 									<?php 
 									$ubicacion = $location.'&del_maq='.$maquina['idMaquina'];
-									$dialogo   = '¿Realmente deseas eliminar a '.$x_column_maquina_sing.' '.$maquina['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar <?php echo $x_column_maquina_sing; ?>" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
+									$dialogo   = '¿Realmente deseas eliminar a Maquina '.$maquina['Nombre'].'?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Maquina" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
 						</tr> 
@@ -1307,12 +1307,12 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', $zx1, 0,
 										 'Variedad','idProducto', $x5, 2, 'idProducto', 'Nombre', 'variedades_listado', $zx2, 0, 
 										 $dbConn, 'form1');
-				$Form_Inputs->form_select_depend5($x_column_ubicacion, 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
-							                 $x_column_ubicacion_lvl_1, 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
-							                 $x_column_ubicacion_lvl_2, 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
-							                 $x_column_ubicacion_lvl_3, 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
-							                 $x_column_ubicacion_lvl_4, 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
-							                 $x_column_ubicacion_lvl_5, 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
+				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
+							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
+							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
+							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
+							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
 				
 				
@@ -1360,18 +1360,18 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'tipo_asc':       $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre ASC ';                           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
-		case 'tipo_desc':      $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre DESC ';                          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
-		case 'fecha_asc':      $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Creacion_fecha ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ingreso Ascendente';break;
-		case 'fecha_desc':     $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Creacion_fecha DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';break;
-		case 'temporada_asc':  $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Temporada ASC ';                             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Temporada Ascendente';break;
-		case 'temporada_desc': $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Temporada DESC ';                            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Temporada Descendente';break;
-		case 'producto_asc':   $order_by = 'ORDER BY sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_producto_nombre_sing.' Ascendente';break;
-		case 'producto_desc':  $order_by = 'ORDER BY sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_producto_nombre_sing.' Descendente';break;
-		case 'zona_asc':       $order_by = 'ORDER BY ubicacion_listado.Nombre ASC ';                                             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Zona Ascendente';break;
-		case 'zona_desc':      $order_by = 'ORDER BY ubicacion_listado.Nombre DESC ';                                            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Zona Descendente';break;
-		case 'creador_asc':    $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
-		case 'creador_desc':   $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+		case 'tipo_asc':       $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre ASC ';                             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
+		case 'tipo_desc':      $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre DESC ';                            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+		case 'fecha_asc':      $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Creacion_fecha ASC ';                    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ingreso Ascendente';break;
+		case 'fecha_desc':     $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Creacion_fecha DESC ';                   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';break;
+		case 'temporada_asc':  $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Temporada ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Temporada Ascendente';break;
+		case 'temporada_desc': $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Temporada DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Temporada Descendente';break;
+		case 'producto_asc':   $order_by = 'ORDER BY sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Producto Ascendente';break;
+		case 'producto_desc':  $order_by = 'ORDER BY sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Producto Descendente';break;
+		case 'zona_asc':       $order_by = 'ORDER BY ubicacion_listado.Nombre ASC ';                                               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Zona Ascendente';break;
+		case 'zona_desc':      $order_by = 'ORDER BY ubicacion_listado.Nombre DESC ';                                              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Zona Descendente';break;
+		case 'creador_asc':    $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
+		case 'creador_desc':   $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
 
 				
 		default: $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';
@@ -1580,12 +1580,12 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', $zx1, 0,
 										 'Variedad','idProducto', $x5, 1, 'idProducto', 'Nombre', 'variedades_listado', $zx2, 0, 
 										 $dbConn, 'form1');
-				$Form_Inputs->form_select_depend5($x_column_ubicacion, 'idUbicacion',  $x6,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
-											 $x_column_ubicacion_lvl_1, 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
-							                 $x_column_ubicacion_lvl_2, 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
-							                 $x_column_ubicacion_lvl_3, 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
-							                 $x_column_ubicacion_lvl_4, 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
-							                 $x_column_ubicacion_lvl_5, 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
+				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
+											 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
+							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
+							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
+							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
 				
 				
@@ -1640,7 +1640,7 @@ foreach ($arrPermisos as $prod) {
 							</div>
 						</th>
 						<th>
-							<div class="pull-left"><?php echo $x_column_producto_cat_sing.' - '.$x_column_producto_nombre_sing; ?></div>
+							<div class="pull-left">Categoria - Producto</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=producto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=producto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>

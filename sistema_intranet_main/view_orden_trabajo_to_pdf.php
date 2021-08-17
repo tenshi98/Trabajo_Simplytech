@@ -308,13 +308,13 @@ $html ='<style>
                 </tr>';
 				if(isset($rowdata['ClienteNombre'])&&$rowdata['ClienteNombre']!=''){
 					$html .='<tr>
-						<td class="meta-head">'.$x_column_cliente_sing.'</td>
+						<td class="meta-head">Cliente</td>
 						<td>'.$rowdata['ClienteNombre'].'</td>
 					</tr>';
 				}
 				$html .='
 				<tr>
-                    <td class="meta-head">'.$x_column_maquina_sing.'</td>
+                    <td class="meta-head">Maquina</td>
                     <td>'.$rowdata['NombreMaquina'].'</td>
                 </tr>
 				<tr>

@@ -418,7 +418,7 @@ array_push( $arrInsumos2,$row );
 	<div class="col-sm-6">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por <?php echo $x_column_maquina_sing; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por Maquina</h5>
 			</header>
 			 <div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -467,7 +467,7 @@ array_push( $arrInsumos2,$row );
 					]);
 
 					var options = {
-					  title: 'Grafico Resumen por '.$x_column_maquina_sing,
+					  title: 'Grafico Resumen por Maquina',
 					  is3D: true,
 					};
 
@@ -693,7 +693,7 @@ array_push( $arrInsumos2,$row );
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<thead>
 							<tr role="row">
-								<th><?php echo $x_column_maquina_sing; ?></th>
+								<th>Maquina</th>
 								<th>Articulo usado</th>
 								<th width="200">Cantidad</th>
 								<th width="200">Valor Unitario</th>

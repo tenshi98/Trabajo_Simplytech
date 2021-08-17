@@ -642,7 +642,7 @@ array_push( $arrFlashpoint,$row );
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
-						<th><?php echo $x_column_maquina_sing; ?></th>
+						<th>Maquina</th>
 						<th>Empresa</th>
 					</tr>
 				</thead>
@@ -808,7 +808,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
+				$Form_Inputs->form_select_depend1('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
 										 'Matriz de Analisis','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
 				$Form_Inputs->form_date('Fecha Muestreo Inicio','f_inicio', $x3, 2);

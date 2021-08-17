@@ -868,11 +868,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 				$Form_Inputs = new Form_Inputs();
 				//verifico el sistema
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
-											 $x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0, 
+					$Form_Inputs->form_select_depend1('Cliente','idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
+											 'Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
+					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
 				}
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
@@ -934,12 +934,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 					</tr>
 					<?php if(isset($_SESSION['ot_basicos']['NombreCliente'])&&$_SESSION['ot_basicos']['NombreCliente']!=''){?>
 						<tr>
-							<td class="meta-head"><?php echo $x_column_cliente_sing; ?></td>
+							<td class="meta-head">Cliente</td>
 							<td><?php echo $_SESSION['ot_basicos']['NombreCliente']; ?></td>
 						</tr>
 					<?php }?>
 					<tr>
-						<td class="meta-head"><?php echo $x_column_maquina_sing; ?></td>
+						<td class="meta-head">Maquina</td>
 						<td><?php echo $_SESSION['ot_basicos']['NombreMaquina']; ?></td>
 					</tr>
 					<tr>
@@ -1163,11 +1163,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 				$Form_Inputs = new Form_Inputs();
 				//verifico el sistema
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
-											 $x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0, 
+					$Form_Inputs->form_select_depend1('Cliente','idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
+											 'Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
+					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
 				}
 				
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
@@ -1220,8 +1220,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'id_desc':            $order_by = 'ORDER BY orden_trabajo_listado.idOT DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';break;
 		case 'fprog_asc':          $order_by = 'ORDER BY orden_trabajo_listado.f_programacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Programacion Ascendente';break;
 		case 'fprog_desc':         $order_by = 'ORDER BY orden_trabajo_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Programacion Descendente';break;
-		case 'maquina_asc':        $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Ascendente'; break;
-		case 'maquina_desc':       $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Descendente';break;
+		case 'maquina_asc':        $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente'; break;
+		case 'maquina_desc':       $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
 		case 'prioridad_asc':      $order_by = 'ORDER BY core_ot_prioridad.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente';break;
 		case 'prioridad_desc':     $order_by = 'ORDER BY core_ot_prioridad.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
 		case 'tipotrab_asc':       $order_by = 'ORDER BY core_ot_tipos.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente'; break;
@@ -1349,11 +1349,11 @@ array_push( $arrOTS,$row );
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
-											 $x_column_maquina_sing,'idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0, 
+					$Form_Inputs->form_select_depend1('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
+											 'Maquina','idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
+					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
 				}
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
@@ -1406,7 +1406,7 @@ array_push( $arrOTS,$row );
 							</div>
 						</th>
 						<th>
-							<div class="pull-left"><?php echo $x_column_maquina_sing; ?></div>
+							<div class="pull-left">Maquina</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>

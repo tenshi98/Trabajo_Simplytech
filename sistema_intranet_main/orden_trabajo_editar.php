@@ -2017,12 +2017,12 @@ array_push( $arrTrabajo,$row );
 					</tr>
 					<?php if(isset($rowdata['NombreCliente'])&&$rowdata['NombreCliente']!=''){?>
 						<tr>
-							<td class="meta-head"><?php echo $x_column_cliente_sing; ?></td>
+							<td class="meta-head">Cliente</td>
 							<td><?php echo $rowdata['NombreCliente'] ?></td>
 						</tr>
 					<?php }?>
 					<tr>
-						<td class="meta-head"><?php echo $x_column_maquina_sing; ?></td>
+						<td class="meta-head">Maquina</td>
 						<td><?php echo $rowdata['NombreMaquina']?></td>
 					</tr>
 					<tr>

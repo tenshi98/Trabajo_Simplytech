@@ -533,7 +533,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_2
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Seleccion de <?php echo $x_column_maquina_sing; ?> y Analisis</h5>
+			<h5>Seleccion de Maquina y Analisis</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
@@ -550,7 +550,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_2
 				$Form_Inputs->form_date('Fecha de muestreo','f_muestreo', $x1, 2);
 				$Form_Inputs->form_date('Fecha Recibida','f_recibida', $x2, 2);
 				$Form_Inputs->form_date('Fecha del reporte','f_reporte', $x3, 2);
-				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x4, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
+				$Form_Inputs->form_select_depend1('Maquina','idMaquina', $x4, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
 										 'Analisis','idMatriz', $x5, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										  $dbConn, 'form1');
 				
@@ -593,8 +593,8 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'maquina_asc':    $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Ascendente'; break;
-		case 'maquina_desc':   $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Descendente';break;
+		case 'maquina_asc':    $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente'; break;
+		case 'maquina_desc':   $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
 		case 'analisis_asc':   $order_by = 'ORDER BY maquinas_listado_matriz.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Analisis Ascendente';break;
 		case 'analisis_desc':  $order_by = 'ORDER BY maquinas_listado_matriz.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Analisis Descendente';break;
 		case 'nmuestra_asc':   $order_by = 'ORDER BY analisis_listado.n_muestra ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Muestra Ascendente'; break;
@@ -716,7 +716,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_date('Fecha de muestreo','f_muestreo', $x1, 1);
 				$Form_Inputs->form_date('Fecha Recibida','f_recibida', $x2, 1);
 				$Form_Inputs->form_date('Fecha del reporte','f_reporte', $x3, 1);
-				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x4, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0,
+				$Form_Inputs->form_select_depend1('Maquina','idMaquina', $x4, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0,
 										 'Analisis','idMatriz', $x5, 1, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										  $dbConn, 'form1');
 				
@@ -751,7 +751,7 @@ array_push( $arrTipo,$row );
 				<thead>
 					<tr role="row">
 						<th>
-							<div class="pull-left"><?php echo $x_column_maquina_sing; ?></div>
+							<div class="pull-left">Maquina</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>

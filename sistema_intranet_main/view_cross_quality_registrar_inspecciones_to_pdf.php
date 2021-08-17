@@ -214,7 +214,7 @@ $html .= '
 						<tr>
 							<td style="vertical-align: top; width:33%;">
 								Datos Basicos<br/>
-								<strong>'.$x_column_producto_nombre_sing.'</strong><br/>
+								<strong>Producto</strong><br/>
 								'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>
 								Ubicacion: '.$row_data['UbicacionNombre'].'<br/>';
 								if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_1'];}
@@ -263,7 +263,7 @@ $html .= '
 						} 
 					}
 					if ($arrMaquinas) {
-						$html .= '<tr class="active"><td colspan="6"><strong><?php echo $x_column_maquina_plur; ?> a Utilizar</strong></td></tr>';
+						$html .= '<tr class="active"><td colspan="6"><strong>Maquinas a Utilizar</strong></td></tr>';
 						foreach ($arrMaquinas as $maq) {
 							$html .= '
 							<tr>

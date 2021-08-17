@@ -953,7 +953,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Agregar <?php echo $x_column_maquina_sing; ?></h5>
+			<h5>Agregar Maquina</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -964,7 +964,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x1, 2, 'idMaquina', 'Codigo,Nombre', 'maquinas_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Codigo,Nombre', 'maquinas_listado', $z, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('idAnalisis', $row_data['idAnalisis'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $row_data['idSistema'], 2);
@@ -1205,12 +1205,12 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', $zx1, 0,
 										 'Variedad','idProducto', $x5, 2, 'idProducto', 'Nombre', 'variedades_listado', $zx2, 0, 
 										 $dbConn, 'form1');
-				$Form_Inputs->form_select_depend5($x_column_ubicacion, 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
-							                 $x_column_ubicacion_lvl_1, 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
-							                 $x_column_ubicacion_lvl_2, 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
-							                 $x_column_ubicacion_lvl_3, 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
-							                 $x_column_ubicacion_lvl_4, 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
-							                 $x_column_ubicacion_lvl_5, 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
+				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
+							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
+							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
+							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
+							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
 				
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
@@ -1432,11 +1432,11 @@ array_push( $arrArchivos,$row );
 						<td class="meta-head"><a href="<?php echo $new_location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
-						<td class="meta-head"><?php echo $x_column_producto_nombre_sing; ?></td>
+						<td class="meta-head">Producto</td>
 						<td><?php echo $row_data['ProductoCategoria'].', '.$row_data['ProductoNombre']; ?></td>
 					</tr>
 					<tr>
-						<td class="meta-head"><?php echo $x_column_ubicacion; ?></td>
+						<td class="meta-head">Ubicacion</td>
 						<td>
 							<?php echo $row_data['UbicacionNombre']; 
 							if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}
@@ -1500,9 +1500,9 @@ array_push( $arrArchivos,$row );
 				<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/ ?>
 				<tr class="item-row fact_tittle">
-					<td colspan="5"><?php echo $x_column_maquina_plur; ?> a Utilizar</td>
+					<td colspan="5">Maquinas a Utilizar</td>
 					<td>
-						<a href="<?php echo $new_location.'&addMaquina=true' ?>" title="Agregar <?php echo $x_column_maquina_sing; ?>" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar <?php echo $x_column_maquina_sing; ?></a>
+						<a href="<?php echo $new_location.'&addMaquina=true' ?>" title="Agregar Maquina" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Maquina</a>
 					</td>
 				</tr>
 				<?php 
@@ -1514,7 +1514,7 @@ array_push( $arrArchivos,$row );
 								<div class="btn-group" style="width: 35px;" >
 									<?php 
 									$ubicacion = $new_location.'&del_maq='.simpleEncode($maq['idMaquinas'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar a '.$x_column_maquina_sing.' '.$maq['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar a Maquina '.$maq['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>

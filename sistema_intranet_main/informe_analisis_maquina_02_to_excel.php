@@ -632,7 +632,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 //Titulo columnas
 $objPHPExcel->setActiveSheetIndex(0)
-			->setCellValue('A3', $x_column_maquina_sing)
+			->setCellValue('A3', 'Maquina')
             ->setCellValue('B3', 'Empresa');
 //Maquina y empresa
 $objPHPExcel->setActiveSheetIndex(0)
@@ -758,7 +758,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 
 // Redirect output to a client’s web browser (Excel5)
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Analisis Comparativo '.$x_column_maquina_sing.' al '.fecha_actual().'.xls"');
+header('Content-Disposition: attachment;filename="Analisis Comparativo Maquina al '.fecha_actual().'.xls"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

@@ -226,7 +226,7 @@ foreach ($arrPromedioProd as $productos) {
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos del <?php echo $x_column_producto_nombre_sing; ?> <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Datos del Producto <?php echo $rowdata['Nombre']; ?></h5>
 			<div class="toolbar"> </div>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
@@ -247,13 +247,13 @@ foreach ($arrPromedioProd as $productos) {
 					</div>
 					<div class="col-sm-8">
 						
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del <?php echo $x_column_producto_nombre_sing; ?></h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Producto</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Marca : </strong><?php echo $rowdata['Marca']; ?><br/>
 							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-							<strong><?php echo $x_column_producto_cat_sing; ?> : </strong><?php echo $rowdata['Categoria']; ?><br/>
-							<strong><?php echo $x_column_producto_tipo_sing; ?> : </strong><?php echo $rowdata['Tipo']; ?><br/>
+							<strong>Categoria : </strong><?php echo $rowdata['Categoria']; ?><br/>
+							<strong>Tipo de Producto : </strong><?php echo $rowdata['Tipo']; ?><br/>
 							<strong>Tipo de Producto : </strong><?php echo $rowdata['TipoProd']; ?><br/>
 							<strong>Unidad de medida : </strong><?php echo $rowdata['Unidad']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>

@@ -142,7 +142,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Marca : </strong><?php echo $rowdata['Marca']; ?><br/>
 							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-							<strong><?php echo $x_column_producto_cat_sing; ?> : </strong><?php echo $rowdata['Categoria']; ?><br/>
+							<strong>Categoria : </strong><?php echo $rowdata['Categoria']; ?><br/>
 							<strong>Unidad de medida : </strong><?php echo $rowdata['Unidad']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?>
 						</p>
@@ -237,7 +237,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_select_filter($x_column_producto_cat_sing,'idCategoria', $x2, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Categoria','idCategoria', $x2, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Marca', 'Marca', $x3, 2);
 				$Form_Inputs->form_select_filter('Unidad de Medida','idUml', $x4, 2, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
 				
@@ -282,8 +282,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'marca_desc':       $order_by = 'ORDER BY insumos_listado.Marca DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Marca Descendente';break;
 		case 'nombre_asc':       $order_by = 'ORDER BY insumos_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
 		case 'nombre_desc':      $order_by = 'ORDER BY insumos_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'categoria_asc':    $order_by = 'ORDER BY sistema_productos_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_producto_cat_sing.' Ascendente';break;
-		case 'categoria_desc':   $order_by = 'ORDER BY sistema_productos_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_producto_cat_sing.' Descendente';break;
+		case 'categoria_asc':    $order_by = 'ORDER BY sistema_productos_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente';break;
+		case 'categoria_desc':   $order_by = 'ORDER BY sistema_productos_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
 		case 'unimed_asc':       $order_by = 'ORDER BY sistema_productos_uml.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Unidad Medida Ascendente';break;
 		case 'unimed_desc':      $order_by = 'ORDER BY sistema_productos_uml.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Unidad Medida Descendente';break;
 		case 'estado_asc':       $order_by = 'ORDER BY insumos_listado.idEstado ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
@@ -388,7 +388,7 @@ array_push( $arrProductos,$row );
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
-				$Form_Inputs->form_select_filter($x_column_producto_cat_sing,'idCategoria', $x2, 1, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Categoria','idCategoria', $x2, 1, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Marca', 'Marca', $x3, 1);
 				$Form_Inputs->form_select_filter('Unidad de Medida','idUml', $x4, 1, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
 				
@@ -438,7 +438,7 @@ array_push( $arrProductos,$row );
 							</div>
 						</th>
 						<th>
-							<div class="pull-left"><?php echo $x_column_producto_cat_sing; ?></div>
+							<div class="pull-left">Categoria</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=categoria_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=categoria_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>

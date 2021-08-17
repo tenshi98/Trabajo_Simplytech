@@ -72,7 +72,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 ?>
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_producto_nombre_plur, $rowdata['Nombre'], 'Editar Estado');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Estado');?>
 </div>
 <div class="clearfix"></div>
 
@@ -118,7 +118,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd">			
-						<td><?php echo $x_column_producto_nombre_sing.' '.$rowdata['estado']; ?></td>		
+						<td><?php echo 'Producto '.$rowdata['estado']; ?></td>		
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	 
 								<?php if ($rowlevel['level']>=2){?> 

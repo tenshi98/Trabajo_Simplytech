@@ -65,8 +65,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'id_desc':        $order_by = 'ORDER BY orden_trabajo_listado.idOT DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';break;
 		case 'fprog_asc':      $order_by = 'ORDER BY orden_trabajo_listado.f_programacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> F Prog Ascendente';break;
 		case 'fprog_desc':     $order_by = 'ORDER BY orden_trabajo_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> F Prog Descendente';break;
-		case 'maquina_asc':    $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Ascendente';break;
-		case 'maquina_desc':   $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Descendente';break;
+		case 'maquina_asc':    $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente';break;
+		case 'maquina_desc':   $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
 		case 'prioridad_asc':  $order_by = 'ORDER BY core_ot_prioridad.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente';break;
 		case 'prioridad_desc': $order_by = 'ORDER BY core_ot_prioridad.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
 		case 'tipotrab_asc':   $order_by = 'ORDER BY core_ot_tipos.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente';break;
@@ -190,7 +190,7 @@ array_push( $arrOTS,$row );
 							</div>
 						</th>
 						<th>
-							<div class="pull-left"><?php echo $x_column_maquina_sing; ?></div>
+							<div class="pull-left">Maquina</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
@@ -292,7 +292,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_date('Fecha Programacion Hasta','f_programacion_termino', $x2, 1);
 				$Form_Inputs->form_date('Fecha Termino Desde','f_termino_inicio', $x3, 1);
 				$Form_Inputs->form_date('Fecha Termino Hasta','f_termino_termino', $x4, 1);
-				$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x5, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Maquina','idMaquina', $x5, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_ot', 0, '', $dbConn);
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x7, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo','idTipo', $x8, 1, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);

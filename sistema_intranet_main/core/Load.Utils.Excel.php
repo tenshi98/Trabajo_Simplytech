@@ -15,7 +15,6 @@ $_GET  = $security->xss_clean($_GET);
 /**********************************************************************************************************************************/
 //Configuracion de la plataforma
 require_once 'A1XRXS_sys/xrxs_configuracion/config.php';
-require_once 'core/rename.php';
 
 //Carga de las funciones del nucleo
 require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Utils.Load.php';                  //Carga de variables

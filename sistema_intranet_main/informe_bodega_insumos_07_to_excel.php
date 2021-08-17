@@ -275,7 +275,7 @@ $sheet = 0;
             
 //Titulo columnas
 $objPHPExcel->setActiveSheetIndex($sheet)
-            ->setCellValue('A1', $x_column_producto_cat_sing)
+            ->setCellValue('A1', 'Categoria')
 			->setCellValue('B1', numero_a_mes_corto($graficoMain[1]['mes']))
 			->setCellValue('C1', numero_a_mes_corto($graficoMain[2]['mes']))
 			->setCellValue('D1', numero_a_mes_corto($graficoMain[3]['mes']))
@@ -390,7 +390,7 @@ foreach($arrExistencias as $empresa=>$datos) {
 		
 	//Titulo columnas
 	$objPHPExcel->setActiveSheetIndex($sheet)
-				->setCellValue('A1', $x_column_producto_cat_sing)
+				->setCellValue('A1', 'Categoria')
 				->setCellValue('B1', numero_a_mes_corto($grafico[$datos[0]['BodegaID']][1]['mes']))
 				->setCellValue('C1', numero_a_mes_corto($grafico[$datos[0]['BodegaID']][2]['mes']))
 				->setCellValue('D1', numero_a_mes_corto($grafico[$datos[0]['BodegaID']][3]['mes']))

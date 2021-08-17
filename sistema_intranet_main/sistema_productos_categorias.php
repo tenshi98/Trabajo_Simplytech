@@ -51,9 +51,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/'.$x_column_producto_cat_sing.' Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/'.$x_column_producto_cat_sing.' Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/'.$x_column_producto_cat_sing.' borrada correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Categoria Creada correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Categoria Modificada correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Categoria borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -83,7 +83,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Modificacion de <?php echo $x_column_producto_cat_sing; ?></h5>
+			<h5>Modificacion de Categoria</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -118,7 +118,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear <?php echo $x_column_producto_cat_sing; ?></h5>
+			<h5>Crear Categoria</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -233,7 +233,7 @@ array_push( $arrCategorias,$row );
 		<?php } ?>		
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear <?php echo $x_column_producto_cat_sing; ?></a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Categoria</a><?php } ?>
 
 </div>
 <div class="clearfix"></div> 
@@ -268,7 +268,7 @@ array_push( $arrCategorias,$row );
 <div class="col-sm-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de <?php echo $x_column_producto_cat_plur; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Categorias</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -298,7 +298,7 @@ array_push( $arrCategorias,$row );
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idCategoria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idCategoria'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la '.$x_column_producto_cat_sing.' '.$cat['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la Categoria '.$cat['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>								
 							</div>

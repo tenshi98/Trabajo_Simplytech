@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-					$Form_Inputs->form_select_filter($x_column_producto_cat_sing,'idCategoria', $x2, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
+					$Form_Inputs->form_select_filter('Categoria','idCategoria', $x2, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, '', $dbConn);
 					$Form_Inputs->form_select_filter('Unidad de Medida','idUml', $x3, 2, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('Marca', 'Marca', $x4, 2);
 					$Form_Inputs->form_input_text('Codigo', 'Codigo', $x5, 1);

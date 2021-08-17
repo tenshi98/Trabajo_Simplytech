@@ -494,7 +494,7 @@ array_push( $arrArchivos,$row );
 			<div class="col-sm-4 invoice-col">
 				Datos Basicos
 				<address>
-					<strong>'.$x_column_producto_nombre_sing.'</strong><br/>
+					<strong>Producto</strong><br/>
 					'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>
 					Ubicacion: '.$row_data['UbicacionNombre'];
 					if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}

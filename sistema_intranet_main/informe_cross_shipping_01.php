@@ -201,7 +201,7 @@ array_push( $arrTipo,$row );
 					<tr role="row">
 						<th>Fecha del informe</th>
 						<th>Contenedor Nro.</th>
-						<th><?php echo $x_column_producto_cat_sing.' - '.$x_column_producto_nombre_sing; ?></th>
+						<th>Categoria - Producto</th>
 						<th>Estiba</th>
 						<th>Ubicacion</th>
 						<th>Posicion</th>

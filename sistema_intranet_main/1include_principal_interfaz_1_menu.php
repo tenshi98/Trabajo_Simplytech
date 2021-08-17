@@ -30,7 +30,7 @@ echo '
 		//Lubricacion
 		$temp = $prm_x[6] + $prm_x[10] + $prm_x[11];					
 		if($temp!=0) {
-			echo '<li><a href="#Menu_tab_4" data-toggle="tab"><i class="fa fa-fw fa-cubes" aria-hidden="true"></i> '.$x_column_lubricacion.'</a></li>';
+			echo '<li><a href="#Menu_tab_4" data-toggle="tab"><i class="fa fa-fw fa-cubes" aria-hidden="true"></i> Operaciones x Contrato</a></li>';
 		}
 		
 		//Repositorio

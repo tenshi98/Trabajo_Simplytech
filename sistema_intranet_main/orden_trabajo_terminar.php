@@ -103,7 +103,7 @@ array_push( $arrOTS,$row );
 					<tr role="row">
 						<th>#</th>
 						<th>F Prog</th>
-						<th><?php echo $x_column_maquina_sing; ?></th>
+						<th>Maquina</th>
 						<th>Prioridad</th>
 						<th>Tipo Trabajo</th>
 						<th>Observaciones</th>
@@ -160,11 +160,11 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
-											 $x_column_maquina_sing,'idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0, 
+					$Form_Inputs->form_select_depend1('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $y, 0,
+											 'Maquina','idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Inputs->form_select_filter($x_column_maquina_sing,'idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
+					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
 				}
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);

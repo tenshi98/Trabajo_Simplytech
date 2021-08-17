@@ -778,14 +778,14 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':      $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha ASC ';                          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha del informe Ascendente';break;
-		case 'fecha_desc':     $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha DESC ';                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';break;
-		case 'producto_asc':   $order_by = 'ORDER BY sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_producto_nombre_sing.' Ascendente';break;
-		case 'producto_desc':  $order_by = 'ORDER BY sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_producto_nombre_sing.' Descendente';break;
-		case 'creador_asc':    $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
-		case 'creador_desc':   $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
-		case 'ctn_asc':        $order_by = 'ORDER BY cross_shipping_consolidacion.CTNNombreCompañia ASC ';                       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Contenedor Ascendente';break;
-		case 'ctn_desc':       $order_by = 'ORDER BY cross_shipping_consolidacion.CTNNombreCompañia DESC ';                      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Contenedor Descendente';break;
+		case 'fecha_asc':      $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha ASC ';                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha del informe Ascendente';break;
+		case 'fecha_desc':     $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha DESC ';                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';break;
+		case 'producto_asc':   $order_by = 'ORDER BY sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Producto Ascendente';break;
+		case 'producto_desc':  $order_by = 'ORDER BY sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Producto Descendente';break;
+		case 'creador_asc':    $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
+		case 'creador_desc':   $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+		case 'ctn_asc':        $order_by = 'ORDER BY cross_shipping_consolidacion.CTNNombreCompañia ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Contenedor Ascendente';break;
+		case 'ctn_desc':       $order_by = 'ORDER BY cross_shipping_consolidacion.CTNNombreCompañia DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Contenedor Descendente';break;
 
 				
 		default: $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
@@ -938,7 +938,7 @@ if(isset($pasa)&&$pasa!=0){ ?>
 						<tr role="row">
 							<th>Fecha del informe</th>
 							<th>Contenedor Nro.</th>
-							<th><?php echo $x_column_producto_cat_sing.' - '.$x_column_producto_nombre_sing; ?></th>
+							<th>Categoria - Producto</th>
 							<th width="10">Acciones</th>
 						</tr>
 					</thead>			  
@@ -996,7 +996,7 @@ if(isset($pasa)&&$pasa!=0){ ?>
 							</div>
 						</th>
 						<th>
-							<div class="pull-left"><?php echo $x_column_producto_cat_sing.' - '.$x_column_producto_nombre_sing; ?></div>
+							<div class="pull-left">Categoria - Producto</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=producto_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=producto_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>

@@ -575,7 +575,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 		
 							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
 								<tr class="odd">
-									<td><?php echo $x_column_cliente_sing;?></td>
+									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente'];?></td>
 								</tr>
 							<?php } ?>
@@ -689,7 +689,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				//verifico el sistema
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
-					$Form_Inputs->form_select_depend1($x_column_cliente_sing,'idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, 0,
+					$Form_Inputs->form_select_depend1('Cliente','idCliente', $x0, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, 0,
 											 'Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{

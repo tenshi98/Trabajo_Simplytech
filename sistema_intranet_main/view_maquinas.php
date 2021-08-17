@@ -547,7 +547,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Ver Datos de la <?php echo $x_column_maquina_sing; ?></h5>	
+			<h5>Ver Datos de la Maquina</h5>	
 		</header>
 		<div id="div-3" class="tab-content">
 			
@@ -574,7 +574,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
-								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){ echo '<strong>'.$x_column_ubicacion.' : </strong>'.$rowdata['Ubicacion'];}?>
+								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){ echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];}?>
 								<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_1'];}?>
 								<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_2'];}?>
 								<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){ echo ' - '.$rowdata['Ubicacion_lvl_3'];}?>

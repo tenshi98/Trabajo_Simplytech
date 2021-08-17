@@ -63,8 +63,8 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'maquina_asc':     $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Ascendente'; break;
-		case 'maquina_desc':    $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> '.$x_column_maquina_sing.' Descendente';break;
+		case 'maquina_asc':     $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente'; break;
+		case 'maquina_desc':    $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
 		case 'analisis_asc':    $order_by = 'ORDER BY maquinas_listado_matriz.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Analisis Ascendente';break;
 		case 'analisis_desc':   $order_by = 'ORDER BY maquinas_listado_matriz.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Analisis Descendente';break;
 		case 'estado_asc':      $order_by = 'ORDER BY core_analisis_estado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
@@ -185,7 +185,7 @@ array_push( $arrTipo,$row );
 				<thead>
 					<tr role="row">
 						<th width="200">
-							<div class="pull-left"><?php echo $x_column_maquina_sing; ?></div>
+							<div class="pull-left">Maquina</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'?d=d'.$search.'&order_by=maquina_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
@@ -293,7 +293,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('N° Muestra de Pago', 'n_muestra', $x1, 1);
-				$Form_Inputs->form_select_depend1($x_column_maquina_sing,'idMaquina', $x2, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
+				$Form_Inputs->form_select_depend1('Maquina','idMaquina', $x2, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
 										 'Analisis','idMatriz', $x3, 1, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										  $dbConn, 'form1');
 				$Form_Inputs->form_select('Tipo Documento','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);

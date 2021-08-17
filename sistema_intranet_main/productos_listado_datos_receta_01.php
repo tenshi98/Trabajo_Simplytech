@@ -157,7 +157,7 @@ foreach ($arrPermisos as $prod) {
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter($x_column_producto_nombre_sing,'idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_select_filter('Producto','idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
@@ -282,7 +282,7 @@ foreach ($arrPermisos as $prod) {
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar <?php echo $x_column_producto_nombre_plur; ?></h5>
+			<h5>Editar Productos</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -294,7 +294,7 @@ foreach ($arrPermisos as $prod) {
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter($x_column_producto_nombre_sing,'idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_select_filter('Producto','idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
@@ -416,7 +416,7 @@ foreach ($arrPermisos as $prod) {
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar <?php echo $x_column_producto_nombre_plur; ?></h5>
+			<h5>Editar Productos</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -428,7 +428,7 @@ foreach ($arrPermisos as $prod) {
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter($x_column_producto_nombre_sing,'idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
@@ -528,7 +528,7 @@ foreach ($arrPermisos as $prod) {
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Agregar <?php echo $x_column_producto_nombre_plur; ?></h5>
+			<h5>Agregar Productos</h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -541,7 +541,7 @@ foreach ($arrPermisos as $prod) {
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter($x_column_producto_nombre_sing,'idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
@@ -662,13 +662,13 @@ array_push( $arrProductos,$row );
 	<div class="col-sm-8 fleft">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Paso 2: Seleccion de <?php echo $x_column_producto_nombre_plur; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Paso 2: Seleccion de Productos</h5>
 			</header>
 			<div class="table-responsive">    
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr>
-							<td class="meta-head"><?php echo $x_column_producto_nombre_sing; ?></td>
+							<td class="meta-head">Producto</td>
 							<td><?php echo $rowdata['Nombre']?></td>
 						</tr>
 						<tr>
@@ -684,9 +684,9 @@ array_push( $arrProductos,$row );
 	<div class="col-sm-12">
 		<div class="box">	
 			<header>		
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de <?php echo $x_column_producto_nombre_plur; ?> a utilizar (Calculo para 1 <?php echo $rowdata['Unidad']; ?>)</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos a utilizar (Calculo para 1 <?php echo $rowdata['Unidad']; ?>)</h5>
 				<div class="toolbar">
-					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&addProd=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Agregar <?php echo $x_column_producto_nombre_plur; ?></a>
+					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&addProd=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a>
 				</div>
 			</header>
 			<div class="table-responsive">    
@@ -722,7 +722,7 @@ array_push( $arrProductos,$row );
 													<a href="<?php echo $new_location.'&id='.$_GET['id'].'&editProd='.$producto['idProducto']; ?>" title="Editar Cantidad" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 													<?php 
 													$ubicacion = $new_location.'&id='.$_GET['id'].'&del_prod='.$producto['idProducto'];
-													$dialogo   = '¿Realmente deseas eliminar el '.$x_column_producto_nombre_sing.' '.str_replace('"','',$prod['Nombre']).'?';?>
+													$dialogo   = '¿Realmente deseas eliminar el Producto '.str_replace('"','',$prod['Nombre']).'?';?>
 													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Dato" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 												</div>
 											</td>
@@ -856,7 +856,7 @@ array_push( $arrRecetas,$row );
 ?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, $x_column_producto_nombre_plur, $rowdata['Nombre'], 'Editar Receta');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Receta');?>
 	<?php
 	$nvar  = 0;
 	$total = 0;
@@ -915,7 +915,7 @@ array_push( $arrRecetas,$row );
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
-						<th><?php $x_column_producto_nombre_sing;?></th>
+						<th>Producto</th>
 						<th width="120">Cantidad</th>
 						<th width="10">Acciones</th>
 					</tr>
