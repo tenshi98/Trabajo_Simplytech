@@ -198,7 +198,7 @@ if($in_eq_fueralinea!=0){
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Ver Datos del Contrato</h5>	
+			<h5>Ver Datos de <?php echo $rowTel['Nombre']; ?></h5>	
 		</header>
 		<div class="tab-content">
 			
