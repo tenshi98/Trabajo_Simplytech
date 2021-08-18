@@ -31,11 +31,11 @@ function prod_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $
 	$cadena = '';			
 	$cadena .= '<script>';
 	foreach ($arrProductos as $prod) {
-		$cadena .= 'var id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
+		$cadena .= 'let id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
 	}
 	foreach ($arrProductos as $prod) {
 		if(isset($prod['Proveedor'])&&$prod['Proveedor']!=''){$prov=$prod['Proveedor'];}else{$prov='Sin proveedor';}
-		$cadena .= 'var id_prov_'.$prod['IdAlgo'].'= "'.$prov.'";';	
+		$cadena .= 'let id_prov_'.$prod['IdAlgo'].'= "'.$prov.'";';	
 	}
 	$cadena .= '</script>';
 				
@@ -45,15 +45,10 @@ function prod_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $
 		document.getElementById("'.$input_1.'").onchange = function() {myFunction_'.$input_1.'()};
 
 		function myFunction_'.$input_1.'() {
-			var Componente = document.getElementById("'.$input_1.'").value;
+			const Componente = document.getElementById("'.$input_1.'").value;
 			if (Componente != "") {
-				id_data1=eval("id_data_" + Componente)
-				id_data2=eval("id_prov_" + Componente)
-				//escribo dentro del input
-				var elem1 = document.getElementById("'.$input_result_1.'");
-				var elem2 = document.getElementById("'.$input_result_2.'");
-				elem1.value = id_data1;
-				elem2.value = id_data2;
+				document.getElementById("'.$input_result_1.'").value = eval("id_data_" + Componente);
+				document.getElementById("'.$input_result_2.'").value = eval("id_prov_" + Componente);
 			}
 		}
 	</script>
@@ -81,11 +76,11 @@ function sell_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $
 	$cadena = '';			
 	$cadena .= '<script>';
 	foreach ($arrProductos as $prod) {
-		$cadena .= 'var id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
+		$cadena .= 'let id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
 	}
 	foreach ($arrProductos as $prod) {
 		if(isset($prod['Cliente'])&&$prod['Cliente']!=''){$prov=$prod['Cliente'];}else{$prov='Sin cliente';}
-		$cadena .= 'var id_prov_'.$prod['IdAlgo'].'= "'.$prov.'";';	
+		$cadena .= 'let id_prov_'.$prod['IdAlgo'].'= "'.$prov.'";';	
 	}
 	$cadena .= '</script>';
 				
@@ -95,15 +90,10 @@ function sell_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $
 		document.getElementById("'.$input_1.'").onchange = function() {myFunction_'.$input_1.'()};
 
 		function myFunction_'.$input_1.'() {
-			var Componente = document.getElementById("'.$input_1.'").value;
+			const Componente = document.getElementById("'.$input_1.'").value;
 			if (Componente != "") {
-				id_data1=eval("id_data_" + Componente)
-				id_data2=eval("id_prov_" + Componente)
-				//escribo dentro del input
-				var elem1 = document.getElementById("'.$input_result_1.'");
-				var elem2 = document.getElementById("'.$input_result_2.'");
-				elem1.value = id_data1;
-				elem2.value = id_data2;
+				document.getElementById("'.$input_result_1.'").value = eval("id_data_" + Componente);
+				document.getElementById("'.$input_result_2.'").value = eval("id_prov_" + Componente);
 			}
 		}
 	</script>
@@ -129,7 +119,7 @@ function venta_print_value($tabla1, $input_1, $input_result_1, $dbConn) {
 	$cadena = '';			
 	$cadena .= '<script>';
 	foreach ($arrProductos as $prod) {
-		$cadena .= 'var id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
+		$cadena .= 'let id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
 	}
 	$cadena .= '</script>';
 				
@@ -139,12 +129,9 @@ function venta_print_value($tabla1, $input_1, $input_result_1, $dbConn) {
 		document.getElementById("'.$input_1.'").onchange = function() {myFunction_'.$input_1.'()};
 
 		function myFunction_'.$input_1.'() {
-			var Componente = document.getElementById("'.$input_1.'").value;
+			const Componente = document.getElementById("'.$input_1.'").value;
 			if (Componente != "") {
-				id_data1=eval("id_data_" + Componente)
-				//escribo dentro del input
-				var elem1 = document.getElementById("'.$input_result_1.'");
-				elem1.value = id_data1;
+				document.getElementById("'.$input_result_1.'").value = eval("id_data_" + Componente);
 			}
 		}
 	</script>
@@ -168,30 +155,20 @@ function operacion_input($input_1, $input_2, $input_result_1, $input_result_2, $
 		document.getElementById("'.$input_2.'").onkeyup = function() {myFunction_'.$input_2.'()};
 
 		function myFunction_'.$input_1.'() {
-			var elem1 = document.getElementById("'.$input_1.'").value
-			if (elem1 != "") {
-				var elem2 = document.getElementById("'.$input_2.'").value;
-								
-				result=elem2 '.$oper.' elem1;
-				//escribo dentro del input
-				var '.$input_result_1.' = document.getElementById("'.$input_result_1.'");
-				var '.$input_result_2.' = document.getElementById("'.$input_result_2.'");
-				'.$input_result_1.'.value = result;
-				'.$input_result_2.'.value = result;
+			const elem1 = document.getElementById("'.$input_1.'").value;
+			const elem2 = document.getElementById("'.$input_2.'").value;
+			if (elem1 != "" && elem2 != "") {
+				document.getElementById("'.$input_result_1.'").value = elem2 '.$oper.' elem1;
+				document.getElementById("'.$input_result_2.'").value = elem2 '.$oper.' elem1;
 			}
 		}
 		
 		function myFunction_'.$input_2.'() {
-			var elem1 = document.getElementById("'.$input_2.'").value
-			if (elem1 != "") {
-				var elem2 = document.getElementById("'.$input_1.'").value;
-								
-				result=elem1 '.$oper.' elem2;
-				//escribo dentro del input
-				var '.$input_result_1.' = document.getElementById("'.$input_result_1.'");
-				var '.$input_result_2.' = document.getElementById("'.$input_result_2.'");
-				'.$input_result_1.'.value = result;
-				'.$input_result_2.'.value = result;
+			const elem1 = document.getElementById("'.$input_2.'").value;
+			const elem2 = document.getElementById("'.$input_1.'").value;
+			if (elem1 != "" && elem2 != "") {
+				document.getElementById("'.$input_result_1.'").value = elem1 '.$oper.' elem2;
+				document.getElementById("'.$input_result_2.'").value = elem1 '.$oper.' elem2;
 			}
 		}
 	</script>
@@ -236,14 +213,14 @@ function prod_print_venta($idBodega, $dato, $tabla1, $tabla2, $input_select, $in
 	
 	$cadena .= '<script>';
 	foreach ($arrTipo as $tipo) {
-		$cadena .= 'var uml_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+		$cadena .= 'let uml_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 	}
 	foreach ($arrTipo as $tipo) {
-		$cadena .= 'var valor_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['Valorizacion']).'";';	
+		$cadena .= 'let valor_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['Valorizacion']).'";';	
 	}
 	foreach ($arrTipo as $tipo) {
 		$Total_existencias = $tipo['ingreso'] - $tipo['egreso'];
-		$cadena .= 'var existencia_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';	
+		$cadena .= 'let existencia_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';	
 	}
 	$cadena .= '</script>';			
 							
@@ -255,22 +232,12 @@ function prod_print_venta($idBodega, $dato, $tabla1, $tabla2, $input_select, $in
     document.getElementById("'.$input_select.'").onchange = function() {myFunction_'.$input_select.'()};
 
 		function myFunction_'.$input_select.'() {
-			var Componente = document.getElementById("'.$input_select.'").value;
+			const Componente = document.getElementById("'.$input_select.'").value;
 			if (Componente != "") {
-						
-				uml_data   = eval("uml_data_" + Componente)
-				valor_data = eval("valor_data_" + Componente)
-				existencia = eval("existencia_" + Componente)
-						
-				var elem1 = document.getElementById("'.$input_result_1.'");
-				var elem2 = document.getElementById("'.$input_result_2.'");
-				var elem3 = document.getElementById("'.$input_result_3.'");
-				var elem4 = document.getElementById("'.$input_result_4.'");
-						
-				elem1.value = uml_data;
-				elem2.value = valor_data;
-				elem3.value = existencia;
-				elem4.value = valor_data;
+				document.getElementById("'.$input_result_1.'").value = eval("uml_data_" + Componente);
+				document.getElementById("'.$input_result_2.'").value = eval("valor_data_" + Componente);
+				document.getElementById("'.$input_result_3.'").value = eval("existencia_" + Componente);
+				document.getElementById("'.$input_result_4.'").value = eval("valor_data_" + Componente);
 			}
 		}
 	</script>

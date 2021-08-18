@@ -127,7 +127,7 @@ function paginador_2($nombre, $total_paginas, $original, $search, $num_pag){
 						</li>
 						<script>
 							function myFunction'.$nombre.'() {
-								var npage = document.getElementById("'.$nombre.'").value;
+								const npage = document.getElementById("'.$nombre.'").value;
 								window.location.href = "'.$location.'"+npage+"'.$search.'";
 							}
 						</script>';
@@ -264,7 +264,7 @@ function widget_comunes($com_tras, $Wheater, $NombreUsuario, $Notificacion,$Cuen
 					unit: \'c\',
 					success: function(weather) {
 						
-						var meteo;
+						let meteo = "";
 						switch (weather.code) {
 							case \'1\':
 							case \'2\':
@@ -2692,7 +2692,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 					<script>
 						$(document).ready(function(){
 						  $("#InputTableFilter_tel_1").on("keyup", function() {
-							var value = $(this).val().toLowerCase();
+							let value = $(this).val().toLowerCase();
 							$("#TableFiltered_tel_1 tr").filter(function() {
 							  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 							});
@@ -2953,7 +2953,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 					<script>
 						$(document).ready(function(){
 						  $("#InputTableFilter_tel_1").on("keyup", function() {
-							var value = $(this).val().toLowerCase();
+							let value = $(this).val().toLowerCase();
 							$("#TableFiltered_tel_1 tr").filter(function() {
 							  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 							});
@@ -4433,7 +4433,7 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 		latlon = new google.maps.LatLng(Latitud, Longitud);
 		map.panTo(latlon);
 		//volver todo a normal
-		for (var i = 0; i < markers.length; i++) {
+		for (let i = 0; i < markers.length; i++) {
 			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
 		}
 		//colorear el seleccionado
@@ -4460,14 +4460,14 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 	/* ************************************************************************** */
 	function setMarkers(map, locations, optc) {
 
-		var marker, i, last_latitude, last_longitude;
+		var marker, last_latitude, last_longitude;
 		
-		for (i = 0; i < locations.length; i++) {
+		for (let i = 0; i < locations.length; i++) {
 			
 			//defino ubicacion y datos
-			var latitude   = locations[i][0];
-			var longitude  = locations[i][1];
-			var data       = locations[i][2];
+			let latitude   = locations[i][0];
+			let longitude  = locations[i][1];
+			let data       = locations[i][2];
 			
 			//guardo las ultimas ubicaciones
 			last_latitude   = locations[i][0];
@@ -4541,7 +4541,7 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 	/* ************************************************************************** */
 	// Sets the map on all markers in the array.
 	function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
+        for (let i = 0; i < markers.length; i++) {
           markers[i].setMap(map);
         }
     }
@@ -4962,7 +4962,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 		latlon = new google.maps.LatLng(Latitud, Longitud);
 		map.panTo(latlon);
 		//volver todo a normal
-		for (var i = 0; i < markers.length; i++) {
+		for (let i = 0; i < markers.length; i++) {
 			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
 		}
 		//colorear el seleccionado
@@ -4997,9 +4997,9 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 		for (i = 0; i < locations.length; i++) {
 			
 			//defino ubicacion y datos
-			var latitude   = locations[i][0];
-			var longitude  = locations[i][1];
-			var data       = locations[i][2];
+			let latitude   = locations[i][0];
+			let longitude  = locations[i][1];
+			let data       = locations[i][2];
 			
 			//guardo las ultimas ubicaciones
 			last_latitude   = locations[i][0];
@@ -5073,7 +5073,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 	/* ************************************************************************** */
 	// Sets the map on all markers in the array.
 	function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
+        for (let i = 0; i < markers.length; i++) {
           markers[i].setMap(map);
         }
     }
@@ -5533,7 +5533,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 				latlon = new google.maps.LatLng(Latitud, Longitud);
 				map.panTo(latlon);
 				//volver todo a normal
-				for (var i = 0; i < markers.length; i++) {
+				for (let i = 0; i < markers.length; i++) {
 					markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
 				}
 				//colorear el seleccionado
@@ -5565,9 +5565,9 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 				for (i = 0; i < locations.length; i++) {
 					
 					//defino ubicacion y datos
-					var latitude   = locations[i][0];
-					var longitude  = locations[i][1];
-					var data       = locations[i][2];
+					let latitude   = locations[i][0];
+					let longitude  = locations[i][1];
+					let data       = locations[i][2];
 					
 					//guardo las ultimas ubicaciones
 					last_latitude   = locations[i][0];
@@ -5641,7 +5641,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 			/* ************************************************************************** */
 			// Sets the map on all markers in the array.
 			function setMapOnAll(map) {
-				for (var i = 0; i < markers.length; i++) {
+				for (let i = 0; i < markers.length; i++) {
 				  markers[i].setMap(map);
 				}
 			}
@@ -6136,7 +6136,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 				latlon = new google.maps.LatLng(Latitud, Longitud);
 				map.panTo(latlon);
 				//volver todo a normal
-				for (var i = 0; i < markers.length; i++) {
+				for (let i = 0; i < markers.length; i++) {
 					markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
 				}
 				//colorear el seleccionado
@@ -6169,9 +6169,9 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 				for (i = 0; i < locations.length; i++) {
 					
 					//defino ubicacion y datos
-					var latitude   = locations[i][0];
-					var longitude  = locations[i][1];
-					var data       = locations[i][2];
+					let latitude   = locations[i][0];
+					let longitude  = locations[i][1];
+					let data       = locations[i][2];
 					
 					//guardo las ultimas ubicaciones
 					last_latitude   = locations[i][0];
@@ -6245,7 +6245,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 			/* ************************************************************************** */
 			// Sets the map on all markers in the array.
 			function setMapOnAll(map) {
-				for (var i = 0; i < markers.length; i++) {
+				for (let i = 0; i < markers.length; i++) {
 				  markers[i].setMap(map);
 				}
 			}
@@ -7194,7 +7194,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		latlon = new google.maps.LatLng(Latitud, Longitud);
 		map.panTo(latlon);
 		//volver todo a normal
-		for (var i = 0; i < markers.length; i++) {
+		for (let i = 0; i < markers.length; i++) {
 			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
 		}
 		//colorear el seleccionado
@@ -7256,9 +7256,9 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		for (i = 0; i < locations.length; i++) {
 			
 			//defino ubicacion y datos
-			var latitude   = locations[i][0];
-			var longitude  = locations[i][1];
-			var data       = locations[i][2];
+			let latitude   = locations[i][0];
+			let longitude  = locations[i][1];
+			let data       = locations[i][2];
 			
 			//guardo las ultimas ubicaciones
 			last_latitude   = locations[i][0];
@@ -7332,7 +7332,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 	/* ************************************************************************** */
 	// Sets the map on all markers in the array.
 	function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
+        for (let i = 0; i < markers.length; i++) {
           markers[i].setMap(map);
         }
     }
@@ -8002,7 +8002,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		latlon = new google.maps.LatLng(Latitud, Longitud);
 		map.panTo(latlon);
 		//volver todo a normal
-		for (var i = 0; i < markers.length; i++) {
+		for (let i = 0; i < markers.length; i++) {
 			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
 		}
 		//colorear el seleccionado
@@ -8037,9 +8037,9 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		for (i = 0; i < locations.length; i++) {
 			
 			//defino ubicacion y datos
-			var latitude   = locations[i][0];
-			var longitude  = locations[i][1];
-			var data       = locations[i][2];
+			let latitude   = locations[i][0];
+			let longitude  = locations[i][1];
+			let data       = locations[i][2];
 			
 			//guardo las ultimas ubicaciones
 			last_latitude   = locations[i][0];
@@ -8113,7 +8113,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 	/* ************************************************************************** */
 	// Sets the map on all markers in the array.
 	function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
+        for (let i = 0; i < markers.length; i++) {
           markers[i].setMap(map);
         }
     }
@@ -9159,7 +9159,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 		latlon = new google.maps.LatLng(Latitud, Longitud);
 		map.panTo(latlon);
 		//volver todo a normal
-		for (var i = 0; i < markers.length; i++) {
+		for (let i = 0; i < markers.length; i++) {
 			markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
 		}
 		//colorear el seleccionado
@@ -9194,9 +9194,9 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 		for (i = 0; i < locations.length; i++) {
 			
 			//defino ubicacion y datos
-			var latitude   = locations[i][0];
-			var longitude  = locations[i][1];
-			var data       = locations[i][2];
+			let latitude   = locations[i][0];
+			let longitude  = locations[i][1];
+			let data       = locations[i][2];
 			
 			//guardo las ultimas ubicaciones
 			last_latitude   = locations[i][0];
@@ -9270,7 +9270,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 	/* ************************************************************************** */
 	// Sets the map on all markers in the array.
 	function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
+        for (let i = 0; i < markers.length; i++) {
           markers[i].setMap(map);
         }
     }

@@ -349,7 +349,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 					}
 					function removeActive(x) {
 						/*a function to remove the "active" class from all autocomplete items:*/
-						for (var i = 0; i < x.length; i++) {
+						for (let i = 0; i < x.length; i++) {
 						  x[i].classList.remove("autocomplete-active");
 						}
 					}
@@ -357,7 +357,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 						/*close all autocomplete lists in the document,
 						except the one passed as an argument:*/
 						var x = document.getElementsByClassName("autocomplete-items");
-						for (var i = 0; i < x.length; i++) {
+						for (let i = 0; i < x.length; i++) {
 						  if (elmnt != x[i] && elmnt != inp) {
 							x[i].parentNode.removeChild(x[i]);
 						  }

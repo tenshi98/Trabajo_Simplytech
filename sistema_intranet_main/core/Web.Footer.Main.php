@@ -8,11 +8,14 @@
 
 <!-- Animacion carga pagina -->
 <script>
+	//ocultar el loader
 	$(document).ready(function() {
 		setTimeout(function(){
 			$('body').addClass('loaded');
 		}, 500);
 	});
+	//ajustar tamaño de todos los textarea
+	autosize(document.querySelectorAll('textarea'));
 </script>
 
 <!--Otros archivos javascript -->
