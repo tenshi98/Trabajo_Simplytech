@@ -303,7 +303,7 @@ array_push( $arrProductos,$row );
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
-				$Form_Inputs->form_select_filter('Uso Avatar','idCardImage', $x2, 1, 'idCardImage', 'Nombre', 'core_card_image', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Uso Avatar','idCardImage', $x2, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Posicion Texto','idCardType', $x3, 1, 'idCardType', 'Nombre', 'core_card_type', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
