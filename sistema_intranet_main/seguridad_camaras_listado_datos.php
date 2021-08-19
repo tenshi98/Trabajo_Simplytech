@@ -136,15 +136,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						document.getElementById('div_Config_Puerto').style.display = 'none';
 						document.getElementById('div_Config_Web').style.display = 'none';
 						
-						var idSubconfiguracion;
-						var idSubconfiguracion_sel;
-						var idPais;
-						var idPais_sel;
-						
 						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 									
-							idSubconfiguracion= $("#idSubconfiguracion").val();
-							idPais= $("#idPais").val();
+							let idSubconfiguracion= $("#idSubconfiguracion").val();
+							let idPais= $("#idPais").val();
 							
 							//Si el pais es distinto de chile
 							if(idPais!=1){
@@ -203,7 +198,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						
 						$("#idPais").on("change", function(){
 							
-							idPais_sel= $("#idPais").val();
+							let idPais_sel= $("#idPais").val();
 							
 							//Si el pais es distinto de chile
 							if(idPais_sel!=1){
@@ -219,7 +214,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 									
 						$("#idSubconfiguracion").on("change", function(){ //se ejecuta al cambiar valor del select
 							
-							idSubconfiguracion_sel= $("#idSubconfiguracion").val();
+							let idSubconfiguracion_sel= $("#idSubconfiguracion").val();
 							
 							//Si tiene subconfiguracion
 							if(idSubconfiguracion_sel == 1){ 

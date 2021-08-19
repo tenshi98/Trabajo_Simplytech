@@ -472,10 +472,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_f_termino_desde').style.display = 'none';
 					document.getElementById('div_f_termino_hasta').style.display = 'none';
 						
-					var idEstado;
-						
 					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
-						idEstado = $(this).val(); //Asignamos el valor seleccionado
+						let idEstado = $(this).val(); //Asignamos el valor seleccionado
 						
 						//Solicitado
 						if(idEstado == 1){ 

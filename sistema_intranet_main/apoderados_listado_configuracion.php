@@ -119,11 +119,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					?>
 					<script>
 						document.getElementById('div_idOpciones_2').style.display = 'none';		
-						var Sensores_val;
-						var modelSelected1;
 						
 						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)	
-							Sensores_val= $("#idOpciones_1").val();	
+							let Sensores_val= $("#idOpciones_1").val();	
 							//si es SI
 							if(Sensores_val == 1){ 
 								document.getElementById('div_idOpciones_2').style.display = '';		
@@ -134,7 +132,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						}); 
 								
 						$("#idOpciones_1").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+							let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 							//si es SI
 							if(modelSelected1 == 1){ 
 								document.getElementById('div_idOpciones_2').style.display = '';										

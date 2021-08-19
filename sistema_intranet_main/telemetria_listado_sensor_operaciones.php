@@ -147,12 +147,9 @@ $rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 					document.getElementById('div_RangoMinimo').style.display = 'none';
 					document.getElementById('div_RangoMaximo').style.display = 'none';
 						
-					var idFuncion;
-					var idFuncion_sel;
-						
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 									
-						idFuncion= $("#idFuncion").val();
+						let idFuncion= $("#idFuncion").val();
 							
 						//Voltaje
 						if(idFuncion == 15){ 
@@ -170,7 +167,7 @@ $rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 					}); 
 						
 					$("#idFuncion").on("change", function(){ //se ejecuta al cambiar valor del select
-						idFuncion_sel = $(this).val(); //Asignamos el valor seleccionado
+						let idFuncion_sel = $(this).val(); //Asignamos el valor seleccionado
 						
 						//Voltaje
 						if(idFuncion_sel == 15){ 
@@ -286,10 +283,8 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 					document.getElementById('div_RangoMinimo').style.display = 'none';
 					document.getElementById('div_RangoMaximo').style.display = 'none';
 						
-					var idFuncion_sel;
-						
 					$("#idFuncion").on("change", function(){ //se ejecuta al cambiar valor del select
-						idFuncion_sel = $(this).val(); //Asignamos el valor seleccionado
+						let idFuncion_sel = $(this).val(); //Asignamos el valor seleccionado
 						
 						//Voltaje
 						if(idFuncion_sel == 15){ 

@@ -108,7 +108,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	/**************************************************************************************/
 	//variables 
-	$unk_var = 0;
+	$unk_temp = 0;
 	//mensajes de error en caso de no tener configurados los datos
 	if(isset($arrConsulta[0]['EquipoActivacionValor'])&&$arrConsulta[0]['EquipoActivacionValor']==0){
 		echo '
@@ -117,7 +117,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
 		</div>';
-		$unk_var++;
+		$unk_temp++;
 	}
 	if(isset($arrConsulta[0]['EquipoColacion_termino'])&&$arrConsulta[0]['EquipoColacion_termino']=='00:00:00'){
 		echo '
@@ -126,7 +126,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
 		</div>';
-		$unk_var++;
+		$unk_temp++;
 	}
 	if(isset($arrConsulta[0]['EquipoColacion_inicio'])&&$arrConsulta[0]['EquipoColacion_inicio']=='00:00:00'){
 		echo '
@@ -135,7 +135,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
 		</div>';
-		$unk_var++;
+		$unk_temp++;
 	}
 	if(isset($arrConsulta[0]['EquipoJornada_inicio'])&&$arrConsulta[0]['EquipoJornada_inicio']=='00:00:00'){
 		echo '
@@ -144,7 +144,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
 		</div>';
-		$unk_var++;
+		$unk_temp++;
 	}
 	if(isset($arrConsulta[0]['EquipoJornada_termino'])&&$arrConsulta[0]['EquipoJornada_termino']=='00:00:00'){
 		echo '
@@ -153,9 +153,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
 		</div>';
-		$unk_var++;
+		$unk_temp++;
 	}
-	if($unk_var!=0){
+	if($unk_temp!=0){
 		echo '<div class="clearfix"></div>';
 	}
 

@@ -489,11 +489,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['solicitud_otros'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['solicitud_otros'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
@@ -505,11 +505,11 @@ require_once '0_validate_user_1.php';
 				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*****************************************************************************/
-				$_SESSION['solicitud_otros'][$bvar]['idOtros']       = $bvar;
-				$_SESSION['solicitud_otros'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['solicitud_otros'][$bvar]['Cantidad']      = $Cantidad;
-				$_SESSION['solicitud_otros'][$bvar]['idFrecuencia']  = $idFrecuencia;
-				$_SESSION['solicitud_otros'][$bvar]['Frecuencia']    = $rowFrecuencia['Nombre'];
+				$_SESSION['solicitud_otros'][$idInterno]['idOtros']       = $idInterno;
+				$_SESSION['solicitud_otros'][$idInterno]['Nombre']        = $Nombre;
+				$_SESSION['solicitud_otros'][$idInterno]['Cantidad']      = $Cantidad;
+				$_SESSION['solicitud_otros'][$idInterno]['idFrecuencia']  = $idFrecuencia;
+				$_SESSION['solicitud_otros'][$idInterno]['Frecuencia']    = $rowFrecuencia['Nombre'];
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -1264,82 +1264,82 @@ require_once '0_validate_user_1.php';
 				}
 				/*************************************************************/
 				//Guardo en un arreglo las solicitudes relacionadas
-				$bvar = 1;
+				$idInterno = 1;
 				/************************************/
 				//Productos
 				foreach ($arrProductos as $prod) { 
-					$_SESSION['ocompra_sol_rel'][$bvar]['Type']          = 1;
-					$_SESSION['ocompra_sol_rel'][$bvar]['idExistencia']  = $prod['idExistencia'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Sistema']       = $prod['Sistema'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idSolicitud']   = $prod['idSolicitud'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['NombreProd']    = $prod['NombreProd'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Cantidad']      = $prod['Cantidad'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Medida']        = $prod['Medida'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idProdSol']     = $prod['idProdSol'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['bvar']          = $bvar;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Type']          = 1;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idExistencia']  = $prod['idExistencia'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Sistema']       = $prod['Sistema'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idSolicitud']   = $prod['idSolicitud'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['NombreProd']    = $prod['NombreProd'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Cantidad']      = $prod['Cantidad'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $prod['idProdSol'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
 					
-					$bvar++;
+					$idInterno++;
 				}
 				/************************************/
 				//Insumos
 				foreach ($arrInsumos as $prod) { 
-					$_SESSION['ocompra_sol_rel'][$bvar]['Type']          = 2;
-					$_SESSION['ocompra_sol_rel'][$bvar]['idExistencia']  = $prod['idExistencia'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Sistema']       = $prod['Sistema'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idSolicitud']   = $prod['idSolicitud'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['NombreProd']    = $prod['NombreProd'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Cantidad']      = $prod['Cantidad'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Medida']        = $prod['Medida'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idProdSol']     = $prod['idProdSol'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['bvar']          = $bvar;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Type']          = 2;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idExistencia']  = $prod['idExistencia'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Sistema']       = $prod['Sistema'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idSolicitud']   = $prod['idSolicitud'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['NombreProd']    = $prod['NombreProd'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Cantidad']      = $prod['Cantidad'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $prod['idProdSol'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
 					
-					$bvar++;
+					$idInterno++;
 				}
 				/************************************/
 				//Arriendos
 				foreach ($arrMaquinasArriendo as $prod) { 
-					$_SESSION['ocompra_sol_rel'][$bvar]['Type']          = 3;
-					$_SESSION['ocompra_sol_rel'][$bvar]['idExistencia']  = $prod['idExistencia'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Sistema']       = $prod['Sistema'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idSolicitud']   = $prod['idSolicitud'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['NombreProd']    = $prod['NombreProd'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Cantidad']      = $prod['Cantidad'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Medida']        = $prod['Medida'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idProdSol']     = $prod['idProdSol'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['bvar']          = $bvar;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Type']          = 3;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idExistencia']  = $prod['idExistencia'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Sistema']       = $prod['Sistema'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idSolicitud']   = $prod['idSolicitud'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['NombreProd']    = $prod['NombreProd'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Cantidad']      = $prod['Cantidad'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $prod['idProdSol'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
 					
-					$bvar++;
+					$idInterno++;
 				}
 				/************************************/
 				//Servicios
 				foreach ($arrServicios as $prod) { 
-					$_SESSION['ocompra_sol_rel'][$bvar]['Type']          = 4;
-					$_SESSION['ocompra_sol_rel'][$bvar]['idExistencia']  = $prod['idExistencia'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Sistema']       = $prod['Sistema'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idSolicitud']   = $prod['idSolicitud'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['NombreProd']    = $prod['NombreProd'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Cantidad']      = $prod['Cantidad'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Medida']        = $prod['Medida'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idProdSol']     = $prod['idProdSol'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['bvar']          = $bvar;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Type']          = 4;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idExistencia']  = $prod['idExistencia'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Sistema']       = $prod['Sistema'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idSolicitud']   = $prod['idSolicitud'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['NombreProd']    = $prod['NombreProd'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Cantidad']      = $prod['Cantidad'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $prod['idProdSol'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
 					
-					$bvar++;
+					$idInterno++;
 				}
 				/************************************/
 				//Otros
 				$cantidad_x = 1;
 				foreach ($arrOtros as $prod) { 
-					$_SESSION['ocompra_sol_rel'][$bvar]['Type']          = 5;
-					$_SESSION['ocompra_sol_rel'][$bvar]['idExistencia']  = $prod['idExistencia'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Sistema']       = $prod['Sistema'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idSolicitud']   = $prod['idSolicitud'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['NombreProd']    = $prod['NombreProd'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Cantidad']      = $prod['Cantidad'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['Medida']        = $prod['Medida'];
-					$_SESSION['ocompra_sol_rel'][$bvar]['idProdSol']     = $cantidad_x;
-					$_SESSION['ocompra_sol_rel'][$bvar]['bvar']          = $bvar;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Type']          = 5;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idExistencia']  = $prod['idExistencia'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Sistema']       = $prod['Sistema'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idSolicitud']   = $prod['idSolicitud'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['NombreProd']    = $prod['NombreProd'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Cantidad']      = $prod['Cantidad'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
+					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $cantidad_x;
+					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
 					
-					$bvar++;
+					$idInterno++;
 					$cantidad_x++;
 				}
 				

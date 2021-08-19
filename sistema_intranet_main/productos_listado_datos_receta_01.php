@@ -197,18 +197,19 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 				}
 				?>
+				</script>
+				
+				<script>
 				document.getElementById("idProductoRel").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProductoRel").value;
+					let Componente = document.getElementById("idProductoRel").value;
 					if (Componente != "") {
-						id_data=eval("id_data_" + Componente)
 						//escribo dentro del input
-						var elem = document.getElementById("escribeme");
-						elem.value = id_data;
+						document.getElementById("escribeme").value = eval("id_data_" + Componente);
 					}
 				}
 				</script>
@@ -335,18 +336,19 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 				}
 				?>
+				</script>
+				
+				<script>
 				document.getElementById("idProductoRel").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProductoRel").value;
+					let Componente = document.getElementById("idProductoRel").value;
 					if (Componente != "") {
-						id_data=eval("id_data_" + Componente)
 						//escribo dentro del input
-						var elem = document.getElementById("escribeme");
-						elem.value = id_data;
+						document.getElementById("escribeme").value = eval("id_data_" + Componente);
 					}
 				}
 				</script>
@@ -468,18 +470,19 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 				}
 				?>
+				</script>
+				
+				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProducto").value;
+					let Componente = document.getElementById("idProducto").value;
 					if (Componente != "") {
-						id_data=eval("id_data_" + Componente)
 						//escribo dentro del input
-						var elem = document.getElementById("escribeme");
-						elem.value = id_data;
+						document.getElementById("escribeme").value = eval("id_data_" + Componente);
 					}
 				}
 				</script>
@@ -581,18 +584,19 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 				}
 				?>
+				</script>
+				
+				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProducto").value;
+					let Componente = document.getElementById("idProducto").value;
 					if (Componente != "") {
-						id_data=eval("id_data_" + Componente)
 						//escribo dentro del input
-						var elem = document.getElementById("escribeme");
-						elem.value = id_data;
+						document.getElementById("escribeme").value = eval("id_data_" + Componente);
 					}
 				}
 				</script>
@@ -858,16 +862,16 @@ array_push( $arrRecetas,$row );
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Receta');?>
 	<?php
-	$nvar  = 0;
+	$conteoRecetas  = 0;
 	$total = 0;
 	foreach ($arrRecetas as $receta) {
 		//Se verifica si existen productos en la receta
-		$nvar++;
+		$conteoRecetas++;
 		//Se verifica si ya existe una cantidad predeterminada superior a 1
 		$total = $total + $receta['Cantidad'];
 	}
 	//Se revisa si existen Productos dentro de la receta
-	if($nvar==0){ ?>
+	if($conteoRecetas==0){ ?>
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Receta</a><?php }?>
 		</div>	

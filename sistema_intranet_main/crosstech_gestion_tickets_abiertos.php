@@ -106,10 +106,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_DescripcionCierre').style.display = 'none';
 					document.getElementById('div_DescripcionCancelacion').style.display = 'none';
 						
-					var idEstado;
-	
 					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
-						idEstado = $(this).val(); //Asignamos el valor seleccionado
+						let idEstado = $(this).val(); //Asignamos el valor seleccionado
 					
 						//si es cerrada
 						if(idEstado == 2){ 

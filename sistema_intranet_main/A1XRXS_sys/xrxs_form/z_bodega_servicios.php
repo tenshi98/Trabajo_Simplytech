@@ -798,19 +798,19 @@ require_once '0_validate_user_1.php';
 
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['servicios_ing_descuentos'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['servicios_ing_descuentos'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['servicios_ing_descuentos'][$bvar]['idDescuento'] = $bvar;
-				$_SESSION['servicios_ing_descuentos'][$bvar]['Nombre'] = $Nombre;
-				$_SESSION['servicios_ing_descuentos'][$bvar]['vTotal'] = $vTotal;
+				$_SESSION['servicios_ing_descuentos'][$idInterno]['idDescuento']  = $idInterno;
+				$_SESSION['servicios_ing_descuentos'][$idInterno]['Nombre']       = $Nombre;
+				$_SESSION['servicios_ing_descuentos'][$idInterno]['vTotal']       = $vTotal;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -1952,19 +1952,19 @@ require_once '0_validate_user_1.php';
 
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['servicios_egr_descuentos'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['servicios_egr_descuentos'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['servicios_egr_descuentos'][$bvar]['idDescuento'] = $bvar;
-				$_SESSION['servicios_egr_descuentos'][$bvar]['Nombre'] = $Nombre;
-				$_SESSION['servicios_egr_descuentos'][$bvar]['vTotal'] = $vTotal;
+				$_SESSION['servicios_egr_descuentos'][$idInterno]['idDescuento']  = $idInterno;
+				$_SESSION['servicios_egr_descuentos'][$idInterno]['Nombre']       = $Nombre;
+				$_SESSION['servicios_egr_descuentos'][$idInterno]['vTotal']       = $vTotal;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -2761,20 +2761,20 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['servicios_ing_nd_otros'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['servicios_ing_nd_otros'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['servicios_ing_nd_otros'][$bvar]['idOtros']       = $bvar;
-				$_SESSION['servicios_ing_nd_otros'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['servicios_ing_nd_otros'][$bvar]['vTotal']        = $vTotal;
+				$_SESSION['servicios_ing_nd_otros'][$idInterno]['idOtros']  = $idInterno;
+				$_SESSION['servicios_ing_nd_otros'][$idInterno]['Nombre']   = $Nombre;
+				$_SESSION['servicios_ing_nd_otros'][$idInterno]['vTotal']   = $vTotal;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -3671,20 +3671,20 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['servicios_ing_nc_otros'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['servicios_ing_nc_otros'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['servicios_ing_nc_otros'][$bvar]['idOtros']       = $bvar;
-				$_SESSION['servicios_ing_nc_otros'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['servicios_ing_nc_otros'][$bvar]['vTotal']        = $vTotal;
+				$_SESSION['servicios_ing_nc_otros'][$idInterno]['idOtros']  = $idInterno;
+				$_SESSION['servicios_ing_nc_otros'][$idInterno]['Nombre']   = $Nombre;
+				$_SESSION['servicios_ing_nc_otros'][$idInterno]['vTotal']   = $vTotal;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -4578,20 +4578,20 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['servicios_egr_nd_otros'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['servicios_egr_nd_otros'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['servicios_egr_nd_otros'][$bvar]['idOtros']       = $bvar;
-				$_SESSION['servicios_egr_nd_otros'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['servicios_egr_nd_otros'][$bvar]['vTotal']        = $vTotal;
+				$_SESSION['servicios_egr_nd_otros'][$idInterno]['idOtros']  = $idInterno;
+				$_SESSION['servicios_egr_nd_otros'][$idInterno]['Nombre']   = $Nombre;
+				$_SESSION['servicios_egr_nd_otros'][$idInterno]['vTotal']   = $vTotal;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -5487,20 +5487,20 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['servicios_egr_nc_otros'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['servicios_egr_nc_otros'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['servicios_egr_nc_otros'][$bvar]['idOtros']       = $bvar;
-				$_SESSION['servicios_egr_nc_otros'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['servicios_egr_nc_otros'][$bvar]['vTotal']        = $vTotal;
+				$_SESSION['servicios_egr_nc_otros'][$idInterno]['idOtros']  = $idInterno;
+				$_SESSION['servicios_egr_nc_otros'][$idInterno]['Nombre']   = $Nombre;
+				$_SESSION['servicios_egr_nc_otros'][$idInterno]['vTotal']   = $vTotal;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	

@@ -440,7 +440,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 					/* ************************************************************************** */
 					// Sets the map on all markers in the array.
 					function setMapOnAll(map_1) {
-						for (var i = 0; i < markersCam.length; i++) {
+						for (let i = 0; i < markersCam.length; i++) {
 							markersCam[i].setMap(map_1);
 						}
 					}

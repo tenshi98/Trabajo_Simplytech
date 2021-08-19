@@ -151,7 +151,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 			$(document).ready(function(){
 		
 				$('input[type=password]').keyup(function() {
-					var pswd = $(this).val();
+					let pswd = $(this).val();
 					
 					//validate the length
 					if ( pswd.length < 8 ) {

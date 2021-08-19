@@ -335,22 +335,22 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['nomina_personas'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['nomina_personas'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['nomina_personas'][$bvar]['idPersona']     = $bvar;
-				$_SESSION['nomina_personas'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['nomina_personas'][$bvar]['Rut']           = $Rut;
-				$_SESSION['nomina_personas'][$bvar]['NDocCedula']    = $NDocCedula;
-				$_SESSION['nomina_personas'][$bvar]['idEstado']      = $idEstado;
+				$_SESSION['nomina_personas'][$idInterno]['idPersona']     = $idInterno;
+				$_SESSION['nomina_personas'][$idInterno]['Nombre']        = $Nombre;
+				$_SESSION['nomina_personas'][$idInterno]['Rut']           = $Rut;
+				$_SESSION['nomina_personas'][$idInterno]['NDocCedula']    = $NDocCedula;
+				$_SESSION['nomina_personas'][$idInterno]['idEstado']      = $idEstado;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	

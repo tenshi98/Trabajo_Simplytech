@@ -263,12 +263,9 @@ foreach ($arrPermisos as $prod) {
 				<script>
 					document.getElementById('div_idLaboratorio').style.display = 'none';
 					
-					var Sensores_val;
-					var modelSelected1;
-					
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 								
-						Sensores_val= $("#idTipo").val();
+						let Sensores_val= $("#idTipo").val();
 						
 						//si es Interno
 						if(Sensores_val == 1){ 
@@ -282,7 +279,7 @@ foreach ($arrPermisos as $prod) {
 					}); 
 							
 					$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si es Interno
 						if(modelSelected1 == 1){ 
@@ -491,10 +488,8 @@ foreach ($arrPermisos as $prod) {
 				<script>
 					document.getElementById('div_idLaboratorio').style.display = 'none';
 					
-					var modelSelected1;
-							
 					$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si es Interno
 						if(modelSelected1 == 1){ 

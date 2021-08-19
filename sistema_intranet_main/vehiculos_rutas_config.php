@@ -436,7 +436,7 @@ array_push( $arrRutas,$row );
 
 
 								];
-								for (var i = 0, j = marcadores.length; i < j; i++) { 
+								for (let i = 0, j = marcadores.length; i < j; i++) { 
 									if(i!=<?php echo $count_in-1;?>){ 
 										var contenido = marcadores[i].contenido;
 										var marker = new google.maps.Marker({

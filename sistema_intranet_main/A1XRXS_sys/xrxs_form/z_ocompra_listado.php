@@ -563,11 +563,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['ocompra_otros'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['ocompra_otros'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
@@ -579,13 +579,13 @@ require_once '0_validate_user_1.php';
 				
 				/*************************************************************************/
 				//creo el producto
-				$_SESSION['ocompra_otros'][$bvar]['idOtros']       = $bvar;
-				$_SESSION['ocompra_otros'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['ocompra_otros'][$bvar]['Cantidad']      = $Cantidad;
-				$_SESSION['ocompra_otros'][$bvar]['idFrecuencia']  = $idFrecuencia;
-				$_SESSION['ocompra_otros'][$bvar]['vUnitario']     = $vUnitario;
-				$_SESSION['ocompra_otros'][$bvar]['vTotal']        = $vTotal;
-				$_SESSION['ocompra_otros'][$bvar]['Frecuencia']    = $rowFrecuencia['Nombre'];
+				$_SESSION['ocompra_otros'][$idInterno]['idOtros']       = $idInterno;
+				$_SESSION['ocompra_otros'][$idInterno]['Nombre']        = $Nombre;
+				$_SESSION['ocompra_otros'][$idInterno]['Cantidad']      = $Cantidad;
+				$_SESSION['ocompra_otros'][$idInterno]['idFrecuencia']  = $idFrecuencia;
+				$_SESSION['ocompra_otros'][$idInterno]['vUnitario']     = $vUnitario;
+				$_SESSION['ocompra_otros'][$idInterno]['vTotal']        = $vTotal;
+				$_SESSION['ocompra_otros'][$idInterno]['Frecuencia']    = $rowFrecuencia['Nombre'];
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -641,11 +641,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['ocompra_boletas'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['ocompra_boletas'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
@@ -657,12 +657,12 @@ require_once '0_validate_user_1.php';
 				
 				/*************************************************************************/
 				//creo el producto
-				$_SESSION['ocompra_boletas'][$bvar]['idBoleta']      = $bvar;
-				$_SESSION['ocompra_boletas'][$bvar]['idTrabajador']  = $idTrabajador;
-				$_SESSION['ocompra_boletas'][$bvar]['N_Doc']         = $N_Doc;
-				$_SESSION['ocompra_boletas'][$bvar]['Descripcion']   = $Descripcion;
-				$_SESSION['ocompra_boletas'][$bvar]['Valor']         = $Valor;
-				$_SESSION['ocompra_boletas'][$bvar]['trabajador']    = $rowTrabajador['Rut'].' - '.$rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'];
+				$_SESSION['ocompra_boletas'][$idInterno]['idBoleta']      = $idInterno;
+				$_SESSION['ocompra_boletas'][$idInterno]['idTrabajador']  = $idTrabajador;
+				$_SESSION['ocompra_boletas'][$idInterno]['N_Doc']         = $N_Doc;
+				$_SESSION['ocompra_boletas'][$idInterno]['Descripcion']   = $Descripcion;
+				$_SESSION['ocompra_boletas'][$idInterno]['Valor']         = $Valor;
+				$_SESSION['ocompra_boletas'][$idInterno]['trabajador']    = $rowTrabajador['Rut'].' - '.$rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'];
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -684,7 +684,7 @@ require_once '0_validate_user_1.php';
 				
 				/*************************************************************************/
 				//creo el producto
-				$_SESSION['ocompra_boletas'][$oldidProducto]['idBoleta']      = $bvar;
+				$_SESSION['ocompra_boletas'][$oldidProducto]['idBoleta']      = $oldidProducto;
 				$_SESSION['ocompra_boletas'][$oldidProducto]['idTrabajador']  = $idTrabajador;
 				$_SESSION['ocompra_boletas'][$oldidProducto]['N_Doc']         = $N_Doc;
 				$_SESSION['ocompra_boletas'][$oldidProducto]['Descripcion']   = $Descripcion;
@@ -717,11 +717,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['ocompra_boletasEmp'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['ocompra_boletasEmp'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
@@ -730,9 +730,9 @@ require_once '0_validate_user_1.php';
 				
 				/*************************************************************************/
 				//creo el producto
-				$_SESSION['ocompra_boletasEmp'][$bvar]['idBoleta']      = $bvar;
-				$_SESSION['ocompra_boletasEmp'][$bvar]['Descripcion']   = $Descripcion;
-				$_SESSION['ocompra_boletasEmp'][$bvar]['Valor']         = $Valor;
+				$_SESSION['ocompra_boletasEmp'][$idInterno]['idBoleta']      = $idInterno;
+				$_SESSION['ocompra_boletasEmp'][$idInterno]['Descripcion']   = $Descripcion;
+				$_SESSION['ocompra_boletasEmp'][$idInterno]['Valor']         = $Valor;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -751,7 +751,7 @@ require_once '0_validate_user_1.php';
 				
 				/*************************************************************************/
 				//creo el producto
-				$_SESSION['ocompra_boletasEmp'][$oldidProducto]['idBoleta']      = $bvar;
+				$_SESSION['ocompra_boletasEmp'][$oldidProducto]['idBoleta']      = $oldidProducto;
 				$_SESSION['ocompra_boletasEmp'][$oldidProducto]['Descripcion']   = $Descripcion;
 				$_SESSION['ocompra_boletasEmp'][$oldidProducto]['Valor']         = $Valor;
 				
@@ -781,11 +781,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['ocompra_documentos'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['ocompra_documentos'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
@@ -797,12 +797,12 @@ require_once '0_validate_user_1.php';
 				
 				/*************************************************************************/
 				//creo el producto
-				$_SESSION['ocompra_documentos'][$bvar]['idDoc']       = $bvar;
-				$_SESSION['ocompra_documentos'][$bvar]['idDocPago']   = $idDocPago;
-				$_SESSION['ocompra_documentos'][$bvar]['NDocPago']    = $NDocPago;
-				$_SESSION['ocompra_documentos'][$bvar]['Fpago']       = $Fpago;
-				$_SESSION['ocompra_documentos'][$bvar]['vTotal']      = $vTotal;
-				$_SESSION['ocompra_documentos'][$bvar]['DocPago']     = $rowDocumentos['Nombre'];
+				$_SESSION['ocompra_documentos'][$idInterno]['idDoc']       = $idInterno;
+				$_SESSION['ocompra_documentos'][$idInterno]['idDocPago']   = $idDocPago;
+				$_SESSION['ocompra_documentos'][$idInterno]['NDocPago']    = $NDocPago;
+				$_SESSION['ocompra_documentos'][$idInterno]['Fpago']       = $Fpago;
+				$_SESSION['ocompra_documentos'][$idInterno]['vTotal']      = $vTotal;
+				$_SESSION['ocompra_documentos'][$idInterno]['DocPago']     = $rowDocumentos['Nombre'];
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	

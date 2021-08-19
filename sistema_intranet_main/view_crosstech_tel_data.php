@@ -540,7 +540,7 @@ if($in_eq_fueralinea!=0){
 					latlon = new google.maps.LatLng(Latitud, Longitud);
 					map.panTo(latlon);
 					//volver todo a normal
-					for (var i = 0; i < markers.length; i++) {
+					for (let i = 0; i < markers.length; i++) {
 						markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
 					}
 					//colorear el seleccionado
@@ -649,7 +649,7 @@ if($in_eq_fueralinea!=0){
 				/* ************************************************************************** */
 				// Sets the map on all markers in the array.
 				function setMapOnAll(map) {
-					for (var i = 0; i < markers.length; i++) {
+					for (let i = 0; i < markers.length; i++) {
 					  markers[i].setMap(map);
 					}
 				}

@@ -796,7 +796,7 @@ $ing_mens_contrato = valores($ing_mens_contrato, 0);
 					function calculatePercentage() {
 						var dataPoint = chart.options.data[0].dataPoints;
 						var total = dataPoint[0].y;
-						for(var i = 0; i < dataPoint.length; i++) {
+						for(let i = 0; i < dataPoint.length; i++) {
 							if(i == 0) {
 								chart.options.data[0].dataPoints[i].percentage = 100;
 							} else {

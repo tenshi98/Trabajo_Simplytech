@@ -172,16 +172,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				document.getElementById("Valor").onkeyup = function() {myFunction()};
 
 					function myFunction() {
-						var CantIngreso = document.getElementById("Cantidad").value
-						if (CantIngreso != "") {
-							var elem3 = document.getElementById("Valor").value;
-							
-							id_data=CantIngreso * elem3;
-							//escribo dentro del input
-							var Total = document.getElementById("Total");
-							var vTotal = document.getElementById("ValorTotal");
-							Total.value = id_data;
-							vTotal.value = id_data;
+						let CantIngreso = document.getElementById("Cantidad").value
+						let valor       = document.getElementById("Valor").value;
+						if (CantIngreso != "" && valor != "") {
+							document.getElementById("Total").value      = CantIngreso * valor;
+							document.getElementById("ValorTotal").value = CantIngreso * valor;
 						}
 					}
 				
@@ -194,14 +189,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_Valor').style.display = 'none';
 					document.getElementById('div_ValorTotal').style.display = 'none';
 							
-					var Sensores_val;
-					var modelSelected1;
-							
-			 
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
-								
-						Sensores_val= $("#idUtilizable").val();
-								
+						let Sensores_val= $("#idUtilizable").val();
 						//si es SI
 						if(Sensores_val == 1){ 
 							document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -225,8 +214,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					}); 
 							
 					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						//si es SI
 						if(modelSelected1 == 1){ 
 							document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -355,16 +343,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				document.getElementById("Valor").onkeyup = function() {myFunction()};
 
 					function myFunction() {
-						var CantIngreso = document.getElementById("Cantidad").value
-						if (CantIngreso != "") {
-							var elem3 = document.getElementById("Valor").value;
-							
-							id_data=CantIngreso * elem3;
-							//escribo dentro del input
-							var Total = document.getElementById("Total");
-							var vTotal = document.getElementById("ValorTotal");
-							Total.value = id_data;
-							vTotal.value = id_data;
+						let CantIngreso = document.getElementById("Cantidad").value
+						let Valor = document.getElementById("Valor").value;
+						if (CantIngreso != "" && Valor != "") {
+							document.getElementById("Total").value      = CantIngreso * Valor;
+							document.getElementById("ValorTotal").value = CantIngreso * Valor;
 						}
 					}
 				
@@ -377,11 +360,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_Valor').style.display = 'none';
 					document.getElementById('div_ValorTotal').style.display = 'none';
 							
-					var modelSelected1;
-			
 					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						//si es SI
 						if(modelSelected1 == 1){ 
 							document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -959,13 +939,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_ValorMensual').style.display = 'none';
 					document.getElementById('div_Presupuesto').style.display = 'none';
 								
-					var TipoLicitacion_val;
-					var modelSelected1;
-								
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
-									
-						TipoLicitacion_val= $("#idTipoLicitacion").val();
-									
+						let TipoLicitacion_val= $("#idTipoLicitacion").val();
 						//si es A suma Alzada
 						if(TipoLicitacion_val == 1){ 
 							document.getElementById('div_ValorMensual').style.display = '';
@@ -983,8 +958,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					}); 
 								
 					$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-							
+						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						//si es A suma Alzada
 						if(modelSelected1 == 1){ 
 							document.getElementById('div_ValorMensual').style.display = '';
@@ -1069,11 +1043,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_ValorMensual').style.display = 'none';
 					document.getElementById('div_Presupuesto').style.display = 'none';
 							
-					var modelSelected1;
-						
 					$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						//si es A suma Alzada
 						if(modelSelected1 == 1){ 
 							document.getElementById('div_ValorMensual').style.display = '';

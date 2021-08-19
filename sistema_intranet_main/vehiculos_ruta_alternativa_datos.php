@@ -116,12 +116,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					<script>
 						document.getElementById('div_Fecha').style.display = 'none';
 						document.getElementById('div_idDia').style.display = 'none';
-						var tipo_val;
-						var modelSelected;
-		 
+						
 						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 							
-							tipo_val= $("#idTipo").val();
+							let tipo_val= $("#idTipo").val();
 							//si es SI
 							if(tipo_val == 1){ 
 								document.getElementById('div_Fecha').style.display = 'none';
@@ -135,7 +133,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						}); 
 						
 						$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected = $(this).val(); //Asignamos el valor seleccionado
+							let modelSelected = $(this).val(); //Asignamos el valor seleccionado
 					
 							//si es SI
 							if(modelSelected == 1){ 

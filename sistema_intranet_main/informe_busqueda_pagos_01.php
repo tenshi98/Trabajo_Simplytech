@@ -393,13 +393,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_idProveedor').style.display = 'none';
 					document.getElementById('div_idCliente').style.display = 'none';
 						
-					var tipo_val;
-						
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idType").on("change", function(){ //se ejecuta al cambiar valor del select
-							tipo_val= $("#idType").val();//Asignamos el valor seleccionado
-								
+							let tipo_val= $("#idType").val();//Asignamos el valor seleccionado
 								
 							//Proveedores
 							if(tipo_val == 1){ 

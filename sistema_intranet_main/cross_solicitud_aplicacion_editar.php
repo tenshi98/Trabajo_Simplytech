@@ -212,10 +212,8 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 					document.getElementById('div_LitrosAplicados').style.display = 'none';
 					//document.getElementById('div_T_Aplicacion').style.display = 'none';
 						
-					var idEjecucion;
-						
 					$("#idEjecucion").on("change", function(){ //se ejecuta al cambiar valor del select
-						idEjecucion = $(this).val(); //Asignamos el valor seleccionado
+						let idEjecucion = $(this).val(); //Asignamos el valor seleccionado
 					
 						//No ejecutado
 						if(idEjecucion == 1){ 
@@ -333,35 +331,27 @@ array_push( $arrTipo,$row );
 					
 					<?php
 					foreach ($arrTipo as $tipo) {
-						echo 'var id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'var id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 					}
 					?>
 					document.getElementById("idProducto").onchange = function() {myFunction()};
 
 					function myFunction() {
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					}
 					
 					$(document).ready(function(){
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					});
 				</script>
@@ -438,35 +428,27 @@ array_push( $arrTipo,$row );
 					
 					<?php
 					foreach ($arrTipo as $tipo) {
-						echo 'var id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'var id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 					}
 					?>
 					document.getElementById("idProducto").onchange = function() {myFunction()};
 
 					function myFunction() {
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					}
 					
 					$(document).ready(function(){
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					});
 				</script>
@@ -846,35 +828,27 @@ array_push( $arrTipo,$row );
 				<script>
 					<?php
 					foreach ($arrTipo as $tipo) {
-						echo 'var id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'var id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 					}
 					?>
 					document.getElementById("idProducto").onchange = function() {myFunction()};
 
 					function myFunction() {
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					}
 					
 					$(document).ready(function(){
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					});
 				</script>

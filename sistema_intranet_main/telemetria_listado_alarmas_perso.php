@@ -612,8 +612,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById("idTipo").onchange = function() {cambia_tipo()};
 					
 					function cambia_tipo(){
-						var Componente
-						Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
+						let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
 						
 						switch(Componente) {
 							//Errores Conjuntos
@@ -753,8 +752,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById("idTipo").onchange = function() {cambia_tipo()};
 					
 					function cambia_tipo(){
-						var Componente
-						Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
+						let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
 						
 						switch(Componente) {
 							//Errores Conjuntos

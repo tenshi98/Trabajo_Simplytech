@@ -183,10 +183,10 @@ $Form_Inputs = new Inputs();
 	//////////////////////////////////////////////////////////
 	function addpago(number, maximo) {
 
-		var pago        = parseInt(document.getElementById("ingpago_"+number).value);
-		var maxs        = parseInt(maximo);
-		var pago_x      = document.getElementById("ingpago_"+number).value;
-		var ok          = 0;
+		let pago        = parseInt(document.getElementById("ingpago_"+number).value);
+		let maxs        = parseInt(maximo);
+		let pago_x      = document.getElementById("ingpago_"+number).value;
+		let ok          = 0;
 
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
@@ -202,10 +202,10 @@ $Form_Inputs = new Inputs();
 	//////////////////////////////////////////////////////////
 	function addpago_2(number, maximo) {
 		
-		var pago        = parseInt(document.getElementById("ingpago_"+number).value);
-		var maxs        = parseInt(maximo);
-		var pago_x      = document.getElementById("ingpago_"+number).value;
-		var ok          = 0;
+		let pago        = parseInt(document.getElementById("ingpago_"+number).value);
+		let maxs        = parseInt(maximo);
+		let pago_x      = document.getElementById("ingpago_"+number).value;
+		let ok          = 0;
 
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
@@ -314,10 +314,10 @@ $Form_Inputs = new Inputs();
 				
 			$('#submitBtn').click(function() {
 				//Se verifica que todos los input tengan valores asignados
-				var ninput = <?php echo ($Registro_total-$Registro_ok);?>;
+				let ninput = <?php echo ($Registro_total-$Registro_ok);?>;
 					
 				//verifica el valor
-				var monto = <?php echo $TotalGeneral; ?>;
+				let monto = <?php echo $TotalGeneral; ?>;
 				if(monto!=0&&ninput==0){
 					$('#submitmodal').show();
 					$('#confirmacion').text('Los montos estan correctos, ¿confirmas el pago?');
@@ -512,9 +512,9 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 		doSomething(number);
 							
 		//Variable con los totales
-		var TotalAPagar = 0;
-		var MontoPagado = 0;
-		var MontoAPagar = 0;
+		let TotalAPagar = 0;
+		let MontoPagado = 0;
+		let MontoAPagar = 0;
 	
 		// check if checkbox is checked
 		<?php foreach ($arrTrabajador as $tipo){ ?>
@@ -586,8 +586,6 @@ $_SESSION['form_require'].=',idFacturacion';
 								</div>
 							</div>
 									
-							<script src="'.DB_SITE_REPO.'/LIBS_js/chosen/chosen.jquery.js" type="text/javascript"></script>
-							<script src="'.DB_SITE_REPO.'/LIBS_js/chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 							<script type="text/javascript">
 										
 								$.fn.oldChosen = $.fn.chosen

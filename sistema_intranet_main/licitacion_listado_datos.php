@@ -135,12 +135,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						document.getElementById('div_ValorMensual').style.display = 'none';
 						document.getElementById('div_Presupuesto').style.display = 'none';
 								
-						var TipoLicitacion_val;
-						var modelSelected1;
-								
 						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 									
-							TipoLicitacion_val= $("#idTipoLicitacion").val();
+							let TipoLicitacion_val= $("#idTipoLicitacion").val();
 									
 							//si es A suma Alzada
 							if(TipoLicitacion_val == 1){ 
@@ -159,7 +156,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						}); 
 								
 						$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+							let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 							
 							//si es A suma Alzada
 							if(modelSelected1 == 1){ 

@@ -234,7 +234,7 @@ array_push( $arrRutasAlt,$row );
 
 
 								];
-								for (var i = 0, j = marcadores.length; i < j; i++) {  
+								for (let i = 0, j = marcadores.length; i < j; i++) {  
 								  var contenido = marcadores[i].contenido;
 								  var marker = new google.maps.Marker({
 									position	: new google.maps.LatLng(marcadores[i].position.lat, marcadores[i].position.lng),

@@ -118,7 +118,7 @@ foreach ($arrUnimed as $data) {
 
 
 <script>
-	var HoraRefresco = '<?php echo hora_actual(); ?>';
+	let HoraRefresco = '<?php echo hora_actual(); ?>';
 	
 	<?php
 	$GPS = 'var new_locations = [ ';

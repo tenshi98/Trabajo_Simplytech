@@ -372,7 +372,7 @@ $Form_Inputs = new Inputs();
 					
 <script>
 	
-	var room = 0;
+	let room = 0;
 	
 	/**********************************************************/
 	//Se agrega producto
@@ -380,8 +380,8 @@ $Form_Inputs = new Inputs();
 		//se incrementa en 1
 		room++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_producto');
-		var objclone = document.getElementById('clone_producto'),
+		let objTo    = document.getElementById('insert_producto');
+		let objclone = document.getElementById('clone_producto'),
 		//se clonan los div
 		clone_producto = objclone.cloneNode(true);
 		clone_producto.id = 'new_producto_'+room; 
@@ -429,21 +429,17 @@ $Form_Inputs = new Inputs();
 		}
 				
 		foreach ($arrTipo as $tipo) {
-			echo 'var id_prov_'.$tipo['idProducto'].'= "'.$tipo['Proveedor'].'";';
-			echo 'var id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-			echo 'var id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';		
+			echo 'let id_prov_'.$tipo['idProducto'].'= "'.$tipo['Proveedor'].'";';
+			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';		
 		}
 		?>
-		var selectedOption = select.options[select.selectedIndex];
-        var Componente = selectedOption.value;
+		let Componente = select.options[select.selectedIndex].value;
 		if (Componente != "") {
-			id_data1=eval("id_med_" + Componente)
-			id_data2=eval("id_prov_" + Componente)
-			id_data3=eval("id_value_" + Componente)
 			//escribo dentro del input
-			$(select).closest('.prod_container').find('.escribeme1').val(id_data1);
-			$(select).closest('.prod_container').find('.escribeme2').val(id_data2);
-			$(select).closest('.prod_container').find('.escribeme3').val(id_data3);
+			$(select).closest('.prod_container').find('.escribeme1').val(eval("id_med_" + Componente));
+			$(select).closest('.prod_container').find('.escribeme2').val(eval("id_prov_" + Componente));
+			$(select).closest('.prod_container').find('.escribeme3').val(eval("id_value_" + Componente));
 		}
     }
 </script>
@@ -647,13 +643,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					document.getElementById('div_fecha_fact_desde').style.display = 'none';
 					document.getElementById('div_fecha_fact_hasta').style.display = 'none';
 					
-					var idDocumentos;
-					var idDocumentosSelected;
-					
 					//se ejecuta al cargar la página (OBLIGATORIO)
 					$(document).ready(function(){ 
-							
-						idDocumentosSelected= $("#idDocumentos").val();
+						let idDocumentosSelected= $("#idDocumentos").val();
 						//si es Factura
 						if(idDocumentosSelected == 2){ 
 							document.getElementById('div_fecha_fact_desde').style.display = '';
@@ -671,8 +663,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					}); 
 						
 					$("#idDocumentos").on("change", function(){ //se ejecuta al cambiar valor del select
-						idDocumentos = $(this).val(); //Asignamos el valor seleccionado
-					
+						let idDocumentos = $(this).val(); //Asignamos el valor seleccionado
 						//si es Factura
 						if(idDocumentos == 2){ 
 							document.getElementById('div_fecha_fact_desde').style.display = '';
@@ -1031,11 +1022,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					document.getElementById('div_fecha_fact_desde').style.display = 'none';
 					document.getElementById('div_fecha_fact_hasta').style.display = 'none';
 						
-					var idDocumentos;
-						
 					$("#idDocumentos").on("change", function(){ //se ejecuta al cambiar valor del select
-						idDocumentos = $(this).val(); //Asignamos el valor seleccionado
-					
+						let idDocumentos = $(this).val(); //Asignamos el valor seleccionado
 						//si es Factura
 						if(idDocumentos == 2){ 
 							document.getElementById('div_fecha_fact_desde').style.display = '';

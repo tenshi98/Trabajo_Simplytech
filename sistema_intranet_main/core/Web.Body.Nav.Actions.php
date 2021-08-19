@@ -81,9 +81,9 @@ if(isset($_SESSION['menu'])&&$_SESSION['menu']!=''){
 }?> 
 
 <script type='text/javascript'>
-    var sesionbase = <?php echo $iii; ?>;
-    var a=$("body");
-    var b=$("#navbar_nav");
+    let sesionbase = <?php echo $iii; ?>;
+    let a          = $("body");
+    let b          = $("#navbar_nav");
     //Muestra y oculta la barra lateral
     function setVsual() {
 		sesionbase = sesionbase + 1;

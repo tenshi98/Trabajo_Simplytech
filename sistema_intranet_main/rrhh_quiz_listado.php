@@ -162,11 +162,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_idEscala').style.display = 'none';
 					document.getElementById('div_Porcentaje_apro').style.display = 'none';
 					
-					var TipoEvaluacion;
-					
 					/************************************************************/
 					//Tipo Evaluacion
-					TipoEvaluacion= $("#idTipoEvaluacion").val();	
+					let TipoEvaluacion= $("#idTipoEvaluacion").val();	
 					//Escala
 					if(TipoEvaluacion == 1){ 
 						document.getElementById('div_idEscala').style.display = '';
@@ -290,13 +288,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_Opcion_6').style.display = 'none';
 					document.getElementById('div_OpcionCorrecta').style.display = 'none';
 	
-					var modelSelected = 0;
-					
-					
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected= $("#idTipo").val();//Asignamos el valor seleccionado
+							let modelSelected= $("#idTipo").val();//Asignamos el valor seleccionado
 							
 							
 							//Seleccion Unica
@@ -309,17 +304,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_6').style.display = '';
 								document.getElementById('div_OpcionCorrecta').style.display = '';
 								
-								//selecciono el select
-								var select = document.getElementById('OpcionCorrecta');
 								//lo vacio
-								select.length = 1
-								select.options[0].value = ""
-								select.options[0].text = "Seleccione una Opcion"
+								document.getElementById('OpcionCorrecta').length = 1
+								document.getElementById('OpcionCorrecta').options[0].value = ""
+								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opcion"
 								//Le indico la cantidad de opciones a mostrar
 								for ( i = 1; i <= 6; i += 1 ) {
 									option = document.createElement('option');
 									option.value = option.text = i;
-									select.add( option );
+									document.getElementById('OpcionCorrecta').add( option );
 								}
 							
 							//Seleccion Multiple	
@@ -342,17 +335,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_6').style.display = 'none';
 								document.getElementById('div_OpcionCorrecta').style.display = '';
 								
-								//selecciono el select
-								var select = document.getElementById('OpcionCorrecta');
 								//lo vacio
-								select.length = 1
-								select.options[0].value = ""
-								select.options[0].text = "Seleccione una Opcion"
+								document.getElementById('OpcionCorrecta').length = 1
+								document.getElementById('OpcionCorrecta').options[0].value = ""
+								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opcion"
 								//Le indico la cantidad de opciones a mostrar
 								for ( i = 1; i <= 2; i += 1 ) {
 									option = document.createElement('option');
 									option.value = option.text = i;
-									select.add( option );
+									document.getElementById('OpcionCorrecta').add( option );
 								}
 								
 							//Para el resto	
@@ -471,13 +462,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_Opcion_6').style.display = 'none';
 					document.getElementById('div_OpcionCorrecta').style.display = 'none';
 					
-					var tipo_val;
-					var modelSelected = 0;
-					
-					
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 						
-						tipo_val= $("#idTipo").val();
+						let tipo_val= $("#idTipo").val();
 						
 						//Seleccion Unica
 						if(tipo_val == 1){ 
@@ -534,7 +521,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							
 	
 						$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected= $("#idTipo").val();
+							let modelSelected= $("#idTipo").val();
 							
 							//Seleccion Unica
 							if(modelSelected == 1){ 
@@ -546,17 +533,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_6').style.display = '';
 								document.getElementById('div_OpcionCorrecta').style.display = '';
 								
-								//selecciono el select
-								var select = document.getElementById('OpcionCorrecta');
 								//lo vacio
-								select.length = 1
-								select.options[0].value = ""
-								select.options[0].text = "Seleccione una Opcion"
+								document.getElementById('OpcionCorrecta').length = 1
+								document.getElementById('OpcionCorrecta').options[0].value = ""
+								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opcion"
 								//Le indico la cantidad de opciones a mostrar
 								for ( i = 1; i <= 6; i += 1 ) {
 									option = document.createElement('option');
 									option.value = option.text = i;
-									select.add( option );
+									document.getElementById('OpcionCorrecta').add( option );
 								}
 							
 							//Seleccion Multiple		
@@ -579,17 +564,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_6').style.display = 'none';
 								document.getElementById('div_OpcionCorrecta').style.display = '';
 								
-								//selecciono el select
-								var select = document.getElementById('OpcionCorrecta');
 								//lo vacio
-								select.length = 1
-								select.options[0].value = ""
-								select.options[0].text = "Seleccione una Opcion"
+								document.getElementById('OpcionCorrecta').length = 1
+								document.getElementById('OpcionCorrecta').options[0].value = ""
+								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opcion"
 								//Le indico la cantidad de opciones a mostrar
 								for ( i = 1; i <= 2; i += 1 ) {
 									option = document.createElement('option');
 									option.value = option.text = i;
-									select.add( option );
+									document.getElementById('OpcionCorrecta').add( option );
 								}
 							
 							//Para el resto	
@@ -945,12 +928,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 					document.getElementById('div_idEscala').style.display = 'none';
 					document.getElementById('div_Porcentaje_apro').style.display = 'none';
 					
-					var TipoEvaluacion;
-					
 					$(document).ready(function(){ 
 						//Tipo Puntuacion
 						$("#idTipoEvaluacion").on("change", function(){
-							TipoEvaluacion= $("#idTipoEvaluacion").val();
+							let TipoEvaluacion= $("#idTipoEvaluacion").val();
 							
 							//Escala
 							if(TipoEvaluacion == 1){ 

@@ -369,9 +369,9 @@ array_push( $arrMediciones,$row );
 $('#dataTable tr').hover(function(){
     //Partida
     if (typeof $(this).data('sensor_1') !== 'undefined') {
-		var elem = document.getElementById('partida').style.backgroundColor  = '#5cb85c';
+		document.getElementById('partida').style.backgroundColor  = '#5cb85c';
 	}else{
-		var elem = document.getElementById('partida').style.backgroundColor  = '#ee465a';
+		document.getElementById('partida').style.backgroundColor  = '#ee465a';
 	}
 	//Parada
 	if (typeof $(this).data('sensor_2') !== 'undefined') {
@@ -380,54 +380,54 @@ $('#dataTable tr').hover(function(){
 	/************************************************/
 	//Freno giro
 	if (typeof $(this).data('sensor_3') !== 'undefined') {
-		var elem = document.getElementById('giro_stop').style.backgroundColor  = '#FFA500';
+		document.getElementById('giro_stop').style.backgroundColor  = '#FFA500';
 	}else{
-		var elem = document.getElementById('giro_stop').style.backgroundColor  = '#ffffff';
+		document.getElementById('giro_stop').style.backgroundColor  = '#ffffff';
 	}
 	//Giro izquierda
 	if (typeof $(this).data('sensor_4') !== 'undefined') {
-		var elem = document.getElementById('giro_left').style.backgroundColor  = '#5cb85c';
+		document.getElementById('giro_left').style.backgroundColor  = '#5cb85c';
 	}else{
-		var elem = document.getElementById('giro_left').style.backgroundColor  = '#ffffff';
+		document.getElementById('giro_left').style.backgroundColor  = '#ffffff';
 	}
 	//Giro derecha
 	if (typeof $(this).data('sensor_5') !== 'undefined') {
-		var elem = document.getElementById('giro_right').style.backgroundColor  = '#5cb85c';
+		document.getElementById('giro_right').style.backgroundColor  = '#5cb85c';
 	}else{
-		var elem = document.getElementById('giro_right').style.backgroundColor  = '#ffffff';
+		document.getElementById('giro_right').style.backgroundColor  = '#ffffff';
 	}
 	/************************************************/
 	//Freno de carro
 	if (typeof $(this).data('sensor_6') !== 'undefined') {
-		var elem = document.getElementById('carro_stop').style.backgroundColor  = '#FFA500';
+		document.getElementById('carro_stop').style.backgroundColor  = '#FFA500';
 	}else{
-		var elem = document.getElementById('carro_stop').style.backgroundColor  = '#ffffff';
+		document.getElementById('carro_stop').style.backgroundColor  = '#ffffff';
 	}
 	//Carro adelante
 	if (typeof $(this).data('sensor_7') !== 'undefined') {
-		var elem = document.getElementById('carro_right').style.backgroundColor  = '#5cb85c';
+		document.getElementById('carro_right').style.backgroundColor  = '#5cb85c';
 	}else{
-		var elem = document.getElementById('carro_right').style.backgroundColor  = '#ffffff';
+		document.getElementById('carro_right').style.backgroundColor  = '#ffffff';
 	}
 	//Carro atras
 	if (typeof $(this).data('sensor_8') !== 'undefined') {
-		var elem = document.getElementById('carro_left').style.backgroundColor  = '#5cb85c';
+		document.getElementById('carro_left').style.backgroundColor  = '#5cb85c';
 	}else{
-		var elem = document.getElementById('carro_left').style.backgroundColor  = '#ffffff';
+		document.getElementById('carro_left').style.backgroundColor  = '#ffffff';
 	}
 	/************************************************/
 	//Elevacion arriba
 	if (typeof $(this).data('sensor_9') !== 'undefined') {
-		var elem = document.getElementById('elevacion_up').style.backgroundColor  = '#5cb85c';
+		document.getElementById('elevacion_up').style.backgroundColor  = '#5cb85c';
 	}else{
-		var elem = document.getElementById('elevacion_up').style.backgroundColor  = '#ffffff';
+		document.getElementById('elevacion_up').style.backgroundColor  = '#ffffff';
 	}
 	
 	//Elevacion abajo
 	if (typeof $(this).data('sensor_10') !== 'undefined') {
-		var elem = document.getElementById('elevacion_down').style.backgroundColor  = '#5cb85c';
+		document.getElementById('elevacion_down').style.backgroundColor  = '#5cb85c';
 	}else{
-		var elem = document.getElementById('elevacion_down').style.backgroundColor  = '#ffffff';
+		document.getElementById('elevacion_down').style.backgroundColor  = '#ffffff';
 	}
 	
 	/************************************************/
@@ -437,15 +437,15 @@ $('#dataTable tr').hover(function(){
 	}
 	//Carga maxima
 	if (typeof $(this).data('sensor_12') !== 'undefined') {
-		var elem = document.getElementById('carga').style.backgroundColor  = '#ee465a';
+		document.getElementById('carga').style.backgroundColor  = '#ee465a';
 	}else{
-		var elem = document.getElementById('carga').style.backgroundColor  = '#ffffff';
+		document.getElementById('carga').style.backgroundColor  = '#ffffff';
 	}
 	//Carga maxima en punta
 	if (typeof $(this).data('sensor_13') !== 'undefined') {
-		var elem = document.getElementById('carga_maxima').style.backgroundColor  = '#ee465a';
+		document.getElementById('carga_maxima').style.backgroundColor  = '#ee465a';
 	}else{
-		var elem = document.getElementById('carga_maxima').style.backgroundColor  = '#ffffff';
+		document.getElementById('carga_maxima').style.backgroundColor  = '#ffffff';
 	}
 	
 	 
@@ -459,9 +459,9 @@ $('#dataTable tr').hover(function(){
 	/************************************************/
 	//Voltaje
 	if (typeof $(this).data('sensor_15') !== 'undefined') {
-		var elem = document.getElementById('voltaje').style.backgroundColor  = '#ee465a';
+		document.getElementById('voltaje').style.backgroundColor  = '#ee465a';
 	}else{
-		var elem = document.getElementById('voltaje').style.backgroundColor  = '#ffffff';
+		document.getElementById('voltaje').style.backgroundColor  = '#ffffff';
 	}
 });
 </script>

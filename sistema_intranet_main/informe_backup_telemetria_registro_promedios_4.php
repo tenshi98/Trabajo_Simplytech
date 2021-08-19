@@ -935,7 +935,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$input .= 'document.getElementById("idTelemetria").onchange = function() {cambia_idTelemetria()};';
 					
 				foreach ($arrSelect as $select) {
-					$input .= 'var id_data_'.$select['idTelemetria'].'=new Array(""';
+					$input .= 'let id_data_'.$select['idTelemetria'].'=new Array(""';
 					$valorx = 0;
 					for ($i = 1; $i <= $select['cantSensores']; $i++) {
 						//solo sensores activos
@@ -952,7 +952,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}
 				foreach ($arrSelect as $select) {
 							
-					$input .= 'var data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
+					$input .= 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
 					$valorx = 0;
 					for ($i = 1; $i <= $select['cantSensores']; $i++) {
 						//solo sensores activos
@@ -975,33 +975,32 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}	
 					
 				$input .= 'function cambia_idTelemetria(){
-					var Componente
-					Componente = document.form1.idTelemetria[document.form1.idTelemetria.selectedIndex].value
+					let Componente = document.form1.idTelemetria[document.form1.idTelemetria.selectedIndex].value
 					try {
 					if (Componente != "") {
-						id_data=eval("id_data_" + Componente)
-						data=eval("data_" + Componente)
-						num_int = id_data.length
-						document.form1.idGrupo.length = num_int
+						id_data = eval("id_data_" + Componente);
+						data    = eval("data_" + Componente);
+						num_int = id_data.length;
+						document.form1.idGrupo.length = num_int;
 						for(i=0;i<num_int;i++){
-						   document.form1.idGrupo.options[i].value=id_data[i]
-						   document.form1.idGrupo.options[i].text=data[i]
+						   document.form1.idGrupo.options[i].value=id_data[i];
+						   document.form1.idGrupo.options[i].text=data[i];
 						}
 						document.getElementById("div_sensorn").style.display = "block";	
 					}else{
-						document.form1.idGrupo.length = 1
-						document.form1.idGrupo.options[0].value = ""
-						document.form1.idGrupo.options[0].text = "Seleccione una Opcion"
+						document.form1.idGrupo.length = 1;
+						document.form1.idGrupo.options[0].value = "";
+						document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
 						document.getElementById("div_sensorn").style.display = "none";
 					}
 					} catch (e) {
-					document.form1.idGrupo.length = 1
-					document.form1.idGrupo.options[0].value = ""
-					document.form1.idGrupo.options[0].text = "Seleccione una Opcion"
+					document.form1.idGrupo.length = 1;
+					document.form1.idGrupo.options[0].value = "";
+					document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
 					document.getElementById("div_sensorn").style.display = "none";
 					
 				}
-					document.form1.idGrupo.options[0].selected = true
+					document.form1.idGrupo.options[0].selected = true;
 				}
 				</script>';					
 				

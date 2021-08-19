@@ -183,13 +183,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_PuntoUniMed').style.display = 'none';
 					document.getElementById('div_Validar').style.display = 'none';
 					
-					var Sensores_val;
-					var modelSelected1;
-							
-			 
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 								
-						Sensores_val= $("#PuntoidTipo").val();
+						let Sensores_val = $("#PuntoidTipo").val();
 						
 						//si es Medicion (Decimal) con parametros limitantes
 						if(Sensores_val == 1){ 
@@ -245,7 +241,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					}); 
 							
 					$("#PuntoidTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si es Medicion (Decimal) con parametros limitantes
 						if(modelSelected1 == 1){ 
@@ -624,26 +620,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					document.getElementById('div_Validar_2').style.display = 'none';
 					document.getElementById('div_Validar_3').style.display = 'none';
 					
-					var Sensores_val_1;
-					var Sensores_val_2;
-					var Sensores_val_3;
-					var Sensores_tipo_1;
-					var Sensores_tipo_2;
-					var Sensores_tipo_3;
-					var modelSelected_1;
-					var modelSelected_2;
-					var modelSelected_3;
-							
-			 
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 								
-						Sensores_val_1= $("#idNota_1").val();
-						Sensores_val_2= $("#idNota_2").val();
-						Sensores_val_3= $("#idNota_3").val();
+						let Sensores_val_1= $("#idNota_1").val();
+						let Sensores_val_2= $("#idNota_2").val();
+						let Sensores_val_3= $("#idNota_3").val();
 						
-						Sensores_tipo_1= $("#idNotaTipo_1").val();
-						Sensores_tipo_2= $("#idNotaTipo_2").val();
-						Sensores_tipo_3= $("#idNotaTipo_3").val();
+						let Sensores_tipo_1= $("#idNotaTipo_1").val();
+						let Sensores_tipo_2= $("#idNotaTipo_2").val();
+						let Sensores_tipo_3= $("#idNotaTipo_3").val();
 						
 						/******************************************************************/
 						//si la opcion esta activa
@@ -726,7 +711,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 							
 					/******************************************************************/
 					$("#idNota_1").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected_1 = $(this).val(); //Asignamos el valor seleccionado
+						let modelSelected_1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si la opcion esta activa
 						if(modelSelected_1 == 1){ 
@@ -745,7 +730,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					});
 					/******************************************************************/
 					$("#idNota_2").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected_2 = $(this).val(); //Asignamos el valor seleccionado
+						let modelSelected_2 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si la opcion esta activa
 						if(modelSelected_2 == 1){ 
@@ -764,7 +749,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					});
 					/******************************************************************/
 					$("#idNota_3").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected_3 = $(this).val(); //Asignamos el valor seleccionado
+						let modelSelected_3 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si la opcion esta activa
 						if(modelSelected_3 == 1){ 
@@ -784,7 +769,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					
 					/******************************************************************/
 					$("#idNotaTipo_1").on("change", function(){ //se ejecuta al cambiar valor del select
-						Sensores_tipo_1 = $(this).val(); //Asignamos el valor seleccionado
+						let Sensores_tipo_1 = $(this).val(); //Asignamos el valor seleccionado
 						//Texto Libre con Validacion
 						if(Sensores_tipo_1 == 11){ 
 							document.getElementById('div_Validar_1').style.display = '';					
@@ -797,7 +782,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					});
 					/******************************************************************/
 					$("#idNotaTipo_2").on("change", function(){ //se ejecuta al cambiar valor del select
-						Sensores_tipo_2 = $(this).val(); //Asignamos el valor seleccionado
+						let Sensores_tipo_2 = $(this).val(); //Asignamos el valor seleccionado
 						//Texto Libre con Validacion
 						if(Sensores_tipo_2 == 11){ 
 							document.getElementById('div_Validar_2').style.display = '';					
@@ -810,7 +795,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					});
 					/******************************************************************/
 					$("#idNotaTipo_3").on("change", function(){ //se ejecuta al cambiar valor del select
-						Sensores_tipo_3 = $(this).val(); //Asignamos el valor seleccionado
+						let Sensores_tipo_3 = $(this).val(); //Asignamos el valor seleccionado
 						//Texto Libre con Validacion
 						if(Sensores_tipo_3 == 11){ 
 							document.getElementById('div_Validar_3').style.display = '';					

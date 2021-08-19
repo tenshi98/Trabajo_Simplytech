@@ -187,19 +187,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						document.getElementById('div_NErroresGeocercaMax').style.display = 'none';
 						document.getElementById('div_NregBackup').style.display = 'none';
 						
-						var id_Sensores;
-						var id_SensoresSelected;
-						var idUsoGeocerca;
-						var idUsoGeocercaSelected;
-						var idBackup;
-						var idBackupSelected;
-						
 						//se ejecuta al cargar la página (OBLIGATORIO)
 						$(document).ready(function(){ 
 							
-							id_Sensores   = $("#id_Sensores").val();
-							idUsoGeocerca = $("#idUsoGeocerca").val();
-							idBackup      = $("#idBackup").val();
+							let id_Sensores   = $("#id_Sensores").val();
+							let idUsoGeocerca = $("#idUsoGeocerca").val();
+							let idBackup      = $("#idBackup").val();
 							/*******************************/
 							//si es SI
 							if(id_Sensores == 1){ 
@@ -234,7 +227,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						}); 
 						
 						$("#id_Sensores").on("change", function(){ //se ejecuta al cambiar valor del select
-							id_SensoresSelected = $(this).val(); //Asignamos el valor seleccionado
+							let id_SensoresSelected = $(this).val(); //Asignamos el valor seleccionado
 					
 							//si es SI
 							if(id_SensoresSelected == 1){ 
@@ -249,7 +242,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						});
 						
 						$("#idUsoGeocerca").on("change", function(){ //se ejecuta al cambiar valor del select
-							idUsoGeocercaSelected = $(this).val(); //Asignamos el valor seleccionado
+							let idUsoGeocercaSelected = $(this).val(); //Asignamos el valor seleccionado
 					
 							//si es SI
 							if(idUsoGeocercaSelected == 1){ 
@@ -264,7 +257,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						});
 						
 						$("#idBackup").on("change", function(){ //se ejecuta al cambiar valor del select
-							idBackupSelected = $(this).val(); //Asignamos el valor seleccionado
+							let idBackupSelected = $(this).val(); //Asignamos el valor seleccionado
 					
 							//si es SI
 							if(idBackupSelected == 1){ 

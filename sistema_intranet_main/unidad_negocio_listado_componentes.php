@@ -391,30 +391,27 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
+					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
 					';	
 				}
 				
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
+					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';	
 				}
 				?> 
+				</script>
+				
+				
+				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProducto").value;
+					let Componente = document.getElementById("idProducto").value;
 					if (Componente != "") {
-						
-						id_data1=eval("id_data1_" + Componente)
-						id_data2=eval("id_data2_" + Componente)
-						
 						//escribo dentro del input
-						var elem = document.getElementById("idUml_fake");
-						elem.value = id_data1;
-						
-						var elem = document.getElementById("idUml");
-						elem.value = id_data2;
+						document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
+						document.getElementById("idUml").value      = eval("id_data2_" + Componente);
 					}
 				}
 				</script>
@@ -440,10 +437,7 @@ foreach ($arrPermisos as $prod) {
 						document.getElementById('div_Frecuencia').style.display = 'none';
 						document.getElementById('div_idFrecuencia').style.display = 'none';
 						
-								
-					
-						var Sensores_val_1;
-						Sensores_val_1= $("#idUtilizable").val();
+						let Sensores_val_1= $("#idUtilizable").val();
 						
 						//si es No Usable
 						if(Sensores_val_1 == 1){ 
@@ -503,9 +497,7 @@ foreach ($arrPermisos as $prod) {
 								
 						}
 					
-							
-						var Sensores_val_2;
-						Sensores_val_2= $("#idSubTipo").val();
+						let Sensores_val_2= $("#idSubTipo").val();
 						
 						//si es grasa
 						if(Sensores_val_2 == 1){ 
@@ -587,10 +579,8 @@ foreach ($arrPermisos as $prod) {
 					
 					/**********************************************************************/		
 				
-					var TipoComp;
-					
 					$("#idUtilizable").on("change", function(){ 
-						TipoComp = $(this).val(); 
+						let TipoComp = $(this).val(); 
 						
 						//si es No Usable
 						if(TipoComp == 1){ 
@@ -681,10 +671,8 @@ foreach ($arrPermisos as $prod) {
 						}
 					});
 							
-					var modelSelected;
-	 
 					$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected = $(this).val(); //Asignamos el valor seleccionado
+						let modelSelected = $(this).val(); //Asignamos el valor seleccionado
 				
 						//si es grasa
 						if(modelSelected == 1){ 
@@ -1051,30 +1039,26 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
+					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
 					';	
 				}
 				
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
+					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';	
 				}
 				?> 
+				</script>
+				
+				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProducto").value;
+					let Componente = document.getElementById("idProducto").value;
 					if (Componente != "") {
-						
-						id_data1=eval("id_data1_" + Componente)
-						id_data2=eval("id_data2_" + Componente)
-						
 						//escribo dentro del input
-						var elem = document.getElementById("idUml_fake");
-						elem.value = id_data1;
-						
-						var elem = document.getElementById("idUml");
-						elem.value = id_data2;
+						document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
+						document.getElementById("idUml").value      = eval("id_data2_" + Componente);
 					}
 				}
 				</script>
@@ -1097,12 +1081,8 @@ foreach ($arrPermisos as $prod) {
 					document.getElementById('div_Frecuencia').style.display = 'none';
 					document.getElementById('div_idFrecuencia').style.display = 'none';
 					
-							
-				
-					var TipoComp;
-					
 					$("#idUtilizable").on("change", function(){ 
-						TipoComp = $(this).val(); 
+						let TipoComp = $(this).val(); 
 						
 						//si es No Usable
 						if(TipoComp == 1){ 
@@ -1181,10 +1161,8 @@ foreach ($arrPermisos as $prod) {
 						}
 					});
 							
-					var modelSelected;
-	 
 					$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected = $(this).val(); //Asignamos el valor seleccionado
+						let modelSelected = $(this).val(); //Asignamos el valor seleccionado
 				
 						//si es grasa
 						if(modelSelected == 1){ 

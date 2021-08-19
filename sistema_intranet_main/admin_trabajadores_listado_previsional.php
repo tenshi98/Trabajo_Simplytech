@@ -135,12 +135,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
 						document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
 						
-						var idCotizacionSaludExtra;
-						var idCotizacionSaludExtra_sel;
-						
 						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 									
-							idCotizacionSaludExtra      = $("#idCotizacionSaludExtra").val();
+							let idCotizacionSaludExtra      = $("#idCotizacionSaludExtra").val();
 							
 							/*************************************/
 							//Si
@@ -164,7 +161,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						}); 
 						
 						$("#idCotizacionSaludExtra").on("change", function(){ //se ejecuta al cambiar valor del select
-							idCotizacionSaludExtra_sel = $(this).val(); //Asignamos el valor seleccionado
+							let idCotizacionSaludExtra_sel = $(this).val(); //Asignamos el valor seleccionado
 							
 							//Si
 							if(idCotizacionSaludExtra_sel == 1){ 

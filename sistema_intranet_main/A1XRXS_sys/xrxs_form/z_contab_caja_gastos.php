@@ -273,11 +273,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['contab_caja_gastos_documentos'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['contab_caja_gastos_documentos'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 			
@@ -290,53 +290,53 @@ require_once '0_validate_user_1.php';
 					//busco el documento
 					$rowDocPago = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago = "'.$idDocPago.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//si existe
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['DocPago']  = $rowDocPago['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$idInterno]['DocPago']  = $rowDocPago['Nombre'];
 				//si no existe
 				}else{
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['DocPago']  = '';
+					$_SESSION['contab_caja_gastos_documentos'][$idInterno]['DocPago']  = '';
 				}
 				
 				/*****************************************/
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto']  = '';
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['CentroCosto']  = '';
 				//Si hay un centro de costo
 				if(isset($idCentroCosto)&&$idCentroCosto!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= $rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$idInterno]['CentroCosto'].= $rowCentro['Nombre'];
 				}
 				if(isset($idLevel_1)&&$idLevel_1!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$idInterno]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				if(isset($idLevel_2)&&$idLevel_2!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$idInterno]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				if(isset($idLevel_3)&&$idLevel_3!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$idInterno]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				if(isset($idLevel_4)&&$idLevel_4!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$idInterno]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				if(isset($idLevel_5)&&$idLevel_5!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$idInterno]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				
 				/*****************************************/
 				//Guardo el resto de datos
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['bvar']            = $bvar;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['Descripcion']     = $Descripcion;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['idDocPago']       = $idDocPago;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['N_Doc']           = $N_Doc;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['Valor']           = $Valor;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['idCentroCosto']   = $idCentroCosto;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['idLevel_1']       = $idLevel_1;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['idLevel_2']       = $idLevel_2;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['idLevel_3']       = $idLevel_3;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['idLevel_4']       = $idLevel_4;
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['idLevel_5']       = $idLevel_5;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['bvar']            = $idInterno;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['Descripcion']     = $Descripcion;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['idDocPago']       = $idDocPago;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['N_Doc']           = $N_Doc;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['Valor']           = $Valor;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['idCentroCosto']   = $idCentroCosto;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['idLevel_1']       = $idLevel_1;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['idLevel_2']       = $idLevel_2;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['idLevel_3']       = $idLevel_3;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['idLevel_4']       = $idLevel_4;
+				$_SESSION['contab_caja_gastos_documentos'][$idInterno]['idLevel_5']       = $idLevel_5;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -366,31 +366,31 @@ require_once '0_validate_user_1.php';
 				}
 				
 				/*****************************************/
-				$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto']  = '';
+				$_SESSION['contab_caja_gastos_documentos'][$oldItemID]['CentroCosto']  = '';
 				//Si hay un centro de costo
 				if(isset($idCentroCosto)&&$idCentroCosto!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= $rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$oldItemID]['CentroCosto'].= $rowCentro['Nombre'];
 				}
 				if(isset($idLevel_1)&&$idLevel_1!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$oldItemID]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				if(isset($idLevel_2)&&$idLevel_2!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$oldItemID]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				if(isset($idLevel_3)&&$idLevel_3!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$oldItemID]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				if(isset($idLevel_4)&&$idLevel_4!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$oldItemID]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				if(isset($idLevel_5)&&$idLevel_5!=''){
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$_SESSION['contab_caja_gastos_documentos'][$bvar]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
+					$_SESSION['contab_caja_gastos_documentos'][$oldItemID]['CentroCosto'].= ' - '.$rowCentro['Nombre'];
 				}
 				
 				/*****************************************/

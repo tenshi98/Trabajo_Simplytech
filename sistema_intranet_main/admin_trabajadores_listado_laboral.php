@@ -182,15 +182,10 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						document.getElementById('div_SueldoHora').style.display = 'none';
 						document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
 						
-						var idTipoContratoTrab;
-						var idTipoContratoTrab_sel;
-						var idTipoTrabajo;
-						var idTipoTrabajo_sel;
-						
 						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 									
-							idTipoContratoTrab = $("#idTipoContratoTrab").val();
-							idTipoTrabajo      = $("#idTipoTrabajo").val();
+							let idTipoContratoTrab = $("#idTipoContratoTrab").val();
+							let idTipoTrabajo      = $("#idTipoTrabajo").val();
 							
 							/*************************************/
 							//Trabajador con sueldo mensual
@@ -249,7 +244,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						}); 
 								
 						$("#idTipoContratoTrab").on("change", function(){ //se ejecuta al cambiar valor del select
-							idTipoContratoTrab_sel = $(this).val(); //Asignamos el valor seleccionado
+							let idTipoContratoTrab_sel = $(this).val(); //Asignamos el valor seleccionado
 							
 							//Trabajador con sueldo mensual
 							if(idTipoContratoTrab_sel == 1){ 
@@ -315,7 +310,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						});
 						
 						$("#idTipoTrabajo").on("change", function(){ //se ejecuta al cambiar valor del select
-							idTipoTrabajo_sel = $(this).val(); //Asignamos el valor seleccionado
+							let idTipoTrabajo_sel = $(this).val(); //Asignamos el valor seleccionado
 							
 							//Trabajo normal
 							if(idTipoTrabajo_sel == 1){ 

@@ -371,39 +371,32 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				<script>
 					document.getElementById('div_idTipoReceta').style.display = 'none';
 					
-					var modelSelected = 0;
-					
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idTipoProducto").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected= $("#idTipoProducto").val();//Asignamos el valor seleccionado
-							
+							let modelSelected= $("#idTipoProducto").val();//Asignamos el valor seleccionado
 							
 							//Materia prima
 							if(modelSelected == 1){ 
 								document.getElementById('div_idTipoReceta').style.display = 'none';
 								
-								//selecciono el select
-								var select = document.getElementById('idTipoReceta');
 								//lo vacio
-								select.length = 1
-								select.options[0].value = "0"
-								select.options[0].text = "Seleccione una Opcion"
+								document.getElementById('idTipoReceta').length = 1
+								document.getElementById('idTipoReceta').options[0].value = "0"
+								document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opcion"
 							
 							//Producto Terminado	
 							} else if(modelSelected == 2){ 
 								document.getElementById('div_idTipoReceta').style.display = '';
 								
-								//selecciono el select
-								var select = document.getElementById('idTipoReceta');
 								//lo vacio
-								select.length = 3
-								select.options[0].value = "0"
-								select.options[0].text = "Seleccione una Opcion"
-								select.options[1].value = "1"
-								select.options[1].text = "Por Porcentaje total"
-								select.options[2].value = "2"
-								select.options[2].text = "Libre"
+								document.getElementById('idTipoReceta').length = 3
+								document.getElementById('idTipoReceta').options[0].value = "0"
+								document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opcion"
+								document.getElementById('idTipoReceta').options[1].value = "1"
+								document.getElementById('idTipoReceta').options[1].text = "Por Porcentaje total"
+								document.getElementById('idTipoReceta').options[2].value = "2"
+								document.getElementById('idTipoReceta').options[2].text = "Libre"
 								
 							} else { 
 								document.getElementById('div_idTipoReceta').style.display = 'none';

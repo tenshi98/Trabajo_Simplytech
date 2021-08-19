@@ -202,8 +202,7 @@ foreach ($arrTabMenu as $tab) {
 				echo '
 				<script type="text/javascript">
 					function actualiza_contenido() {
-						var url = "'.$Url.'";
-						$("#update_tel").load(url);
+						$("#update_tel").load('.$Url.');
 					}
 					setInterval("actualiza_contenido()", '.$x_seg.');
 

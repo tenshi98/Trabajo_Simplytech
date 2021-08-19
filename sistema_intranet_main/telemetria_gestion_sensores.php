@@ -276,7 +276,7 @@ foreach ($arrUnimed as $sen) {
 								map = new google.maps.Map(div, opciones);  
 								
 
-								for (var i = 0, j = marcadores.length; i < j; i++) {  
+								for (let i = 0, j = marcadores.length; i < j; i++) {  
 									var contenido = marcadores[i].contenido;
 									marker = new google.maps.Marker({
 										position	: new google.maps.LatLng(marcadores[i].position.lat, marcadores[i].position.lng),
@@ -369,7 +369,7 @@ foreach ($arrUnimed as $sen) {
 									//se dibujan los iconos de los buses	
 									case 2:
 										//Los demas buses
-										for (var i = 0, j = marcadores_ex.length; i < j; i++) {  
+										for (let i = 0, j = marcadores_ex.length; i < j; i++) {  
 											var contenido = marcadores_ex[i].contenido;
 											
 											(function(marker, contenido) {

@@ -598,10 +598,10 @@ input[type="date"].form-control{
 </div>	
 	
 <script>
-	var nPagoIva = 0;
-	var nPagoPPM = 0;
-	var nPagoRet = 0;
-	var nImpRent = 0;
+	let nPagoIva = 0;
+	let nPagoPPM = 0;
+	let nPagoRet = 0;
+	let nImpRent = 0;
 	
 	/**********************************************************/
 	//Se agrega cuartel
@@ -609,8 +609,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoIva++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_iva');
-		var objclone = document.getElementById('clone_pago_iva'),
+		let objTo    = document.getElementById('insert_pago_iva');
+		let objclone = document.getElementById('clone_pago_iva'),
 		//se clonan los div
 		clone_pago_iva = objclone.cloneNode(true); 
 		clone_pago_iva.id = 'new_pago_iva_'+nPagoIva;
@@ -623,8 +623,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoPPM++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_ppm');
-		var objclone = document.getElementById('clone_pago_ppm'),
+		let objTo    = document.getElementById('insert_pago_ppm');
+		let objclone = document.getElementById('clone_pago_ppm'),
 		//se clonan los div
 		clone_pago_ppm = objclone.cloneNode(true); 
 		clone_pago_ppm.id = 'new_pago_ppm_'+nPagoPPM;
@@ -637,8 +637,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoRet++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_ret');
-		var objclone = document.getElementById('clone_pago_ret'),
+		let objTo    = document.getElementById('insert_pago_ret');
+		let objclone = document.getElementById('clone_pago_ret'),
 		//se clonan los div
 		clone_pago_ret = objclone.cloneNode(true); 
 		clone_pago_ret.id = 'new_pago_ret_'+nPagoRet;
@@ -651,8 +651,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nImpRent++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_impuesto_renta');
-		var objclone = document.getElementById('clone_pago_impuesto_renta'),
+		let objTo    = document.getElementById('insert_pago_impuesto_renta');
+		let objclone = document.getElementById('clone_pago_impuesto_renta'),
 		//se clonan los div
 		clone_pago_impuesto_renta = objclone.cloneNode(true); 
 		clone_pago_impuesto_renta.id = 'new_pago_impuesto_renta_'+nImpRent;
@@ -881,10 +881,10 @@ input[type="date"].form-control{
 </div>	
 	
 <script>
-	var nPagoIva = 0;
-	var nPagoPPM = 0;
-	var nPagoRet = 0;
-	var nImpRent = 0;
+	let nPagoIva = 0;
+	let nPagoPPM = 0;
+	let nPagoRet = 0;
+	let nImpRent = 0;
 	
 	/**********************************************************/
 	//Se agrega cuartel
@@ -892,8 +892,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoIva++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_iva');
-		var objclone = document.getElementById('clone_pago_iva'),
+		let objTo    = document.getElementById('insert_pago_iva');
+		let objclone = document.getElementById('clone_pago_iva'),
 		//se clonan los div
 		clone_pago_iva = objclone.cloneNode(true); 
 		clone_pago_iva.id = 'new_pago_iva_'+nPagoIva;
@@ -906,8 +906,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoPPM++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_ppm');
-		var objclone = document.getElementById('clone_pago_ppm'),
+		let objTo    = document.getElementById('insert_pago_ppm');
+		let objclone = document.getElementById('clone_pago_ppm'),
 		//se clonan los div
 		clone_pago_ppm = objclone.cloneNode(true); 
 		clone_pago_ppm.id = 'new_pago_ppm_'+nPagoPPM;
@@ -920,8 +920,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoRet++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_ret');
-		var objclone = document.getElementById('clone_pago_ret'),
+		let objTo    = document.getElementById('insert_pago_ret');
+		let objclone = document.getElementById('clone_pago_ret'),
 		//se clonan los div
 		clone_pago_ret = objclone.cloneNode(true); 
 		clone_pago_ret.id = 'new_pago_ret_'+nPagoRet;
@@ -934,8 +934,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nImpRent++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_impuesto_renta');
-		var objclone = document.getElementById('clone_pago_impuesto_renta'),
+		let objTo    = document.getElementById('insert_pago_impuesto_renta');
+		let objclone = document.getElementById('clone_pago_impuesto_renta'),
 		//se clonan los div
 		clone_pago_impuesto_renta = objclone.cloneNode(true); 
 		clone_pago_impuesto_renta.id = 'new_pago_impuesto_renta_'+nImpRent;

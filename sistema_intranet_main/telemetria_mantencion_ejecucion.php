@@ -183,8 +183,7 @@ $Url .= $search;
 echo '
 	<script type="text/javascript">
 		function actualiza_contenido() {
-			var url = "'.$Url.'";
-			$("#ContenedorX").load(url);
+			$("#ContenedorX").load('.$Url.');
 		}
 		setInterval("actualiza_contenido()", 5000);
 

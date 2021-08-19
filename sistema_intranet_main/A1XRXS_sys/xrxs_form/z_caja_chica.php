@@ -254,11 +254,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['caja_ing_documentos'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['caja_ing_documentos'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
@@ -273,13 +273,13 @@ require_once '0_validate_user_1.php';
 				
 				/*****************************************/
 				// Se guardan los datos
-				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){   $_SESSION['caja_ing_documentos'][$bvar]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_ing_documentos'][$bvar]['DocPago']  = '';}
+				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){   $_SESSION['caja_ing_documentos'][$idInterno]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_ing_documentos'][$idInterno]['DocPago']  = '';}
 				
 				
-				$_SESSION['caja_ing_documentos'][$bvar]['bvar']      = $bvar;
-				$_SESSION['caja_ing_documentos'][$bvar]['idDocPago'] = $idDocPago;
-				$_SESSION['caja_ing_documentos'][$bvar]['N_Doc']     = $N_Doc;
-				$_SESSION['caja_ing_documentos'][$bvar]['Valor']     = $Valor;
+				$_SESSION['caja_ing_documentos'][$idInterno]['bvar']      = $idInterno;
+				$_SESSION['caja_ing_documentos'][$idInterno]['idDocPago'] = $idDocPago;
+				$_SESSION['caja_ing_documentos'][$idInterno]['N_Doc']     = $N_Doc;
+				$_SESSION['caja_ing_documentos'][$idInterno]['Valor']     = $Valor;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -859,11 +859,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['caja_eg_documentos'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['caja_eg_documentos'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 			
@@ -887,13 +887,13 @@ require_once '0_validate_user_1.php';
 				
 				/*****************************************/
 				// Se guardan los datos
-				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){   $_SESSION['caja_eg_documentos'][$bvar]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_eg_documentos'][$bvar]['DocPago']  = '';}
+				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){   $_SESSION['caja_eg_documentos'][$idInterno]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_eg_documentos'][$idInterno]['DocPago']  = '';}
 				
 				
-				$_SESSION['caja_eg_documentos'][$bvar]['bvar']      = $bvar;
-				$_SESSION['caja_eg_documentos'][$bvar]['idDocPago'] = $idDocPago;
-				$_SESSION['caja_eg_documentos'][$bvar]['N_Doc']     = $N_Doc;
-				$_SESSION['caja_eg_documentos'][$bvar]['Valor']     = $Valor;
+				$_SESSION['caja_eg_documentos'][$idInterno]['bvar']      = $idInterno;
+				$_SESSION['caja_eg_documentos'][$idInterno]['idDocPago'] = $idDocPago;
+				$_SESSION['caja_eg_documentos'][$idInterno]['N_Doc']     = $N_Doc;
+				$_SESSION['caja_eg_documentos'][$idInterno]['Valor']     = $Valor;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -1498,11 +1498,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['caja_rend_documentos'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['caja_rend_documentos'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 			
@@ -1526,12 +1526,12 @@ require_once '0_validate_user_1.php';
 				
 				/*****************************************/
 				// Se guardan los datos
-				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){   $_SESSION['caja_rend_documentos'][$bvar]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_rend_documentos'][$bvar]['DocPago']  = '';}
+				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){   $_SESSION['caja_rend_documentos'][$idInterno]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_rend_documentos'][$idInterno]['DocPago']  = '';}
 				
-				$_SESSION['caja_rend_documentos'][$bvar]['bvar']      = $bvar;
-				$_SESSION['caja_rend_documentos'][$bvar]['idDocPago'] = $idDocPago;
-				$_SESSION['caja_rend_documentos'][$bvar]['N_Doc']     = $N_Doc;
-				$_SESSION['caja_rend_documentos'][$bvar]['Valor']     = $Valor;
+				$_SESSION['caja_rend_documentos'][$idInterno]['bvar']      = $idInterno;
+				$_SESSION['caja_rend_documentos'][$idInterno]['idDocPago'] = $idDocPago;
+				$_SESSION['caja_rend_documentos'][$idInterno]['N_Doc']     = $N_Doc;
+				$_SESSION['caja_rend_documentos'][$idInterno]['Valor']     = $Valor;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -1599,11 +1599,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['caja_rend_items'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['caja_rend_items'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 			
@@ -1619,9 +1619,9 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['caja_rend_items'][$bvar]['bvar']      = $bvar;
-				$_SESSION['caja_rend_items'][$bvar]['Item']      = $Item;
-				$_SESSION['caja_rend_items'][$bvar]['Valor']     = $Valor;
+				$_SESSION['caja_rend_items'][$idInterno]['bvar']      = $idInterno;
+				$_SESSION['caja_rend_items'][$idInterno]['Item']      = $Item;
+				$_SESSION['caja_rend_items'][$idInterno]['Valor']     = $Valor;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -2338,11 +2338,11 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['caja_rendida_documentos'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['caja_rendida_documentos'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 			
@@ -2357,11 +2357,11 @@ require_once '0_validate_user_1.php';
 				
 				/*****************************************/
 				// Se guardan los datos
-				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){   $_SESSION['caja_rendida_documentos'][$bvar]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_rendida_documentos'][$bvar]['DocPago']  = '';}
+				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){   $_SESSION['caja_rendida_documentos'][$idInterno]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_rendida_documentos'][$idInterno]['DocPago']  = '';}
 				
-				$_SESSION['caja_rendida_documentos'][$bvar]['bvar']      = $bvar;
-				$_SESSION['caja_rendida_documentos'][$bvar]['idDocPago'] = $idDocPago;
-				$_SESSION['caja_rendida_documentos'][$bvar]['N_Doc']     = $N_Doc;
+				$_SESSION['caja_rendida_documentos'][$idInterno]['bvar']      = $idInterno;
+				$_SESSION['caja_rendida_documentos'][$idInterno]['idDocPago'] = $idDocPago;
+				$_SESSION['caja_rendida_documentos'][$idInterno]['N_Doc']     = $N_Doc;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -2420,20 +2420,20 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['caja_rendida_items'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['caja_rendida_items'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 			
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['caja_rendida_items'][$bvar]['bvar']      = $bvar;
-				$_SESSION['caja_rendida_items'][$bvar]['Item']      = $Item;
-				$_SESSION['caja_rendida_items'][$bvar]['Valor']     = $Valor;
+				$_SESSION['caja_rendida_items'][$idInterno]['bvar']      = $idInterno;
+				$_SESSION['caja_rendida_items'][$idInterno]['Item']      = $Item;
+				$_SESSION['caja_rendida_items'][$idInterno]['Valor']     = $Valor;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	

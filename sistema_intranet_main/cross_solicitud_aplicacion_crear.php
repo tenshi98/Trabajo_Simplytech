@@ -350,8 +350,8 @@ array_push( $arrTipo,$row );
 				<script>
 					<?php
 					foreach ($arrTipo as $tipo) {
-						echo 'var id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'var id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 					}
 					?>
 					//verifico el cambio
@@ -359,29 +359,21 @@ array_push( $arrTipo,$row );
 
 					//funcion de cambio
 					function myFunction() {
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					}
 					
 					//se precargan los datos
 					$(document).ready(function(){
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					});
 				</script>
@@ -456,8 +448,8 @@ array_push( $arrTipo,$row );
 				<script>
 					<?php
 					foreach ($arrTipo as $tipo) {
-						echo 'var id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'var id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 					}
 					?>
 					
@@ -466,29 +458,21 @@ array_push( $arrTipo,$row );
 					
 					//funcion de cambio
 					function myFunction() {
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					}
 					
 					//se precargan los datos
 					$(document).ready(function(){
-						var Componente = document.getElementById("idProducto").value;
+						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
-							id_data1=eval("id_data_" + Componente)
-							id_data2=eval("id_med_" + Componente)
 							//escribo dentro del input
-							var elem1 = document.getElementById("escribeme1");
-							var elem2 = document.getElementById("escribeme2");
-							elem1.value = id_data1;
-							elem2.value = id_data2;
+							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
+							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					});
 				</script>
@@ -943,12 +927,12 @@ array_push( $arrCuenta2,$row );
 					
 <script>
 
-	var room1 = 0;
-	var room2 = 0;
-	var room3 = 0;
-	var room4 = 0;
-	var incre = 0;
-	var incr2 = 0;
+	let room1 = 0;
+	let room2 = 0;
+	let room3 = 0;
+	let room4 = 0;
+	let incre = 0;
+	let incr2 = 0;
 
 	/**********************************************************/
 	//Se agrega cuartel
@@ -956,8 +940,8 @@ array_push( $arrCuenta2,$row );
 		//se incrementa en 1
 		room1++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_cuartel');
-		var objclone = document.getElementById('clone_cuartel'),
+		let objTo    = document.getElementById('insert_cuartel');
+		let objclone = document.getElementById('clone_cuartel'),
 		//se clonan los div
 		clone_cuartel = objclone.cloneNode(true); 
 		clone_cuartel.id = 'new_cuartel_'+room1;
@@ -971,18 +955,18 @@ array_push( $arrCuenta2,$row );
 		room1++;
 		incre++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_cuartel');
-		var objclone = document.getElementById('clone_cuartel'),
+		let objTo    = document.getElementById('insert_cuartel');
+		let objclone = document.getElementById('clone_cuartel'),
 		//se clonan los div
 		clone_cuartel = objclone.cloneNode(true); 
 		clone_cuartel.id = 'new_cuartel_'+room1;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_cuartel);
 		//Autoselecciono los items
-		var div = document.getElementById('new_cuartel_'+room1);
+		let div = document.getElementById('new_cuartel_'+room1);
 		if (div) {
 			div.querySelector('select').selectedIndex = incre;
-			var subdiv = div.querySelector('select');
+			let subdiv = div.querySelector('select');
 			ChangePredio (subdiv);
 		}
     } 
@@ -1005,8 +989,8 @@ array_push( $arrCuenta2,$row );
 		//se incrementa en 1
 		room2++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_producto');
-		var objclone = document.getElementById('clone_producto'),
+		let objTo    = document.getElementById('insert_producto');
+		let objclone = document.getElementById('clone_producto'),
 		//se clonan los div
 		clone_producto = objclone.cloneNode(true);
 		clone_producto.id = 'new_producto_'+room2; 
@@ -1026,8 +1010,8 @@ array_push( $arrCuenta2,$row );
 		//se incrementa en 1
 		room3++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_tractor');
-		var objclone = document.getElementById('clone_tractor'),
+		let objTo    = document.getElementById('insert_tractor');
+		let objclone = document.getElementById('clone_tractor'),
 		//se clonan los div
 		clone_tractor = objclone.cloneNode(true); 
 		clone_tractor.id = 'new_tractor_'+room3;
@@ -1040,18 +1024,18 @@ array_push( $arrCuenta2,$row );
 		room3++;
 		incr2++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_tractor');
-		var objclone = document.getElementById('clone_tractor'),
+		let objTo    = document.getElementById('insert_tractor');
+		let objclone = document.getElementById('clone_tractor'),
 		//se clonan los div
 		clone_tractor = objclone.cloneNode(true); 
 		clone_tractor.id = 'new_tractor_'+room3;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_tractor);
 		//Autoselecciono los items
-		var div = document.getElementById('new_tractor_'+room3);
+		let div = document.getElementById('new_tractor_'+room3);
 		if (div) {
 			div.querySelector('select').selectedIndex = incr2;
-			var subdiv = div.querySelector('select');
+			let subdiv = div.querySelector('select');
 			//ChangeTractor (subdiv);
 		}
     } 
@@ -1074,8 +1058,8 @@ array_push( $arrCuenta2,$row );
 		//se incrementa en 1
 		room4++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_material');
-		var objclone = document.getElementById('clone_material'),
+		let objTo    = document.getElementById('insert_material');
+		let objclone = document.getElementById('clone_material'),
 		//se clonan los div
 		clone_material = objclone.cloneNode(true); 
 		clone_material.id = 'new_material_'+room4;
@@ -1123,18 +1107,15 @@ array_push( $arrCuenta2,$row );
 		}
 				
 		foreach ($arrTipo as $tipo) {
-			echo 'var id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-			echo 'var id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+			echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 		}
 		?>
-		var selectedOption = select.options[select.selectedIndex];
-        var Componente = selectedOption.value;
+		let Componente = select.options[select.selectedIndex].value;
 		if (Componente != "") {
-			id_data1=eval("id_data_" + Componente)
-			id_data2=eval("id_med_" + Componente)
 			//escribo dentro del input
-			$(select).closest('.prod_container').find('.escribeme1').val(id_data1);
-			$(select).closest('.prod_container').find('.escribeme2').val(id_data2);
+			$(select).closest('.prod_container').find('.escribeme1').val(eval("id_data_" + Componente));
+			$(select).closest('.prod_container').find('.escribeme2').val(eval("id_med_" + Componente));
 		}
     }
     /**********************************************************/
@@ -1143,27 +1124,21 @@ array_push( $arrCuenta2,$row );
 		//variables varias
 		<?php
 		foreach ($arrCuenta as $tipo) {
-			echo 'var id_codigo_'.$tipo['idZona'].'= "'.$tipo['Codigo'].'";';
-			echo 'var id_hectarea_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['Hectareas']).'";';	
-			echo 'var id_hilera_'.$tipo['idZona'].'= "'.$tipo['Hileras'].'";';	
-			echo 'var id_distancia_p_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaPlant']).'";';	
-			echo 'var id_distancia_h_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaHileras']).'";';	
+			echo 'let id_codigo_'.$tipo['idZona'].'= "'.$tipo['Codigo'].'";';
+			echo 'let id_hectarea_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['Hectareas']).'";';	
+			echo 'let id_hilera_'.$tipo['idZona'].'= "'.$tipo['Hileras'].'";';	
+			echo 'let id_distancia_p_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaPlant']).'";';	
+			echo 'let id_distancia_h_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaHileras']).'";';	
 		}
 		?>
-		var selectedOption = select.options[select.selectedIndex];
-        var Componente = selectedOption.value;
+		let Componente = select.options[select.selectedIndex].value;
 		if (Componente != "") {
-			id_data1=eval("id_codigo_" + Componente)
-			id_data2=eval("id_hectarea_" + Componente)
-			id_data3=eval("id_hilera_" + Componente)
-			id_data4=eval("id_distancia_p_" + Componente)
-			id_data5=eval("id_distancia_h_" + Componente)
 			//escribo dentro del input
-			$(select).closest('.cuartel_container').find('.escribeme1').val('Cod: '+id_data1);
-			$(select).closest('.cuartel_container').find('.escribeme2').val('Hect: '+id_data2);
-			$(select).closest('.cuartel_container').find('.escribeme3').val('Hil: '+id_data3);
-			$(select).closest('.cuartel_container').find('.escribeme4').val('D Plantas: '+id_data4);
-			$(select).closest('.cuartel_container').find('.escribeme5').val('D Hileras: '+id_data5);
+			$(select).closest('.cuartel_container').find('.escribeme1').val('Cod: '+eval("id_codigo_" + Componente));
+			$(select).closest('.cuartel_container').find('.escribeme2').val('Hect: '+eval("id_hectarea_" + Componente));
+			$(select).closest('.cuartel_container').find('.escribeme3').val('Hil: '+eval("id_hilera_" + Componente));
+			$(select).closest('.cuartel_container').find('.escribeme4').val('D Plantas: '+eval("id_distancia_p_" + Componente));
+			$(select).closest('.cuartel_container').find('.escribeme5').val('D Hileras: '+eval("id_distancia_h_" + Componente));
 		}
     }
 </script>
@@ -1907,12 +1882,12 @@ array_push( $arrCuenta2,$row );
 					
 <script>
 
-	var room1 = 0;
-	var room2 = 0;
-	var room3 = 0;
-	var room4 = 0;
-	var incre = 0;
-	var incr2 = 0;
+	let room1 = 0;
+	let room2 = 0;
+	let room3 = 0;
+	let room4 = 0;
+	let incre = 0;
+	let incr2 = 0;
 
 	/**********************************************************/
 	//Se agrega cuartel
@@ -1920,8 +1895,8 @@ array_push( $arrCuenta2,$row );
 		//se incrementa en 1
 		room1++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_cuartel');
-		var objclone = document.getElementById('clone_cuartel'),
+		let objTo    = document.getElementById('insert_cuartel');
+		let objclone = document.getElementById('clone_cuartel'),
 		//se clonan los div
 		clone_cuartel = objclone.cloneNode(true); 
 		clone_cuartel.id = 'new_cuartel_'+room1;
@@ -1935,18 +1910,18 @@ array_push( $arrCuenta2,$row );
 		room1++;
 		incre++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_cuartel');
-		var objclone = document.getElementById('clone_cuartel'),
+		let objTo    = document.getElementById('insert_cuartel');
+		let objclone = document.getElementById('clone_cuartel'),
 		//se clonan los div
 		clone_cuartel = objclone.cloneNode(true); 
 		clone_cuartel.id = 'new_cuartel_'+room1;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_cuartel);
 		//Autoselecciono los items
-		var div = document.getElementById('new_cuartel_'+room1);
+		let div = document.getElementById('new_cuartel_'+room1);
 		if (div) {
 			div.querySelector('select').selectedIndex = incre;
-			var subdiv = div.querySelector('select');
+			let subdiv = div.querySelector('select');
 			ChangePredio (subdiv);
 		}
     } 
@@ -1969,8 +1944,8 @@ array_push( $arrCuenta2,$row );
 		//se incrementa en 1
 		room2++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_producto');
-		var objclone = document.getElementById('clone_producto'),
+		let objTo    = document.getElementById('insert_producto');
+		let objclone = document.getElementById('clone_producto'),
 		//se clonan los div
 		clone_producto = objclone.cloneNode(true);
 		clone_producto.id = 'new_producto_'+room2; 
@@ -1990,8 +1965,8 @@ array_push( $arrCuenta2,$row );
 		//se incrementa en 1
 		room3++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_tractor');
-		var objclone = document.getElementById('clone_tractor'),
+		let objTo    = document.getElementById('insert_tractor');
+		let objclone = document.getElementById('clone_tractor'),
 		//se clonan los div
 		clone_tractor = objclone.cloneNode(true); 
 		clone_tractor.id = 'new_tractor_'+room3;
@@ -2004,18 +1979,18 @@ array_push( $arrCuenta2,$row );
 		room3++;
 		incr2++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_tractor');
-		var objclone = document.getElementById('clone_tractor'),
+		let objTo    = document.getElementById('insert_tractor');
+		let objclone = document.getElementById('clone_tractor'),
 		//se clonan los div
 		clone_tractor = objclone.cloneNode(true); 
 		clone_tractor.id = 'new_tractor_'+room3;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_tractor);
 		//Autoselecciono los items
-		var div = document.getElementById('new_tractor_'+room3);
+		let div = document.getElementById('new_tractor_'+room3);
 		if (div) {
 			div.querySelector('select').selectedIndex = incr2;
-			var subdiv = div.querySelector('select');
+			let subdiv = div.querySelector('select');
 			//ChangeTractor (subdiv);
 		}
     } 
@@ -2038,8 +2013,8 @@ array_push( $arrCuenta2,$row );
 		//se incrementa en 1
 		room4++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_material');
-		var objclone = document.getElementById('clone_material'),
+		let objTo    = document.getElementById('insert_material');
+		let objclone = document.getElementById('clone_material'),
 		//se clonan los div
 		clone_material = objclone.cloneNode(true); 
 		clone_material.id = 'new_material_'+room4;
@@ -2087,18 +2062,15 @@ array_push( $arrCuenta2,$row );
 		}
 				
 		foreach ($arrTipo as $tipo) {
-			echo 'var id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-			echo 'var id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+			echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 		}
 		?>
-		var selectedOption = select.options[select.selectedIndex];
-        var Componente = selectedOption.value;
+		let Componente = select.options[select.selectedIndex].value;
 		if (Componente != "") {
-			id_data1=eval("id_data_" + Componente)
-			id_data2=eval("id_med_" + Componente)
 			//escribo dentro del input
-			$(select).closest('.prod_container').find('.escribeme1').val(id_data1);
-			$(select).closest('.prod_container').find('.escribeme2').val(id_data2);
+			$(select).closest('.prod_container').find('.escribeme1').val(eval("id_data_" + Componente));
+			$(select).closest('.prod_container').find('.escribeme2').val(eval("id_med_" + Componente));
 		}
     }
     /**********************************************************/
@@ -2107,27 +2079,21 @@ array_push( $arrCuenta2,$row );
 		//variables varias
 		<?php
 		foreach ($arrCuenta as $tipo) {
-			echo 'var id_codigo_'.$tipo['idZona'].'= "'.$tipo['Codigo'].'";';
-			echo 'var id_hectarea_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['Hectareas']).'";';	
-			echo 'var id_hilera_'.$tipo['idZona'].'= "'.$tipo['Hileras'].'";';	
-			echo 'var id_distancia_p_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaPlant']).'";';	
-			echo 'var id_distancia_h_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaHileras']).'";';	
+			echo 'let id_codigo_'.$tipo['idZona'].'= "'.$tipo['Codigo'].'";';
+			echo 'let id_hectarea_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['Hectareas']).'";';	
+			echo 'let id_hilera_'.$tipo['idZona'].'= "'.$tipo['Hileras'].'";';	
+			echo 'let id_distancia_p_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaPlant']).'";';	
+			echo 'let id_distancia_h_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaHileras']).'";';	
 		}
 		?>
-		var selectedOption = select.options[select.selectedIndex];
-        var Componente = selectedOption.value;
+		let Componente = elect.options[select.selectedIndex].value;
 		if (Componente != "") {
-			id_data1=eval("id_codigo_" + Componente)
-			id_data2=eval("id_hectarea_" + Componente)
-			id_data3=eval("id_hilera_" + Componente)
-			id_data4=eval("id_distancia_p_" + Componente)
-			id_data5=eval("id_distancia_h_" + Componente)
 			//escribo dentro del input
-			$(select).closest('.cuartel_container').find('.escribeme1').val('Cod: '+id_data1);
-			$(select).closest('.cuartel_container').find('.escribeme2').val('Hect: '+id_data2);
-			$(select).closest('.cuartel_container').find('.escribeme3').val('Hil: '+id_data3);
-			$(select).closest('.cuartel_container').find('.escribeme4').val('D Plantas: '+id_data4);
-			$(select).closest('.cuartel_container').find('.escribeme5').val('D Hileras: '+id_data5);
+			$(select).closest('.cuartel_container').find('.escribeme1').val('Cod: '+eval("id_codigo_" + Componente));
+			$(select).closest('.cuartel_container').find('.escribeme2').val('Hect: '+eval("id_hectarea_" + Componente));
+			$(select).closest('.cuartel_container').find('.escribeme3').val('Hil: '+eval("id_hilera_" + Componente));
+			$(select).closest('.cuartel_container').find('.escribeme4').val('D Plantas: '+eval("id_distancia_p_" + Componente));
+			$(select).closest('.cuartel_container').find('.escribeme5').val('D Hileras: '+eval("id_distancia_h_" + Componente));
 		}
     }
 </script>

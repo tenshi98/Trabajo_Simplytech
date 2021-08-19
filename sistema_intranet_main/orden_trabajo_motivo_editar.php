@@ -552,18 +552,19 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 				}
 				?>
+				</script>
+				
+				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProducto").value;
+					let Componente = document.getElementById("idProducto").value;
 					if (Componente != "") {
-						id_data=eval("id_data_" + Componente)
 						//escribo dentro del input
-						var elem = document.getElementById("escribeme");
-						elem.value = id_data;
+						document.getElementById("escribeme").value = eval("id_data_" + Componente);
 					}
 				}
 				</script>
@@ -688,18 +689,19 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 				}
 				?>
+				</script>
+				
+				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProducto").value;
+					let Componente = document.getElementById("idProducto").value;
 					if (Componente != "") {
-						id_data=eval("id_data_" + Componente)
 						//escribo dentro del input
-						var elem = document.getElementById("escribeme");
-						elem.value = id_data;
+						document.getElementById("escribeme").value = eval("id_data_" + Componente);
 					}
 				}
 				</script>
@@ -835,18 +837,19 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 				}
 				?>
+				</script>
+				
+				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProducto").value;
+					let Componente = document.getElementById("idProducto").value;
 					if (Componente != "") {
-						id_data=eval("id_data_" + Componente)
 						//escribo dentro del input
-						var elem = document.getElementById("escribeme");
-						elem.value = id_data;
+						document.getElementById("escribeme").value = eval("id_data_" + Componente);
 					}
 				}
 				</script>
@@ -973,18 +976,19 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'var id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 				}
 				?>
+				</script>
+				
+				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
 				function myFunction() {
-					var Componente = document.getElementById("idProducto").value;
+					let Componente = document.getElementById("idProducto").value;
 					if (Componente != "") {
-						id_data=eval("id_data_" + Componente)
 						//escribo dentro del input
-						var elem = document.getElementById("escribeme");
-						elem.value = id_data;
+						document.getElementById("escribeme").value = eval("id_data_" + Componente);
 					}
 				}
 				</script>

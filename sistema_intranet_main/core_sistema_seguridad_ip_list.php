@@ -240,10 +240,8 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 					document.getElementById('div_idApoderado').style.display = 'none';
 					document.getElementById('div_idAlumno').style.display = 'none';
 					
-					var idSeguridad;
-						
 					$("#idSeguridad").on("change", function(){ //se ejecuta al cambiar valor del select
-						idSeguridad = $(this).val(); //Asignamos el valor seleccionado
+						let idSeguridad = $(this).val(); //Asignamos el valor seleccionado
 					
 						//IP Relacionadas - Usuarios
 						if(idSeguridad == 1){ 

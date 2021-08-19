@@ -75,8 +75,8 @@ echo '<div class="wrapper">';
 				unit: \'c\',
 				success: function(weather) {
 								
-					var meteo;
-					var back_g;
+					let meteo  = "";
+					let back_g = "";
 					switch (weather.code) {
 						case \'1\':
 						case \'2\':
@@ -228,11 +228,8 @@ echo '<div class="wrapper">';
 			if (Minutos <= 9) Minutos = "0" + Minutos
 			if (Segundos <= 9) Segundos = "0" + Segundos
 
-			/* En Reloj le indicamos la Hora, los Minutos y los Segundos */
-			var Script = Hora + ":" + Minutos + ":" + Segundos
-
 			/* Capturamos una celda para mostrar el Reloj */
-			document.getElementById("hora_actual").innerHTML = Script
+			document.getElementById("hora_actual").innerHTML = Hora + ":" + Minutos + ":" + Segundos;
 			
 		}
 	</script>';

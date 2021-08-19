@@ -202,15 +202,15 @@ require_once '0_validate_user_1.php';
 					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor', 'ocompra_listado_existencias_boletas', '', 'idUso=1 AND idOcompra = '.$idOcompra.' AND idTrabajador = '.$idTrabajador.' AND N_Doc = '.$N_Doc, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se guardan los datos
-					$bvar = 1;
+					$idInterno = 1;
 					foreach ($arrBoletas as $motivo){
 						//se recorren los datos
-						$_SESSION['boleta_ing_servicios'][$bvar]['idServicio']    = $bvar;
-						$_SESSION['boleta_ing_servicios'][$bvar]['idExistencia']  = $motivo['idExistencia'];
-						$_SESSION['boleta_ing_servicios'][$bvar]['Nombre']        = $motivo['Descripcion'];
-						$_SESSION['boleta_ing_servicios'][$bvar]['vTotal']        = $motivo['Valor'];
+						$_SESSION['boleta_ing_servicios'][$idInterno]['idServicio']    = $idInterno;
+						$_SESSION['boleta_ing_servicios'][$idInterno]['idExistencia']  = $motivo['idExistencia'];
+						$_SESSION['boleta_ing_servicios'][$idInterno]['Nombre']        = $motivo['Descripcion'];
+						$_SESSION['boleta_ing_servicios'][$idInterno]['vTotal']        = $motivo['Valor'];
 						
-						$bvar++;
+						$idInterno++;
 					}
 				
 				}
@@ -396,15 +396,15 @@ require_once '0_validate_user_1.php';
 					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor', 'ocompra_listado_existencias_boletas', '', 'idUso=1 AND idOcompra = '.$idOcompra.' AND idTrabajador = '.$idTrabajador.' AND N_Doc = '.$N_Doc, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se guardan los datos
-					$bvar = 1;
+					$idInterno = 1;
 					foreach ($arrBoletas as $motivo){
 						//se recorren los datos
-						$_SESSION['boleta_ing_servicios'][$bvar]['idServicio']    = $bvar;
-						$_SESSION['boleta_ing_servicios'][$bvar]['idExistencia']  = $motivo['idExistencia'];
-						$_SESSION['boleta_ing_servicios'][$bvar]['Nombre']        = $motivo['Descripcion'];
-						$_SESSION['boleta_ing_servicios'][$bvar]['vTotal']        = $motivo['Valor'];
+						$_SESSION['boleta_ing_servicios'][$idInterno]['idServicio']    = $idInterno;
+						$_SESSION['boleta_ing_servicios'][$idInterno]['idExistencia']  = $motivo['idExistencia'];
+						$_SESSION['boleta_ing_servicios'][$idInterno]['Nombre']        = $motivo['Descripcion'];
+						$_SESSION['boleta_ing_servicios'][$idInterno]['vTotal']        = $motivo['Valor'];
 						
-						$bvar++;
+						$idInterno++;
 					}
 				
 				}
@@ -492,20 +492,20 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['boleta_ing_servicios'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['boleta_ing_servicios'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['boleta_ing_servicios'][$bvar]['idServicio']    = $bvar;
-				$_SESSION['boleta_ing_servicios'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['boleta_ing_servicios'][$bvar]['vTotal']        = $vTotal;
+				$_SESSION['boleta_ing_servicios'][$idInterno]['idServicio']    = $idInterno;
+				$_SESSION['boleta_ing_servicios'][$idInterno]['Nombre']        = $Nombre;
+				$_SESSION['boleta_ing_servicios'][$idInterno]['vTotal']        = $vTotal;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -1111,20 +1111,20 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['boleta_eg_servicios'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['boleta_eg_servicios'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['boleta_eg_servicios'][$bvar]['idServicio']    = $bvar;
-				$_SESSION['boleta_eg_servicios'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['boleta_eg_servicios'][$bvar]['vTotal']        = $vTotal;
+				$_SESSION['boleta_eg_servicios'][$idInterno]['idServicio']    = $idInterno;
+				$_SESSION['boleta_eg_servicios'][$idInterno]['Nombre']        = $Nombre;
+				$_SESSION['boleta_eg_servicios'][$idInterno]['vTotal']        = $vTotal;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	
@@ -1592,16 +1592,16 @@ require_once '0_validate_user_1.php';
 					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor, Total_Ingresado', 'ocompra_listado_existencias_boletas_empresas', '', 'Valor>Total_Ingresado AND idOcompra = '.$idOcompra, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se guardan los datos
-					$bvar = 1;
+					$idInterno = 1;
 					foreach ($arrBoletas as $motivo){
 						//se recorren los datos
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['idServicio']    = $bvar;
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['idExistencia']  = $motivo['idExistencia'];
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['Nombre']        = $motivo['Descripcion'];
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['vTotal']        = $motivo['Valor'] - $motivo['Total_Ingresado'];
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['Total_ing']     = $motivo['Total_Ingresado'];
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['idServicio']    = $idInterno;
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['idExistencia']  = $motivo['idExistencia'];
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Nombre']        = $motivo['Descripcion'];
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['vTotal']        = $motivo['Valor'] - $motivo['Total_Ingresado'];
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Total_ing']     = $motivo['Total_Ingresado'];
 						
-						$bvar++;
+						$idInterno++;
 					}
 				
 				}
@@ -1737,16 +1737,16 @@ require_once '0_validate_user_1.php';
 					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor, Total_Ingresado', 'ocompra_listado_existencias_boletas_empresas', '', 'Valor>Total_Ingresado AND idOcompra = '.$idOcompra, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se guardan los datos
-					$bvar = 1;
+					$idInterno = 1;
 					foreach ($arrBoletas as $motivo){
 						//se recorren los datos
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['idServicio']    = $bvar;
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['idExistencia']  = $motivo['idExistencia'];
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['Nombre']        = $motivo['Descripcion'];
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['vTotal']        = $motivo['Valor'] - $motivo['Total_Ingresado'];
-						$_SESSION['boleta_ing_prov_servicios'][$bvar]['Total_ing']     = $motivo['Total_Ingresado'];
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['idServicio']    = $idInterno;
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['idExistencia']  = $motivo['idExistencia'];
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Nombre']        = $motivo['Descripcion'];
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['vTotal']        = $motivo['Valor'] - $motivo['Total_Ingresado'];
+						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Total_ing']     = $motivo['Total_Ingresado'];
 						
-						$bvar++;
+						$idInterno++;
 					}
 				
 				}
@@ -1785,20 +1785,20 @@ require_once '0_validate_user_1.php';
 			
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['boleta_ing_prov_servicios'])){
-				$bvar = 1;
+				$idInterno = 1;
 			}else{
-				$bvar = 1;
+				$idInterno = 1;
 				foreach ($_SESSION['boleta_ing_prov_servicios'] as $key => $producto){
-					$bvar++;
+					$idInterno++;
 				}	
 			}
 
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$_SESSION['boleta_ing_prov_servicios'][$bvar]['idServicio']    = $bvar;
-				$_SESSION['boleta_ing_prov_servicios'][$bvar]['Nombre']        = $Nombre;
-				$_SESSION['boleta_ing_prov_servicios'][$bvar]['vTotal']        = $vTotal;
+				$_SESSION['boleta_ing_prov_servicios'][$idInterno]['idServicio']    = $idInterno;
+				$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Nombre']        = $Nombre;
+				$_SESSION['boleta_ing_prov_servicios'][$idInterno]['vTotal']        = $vTotal;
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;	

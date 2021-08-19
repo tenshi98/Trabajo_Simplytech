@@ -130,13 +130,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					
 					<script>
 						
-						var idPais;
-						var idPais_sel;
-						
 						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 									
-							idSubconfiguracion= $("#idSubconfiguracion").val();
-							idPais= $("#idPais").val();
+							let idSubconfiguracion= $("#idSubconfiguracion").val();
+							let idPais= $("#idPais").val();
 							
 							//Si el pais es distinto de chile
 							if(idPais!=1){
@@ -152,7 +149,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						
 						$("#idPais").on("change", function(){
 							
-							idPais_sel= $("#idPais").val();
+							let idPais_sel= $("#idPais").val();
 							
 							//Si el pais es distinto de chile
 							if(idPais_sel!=1){

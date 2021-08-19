@@ -178,7 +178,7 @@ array_push( $arrRutas,$row );
 									dest, marker.position); // in meters
 									
 									var numStep = distance / step;
-									var i = 0;
+									let i = 0;
 									var deltaLat = (coords[target][0] - lat) / numStep;
 									var deltaLng = (coords[target][1] - lng) / numStep;
 									

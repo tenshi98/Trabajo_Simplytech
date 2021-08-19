@@ -589,10 +589,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_ValorMensual').style.display = 'none';
 					document.getElementById('div_Presupuesto').style.display = 'none';
 							
-					var modelSelected1;
-						
 					$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
-						modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si es A suma Alzada
 						if(modelSelected1 == 1){ 

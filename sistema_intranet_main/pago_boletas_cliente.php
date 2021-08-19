@@ -205,10 +205,10 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 	//////////////////////////////////////////////////////////
 	function addpago_2(idFacturacion, maximo) {
 		
-		var pago        = parseInt(document.getElementById("ingpago_"+idFacturacion).value);
-		var maxs        = parseInt(maximo);
-		var pago_x      = document.getElementById("ingpago_"+idFacturacion).value;
-		var ok          = 0;
+		let pago        = parseInt(document.getElementById("ingpago_"+idFacturacion).value);
+		let maxs        = parseInt(maximo);
+		let pago_x      = document.getElementById("ingpago_"+idFacturacion).value;
+		let ok          = 0;
 
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
@@ -254,10 +254,10 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 	//////////////////////////////////////////////////////////
 	function addpago( idFacturacion, maximo) {
 
-		var pago        = parseInt(document.getElementById("ingpago_"+idFacturacion).value);
-		var maxs        = parseInt(maximo);
-		var pago_x      = document.getElementById("ingpago_"+idFacturacion).value;
-		var ok          = 0;
+		let pago        = parseInt(document.getElementById("ingpago_"+idFacturacion).value);
+		let maxs        = parseInt(maximo);
+		let pago_x      = document.getElementById("ingpago_"+idFacturacion).value;
+		let ok          = 0;
 
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
@@ -343,10 +343,10 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 				
 				$('#submitBtn').click(function() {
 					//Se verifica que todos los input tengan valores asignados
-					var ninput = <?php echo ($Registro_total-$Registro_ok);?>;
+					let ninput = <?php echo ($Registro_total-$Registro_ok);?>;
 					
 					//verifica el valor
-					var monto = <?php echo $TotalGeneral; ?>;
+					let monto = <?php echo $TotalGeneral; ?>;
 					if(monto!=0&&ninput==0){
 						$('#submitmodal').show();
 						$('#confirmacion').text('Los montos estan correctos, ¿confirmas el pago?');
@@ -592,9 +592,9 @@ array_push( $arrBoletas,$row );
 		
 		
 		//Variable con los totales
-		var Total = 0;
-		var MontoCancelado = 0;
-		var Totalgen = 0;
+		let Total          = 0;
+		let MontoCancelado = 0;
+		let Totalgen       = 0;
 	
 		// check if checkbox is checked
 		<?php foreach ($arrBoletas as $tipo){ ?>

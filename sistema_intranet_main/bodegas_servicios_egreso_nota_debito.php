@@ -454,13 +454,9 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 					document.getElementById('div_fecha_fact_desde').style.display = 'none';
 					document.getElementById('div_fecha_fact_hasta').style.display = 'none';
 					
-					var idDocumentos;
-					var idDocumentosSelected;
-					
 					//se ejecuta al cargar la página (OBLIGATORIO)
 					$(document).ready(function(){ 
-							
-						idDocumentosSelected= $("#idDocumentos").val();
+						let idDocumentosSelected= $("#idDocumentos").val();
 						//si es Factura
 						if(idDocumentosSelected == 2){ 
 							document.getElementById('div_fecha_fact_desde').style.display = '';
@@ -478,8 +474,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 					}); 
 						
 					$("#idDocumentos").on("change", function(){ //se ejecuta al cambiar valor del select
-						idDocumentos = $(this).val(); //Asignamos el valor seleccionado
-					
+						let idDocumentos = $(this).val(); //Asignamos el valor seleccionado
 						//si es Factura
 						if(idDocumentos == 2){ 
 							document.getElementById('div_fecha_fact_desde').style.display = '';
@@ -820,11 +815,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					document.getElementById('div_fecha_fact_desde').style.display = 'none';
 					document.getElementById('div_fecha_fact_hasta').style.display = 'none';
 						
-					var idDocumentos;
-						
 					$("#idDocumentos").on("change", function(){ //se ejecuta al cambiar valor del select
-						idDocumentos = $(this).val(); //Asignamos el valor seleccionado
-					
+						let idDocumentos = $(this).val(); //Asignamos el valor seleccionado
 						//si es Factura
 						if(idDocumentos == 2){ 
 							document.getElementById('div_fecha_fact_desde').style.display = '';

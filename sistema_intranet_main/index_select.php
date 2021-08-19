@@ -279,7 +279,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 		var ready = function () {
 		  arr = [];
-		  for (var i = 0; i < 20; i++) {
+		  for (let i = 0; i < 20; i++) {
 			set();
 		  }
 		};

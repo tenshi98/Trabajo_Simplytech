@@ -204,12 +204,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo '
-					var id_idSector_'.$tipo['idCliente'].'= "'.$tipo['idSector'].'";
-					var id_idPuntoMuestreo_'.$tipo['idCliente'].'= "'.$tipo['idPuntoMuestreo'].'";
-					var UTM_norte_'.$tipo['idCliente'].'= "'.$tipo['UTM_norte'].'";
-					var UTM_este_'.$tipo['idCliente'].'= "'.$tipo['UTM_este'].'";
-					var Sector_'.$tipo['idCliente'].'= "'.$tipo['Sector'].'";
-					var Punto_'.$tipo['idCliente'].'= "'.$tipo['Punto'].'";
+					let id_idSector_'.$tipo['idCliente'].'= "'.$tipo['idSector'].'";
+					let id_idPuntoMuestreo_'.$tipo['idCliente'].'= "'.$tipo['idPuntoMuestreo'].'";
+					let UTM_norte_'.$tipo['idCliente'].'= "'.$tipo['UTM_norte'].'";
+					let UTM_este_'.$tipo['idCliente'].'= "'.$tipo['UTM_este'].'";
+					let Sector_'.$tipo['idCliente'].'= "'.$tipo['Sector'].'";
+					let Punto_'.$tipo['idCliente'].'= "'.$tipo['Punto'].'";
 					';	
 				}
 				echo '</script>';	
@@ -231,16 +231,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
 					
 					//declaro variables
-					var idTipoMuestra;
-					var idOpciones;
-					var idCliente;
-					var elem_1 = document.getElementById("idSector_fake1");
-					var elem_2 = document.getElementById("UTM_norte_fake1");
-					var elem_3 = document.getElementById("UTM_este_fake1");
-					var elem_4 = document.getElementById("idPuntoMuestreo_fake1");
-					var elem_5 = document.getElementById("idSector_fake2");
-					var elem_6 = document.getElementById("UTM_norte_fake2");
-					var elem_7 = document.getElementById("UTM_este_fake2");
+					
+					
 					var elem_8 = document.getElementById("idPuntoMuestreo_fake2");
 					
 					//inicio documentos
@@ -299,14 +291,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						}
 						
 						//actualizo
-						elem_1.value = eval("Sector_" + tipo_val_3);
-						elem_2.value = eval("UTM_norte_" + tipo_val_3);
-						elem_3.value = eval("UTM_este_" + tipo_val_3);
-						elem_4.value = eval("Punto_" + tipo_val_3);
-						elem_5.value = eval("id_idSector_" + tipo_val_3);
-						elem_6.value = eval("UTM_norte_" + tipo_val_3);
-						elem_7.value = eval("UTM_este_" + tipo_val_3);
-						elem_8.value = eval("id_idPuntoMuestreo_" + tipo_val_3);
+						document.getElementById("idSector_fake1").value         = eval("Sector_" + tipo_val_3);
+						document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + tipo_val_3);
+						document.getElementById("UTM_este_fake1").value         = eval("UTM_este_" + tipo_val_3);
+						document.getElementById("idPuntoMuestreo_fake1").value  = eval("Punto_" + tipo_val_3);
+						document.getElementById("idSector_fake2").value         = eval("id_idSector_" + tipo_val_3);
+						document.getElementById("UTM_norte_fake2").value        = eval("UTM_norte_" + tipo_val_3);
+						document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + tipo_val_3);
+						document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + tipo_val_3);
 						
 	
 					
@@ -314,16 +306,16 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						//busco cambios en el Cliente seleccionado
 						$("#idCliente").on("change", function(){ 
 							//verifico si la seleccion tiene datos y procedo a escribir
-							idCliente = $(this).val(); 
+							let idCliente = $(this).val(); 
 							if (idCliente != "") {
-								elem_1.value = eval("Sector_" + idCliente);
-								elem_2.value = eval("UTM_norte_" + idCliente);
-								elem_3.value = eval("UTM_este_" + idCliente);
-								elem_4.value = eval("Punto_" + idCliente);
-								elem_5.value = eval("id_idSector_" + idCliente);
-								elem_6.value = eval("UTM_norte_" + idCliente);
-								elem_7.value = eval("UTM_este_" + idCliente);
-								elem_8.value = eval("id_idPuntoMuestreo_" + idCliente);
+								document.getElementById("idSector_fake1").value         = eval("Sector_" + idCliente);
+								document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + idCliente);
+								document.getElementById("UTM_este_fake1").value         = eval("UTM_este_" + idCliente);
+								document.getElementById("idPuntoMuestreo_fake1").value  = eval("Punto_" + idCliente);
+								document.getElementById("idSector_fake2").value         = eval("id_idSector_" + idCliente);
+								document.getElementById("UTM_norte_fake2").value        = eval("UTM_norte_" + idCliente);
+								document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + idCliente);
+								document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + idCliente);
 							}
 		
 						});
@@ -331,7 +323,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						
 						//busco cambios en el tipo de muestra
 						$("#idTipoMuestra").on("change", function(){ 
-							idTipoMuestra = $(this).val(); 
+							let idTipoMuestra = $(this).val(); 
 							//si es muestra
 							if(idTipoMuestra == 1){ 
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
@@ -348,7 +340,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						
 						//busco cambios en el uso del cliente
 						$("#idOpciones").on("change", function(){ 
-							idOpciones = $(this).val(); 
+							let idOpciones = $(this).val(); 
 							//si es si
 							if(idOpciones == 1){ 
 								document.getElementById('div_idSector').style.display = 'none';
@@ -547,36 +539,22 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_UTM_este_fake1').style.display = 'none';
 					document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
 					
-					//declaro variables
-					var idTipoMuestra;
-					var idOpciones;
-					var idCliente;
-					var elem_1 = document.getElementById("idSector_fake1");
-					var elem_2 = document.getElementById("UTM_norte_fake1");
-					var elem_3 = document.getElementById("UTM_este_fake1");
-					var elem_4 = document.getElementById("idPuntoMuestreo_fake1");
-					var elem_5 = document.getElementById("idSector_fake2");
-					var elem_6 = document.getElementById("UTM_norte_fake2");
-					var elem_7 = document.getElementById("UTM_este_fake2");
-					var elem_8 = document.getElementById("idPuntoMuestreo_fake2");
-							
-							
 					//inicio documentos
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 						
 						//busco cambios en el Cliente seleccionado
 						$("#idCliente").on("change", function(){ 
 							//verifico si la seleccion tiene datos y procedo a escribir
-							idCliente = $(this).val(); 
+							let idCliente = $(this).val(); 
 							if (idCliente != "") {
-								elem_1.value = eval("Sector_" + idCliente);
-								elem_2.value = eval("UTM_norte_" + idCliente);
-								elem_3.value = eval("UTM_este_" + idCliente);
-								elem_4.value = eval("Punto_" + idCliente);
-								elem_5.value = eval("id_idSector_" + idCliente);
-								elem_6.value = eval("UTM_norte_" + idCliente);
-								elem_7.value = eval("UTM_este_" + idCliente);
-								elem_8.value = eval("id_idPuntoMuestreo_" + idCliente);
+								document.getElementById("idSector_fake1").value         = eval("Sector_" + idCliente);
+								document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + idCliente);
+								document.getElementById("UTM_este_fake1").value         = eval("UTM_este_" + idCliente);
+								document.getElementById("idPuntoMuestreo_fake1").value  = eval("Punto_" + idCliente);
+								document.getElementById("idSector_fake2").value         = eval("id_idSector_" + idCliente);
+								document.getElementById("UTM_norte_fake2").value        = eval("UTM_norte_" + idCliente);
+								document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + idCliente);
+								document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + idCliente);
 							}
 		
 						});
@@ -584,7 +562,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						
 						//busco cambios en el tipo de muestra
 						$("#idTipoMuestra").on("change", function(){ 
-							idTipoMuestra = $(this).val(); 
+							let idTipoMuestra = $(this).val(); 
 							//si es muestra
 							if(idTipoMuestra == 1){ 
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
@@ -601,7 +579,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						
 						//busco cambios en el uso del cliente
 						$("#idOpciones").on("change", function(){ 
-							idOpciones = $(this).val(); 
+							let idOpciones = $(this).val(); 
 							//si es si
 							if(idOpciones == 1){ 
 								document.getElementById('div_idSector').style.display = 'none';

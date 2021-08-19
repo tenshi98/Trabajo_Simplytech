@@ -171,30 +171,30 @@ array_push( $arrMediciones,$row );
 				<script>
 					/* ************************************************************************** */
 					//Variables globales
-					var idEquipoActual              = '.$arrEquipo[0]['idTelemetria'].';
-					var NombreEquipoActual          = "'.$arrEquipo[0]['Nombre'].'";
-					var IdentificadorEquipoActual   = "'.$arrEquipo[0]['Identificador'].'";
-					var idSensoresActual            = '.$arrEquipo[0]['cantSensores'].';
-					var Counter_x1                  = 0;
-					var correccion_x                = 0;
+					let idEquipoActual              = '.$arrEquipo[0]['idTelemetria'].';
+					let NombreEquipoActual          = "'.$arrEquipo[0]['Nombre'].'";
+					let IdentificadorEquipoActual   = "'.$arrEquipo[0]['Identificador'].'";
+					let idSensoresActual            = '.$arrEquipo[0]['cantSensores'].';
+					let Counter_x1                  = 0;
+					let correccion_x                = 0;
 					
-					var chart_vel                   = "";
-					var chart_tanque                = "";
-					var chart_caud_flu              = "";
-					var chart_caud                  = "";
-					var chart_gauge                 = "";
+					let chart_vel                   = "";
+					let chart_tanque                = "";
+					let chart_caud_flu              = "";
+					let chart_caud                  = "";
+					let chart_gauge                 = "";
 					
-					var data_vel                    = "";
-					var data_tanque                 = "";
-					var data_caud_flu               = "";
-					var data_caud                   = "";
-					var data_gauge                  = "";
+					let data_vel                    = "";
+					let data_tanque                 = "";
+					let data_caud_flu               = "";
+					let data_caud                   = "";
+					let data_gauge                  = "";
 					
-					var options_vel                 = "";
-					var options_tanque              = "";
-					var options_caud_flu            = "";
-					var options_caud                = "";
-					var options_gauge               = "";
+					let options_vel                 = "";
+					let options_tanque              = "";
+					let options_caud_flu            = "";
+					let options_caud                = "";
+					let options_gauge               = "";
 						
 					//carga de los graficos	
 					google.charts.setOnLoadCallback(Chart_velocidades);
@@ -210,8 +210,7 @@ array_push( $arrMediciones,$row );
 					updtGraficos('.$x_seg.');
 					/* ************************************************************************** */
 					function updtGraficos(time) {
-						var newTime = time / 2;
-						setInterval(function(){updtGraficosTimer()},newTime);
+						setInterval(function(){updtGraficosTimer()},(time / 2));
 					}
 					/* ************************************************************************** */
 					

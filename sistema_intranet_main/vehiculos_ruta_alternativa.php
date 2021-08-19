@@ -268,7 +268,7 @@ array_push( $arrRutasAlt,$row );
 
 
 								];
-								for (var i = 0, j = marcadores.length; i < j; i++) {  
+								for (let i = 0, j = marcadores.length; i < j; i++) {  
 								  var contenido = marcadores[i].contenido;
 								  var marker = new google.maps.Marker({
 									position	: new google.maps.LatLng(marcadores[i].position.lat, marcadores[i].position.lng),
@@ -398,11 +398,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	?>
 					<script>
 						document.getElementById('div_Fecha').style.display = 'none';
 						document.getElementById('div_idDia').style.display = 'none';
-						var tipo_val;
-						var modelSelected;
-		 
+						
 						$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected = $(this).val(); //Asignamos el valor seleccionado
+							let modelSelected = $(this).val(); //Asignamos el valor seleccionado
 					
 							//si es SI
 							if(modelSelected == 1){ 

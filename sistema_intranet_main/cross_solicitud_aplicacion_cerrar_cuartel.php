@@ -125,10 +125,8 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 					document.getElementById('div_LitrosAplicados').style.display = 'none';
 					//document.getElementById('div_T_Aplicacion').style.display = 'none';
 						
-					var idEjecucion;
-						
 					$("#idEjecucion").on("change", function(){ //se ejecuta al cambiar valor del select
-						idEjecucion = $(this).val(); //Asignamos el valor seleccionado
+						let idEjecucion = $(this).val(); //Asignamos el valor seleccionado
 					
 						//No ejecutado
 						if(idEjecucion == 1){ 

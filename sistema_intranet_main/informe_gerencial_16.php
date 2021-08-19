@@ -425,12 +425,11 @@ foreach ($arrPermisos as $prod) {
 					document.getElementById('div_idInsumo').style.display = 'none';
 					document.getElementById('div_idProducto').style.display = 'none';
 					document.getElementById('div_idServicio').style.display = 'none';	
-					var tipo_val;
-						
+					
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idTipoMov").on("change", function(){ //se ejecuta al cambiar valor del select
-							tipo_val= $("#idTipoMov").val();//Asignamos el valor seleccionado
+							let tipo_val = $("#idTipoMov").val();//Asignamos el valor seleccionado
 								
 							//Proveedores
 							if(tipo_val == 1){ 

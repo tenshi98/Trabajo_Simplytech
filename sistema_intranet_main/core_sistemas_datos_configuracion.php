@@ -150,13 +150,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<script>
 						document.getElementById('div_idOpcionesGen_6').style.display = 'none';
 						
-						var Sensores_val;
-						var modelSelected1;
-								
-				 
 						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 									
-							Sensores_val= $("#idOpcionesGen_4").val();
+							let Sensores_val = $("#idOpcionesGen_4").val();
 							
 							//si es medicion
 							if(Sensores_val == 1){ 
@@ -170,7 +166,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						}); 
 								
 						$("#idOpcionesGen_4").on("change", function(){ //se ejecuta al cambiar valor del select
-							modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+							let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 							
 							//si es medicion
 							if(modelSelected1 == 1){ 

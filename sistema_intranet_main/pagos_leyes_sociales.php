@@ -492,9 +492,9 @@ input[type="date"].form-control{
 </div>	
 	
 <script>
-	var nPagoAFP       = 0;
-	var nPagoSalud     = 0;
-	var nPagoSeguridad = 0;
+	let nPagoAFP       = 0;
+	let nPagoSalud     = 0;
+	let nPagoSeguridad = 0;
 	
 	/**********************************************************/
 	//Se agrega cuartel
@@ -502,8 +502,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoAFP++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_afp');
-		var objclone = document.getElementById('clone_pago_afp'),
+		let objTo    = document.getElementById('insert_pago_afp');
+		let objclone = document.getElementById('clone_pago_afp'),
 		//se clonan los div
 		clone_pago_afp = objclone.cloneNode(true); 
 		clone_pago_afp.id = 'new_pago_afp_'+nPagoAFP;
@@ -516,8 +516,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoSalud++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_salud');
-		var objclone = document.getElementById('clone_pago_salud'),
+		let objTo    = document.getElementById('insert_pago_salud');
+		let objclone = document.getElementById('clone_pago_salud'),
 		//se clonan los div
 		clone_pago_salud = objclone.cloneNode(true); 
 		clone_pago_salud.id = 'new_pago_salud_'+nPagoSalud;
@@ -530,8 +530,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoSeguridad++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_seguridad');
-		var objclone = document.getElementById('clone_pago_seguridad'),
+		let objTo    = document.getElementById('insert_pago_seguridad');
+		let objclone = document.getElementById('clone_pago_seguridad'),
 		//se clonan los div
 		clone_pago_seguridad = objclone.cloneNode(true); 
 		clone_pago_seguridad.id = 'new_pago_seguridad_'+nPagoSeguridad;
@@ -720,9 +720,9 @@ input[type="date"].form-control{
 </div>	
 	
 <script>
-	var nPagoAFP       = 0;
-	var nPagoSalud     = 0;
-	var nPagoSeguridad = 0;
+	let nPagoAFP       = 0;
+	let nPagoSalud     = 0;
+	let nPagoSeguridad = 0;
 	
 	/**********************************************************/
 	//Se agrega cuartel
@@ -730,8 +730,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoAFP++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_afp');
-		var objclone = document.getElementById('clone_pago_afp'),
+		let objTo    = document.getElementById('insert_pago_afp');
+		let objclone = document.getElementById('clone_pago_afp'),
 		//se clonan los div
 		clone_pago_afp = objclone.cloneNode(true); 
 		clone_pago_afp.id = 'new_pago_afp_'+nPagoAFP;
@@ -744,8 +744,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoSalud++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_salud');
-		var objclone = document.getElementById('clone_pago_salud'),
+		let objTo    = document.getElementById('insert_pago_salud');
+		let objclone = document.getElementById('clone_pago_salud'),
 		//se clonan los div
 		clone_pago_salud = objclone.cloneNode(true); 
 		clone_pago_salud.id = 'new_pago_salud_'+nPagoSalud;
@@ -758,8 +758,8 @@ input[type="date"].form-control{
 		//se incrementa en 1
 		nPagoSeguridad++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_pago_seguridad');
-		var objclone = document.getElementById('clone_pago_seguridad'),
+		let objTo    = document.getElementById('insert_pago_seguridad');
+		let objclone = document.getElementById('clone_pago_seguridad'),
 		//se clonan los div
 		clone_pago_seguridad = objclone.cloneNode(true); 
 		clone_pago_seguridad.id = 'new_pago_seguridad_'+nPagoSeguridad;

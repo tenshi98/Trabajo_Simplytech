@@ -25,7 +25,7 @@ require_once 'core/Web.Header.Main.php';
 ?>
 
 <script type="text/javascript">
-    var int=self.setInterval("refresh()",60000);
+    var int = self.setInterval("refresh()",60000);
     function refresh()
     {
        location.reload(true);

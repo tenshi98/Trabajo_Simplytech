@@ -301,7 +301,7 @@ $Form_Inputs = new Inputs();
 					
 <script>
 	
-	var room = 0;
+	let room = 0;
 	
 	/**********************************************************/
 	//Se agrega producto
@@ -309,8 +309,8 @@ $Form_Inputs = new Inputs();
 		//se incrementa en 1
 		room++;
 		//se estancian los objetos a clonar
-		var objTo    = document.getElementById('insert_producto');
-		var objclone = document.getElementById('clone_producto'),
+		let objTo    = document.getElementById('insert_producto');
+		let objclone = document.getElementById('clone_producto'),
 		//se clonan los div
 		clone_producto = objclone.cloneNode(true);
 		clone_producto.id = 'new_producto_'+room; 
@@ -371,21 +371,17 @@ $Form_Inputs = new Inputs();
 				
 		foreach ($arrTipo as $tipo) {
 			$Total_existencias = $tipo['ingreso'] - $tipo['egreso'];
-			echo 'var id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-			echo 'var id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';	
-			echo 'var id_exist_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';			
+			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';	
+			echo 'let id_exist_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';			
 		}
 		?>
-		var selectedOption = select.options[select.selectedIndex];
-        var Componente = selectedOption.value;
+		let Componente = select.options[select.selectedIndex].value;
 		if (Componente != "") {
-			id_data1=eval("id_med_" + Componente)
-			id_data2=eval("id_value_" + Componente)
-			id_data3=eval("id_exist_" + Componente)
 			//escribo dentro del input
-			$(select).closest('.prod_container').find('.escribeme1').val(id_data1);
-			$(select).closest('.prod_container').find('.escribeme2').val(id_data2);
-			$(select).closest('.prod_container').find('.escribeme3').val(id_data3);
+			$(select).closest('.prod_container').find('.escribeme1').val(eval("id_med_" + Componente));
+			$(select).closest('.prod_container').find('.escribeme2').val(eval("id_value_" + Componente));
+			$(select).closest('.prod_container').find('.escribeme3').val(eval("id_exist_" + Componente));
 		}
     }
 </script>

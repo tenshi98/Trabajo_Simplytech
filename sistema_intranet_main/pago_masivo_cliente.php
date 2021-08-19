@@ -616,10 +616,10 @@ $Form_Inputs = new Inputs();
 	//////////////////////////////////////////////////////////
 	function addpago(level, number, maximo) {
 
-		var pago        = parseInt(document.getElementById("ingpago_"+level+"_"+number).value);
-		var maxs        = parseInt(maximo);
-		var pago_x      = document.getElementById("ingpago_"+level+"_"+number).value;
-		var ok          = 0;
+		let pago        = parseInt(document.getElementById("ingpago_"+level+"_"+number).value);
+		let maxs        = parseInt(maximo);
+		let pago_x      = document.getElementById("ingpago_"+level+"_"+number).value;
+		let ok          = 0;
 
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
@@ -635,10 +635,10 @@ $Form_Inputs = new Inputs();
 	//////////////////////////////////////////////////////////
 	function addpago_2(level, number, maximo) {
 		
-		var pago        = parseInt(document.getElementById("ingpago_"+level+"_"+number).value);
-		var maxs        = parseInt(maximo);
-		var pago_x      = document.getElementById("ingpago_"+level+"_"+number).value;
-		var ok          = 0;
+		let pago        = parseInt(document.getElementById("ingpago_"+level+"_"+number).value);
+		let maxs        = parseInt(maximo);
+		let pago_x      = document.getElementById("ingpago_"+level+"_"+number).value;
+		let ok          = 0;
 
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
@@ -729,9 +729,9 @@ $Form_Inputs = new Inputs();
 	function addDoc(level, number, valor) {
 		
 	
-		var selector = document.getElementById("facturas_"+level+"_"+number);
-		var value = selector[selector.selectedIndex].value;
-		var text = selector[selector.selectedIndex].text;
+		let selector = document.getElementById("facturas_"+level+"_"+number);
+		let value    = selector[selector.selectedIndex].value;
+		let text     = selector[selector.selectedIndex].text;
     
 		//Verifico 
 		if(value!=0 &&value!=''&&text!=''){
@@ -857,10 +857,10 @@ $Form_Inputs = new Inputs();
 				
 				$('#submitBtn').click(function() {
 					//Se verifica que todos los input tengan valores asignados
-					var ninput = <?php echo ($Registro_total-$Registro_ok);?>;
+					let ninput = <?php echo ($Registro_total-$Registro_ok);?>;
 					
 					//verifica el valor
-					var monto = <?php echo $TotalGeneral; ?>;
+					let monto = <?php echo $TotalGeneral; ?>;
 					if(monto!=0&&ninput==0){
 						$('#submitmodal').show();
 						$('#confirmacion').text('Los montos estan correctos, ¿confirmas el pago?');
@@ -1536,10 +1536,10 @@ array_push( $arrTipo4,$row );
 		
 		
 		//Variable con los totales
-		var Total = 0;
-		var MontoCancelado = 0;
-		var NCCancelado = 0;
-		var Totalgen = 0;
+		let Total = 0;
+		let MontoCancelado = 0;
+		let NCCancelado = 0;
+		let Totalgen = 0;
 	
 		// check if checkbox is checked
 		<?php foreach ($arrTipo1 as $tipo){ ?>

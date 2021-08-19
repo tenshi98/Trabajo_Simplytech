@@ -227,15 +227,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
 					document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'none';
 						
-					var SensoresUso_<?php echo $_GET['mod']; ?>;
-					var SensoresUso_<?php echo $_GET['mod']; ?>_sel;
-					var SensoresRevision_<?php echo $_GET['mod']; ?>;
-					var SensoresRevision_<?php echo $_GET['mod']; ?>_sel;
-						
 					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 									
-						SensoresUso_<?php echo $_GET['mod']; ?>= $("#SensoresUso_<?php echo $_GET['mod']; ?>").val();
-						SensoresRevision_<?php echo $_GET['mod']; ?>= $("#SensoresRevision_<?php echo $_GET['mod']; ?>").val();
+						let SensoresUso_<?php echo $_GET['mod']; ?>= $("#SensoresUso_<?php echo $_GET['mod']; ?>").val();
+						let SensoresRevision_<?php echo $_GET['mod']; ?>= $("#SensoresRevision_<?php echo $_GET['mod']; ?>").val();
 							
 						//Si es si
 						if(SensoresUso_<?php echo $_GET['mod']; ?> == 1){ 
@@ -276,7 +271,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					}); 
 								
 					$("#SensoresUso_<?php echo $_GET['mod']; ?>").on("change", function(){ //se ejecuta al cambiar valor del select
-						SensoresUso_<?php echo $_GET['mod']; ?>_sel = $(this).val(); //Asignamos el valor seleccionado
+						let SensoresUso_<?php echo $_GET['mod']; ?>_sel = $(this).val(); //Asignamos el valor seleccionado
 							
 						//Si es si
 						if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 1){ 
@@ -315,7 +310,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						
 						
 					$("#SensoresRevision_<?php echo $_GET['mod']; ?>").on("change", function(){ //se ejecuta al cambiar valor del select
-						SensoresRevision_<?php echo $_GET['mod']; ?>_sel = $(this).val(); //Asignamos el valor seleccionado
+						let SensoresRevision_<?php echo $_GET['mod']; ?>_sel = $(this).val(); //Asignamos el valor seleccionado
 							
 						//Si es si
 						if(SensoresRevision_<?php echo $_GET['mod']; ?>_sel == 1){ 
