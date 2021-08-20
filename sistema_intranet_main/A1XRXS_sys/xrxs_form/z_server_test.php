@@ -211,7 +211,7 @@ require_once '0_validate_user_1.php';
 
 		break;
 /*******************************************************************************************************************/
-		case 'send_mail':	
+		case 'send_whatsapp':	
 		
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
@@ -220,8 +220,11 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//envio mensaje
-				echo WhatsappSendMessage($Token, $InstanceId, $fono, $mensaje);
+				$resultado =  WhatsappSendMessage($Token, $InstanceId, $fono, $mensaje);
 				
+				echo '<pre>';
+				var_dump($resultado);
+				echo '</pre>';
 	
 			}
 		
