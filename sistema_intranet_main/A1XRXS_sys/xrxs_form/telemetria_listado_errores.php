@@ -80,6 +80,7 @@ require_once '0_validate_user_1.php';
 				
 				/*******************************************************/
 				//se actualizan los datos
+				$a = "NAlertas='0'" ;
 				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
