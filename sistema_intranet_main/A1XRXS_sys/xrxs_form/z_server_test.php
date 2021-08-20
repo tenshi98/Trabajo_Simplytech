@@ -19,6 +19,10 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['email_principal']) )  $email_principal   = $_POST['email_principal'];
 	if ( !empty($_POST['GmailUsuario']) )     $GmailUsuario      = $_POST['GmailUsuario'];
 	if ( !empty($_POST['GmailPassword']) )    $GmailPassword     = $_POST['GmailPassword'];
+	if ( !empty($_POST['Token']) )            $Token             = $_POST['Token'];
+	if ( !empty($_POST['InstanceId']) )       $InstanceId        = $_POST['InstanceId'];
+	if ( !empty($_POST['fono']) )             $fono              = $_POST['fono'];
+	if ( !empty($_POST['mensaje']) )          $mensaje           = $_POST['mensaje'];
 	
 
 /*******************************************************************************************************************/
@@ -37,6 +41,10 @@ require_once '0_validate_user_1.php';
 			case 'email_principal':  if(empty($email_principal)){   $error['email_principal']    = 'error/No ha ingresado el email_principal';}break;
 			case 'GmailUsuario':     if(empty($GmailUsuario)){      $error['GmailUsuario']       = 'error/No ha ingresado el GmailUsuario';}break;
 			case 'GmailPassword':    if(empty($GmailPassword)){     $error['GmailPassword']      = 'error/No ha ingresado el GmailPassword';}break;
+			case 'Token':            if(empty($Token)){             $error['Token']              = 'error/No ha ingresado el Token';}break;
+			case 'InstanceId':       if(empty($InstanceId)){        $error['InstanceId']         = 'error/No ha ingresado el InstanceId';}break;
+			case 'fono':             if(empty($fono)){              $error['fono']               = 'error/No ha ingresado el fono';}break;
+			case 'mensaje':          if(empty($mensaje)){           $error['mensaje']            = 'error/No ha ingresado el mensaje';}break;
 			
 		}
 	}
@@ -201,6 +209,23 @@ require_once '0_validate_user_1.php';
 				die;
 			}
 
+		break;
+/*******************************************************************************************************************/
+		case 'send_mail':	
+		
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				//envio mensaje
+				echo WhatsappSendMessage($Token, $InstanceId, $fono, $mensaje);
+				
+	
+			}
+		
+			
 		break;			
 /*******************************************************************************************************************/
 	}

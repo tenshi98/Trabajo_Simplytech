@@ -123,6 +123,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){?>
 			<li><a href="core_cambio_usuario.php">                      <i class="fa fa-cogs" aria-hidden="true"></i> Cambio de Usuario</a></li>
 			<li><a href="core_testing_code.php">                        <i class="fa fa-cogs" aria-hidden="true"></i> Testeo de codigo</a></li>
 			<li><a href="core_test_email.php">                          <i class="fa fa-cogs" aria-hidden="true"></i> Testeo de correos</a></li>
+			<li><a href="core_test_social.php">                         <i class="fa fa-cogs" aria-hidden="true"></i> Testeo de Whatsapp</a></li>
 			
 		</ul>
 	</li>
