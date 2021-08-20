@@ -65,15 +65,15 @@ telemetria_listado.GeoErrores,
 telemetria_listado.NErrores'.$subquery;
 $SIS_join  = '';
 $SIS_where = 'telemetria_listado.idEstado = 1';                //solo equipos activos
-$SIS_where.= 'AND telemetria_listado.id_Geo = '.$id_Geo;       //solo los equipos que tengan el seguimiento activado
+$SIS_where.= ' AND telemetria_listado.id_Geo = '.$id_Geo;      //solo los equipos que tengan el seguimiento activado
 //Filtro el sistema al cual pertenece
-if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){ $SIS_where.= 'AND telemetria_listado.idSistema = '.$idSistema;}
+if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){ $SIS_where.= ' AND telemetria_listado.idSistema = '.$idSistema;}
 //Filtro la zona si existe
-if(isset($idZona)&&$idZona!=''&&$idZona!=9999){       $SIS_where.= 'AND telemetria_listado.idZona = '.$idZona;}
+if(isset($idZona)&&$idZona!=''&&$idZona!=9999){       $SIS_where.= ' AND telemetria_listado.idZona = '.$idZona;}
 //Filtro por el tipo de usuario
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
 	$SIS_join .= 'INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria';	
-	$SIS_where.= 'AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario; 	
+	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario; 	
 }
 $SIS_order = 'telemetria_listado.Nombre ASC';
 //Realizo la consulta

@@ -87,7 +87,7 @@ array_push( $arrMediciones,$row );
 
 <script>
 	
-	let DatosRefresco = "<?php echo 'Datos desde <strong>'.fecha_estandar($f_inicio).'-'.$h_inicio .'</strong> a <strong>'.fecha_estandar($f_termino).'-'.$h_termino.'</strong>'; ?>";
+	var DatosRefresco = "<?php echo 'Datos desde <strong>'.fecha_estandar($f_inicio).'-'.$h_inicio .'</strong> a <strong>'.fecha_estandar($f_termino).'-'.$h_termino.'</strong>'; ?>";
 	
 	<?php
 	/******************************************************/
