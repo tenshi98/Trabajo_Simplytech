@@ -96,7 +96,7 @@ select {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_filter('Icono de la Categoria','idFont', $x2, 2, 'idFont', 'Nombre', 'core_font_awesome', 0, '', $dbConn);
-				$Form_Inputs->form_input_color( 'Color Icono', 'IconColor', $x3, 1);
+				$Form_Inputs->form_color_picker( 'Color Icono', 'IconColor', $x3, 1);
 				
 				$Form_Inputs->form_input_hidden('id_pmcat', $_GET['id'], 2);
 				?>
@@ -142,7 +142,7 @@ select {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_filter('Icono de la Categoria','idFont', $x2, 2, 'idFont', 'Nombre', 'core_font_awesome', 0, '', $dbConn);
-				$Form_Inputs->form_input_color('Color Icono', 'IconColor', $x3, 1);
+				$Form_Inputs->form_color_picker('Color Icono', 'IconColor', $x3, 1);
 				?>
 	 
 				<div class="form-group">
