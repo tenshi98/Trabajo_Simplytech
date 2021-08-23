@@ -123,6 +123,8 @@ echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
 				<li><a href="core_recursos_pricing.php">      <i class="fa fa-cogs" aria-hidden="true"></i> Pricing Table</a></li>
 				<li><a href="core_recursos_progress.php">     <i class="fa fa-cogs" aria-hidden="true"></i> Progress</a></li>
 				<li><a href="core_recursos_typography.php">   <i class="fa fa-cogs" aria-hidden="true"></i> Typography</a></li>
+				<li><a href="core_recursos_forms.php">        <i class="fa fa-cogs" aria-hidden="true"></i> Formularios</a></li>
+				<li><a href="core_recursos_graphics.php">     <i class="fa fa-cogs" aria-hidden="true"></i> Graficos</a></li>
 				
 			</ul>
 		</li>';
