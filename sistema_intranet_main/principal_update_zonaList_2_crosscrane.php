@@ -236,13 +236,13 @@ foreach ($arrEquipo as $data) {
 	$arrGruas[$xdanger][$data['idTelemetria']]['status_icon']  = $status_icon;
 	$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']       = $data['Nombre'];
 	$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']   = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
-	if(isset($data['SensoresMedActual_37'])&&$data['SensoresMedActual_37']!=''&&$data['SensoresMedActual_37']!=0&&$data['SensoresMedActual_37']!=99900){
-		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).$arrFinalUnimed[$data['SensoresUniMed_37']];
+	if(isset($data['SensoresMedActual_37'])&&$data['SensoresMedActual_37']!=''&&$data['SensoresMedActual_37']!=0&&$data['SensoresMedActual_37']<99900){
+		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).' '.$arrFinalUnimed[$data['SensoresUniMed_37']];
 	}else{
-		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0'.$arrFinalUnimed[$data['SensoresUniMed_37']];
+		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0 '.$arrFinalUnimed[$data['SensoresUniMed_37']];
 	}
-	if(isset($data['SensoresMedActual_39'])&&$data['SensoresMedActual_39']!=''&&$data['SensoresMedActual_39']!=0){
-		$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).$arrFinalUnimed[$data['SensoresUniMed_39']];
+	if(isset($data['SensoresMedActual_39'])&&$data['SensoresMedActual_39']!=''&&$data['SensoresMedActual_39']!=0&&$data['SensoresMedActual_39']<99900){
+		$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).' '.$arrFinalUnimed[$data['SensoresUniMed_39']];
 	}else{
 		$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = 'N/A';
 	}
@@ -372,8 +372,8 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 		<tr role="row">
 			<th></th>
 			<th>Equipo</th>
-			<th>Voltaje</th>
-			<th>Viento</th>
+			<th>Voltaje (V)</th>
+			<th>Viento (km/h)</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>

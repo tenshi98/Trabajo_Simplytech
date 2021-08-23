@@ -119,10 +119,10 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			<tr role="row">
 				<th></th>
 				<th>Equipo</th>
-				<th>Vel</th>
-				<th>Nivel</th>
-				<th>F. Der</th>
-				<th>F. Izq</th>
+				<th>Velocidad (km/h)</th>
+				<th>Estanque (%)</th>
+				<th>F. izq (l/min)</th>
+				<th>F. der (l/min)</th>
 				<th></th>
 			</tr>
 		<?php } ?>
@@ -247,10 +247,10 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 						<?php echo $data['Nombre'];?><br/>
 						<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];?>
 					</td>
-					<td><?php echo Cantidades($data['GeoVelocidad'], 0);?> km</td>
+					<td><?php echo Cantidades($data['GeoVelocidad'], 0);?> km/h</td>
 					<td><?php echo $xdata_3;?> %</td>
-					<td><?php echo $xdata_1;?> l/min</td>
 					<td><?php echo $xdata_2;?> l/min</td>
+					<td><?php echo $xdata_1;?> l/min</td>
 				<?php }else{ ?>
 					<td colspan="5">	
 						<?php echo $data['Nombre'];?><br/>

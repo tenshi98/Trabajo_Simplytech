@@ -189,11 +189,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 							chart: {
 								title: 'Temperaturas'
 							},
-							series: {
-								// Gives each series an axis name that matches the Y-axis below.
-								0: {axis: 'Temperatura Real (°C)'},
-								1: {axis: 'Temperatura Proyectada (°C)'}
-							},
+							
 							axes: {
 								// Adds labels to each axis; they don't have to match the axis names.
 								y: {

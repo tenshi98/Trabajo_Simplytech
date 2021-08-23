@@ -5875,7 +5875,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>	
 					</header>
 					<div class="table-responsive">
-						<div class="col-sm-6">
+						<div class="col-sm-7">
 							<div class="row">
 								<div id="vehiContent_'.$idTab.'" class="table-wrapper-scroll-y my-custom-scrollbar">
 									<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -5902,10 +5902,10 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 												<tr role="row">
 													<th></th>
 													<th>Equipo</th>
-													<th>Vel</th>
-													<th>Nivel</th>
-													<th>F. Der</th>
-													<th>F. Izq</th>
+													<th>Velocidad (km/h)</th>
+													<th>Estanque (%)</th>
+													<th>F. izq (l/min)</th>
+													<th>F. der (l/min)</th>
 													<th></th>
 												</tr>';
 											}
@@ -6040,10 +6040,10 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 															'.$data['Nombre'].'<br/>
 															'.fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'].'
 														</td>
-														<td>'.Cantidades($data['GeoVelocidad'], 0).' km</td>
+														<td>'.Cantidades($data['GeoVelocidad'], 0).' km/h</td>
 														<td>'.$xdata_3.' %</td>
-														<td>'.$xdata_1.' l/min</td>
-														<td>'.$xdata_2.' l/min</td>';
+														<td>'.$xdata_2.' l/min</td>
+														<td>'.$xdata_1.' l/min</td>';
 													}else{
 														$GPS .= '
 														<td colspan="5">
@@ -6066,7 +6066,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-6">
+						<div class="col-sm-5">
 							<div class="row">
 								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 								<div id="map_content_'.$idTab.'"></div>
@@ -7695,13 +7695,13 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			$arrGruas[$xdanger][$data['idTelemetria']]['status_icon']  = $status_icon;
 			$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']       = $data['Nombre'];
 			$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']   = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
-			if(isset($data['SensoresMedActual_37'])&&$data['SensoresMedActual_37']!=''&&$data['SensoresMedActual_37']!=0&&$data['SensoresMedActual_37']!=99900){
-				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).$arrFinalUnimed[$data['SensoresUniMed_37']];
+			if(isset($data['SensoresMedActual_37'])&&$data['SensoresMedActual_37']!=''&&$data['SensoresMedActual_37']!=0&&$data['SensoresMedActual_37']<99900){
+				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).' '.$arrFinalUnimed[$data['SensoresUniMed_37']];
 			}else{
-				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0'.$arrFinalUnimed[$data['SensoresUniMed_37']];
+				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0 '.$arrFinalUnimed[$data['SensoresUniMed_37']];
 			}
-			if(isset($data['SensoresMedActual_39'])&&$data['SensoresMedActual_39']!=''&&$data['SensoresMedActual_39']!=0){
-				$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).$arrFinalUnimed[$data['SensoresUniMed_39']];
+			if(isset($data['SensoresMedActual_39'])&&$data['SensoresMedActual_39']!=''&&$data['SensoresMedActual_39']!=0&&$data['SensoresMedActual_39']<99900){
+				$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).' '.$arrFinalUnimed[$data['SensoresUniMed_39']];
 			}else{
 				$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = 'N/A';
 			}
@@ -7831,8 +7831,8 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 									<tr role="row">
 										<th></th>
 										<th>Equipo</th>
-										<th>Voltaje</th>
-										<th>Viento</th>
+										<th>Voltaje (V)</th>
+										<th>Viento (km/h)</th>
 										<th>Acciones</th>
 									</tr>
 								</thead>
