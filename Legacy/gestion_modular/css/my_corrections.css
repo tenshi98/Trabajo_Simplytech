@@ -70,6 +70,7 @@ textarea {resize:none !important;	}
 textarea:required{background:url(../img/required.png) no-repeat 5px 10px !important;background-color: #fff !important;	}	
 input:required:valid , select:valid, textarea:valid{background:url() no-repeat left center !important; background-color: #fff !important;}
 .form-control , .chosen-single{padding-top: 6px;padding-right: 12px;padding-bottom: 6px;padding-left: 25px !important;} 
+.frm_country{padding-left: 0px !important;}
 @media (max-width:768px){
 	.navbar-nav{display: inline !important;}
 	.container_box {right: 70px !important;}
