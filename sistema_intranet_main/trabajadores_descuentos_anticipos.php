@@ -323,7 +323,7 @@ array_push( $arrInasHoras,$row );
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 1);
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x3, 1, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Mes','idMes', $x4, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Mes','idMes', $x4, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x5, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);

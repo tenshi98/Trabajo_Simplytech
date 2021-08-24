@@ -102,7 +102,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					$Form_Inputs->form_select('Ruta','idRuta', $x1, 2, 'idRuta', 'Nombre', 'vehiculos_rutas', $z, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de Ruta','idTipo', $x2, 2, 'idTipo', 'Nombre', 'vehiculos_ruta_alternativa_tipos', 0, '', $dbConn);
 					$Form_Inputs->form_date('Fecha','Fecha', $x3, 1);
-					$Form_Inputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'ORDER BY idDia ASC', $dbConn);
+					$Form_Inputs->form_select_filter('Dia','idDia', $x4, 1, 'idDia', 'Nombre', 'core_tiempo_dias', 0, 'idDia ASC', $dbConn);
 					$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
 					$Form_Inputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
 					$Form_Inputs->form_input_text('Nombre de la Ruta', 'Nombre', $x7, 2);

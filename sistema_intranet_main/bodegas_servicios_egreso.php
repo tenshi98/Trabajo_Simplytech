@@ -375,7 +375,7 @@ $z=" idDocumentos = 1 AND idEstado = 1 AND idCliente = ".$_SESSION['servicios_eg
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter('Guias disponibles','idGuia', $x1, 2, 'idFacturacion', 'N_Doc', 'bodegas_servicios_facturacion', $z, 'ORDER BY N_Doc ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Guias disponibles','idGuia', $x1, 2, 'idFacturacion', 'N_Doc', 'bodegas_servicios_facturacion', $z, 'N_Doc ASC', $dbConn);
 
 				?>
 
@@ -1157,7 +1157,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x3, 1);
 				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x4, 1);
 				$Form_Inputs->form_select_n_auto('Año Documento','Creacion_ano', $x5, 1, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Mes Documento','Creacion_mes', $x6, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Mes Documento','Creacion_mes', $x6, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_select('Vendedor','idTrabajador', $x7, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1, 160);
 				$Form_Inputs->form_post_data(1, 'Solo las empresas que no sean contribuyentes del Impuesto al Valor Agregado (IVA) y las que gocen de exención del IVA de conformidad a lo dispuesto en los Artículos 12 y 13 de la <a href="http://www.sii.cl/pagina/jurisprudencia/legislacion/basica/dl825.doc">Ley del IVA</a> pueden elegir la opcion <strong>SI</strong>, para el resto es de uso obligatorio la opcion <strong>NO</strong>. ');

@@ -150,7 +150,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha Creacion Desde','f_creacion_inicio', $x3, 1);
 				$Form_Inputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x4, 1);
 				$Form_Inputs->form_select_n_auto('Año','Creacion_ano', $x5, 1, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Mes','Creacion_mes', $x6, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Mes','Creacion_mes', $x6, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 						
 				?> 
 

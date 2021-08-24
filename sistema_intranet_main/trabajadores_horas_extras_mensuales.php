@@ -193,7 +193,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x2, 2, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
@@ -421,7 +421,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x2, 2, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
@@ -576,7 +576,7 @@ array_push( $arrTipo,$row );
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 1);
-				$Form_Inputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Mes','Creacion_mes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_select_n_auto('Año','Creacion_ano', $x3, 1, 2016, ano_actual());
 						
 			

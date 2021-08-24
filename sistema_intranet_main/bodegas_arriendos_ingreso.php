@@ -1307,7 +1307,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x3, 1);
 				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x4, 1);
 				$Form_Inputs->form_select_n_auto('Año Documento','Creacion_ano', $x5, 1, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Mes Documento','Creacion_mes', $x6, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Mes Documento','Creacion_mes', $x6, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_date('F Devolucion Estimada','Devolucion_fecha', $x7, 1);
 				$Form_Inputs->form_select_join_filter('Bodega destino','idBodega', $x8, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $y, $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x9, 1, 160);

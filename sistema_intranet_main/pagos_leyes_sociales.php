@@ -845,7 +845,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Periodo Año','Periodo_Ano', $x1, 2, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago','Pago_fecha', $x3, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
@@ -1373,7 +1373,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Periodo Año','Periodo_Ano', $x1, 2, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago','Pago_fecha', $x3, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
@@ -1537,7 +1537,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Periodo Año','Periodo_Ano', $x1, 2, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago','Pago_fecha', $x3, 2);
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Inputs->form_select_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);	

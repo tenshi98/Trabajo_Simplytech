@@ -198,7 +198,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 				$Form_Inputs->form_textarea('texto', 'form_textarea1', $x33, 1, 160);
 				$Form_Inputs->form_textarea('texto', 'form_textarea2', $x34, 2, 160);
 				$Form_Inputs->form_ckeditor('ckeditor','form_ckeditor1', $x35, 1, 2);
-				//$Form_Inputs->form_ckeditor('ckeditor','form_ckeditor2', $x36, 2, 2);
+				$Form_Inputs->form_ckeditor('ckeditor','form_ckeditor2', $x36, 2, 2);
 				
 				$Form_Inputs->form_tittle(3, 'Subida Archivos');
 				$Form_Inputs->form_multiple_upload('Subir archivos','form_multiple_upload1', 1, '"jpg", "png", "gif", "jpeg"');

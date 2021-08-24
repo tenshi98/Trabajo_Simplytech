@@ -291,7 +291,7 @@ array_push( $arrVehiculos,$row );
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Generar Informe por Mes');
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
-				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'ORDER BY idMes ASC', $dbConn);
+				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				
 				$Form_Inputs->form_tittle(3, 'Generar informe entre fechas');
 				$Form_Inputs->form_date('F Inicio','fInicio', $x3, 1);
