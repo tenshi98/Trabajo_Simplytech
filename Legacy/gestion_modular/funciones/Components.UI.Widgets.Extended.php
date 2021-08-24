@@ -10,7 +10,9 @@ if( ! defined('XMBCXRXSKGC')) {
 /*                                    Se llama a la clase de la que se hereda                                      */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-require_once '../A2XRXS_gears/xrxs_funciones/Components.UI.Widgets.php';
+require_once '../A2XRXS_gears/xrxs_funciones/Components.UI.Widgets.Common.php';
+require_once '../A2XRXS_gears/xrxs_funciones/Components.UI.Widgets.Graphics.php';
+require_once '../A2XRXS_gears/xrxs_funciones/Components.UI.Widgets.Maps.php';
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                  Funciones                                                      */
