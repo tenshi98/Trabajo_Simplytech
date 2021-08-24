@@ -578,7 +578,7 @@ function widget_bodega($titulo,
 	
 	$SIS_query = 'Creacion_ano,Creacion_mes,idTipo,SUM(ValorTotal) AS Valor';
 	$SIS_join  = $join_1;
-	$SIS_where = $z.$where_1.'GROUP BY Creacion_ano,Creacion_mes,idTipo';
+	$SIS_where = $z.$where_1.' GROUP BY Creacion_ano,Creacion_mes,idTipo';
 	$SIS_order = 'Creacion_ano ASC, Creacion_mes ASC';	
 
 	$arrExistencias = array();
