@@ -19,13 +19,11 @@ $search  = '?pagina='.$_GET['pagina'];
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
 $search .= '&submit_filter=Filtrar';
-$search .= '&idOpciones=2';
 
 $location .= '?pagina='.$_GET['pagina'];
 $location .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $location .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
 $location .= '&submit_filter=Filtrar';
-$location .= '&idOpciones=2';
 
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){           $location .= "&f_inicio=".$_GET['f_inicio'];           $search .= "&f_inicio=".$_GET['f_inicio'];}
 if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){         $location .= "&f_termino=".$_GET['f_termino'];         $search .= "&f_termino=".$_GET['f_termino'];}
@@ -240,7 +238,7 @@ foreach ($arrUnimed as $sen) {
 							<td>
 								<div class="btn-group" style="width: 105px;" >
 									<a href="<?php echo 'informe_telemetria_errores_6_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Ubicacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-									<a href="<?php echo $location.'&idErrores='.$error['idErrores'].'&idTelemetria='.$error['idTelemetria']; ?>" title="Marcar como leido" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+									<a href="<?php echo $location.'&idErrores='.$error['idErrores'].'&idTelemetriaMarc='.$error['idTelemetria']; ?>" title="Marcar como leido" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 									
 									<?php
 									$fecha_desde  = $error['Fecha'];
@@ -286,13 +284,16 @@ foreach ($arrUnimed as $sen) {
 
 <div class="clearfix"></div>
 <div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<a href="<?php echo $original ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  {  
-$z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='2' AND telemetria_listado.id_Sensores=1";	 
+//Filtro de busqueda
+$z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
+$z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
+$z .= " AND telemetria_listado.id_Sensores=1";                                           //sensores activos
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
@@ -331,7 +332,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}
 				$Form_Inputs->form_select('Tipo de error','idTipo', $x4, 1, 'idTipo', 'Nombre', 'telemetria_listado_errores_tipos', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				
 				?>        
 	   

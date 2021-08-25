@@ -19,13 +19,11 @@ $search  = '?pagina='.$_GET['pagina'];
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
 $search .= '&submit_filter=Filtrar';
-$search .= '&idOpciones=2';
 
 $location .= '?pagina='.$_GET['pagina'];
 $location .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $location .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
 $location .= '&submit_filter=Filtrar';
-$location .= '&idOpciones=2';
 
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){           $location .= "&f_inicio=".$_GET['f_inicio'];           $search .= "&f_inicio=".$_GET['f_inicio'];}
 if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){         $location .= "&f_termino=".$_GET['f_termino'];         $search .= "&f_termino=".$_GET['f_termino'];}
@@ -238,34 +236,9 @@ foreach ($arrUnimed as $sen) {
 							<td><?php echo Cantidades_decimales_justos($error['Valor_min']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]]; ?></td>
 							<td><?php echo Cantidades_decimales_justos($error['Valor_max']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]]; ?></td>
 							<td>
-								<div class="btn-group" style="width: 105px;" >
+								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo 'informe_telemetria_errores_7_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Ubicacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-									<a href="<?php echo $location.'&idErrores='.$error['idErrores'].'&idTelemetria='.$error['idTelemetria']; ?>" title="Marcar como leido" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
-									
-									<?php
-									$fecha_desde  = $error['Fecha'];
-									$fecha_hasta  = $error['Fecha'];
-									$h_inicio     = restahoras('00:05:00',$error['Hora']);
-									$h_termino    = sumahoras('00:05:00',$error['Hora']);
-
-									//Se calcula lapso de tiempo condicionando dias
-									if($error['Hora']<'00:05:00'){
-										$fecha_desde = restarDias($error['Fecha'],1);
-									}
-									
-									//direccion
-									$subloc  = 'informe_telemetria_historial_operaciones_01.php';
-									$subloc .= '?idTelemetria='.$error['idTelemetria'];
-									$subloc .= '&fecha_desde='.$fecha_desde;
-									$subloc .= '&fecha_hasta='.$fecha_hasta;
-									$subloc .= '&h_inicio='.$h_inicio;
-									$subloc .= '&h_termino='.$h_termino;
-									$subloc .= '&fecha_actual='.$error['Fecha'];
-									$subloc .= '&hora_actual='.$error['Hora'];
-									$subloc .= '&submit_filter=Filtrar';
-									
-									?>
-									<a href="<?php echo $subloc; ?>" title="Ver historial operacional" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+									<a href="<?php echo $location.'&idErrores='.$error['idErrores'].'&idTelemetriaMarc='.$error['idTelemetria']; ?>" title="Marcar como leido" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 								</div>
 							</td>	
 						</tr>
@@ -286,21 +259,24 @@ foreach ($arrUnimed as $sen) {
 
 <div class="clearfix"></div>
 <div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<a href="<?php echo $original ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  {  
-$z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='2' AND telemetria_listado.id_Sensores=1";	 
+//Filtro de busqueda
+$z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
+$z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
+$z .= " AND telemetria_listado.id_Sensores=1";                                           //sensores activos
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=6";//CrossCrane			
-}
+	$z .= " AND telemetria_listado.idTab=9";//CrossEnergy			
+} 
  ?>			
 	<div class="col-sm-8 fcenter">
 	<div class="box dark">	
@@ -331,7 +307,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}
 				$Form_Inputs->form_select('Tipo de error','idTipo', $x4, 1, 'idTipo', 'Nombre', 'telemetria_listado_errores_tipos', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				
 				?>        
 	   
