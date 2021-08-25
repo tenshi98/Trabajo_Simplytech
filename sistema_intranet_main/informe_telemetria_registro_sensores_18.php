@@ -26,76 +26,77 @@ require_once 'core/Web.Header.Main.php';
 if ( ! empty($_GET['submit_filter']) ) { 
 
 //se verifica si se ingreso la hora, es un dato optativo
-$z='';
-$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$search .= '&sensorn='.$_GET['sensorn'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
+$SIS_where = '';
+$search    = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$search   .= '&sensorn='.$_GET['sensorn'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$SIS_where .="(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 	$search.="&h_inicio=".$_GET['h_inicio']."&h_termino=".$_GET['h_termino'];
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where .="(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 
-
-//Se traen todos los registros
-$arrRutas = array();
-$query = "SELECT 
+/****************************************************************/
+//se traen lo datos del equipo
+$SIS_query = '
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado_grupos.Nombre AS Grupo,
 telemetria_listado_unidad_medida.Nombre AS SensoresUniMed,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema,
-telemetria_listado.SensoresNombre_".$_GET['sensorn']." AS SensorNombre,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']." AS SensorValue
+telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
+telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema,
+telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
+telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$_GET['sensorn'].' AS SensorValue';
+$SIS_join  = '
+LEFT JOIN `telemetria_listado`                 ON telemetria_listado.idTelemetria             = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria
+LEFT JOIN `telemetria_listado_grupos`          ON telemetria_listado_grupos.idGrupo           = telemetria_listado.SensoresGrupo_'.$_GET['sensorn'].'
+LEFT JOIN `telemetria_listado_unidad_medida`   ON telemetria_listado_unidad_medida.idUniMed   = telemetria_listado.SensoresUniMed_'.$_GET['sensorn'];
+$SIS_order = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC, telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema ASC LIMIT 10000';
+$arrEquipos = array();
+$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_logo');
 
-FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `telemetria_listado`                 ON telemetria_listado.idTelemetria             = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-LEFT JOIN `telemetria_listado_grupos`          ON telemetria_listado_grupos.idGrupo           = telemetria_listado.SensoresGrupo_".$_GET['sensorn']."
-LEFT JOIN `telemetria_listado_unidad_medida`   ON telemetria_listado_unidad_medida.idUniMed   = telemetria_listado.SensoresUniMed_".$_GET['sensorn']."
-
-".$z."
-ORDER BY telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema ASC,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema ASC
-LIMIT 10000";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRutas,$row );
-}
-
-
-
+/****************************************************************/
 //Variables
-$chain    = '';
 $m_table  = '';
+$Temp_1   = '';
+$Temp_2   = '';
 
 //se arman datos
-foreach ($arrRutas as $fac) {
-								
+foreach ($arrEquipos as $fac) {
+	
+	//variables							
+	$Temp_1 .= "'".Fecha_estandar($fac['FechaSistema'])." - ".$fac['HoraSistema']."',";
+	$xcount  = 0;
+							
 	//Que el valor medido sea distinto de 999
 	if(isset($fac['SensorValue'])&&$fac['SensorValue']<99900){
-		$chain  .= "['".Fecha_estandar($fac['FechaSistema'])." - ".Hora_estandar($fac['HoraSistema'])."', ".$fac['SensorValue']."],";		
+		
+		//verifico si existe
+		if(isset($Temp_2)&&$Temp_2!=''){
+			$Temp_2 .= ", ".$fac['SensorValue'];
+		//si no lo crea
+		}else{
+			$Temp_2 = $fac['SensorValue'];
+		}
+		
+		//Tabla
 		$m_table .= '
 		<tr class="odd">
 			<td>'.fecha_estandar($fac['FechaSistema']).'</td>
 			<td>'.$fac['HoraSistema'].'</td>
 			<td>'.cantidades($fac['SensorValue'], 2).' '.$fac['SensoresUniMed'].'</td>
 		</tr>';	
-
 	}
-
-}  
+}    
+//variables
+$Graphics_xData       = 'var xData = [['.$Temp_1.']];';
+$Graphics_yData       = 'var yData = [['.$Temp_2.']];';
+$Graphics_names       = "var names = ['".$arrEquipos[0]['Grupo'].'-'.$arrEquipos[0]['SensorNombre']."'];";
+$Graphics_types       = "var types = [''];";
+$Graphics_texts       = 'var texts = [[]];';
+$Graphics_lineColors  = "var lineColors = [''];";
+$Graphics_lineDash    = "var lineDash = [''];";
+$Graphics_lineWidth   = "var lineWidth = [''];";
+  
 ?>	
 
 <style>
@@ -108,7 +109,7 @@ document.getElementById("loading").style.display = "none";
 </script>
 						
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trazabilidad Sensor', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe Sensor '.$arrRutas[0]['Grupo'].'-'.$arrRutas[0]['SensorNombre'].' del equipo '.$arrRutas[0]['NombreEquipo']);?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trazabilidad Sensor', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe Sensor '.$arrEquipos[0]['Grupo'].'-'.$arrEquipos[0]['SensorNombre'].' del equipo '.$arrEquipos[0]['NombreEquipo']);?>
 	<div class="col-md-6 col-sm-6 col-xs-12 clearfix">
 		<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_18_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	
@@ -130,13 +131,6 @@ document.getElementById("loading").style.display = "none";
 <?php 
 //Se verifica si se pidieron los graficos
 if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script>google.charts.load('current', {'packages':['line','corechart']});</script>
-
-	<?php
-	//Hago recuento de los datos
-	$xsi = 1;
-	?>
 	
 	<div class="col-sm-12">
 		<div class="box">
@@ -145,53 +139,9 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				<h5> Graficos</h5>
 			</header>
 			<div class="table-responsive" id="grf">	
-				<script>
-					google.charts.setOnLoadCallback(drawChart_<?php echo $xsi; ?>);
-
-					function drawChart_<?php echo $xsi; ?>() {
+				
+				<?php GraphLinear_1('graphLinear_1', 'Grafico Consumo', 'Fecha', 'Consumo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth); ?>
 								
-
-						var chartDiv = document.getElementById('curve_chart_<?php echo $xsi; ?>');
-
-						var data = new google.visualization.DataTable();
-						data.addColumn('string', 'Fecha'); 
-						data.addColumn('number', "<?php echo $arrRutas[0]['Grupo'].'-'.$arrRutas[0]['SensorNombre']; ?>");
-						//data.addColumn('number', "Humedad");
-
-						data.addRows([<?php echo $chain; ?>]);
-
-						var materialOptions = {
-							/*chart: {
-								title: 'Informe Sensores'
-							},*/
-							series: {
-								// Gives each series an axis name that matches the Y-axis below.
-								0: {axis: '<?php echo $arrRutas[0]['Grupo'].'-'.$arrRutas[0]['SensorNombre']; ?>'},
-								//1: {axis: 'Humedad'}
-							},
-							axes: {
-								// Adds labels to each axis; they don't have to match the axis names.
-								y: {
-									Temps: {label: '<?php echo $arrRutas[0]['Grupo'].'-'.$arrRutas[0]['SensorNombre']; ?>'},
-									//Daylight: {label: 'Humedad (Porcentaje)'}
-								}
-							},
-							legend: { position: 'none' }
-
-						};
-
-						function drawMaterialChart() {
-							var materialChart = new google.charts.Line(chartDiv);
-							materialChart.draw(data, materialOptions);
-						}
-
-						drawMaterialChart();
-
-					}
-
-				</script> 
-				<div id="curve_chart_<?php echo $xsi; ?>" style="height: 500px"></div>
-									
 			</div>
 		</div>
 	</div>
@@ -217,7 +167,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>		
 		<script>
-			var node = document.getElementById('curve_chart_<?php echo $xsi; ?>');
+			var node = document.getElementById('graphLinear_1');
 			
 			function sendDatatoSRV(img) {
 				$('#img_adj').val(img);
@@ -266,7 +216,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 					<tr class="odd">
 						<th>Fecha</th>
 						<th>Hora</th>
-						<th><?php echo $arrRutas[0]['Grupo'].'-'.$arrRutas[0]['SensorNombre']; ?></th>
+						<th><?php echo $arrEquipos[0]['Grupo'].'-'.$arrEquipos[0]['SensorNombre']; ?></th>
 					</tr>
 					
 					<?php echo $m_table; ?>				
@@ -287,7 +237,9 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-$z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='2'";	 
+//Filtro de busqueda
+$z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
+$z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		

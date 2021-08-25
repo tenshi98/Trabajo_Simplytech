@@ -26,19 +26,19 @@ require_once 'core/Web.Header.Main.php';
 if ( ! empty($_GET['submit_filter']) ) { 
 
 //se verifica si se ingreso la hora, es un dato optativo
-$z='';
-$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$search .= '&idGrupo='.$_GET['idGrupo'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
+$SIS_where = '';
+$search    = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$search   .= '&idGrupo='.$_GET['idGrupo'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.=" WHERE (telemetria_listado_crossenergy_hora.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
-	$search.="&h_inicio=".$_GET['h_inicio']."&h_termino=".$_GET['h_termino'];
+	$SIS_where .="(telemetria_listado_crossenergy_hora.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$search    .="&h_inicio=".$_GET['h_inicio']."&h_termino=".$_GET['h_termino'];
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" WHERE (telemetria_listado_crossenergy_hora.FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where .="(telemetria_listado_crossenergy_hora.FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
-$z.=" AND telemetria_listado_crossenergy_hora.idTelemetria=".$_GET['idTelemetria'];
+$SIS_where.=" AND telemetria_listado_crossenergy_hora.idTelemetria=".$_GET['idTelemetria'];
 
 //numero sensores equipo
-$N_Maximo_Sensores = 72;
+$N_Maximo_Sensores = 20;
 $consql = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
     $consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensoresNombre_'.$i;
@@ -46,56 +46,39 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
     $consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
     $consql .= ',telemetria_listado.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
     $consql .= ',telemetria_listado_crossenergy_hora.Sensor_'.$i.' AS SensorValue_'.$i;
-   
 }
-//Se traen todos los registros
-$arrRutas = array();
-$query = "SELECT 
+
+/****************************************************************/
+//se traen lo datos del equipo
+$SIS_query = '
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.cantSensores AS cantSensores,
 telemetria_listado_crossenergy_hora.FechaSistema,
-telemetria_listado_crossenergy_hora.HoraSistema
-".$consql."
-FROM `telemetria_listado_crossenergy_hora`
-LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_crossenergy_hora.idTelemetria
-
-".$z."
-ORDER BY telemetria_listado_crossenergy_hora.FechaSistema ASC,
-telemetria_listado_crossenergy_hora.HoraSistema ASC
-LIMIT 10000";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRutas,$row );
-}
+telemetria_listado_crossenergy_hora.HoraSistema'.$consql;
+$SIS_join  = 'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_crossenergy_hora.idTelemetria';
+$SIS_order = 'telemetria_listado_crossenergy_hora.FechaSistema ASC, telemetria_listado_crossenergy_hora.HoraSistema ASC LIMIT 10000';
+$arrEquipos = array();
+$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_crossenergy_hora', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_logo');
 
 //Se trae el dato del grupo
 $rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowGrupo');
-				
+
+/****************************************************************/				
 //Variables
-$chain          = '';
-$chain_title    = '';
 $m_table        = '';
 $m_table_title  = '';
 $count          = 0;
+$Temp_1         = '';
+$arrData        = array();
+$xcount         = 0;
 
 //se arman datos
-foreach ($arrRutas as $fac) {
+foreach ($arrEquipos as $fac) {
 								
-	//numero sensores equipo
+	//variables							
+	$Temp_1           .= "'".Fecha_estandar($fac['FechaSistema'])." - ".$fac['HoraSistema']."',";
+	$xcount            = 0;
 	$N_Maximo_Sensores = $fac['cantSensores'];
-	$chain            .= "['".Fecha_estandar($fac['FechaSistema'])." - ".Hora_estandar($fac['HoraSistema'])."'";
 	$m_table          .= '<tr class="odd"><td>'.fecha_estandar($fac['FechaSistema']).'</td><td>'.$fac['HoraSistema'].'</td>';
 											
 	for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
@@ -104,25 +87,71 @@ foreach ($arrRutas as $fac) {
 			if(isset($fac['SensoresActivo_'.$x])&&$fac['SensoresActivo_'.$x]==1){
 				//Que el valor medido sea distinto de 999
 				if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
-					//Graficos
-					$chain   .= ", ".$fac['SensorValue_'.$x];
+					//Numero de sensor
+					$xcount++;
+					//verifico si existe
+					if(isset($arrData[$xcount]['Value'])&&$arrData[$xcount]['Value']!=''){
+						$arrData[$xcount]['Value'] .= ", ".$fac['SensorValue_'.$x];
+					//si no lo crea
+					}else{
+						$arrData[$xcount]['Value'] = $fac['SensorValue_'.$x];
+					}
+					
+					//Tabla
 					$m_table .= '<td>'.cantidades($fac['SensorValue_'.$x], 2).'</td>';
+					
 					//si es el primer recorrido
 					if($count==0){
-						$chain_title    .= "data.addColumn('number', '".$fac['SensoresNombre_'.$x]."');";
+						//titulo grafico
+						$arrData[$xcount]['Name'] = "'".$fac['SensoresNombre_'.$x]."'";
+						//titulo tabla
 						$m_table_title  .= '<th>'.$fac['SensoresNombre_'.$x].'</th>';	
 					}
-	
 				}
 			}
 		}
 	}
-	$chain  .= "],";
+	//cierro tabla
 	$m_table .= '</tr>';
-										
+	//contador										
 	$count++;	
-	
-}  
+}   
+//variables
+$Graphics_xData       = 'var xData = [';
+$Graphics_yData       = 'var yData = [';
+$Graphics_names       = 'var names = [';
+$Graphics_types       = 'var types = [';
+$Graphics_texts       = 'var texts = [';
+$Graphics_lineColors  = 'var lineColors = [';
+$Graphics_lineDash    = 'var lineDash = [';
+$Graphics_lineWidth   = 'var lineWidth = [';
+//Se crean los datos
+for ($x = 1; $x <= $xcount; $x++) {
+	//las fechas
+	$Graphics_xData      .='['.$Temp_1.'],';
+	//los valores
+	$Graphics_yData      .='['.$arrData[$x]['Value'].'],';
+	//los nombres
+	$Graphics_names      .= $arrData[$x]['Name'].',';
+	//los tipos
+	$Graphics_types      .= "'',";
+	//si lleva texto en las burbujas
+	$Graphics_texts      .= "[],";
+	//los colores de linea
+	$Graphics_lineColors .= "'',";
+	//los tipos de linea
+	$Graphics_lineDash   .= "'',";
+	//los anchos de la linea
+	$Graphics_lineWidth  .= "'',";
+}
+$Graphics_xData      .= '];';
+$Graphics_yData      .= '];';
+$Graphics_names      .= '];';
+$Graphics_types      .= '];';
+$Graphics_texts      .= '];';
+$Graphics_lineColors .= '];';
+$Graphics_lineDash   .= '];';
+$Graphics_lineWidth  .= '];'; 
 ?>	
 
 <style>
@@ -135,7 +164,7 @@ document.getElementById("loading").style.display = "none";
 </script>
 						
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Hora', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$arrRutas[0]['NombreEquipo']);?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Hora', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$arrEquipos[0]['NombreEquipo']);?>
 	<div class="col-md-6 col-sm-6 col-xs-12 clearfix">
 		<a target="new" href="<?php echo 'informe_crossenergy_02_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	
@@ -157,10 +186,6 @@ document.getElementById("loading").style.display = "none";
 <?php 
 //Se verifica si se pidieron los graficos
 if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script>google.charts.load('current', {'packages':['line','corechart']});</script>
-
-	
 	
 	<div class="col-sm-12">
 		<div class="box">
@@ -169,49 +194,8 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				<h5> Graficos Grupo <?php echo $rowGrupo['Nombre']; ?></h5>
 			</header>
 			<div class="table-responsive" id="grf">	
-				<script>
-					google.charts.setOnLoadCallback(drawChart);
-
-					function drawChart() {
-								
-
-						var chartDiv = document.getElementById('curve_chart');
-
-						var data = new google.visualization.DataTable();
-						data.addColumn('string', 'Fecha'); 
-						<?php echo $chain_title; ?>
-
-						data.addRows([<?php echo $chain; ?>]);
-
-						var materialOptions = {
-							/*chart: {
-								title: 'Informe Sensores'
-							},*/
-							/*series: {
-								// Gives each series an axis name that matches the Y-axis below.
-								0: {axis: 'Temperatura'},
-								1: {axis: 'Humedad'}
-							},
-							axes: {
-								// Adds labels to each axis; they don't have to match the axis names.
-								y: {
-									Temps: {label: 'Temperatura (Celsius)'},
-									Daylight: {label: 'Humedad (Porcentaje)'}
-								}
-							}*/
-						};
-
-						function drawMaterialChart() {
-							var materialChart = new google.charts.Line(chartDiv);
-							materialChart.draw(data, materialOptions);
-						}
-
-						drawMaterialChart();
-
-					}
-
-				</script> 
-				<div id="curve_chart" style="height: 500px"></div>
+				
+				<?php GraphLinear_1('graphLinear_1', 'Grafico Consumo', 'Fecha', 'Consumo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth); ?>
 									
 			</div>
 		</div>
@@ -239,7 +223,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>		
 		<script>
-			var node = document.getElementById('curve_chart');
+			var node = document.getElementById('graphLinear_1');
 			
 			function sendDatatoSRV(img) {
 				$('#img_adj').val(img);
@@ -307,7 +291,9 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-$z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='2'";	 
+//Filtro de busqueda
+$z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
+$z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		

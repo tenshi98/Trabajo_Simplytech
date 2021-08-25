@@ -76,7 +76,7 @@ $Informes_HoraTermino    = hora_actual();
 
 
 //numero sensores equipo
-$N_Maximo_Sensores = 50;
+$N_Maximo_Sensores = 20;
 $subquery_1 = 'Nombre, cantSensores';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
@@ -149,15 +149,78 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 	$x_seg = 300000;//5 minutos
 }
 $x_seg = 300000;//5 minutos
+
+
+/****************************************************************/				
+//Variables
+$Temp_1         = '';
+$arrData        = array();
+
+//se arman datos
+foreach ($arrGraficos as $data) {
+	
+	//variables							
+	$Temp_1 .= "'".$data['HoraSistema']."',";
+	//recorro
+	for ($x = 1; $x <= 3; $x++) {
+		//verifico si existe
+		if(isset($arrData[$x]['Value'])&&$arrData[$x]['Value']!=''){
+			$arrData[$x]['Value'] .= ", ".$data['Sensor_'.$x];
+		//si no lo crea
+		}else{
+			$arrData[$x]['Value'] = $data['Sensor_'.$x];
+		}			
+	}
+} 
+//nombres
+$arrData[1]['Name'] = "'Fase 1'";
+$arrData[2]['Name'] = "'Fase 2'";
+$arrData[3]['Name'] = "'Fase 3'";
+
+//variables
+$Graphics_xData       = 'var xData = [';
+$Graphics_yData       = 'var yData = [';
+$Graphics_names       = 'var names = [';
+$Graphics_types       = 'var types = [';
+$Graphics_texts       = 'var texts = [';
+$Graphics_lineColors  = 'var lineColors = [';
+$Graphics_lineDash    = 'var lineDash = [';
+$Graphics_lineWidth   = 'var lineWidth = [';
+//Se crean los datos
+for ($x = 1; $x <= 3; $x++) {
+	//las fechas
+	$Graphics_xData      .='['.$Temp_1.'],';
+	//los valores
+	$Graphics_yData      .='['.$arrData[$x]['Value'].'],';
+	//los nombres
+	$Graphics_names      .= $arrData[$x]['Name'].',';
+	//los tipos
+	$Graphics_types      .= "'lines',";
+	//si lleva texto en las burbujas
+	$Graphics_texts      .= "[],";
+	//los colores de linea
+	$Graphics_lineColors .= "'',";
+	//los tipos de linea
+	$Graphics_lineDash   .= "'',";
+	//los anchos de la linea
+	$Graphics_lineWidth  .= "'',";
+}
+$Graphics_xData      .= '];';
+$Graphics_yData      .= '];';
+$Graphics_names      .= '];';
+$Graphics_types      .= '];';
+$Graphics_texts      .= '];';
+$Graphics_lineColors .= '];';
+$Graphics_lineDash   .= '];';
+$Graphics_lineWidth  .= '];';  
+
+
 ?>
 <script>
 	window.setTimeout(function () {
 	  window.location.reload();
 	}, <?php echo $x_seg; ?>);
 </script>
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>google.charts.load('current', {'packages':['line','corechart']});</script>
 
 <div class="col-sm-12">
 	<div class="box">
@@ -170,48 +233,9 @@ $x_seg = 300000;//5 minutos
 				
 				<div class="row">
 					<div class="col-sm-12">
-						<script>
-							google.charts.setOnLoadCallback(drawChart);
-
-							function drawChart() {
-								
-								var chartDiv = document.getElementById('curve_chart');
-
-								var data = new google.visualization.DataTable();
-								data.addColumn('string', 'Hora'); 
-								data.addColumn('number', "Fase 1");
-								data.addColumn('number', "Fase 2");
-								data.addColumn('number', "Fase 3");
-
-								data.addRows([
-									<?php 
-										foreach ($arrGraficos as $data) {
-											
-											$chain  = "'".Hora_estandar($data['HoraSistema'])."'";
-											$chain .= ", ".$data['Sensor_1'].", ".$data['Sensor_2'].", ".$data['Sensor_3'];
-											//se imprime dato
-											echo '['.$chain.'],'; 
-										}  
-									?>
-								]);
-
-								var materialOptions = {
-									chart: {
-										title: 'Comportamiento Lineas Trifasicas (Ultima Hora)'
-									}
-								};
-
-								function drawMaterialChart() {
-									var materialChart = new google.charts.Line(chartDiv);
-									materialChart.draw(data, materialOptions);
-								}
-
-								drawMaterialChart();
-
-							}
-
-						</script> 
-						<div id="curve_chart" style="height: 500px"></div>
+						
+						<?php GraphLinear_1('graphLinear_1', 'Comportamiento Lineas Trifasicas (Ultima Hora)', 'Hora', 'Consumo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth); ?>
+				
 					</div>
 				</div>
 				
