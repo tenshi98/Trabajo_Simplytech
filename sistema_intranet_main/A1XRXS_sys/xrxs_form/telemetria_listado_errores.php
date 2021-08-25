@@ -20,16 +20,11 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			//variables
-			$Fecha_inicio  = restarDias(fecha_actual(),1);
-			$Fecha_fin     = fecha_actual();
-
-
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Variables
 				$idErrores    = $_GET['idErrores'];
-				$idTelemetria = $_GET['idTelemetria'];
+				$idTelemetria = $_GET['idTelemetriaMarc'];
 				$idSistema    = $_SESSION['usuario']['basic_data']['idSistema'];
 				
 				//Filtros
@@ -42,7 +37,12 @@ require_once '0_validate_user_1.php';
 				/******************************************************************/
 				//Recuento la cantidad de errores existentes
 				$SIS_query = 'COUNT(idErrores) AS NAlertas';
-				$SIS_where = "idTelemetria=".$idTelemetria." AND idLeido=0 AND Fecha BETWEEN '".$Fecha_inicio."' AND '".$Fecha_fin."' AND idSistema=".$idSistema;
+				$SIS_where = "idTelemetria=".$idTelemetria." AND idLeido=0 AND idSistema=".$idSistema;
+				//si existe la fecha filtro por ella
+				if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+					$SIS_where .= " AND Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+				}
+				
 				$rowCuenta = db_select_data (false, $SIS_query, 'telemetria_listado_errores', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************************************/
