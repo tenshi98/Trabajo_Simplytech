@@ -99,6 +99,7 @@ echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
 				<li><a href="core_testing_code.php">                         <i class="fa fa-cogs" aria-hidden="true"></i> Testeo de codigo</a></li>
 				<li><a href="core_test_email.php">                           <i class="fa fa-cogs" aria-hidden="true"></i> Testeo de correos</a></li>
 				<li><a href="core_test_social.php">                          <i class="fa fa-cogs" aria-hidden="true"></i> Testeo de Whatsapp</a></li>
+				<li><a href="core_test_sql_injected.php">                    <i class="fa fa-cogs" aria-hidden="true"></i> Testeo de SQL Injected</a></li>
 				
 			</ul>
 		</li>';
