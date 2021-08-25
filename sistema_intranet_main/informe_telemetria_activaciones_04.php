@@ -235,7 +235,8 @@ array_push( $arrMediciones,$row );
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  {
-$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	  
+//filtros
+$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		

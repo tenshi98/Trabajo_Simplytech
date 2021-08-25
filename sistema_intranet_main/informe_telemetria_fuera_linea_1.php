@@ -42,10 +42,9 @@ if (!$num_pag){
 } else {
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
-//Inicia variable
-$z = "WHERE telemetria_listado_error_fuera_linea.idFueraLinea>0"; 
-$z.= " AND telemetria_listado.id_Geo='1'";
-$z.= " AND telemetria_listado_error_fuera_linea.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+//filtros
+$z  = "WHERE telemetria_listado_error_fuera_linea.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
+$z .= " AND telemetria_listado.id_Geo=1";                                                                  //Geolocalizacion activa
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
@@ -194,7 +193,9 @@ array_push( $arrErrores,$row );
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-$z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='1'";	 
+//Filtro de busqueda
+$z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
+$z .= " AND telemetria_listado.id_Geo=1";                                                //Geolocalizacion activa
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
