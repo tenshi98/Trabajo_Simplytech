@@ -32,10 +32,6 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ?>
 
 
-<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly.min.js"></script>
-<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
-
-
 <div class="col-sm-12">
 	<div class="box">
 		<header>
