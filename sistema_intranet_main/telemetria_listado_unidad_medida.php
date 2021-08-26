@@ -55,24 +55,9 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos de mi usuario
-$query = "SELECT Nombre
-FROM `telemetria_listado_unidad_medida`
-WHERE idUniMed = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+// Se tre el nombre
+$rowdata = db_select_data (false, 'Nombre', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
+?>
  
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -157,49 +142,15 @@ if (!$num_pag){
 } else {
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
-//Verifico si la variable de busqueda existe
-$z="";
+
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idUniMed FROM `telemetria_listado_unidad_medida` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idUniMed', 'telemetria_listado_unidad_medida', '', '', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los usuarios
-$arrCategorias = array();
-$query = "SELECT idUniMed,Nombre
-FROM `telemetria_listado_unidad_medida`
-".$z."
-ORDER BY Nombre ASC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCategorias,$row );
-}
+$arrUnimed = array();
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'Nombre ASC LIMIT '.$comienzo.', '.$cant_reg, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+
 
 //paginador
 $search='';
@@ -230,7 +181,7 @@ $search='';
 				</thead>
 								  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrCategorias as $cat) { ?>
+					<?php foreach ($arrUnimed as $cat) { ?>
 					<tr class="odd">
 						<td><?php echo $cat['Nombre']; ?></td>
 						<td>

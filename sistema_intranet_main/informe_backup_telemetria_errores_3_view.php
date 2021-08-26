@@ -55,25 +55,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
-$query = "SELECT idUniMed,Nombre
-FROM `telemetria_listado_unidad_medida`
-ORDER BY idUniMed ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUnimed,$row );
-}
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+
 $arrFinalUnimed = array();
 foreach ($arrUnimed as $sen) {
 	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];

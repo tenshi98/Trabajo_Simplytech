@@ -82,25 +82,9 @@ $arrData[$xx] = "AZ";$xx++;
 $arrData[$xx] = "BA";$xx++;
 /*******************************************************************************/
 // Se trae un listado con todas las unidades de medida
-$arrUnidad = array();
-$query = "SELECT idUniMed, Nombre
-FROM `telemetria_listado_unidad_medida`
-ORDER BY idUniMed ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrUnimed = array();
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUnidad,$row );
-}
 //Creo un arreglo con los datos
 $arrUni = array();
 foreach ($arrUnidad as $uni) {

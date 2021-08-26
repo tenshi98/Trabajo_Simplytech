@@ -83,11 +83,11 @@ array_push( $arrRutas,$row );
 /*************************************************************************/
 //Se traen todas las unidades de medida
 if(isset($idGrupo)&&$idGrupo!=''){
-	$z = 'WHERE idGrupo='.$idGrupo;
+	$SIS_where = 'idGrupo='.$idGrupo;
 }else{
 	//busco los grupos disponibles
 	$arrSubgrupos = array();
-	$z            = 'WHERE idGrupo=0';		
+	$SIS_where    = 'idGrupo=0';		
 	foreach ($arrRutas as $fac) {
 		$N_Maximo_Sensores  = $fac['cantSensores'];
 		for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
@@ -95,48 +95,16 @@ if(isset($idGrupo)&&$idGrupo!=''){
 		}
 	}
 	foreach($arrSubgrupos as $categoria=>$sub){
-		$z .= ' OR idGrupo='.$sub['idGrupo'];	
+		$SIS_where .= ' OR idGrupo='.$sub['idGrupo'];	
 	}
 	
 }
+
+//consulto
 $arrGrupos = array();
-$query = "SELECT idGrupo, Nombre
-FROM `telemetria_listado_grupos`
-".$z."
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_where, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+$rowUnimed = db_select_data (false, 'idUniMed, Nombre', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$idUniMed, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupos,$row );
-}
-
-//Se traen todas las unidades de medida
-$query = "SELECT idUniMed, Nombre
-FROM `telemetria_listado_unidad_medida`
-WHERE idUniMed='".$idUniMed."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-$rowUnimed = mysqli_fetch_assoc ($resultado);
 /*************************************************************************/
 //Variables
 $m_table  = '';

@@ -83,11 +83,11 @@ array_push( $arrRutas,$row );
 /*************************************************************************/
 //Se traen todas las unidades de medida
 if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-	$z = 'WHERE idGrupo='.$_GET['idGrupo'];
+	$SIS_where = 'idGrupo='.$_GET['idGrupo'];
 }else{
 	//busco los grupos disponibles
 	$arrSubgrupos = array();
-	$z            = 'WHERE idGrupo=0';		
+	$SIS_where    = 'idGrupo=0';		
 	foreach ($arrRutas as $fac) {
 		$N_Maximo_Sensores  = $fac['cantSensores'];
 		for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
@@ -95,50 +95,16 @@ if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
 		}
 	}
 	foreach($arrSubgrupos as $categoria=>$sub){
-		$z .= ' OR idGrupo='.$sub['idGrupo'];	
+		$SIS_where .= ' OR idGrupo='.$sub['idGrupo'];	
 	}
 	
 }
-$arrGrupos = array();
-$query = "SELECT idGrupo, Nombre
-FROM `telemetria_listado_grupos`
-".$z."
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupos,$row );
-}
 
-//Se traen todas las unidades de medida
-$query = "SELECT idUniMed, Nombre
-FROM `telemetria_listado_unidad_medida`
-WHERE idUniMed='".$_GET['idUniMed']."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowUnimed = mysqli_fetch_assoc ($resultado);
+//consulto
+$arrGrupos = array();
+$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_where, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+$rowUnimed = db_select_data (false, 'idUniMed, Nombre', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['idUniMed'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
+
 /*************************************************************************/
 //Variables
 $chain    = '';
