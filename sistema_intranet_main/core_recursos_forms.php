@@ -205,8 +205,6 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 				$Form_Inputs->form_multiple_upload('Subir archivos','form_multiple_upload2', 1, '"jpg", "png", "gif", "jpeg"');
 				
 				$Form_Inputs->form_tittle(3, 'Opciones');
-				$Form_Inputs->form_checkbox('opciones','form_checkbox1', $x37, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
-				$Form_Inputs->form_checkbox('opciones','form_checkbox2', $x38, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				$Form_Inputs->form_checkbox_active('opciones seleccionadas','form_checkbox_active1', $x39, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				$Form_Inputs->form_checkbox_active('opciones seleccionadas','form_checkbox_active2', $x40, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				
