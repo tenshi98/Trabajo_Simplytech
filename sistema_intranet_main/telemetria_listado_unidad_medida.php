@@ -56,7 +56,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se tre el nombre
-$rowdata = db_select_data (false, 'Nombre', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
+$rowdata = db_select_data (false, 'Nombre, NombreLargo', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
 ?>
  
 <div class="col-sm-8 fcenter">
@@ -70,11 +70,14 @@ $rowdata = db_select_data (false, 'Nombre', 'telemetria_listado_unidad_medida', 
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Nombre)) {       $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
+				if(isset($NombreLargo)) {  $x2  = $NombreLargo; }else{$x2  = $rowdata['NombreLargo'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_text('Nombre Largo', 'NombreLargo', $x2, 2);
+				
 				$Form_Inputs->form_input_hidden('idUniMed', $_GET['id'], 2);
 				?>
 
@@ -105,11 +108,13 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = '';}
+				if(isset($Nombre)) {       $x1  = $Nombre;      }else{$x1  = '';}
+				if(isset($NombreLargo)) {  $x2  = $NombreLargo; }else{$x2  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_text('Nombre Largo', 'NombreLargo', $x2, 2);
 				?>
 				
 				<div class="form-group">
@@ -149,7 +154,7 @@ $cuenta_registros = db_select_nrows (false, 'idUniMed', 'telemetria_listado_unid
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los usuarios
 $arrUnimed = array();
-$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'Nombre ASC LIMIT '.$comienzo.', '.$cant_reg, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre,NombreLargo', 'telemetria_listado_unidad_medida', '', '', 'Nombre ASC LIMIT '.$comienzo.', '.$cant_reg, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 
 
 //paginador
@@ -176,6 +181,7 @@ $search='';
 				<thead>
 					<tr role="row">
 						<th>Nombre</th>
+						<th>Nombre Largo</th>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
@@ -184,6 +190,7 @@ $search='';
 					<?php foreach ($arrUnimed as $cat) { ?>
 					<tr class="odd">
 						<td><?php echo $cat['Nombre']; ?></td>
+						<td><?php echo $cat['NombreLargo']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idUniMed']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>

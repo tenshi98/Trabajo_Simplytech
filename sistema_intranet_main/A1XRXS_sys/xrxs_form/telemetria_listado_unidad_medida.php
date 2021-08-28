@@ -14,9 +14,10 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idUniMed']) )    $idUniMed    = $_POST['idUniMed'];
-	if ( !empty($_POST['Nombre']) )      $Nombre      = $_POST['Nombre'];
-
+	if ( !empty($_POST['idUniMed']) )      $idUniMed       = $_POST['idUniMed'];
+	if ( !empty($_POST['Nombre']) )        $Nombre         = $_POST['Nombre'];
+	if ( !empty($_POST['NombreLargo']) )   $NombreLargo    = $_POST['NombreLargo'];
+	
 	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -29,16 +30,18 @@ require_once '0_validate_user_1.php';
 	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
 		switch ($INT_valor) {
-			case 'idUniMed':   if(empty($idUniMed)){   $error['idUniMed']    = 'error/No ha ingresado el id';}break;
-			case 'Nombre':     if(empty($Nombre)){     $error['Nombre']      = 'error/No ha ingresado el nombre';}break;
+			case 'idUniMed':    if(empty($idUniMed)){    $error['idUniMed']    = 'error/No ha ingresado el id';}break;
+			case 'Nombre':      if(empty($Nombre)){      $error['Nombre']      = 'error/No ha ingresado el nombre';}break;
+			case 'NombreLargo': if(empty($NombreLargo)){ $error['NombreLargo'] = 'error/No ha ingresado el nombre largo';}break;
 			
 		}
 	}
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($NombreLargo)&&contar_palabras_censuradas($NombreLargo)!=0){  $error['NombreLargo'] = 'error/Edita NombreLargo, contiene palabras no permitidas'; }	
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -65,7 +68,8 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){    $a = "'".$Nombre."'" ;   }else{$a ="''";}
+				if(isset($Nombre) && $Nombre != ''){            $a  = "'".$Nombre."'" ;        }else{$a  = "''";}
+				if(isset($NombreLargo) && $NombreLargo != ''){  $a .= ",'".$NombreLargo."'" ;  }else{$a .= ",''";}
 				
 				
 				// inserto los datos de registro en la db
@@ -114,7 +118,8 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				//Filtros
 				$a = "idUniMed='".$idUniMed."'" ;
-				if(isset($Nombre) && $Nombre != ''){       $a .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Nombre) && $Nombre != ''){            $a .= ",Nombre='".$Nombre."'" ;}
+				if(isset($NombreLargo) && $NombreLargo != ''){  $a .= ",NombreLargo='".$NombreLargo."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
