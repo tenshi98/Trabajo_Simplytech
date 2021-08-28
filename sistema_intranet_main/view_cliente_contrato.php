@@ -74,22 +74,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 /*******************************************/
 //Listado con los tabs
 $arrTabs = array();
-$query = "SELECT idTab, Nombre FROM `core_telemetria_tabs` ORDER BY idTab ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrTabs = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'idTab ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTabs,$row );
-}
 //recorro
 $arrTabsSorter = array();
 foreach ($arrTabs as $tab) {
