@@ -130,100 +130,120 @@ if ( !empty($_GET['ini']) )  {
 	</head>
 
 	<body class="login">
-		<canvas id="canv" style="width: 100%;height: 100%;position: absolute;top: 0px;left: 0px;"></canvas>
+		<canvas id="canv" style="width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;"></canvas>
 	  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 //Si el usuario es un super usuario
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	// Se trae un listado con todos los sistemas
-	$arrSistemas = array();
-	$query = "SELECT  idSistema, Nombre AS RazonSocial
-	FROM `core_sistemas`
-	WHERE idEstado=1
-	ORDER BY Nombre ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrSistemas,$row );
-	}						
+	$arrSistemas  = array();
+	$arrSistemas  = db_select_array (false, 
+	'core_sistemas.idSistema, 
+	core_sistemas.Nombre AS RazonSocial, 
+	core_interfaces.Nombre AS Interfaz', 
+	'core_sistemas', 
+	'LEFT JOIN `core_interfaces`  ON core_interfaces.idInterfaz  = core_sistemas.idOpcionesGen_7', 
+	'core_sistemas.idEstado=1', 
+	'core_sistemas.Nombre ASC', 
+	$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGraficos');
+					
 //Si el usuario es un usuario normal
 }else{
 	// Se trae un listado con todos los sistemas
-	$arrSistemas = array();
-	$query = "SELECT 
-	usuarios_sistemas.idSistema,
-	core_sistemas.Nombre AS RazonSocial
-	FROM `usuarios_sistemas`
-	LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema
-	WHERE usuarios_sistemas.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']."
-	AND core_sistemas.idEstado=1
-	ORDER BY Nombre ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrSistemas,$row );
-	}												
+	$arrSistemas  = array();
+	$arrSistemas  = db_select_array (false, 
+	'usuarios_sistemas.idSistema,
+	core_sistemas.Nombre AS RazonSocial, 
+	core_interfaces.Nombre AS Interfaz', 
+	'usuarios_sistemas', 
+	'LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema LEFT JOIN `core_interfaces`  ON core_interfaces.idInterfaz  = core_sistemas.idOpcionesGen_7', 
+	'usuarios_sistemas.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'].' AND core_sistemas.idEstado=1', 
+	'core_sistemas.Nombre ASC', 
+	$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGraficos');
+												
 }
 
 
 ?>
 
-<div class="container">
 
-	<h1 style="margin-top: 0px;margin-bottom: 0px;color: white;"><?php echo DB_SOFT_NAME; ?></h1>
+
+<div class="container">
 	
 	<div class="col-sm-12">
-		<div class="col-sm-4">
-			<div class="box">
-				<header>
-					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-					<h5>Bienvenido <?php echo $_SESSION['usuario']['basic_data']['Nombre']; ?></h5>
-				</header>
-				<div class="tab-content" style="min-height: 350px !important;">
-					<div class="col-sm-12" style="padding-top:15px;">
-						<?php if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') { ?>
-							<img class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
-						<?php }else{  ?>
-							<img class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $_SESSION['usuario']['basic_data']['Direccion_img']; ?>">
-						<?php }?>
+			
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo DB_SOFT_NAME; ?></h5>
+			</header>
+			<div class="table-responsive">
+				
+	
+
+				<div class="col-sm-4">
+					<div class="usercard usercard-widget widget-user">
+						<div class="widget-user-header text-white" style="background: url('<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/photo1.png') center center;">
+							<h3 class="widget-user-username text-right">Bienvenido</h3>
+							<h5 class="widget-user-desc text-right"><?php echo $_SESSION['usuario']['basic_data']['Nombre']; ?></h5>
+						</div>
+						<div class="widget-user-image">
+							<?php if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') { ?>
+							<img class="img-circle" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
+							<?php }else{  ?>
+								<img class="img-circle" alt="User Picture" src="upload/<?php echo $_SESSION['usuario']['basic_data']['Direccion_img']; ?>">
+							<?php }?>
+						</div>
+						<div class="usercard-footer">
+							<div class="row">
+								<br><br>
+							</div>
+						</div>
 					</div>
-				</div>	
-			</div>
-		</div>
-		<div class="col-sm-8">
-			
-			<div class="box">
-				<header>
-					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Sistemas Autorizados</h5>
-				</header>
-				<div class="table-responsive">
-					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-						<thead>
-							<tr role="row">
-								<th>Sistema</th>
-								<th width="10">Acciones</th>
-							</tr>
-							<?php echo widget_sherlock(1, 2);?>
-						</thead>			  
-						<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
-							<?php foreach ($arrSistemas as $sis) { ?>
-								<tr class="odd">
-									<td><?php echo $sis['RazonSocial']; ?></td>
-									<td>
-										<div class="btn-group" style="width: 35px;" >
-											<a href="<?php echo $location.'?ini='.$sis['idSistema'].'&id='.$_SESSION['usuario']['basic_data']['idUsuario']; ?>" title="Seleccionar sistema" class="btn btn-primary btn-sm tooltip"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-										</div>
-									</td>
-								</tr>
-							<?php } ?>                    
-						</tbody>
-					</table>
 				</div> 
-			</div>
-			
+				
+				<div class="clearfix"></div>        
+
+				<div class="col-sm-12">
+					<div class="box">
+						<header>
+							<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Sistemas Autorizados</h5>
+						</header>
+						<div class="table-responsive">
+							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+								<thead>
+									<tr role="row">
+										<th>Sistema</th>
+										<th>Interfaz</th>
+										<th width="10">Acciones</th>
+									</tr>
+									<?php echo widget_sherlock(1, 3);?>
+								</thead>			  
+								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
+									<?php foreach ($arrSistemas as $sis) { ?>
+										<tr class="odd">
+											<td><?php echo $sis['RazonSocial']; ?></td>
+											<td><?php echo $sis['Interfaz']; ?></td>
+											<td>
+												<div class="btn-group" style="width: 35px;" >
+													<a href="<?php echo $location.'?ini='.$sis['idSistema'].'&id='.$_SESSION['usuario']['basic_data']['idUsuario']; ?>" title="Seleccionar sistema" class="btn btn-primary btn-sm tooltip"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+												</div>
+											</td>
+										</tr>
+									<?php } ?>                    
+								</tbody>
+							</table>
+						</div> 
+					</div>
+				</div>
+	
+			</div> 
 		</div>
+			
 	</div>
+		
+		
+	
 </div>
 
 	<script id="rendered-js" >
