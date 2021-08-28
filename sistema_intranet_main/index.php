@@ -143,7 +143,7 @@ $_SESSION['form_require'] = 'required';
 	</head>
 	<body class="login">
 	  
-		<canvas id="canv" style="width: 100%;height: 100%;position: absolute;top: 0px;left: 0px;"></canvas>
+		<canvas id="canv" style="width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;"></canvas>
 	  
 	  
 <?php 
