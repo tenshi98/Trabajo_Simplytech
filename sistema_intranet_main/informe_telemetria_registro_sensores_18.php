@@ -59,6 +59,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelac
 $m_table  = '';
 $Temp_1   = '';
 $Temp_2   = '';
+$count    = 0;
 
 //se arman datos
 foreach ($arrEquipos as $fac) {
@@ -86,6 +87,8 @@ foreach ($arrEquipos as $fac) {
 			<td>'.cantidades($fac['SensorValue'], 2).' '.$fac['SensoresUniMed'].'</td>
 		</tr>';	
 	}
+	//contador										
+	$count++;
 }    
 //variables
 $Graphics_xData       = 'var xData = [['.$Temp_1.']];';
@@ -96,7 +99,15 @@ $Graphics_texts       = 'var texts = [[]];';
 $Graphics_lineColors  = "var lineColors = [''];";
 $Graphics_lineDash    = "var lineDash = [''];";
 $Graphics_lineWidth   = "var lineWidth = [''];";
-  
+
+//si hay mas de 9000 registros
+if(isset($count)&&$count>9000){
+	//Se escribe el dato
+	echo '<div class="col-sm-12">';
+		$Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
+		alert_post_data(3,1,1, $Alert_Text);
+	echo '</div>';
+}
 ?>	
 
 <style>
@@ -140,7 +151,18 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 			</header>
 			<div class="table-responsive" id="grf">	
 				
-				<?php GraphLinear_1('graphLinear_1', 'Grafico Consumo', 'Fecha', 'Consumo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth); ?>
+				<?php 
+				//si se envian los datos desde afuera
+				if(isset($_GET['inform_tittle'])&&$_GET['inform_tittle']!=''&&isset($_GET['inform_unimed'])&&$_GET['inform_unimed']!=''){
+					$gr_tittle = $_GET['inform_tittle'];
+					$gr_unimed = $_GET['inform_unimed'];
+				//sino, se usan los que ya existen
+				}else{
+					if(isset($arrEquipos[0]['SensoresUniMed'])&&$arrEquipos[0]['SensoresUniMed']!=''){$uni = $arrEquipos[0]['SensoresUniMed'];}else{$uni = 'Consumo';}
+					$gr_tittle = 'Grafico ('.$uni.')';
+					$gr_unimed = $uni;
+				}
+				GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth); ?>
 								
 			</div>
 		</div>

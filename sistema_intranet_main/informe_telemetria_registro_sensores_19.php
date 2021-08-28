@@ -62,6 +62,18 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelac
 //Se trae el dato del grupo
 $rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowGrupo');
 
+//Se traen las unidades de medida
+$arrUnimed = array();
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre,NombreLargo', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+
+$arrUnimedX = array();
+foreach ($arrUnimed as $sen) {
+	if(isset($sen['NombreLargo'])&&$sen['NombreLargo']!=''){
+		$arrUnimedX[$sen['idUniMed']] = $sen['NombreLargo'];
+	}else{
+		$arrUnimedX[$sen['idUniMed']] = $sen['Nombre'];
+	}
+}
 /****************************************************************/				
 //Variables
 $m_table        = '';
@@ -70,6 +82,7 @@ $count          = 0;
 $Temp_1         = '';
 $arrData        = array();
 $xcount         = 0;
+$unidadMed      = '';
 
 //se arman datos
 foreach ($arrEquipos as $fac) {
@@ -104,7 +117,9 @@ foreach ($arrEquipos as $fac) {
 						//titulo grafico
 						$arrData[$xcount]['Name'] = "'".$fac['SensoresNombre_'.$x]."'";
 						//titulo tabla
-						$m_table_title  .= '<th>'.$fac['SensoresNombre_'.$x].'</th>';	
+						$m_table_title  .= '<th>'.$fac['SensoresNombre_'.$x].'</th>';
+						//Se guarda la unidad de medida
+						$unidadMed  = 	$arrUnimedX[$fac['SensoresUniMed_'.$x]];
 					}
 				}
 			}
@@ -151,6 +166,15 @@ $Graphics_texts      .= '];';
 $Graphics_lineColors .= '];';
 $Graphics_lineDash   .= '];';
 $Graphics_lineWidth  .= '];';  
+
+//si hay mas de 9000 registros
+if(isset($count)&&$count>9000){
+	//Se escribe el dato
+	echo '<div class="col-sm-12">';
+		$Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
+		alert_post_data(3,1,1, $Alert_Text);
+	echo '</div>';
+}
 ?>	
 
 <style>
@@ -194,7 +218,18 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 			</header>
 			<div class="table-responsive" id="grf">	
 				
-				<?php GraphLinear_1('graphLinear_1', 'Grafico Consumo', 'Fecha', 'Consumo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth); ?>
+				<?php  
+				//si se envian los datos desde afuera
+				if(isset($_GET['inform_tittle'])&&$_GET['inform_tittle']!=''&&isset($_GET['inform_unimed'])&&$_GET['inform_unimed']!=''){
+					$gr_tittle = $_GET['inform_tittle'];
+					$gr_unimed = $_GET['inform_unimed'];
+				//sino, se usan los que ya existen
+				}else{
+					if(isset($unidadMed)&&$unidadMed!=''){$uni = $unidadMed;}else{$uni = 'Consumo';}
+					$gr_tittle = 'Grafico ('.$uni.')';
+					$gr_unimed = $uni;
+				}
+				GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth); ?>
 							
 			</div>
 		</div>
