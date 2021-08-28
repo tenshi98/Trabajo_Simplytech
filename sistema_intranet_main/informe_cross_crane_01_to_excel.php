@@ -222,6 +222,7 @@ $objPHPExcel->setActiveSheetIndex(1)
 /**************************************************************/
 //variables
 $nn=3;
+$ndias = dias_transcurridos($_GET['f_inicio'], $_GET['f_termino']);
 //filtro por equipo
 filtrar($arrEquipos2, 'Equipo'); 
 //recorro los equipos 
