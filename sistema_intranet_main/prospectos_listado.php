@@ -152,7 +152,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 /*******************************************/
 //Listado con los tabs
 $arrTabs = array();
-$arrTabs = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'idTab ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+$arrTabs = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'idTab ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTabs');
 
 //recorro
 $arrTabsSorter = array();
@@ -531,7 +531,7 @@ array_push( $arrProspecto,$row );
 /*******************************************/
 //Listado con los tabs
 $arrTabs = array();
-$arrTabs = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'idTab ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+$arrTabs = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'idTab ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTabs');
 
 //recorro
 $arrTabsSorter = array();
