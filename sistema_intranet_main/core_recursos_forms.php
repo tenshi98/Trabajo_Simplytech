@@ -90,7 +90,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 				$x46  = '';
 				$x47  = '';
 				$x48  = '';
-				$x49  = 1;
+				$x49  = 2;
 				$x50  = 2;
 				$x51  = '';
 				$x52  = '';
@@ -216,23 +216,23 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 				$Form_Inputs->form_select_filter('form_select_filter','ifilter2', $x44, 2, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);	
 				$Form_Inputs->form_select_join('form_select_join','form_select_join1', $x45, 1, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', 'bodegas_insumos_listado.idSistema>=0', $dbConn);
 				$Form_Inputs->form_select_join('form_select_join','form_select_join2', $x46, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', 'bodegas_insumos_listado.idSistema>=0', $dbConn);
-				$Form_Inputs->form_select_join_filter('form_select_join_filter','form_select_join_filter1', $x47, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Inputs->form_select_join_filter('form_select_join_filter','form_select_join_filter2', $x48, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Inputs->form_select_disabled('form_select_disabled','form_select_disabled1', $x49, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
-				$Form_Inputs->form_select_disabled('form_select_disabled','form_select_disabled2', $x50, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
+				$Form_Inputs->form_select_join_filter('form_select_join_filter 1','form_select_join_filter1', $x47, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('form_select_join_filter 2','form_select_join_filter2', $x48, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_disabled('form_select_disabled 1','form_select_disabled1', $x49, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
+				$Form_Inputs->form_select_disabled('form_select_disabled 2','form_select_disabled2', $x50, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
 				$Form_Inputs->form_select_n_auto('form_select_n_auto','form_select_n_auto1', $x51, 1, 1, 72);	
 				$Form_Inputs->form_select_n_auto('form_select_n_auto','form_select_n_auto2', $x52, 2, 1, 72);	
 				$Form_Inputs->form_select_country('form_select_country','form_select_country1', $x53, 1, $dbConn);
 				$Form_Inputs->form_select_country('form_select_country','form_select_country2', $x54, 2, $dbConn);
-				$Form_Inputs->form_select_depend1('Select dependientes 1','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										 'Nivel 1','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
-										 $dbConn, 'form1');																															
-				/*$Form_Inputs->form_select_depend1('Select dependientes 1','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										 'Nivel 1','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
-										 $dbConn, 'form1');*/
-				$Form_Inputs->form_select_depend2('Select dependientes 2', 'idCentroCosto',  $x3,  1,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  0,   0,
-												  'Nivel 1', 'idLevel_1',  $x4,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
-												  'Nivel 2', 'idLevel_2',  $x5,  1,  'idLevel_2',  'Nombre',  'centrocosto_listado_level_2',  0,   0,
+				$Form_Inputs->form_select_depend1('Select dependientes 1 a','idCiudad', $x55, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+												 'Nivel 1','idComuna', $x56, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+												 $dbConn, 'form1');																															
+				$Form_Inputs->form_select_depend1('Select dependientes 1 b','idCiudad2', $x57, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+												'Nivel 1','idComuna2', $x58, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+												$dbConn, 'form1');
+				$Form_Inputs->form_select_depend2('Select dependientes 2', 'idCentroCosto',  $x59,  1,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  0,   0,
+												  'Nivel 1', 'idLevel_1',  $x60,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
+												  'Nivel 2', 'idLevel_2',  $x61,  1,  'idLevel_2',  'Nombre',  'centrocosto_listado_level_2',  0,   0,
 												  $dbConn, 'form1');
 				/*$Form_Inputs->form_select_depend2('Select dependientes 2', 'idCentroCosto',  $x3,  1,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  0,   0,
 												  'Nivel 1', 'idLevel_1',  $x4,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
