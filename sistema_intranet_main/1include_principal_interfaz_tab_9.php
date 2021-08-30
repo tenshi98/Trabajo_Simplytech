@@ -4,7 +4,7 @@
 $temp = $prm_x[50];				
 if($temp!=0) {
 	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrReserva = array();
 $query = "SELECT 
 gestion_reserva_oficinas.idReserva,

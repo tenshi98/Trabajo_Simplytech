@@ -118,7 +118,7 @@ $cadena .= ',PuntoUniMed_'.$_GET['mod'].' AS UniMed';
 $cadena .= ',PuntoidTipo_'.$_GET['mod'].' AS Tipo';
 $cadena .= ',PuntoidGrupo_'.$_GET['mod'].' AS Grupo';
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `maquinas_listado_matriz`
 WHERE idMatriz = ".$_GET['idMatriz'];
@@ -238,7 +238,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	 	 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } elseif ( ! empty($_GET['idMatriz']) ) {    
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre,cantPuntos,
 PuntoNombre_1,PuntoNombre_2,PuntoNombre_3,PuntoNombre_4,PuntoNombre_5,
 PuntoNombre_6,PuntoNombre_7,PuntoNombre_8,PuntoNombre_9,PuntoNombre_10,
@@ -469,7 +469,7 @@ array_push( $arrGrupos,$row );
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['idMatriz_2']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, cantPuntos, idEstado
 FROM `maquinas_listado_matriz`
 WHERE idMatriz = ".$_GET['idMatriz_2'];
@@ -570,7 +570,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  Nombre,  idConfig_1,  idConfig_2, idConfig_3
 FROM `maquinas_listado`
 WHERE idMaquina = ".$_GET['id'];

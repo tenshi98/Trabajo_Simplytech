@@ -50,7 +50,7 @@ $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresUniMed_'.$i;
 }
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrErrores = array();
 $query = "SELECT 
 backup_telemetria_listado_errores_999.idErrores,

@@ -61,7 +61,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, Valor_Mensual, Valor_Anual, N_Hijos
 FROM `sistema_planes_transporte`
 WHERE idPlan = ".$_GET['id'];
@@ -227,7 +227,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrPlan = array();
 $query = "SELECT  idPlan, Nombre, Valor_Mensual, Valor_Anual, N_Hijos
 FROM `sistema_planes_transporte`

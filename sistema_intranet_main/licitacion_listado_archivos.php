@@ -93,7 +93,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT  idLicitacion, Nombre, idOpcionItem
 FROM `licitacion_listado`
 WHERE idLicitacion = ".$_GET['id'];

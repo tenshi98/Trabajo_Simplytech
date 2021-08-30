@@ -76,7 +76,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 /************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idTrabajador,Fecha_inicio, Fecha_termino, N_Dias,File_Licencia,Observacion, idSistema
 FROM `trabajadores_licencias`
 WHERE idLicencia = ".$_GET['id'];
@@ -285,7 +285,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrInasHoras = array();
 $query = "SELECT 
 trabajadores_licencias.idLicencia,

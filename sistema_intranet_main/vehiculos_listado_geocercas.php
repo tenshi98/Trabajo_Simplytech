@@ -97,7 +97,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else{
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT Nombre,Patente,idOpciones_1,idOpciones_2,idOpciones_3,idOpciones_4,idOpciones_5, idOpciones_6,
 idOpciones_7, idOpciones_8, doc_mantencion, doc_fecha_mantencion
 FROM `vehiculos_listado`
@@ -117,7 +117,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrGeocerca = array();
 $query = "SELECT 
 vehiculos_listado_geocercas.idGeocerca,

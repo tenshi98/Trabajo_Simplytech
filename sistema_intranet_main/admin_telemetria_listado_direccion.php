@@ -44,7 +44,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre,idCiudad,idComuna,Direccion,GeoLatitud,GeoLongitud,id_Geo, id_Sensores, idZona, 
 idUsoContrato
 FROM `telemetria_listado`

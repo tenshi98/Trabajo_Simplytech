@@ -42,7 +42,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //Verifico el tipo de usuario que esta ingresando
 $z.=" AND telemetria_listado_error_fuera_linea.idSistema=".$_GET['idSistema'];	
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrErrores = array();
 $query = "SELECT 
 telemetria_listado_error_fuera_linea.idFueraLinea,

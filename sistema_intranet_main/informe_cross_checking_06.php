@@ -79,7 +79,7 @@ if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GE
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
 	$z.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '".$_GET['f_termino_desde']."' AND '".$_GET['f_termino_hasta']."'";
 }
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrOTS = array();
 $query = "SELECT 
 sistema_variedades_categorias.Nombre AS EspecieNombre,

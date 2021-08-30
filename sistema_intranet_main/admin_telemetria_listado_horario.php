@@ -51,7 +51,7 @@ $cadena  = 'Hor_idActivo_dia'.$_GET['mod'].' AS idActivo';
 $cadena .= ',Hor_Inicio_dia'.$_GET['mod'].' AS Inicio';
 $cadena .= ',Hor_Termino_dia'.$_GET['mod'].' AS Termino';
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `telemetria_listado`
 WHERE idTelemetria = ".$_GET['id'];
@@ -104,7 +104,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } else  {
-	// tomo los datos del usuario
+	// consulto los datos
 $query = "SELECT Nombre,id_Sensores, id_Geo,
 Hor_idActivo_dia1, Hor_idActivo_dia2, Hor_idActivo_dia3, Hor_idActivo_dia4, Hor_idActivo_dia5, Hor_idActivo_dia6, Hor_idActivo_dia7,
 Hor_Inicio_dia1, Hor_Inicio_dia2, Hor_Inicio_dia3, Hor_Inicio_dia4, Hor_Inicio_dia5, Hor_Inicio_dia6, Hor_Inicio_dia7,

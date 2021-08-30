@@ -43,7 +43,7 @@ if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                $z .= " AND 
 if(isset($_GET['idFacturable']) && $_GET['idFacturable'] != ''){    $z .= " AND aguas_clientes_listado.idFacturable=".$_GET['idFacturable'];}
 if(isset($_GET['idSector']) && $_GET['idSector'] != ''){            $z .= " AND aguas_clientes_listado.idSector=".$_GET['idSector'];}
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrUsers = array();
 $query = "SELECT 
 aguas_clientes_listado.idCliente,

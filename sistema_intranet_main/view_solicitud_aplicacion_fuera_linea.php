@@ -42,7 +42,7 @@ if(isset($_GET['idSolicitud'])&&$_GET['idSolicitud']!=''){    $z.=" AND telemetr
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  $z.=" AND telemetria_listado_error_fuera_linea.idTelemetria='".simpleDecode($_GET['idTelemetria'], fecha_actual())."'";}
 if(isset($_GET['idZona'])&&$_GET['idZona']!=''){              $z.=" AND telemetria_listado_error_fuera_linea.idZona='".simpleDecode($_GET['idZona'], fecha_actual())."'";}
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrErrores = array();
 $query = "SELECT 
 telemetria_listado_error_fuera_linea.idFueraLinea,

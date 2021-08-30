@@ -375,7 +375,7 @@ foreach ($arrPagosProveedores as $pagos) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  }elseif ( ! empty($_GET['test_cross']) ) { 
 $idPredio = 1;
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `cross_predios_listado`
 WHERE idPredio = {$idPredio}";

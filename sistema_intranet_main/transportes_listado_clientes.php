@@ -70,7 +70,7 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Permiso asignado co
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `transportes_listado`
 WHERE idTransporte = ".$_GET['id'];

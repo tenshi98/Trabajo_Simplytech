@@ -48,7 +48,7 @@ if($_GET['idTipoUsuario']==1){
 	$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrErrores = array();
 $query = "SELECT 
 telemetria_listado_error_geocerca.idErrores,

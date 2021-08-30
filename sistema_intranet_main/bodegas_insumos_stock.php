@@ -41,7 +41,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Bodega borrada corr
 if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['view']) ) { 	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrProductos = array();
 $query = "SELECT 
 bodegas_insumos_facturacion_existencias.Creacion_fecha,
@@ -142,7 +142,7 @@ array_push( $arrProductos,$row );
              
   
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrProductos = array();
 $query = "SELECT
 insumos_listado.idProducto,
@@ -288,7 +288,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 bodegas_insumos_listado.idBodega,

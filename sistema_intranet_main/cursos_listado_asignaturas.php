@@ -94,7 +94,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `cursos_listado`
 WHERE idCurso = ".$_GET['id'];

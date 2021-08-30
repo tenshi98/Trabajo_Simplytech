@@ -42,7 +42,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Apoderado borrado c
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, Semanas, F_inicio, F_termino, idSistema
 FROM `alumnos_cursos`
 WHERE idCurso = ".$_GET['id'];

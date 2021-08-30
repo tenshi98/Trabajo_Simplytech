@@ -627,7 +627,7 @@ require_once '0_validate_user_1.php';
 			
 			if ( empty($error) ) {
 				
-				// tomo los datos del usuario
+				// consulto los datos
 				$rowProductor = db_select_data (false, 'Nombre', 'productores_listado', '', 'idProductor ='.$idProductor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				$idInterno = $idInterno+1;
@@ -668,7 +668,7 @@ require_once '0_validate_user_1.php';
 			
 			if ( empty($error) ) {
 				
-				// tomo los datos del usuario
+				// consulto los datos
 				$rowProductor = db_select_data (false, 'Nombre', 'productores_listado', '', 'idProductor ='.$idProductor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				$_SESSION['cross_quality_ana_cali_muestras'][$oldidProducto]['idMuestra']         = $oldidProducto;

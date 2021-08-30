@@ -44,7 +44,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowdata = db_select_data (false, 'Nombre', 'bodegas_productos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['productos_gasto_basicos']['TipoDocumento'] = $rowdata['Nombre'];
@@ -53,7 +53,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowdata = db_select_data (false, 'Nombre', 'bodegas_productos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['productos_gasto_basicos']['Bodega'] = $rowdata['Nombre'];

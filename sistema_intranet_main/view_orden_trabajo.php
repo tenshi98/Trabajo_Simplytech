@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $query = "SELECT 
 orden_trabajo_listado.idOT,
 orden_trabajo_listado.f_creacion,

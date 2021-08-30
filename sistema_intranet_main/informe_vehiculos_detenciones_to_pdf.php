@@ -36,7 +36,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 //Verifico el tipo de usuario que esta ingresando
 $z.=" AND vehiculos_listado_error_detenciones.idSistema=".$_GET['idSistema'];	
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrErrores = array();
 $query = "SELECT 
 vehiculos_listado_error_detenciones.idDetencion,

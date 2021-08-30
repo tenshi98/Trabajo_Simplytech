@@ -18,7 +18,7 @@ $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresUniMed_'.$i;
 }
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT
 backup_telemetria_listado_errores.Descripcion, 
 backup_telemetria_listado_errores.Fecha, 

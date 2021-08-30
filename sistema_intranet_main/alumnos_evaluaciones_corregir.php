@@ -53,7 +53,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT idEstadoAprobacion
 FROM `quiz_realizadas`
 WHERE idQuizRealizadas = ".$_GET['id'];

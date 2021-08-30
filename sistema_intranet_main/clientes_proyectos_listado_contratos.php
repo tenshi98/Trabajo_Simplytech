@@ -101,7 +101,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Contrato borrado co
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit_itemizado']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, Codigo, idUtilizable, idFrecuencia, Cantidad, TiempoProgramado, idTrabajo, Valor, ValorTotal
 FROM `licitacion_listado_level_".$_GET['lvl']."`
 WHERE idLevel_".$_GET['lvl']." = ".$_GET['edit_itemizado'];
@@ -448,7 +448,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['itemizado']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, idSistema
 FROM `licitacion_listado`
 WHERE idLicitacion = ".$_GET['itemizado'];
@@ -804,7 +804,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 	
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['status']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 licitacion_listado.idLicitacion,
 licitacion_listado.Nombre,
@@ -877,7 +877,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns,
 idSistema, idAprobado, idTipoLicitacion, ValorMensual, idOpcionItem
 FROM `licitacion_listado`
@@ -1086,7 +1086,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre,idTipo
 FROM `clientes_listado`
 WHERE idCliente = ".$_GET['id'];
@@ -1105,7 +1105,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrArea = array();
 $query = "SELECT 
 licitacion_listado.idLicitacion,

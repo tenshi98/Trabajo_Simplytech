@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 alumnos_elearning_listado.Nombre, 
 alumnos_elearning_listado.Resumen, 
@@ -64,7 +64,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	
 
 /*****************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrContenidos = array();
 $query = "SELECT
 alumnos_elearning_listado_unidades.idUnidad AS Unidad_ID, 
@@ -96,7 +96,7 @@ array_push( $arrContenidos,$row );
 }
 
 /*****************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrFiles = array();
 $query = "SELECT idDocumentacion, idUnidad, idElearning, idContenido, File
 FROM `alumnos_elearning_listado_unidades_documentacion`
@@ -120,7 +120,7 @@ array_push( $arrFiles,$row );
 }
 
 /*****************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCuestionarios = array();
 $query = "SELECT 
 alumnos_elearning_listado_unidades_cuestionarios.idCuestionario, 

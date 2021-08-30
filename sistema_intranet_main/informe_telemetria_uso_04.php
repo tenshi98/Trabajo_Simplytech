@@ -62,7 +62,7 @@ $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresRevisionGrupo_'.$i;
 }
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre 
 ".$subquery."
 FROM `telemetria_listado`

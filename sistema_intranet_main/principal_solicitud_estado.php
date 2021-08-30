@@ -54,7 +54,7 @@ if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f
 
 				
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrSolicitudes = array();
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,

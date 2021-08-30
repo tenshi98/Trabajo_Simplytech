@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT 
 trabajadores_listado.Direccion_img,
 
@@ -157,7 +157,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrCargas,$row );
 }
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrBonos = array();
 $query = "SELECT 
 trabajadores_listado_bonos_fijos.idBono,
@@ -184,7 +184,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrBonos,$row );
 }
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrAnexos = array();
 $query = "SELECT  idAnexo,Documento, Fecha_ingreso
 FROM `trabajadores_listado_anexos`

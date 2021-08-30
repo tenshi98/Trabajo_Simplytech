@@ -212,7 +212,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrComentarios,$row );
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrReportes = array();
 $query = "SELECT 
 seg_vecinal_reportes_post_listado.idCliente,
@@ -474,7 +474,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrReportes = array();
 $query = "SELECT 
 seg_vecinal_reportes_post_listado.idEventoPeligro,

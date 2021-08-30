@@ -147,7 +147,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['contab_caja_gastos_basicos']['Trabajador']  = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
@@ -244,7 +244,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat, Cargo, Fono, Rut', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['contab_caja_gastos_basicos']['Trabajador']  = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];

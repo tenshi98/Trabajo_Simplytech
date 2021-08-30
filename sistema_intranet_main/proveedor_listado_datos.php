@@ -43,7 +43,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Proveedor borrado c
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idTipo, Nombre , Rut, fNacimiento, idPais, idCiudad, idComuna, Direccion, idSistema, Giro
 FROM `proveedor_listado`
 WHERE idProveedor = ".$_GET['id'];

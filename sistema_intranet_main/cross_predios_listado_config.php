@@ -90,7 +90,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Cuartel borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['mod']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 cross_predios_listado_zonas.Nombre,
 cross_predios_listado.Direccion,
@@ -355,7 +355,7 @@ array_push( $arrPuntos,$row );
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['edit_puntos']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 cross_predios_listado_zonas.Nombre,
 cross_predios_listado.Direccion,
@@ -712,7 +712,7 @@ array_push( $arrZonas,$row );
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['edit_zona']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre,Codigo,idCategoria,idProducto,AnoPlantacion,Hectareas,Hileras,Plantas,
 idEstadoProd,DistanciaPlant,DistanciaHileras,idEstado
 FROM `cross_predios_listado_zonas`
@@ -848,7 +848,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 </div> 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } else  { 	 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `cross_predios_listado`
 WHERE idPredio = ".$_GET['id'];

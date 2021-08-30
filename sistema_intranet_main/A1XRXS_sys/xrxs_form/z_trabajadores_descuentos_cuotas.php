@@ -143,7 +143,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'trabajadores_descuentos_cuotas_tipos', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -152,7 +152,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
@@ -161,7 +161,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['Usuario'] = $rowUsuario['Nombre'];
@@ -257,7 +257,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'trabajadores_descuentos_cuotas_tipos', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -266,7 +266,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
@@ -275,7 +275,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['desc_cuotas_basicos']['Usuario'] = $rowUsuario['Nombre'];

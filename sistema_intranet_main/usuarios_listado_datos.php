@@ -44,7 +44,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Usuario borrado cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, Fono, email, Rut, fNacimiento, idCiudad, idComuna, Direccion, Direccion_img
 FROM `usuarios_listado`
 WHERE idUsuario = ".$_GET['id'];

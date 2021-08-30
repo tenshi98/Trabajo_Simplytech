@@ -53,7 +53,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Mantencion borrada 
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Fecha, Descripcion, Hora_ini, Hora_fin
 FROM `core_mantenciones`
 WHERE idMantencion = ".$_GET['id'];
@@ -189,7 +189,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrMantencion = array();
 $query = "SELECT  idMantencion, Fecha, Descripcion, Hora_ini, Hora_fin
 FROM `core_mantenciones`

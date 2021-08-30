@@ -52,7 +52,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 telemetria_listado.idTelemetria,
 telemetria_listado.Direccion_img,

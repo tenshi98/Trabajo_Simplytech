@@ -41,7 +41,7 @@ if (isset($_GET['deleted'])) {$error['Cliente'] 	  = 'sucess/Sistema borrado cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, Social_idUso, Social_facebook, Social_twitter, 
 Social_instagram, Social_linkedin, Social_rss, Social_youtube, Social_tumblr
 FROM `core_sistemas`

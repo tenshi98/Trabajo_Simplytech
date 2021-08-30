@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Usuario borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT idUsuario
 FROM `comunicaciones_screen_listado_usuarios`
 WHERE idUsers = ".$_GET['edit'];
@@ -164,7 +164,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `comunicaciones_screen_listado`
 WHERE idScreen = ".$_GET['id'];

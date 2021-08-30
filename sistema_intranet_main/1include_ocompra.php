@@ -1,5 +1,5 @@
 <?php 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 ocompra_listado.Creacion_fecha,
 ocompra_listado.Observaciones,

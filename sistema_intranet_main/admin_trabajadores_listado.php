@@ -60,7 +60,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT 
 trabajadores_listado.Direccion_img,
 
@@ -181,7 +181,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrCargas,$row );
 }
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrBonos = array();
 $query = "SELECT 
 trabajadores_listado_bonos_fijos.idBono,
@@ -208,7 +208,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrBonos,$row );
 }
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrAnexos = array();
 $query = "SELECT  idAnexo,Documento, Fecha_ingreso
 FROM `trabajadores_listado_anexos`
@@ -671,7 +671,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTrabajador = array();
 $query = "SELECT 
 trabajadores_listado.idTrabajador,

@@ -7,7 +7,7 @@ if($temp!=0) {
 $z = "WHERE clientes_listado.idCliente!=0";
 //sistema
 $z.=" AND clientes_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrClientes = array();
 $query = "SELECT 
 clientes_listado.idCliente,

@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Correo borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT email
 FROM `sistema_cross_email_aprobados`
 WHERE idAprobador = ".$_GET['edit'];
@@ -157,7 +157,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `core_sistemas`
 WHERE idSistema = ".$_GET['id'];
@@ -176,7 +176,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrAprobador = array();
 $query = "SELECT  idAprobador, email
 FROM `sistema_cross_email_aprobados`

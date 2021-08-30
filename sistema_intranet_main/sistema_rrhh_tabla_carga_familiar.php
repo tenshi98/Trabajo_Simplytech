@@ -42,7 +42,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Tramo,Valor_Desde,Valor_Hasta,Valor_Pago
 FROM `sistema_rrhh_tabla_carga_familiar`
 WHERE idTablaCarga = ".$_GET['id'];

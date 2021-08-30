@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT AguasInfFechaEmision, ClienteIdentificador, ClienteDireccion, DetalleTotalAPagar, DetalleSaldoAnterior
 FROM `aguas_facturacion_listado_detalle`
 WHERE idFacturacionDetalle = ".$X_Puntero;

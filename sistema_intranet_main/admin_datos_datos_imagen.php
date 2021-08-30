@@ -51,7 +51,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Sistema borrado cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, Config_imgLogo
 FROM `core_sistemas`
 WHERE idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];

@@ -70,7 +70,7 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Permiso asignado co
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `usuarios_listado`
 WHERE idUsuario = ".$_GET['id'];
@@ -235,7 +235,7 @@ $x_permisos_5 = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] +
 $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCamaras = array();
 $query = "SELECT 
 seguridad_camaras_listado.idCamara,

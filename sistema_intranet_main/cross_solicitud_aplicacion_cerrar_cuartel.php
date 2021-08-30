@@ -164,7 +164,7 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else { 
 /**********************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idEstado, f_ejecucion, f_ejecucion_fin
 FROM `cross_solicitud_aplicacion_listado`
 WHERE idSolicitud = ".$_GET['view'];

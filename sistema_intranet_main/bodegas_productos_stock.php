@@ -35,7 +35,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['view']) ) { 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrProductos = array();
 $query = "SELECT 
 bodegas_productos_facturacion_existencias.Creacion_fecha,
@@ -287,7 +287,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 bodegas_productos_listado.idBodega,

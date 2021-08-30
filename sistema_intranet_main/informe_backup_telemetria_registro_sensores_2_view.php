@@ -14,7 +14,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.GeoLatitud,

@@ -76,7 +76,7 @@ if(!$resultado){
 }
 $rowDatos = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrDetalle = array();
 $query = "SELECT 
 apoderados_listado.Nombre AS ApoderadoNombre,

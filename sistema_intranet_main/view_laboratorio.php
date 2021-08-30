@@ -77,7 +77,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrObservaciones = array();
 $query = "SELECT 
 usuarios_listado.Nombre AS nombre_usuario,

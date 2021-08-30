@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Peoneta borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat, Rut, Fecha
 FROM `vehiculos_listado_peonetas`
 WHERE idPeoneta = ".$_GET['edit'];
@@ -170,7 +170,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT Nombre,Patente,idOpciones_1,idOpciones_2,idOpciones_3,idOpciones_4,idOpciones_5,
 idOpciones_6, idOpciones_7, idOpciones_8
 FROM `vehiculos_listado`
@@ -265,7 +265,7 @@ $todos = $telemetria + $bodega + $ruta + $trabajador + $pasajeros + $peonetas + 
 $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 /************************************************/
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrPeonetas = array();
 $query = "SELECT idPeoneta, Nombre, ApellidoPat, ApellidoMat, Rut, Fecha
 FROM `vehiculos_listado_peonetas`

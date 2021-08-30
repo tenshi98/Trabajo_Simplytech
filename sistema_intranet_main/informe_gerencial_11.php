@@ -224,7 +224,7 @@ $z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data'][
 if(isset($Ano)&&$Ano!=''){ 
 	$z.=" AND orden_trabajo_listado.progAno=".$Ano;
 }
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrInsumos = array();
 $query = "SELECT
 SUM(orden_trabajo_listado_insumos.Cantidad) AS Cantidad,
@@ -255,7 +255,7 @@ array_push( $arrInsumos,$row );
 }
 
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrInsumos2 = array();
 $query = "SELECT
 maquinas_listado.idUbicacion,

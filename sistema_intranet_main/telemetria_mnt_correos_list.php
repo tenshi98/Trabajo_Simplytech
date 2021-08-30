@@ -67,7 +67,7 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idCorreosCat, idUsuario
 FROM `telemetria_mnt_correos_list`
 WHERE idCorreos = ".$_GET['id'];
@@ -237,7 +237,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrComunas = array();
 $query = "SELECT 
 telemetria_mnt_correos_list.idCorreos,

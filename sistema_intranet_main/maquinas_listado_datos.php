@@ -42,7 +42,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 //verifico que sea un administrador
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Codigo, Nombre, Modelo, Serie, Fabricante, fincorporacion, idConfig_1, idConfig_2,
 idCliente, idConfig_3
 FROM `maquinas_listado`

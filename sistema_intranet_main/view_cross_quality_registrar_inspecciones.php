@@ -52,7 +52,7 @@ for ($i = 1; $i <= $X_cantPuntos; $i++) {
 	$cadena .= ',PuntoUniMed_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
 WHERE idMatriz = ".$X_idCalidad;
@@ -77,7 +77,7 @@ for ($i = 1; $i <= $X_cantPuntos; $i++) {
 	$cadena .= ',cross_quality_registrar_inspecciones_muestras.Medida_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 cross_quality_registrar_inspecciones_muestras.n_folio_pallet,
 cross_quality_registrar_inspecciones_muestras.lote,

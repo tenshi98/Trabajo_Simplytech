@@ -53,7 +53,7 @@ require_once 'core/Web.Header.Views.php';
 
 
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 principal_notificaciones_listado.Titulo,
 principal_notificaciones_listado.Notificacion,

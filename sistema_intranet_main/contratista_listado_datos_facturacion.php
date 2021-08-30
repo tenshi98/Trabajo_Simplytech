@@ -43,7 +43,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Contratista borrado
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT FormaPago, Nombre
 FROM `contratista_listado`
 WHERE idContratista = ".$_GET['id'];

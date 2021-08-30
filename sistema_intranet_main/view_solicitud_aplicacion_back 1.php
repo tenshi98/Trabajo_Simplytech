@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT
 cross_solicitud_aplicacion_listado.idSolicitud, 
 cross_solicitud_aplicacion_listado.f_creacion,

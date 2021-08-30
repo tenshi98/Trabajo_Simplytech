@@ -43,7 +43,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Cliente borrado cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idTipo, Nombre, Contrato_Nombre, Contrato_Numero, Contrato_idPeriodo, Contrato_Fecha_Ini, 
 Contrato_Fecha_Term, Contrato_N_Meses, Contrato_Representante_Legal, Contrato_Representante_Rut, Contrato_Representante_Fono,
 Contrato_Valor_Mensual, Contrato_Valor_Anual, Contrato_UF_Instalacion, Contrato_UF_Mensual, idTab_1, 

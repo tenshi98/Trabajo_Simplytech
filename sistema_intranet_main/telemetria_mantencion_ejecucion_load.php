@@ -27,7 +27,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 
 }
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  
 telemetria_listado.Nombre AS Tel_Equipo,
 telemetria_listado.Identificador AS Tel_Identificador,

@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Contrato borrada co
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, Codigo, idUtilizable, idFrecuencia, Cantidad, TiempoProgramado, idTrabajo, Valor, ValorTotal
 FROM `licitacion_listado_level_".$_GET['lvl']."`
 WHERE idLevel_".$_GET['lvl']." = ".$_GET['edit'];
@@ -419,7 +419,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, idSistema, idOpcionItem
 FROM `licitacion_listado`
 WHERE idLicitacion = ".$_GET['id'];

@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Observacion borrada
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT Observacion
 FROM `transportes_observaciones`
 WHERE idObservacion = ".$_GET['edit'];
@@ -154,7 +154,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['view']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT 
 transportes_listado.Nombre AS nombre_transporte,
 usuarios_listado.Nombre AS nombre_usuario,
@@ -214,7 +214,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `transportes_listado`
 WHERE idTransporte = ".$_GET['id'];

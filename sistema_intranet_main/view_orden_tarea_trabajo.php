@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $query = "SELECT 
 orden_trabajo_tareas_listado.idOT,
 orden_trabajo_tareas_listado.f_creacion,
@@ -316,7 +316,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrHistorial,$row );
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrQuejas = array();
 $query = "SELECT 
 usuarios_listado.Nombre AS Usuario,

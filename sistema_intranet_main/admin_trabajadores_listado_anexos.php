@@ -93,7 +93,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat
 FROM `trabajadores_listado`
 WHERE idTrabajador = ".$_GET['id'];
@@ -112,7 +112,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrAnexos = array();
 $query = "SELECT  idAnexo,Documento, Fecha_ingreso
 FROM `trabajadores_listado_anexos`

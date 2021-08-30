@@ -13,7 +13,7 @@ if($temp!=0) {
 	$z.=" AND cross_shipping_consolidacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrCross = array();
 	$query = "SELECT 
 	cross_shipping_consolidacion_estibas.idEstibaListado,

@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Observacion borrada
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT Observacion
 FROM `clientes_observaciones`
 WHERE idObservacion = ".$_GET['edit'];
@@ -155,7 +155,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);  ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['view']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT 
 clientes_listado.Nombre AS nombre_cliente,
 usuarios_listado.Nombre AS nombre_usuario,
@@ -215,7 +215,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre,idTipo
 FROM `clientes_listado`
 WHERE idCliente = ".$_GET['id'];
@@ -234,7 +234,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrObservaciones = array();
 $query = "SELECT 
 clientes_observaciones.idObservacion,

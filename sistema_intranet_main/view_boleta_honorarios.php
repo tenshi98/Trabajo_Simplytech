@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 boleta_honorarios_facturacion.idTipo,
 boleta_honorarios_facturacion.Creacion_fecha,
@@ -206,7 +206,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrHistorial,$row );
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrPagosTrab = array();
 $query = "SELECT 
 sistema_documentos_pago.Nombre,
@@ -237,7 +237,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrPagosTrab,$row );
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrPagosClien = array();
 $query = "SELECT 
 sistema_documentos_pago.Nombre,
@@ -268,7 +268,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrPagosClien,$row );
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrPagosProv = array();
 $query = "SELECT 
 sistema_documentos_pago.Nombre,

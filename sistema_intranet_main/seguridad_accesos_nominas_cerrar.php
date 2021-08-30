@@ -55,7 +55,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Boleta de Honorario
 if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['editPersona']) ) {  
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Fecha, HoraEntrada, HoraSalida, idEstado, Nombre
 FROM `seguridad_accesos_nominas_listado`
 WHERE idNomina = ".$_GET['editPersona'];
@@ -116,7 +116,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idEstado
 FROM `seguridad_accesos_nominas`
 WHERE idAcceso = ".$_GET['id'];
@@ -172,7 +172,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
  } elseif ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn); 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 seguridad_accesos_nominas.FechaProgramada,
 seguridad_accesos_nominas.HoraInicioProgramada,
@@ -509,7 +509,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 seguridad_accesos_nominas.idAcceso,

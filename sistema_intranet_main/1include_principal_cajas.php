@@ -11,7 +11,7 @@ if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada']
 if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                                      $z .= " AND caja_chica_facturacion.idTipo='".$_GET['idTipo']."'";}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                                  $z .= " AND caja_chica_facturacion.idEstado='".$_GET['idEstado']."'";}
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 caja_chica_facturacion.idFacturacion AS ID,

@@ -27,7 +27,7 @@ if ( ! empty($_GET['submit_filter']) ) {
 //Se aplican los filtros
 $idTelemetria = $_GET['idTelemetria'];
 /**********************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 telemetria_listado.Nombre AS EquipoNombre,
 telemetria_listado.cantSensores AS EquipoN_Sensores,

@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Estudio borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat
 FROM `postulantes_listado`
 WHERE idPostulante = ".$_GET['id'];
@@ -83,7 +83,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $query = "SELECT AnoInicio,AnoTermino,idEstado,idEstudioCat,idEstudio,Nombre,Descripcion
 FROM `postulantes_listado_estudios`
 WHERE idEstudioPost = ".$_GET['edit'];
@@ -198,7 +198,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat
 FROM `postulantes_listado`
 WHERE idPostulante = ".$_GET['id'];
@@ -217,7 +217,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrEstudios = array();
 $query = "SELECT 
 postulantes_listado_estudios.idEstudioPost,

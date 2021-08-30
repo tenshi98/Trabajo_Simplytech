@@ -250,7 +250,7 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 </div><?php */ ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['edit_prod']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idProducto, DosisAplicar, Objetivo
 FROM `cross_solicitud_aplicacion_listado_productos`
 WHERE idProdQuim = ".$_GET['edit_prod'];
@@ -477,7 +477,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 	$w .= " AND telemetria_listado.idTab=1";//CrossChecking					
 }
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idVehiculo, idTelemetria, idTrabajador
 FROM `cross_solicitud_aplicacion_listado_tractores`
 WHERE idTractores = ".$_GET['edit_trac'];
@@ -602,7 +602,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['edit_Cuarteles']) ) {
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idPredio, idCategoria, idProducto
 FROM `cross_solicitud_aplicacion_listado`
 WHERE idSolicitud = ".$_GET['view'];
@@ -629,7 +629,7 @@ if(isset($row_data_ini['idCategoria'])&&$row_data_ini['idCategoria']!=0){ $z.= "
 if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){   $z.= " AND idProducto=".$row_data_ini['idProducto'];}
 
 /***************************************************/	
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idZona,Mojamiento,VelTractor,VelViento,TempMin,TempMax,HumTempMax
 FROM `cross_solicitud_aplicacion_listado_cuarteles`
 WHERE idCuarteles = ".$_GET['cuartel_id'];
@@ -699,7 +699,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addCuartel']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idPredio, idCategoria, idProducto,
 Mojamiento, VelTractor, VelViento, TempMin, TempMax,
 HumTempMax
@@ -905,7 +905,7 @@ $y = "idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idPredio, idTemporada, idEstadoFen, idCategoria, idProducto, f_programacion, 
 horaProg, idSistema, idEstado, f_ejecucion, f_termino, horaEjecucion, horaTermino,
 Mojamiento, VelTractor, VelViento, TempMin, TempMax, idPrioridad, f_programacion_fin, 
@@ -1040,7 +1040,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else { 
 /**********************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT
 cross_solicitud_aplicacion_listado.idEstado,
 cross_solicitud_aplicacion_listado.idSolicitud, 

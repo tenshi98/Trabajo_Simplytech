@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 alumnos_evaluaciones_asignadas.idAsignadas,
 alumnos_evaluaciones_asignadas.Programada_fecha,
@@ -69,7 +69,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	
 
 /**********************************************************/
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrAlumnos = array();
 $query = "SELECT 
 alumnos_listado.Nombre AS AlumnoNombre,

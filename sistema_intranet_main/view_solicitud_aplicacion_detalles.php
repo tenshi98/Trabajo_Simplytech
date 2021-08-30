@@ -44,7 +44,7 @@ for ($i = 1; $i <= $Nsens; $i++) {
 	$aa .= ',telemetria_listado.SensoresNombre_'.$i.' AS Sensor_'.$i.'_Nombre';
 }
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,
 cross_solicitud_aplicacion_listado.NSolicitud,

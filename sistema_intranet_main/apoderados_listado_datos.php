@@ -44,7 +44,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Apoderado borrado c
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT Nombre,ApellidoPat,ApellidoMat,Rut,FNacimiento,Fono1,Fono2,idCiudad,idComuna,Direccion,idSistema,idApoderado,
 F_Inicio_Contrato, F_Termino_Contrato, idOpciones_1,idOpciones_2
 FROM `apoderados_listado`

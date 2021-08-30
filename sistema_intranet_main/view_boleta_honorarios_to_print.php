@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 boleta_honorarios_facturacion.idTipo,
 boleta_honorarios_facturacion.Creacion_fecha,

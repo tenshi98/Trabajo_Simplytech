@@ -52,7 +52,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Fecha, Asunto, Cuerpo
 FROM `comunicaciones_internas_email` 
 WHERE idEmail = ".$X_Puntero;
@@ -71,7 +71,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrNotificaciones = array();
 $query = "SELECT 
 usuarios_listado.Nombre AS UsuarioNombre,

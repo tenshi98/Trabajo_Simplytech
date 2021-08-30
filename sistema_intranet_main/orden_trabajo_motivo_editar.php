@@ -1256,7 +1256,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>					
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) { 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $query = "SELECT 
 orden_trabajo_tareas_listado.idOT,
 orden_trabajo_tareas_listado.f_creacion,

@@ -211,7 +211,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -221,7 +221,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -230,7 +230,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -239,7 +239,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['Proveedor'] = $rowProveedor['Nombre'];
@@ -344,7 +344,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -354,7 +354,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -363,7 +363,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -372,7 +372,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['Proveedor'] = $rowProveedor['Nombre'];
@@ -401,7 +401,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['CentroCosto']   = $rowCentro['Nombre'];
@@ -409,7 +409,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -417,7 +417,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -425,7 +425,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -433,7 +433,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -441,7 +441,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -1383,7 +1383,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -1393,7 +1393,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -1402,7 +1402,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -1411,7 +1411,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -1420,7 +1420,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowVendedor = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['Vendedor'] = $rowVendedor['Nombre'].' '.$rowVendedor['ApellidoPat'].' '.$rowVendedor['ApellidoMat'];
@@ -1513,7 +1513,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -1523,7 +1523,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -1532,7 +1532,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -1541,7 +1541,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -1550,7 +1550,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowVendedor = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['Vendedor'] = $rowVendedor['Nombre'].' '.$rowVendedor['ApellidoPat'].' '.$rowVendedor['ApellidoMat'];
@@ -1580,7 +1580,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['CentroCosto']   = $rowCentro['Nombre'];
@@ -1588,7 +1588,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -1596,7 +1596,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -1604,7 +1604,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -1612,7 +1612,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -1620,7 +1620,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -2433,7 +2433,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -2443,7 +2443,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -2452,7 +2452,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -2461,7 +2461,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['Proveedor'] = $rowProveedor['Nombre'];
@@ -2553,7 +2553,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -2563,7 +2563,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -2572,7 +2572,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -2581,7 +2581,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['Proveedor'] = $rowProveedor['Nombre'];
@@ -2611,7 +2611,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['CentroCosto']   = $rowCentro['Nombre'];
@@ -2619,7 +2619,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -2627,7 +2627,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -2635,7 +2635,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -2643,7 +2643,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -2651,7 +2651,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -3357,7 +3357,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -3367,7 +3367,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -3376,7 +3376,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -3385,7 +3385,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['Proveedor'] = $rowProveedor['Nombre'];
@@ -3464,7 +3464,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -3474,7 +3474,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -3483,7 +3483,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -3492,7 +3492,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['Proveedor'] = $rowProveedor['Nombre'];
@@ -3522,7 +3522,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['CentroCosto']   = $rowCentro['Nombre'];
@@ -3530,7 +3530,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -3538,7 +3538,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -3546,7 +3546,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -3554,7 +3554,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -3562,7 +3562,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -4252,7 +4252,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -4262,7 +4262,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -4271,7 +4271,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -4280,7 +4280,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -4371,7 +4371,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -4381,7 +4381,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -4390,7 +4390,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -4399,7 +4399,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -4429,7 +4429,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['CentroCosto']   = $rowCentro['Nombre'];
@@ -4437,7 +4437,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -4445,7 +4445,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -4453,7 +4453,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -4461,7 +4461,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -4469,7 +4469,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -5174,7 +5174,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -5184,7 +5184,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -5193,7 +5193,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -5202,7 +5202,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -5281,7 +5281,7 @@ require_once '0_validate_user_1.php';
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
@@ -5291,7 +5291,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idDocumentos) && $idDocumentos != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['Documento'] = $rowDocumento['Nombre'];
@@ -5300,7 +5300,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_servicios_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -5309,7 +5309,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -5338,7 +5338,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['CentroCosto']   = $rowCentro['Nombre'];
@@ -5346,7 +5346,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_1) && $idLevel_1 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -5354,7 +5354,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_2) && $idLevel_2 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -5362,7 +5362,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_3) && $idLevel_3 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -5370,7 +5370,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_4) && $idLevel_4 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
@@ -5378,7 +5378,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idLevel_5) && $idLevel_5 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['servicios_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];

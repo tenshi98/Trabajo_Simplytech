@@ -46,7 +46,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowdata = db_select_data (false, 'Nombre', 'bodegas_insumos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['TipoDocumento'] = $rowdata['Nombre'];
@@ -55,7 +55,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idBodega) && $idBodega != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowdata = db_select_data (false, 'Nombre', 'bodegas_insumos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['Bodega'] = $rowdata['Nombre'];
@@ -64,7 +64,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowdata = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['insumos_egr_basicos']['Trabajador'] = $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'];

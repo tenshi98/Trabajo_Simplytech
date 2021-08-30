@@ -179,7 +179,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['cotizacion_prospectos_basicos']['Prospecto'] = '';
 				}
 				/****************************************************/
-				// Se traen todos los datos de mi usuario
+				// consulto los datos
 				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//se guarda dato
@@ -270,7 +270,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['cotizacion_prospectos_basicos']['Prospecto'] = '';
 				}
 				/****************************************************/
-				// Se traen todos los datos de mi usuario
+				// consulto los datos
 				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//se guarda dato

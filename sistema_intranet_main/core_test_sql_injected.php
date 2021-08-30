@@ -52,7 +52,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 					if ( !empty($_POST['usuario']) )    $usuario_1   = $_POST['usuario'];
 					if ( !empty($_POST['password']) )   $password_1  = $_POST['password'];
 					
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$query = "SELECT  
 					usuarios_listado.password, 
 					usuarios_listado.usuario, 
@@ -87,7 +87,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 					if ( !empty($_POST['usuario']) )    $usuario_2    = $_POST['usuario'];
 					if ( !empty($_POST['password']) )   $password_2   = $_POST['password'];
 					
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$query = "SELECT  
 					usuarios_listado.password, 
 					usuarios_listado.usuario, 

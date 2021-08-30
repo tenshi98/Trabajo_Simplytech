@@ -65,7 +65,7 @@ if (isset($_GET['del_arch'])) {$error['usuario'] 	  = 'sucess/Archivo borrado co
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT Observacion, idEtapa, Archivo
 FROM `prospectos_etapa_fidelizacion`
 WHERE idEtapaFide = ".$_GET['edit'];
@@ -180,7 +180,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `prospectos_listado`
 WHERE idProspecto = ".$_GET['id'];

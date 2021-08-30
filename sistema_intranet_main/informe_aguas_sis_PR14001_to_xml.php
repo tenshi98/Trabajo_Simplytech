@@ -49,7 +49,7 @@ if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset(
 	$z .= " AND aguas_analisis_aguas.f_recibida BETWEEN '".$_GET['f_recibida_inicio']."' AND '".$_GET['f_recibida_termino']."'" ;
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrProductos = array();
 $query = "SELECT 
 aguas_analisis_aguas.codigoProceso,

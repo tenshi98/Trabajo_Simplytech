@@ -43,7 +43,7 @@ for ($i = 1; $i <= 100; $i++) {
 	$cadena .= ',PuntoUniMed_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
 WHERE idMatriz = ".$X_Puntero;

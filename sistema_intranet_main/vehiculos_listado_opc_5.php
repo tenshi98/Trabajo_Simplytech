@@ -93,7 +93,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT Nombre,Patente,idOpciones_1,idOpciones_2,idOpciones_3,idOpciones_4,idOpciones_5,
 idOpciones_6, idOpciones_7, idOpciones_8
 FROM `vehiculos_listado`
@@ -113,7 +113,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrCargas = array();
 $query = "SELECT 
 apoderados_listado.Nombre AS ApoderadoNombre,

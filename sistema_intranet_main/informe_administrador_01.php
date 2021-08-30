@@ -74,7 +74,7 @@ if(isset($_GET['usuario']) && $_GET['usuario'] != ''){       $z .= " AND usuario
 if(isset($_GET['email']) && $_GET['email'] != ''){           $z .= " AND email LIKE '%".$_GET['email']."%'";}
 if(isset($_GET['IP_Client']) && $_GET['IP_Client'] != ''){   $z .= " AND IP_Client=".$_GET['IP_Client'];}
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCarga = array();
 $query = "SELECT COUNT(idAcceso) AS Cuenta,Fecha, usuario, email, IP_Client
 FROM `alumnos_checkbrute`

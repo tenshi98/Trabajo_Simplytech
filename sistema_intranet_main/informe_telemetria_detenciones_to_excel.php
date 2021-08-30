@@ -43,7 +43,7 @@ if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''){
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
 }
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrErrores = array();
 $query = "SELECT 
 telemetria_listado_error_detenciones.idDetencion,

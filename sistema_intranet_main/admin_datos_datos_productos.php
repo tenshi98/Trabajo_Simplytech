@@ -49,7 +49,7 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Permiso asignado co
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `core_sistemas`
 WHERE idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];

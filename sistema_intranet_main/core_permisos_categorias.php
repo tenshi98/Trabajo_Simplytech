@@ -53,7 +53,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Categoria borrada c
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, idFont, IconColor
 FROM `core_permisos_categorias`
 WHERE id_pmcat = ".$_GET['id'];
@@ -196,7 +196,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCatpem = array();
 $query = "SELECT 
 core_permisos_categorias.id_pmcat,

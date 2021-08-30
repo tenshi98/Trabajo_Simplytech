@@ -803,7 +803,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 productos_listado.Nombre, 
 productos_listado.idTipoProducto,

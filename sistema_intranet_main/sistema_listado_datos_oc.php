@@ -70,7 +70,7 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT idUsuario
 FROM `sistema_aprobador_oc`
 WHERE idAprobador = ".$_GET['edit'];
@@ -170,7 +170,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `core_sistemas`
 WHERE idSistema = ".$_GET['id'];
@@ -189,7 +189,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrAprobador = array();
 $query = "SELECT 
 sistema_aprobador_oc.idAprobador,

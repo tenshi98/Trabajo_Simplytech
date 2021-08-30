@@ -1120,7 +1120,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) { 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $query = "SELECT 
 orden_trabajo_tareas_listado.idOT,
 orden_trabajo_tareas_listado.f_creacion,
@@ -1789,7 +1789,7 @@ if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                        $z .
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                    $z .= " AND orden_trabajo_tareas_listado.idEstado=".$_GET['Nombre'];}
 /**********************************************************/
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrOTS = array();
 $query = "SELECT 
 orden_trabajo_tareas_listado.idOT,

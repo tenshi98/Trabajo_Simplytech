@@ -127,7 +127,7 @@ $cadena .= ',PuntoidTipo_'.$_GET['mod'].' AS Tipo';
 $cadena .= ',PuntoidGrupo_'.$_GET['mod'].' AS Grupo';
 $cadena .= ',Validacion_'.$_GET['mod'].' AS Validar';
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
 WHERE idMatriz = ".$_GET['idMatriz'];
@@ -311,7 +311,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	 	 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } elseif ( ! empty($_GET['idMatriz']) ) {    
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre,cantPuntos,
 PuntoNombre_1,PuntoNombre_2,PuntoNombre_3,PuntoNombre_4,PuntoNombre_5,
 PuntoNombre_6,PuntoNombre_7,PuntoNombre_8,PuntoNombre_9,PuntoNombre_10,
@@ -542,7 +542,7 @@ array_push( $arrGrupos,$row );
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['idMatriz_2']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1,
 idNotaTipo_2, idNotaTipo_3, idTipo, idSistema, Validar_1, Validar_2, Validar_3
 FROM `cross_quality_calidad_matriz`
@@ -955,7 +955,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrMatriz = array();
 $query = "SELECT 
 cross_quality_calidad_matriz.idMatriz, 

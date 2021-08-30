@@ -58,7 +58,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT 
 comunicaciones_audio_listado.Nombre, 
 comunicaciones_audio_listado.Fecha,
@@ -263,7 +263,7 @@ if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $z .= " AND comunica
 if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){        $z .= " AND comunicaciones_audio_listado.idTipo='".$_GET['idTipo']."'";}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $z .= " AND comunicaciones_audio_listado.idUsuario='".$_GET['idUsuario']."'";}
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrAudioConferencia = array();
 $query = "SELECT 
 comunicaciones_audio_listado.idAudio,

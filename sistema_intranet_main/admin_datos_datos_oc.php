@@ -61,7 +61,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Aprobador borrado c
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT idUsuario, idSistema
 FROM `sistema_aprobador_oc`
 WHERE idAprobador = ".$_GET['edit'];
@@ -174,7 +174,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `core_sistemas`
 WHERE idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -193,7 +193,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrAprobador = array();
 $query = "SELECT 
 sistema_aprobador_oc.idAprobador,

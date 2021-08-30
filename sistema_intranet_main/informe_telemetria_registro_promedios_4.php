@@ -463,7 +463,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	}
 	
 	/*********************************************/
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrEquipos = array();
 	$query = "SELECT 
 	telemetria_listado.idTelemetria, 

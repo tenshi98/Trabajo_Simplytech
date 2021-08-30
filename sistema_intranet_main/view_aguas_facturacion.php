@@ -170,7 +170,7 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 
 
 			
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipoPagos = array();
 $query = "SELECT idTipoPago, Nombre
 FROM `aguas_facturacion_listado_detalle_tipo_pago`";
@@ -191,7 +191,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTipoPagos,$row );
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrPagosRel = array();
 $query = "SELECT 
 aguas_facturacion_listado_detalle_tipo_pago.Nombre,

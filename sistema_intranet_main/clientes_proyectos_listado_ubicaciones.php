@@ -101,7 +101,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Ubicacion borrada c
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit_itemizado']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `ubicacion_listado_level_".$_GET['lvl']."`
 WHERE idLevel_".$_GET['lvl']." = ".$_GET['edit_itemizado'];
@@ -214,7 +214,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['itemizado']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, idSistema
 FROM `ubicacion_listado`
 WHERE idUbicacion = ".$_GET['itemizado'];
@@ -403,7 +403,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 	
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['status']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 ubicacion_listado.idUbicacion,
 ubicacion_listado.Nombre,
@@ -472,7 +472,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['edit']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre,idSistema
 FROM `ubicacion_listado`
 WHERE idUbicacion = ".$_GET['edit'];
@@ -574,7 +574,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre,idTipo
 FROM `clientes_listado`
 WHERE idCliente = ".$_GET['id'];
@@ -593,7 +593,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrArea = array();
 $query = "SELECT 
 ubicacion_listado.idUbicacion,

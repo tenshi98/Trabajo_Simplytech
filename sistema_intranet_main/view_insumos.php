@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 insumos_listado.Nombre,
 insumos_listado.Descripcion,
@@ -79,7 +79,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $z=" AND bodegas_insumos_facturacion_existencias.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrProductos = array();
 $query = "SELECT 
 bodegas_insumos_facturacion_existencias.Creacion_fecha,

@@ -14,7 +14,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 telemetria_listado.Nombre,
 telemetria_listado.cantSensores,
@@ -124,7 +124,7 @@ foreach ($arrUnimed as $sen) {
 							$subquery .= ',SensoresMedActual_'.$i;
 							$subquery .= ',SensoresActivo_'.$i;
 						}
-						// tomo los datos del usuario
+						// consulto los datos
 						$query = "SELECT Nombre, id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,
 						GeoVelocidad
 						".$subquery."

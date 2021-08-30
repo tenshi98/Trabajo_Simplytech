@@ -67,7 +67,7 @@ if(isset($_GET['Creacion_fechaDesde']) && $_GET['Creacion_fechaDesde'] != ''&&is
 }
 
 /**********************************************************/	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 cross_shipping_consolidacion.Creacion_fecha,

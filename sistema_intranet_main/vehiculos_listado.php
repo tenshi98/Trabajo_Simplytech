@@ -59,7 +59,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT 
 vehiculos_listado.Direccion_img,
 
@@ -180,7 +180,7 @@ if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){
 	}
 }
 if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){
-	// Se trae un listado con todas las observaciones el cliente
+	// consulto los datos
 	$arrPeonetas = array();
 	$query = "SELECT idPeoneta, Nombre, ApellidoPat, ApellidoMat, Rut, Fecha
 	FROM `vehiculos_listado_peonetas`
@@ -809,7 +809,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTrabajador = array();
 $query = "SELECT 
 vehiculos_listado.idVehiculo,

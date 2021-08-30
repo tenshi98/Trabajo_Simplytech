@@ -29,7 +29,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['idSolicitud']) ) {
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT
 cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.idSolicitud,
@@ -59,7 +59,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	/*****************************************/				
 
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$query = "SELECT 
 	cross_solicitud_aplicacion_listado.idSolicitud,
 	cross_solicitud_aplicacion_listado_cuarteles.idZona,
@@ -110,7 +110,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	}
 	$rowSolicitud = mysqli_fetch_assoc ($resultado);
 
-	// Se traen todos los datos de mi usuario
+	// consulto los datos
 	$arrTractores = array();
 	$query = "SELECT 
 	cross_solicitud_aplicacion_listado_tractores.idTelemetria,
@@ -270,7 +270,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	array_push( $arrZonas,$row );
 	}
 	
-	// Se traen todos los datos de mi usuario
+	// consulto los datos
 	$arrTractoresData = array();
 	$query = "SELECT 
 	cross_solicitud_aplicacion_listado_tractores.idTelemetria,

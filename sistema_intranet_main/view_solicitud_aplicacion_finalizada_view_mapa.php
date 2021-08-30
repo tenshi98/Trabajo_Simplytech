@@ -37,7 +37,7 @@ $X_idTelemetria = simpleDecode($_GET['idTelemetria'], fecha_actual());
 $X_idSolicitud  = simpleDecode($_GET['idSolicitud'], fecha_actual());
 /**************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT
 vehiculos_listado.Nombre AS VehiculoNombreBack,
 telemetria_listado.Nombre AS VehiculoNombre,

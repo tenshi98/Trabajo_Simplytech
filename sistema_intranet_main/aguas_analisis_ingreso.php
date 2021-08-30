@@ -64,7 +64,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT f_muestra,f_recibida,idTipoMuestra,RemuestraFecha,Remuestra_codigo_muestra,idParametros,
 idSigno,valorAnalisis,idLaboratorio,codigoMuestra,idOpciones,idSector,UTM_norte,UTM_este,idPuntoMuestreo,
 idCliente,idSistema, idEstado, Observaciones, CodigoLaboratorio
@@ -700,7 +700,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 aguas_analisis_aguas.idAnalisisAgua,

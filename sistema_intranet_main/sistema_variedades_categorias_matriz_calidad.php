@@ -65,7 +65,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 if ( ! empty($_GET['edit']) ) { 
 //verifico que sea un administrador
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT idMatriz, idProceso, idSistema
 FROM `sistema_variedades_categorias_matriz_calidad`
 WHERE idVarMatriz = ".$_GET['edit'];
@@ -190,7 +190,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrProductos = array();
 $query = "SELECT 
 sistema_variedades_categorias_matriz_calidad.idVarMatriz,

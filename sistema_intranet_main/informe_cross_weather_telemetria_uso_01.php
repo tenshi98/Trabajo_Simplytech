@@ -28,7 +28,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, cantSensores, Direccion_img
 FROM `telemetria_listado`
 WHERE idTelemetria = ".$_GET['idTelemetria'];
@@ -59,7 +59,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	$aa .= ',SensoresAccionMedT_'.$i;
 	$aa .= ',SensoresAccionAlerta_'.$i;
 }
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 ".$aa."
 FROM `telemetria_listado`

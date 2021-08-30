@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Descuento Asignado 
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT idDescuentoFijo,idAFP,Monto
 FROM `trabajadores_listado_descuentos_fijos`
 WHERE idDescuento = ".$_GET['edit'];
@@ -160,7 +160,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat
 FROM `trabajadores_listado`
 WHERE idTrabajador = ".$_GET['id'];
@@ -179,7 +179,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrDescuentos = array();
 $query = "SELECT 
 trabajadores_listado_descuentos_fijos.idDescuento,

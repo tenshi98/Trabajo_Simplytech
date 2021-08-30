@@ -130,7 +130,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['editCuestionario']) ) {	
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idQuiz
 FROM `alumnos_elearning_listado_unidades_cuestionarios`
 WHERE idCuestionario = ".$_GET['editCuestionario'];
@@ -225,7 +225,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['modBase']) ) { 	
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, Resumen, Objetivos,Requisitos,Descripcion, idSistema, idEstado
 FROM `alumnos_elearning_listado`
 WHERE idElearning = ".$_GET['id_curso'];
@@ -509,7 +509,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>		 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  }elseif ( ! empty($_GET['id_curso']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 alumnos_elearning_listado.Nombre, 
 alumnos_elearning_listado.Resumen, 
@@ -539,7 +539,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	
 
 /*****************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrContenidos = array();
 $query = "SELECT
 alumnos_elearning_listado_unidades.idUnidad AS Unidad_ID, 
@@ -571,7 +571,7 @@ array_push( $arrContenidos,$row );
 }
 
 /*****************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrFiles = array();
 $query = "SELECT idDocumentacion, idUnidad, idElearning, idContenido, File
 FROM `alumnos_elearning_listado_unidades_documentacion`
@@ -595,7 +595,7 @@ array_push( $arrFiles,$row );
 }
 
 /*****************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCuestionarios = array();
 $query = "SELECT 
 alumnos_elearning_listado_unidades_cuestionarios.idCuestionario, 
@@ -938,7 +938,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCurso = array();
 $query = "SELECT 
 alumnos_elearning_listado.idElearning,

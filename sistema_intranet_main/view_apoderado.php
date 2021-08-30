@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT 
 apoderados_listado.Direccion_img,
 apoderados_listado.Nombre,

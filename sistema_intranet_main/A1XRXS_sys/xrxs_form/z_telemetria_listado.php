@@ -1170,7 +1170,7 @@ require_once '0_validate_user_1.php';
 			$subquery .= ',SensoresMant_'.$i.' AS Tel_Sensor_Valor_'.$i;
 		}
 
-		// Se traen todos los datos de mi usuario
+		// consulto los datos
 		$rowdata = db_select_data (false, 'idTelemetria, idUsuarioMan, idMatriz, FechaMantencionIni, HoraMantencionIni '.$subquery, 'telemetria_listado', '', 'idTelemetria = '.$_GET['verify'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 		
 		/***************************************************************/
@@ -1246,7 +1246,7 @@ require_once '0_validate_user_1.php';
 			$subquery .= ',SensoresMant_'.$i.' AS Tel_Sensor_Valor_'.$i;
 		}
 
-		// Se traen todos los datos de mi usuario
+		// consulto los datos
 		$rowdata = db_select_data (false, 'idTelemetria, idUsuarioMan, idMatriz, FechaMantencionIni, HoraMantencionIni '.$subquery, 'telemetria_listado', '', 'idTelemetria = '.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 		
 		/***************************************************************/

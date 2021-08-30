@@ -147,7 +147,7 @@ filtrar($arrOTS, 'idTelemetria');
 
 
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrSolicitudes = array();
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,

@@ -39,7 +39,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) {
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn); 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  
 Nombre
 FROM `sistema_variedades_categorias`
@@ -59,7 +59,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrMatrizCalidad = array();
 $query = "SELECT 
 sistema_variedades_categorias_matriz_calidad.idMatriz,
@@ -88,7 +88,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrMatrizCalidad,$row );
 }
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrMatrizProceso = array();
 $query = "SELECT 
 sistema_variedades_categorias_matriz_proceso.idMatriz,
@@ -118,7 +118,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrMatrizProceso,$row );
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTiposEmbalaje = array();
 $query = "SELECT 
 sistema_variedades_categorias_tipo_emb.idEmbalaje,
@@ -341,7 +341,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCategorias = array();
 $query = "SELECT 
 core_sistemas_variedades_categorias.idCategoria,

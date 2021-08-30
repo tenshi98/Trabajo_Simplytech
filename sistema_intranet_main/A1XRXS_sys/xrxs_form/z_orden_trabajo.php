@@ -218,7 +218,7 @@ require_once '0_validate_user_1.php';
 
 				/********************************************************************************/
 				if(isset($idMaquina) && $idMaquina != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowMaquina = db_select_data (false, 'maquinas_listado.Nombre AS NombreMaquina, clientes_listado.Nombre AS NombreCliente', 'maquinas_listado', 'LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = maquinas_listado.idCliente', 'maquinas_listado.idMaquina='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se guarda dato
@@ -230,7 +230,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idPrioridad) && $idPrioridad != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowPrioridad = db_select_data (false, 'Nombre', 'core_ot_prioridad', '', 'idPrioridad='.$idPrioridad, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se guarda dato
@@ -240,7 +240,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipo = db_select_data (false, 'Nombre', 'core_ot_tipos', '', 'idTipo='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se guarda dato
@@ -250,7 +250,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTrabajador) && $idTrabajador != ''){ 
-					// Se traen todos los datos del trabajador
+					// consulto los datos
 					$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat, Cargo, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se guarda dato
@@ -314,7 +314,7 @@ require_once '0_validate_user_1.php';
 			
 				/********************************************************************************/
 				if(isset($idMaquina) && $idMaquina != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowMaquina = db_select_data (false, 'maquinas_listado.Nombre AS NombreMaquina, clientes_listado.Nombre AS NombreCliente', 'maquinas_listado', 'LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = maquinas_listado.idCliente', 'maquinas_listado.idMaquina='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se guarda dato
@@ -326,7 +326,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idPrioridad) && $idPrioridad != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowPrioridad = db_select_data (false, 'Nombre', 'core_ot_prioridad', '', 'idPrioridad='.$idPrioridad, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se guarda dato
@@ -336,7 +336,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipo = db_select_data (false, 'Nombre', 'core_ot_tipos', '', 'idTipo='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se guarda dato
@@ -360,7 +360,7 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				// Se traen todos los datos de mi usuario
+				// consulto los datos
 				$rowTrabajador = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat, Cargo, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				//Se guarda el trabajador asignado
@@ -397,7 +397,7 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				// Se traen todos los datos de mi usuario
+				// consulto los datos
 				$rowProducto = db_select_data (false, 'insumos_listado.Nombre AS NombreProducto, sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Se guarda el insumos asignado
@@ -433,7 +433,7 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				// Se traen todos los datos de mi usuario
+				// consulto los datos
 				$rowProducto = db_select_data (false, 'productos_listado.Nombre AS NombreProducto, sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Se guarda el productos asignado

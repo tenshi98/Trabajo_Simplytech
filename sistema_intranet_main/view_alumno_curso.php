@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  
 alumnos_cursos.Nombre AS CursoNombre,
 alumnos_cursos.Semanas AS CursoSemanas,
@@ -88,7 +88,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrElearnng,$row );
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrArchivos = array();
 $query = "SELECT idDocumentacion, File, Semana
 FROM `alumnos_cursos_documentacion`

@@ -65,7 +65,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 	$usrfil .= " AND usuarios_listado.idTipoUsuario=5";
 }
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idUsuario
 FROM `prospectos_listado`
 WHERE idProspecto = ".$_GET['id'];
@@ -193,7 +193,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrUsers = array();
 $query = "SELECT 
 prospectos_listado.idProspecto,

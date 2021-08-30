@@ -55,7 +55,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT AFP_idCentroCosto,AFP_idLevel_1,
 AFP_idLevel_2,AFP_idLevel_3,AFP_idLevel_4,AFP_idLevel_5,SALUD_idCentroCosto,
 SALUD_idLevel_1,SALUD_idLevel_2,SALUD_idLevel_3,SALUD_idLevel_4,SALUD_idLevel_5,
@@ -243,7 +243,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrImpuestos = array();
 $query = "SELECT 
 sistema_leyes_sociales.idMantenedor, 

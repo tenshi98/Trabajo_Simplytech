@@ -53,7 +53,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Firma borrada corre
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 telemetria_historial_mantencion.idMantencion,
 telemetria_historial_mantencion.Path_Firma,

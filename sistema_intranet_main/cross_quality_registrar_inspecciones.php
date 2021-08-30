@@ -175,7 +175,7 @@ for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 	$cadena .= ',Validacion_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
 WHERE idMatriz = ".$_GET['idCalidad'];
@@ -361,7 +361,7 @@ for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 	$cadena .= ',Validacion_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
 WHERE idMatriz = ".$_GET['idCalidad'];
@@ -582,7 +582,7 @@ for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 	$cadena .= ',Validacion_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
 WHERE idMatriz = ".$_GET['idCalidad'];
@@ -1416,7 +1416,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 cross_quality_registrar_inspecciones.idAnalisis,

@@ -14,7 +14,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, IdentificadorEmpresa, LimiteVelocidad, cantSensores, id_Geo, id_Sensores, Direccion_img, TiempoFueraLinea, TiempoDetencion
 FROM `telemetria_listado`
 WHERE idTelemetria = ".simpleDecode($_GET['view'], fecha_actual());
@@ -190,7 +190,7 @@ array_push( $arrFlinea,$row );
 							$subquery .= ',SensoresMedActual_'.$i;
 							$subquery .= ',SensoresActivo_'.$i;
 						}
-						// tomo los datos del usuario
+						// consulto los datos
 						$query = "SELECT Nombre,id_Geo, id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,
 						GeoVelocidad
 						".$subquery."

@@ -36,7 +36,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSist
 	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema ='.simpleDecode($_GET['idSistema'], fecha_actual()), $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 /********************************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $query = "SELECT 
 orden_trabajo_listado.idOT,
 orden_trabajo_listado.f_creacion,

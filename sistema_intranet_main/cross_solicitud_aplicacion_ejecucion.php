@@ -101,7 +101,7 @@ if ( ! empty($_GET['cancel_ejecution']) ) { ?>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['termino']) ) {
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT f_termino,horaTermino, f_termino_fin, horaTermino_fin
 FROM `cross_solicitud_aplicacion_listado`
 WHERE idSolicitud = ".$_GET['termino'];
@@ -251,7 +251,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrOTS = array();
 $query = "SELECT 
 cross_solicitud_aplicacion_listado.idSolicitud,

@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 vehiculos_listado.Direccion_img,
 
@@ -156,7 +156,7 @@ if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){
 
 
 if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){
-	// Se trae un listado con todas las observaciones el cliente
+	// consulto los datos
 	$arrPeonetas = array();
 	$query = "SELECT idPeoneta, Nombre, ApellidoPat, ApellidoMat, Rut, Fecha
 	FROM `vehiculos_listado_peonetas`

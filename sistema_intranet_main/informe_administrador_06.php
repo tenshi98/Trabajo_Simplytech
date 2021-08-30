@@ -67,7 +67,7 @@ if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){           $z .= " AND Fecha='
 if(isset($_GET['usuario']) && $_GET['usuario'] != ''){       $z .= " AND usuario LIKE '%".$_GET['usuario']."%'";}
 if(isset($_GET['IP_Client']) && $_GET['IP_Client'] != ''){   $z .= " AND IP_Client=".$_GET['IP_Client'];}
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCarga = array();
 $query = "SELECT COUNT(idHacking) AS Cuenta, Fecha, Hora, IP_Client, usuario
 FROM `sistema_seguridad_hacking`

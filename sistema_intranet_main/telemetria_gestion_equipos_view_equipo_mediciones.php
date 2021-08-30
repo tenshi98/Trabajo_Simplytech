@@ -24,7 +24,7 @@ for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
 	
 	
 	
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT GeoLatitud, GeoLongitud, LastUpdateFecha, LastUpdateHora,Nombre,id_Geo
 ".$aa."
 FROM `telemetria_listado`

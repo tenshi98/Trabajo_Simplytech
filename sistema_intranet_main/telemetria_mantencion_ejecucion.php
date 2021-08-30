@@ -115,7 +115,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 
 }
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  
 telemetria_listado.Nombre AS Tel_Equipo,
 telemetria_listado.Identificador AS Tel_Identificador,
@@ -418,7 +418,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrUsers = array();
 $query = "SELECT 
 telemetria_listado.idTelemetria,

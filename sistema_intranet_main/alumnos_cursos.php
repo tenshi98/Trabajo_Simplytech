@@ -58,7 +58,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  
 alumnos_cursos.Nombre AS CursoNombre,
 alumnos_cursos.Semanas AS CursoSemanas,
@@ -112,7 +112,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrElearnng,$row );
 }
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrArchivos = array();
 $query = "SELECT idDocumentacion, File, Semana
 FROM `alumnos_cursos_documentacion`
@@ -330,7 +330,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCiudad = array();
 $query = "SELECT 
 alumnos_cursos.idCurso, 

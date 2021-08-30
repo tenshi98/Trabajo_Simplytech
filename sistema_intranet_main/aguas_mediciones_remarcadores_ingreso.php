@@ -435,7 +435,7 @@ array_push( $arrDatosCorrectos,$row );
 $z  = 'WHERE aguas_clientes_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $z .= ' AND aguas_clientes_listado.idMarcadores = '.$_SESSION['rem_basicos']['idMarcadores'];
 $z .= ' AND aguas_clientes_listado.idRemarcadores !=0';	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrClientes = array();
 $query = "SELECT 
 aguas_clientes_listado.idCliente,
@@ -861,7 +861,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 aguas_mediciones_datos.idDatos,

@@ -45,7 +45,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Prospecto borrado c
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `prospectos_listado`
 WHERE idProspecto = ".$_GET['id'];

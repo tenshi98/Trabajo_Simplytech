@@ -43,7 +43,7 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Estado cambiado cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 equipos_arriendo_listado.idEquipo,
 equipos_arriendo_listado.Nombre,

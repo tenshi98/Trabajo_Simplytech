@@ -54,7 +54,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT valorCargoFijo, valorAgua, valorRecoleccion, valorVisitaCorte, 
 valorCorte1, valorCorte2, valorReposicion1, valorReposicion2, NdiasPago, 
 Fac_nEmergencia, Fac_nConsultas
@@ -192,7 +192,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
  } else  { 
 //Variable de busqueda
 $z = "WHERE aguas_datos_valores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrUML = array();
 $query = "SELECT 
 aguas_datos_valores.idDato,

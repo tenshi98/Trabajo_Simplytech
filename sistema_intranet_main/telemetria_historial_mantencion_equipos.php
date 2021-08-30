@@ -56,7 +56,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 if ( ! empty($_GET['new']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 telemetria_historial_mantencion.idSistema
 FROM `telemetria_historial_mantencion`
@@ -119,7 +119,7 @@ $w = "telemetria_listado.idSistema=".$rowdata['idSistema']." AND telemetria_list
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 core_telemetria_servicio_tecnico.Nombre AS Servicio
 FROM `telemetria_historial_mantencion`
@@ -140,7 +140,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrEquipos = array();
 $query = "SELECT 
 telemetria_historial_mantencion_equipos.idEquipo,

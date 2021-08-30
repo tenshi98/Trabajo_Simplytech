@@ -53,7 +53,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Permiso borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT id_pmcat, Direccionweb, Direccionbase, Nombre, visualizacion, Version, 
 Descripcion, Level_Limit, Habilita, Principal
 FROM `core_permisos_listado`
@@ -191,7 +191,7 @@ mysqli_free_result($resultado);
  } else  { 
 //Creo la variable con la ubicacion
 $z="";
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrPermisos = array();
 $query = "SELECT 
 core_permisos_listado.idAdmpm,

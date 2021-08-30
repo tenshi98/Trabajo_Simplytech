@@ -164,7 +164,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario ='.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_basicos']['Usuario'] = $rowUsuario['Nombre'];
@@ -173,7 +173,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente ='.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -181,7 +181,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['cotizacion_basicos']['Cliente'] = '';
 				}
 				/****************************************************/
-				// Se traen todos los datos de mi usuario
+				// consulto los datos
 				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//se guarda dato
@@ -257,7 +257,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario ='.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_basicos']['Usuario'] = $rowUsuario['Nombre'];
@@ -266,7 +266,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente ='.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -274,7 +274,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['cotizacion_basicos']['Cliente'] = '';
 				}
 				/****************************************************/
-				// Se traen todos los datos de mi usuario
+				// consulto los datos
 				$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//se guarda dato

@@ -29,7 +29,7 @@ if (validarNumero($_GET['view'])){
 } else { 
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $query = "SELECT 
 orden_trabajo_tareas_listado.idOT,
 orden_trabajo_tareas_listado.f_creacion,

@@ -63,7 +63,7 @@ if (isset($_GET['deleted']))  {$error['deleted'] 	  = 'sucess/Videoconferencia e
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
+// consulto los datos
 $query = "SELECT idUsuario, Nombre, HoraInicio, HoraTermino, idDia_1, idDia_2,
 idDia_3, idDia_4, idDia_5, idDia_6, idDia_7
 FROM `cursos_listado_videoconferencia`
@@ -195,7 +195,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `cursos_listado`
 WHERE idCurso = ".$_GET['id'];

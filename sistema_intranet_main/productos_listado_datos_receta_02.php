@@ -319,7 +319,7 @@ foreach ($arrPermisos as $prod) {
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 productos_listado.Nombre, 
 productos_listado.idTipoProducto,

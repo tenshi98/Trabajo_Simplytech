@@ -218,7 +218,7 @@ for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 	$cadena .= ',PuntoidGrupo_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
 WHERE idMatriz = ".$_GET['idCalidad'];
@@ -259,7 +259,7 @@ array_push( $arrGrupo,$row );
 }
 
 /***********************************************/
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 cross_quality_analisis_calidad_muestras.idMuestras,
 cross_quality_analisis_calidad_muestras.n_folio_pallet,
@@ -454,7 +454,7 @@ for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 	$cadena .= ',PuntoidGrupo_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
 WHERE idMatriz = ".$_GET['idCalidad'];
@@ -501,7 +501,7 @@ for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 	$cadena .= ',cross_quality_analisis_calidad_muestras.Medida_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 cross_quality_analisis_calidad_muestras.idMuestras,
 cross_quality_analisis_calidad_muestras.n_folio_pallet,
@@ -705,7 +705,7 @@ for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 	$cadena .= ',PuntoidGrupo_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `cross_quality_calidad_matriz`
 WHERE idMatriz = ".$_GET['idCalidad'];

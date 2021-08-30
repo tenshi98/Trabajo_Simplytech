@@ -39,7 +39,7 @@ if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){       $z.=" AND clientes_
 if(isset($_GET['Giro'])&&$_GET['Giro']!=''){                 $z.=" AND clientes_listado.Giro LIKE '%".$_GET['Giro']."%'";            $search.= '&Giro='.$_GET['Giro'];}
 				
 /**********************************************************************/             
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrClientes = array();
 $query = "SELECT 
 clientes_listado.email, 

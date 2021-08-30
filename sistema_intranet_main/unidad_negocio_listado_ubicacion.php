@@ -43,7 +43,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Maquina borrado cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, idConfig_1, idConfig_2, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
 idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente
 FROM `maquinas_listado`

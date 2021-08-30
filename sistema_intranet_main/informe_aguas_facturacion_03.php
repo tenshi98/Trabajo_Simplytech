@@ -26,7 +26,7 @@ require_once 'core/Web.Header.Main.php';
 if ( ! empty($_GET['submit_filter']) ) { 
 //Variable de busqueda
 $z = "WHERE aguas_clientes_listado.idCliente=".$_GET['idCliente'];
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrUsers = array();
 $query = "SELECT 
 aguas_clientes_listado.idCliente,

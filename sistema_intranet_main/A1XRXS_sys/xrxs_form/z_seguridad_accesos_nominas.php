@@ -146,7 +146,7 @@ require_once '0_validate_user_1.php';
 
 				/********************************************************************************/
 				if(isset($idUbicacion) && $idUbicacion != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado', '', 'idUbicacion = '.$idUbicacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se guarda dato
@@ -154,35 +154,35 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_1', '', 'idLevel_1 = '.$idUbicacion_lvl_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_2', '', 'idLevel_2 = '.$idUbicacion_lvl_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_3', '', 'idLevel_3 = '.$idUbicacion_lvl_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_4', '', 'idLevel_4 = '.$idUbicacion_lvl_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_5', '', 'idLevel_5 = '.$idUbicacion_lvl_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];
@@ -279,7 +279,7 @@ require_once '0_validate_user_1.php';
 
 				/********************************************************************************/
 				if(isset($idUbicacion) && $idUbicacion != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado', '', 'idUbicacion = '.$idUbicacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//se guarda dato
@@ -287,35 +287,35 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_1', '', 'idLevel_1 = '.$idUbicacion_lvl_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_2', '', 'idLevel_2 = '.$idUbicacion_lvl_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_3', '', 'idLevel_3 = '.$idUbicacion_lvl_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_4', '', 'idLevel_4 = '.$idUbicacion_lvl_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];
 				}
 				/********************************************************************************/
 				if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado_level_5', '', 'idLevel_5 = '.$idUbicacion_lvl_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= ' - '.$rowUbicacion['Nombre'];

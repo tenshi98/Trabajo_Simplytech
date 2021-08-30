@@ -37,7 +37,7 @@ if(isset($_GET['idComuna'])&&$_GET['idComuna']!=''){         $z.=" AND proveedor
 if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){       $z.=" AND proveedor_listado.Direccion LIKE '%".$_GET['Direccion']."%'";  $search.= '&Direccion='.$_GET['Direccion'];}
 				
 /**********************************************************************/             
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrProveedores = array();
 $query = "SELECT 
 proveedor_listado.email, 

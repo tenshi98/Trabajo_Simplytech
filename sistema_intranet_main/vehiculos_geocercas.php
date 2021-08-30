@@ -82,7 +82,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Geocerca borrada co
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['mod']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `vehiculos_geocercas`
 WHERE vehiculos_geocercas.idZona = ".$_GET['edit_puntos'];
@@ -304,7 +304,7 @@ array_push( $arrPuntos,$row );
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['edit_puntos']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `vehiculos_geocercas`
 WHERE vehiculos_geocercas.idZona = ".$_GET['edit_puntos'];
@@ -528,7 +528,7 @@ array_push( $arrPuntos,$row );
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['edit_zona']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre,idEstado
 FROM `vehiculos_geocercas`
 WHERE idZona = ".$_GET['edit_zona'];
@@ -677,7 +677,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCercas = array();
 $query = "SELECT 
 vehiculos_geocercas.idZona,

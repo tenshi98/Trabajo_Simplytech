@@ -53,7 +53,7 @@ $qry = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$qry .= ', SensoresNombre_'.$i;
 }
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT SensorActivacionID, SensorActivacionValor,cantSensores
 ".$qry."
 FROM `telemetria_listado`
@@ -136,7 +136,7 @@ $cadena .= ',SensoresAccionC_'.$_GET['mod'].' AS AccionC';
 $cadena .= ',SensoresAccionT_'.$_GET['mod'].' AS AccionT';
 $cadena .= ',SensoresAccionAlerta_'.$_GET['mod'].' AS AccionAlerta';
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `telemetria_listado`
 WHERE idTelemetria = ".$_GET['id'];

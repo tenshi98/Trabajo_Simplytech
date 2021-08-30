@@ -57,7 +57,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 if ( ! empty($_GET['new']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Semanas
 FROM `alumnos_cursos`
 WHERE idCurso = ".$_GET['id'];
@@ -110,7 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `alumnos_cursos`
 WHERE idCurso = ".$_GET['id'];
@@ -129,7 +129,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrArchivos = array();
 $query = "SELECT idDocumentacion, File, Semana
 FROM `alumnos_cursos_documentacion`

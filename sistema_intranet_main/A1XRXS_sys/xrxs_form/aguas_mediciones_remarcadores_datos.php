@@ -172,7 +172,7 @@ require_once '0_validate_user_1.php';
 					
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowdata = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['rem_basicos']['Usuario'] = $rowdata['Nombre'];
@@ -182,7 +182,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idTipoMedicion) && $idTipoMedicion != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowdata = db_select_data (false, 'Nombre', 'aguas_mediciones_datos_tipo_medicion', '', 'idTipoMedicion = "'.$idTipoMedicion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['rem_basicos']['TipoMedicion'] = $rowdata['Nombre'];
@@ -288,7 +288,7 @@ require_once '0_validate_user_1.php';
 					
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowdata = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['rem_basicos']['Usuario'] = $rowdata['Nombre'];
@@ -298,7 +298,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idTipoMedicion) && $idTipoMedicion != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowdata = db_select_data (false, 'Nombre', 'aguas_mediciones_datos_tipo_medicion', '', 'idTipoMedicion = "'.$idTipoMedicion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['rem_basicos']['TipoMedicion'] = $rowdata['Nombre'];

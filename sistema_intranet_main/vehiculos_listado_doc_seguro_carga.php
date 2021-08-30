@@ -54,7 +54,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT Nombre,Patente,idOpciones_1,idOpciones_2,idOpciones_3,idOpciones_4,idOpciones_5,
 idOpciones_6, idOpciones_7, idOpciones_8,doc_seguro_carga, doc_fecha_seguro_carga
 FROM `vehiculos_listado`

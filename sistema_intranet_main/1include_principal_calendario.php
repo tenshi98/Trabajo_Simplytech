@@ -3,7 +3,7 @@
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Fecha, Titulo, Cuerpo, idSistema
 FROM `principal_calendario_listado`
 WHERE idCalendario = ".$_GET['id'];

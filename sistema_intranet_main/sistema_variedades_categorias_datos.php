@@ -44,7 +44,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Transporte borrado 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, Temp_optima_min, Temp_optima_max, Temp_optima_margen_critico
 FROM `sistema_variedades_categorias`
 WHERE idCategoria = ".$_GET['id'];

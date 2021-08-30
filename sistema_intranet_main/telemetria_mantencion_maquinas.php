@@ -114,7 +114,7 @@ $cadena .= ',SensoresTipo_'.$_GET['mod'].' AS Sensor';
 $cadena .= ',SensoresValor_'.$_GET['mod'].' AS Valor';
 $cadena .= ',SensoresNumero_'.$_GET['mod'].' AS SensoresNumero';
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `telemetria_mantencion_matriz`
 WHERE idMatriz = ".$_GET['idMatriz'];
@@ -179,7 +179,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresValor_'.$i;
 	$subquery .= ',SensoresNumero_'.$i;
 }
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre,cantPuntos
 ".$subquery."
 
@@ -281,7 +281,7 @@ array_push( $arrTipos,$row );
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['idMatriz_2']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, cantPuntos, idSistema
 FROM `telemetria_mantencion_matriz`
 WHERE idMatriz = ".$_GET['idMatriz_2'];

@@ -64,7 +64,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 analisis_listado.idMatriz, 
 analisis_listado.f_muestreo, 
@@ -115,7 +115,7 @@ for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
 	$cadena .= ',PuntoidGrupo_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `maquinas_listado_matriz`
 WHERE idMatriz = {$rowdata['idMatriz']}";
@@ -307,7 +307,7 @@ foreach ($arrPermisos as $prod) {
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new2']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT cantPuntos
 FROM `maquinas_listado_matriz`
 WHERE idMatriz = ".$_GET['idMatriz'];
@@ -334,7 +334,7 @@ for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
 	$cadena .= ',PuntoidGrupo_'.$i;
 }
 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT ".$cadena."
 FROM `maquinas_listado_matriz`
 WHERE idMatriz = ".$_GET['idMatriz'];
@@ -642,7 +642,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 analisis_listado.idAnalisis,

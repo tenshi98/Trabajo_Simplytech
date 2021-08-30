@@ -14,7 +14,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  Nombre, LimiteVelocidad, GeoLatitud, GeoLongitud, GeoVelocidad, LastUpdateFecha, LastUpdateHora
 FROM `telemetria_listado`
 WHERE idTelemetria = ".$_GET['view']."

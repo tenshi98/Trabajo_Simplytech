@@ -39,7 +39,7 @@ require_once 'core/Web.Header.Main.php';
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  Nombre,idSistema
 FROM `centrocosto_listado`
 WHERE idCentroCosto = ".$_GET['id'];

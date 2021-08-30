@@ -29,7 +29,7 @@ if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset
 }
 
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 telemetria_listado.Nombre,
 telemetria_listado.Sim_Num_Tel,
@@ -81,7 +81,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	$aa .= ',SensoresMedActual_'.$i;
 	$aa .= ',SensoresActivo_'.$i;
 }
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,GeoVelocidad
 ".$aa."
 FROM `telemetria_listado`

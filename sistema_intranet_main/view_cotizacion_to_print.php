@@ -30,8 +30,8 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
-// Se traen todos los datos de mi usuario
+// consulto los datos
+// consulto los datos
 $query = "SELECT 
 cotizacion_listado.Creacion_fecha,
 cotizacion_listado.Observaciones,

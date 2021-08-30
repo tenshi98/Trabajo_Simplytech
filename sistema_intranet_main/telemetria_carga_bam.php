@@ -71,7 +71,7 @@ $z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSiste
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
 }
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT idTelemetria, FechaCarga, FechaVencimiento, idDocPago, N_DocPago, Monto
 FROM `telemetria_carga_bam`
 WHERE idCarga = ".$_GET['id'];
@@ -276,7 +276,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrCarga = array();
 $query = "SELECT 
 telemetria_carga_bam.idCarga,

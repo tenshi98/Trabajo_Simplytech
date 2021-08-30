@@ -41,7 +41,7 @@ if (isset($_GET['deleted'])) {$error['Cliente'] 	  = 'sucess/Sistema borrado cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, Config_IDGoogle, Config_Google_apiKey, Config_FCM_apiKey, Config_FCM_Main_apiKey
 FROM `core_sistemas`
 WHERE idSistema = ".$_GET['id'];

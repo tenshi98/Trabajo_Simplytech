@@ -113,7 +113,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['vehiculos_basicos']['Usuario'] = $rowUsuario['Nombre'];
@@ -122,7 +122,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idSistema) && $idSistema != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowSistema = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['vehiculos_basicos']['Sistema'] = $rowSistema['Nombre'];
@@ -181,7 +181,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['vehiculos_basicos']['Usuario'] = $rowUsuario['Nombre'];
@@ -190,7 +190,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************************************************/
 				if(isset($idSistema) && $idSistema != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowSistema = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['vehiculos_basicos']['Sistema'] = $rowSistema['Nombre'];

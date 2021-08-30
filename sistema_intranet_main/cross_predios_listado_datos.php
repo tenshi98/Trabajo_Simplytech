@@ -44,7 +44,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Ruta borrada correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, idSistema, idPais, idCiudad, idComuna, Direccion
 FROM `cross_predios_listado`
 WHERE idPredio = ".$_GET['id'];

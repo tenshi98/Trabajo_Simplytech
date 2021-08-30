@@ -41,7 +41,7 @@ if (isset($_GET['deleted'])) {$error['Cliente'] 	  = 'sucess/Sistema borrado cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre,Config_idTheme, Config_CorreoRespaldo, email_principal, idOpcionesTel, 
 idConfigRam, idConfigTime, idOpcionesGen_1, idOpcionesGen_2, idOpcionesGen_3, idOpcionesGen_4, 
 idOpcionesGen_5, idOpcionesGen_6, idOpcionesGen_7, idOpcionesGen_8, idOpcionesGen_9,

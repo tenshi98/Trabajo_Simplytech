@@ -47,7 +47,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Sistema borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT
 core_sistemas.Nombre,  
 core_sistemas.Rut, 

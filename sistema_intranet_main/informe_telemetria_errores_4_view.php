@@ -11,7 +11,7 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                Carga del documento HTML                                                        */
 /**********************************************************************************************************************************/
 /**********************************************************************************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT
 telemetria_listado_errores_999.Descripcion, 
 telemetria_listado_errores_999.Fecha, 

@@ -100,7 +100,7 @@ if ( ! empty($_GET['newPago']) ) {
 //se dibujan los inputs
 $Form_Inputs = new Inputs();
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $row_data = db_select_data (false, 'AFP_MontoPago,SALUD_MontoPago,SEGURIDAD_MontoPago,TotalGeneral,TotalPagoGeneral', 'pagos_leyes_sociales', '', 'idFactSocial ='.$_GET['newPago'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 				
 $arrFormaPago = array();
@@ -1465,7 +1465,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrTipo = array();
 $query = "SELECT 
 pagos_leyes_sociales.idFactSocial,

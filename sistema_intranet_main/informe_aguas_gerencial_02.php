@@ -31,7 +31,7 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrFacturacion = array();
 $query = "SELECT
 Ano AS anoActual, 

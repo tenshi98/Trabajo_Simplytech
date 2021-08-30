@@ -72,7 +72,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 	}
 	/*************************************************************/
 	/******************************************************/
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrInsumos = array();
 	$query = "SELECT  idOcompra FROM `bodegas_insumos_facturacion` ".$z1;
 	//Consulta
@@ -92,7 +92,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 	array_push( $arrInsumos,$row );
 	}
 	/******************************************************/
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrProductos = array();
 	$query = "SELECT idOcompra FROM `bodegas_productos_facturacion` ".$z2;
 	//Consulta
@@ -112,7 +112,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 	array_push( $arrProductos,$row );
 	}
 	/******************************************************/
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrArriendos = array();
 	$query = "SELECT idOcompra FROM `bodegas_arriendos_facturacion` ".$z3;
 	//Consulta
@@ -132,7 +132,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 	array_push( $arrArriendos,$row );
 	}
 	/******************************************************/
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrServicios = array();
 	$query = "SELECT idOcompra FROM `bodegas_servicios_facturacion` ".$z4;
 	//Consulta

@@ -55,7 +55,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Porcentaje_PPM,IVA_idCentroCosto,IVA_idLevel_1,
 IVA_idLevel_2,IVA_idLevel_3,IVA_idLevel_4,IVA_idLevel_5,PPM_idCentroCosto,
 PPM_idLevel_1,PPM_idLevel_2,PPM_idLevel_3,PPM_idLevel_4,PPM_idLevel_5,
@@ -285,7 +285,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrImpuestos = array();
 $query = "SELECT 
 sistema_leyes_fiscales.idMantenedor, 

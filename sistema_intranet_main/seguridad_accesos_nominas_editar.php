@@ -103,7 +103,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editPersona']) ) {  
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, Rut, NDocCedula
 FROM `seguridad_accesos_nominas_listado`
 WHERE idNomina = ".$_GET['editPersona'];
@@ -201,7 +201,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT FechaProgramada, HoraInicioProgramada, HoraTerminoProgramada, idUbicacion,
 idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4,
 idUbicacion_lvl_5, PersonaReunion
@@ -279,7 +279,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
  } elseif ( ! empty($_GET['id']) ) {  
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 seguridad_accesos_nominas.FechaProgramada,
 seguridad_accesos_nominas.HoraInicioProgramada,

@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Ruta borrada correc
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['mod']) ) { 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `vehiculos_ruta_alternativa`
 WHERE idRutaAlt = ".$_GET['id'];
@@ -388,7 +388,7 @@ array_push( $arrRutas,$row );
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } else  { 	 
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, idRuta
 FROM `vehiculos_ruta_alternativa`
 WHERE idRutaAlt = ".$_GET['id'];

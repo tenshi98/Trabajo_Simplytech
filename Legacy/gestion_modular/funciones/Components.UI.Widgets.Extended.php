@@ -3763,7 +3763,7 @@ function widget_Doc_relacionados($idOcompra,
 	array_push( $arrOrdenes,$row );
 	}
 	/******************************************************/
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrInsumos = array();
 	$query = "SELECT 
 	bodegas_insumos_facturacion.idFacturacion,
@@ -3801,7 +3801,7 @@ function widget_Doc_relacionados($idOcompra,
 	array_push( $arrInsumos,$row );
 	}
 	/******************************************************/
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrProductos = array();
 	$query = "SELECT 
 	bodegas_productos_facturacion.idFacturacion,
@@ -3839,7 +3839,7 @@ function widget_Doc_relacionados($idOcompra,
 	array_push( $arrProductos,$row );
 	}
 	/******************************************************/
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrArriendos = array();
 	$query = "SELECT 
 	bodegas_arriendos_facturacion.idFacturacion,
@@ -3877,7 +3877,7 @@ function widget_Doc_relacionados($idOcompra,
 	array_push( $arrArriendos,$row );
 	}
 	/******************************************************/
-	// Se trae un listado con todos los usuarios
+	// Se trae un listado con todos los elementos
 	$arrServicios = array();
 	$query = "SELECT 
 	bodegas_servicios_facturacion.idFacturacion,

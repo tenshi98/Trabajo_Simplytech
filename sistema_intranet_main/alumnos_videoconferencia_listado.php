@@ -56,7 +56,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_GET['idCurso']) && $_GET['idCurso'] != ''){      $z .= " AND cursos_listado.idCurso='".$_GET['idCurso']."'";}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $z .= " AND cursos_listado_videoconferencia.idUsuario='".$_GET['idUsuario']."'";}
 /**********************************************************/
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrVideoConferencia = array();
 $query = "SELECT 
 cursos_listado_videoconferencia.idVideoConferencia,

@@ -53,7 +53,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Usuario borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT usuario,  email, Nombre, Rut, fNacimiento, Direccion, Fono, idCiudad, idComuna
 FROM `usuarios_listado`
 WHERE idUsuario = ".$_GET['id'];
@@ -179,7 +179,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) { 
- // Se traen todos los datos de mi usuario
+ // consulto los datos
 $query = "SELECT 
 usuarios_listado.usuario, 
 usuarios_listado.email, 
@@ -360,7 +360,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrUsers = array();
 $query = "SELECT 
 usuarios_listado.idUsuario,

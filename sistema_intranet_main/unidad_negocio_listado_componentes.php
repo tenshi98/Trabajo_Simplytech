@@ -228,7 +228,7 @@ $w = 'idUtilizable=1';
 <?php
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['edit']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 maquinas_listado_level_".$_GET['lvl'].".Nombre,
 maquinas_listado_level_".$_GET['lvl'].".Codigo,
@@ -811,7 +811,7 @@ foreach ($arrPermisos as $prod) {
 <?php
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editimg']) ) { 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 maquinas_listado_level_".$_GET['lvl'].".Nombre,
 maquinas_listado_level_".$_GET['lvl'].".Direccion_img
@@ -1308,7 +1308,7 @@ foreach ($arrPermisos as $prod) {
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre, idSistema, idConfig_1, idConfig_2
 FROM `maquinas_listado`
 WHERE idMaquina = ".$_GET['id'];

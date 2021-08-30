@@ -67,7 +67,7 @@ for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
 	$consql .= ',analisis_listado.Medida_'.$i.' AS Analisis_Medida_'.$i;
 }
 /**********************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  
 
 maquinas_listado.Codigo AS MaquinaCodigo,

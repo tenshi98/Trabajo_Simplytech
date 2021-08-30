@@ -62,7 +62,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Fecha, Descripcion, idCliente
 FROM `seg_vecinal_clientes_infracciones`
 WHERE idInfraccion = ".$_GET['id'];
@@ -204,7 +204,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrBloqueo = array();
 $query = "SELECT  
 seg_vecinal_clientes_infracciones.idInfraccion, 

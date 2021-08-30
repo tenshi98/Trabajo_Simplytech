@@ -87,7 +87,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT 
 core_telemetria_servicio_tecnico.Nombre AS Servicio
 FROM `telemetria_historial_mantencion`

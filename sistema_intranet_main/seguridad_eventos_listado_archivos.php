@@ -86,7 +86,7 @@ if ( ! empty($_GET['new_file']) ) { ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else{
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT 
 seguridad_eventos_listado.Fecha,
 seguridad_eventos_listado.Hora

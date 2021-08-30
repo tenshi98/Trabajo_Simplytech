@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT 
 telemetria_listado.Nombre,
 telemetria_listado.IdentificadorEmpresa,
@@ -286,7 +286,7 @@ foreach ($arrUnimed as $sen) {
 							$subquery .= ',SensoresMedActual_'.$i;
 							$subquery .= ',SensoresActivo_'.$i;
 						}
-						// tomo los datos del usuario
+						// consulto los datos
 						$query = "SELECT Nombre,id_Geo, id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,
 						GeoVelocidad
 						".$subquery."
@@ -472,7 +472,7 @@ foreach ($arrUnimed as $sen) {
 				<div class="tab-pane fade" id="trabajador">
 					<div class="wmd-panel">
 						<?php 
-						// Se traen todos los datos del trabajador
+						// consulto los datos
 						$query = "SELECT 
 						trabajadores_listado.Nombre,
 						trabajadores_listado.ApellidoPat,

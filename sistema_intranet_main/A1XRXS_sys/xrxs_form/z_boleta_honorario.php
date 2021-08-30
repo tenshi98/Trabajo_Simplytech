@@ -216,7 +216,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 					//se guarda dato
@@ -410,7 +410,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 					//se guarda dato
@@ -973,7 +973,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_eg_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -982,7 +982,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = '.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_eg_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -1080,7 +1080,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_eg_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -1089,7 +1089,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idCliente) && $idCliente != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = '.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_eg_basicos']['Cliente'] = $rowCliente['Nombre'];
@@ -1608,7 +1608,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_ing_prov_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -1617,7 +1617,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = '.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_ing_prov_basicos']['Proveedor'] = $rowProveedor['Nombre'];
@@ -1753,7 +1753,7 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************/
 				if(isset($idTipo) && $idTipo != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_ing_prov_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
@@ -1762,7 +1762,7 @@ require_once '0_validate_user_1.php';
 				}
 				/****************************************************/
 				if(isset($idProveedor) && $idProveedor != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = '.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['boleta_ing_prov_basicos']['Proveedor'] = $rowProveedor['Nombre'];

@@ -42,7 +42,7 @@ if(!$resultado){
 $rowCard = mysqli_fetch_assoc ($resultado);
 
 /****************************************************************************/
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT 
 trabajadores_listado.Direccion_img,
 trabajadores_listado.Nombre,

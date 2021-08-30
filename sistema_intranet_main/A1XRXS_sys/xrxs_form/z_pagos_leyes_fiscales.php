@@ -361,7 +361,7 @@ require_once '0_validate_user_1.php';
 					
 				/****************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['pagos_leyes_fiscales_basicos']['Usuario']  = $rowUsuario['Nombre'];
@@ -939,7 +939,7 @@ require_once '0_validate_user_1.php';
 					
 				/****************************************************/
 				if(isset($idUsuario) && $idUsuario != ''){ 
-					// Se traen todos los datos de mi usuario
+					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['pagos_leyes_fiscales_basicos']['Usuario']  = $rowUsuario['Nombre'];

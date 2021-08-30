@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// tomo los datos del usuario
+// consulto los datos
 $query = "SELECT Nombre
 FROM `cross_predios_listado_zonas`
 WHERE idZona = ".$X_Puntero;

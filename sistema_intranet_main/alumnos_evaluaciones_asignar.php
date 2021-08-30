@@ -90,7 +90,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Asignacion borrada 
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['editFecha']) ) { 
-// Se traen todos los datos del trabajador
+// consulto los datos
 $query = "SELECT Programada_fecha
 FROM `alumnos_evaluaciones_asignadas`
 WHERE idAsignadas = ".$_GET['editFecha'];
@@ -455,7 +455,7 @@ if(!$resultado){
 $cuenta_registros = mysqli_num_rows($resultado);
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrUsers = array();
 $query = "SELECT 
 alumnos_evaluaciones_asignadas.idAsignadas,

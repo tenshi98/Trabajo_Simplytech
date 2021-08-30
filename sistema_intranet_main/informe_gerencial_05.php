@@ -205,7 +205,7 @@ $z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data'][
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 	$z.= " AND orden_trabajo_listado.f_termino BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrInsumos = array();
 $query = "SELECT
 SUM(orden_trabajo_listado_insumos.Cantidad) AS Cantidad,
@@ -236,7 +236,7 @@ array_push( $arrInsumos,$row );
 }
 
 
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrInsumos2 = array();
 $query = "SELECT
 maquinas_listado.idUbicacion,

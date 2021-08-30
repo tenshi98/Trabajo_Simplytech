@@ -41,7 +41,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Sistema borrado cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT Nombre, OT_idBodegaProd,OT_idBodegaIns
 FROM `core_sistemas`
 WHERE idSistema = ".$_GET['id'];

@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 $X_idTab = simpleDecode($_GET['idTab'], fecha_actual());
 /**************************************************************/
-// Se traen todos los datos de mi usuario
+// consulto los datos
 $query = "SELECT  
 clientes_listado.idCliente,
 clientes_listado.Contrato_Fecha_Ini,

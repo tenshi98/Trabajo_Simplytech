@@ -81,7 +81,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idFacturable) && $idFacturable != ''){  $z .= " AND aguas_clientes_listado.idFacturable=".$idFacturable;}
 				if(isset($idSector) && $idSector != ''){          $z .= " AND aguas_clientes_listado.idSector=".$idSector;}
 				/**********************************************************/
-				// Se trae un listado con todos los usuarios
+				// Se trae un listado con todos los elementos
 				$arrUsers = array();
 				$arrUsers = db_select_array (false, 'idCliente', 'aguas_clientes_listado', 0, $z, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
