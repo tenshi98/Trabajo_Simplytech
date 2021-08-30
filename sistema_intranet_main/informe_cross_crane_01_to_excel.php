@@ -40,10 +40,19 @@ $w1 =" GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Descripcio
 $w2 =" GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Fecha";
 
 $arrEquipos1 = array();
-$arrEquipos1 = db_select_array (false, 'COUNT(telemetria_listado_errores.idErrores) AS Cuenta,telemetria_listado.Nombre AS Equipo,telemetria_listado_errores.Fecha,telemetria_listado_errores.Descripcion,telemetria_listado_errores.Valor_min,telemetria_listado_errores.Valor_max', 'telemetria_listado_errores', 'LEFT JOIN telemetria_listado ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria', $z.$w1, 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripcion ASC, telemetria_listado_errores.Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos1');
+$arrEquipos1 = db_select_array (false, '
+COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
+telemetria_listado.Nombre AS Equipo,
+telemetria_listado_errores.Fecha,
+telemetria_listado_errores.Descripcion,
+telemetria_listado_errores.Valor_min,
+telemetria_listado_errores.Valor_max', 'telemetria_listado_errores', 'LEFT JOIN telemetria_listado ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria', $z.$w1, 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripcion ASC, telemetria_listado_errores.Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos1');
 
 $arrEquipos2 = array();
-$arrEquipos2 = db_select_array (false, 'COUNT(telemetria_listado_errores.idErrores) AS Cuenta,telemetria_listado.Nombre AS Equipo,telemetria_listado_errores.Fecha', 'telemetria_listado_errores', 'LEFT JOIN telemetria_listado ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria', $z.$w2, 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos2');
+$arrEquipos2 = db_select_array (false, '
+COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
+telemetria_listado.Nombre AS Equipo,
+telemetria_listado_errores.Fecha', 'telemetria_listado_errores', 'LEFT JOIN telemetria_listado ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria', $z.$w2, 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos2');
 
 
 // Create new PHPExcel object
@@ -143,7 +152,15 @@ $objPHPExcel->setActiveSheetIndex(0)
          
 
 //variables
-$nn=3;
+$nn     = 3;
+$ObsMin = 9999999;
+$ObsMax = 0;
+
+//Obtengo el minimo y maximo
+foreach ($arrEquipos1 as $equip) {
+	if(){}
+	if(){}
+}
 foreach ($arrEquipos1 as $equip) {
 	
 	$objPHPExcel->setActiveSheetIndex(0)
@@ -169,12 +186,12 @@ $objPHPExcel->getActiveSheet(0)->getColumnDimension('F')->setWidth(20);
 //negrita
 $objPHPExcel->getActiveSheet(0)->getStyle('A1:F2')->getFont()->setBold(true);
 //Coloreo celdas
-$objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
-$objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
+$objPHPExcel->getActiveSheet(0)->getStyle('A1:F1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
+$objPHPExcel->getActiveSheet(0)->getStyle('A2:F2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
 //coloreo fuentes
-$objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFont()->getColor()->setRGB('FFFFFF');
+$objPHPExcel->getActiveSheet(0)->getStyle('A2:F2')->getFont()->getColor()->setRGB('FFFFFF');
 //Pongo los bordes
-$objPHPExcel->getActiveSheet()->getStyle('A1:F'.$nn)->applyFromArray(
+$objPHPExcel->getActiveSheet(0)->getStyle('A1:F'.$nn)->applyFromArray(
     array(
         'borders' => array(
             'allborders' => array(
@@ -221,8 +238,10 @@ $objPHPExcel->setActiveSheetIndex(1)
 								                 
 /**************************************************************/
 //variables
-$nn=3;
-$ndias = dias_transcurridos($_GET['f_inicio'], $_GET['f_termino']);
+$nn           = 3;
+$ndias        = dias_transcurridos($_GET['f_inicio'], $_GET['f_termino']);
+$nColumnTotal = 1;
+$nColumnProm  = 1;
 //filtro por equipo
 filtrar($arrEquipos2, 'Equipo'); 
 //recorro los equipos 
@@ -262,13 +281,16 @@ foreach($arrEquipos2 as $equipo=>$dias){
 	//Creo las columnas  
 	$objPHPExcel->setActiveSheetIndex(1)
 					->setCellValue($arrData[$i].$nn, $TotalErrores);
+	//Guardo la columna donde estan los totales
+	$nColumnTotal = $i;
+			
 	$i++;	
 	$ss_to = 0;
 	if($ndias!=0){$ss_to = $TotalErrores/$ndias;}			
 	$objPHPExcel->setActiveSheetIndex(1)
 					->setCellValue($arrData[$i].$nn, cantidades($ss_to, 2));
-	
-			
+	//Guardo la columna donde estan los promedios
+	$nColumnProm  = $i;			
 	//Se suma 1
 	$nn++;
 }				
@@ -276,11 +298,11 @@ foreach($arrEquipos2 as $equipo=>$dias){
 //seteo el nombre de la hoja
 $objPHPExcel->getActiveSheet(1)->setTitle('Recuento Total por Dia');
 //negrita
-$objPHPExcel->getActiveSheet(1)->getStyle('A1:F2')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet(1)->getStyle('A1:'.$arrData[$i].'2')->getFont()->setBold(true);
 //Coloreo celdas
-$objPHPExcel->getActiveSheet(1)->getStyle('A1:F2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
+$objPHPExcel->getActiveSheet(1)->getStyle('A1:'.$arrData[$i].'2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
 //Pongo los bordes
-$objPHPExcel->getActiveSheet()->getStyle('A1:'.$arrData[$i].$nn)->applyFromArray(
+$objPHPExcel->getActiveSheet(1)->getStyle('A1:'.$arrData[$i].$nn)->applyFromArray(
     array(
         'borders' => array(
             'allborders' => array(
@@ -291,16 +313,52 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:'.$arrData[$i].$nn)->applyFromArray
     )
 );
 //ancho de columnas
-$objPHPExcel->getActiveSheet(0)->getColumnDimension('A')->setWidth(60);
+$objPHPExcel->getActiveSheet(1)->getColumnDimension('A')->setWidth(60);
 for ($i = 1; $i <= $ndias; $i++) {
-	$objPHPExcel->getActiveSheet(0)->getColumnDimension($arrData[$i])->setWidth(10);
+	$objPHPExcel->getActiveSheet(1)->getColumnDimension($arrData[$i])->setWidth(10);
 }
-$objPHPExcel->getActiveSheet(0)->getColumnDimension($arrData[$i])->setWidth(20);
+$objPHPExcel->getActiveSheet(1)->getColumnDimension($arrData[$i])->setWidth(20);
 $i++;
-$objPHPExcel->getActiveSheet(0)->getColumnDimension($arrData[$i])->setWidth(20);
+$objPHPExcel->getActiveSheet(1)->getColumnDimension($arrData[$i])->setWidth(20);
+
+
+/**************************************************************/
+
+
+  
+//datos de origen
+/*$categories = new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$A$3:$A$'.$nn);
+$values     = new PHPExcel_Chart_DataSeriesValues('Number', 'Worksheet!$'.$arrData[$nColumnTotal].'$3:$'.$arrData[$nColumnTotal].'$'.$nn);
+
+//Opciones
+$series = new PHPExcel_Chart_DataSeries(
+    PHPExcel_Chart_DataSeries::TYPE_AREACHART,       // plotType
+    PHPExcel_Chart_DataSeries::GROUPING_CLUSTERED,  // plotGrouping
+    array(0),                                       // plotOrder
+    array(),                                        // plotLabel
+    array($categories),                             // plotCategory
+    array($values)                                  // plotValues
+);
+
+//$series->setPlotDirection(PHPExcel_Chart_DataSeries::DIRECTION_VERTICAL);
+
+$layout   = new PHPExcel_Chart_Layout();
+$plotarea = new PHPExcel_Chart_PlotArea($layout, array($series));
+$xTitle   = new PHPExcel_Chart_Title('Equipo');
+$yTitle   = new PHPExcel_Chart_Title('yAxisLabel');
+$legend   = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_TOPRIGHT, NULL, false);
+$title    = new PHPExcel_Chart_Title('Test Area Chart');
 
 
 
+$chart = new PHPExcel_Chart('sample', $title, $legend, $plotarea, true,0,$xTitle,$yTitle);
+
+$LeftPos = $nn + 3;
+$RightPos = $nn + 3;
+$chart->setTopLeftPosition('A'.$LeftPos);
+$chart->setBottomRightPosition('J'.$RightPos);
+
+$objPHPExcel->getActiveSheet(1)->addChart($chart);
 
 
 
@@ -323,5 +381,6 @@ header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 header ('Pragma: public'); // HTTP/1.0
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter->setIncludeCharts(TRUE);
 $objWriter->save('php://output');
 exit;
