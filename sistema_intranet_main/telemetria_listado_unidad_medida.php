@@ -152,7 +152,7 @@ if (!$num_pag){
 $cuenta_registros = db_select_nrows (false, 'idUniMed', 'telemetria_listado_unidad_medida', '', '', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae un listado con todos los usuarios
+// Se trae un listado con todos los elementos
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre,NombreLargo', 'telemetria_listado_unidad_medida', '', '', 'Nombre ASC LIMIT '.$comienzo.', '.$cant_reg, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 

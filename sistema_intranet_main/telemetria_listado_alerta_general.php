@@ -45,33 +45,19 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
-$query = "SELECT 
+// consulto los datos
+$SIS_query = '
 telemetria_listado.Nombre,
 telemetria_listado.id_Geo,
 telemetria_listado.id_Sensores,
 telemetria_listado.idAlarmaGeneral,
 telemetria_listado_alarma_general.Nombre AS Estado, 
 telemetria_listado.idUsoContrato,
-telemetria_listado.idUsoGeocerca
+telemetria_listado.idUsoGeocerca';
+$SIS_join  = 'LEFT JOIN `telemetria_listado_alarma_general`   ON telemetria_listado_alarma_general.idAlarmaGeneral   = telemetria_listado.idAlarmaGeneral';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-FROM `telemetria_listado`
-LEFT JOIN `telemetria_listado_alarma_general`   ON telemetria_listado_alarma_general.idAlarmaGeneral       = telemetria_listado.idAlarmaGeneral
-WHERE telemetria_listado.idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	

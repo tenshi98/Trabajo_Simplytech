@@ -331,40 +331,20 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 //Consultas
 $rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores, idUsoContrato, idUsoGeocerca'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
-// Se trae un listado con todas las observaciones el cliente
-$arrOperaciones = array();
-$query = "SELECT 
+// consulto los datos
+$SIS_query = '
 telemetria_listado_definicion_operacional.idDefinicion,
 telemetria_listado_definicion_operacional.N_Sensor,
 telemetria_listado_definicion_operacional.ValorActivo,
 telemetria_listado_definicion_operacional.RangoMinimo,
 telemetria_listado_definicion_operacional.RangoMaximo,
 telemetria_listado_definicion_operacional.idFuncion,
-core_telemetria_funciones.Nombre AS Funcion
-
-FROM `telemetria_listado_definicion_operacional`
-LEFT JOIN `core_telemetria_funciones`   ON core_telemetria_funciones.idFuncion  = telemetria_listado_definicion_operacional.idFuncion
-WHERE telemetria_listado_definicion_operacional.idTelemetria = ".$_GET['id']."
-ORDER BY telemetria_listado_definicion_operacional.N_Sensor ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOperaciones,$row );
-}
-
-
+core_telemetria_funciones.Nombre AS Funcion';
+$SIS_join  = 'LEFT JOIN `core_telemetria_funciones`   ON core_telemetria_funciones.idFuncion  = telemetria_listado_definicion_operacional.idFuncion';
+$SIS_where = 'telemetria_listado_definicion_operacional.idTelemetria ='.$_GET['id'];
+$SIS_order = 'telemetria_listado_definicion_operacional.N_Sensor ASC';
+$arrOperaciones = array();
+$arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_definicion_operacional', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOperaciones');
 
 ?>
 <div class="col-sm-12">

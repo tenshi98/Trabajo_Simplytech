@@ -45,33 +45,8 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
-$query = "SELECT 
-telemetria_listado.Nombre,
-telemetria_listado.id_Geo,
-telemetria_listado.id_Sensores,
-telemetria_listado.idEstado,
-core_estados.Nombre AS Estado, 
-telemetria_listado.idUsoContrato,
-telemetria_listado.idUsoGeocerca
-
-FROM `telemetria_listado`
-LEFT JOIN `core_estados`   ON core_estados.idEstado       = telemetria_listado.idEstado
-WHERE telemetria_listado.idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+// consulto los datos
+$rowdata = db_select_data (false, 'telemetria_listado.Nombre,telemetria_listado.id_Geo,telemetria_listado.id_Sensores,telemetria_listado.idEstado,core_estados.Nombre AS Estado, telemetria_listado.idUsoContrato,telemetria_listado.idUsoGeocerca', 'telemetria_listado', 'LEFT JOIN `core_estados` ON core_estados.idEstado = telemetria_listado.idEstado', 'telemetria_listado.idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	

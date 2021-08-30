@@ -66,25 +66,10 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 if ( ! empty($_GET['edit']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-//Obtengo los datos de una observacion
-$query = "SELECT Observacion
-FROM `telemetria_listado_observaciones`
-WHERE idObservacion = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
- ?>
+// consulto los datos
+$rowdata = db_select_data (false, 'Observacion', 'telemetria_listado_observaciones', '', 'idObservacion ='.$_GET['edit'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
@@ -153,117 +138,14 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	</div>
 </div>
 
-
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['view']) ) { 
-//Obtengo los datos de una observacion
-$query = "SELECT 
-telemetria_listado.Nombre AS nombre_equipo,
-usuarios_listado.Nombre AS nombre_usuario,
-telemetria_listado_observaciones.Fecha,
-telemetria_listado_observaciones.Observacion
-FROM `telemetria_listado_observaciones`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria     = telemetria_listado_observaciones.idTelemetria
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario          = telemetria_listado_observaciones.idUsuario
-WHERE telemetria_listado_observaciones.idObservacion = ".$_GET['view']."
-ORDER BY telemetria_listado_observaciones.idObservacion ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-?>
-<div class="col-sm-8 fcenter">
-	<div class="box">	
-		<header>		
-			<h5>Ver Datos de la Observacion</h5>		
-		</header>
-        <div class="body">
-            <h2 class="text-primary">Datos Basicos</h2>
-            <p class="text-muted">
-				<strong>Equipo : </strong><?php echo $rowdata['nombre_equipo']; ?><br/>
-				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
-				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?>
-            </p>
-                      
-            <h2 class="text-primary">Observacion</h2>
-            <p class="text-muted word_break">
-				<div class="text-muted well well-sm no-shadow">
-					<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
-					<div class="clearfix"></div>
-				</div>
-			</p>
-            
-        	
-        </div>
-	</div>
-</div>
-<div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
-</div>
- 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
-$query = "SELECT Nombre,id_Geo, id_Sensores, idUsoContrato, idUsoGeocerca
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+// consulto los datos
+$rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores, idUsoContrato, idUsoGeocerca', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrObservaciones = array();
-$query = "SELECT 
-telemetria_listado_observaciones.idObservacion,
-usuarios_listado.Nombre AS nombre_usuario,
-telemetria_listado_observaciones.Fecha,
-telemetria_listado_observaciones.Observacion
-FROM `telemetria_listado_observaciones`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario        = telemetria_listado_observaciones.idUsuario
-WHERE telemetria_listado_observaciones.idTelemetria = ".$_GET['id']."
-ORDER BY telemetria_listado_observaciones.idObservacion ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrObservaciones,$row );
-}
-
-
+$arrObservaciones = db_select_array (false, 'telemetria_listado_observaciones.idObservacion,usuarios_listado.Nombre AS nombre_usuario,telemetria_listado_observaciones.Fecha,telemetria_listado_observaciones.Observacion', 'telemetria_listado_observaciones', 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = telemetria_listado_observaciones.idUsuario', 'telemetria_listado_observaciones.idTelemetria ='.$_GET['id'], 'telemetria_listado_observaciones.idObservacion ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrObservaciones');
 
 ?>
 <div class="col-sm-12">
@@ -335,7 +217,7 @@ array_push( $arrObservaciones,$row );
 						<td><?php echo cortar($observaciones['Observacion'], 70); ?></td>		
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&view='.$observaciones['idObservacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_observacion.php?view='.simpleEncode($observaciones['idObservacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$observaciones['idObservacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($observaciones['idObservacion'], fecha_actual());
@@ -358,6 +240,7 @@ array_push( $arrObservaciones,$row );
 <div class="clearfix"></div>
 </div>
 
+<?php widget_modal(80, 95); ?>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

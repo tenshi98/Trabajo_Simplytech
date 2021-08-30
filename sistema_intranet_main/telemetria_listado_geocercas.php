@@ -97,51 +97,12 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else{
-// Se traen todos los datos del trabajador
-$query = "SELECT Nombre, idUsoContrato, id_Geo, id_Sensores, idUsoGeocerca
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+// consulto los datos
+$rowdata = db_select_data (false, 'Nombre, idUsoContrato, id_Geo, id_Sensores, idUsoGeocerca', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
 $arrGeocerca = array();
-$query = "SELECT 
-telemetria_listado_geocercas.idGeocerca,
-telemetria_geocercas.Nombre AS Geocerca
-FROM `telemetria_listado_geocercas`
-LEFT JOIN `telemetria_geocercas`   ON telemetria_geocercas.idZona     = telemetria_listado_geocercas.idZona
-WHERE telemetria_listado_geocercas.idTelemetria = ".$_GET['id']."
-ORDER BY telemetria_geocercas.Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGeocerca,$row );
-}
-
+$arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,telemetria_geocercas.Nombre AS Geocerca', 'telemetria_listado_geocercas', 'LEFT JOIN `telemetria_geocercas` ON telemetria_geocercas.idZona = telemetria_listado_geocercas.idZona', 'telemetria_listado_geocercas.idTelemetria ='.$_GET['id'], 'telemetria_geocercas.Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGeocerca');
 
 ?>
 <div class="col-sm-12">

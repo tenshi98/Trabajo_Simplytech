@@ -55,33 +55,13 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['modAct']) ) { 
-
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresNombre_'.$i;
-}
-// tomo los datos del usuario
-$query = "SELECT Nombre AS Equipo,SensorActivacionID, SensorActivacionValor,cantSensores
-".$subquery."
-
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+}	 
+$rowdata = db_select_data (false, 'Nombre AS Equipo,SensorActivacionID, SensorActivacionValor,cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 	 
 ?>
 	 
@@ -137,7 +117,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['mod']) ) { 
 //Armo cadena
-$cadena  = 'SensoresNombre_'.$_GET['mod'].' AS Nombre';
+$cadena  = ',SensoresNombre_'.$_GET['mod'].' AS Nombre';
 $cadena .= ',SensoresMedMin_'.$_GET['mod'].' AS MedMin';
 $cadena .= ',SensoresMedMax_'.$_GET['mod'].' AS MedMax';
 $cadena .= ',SensoresMedErrores_'.$_GET['mod'].' AS Errores_1';
@@ -154,24 +134,8 @@ $cadena .= ',SensoresAccionAlerta_'.$_GET['mod'].' AS AccionAlerta';
 $cadena .= ',SensoresRevision_'.$_GET['mod'].' AS Revision';
 $cadena .= ',SensoresRevisionGrupo_'.$_GET['mod'].' AS RevisionGrupo';
 
-// tomo los datos del usuario
-$query = "SELECT Nombre AS Equipo, ".$cadena."
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+// consulto los datos
+$rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 	 
 ?>
 	 

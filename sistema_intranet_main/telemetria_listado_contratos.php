@@ -64,25 +64,9 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Carga borrada corre
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
-//Obtengo los datos de una observacion
-$query = "SELECT Codigo, F_Inicio, F_Termino
-FROM `telemetria_listado_contratos`
-WHERE idContrato = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
-
+// consulto los datos
+$rowdata = db_select_data (false, 'Codigo, F_Inicio, F_Termino', 'telemetria_listado_contratos', '', 'idContrato ='.$_GET['edit'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	
  ?>
 
 <div class="col-sm-8 fcenter">
@@ -164,51 +148,15 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
-// tomo los datos del usuario
-$query = "SELECT Nombre,Identificador,id_Geo,id_Sensores, idUsoContrato, idUsoGeocerca
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-// Se trae un listado con todas las observaciones el cliente
+// consulto los datos
+$rowdata = db_select_data (false, 'Nombre,Identificador,id_Geo,id_Sensores, idUsoContrato, idUsoGeocerca', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	
+// consulto los datos
 $arrContratos = array();
-$query = "SELECT idContrato, Codigo, F_Inicio, F_Termino
-FROM `telemetria_listado_contratos`
-WHERE idTelemetria = ".$_GET['id']."
-ORDER BY idContrato DESC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrContratos,$row );
-}
-
-
+$arrContratos = db_select_array (false, 'idContrato, Codigo, F_Inicio, F_Termino', 'telemetria_listado_contratos', '', 'idTelemetria ='.$_GET['id'], 'idContrato DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrContratos');
 
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Contratos');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">

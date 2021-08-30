@@ -44,25 +44,12 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-// tomo los datos del usuario
-$query = "SELECT Nombre,Jornada_inicio,Jornada_termino,Colacion_inicio,Colacion_termino,Microparada,
-id_Geo, id_Sensores, idUsoContrato, idUsoGeocerca
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+// consulto los datos
+$SIS_query = 'Nombre,Jornada_inicio,Jornada_termino,Colacion_inicio,Colacion_termino,Microparada,
+id_Geo, id_Sensores, idUsoContrato, idUsoGeocerca';
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Basicos');?>

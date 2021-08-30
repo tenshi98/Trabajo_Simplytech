@@ -47,30 +47,14 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['mod']) ) { 
 //Armo cadena
-$cadena  = 'Hor_idActivo_dia'.$_GET['mod'].' AS idActivo';
-$cadena .= ',Hor_Inicio_dia'.$_GET['mod'].' AS Inicio';
-$cadena .= ',Hor_Termino_dia'.$_GET['mod'].' AS Termino';
+$SIS_query  = 'Hor_idActivo_dia'.$_GET['mod'].' AS idActivo';
+$SIS_query .= ',Hor_Inicio_dia'.$_GET['mod'].' AS Inicio';
+$SIS_query .= ',Hor_Termino_dia'.$_GET['mod'].' AS Termino';
 
-// tomo los datos del usuario
-$query = "SELECT ".$cadena."
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 	 
+// consulto los datos	 	 
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 	 
-	 ?>
+?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -104,50 +88,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } else  {
-// tomo los datos del usuario
-$query = "SELECT Nombre,id_Sensores, id_Geo,
+// consulto los datos
+$SIS_query = 'Nombre,id_Sensores, id_Geo,
 Hor_idActivo_dia1, Hor_idActivo_dia2, Hor_idActivo_dia3, Hor_idActivo_dia4, Hor_idActivo_dia5, Hor_idActivo_dia6, Hor_idActivo_dia7,
 Hor_Inicio_dia1, Hor_Inicio_dia2, Hor_Inicio_dia3, Hor_Inicio_dia4, Hor_Inicio_dia5, Hor_Inicio_dia6, Hor_Inicio_dia7,
 Hor_Termino_dia1, Hor_Termino_dia2, Hor_Termino_dia3, Hor_Termino_dia4, Hor_Termino_dia5, Hor_Termino_dia6, Hor_Termino_dia7, 
-idUsoContrato, idUsoGeocerca
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+idUsoContrato, idUsoGeocerca';
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Se traen todas las activaciones
 $arrOpciones = array();
-$query = "SELECT idOpciones,Nombre
-FROM `core_sistemas_opciones`
-ORDER BY idOpciones ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOpciones,$row );
-}
+$arrOpciones = db_select_array (false, 'idOpciones,Nombre', 'core_sistemas_opciones', '', '', 'idOpciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOpciones');
+
 ?>
 
 <div class="col-sm-12">
@@ -225,8 +177,6 @@ array_push( $arrOpciones,$row );
 							<td><?php echo $rowdata['Hor_Inicio_dia'.$i]; ?></td>	
 							<td><?php echo $rowdata['Hor_Termino_dia'.$i]; ?></td>	
 							
-							
-			
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>

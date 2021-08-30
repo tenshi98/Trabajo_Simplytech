@@ -93,53 +93,11 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else{
-// tomo los datos del usuario
-$query = "SELECT Nombre,id_Geo, id_Sensores, idUsoContrato, idUsoGeocerca
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+// consulto los datos
+$rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores, idUsoContrato, idUsoGeocerca', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+// consulto los archivos
 $arrArchivos = array();
-$query = "SELECT 
-telemetria_listado_archivos.idArchivos, 
-telemetria_listado_archivos.NombreArchivo, 
-telemetria_listado_archivos.Fecha_ingreso, 
-telemetria_listado_archivos.Detalle,
-usuarios_listado.Nombre AS nombre_usuario
-
-FROM `telemetria_listado_archivos`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario  = telemetria_listado_archivos.idUsuario
-WHERE telemetria_listado_archivos.idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
-
+$arrArchivos = db_select_array (false, 'telemetria_listado_archivos.idArchivos, telemetria_listado_archivos.NombreArchivo, telemetria_listado_archivos.Fecha_ingreso, telemetria_listado_archivos.Detalle,usuarios_listado.Nombre AS nombre_usuario', 'telemetria_listado_archivos', 'LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario  = telemetria_listado_archivos.idUsuario', 'telemetria_listado_archivos.idTelemetria ='.$_GET['id'], 'telemetria_listado_archivos.NombreArchivo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivos');
 
 ?>
 
