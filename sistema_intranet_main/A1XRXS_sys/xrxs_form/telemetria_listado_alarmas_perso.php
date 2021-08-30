@@ -18,6 +18,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idTelemetria']) )     $idTelemetria        = $_POST['idTelemetria'];
 	if ( !empty($_POST['Nombre']) )           $Nombre              = $_POST['Nombre'];
 	if ( !empty($_POST['idTipo']) )           $idTipo              = $_POST['idTipo'];
+	if ( !empty($_POST['idTipoAlerta']) )     $idTipoAlerta        = $_POST['idTipoAlerta'];
 	if ( !empty($_POST['valor_error']) )      $valor_error         = $_POST['valor_error'];
 	if ( !empty($_POST['valor_diferencia']) ) $valor_diferencia    = $_POST['valor_diferencia'];
 	if ( !empty($_POST['Rango_ini']) )        $Rango_ini           = $_POST['Rango_ini'];
@@ -41,6 +42,7 @@ require_once '0_validate_user_1.php';
 			case 'idTelemetria':      if(empty($idTelemetria)){        $error['idTelemetria']       = 'error/No ha seleccionado el equipo de telemetria';}break;
 			case 'Nombre':            if(empty($Nombre)){              $error['Nombre']             = 'error/No ha ingresado el nombre';}break;
 			case 'idTipo':            if(empty($idTipo)){              $error['idTipo']             = 'error/No ha seleccionado el tipo';}break;
+			case 'idTipoAlerta':      if(empty($idTipoAlerta)){        $error['idTipoAlerta']       = 'error/No ha seleccionado la prioridad de la alerta';}break;
 			case 'valor_error':       if(empty($valor_error)){         $error['valor_error']        = 'error/No ha ingresado el valor de error';}break;
 			case 'valor_diferencia':  if(empty($valor_diferencia)){    $error['valor_diferencia']   = 'error/No ha ingresado el porcentaje de diferencia';}break;
 			case 'Rango_ini':         if(empty($Rango_ini)){           $error['Rango_ini']          = 'error/No ha ingresado el rango de inicio';}break;
@@ -84,6 +86,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTelemetria) && $idTelemetria != ''){          $a = "'".$idTelemetria."'" ;       }else{$a ="''";}
 				if(isset($Nombre) && $Nombre != ''){                      $a .= ",'".$Nombre."'" ;           }else{$a .=",''";}
 				if(isset($idTipo) && $idTipo != ''){                      $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
+				if(isset($idTipoAlerta) && $idTipoAlerta != ''){          $a .= ",'".$idTipoAlerta."'" ;     }else{$a .=",''";}
 				if(isset($valor_error) && $valor_error != ''){            $a .= ",'".$valor_error."'" ;      }else{$a .=",''";}
 				if(isset($valor_diferencia) && $valor_diferencia != ''){  $a .= ",'".$valor_diferencia."'" ; }else{$a .=",''";}
 				if(isset($Rango_ini) && $Rango_ini != ''){                $a .= ",'".$Rango_ini."'" ;        }else{$a .=",''";}
@@ -92,8 +95,9 @@ require_once '0_validate_user_1.php';
 				if(isset($NErroresActual) && $NErroresActual != ''){      $a .= ",'".$NErroresActual."'" ;   }else{$a .=",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_listado_alarmas_perso` (idTelemetria, Nombre, idTipo, valor_error, 
-				valor_diferencia, Rango_ini, Rango_fin, NErroresMax, NErroresActual) 
+				$query  = "INSERT INTO `telemetria_listado_alarmas_perso` (idTelemetria, Nombre, 
+				idTipo, idTipoAlerta, valor_error, valor_diferencia, Rango_ini, Rango_fin, NErroresMax, 
+				NErroresActual) 
 				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -141,6 +145,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTelemetria) && $idTelemetria != ''){            $a .= ",idTelemetria='".$idTelemetria."'" ;}
 				if(isset($Nombre) && $Nombre != ''){                        $a .= ",Nombre='".$Nombre."'" ;}
 				if(isset($idTipo) && $idTipo != ''){                        $a .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idTipoAlerta) && $idTipoAlerta != ''){            $a .= ",idTipoAlerta='".$idTipoAlerta."'" ;}
 				if(isset($valor_error) && $valor_error != ''){              $a .= ",valor_error='".$valor_error."'" ;}
 				if(isset($valor_diferencia) && $valor_diferencia != ''){    $a .= ",valor_diferencia='".$valor_diferencia."'" ;}
 				if(isset($Rango_ini) && $Rango_ini != ''){                  $a .= ",Rango_ini='".$Rango_ini."'" ;}

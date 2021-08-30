@@ -99,29 +99,29 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['editItem']) ) { 
-// tomo los datos del usuario
-$query = "SELECT Sensor_N, Rango_ini, Rango_fin, valor_especifico
-FROM `telemetria_listado_alarmas_perso_items`
-WHERE idItem = ".$_GET['editItem'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+// consulto los datos
+$rowdata = db_select_data (false, 'Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idItem ='.$_GET['editItem'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-$Form_Inputs = new Form_Inputs();
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresGrupo_'.$i;
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}
+//Se traen todos los datos
+$rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
+								
+$arrGrupos = array();
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+
+$arrFinalGrupos    = array();
+foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre']; }								
+			
+				
 ?>
-	
-	
+		
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -134,59 +134,7 @@ $Form_Inputs = new Form_Inputs();
 				<?php 
 				$Form_Inputs = new Form_Inputs();
 				
-				//numero sensores equipo
-				$N_Maximo_Sensores = 72;
-				$subquery = '';
-				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-					$subquery .= ',SensoresGrupo_'.$i;
-					$subquery .= ',SensoresNombre_'.$i;
-					$subquery .= ',SensoresActivo_'.$i;
-				}
-				//Se traen todos los nombres
-				$query = "SELECT
-				idTelemetria, cantSensores
-				".$subquery."
-			
-				FROM `telemetria_listado`
-				WHERE idTelemetria = ".$_GET['id'];
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-													
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-													
-				}
-				$rowSensores = mysqli_fetch_assoc ($resultado);
-
-								
-								
-				//Se traen todos los grupos
-				$arrGrupos = array();
-				$query = "SELECT idGrupo,Nombre
-				FROM `telemetria_listado_grupos`
-				ORDER BY idGrupo ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-													
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-													
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrGrupos,$row );
-				}	
+					
 
 				echo '<div class="form-group" id="div_sensorn" >
 						<label for="text2" class="control-label col-sm-4">Sensor</label>
@@ -199,25 +147,25 @@ $Form_Inputs = new Form_Inputs();
 									if(isset($rowSensores['SensoresActivo_'.$i])&&$rowSensores['SensoresActivo_'.$i]==1){
 										//se verifica que el grupo exista
 										if($arrGrupos){
-											//se verifica grupo
-											foreach ($arrGrupos as $sen) { 
-												if($rowSensores['SensoresGrupo_'.$i]==$sen['idGrupo']){
-													$selected = '';
-													if($rowdata['Sensor_N']==$i){
-														$selected = 'selected';
-													}
-													echo '<option value="'.$i.'" '.$selected.'>'.$sen['Nombre'].' - '.$rowSensores['SensoresNombre_'.$i].'</option>';
-												}
-											}
-										//si no existe grupo se imprime sin este
-										}else{
+											//Se trae el grupo
+											$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
+											//Se marca como seleccionado
 											$selected = '';
 											if($rowdata['Sensor_N']==$i){
 												$selected = 'selected';
 											}
+											//se imprime
+											echo '<option value="'.$i.'" '.$selected.'>'.$Grupos.' - '.$rowSensores['SensoresNombre_'.$i].'</option>';
+										//si no existe grupo se imprime sin este
+										}else{
+											//Se marca como seleccionado
+											$selected = '';
+											if($rowdata['Sensor_N']==$i){
+												$selected = 'selected';
+											}
+											//se imprime
 											echo '<option value="'.$i.'" '.$selected.'>'.$rowSensores['SensoresNombre_'.$i].'</option>';
-										}
-												
+										}		
 									}
 								}
 									
@@ -245,8 +193,6 @@ $Form_Inputs = new Form_Inputs();
 				}
 				
 				
-				
-				
 				$Form_Inputs->form_input_hidden('idItem', $_GET['editItem'], 2);
 									
 				?>
@@ -263,7 +209,27 @@ $Form_Inputs = new Form_Inputs();
 </div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['addItem']) ) { ?>
+}elseif ( ! empty($_GET['addItem']) ) { 
+	
+//numero sensores equipo
+$N_Maximo_Sensores = 72;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresGrupo_'.$i;
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}
+//Se traen todos los datos
+$rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
+								
+$arrGrupos = array();
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+
+$arrFinalGrupos    = array();
+foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre']; }								
+	
+	
+?>
 	
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -278,60 +244,6 @@ $Form_Inputs = new Form_Inputs();
 				$Form_Inputs = new Form_Inputs();
 				
 				
-				//numero sensores equipo
-				$N_Maximo_Sensores = 72;
-				$subquery = '';
-				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-					$subquery .= ',SensoresGrupo_'.$i;
-					$subquery .= ',SensoresNombre_'.$i;
-					$subquery .= ',SensoresActivo_'.$i;
-				}
-				//Se traen todos los nombres
-				$query = "SELECT
-				idTelemetria, cantSensores
-				".$subquery."
-					
-				FROM `telemetria_listado`
-				WHERE idTelemetria = ".$_GET['id'];
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-													
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-													
-				}
-				$rowSensores = mysqli_fetch_assoc ($resultado);
-
-								
-								
-				//Se traen todos los grupos
-				$arrGrupos = array();
-				$query = "SELECT idGrupo,Nombre
-				FROM `telemetria_listado_grupos`
-				ORDER BY idGrupo ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-													
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-													
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrGrupos,$row );
-				}	
-
 				echo '<div class="form-group" id="div_sensorn" >
 						<label for="text2" class="control-label col-sm-4">Sensor</label>
 						<div class="col-sm-8 field">
@@ -343,13 +255,13 @@ $Form_Inputs = new Form_Inputs();
 									if(isset($rowSensores['SensoresActivo_'.$i])&&$rowSensores['SensoresActivo_'.$i]==1){
 										//se verifica que el grupo exista
 										if($arrGrupos){
-											foreach ($arrGrupos as $sen) { 
-												if($rowSensores['SensoresGrupo_'.$i]==$sen['idGrupo']){
-													echo '<option value="'.$i.'">'.$sen['Nombre'].' - '.$rowSensores['SensoresNombre_'.$i].'</option>';
-												}
-											}
+											//Se trae el grupo
+											$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
+											//se imprime
+											echo '<option value="'.$i.'">'.$Grupos.' - '.$rowSensores['SensoresNombre_'.$i].'</option>';
 										//si no existe grupo se imprime sin este
 										}else{
+											//se imprime
 											echo '<option value="'.$i.'">'.$rowSensores['SensoresNombre_'.$i].'</option>';
 										}		
 									}
@@ -399,25 +311,7 @@ $Form_Inputs = new Form_Inputs();
 }elseif ( ! empty($_GET['listItems']) ) {
 // Se trae un listado con todas las alarmas
 $arrAlarmas = array();
-$query = "SELECT  idItem, Sensor_N, Rango_ini, Rango_fin, valor_especifico
-FROM `telemetria_listado_alarmas_perso_items`
-WHERE idAlarma = ".$_GET['listItems'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAlarmas,$row );
-}
+$arrAlarmas = db_select_array (false, 'idItem, Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idAlarma ='.$_GET['listItems'], 'idItem ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlarmas');
 
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
@@ -426,51 +320,15 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresNombre_'.$i;
 }
-//Se traen todos los nombres
-$query = "SELECT
-idTelemetria, cantSensores
-".$subquery." 
-
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-									
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-}
-$rowSensores = mysqli_fetch_assoc ($resultado);
-
-				
-				
-//Se traen todos los grupos
+//Se traen todos los datos
+$rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
+								
 $arrGrupos = array();
-$query = "SELECT idGrupo,Nombre
-FROM `telemetria_listado_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-									
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupos,$row );
-}				
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+
+$arrFinalGrupos    = array();
+foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre']; }								
+					
 ?>
 
 <div class="col-sm-12">
@@ -497,12 +355,7 @@ array_push( $arrGrupos,$row );
 					<?php foreach ($arrAlarmas as $alarmas) { ?>
 						<tr class="odd">		
 							<td><?php 
-							$grupo = '';
-							foreach ($arrGrupos as $gru) {
-								if($gru['idGrupo']==$rowSensores['SensoresGrupo_'.$alarmas['Sensor_N']]){
-									$grupo = $gru['Nombre'].' - ';
-								}
-							}
+							$grupo = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$alarmas['Sensor_N']]];
 							echo $grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']]; 
 							if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&($_GET['idTipo']==3 OR $_GET['idTipo']==4)){
 								echo ' (Rango: '.Cantidades_decimales_justos($alarmas['Rango_ini']).' / '.Cantidades_decimales_justos($alarmas['Rango_fin']).')';
@@ -539,25 +392,11 @@ array_push( $arrGrupos,$row );
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editAlarma']) ) { 
-// tomo los datos del usuario
-$query = "SELECT Nombre, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
-NErroresMax, NErroresActual
-FROM `telemetria_listado_alarmas_perso`
-WHERE idAlarma = ".$_GET['editAlarma'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+// consulto los datos
+$SIS_query = 'Nombre, idTipoAlerta, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
+NErroresMax, NErroresActual';
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso', '', 'idAlarma ='.$_GET['editAlarma'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 	
 	
@@ -573,26 +412,29 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<?php 
 				//Se verifican si existen los datos
 				if(isset($Nombre)) {            $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
-				if(isset($idTipo)) {            $x2  = $idTipo;            }else{$x2  = $rowdata['idTipo'];}
-				if(isset($NErroresMax)) {       $x3  = $NErroresMax;       }else{$x3  = Cantidades_decimales_justos($rowdata['NErroresMax']);}
-				if(isset($NErroresActual)) {    $x4  = $NErroresActual;    }else{$x4  = Cantidades_decimales_justos($rowdata['NErroresActual']);}
-				if(isset($valor_error)) {       $x5  = $valor_error;       }else{$x5  = Cantidades_decimales_justos($rowdata['valor_error']);}
-				if(isset($valor_diferencia)) {  $x6  = $valor_diferencia;  }else{$x6  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
-				if(isset($Rango_ini)) {         $x7  = $Rango_ini;         }else{$x7  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
-				if(isset($Rango_fin)) {         $x8  = $Rango_fin;         }else{$x8  = Cantidades_decimales_justos($rowdata['Rango_fin']);}
+				if(isset($idTipoAlerta)) {      $x2  = $idTipoAlerta;      }else{$x2  = $rowdata['idTipoAlerta'];}
+				if(isset($idTipo)) {            $x3  = $idTipo;            }else{$x3  = $rowdata['idTipo'];}
+				if(isset($NErroresMax)) {       $x4  = $NErroresMax;       }else{$x4  = Cantidades_decimales_justos($rowdata['NErroresMax']);}
+				if(isset($NErroresActual)) {    $x5  = $NErroresActual;    }else{$x5  = Cantidades_decimales_justos($rowdata['NErroresActual']);}
+				if(isset($valor_error)) {       $x6  = $valor_error;       }else{$x6  = Cantidades_decimales_justos($rowdata['valor_error']);}
+				if(isset($valor_diferencia)) {  $x7  = $valor_diferencia;  }else{$x7  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
+				if(isset($Rango_ini)) {         $x8  = $Rango_ini;         }else{$x8  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
+				if(isset($Rango_fin)) {         $x9  = $Rango_fin;         }else{$x9  = Cantidades_decimales_justos($rowdata['Rango_fin']);}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
+				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
 				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
-				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x2, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
-				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x3, 2);
-				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x4, 1);
+				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x3, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x4, 2);
+				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x5, 1);
 				//opcionales ocultos
-				$Form_Inputs->form_input_number('Valor de error','valor_error', $x5, 1);
-				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x6, 1);
-				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x7, 1);
-				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x8, 1);
+				$Form_Inputs->form_input_number('Valor de error','valor_error', $x6, 1);
+				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x7, 1);
+				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x8, 1);
+				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x9, 1);
 				
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idAlarma', $_GET['editAlarma'], 2);
@@ -715,26 +557,29 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<?php 
 				//Se verifican si existen los datos
 				if(isset($Nombre)) {            $x1  = $Nombre;            }else{$x1  = '';}
-				if(isset($idTipo)) {            $x2  = $idTipo;            }else{$x2  = '';}
-				if(isset($NErroresMax)) {       $x3  = $NErroresMax;       }else{$x3  = '';}
-				if(isset($NErroresActual)) {    $x4  = $NErroresActual;    }else{$x4  = '';}
-				if(isset($valor_error)) {       $x5  = $valor_error;       }else{$x5  = '';}
-				if(isset($valor_diferencia)) {  $x6  = $valor_diferencia;  }else{$x6  = '';}
-				if(isset($Rango_ini)) {         $x7  = $Rango_ini;         }else{$x7  = '';}
-				if(isset($Rango_fin)) {         $x8  = $Rango_fin;         }else{$x8  = '';}
+				if(isset($idTipoAlerta)) {      $x2  = $idTipoAlerta;      }else{$x2  = '';}
+				if(isset($idTipo)) {            $x3  = $idTipo;            }else{$x3  = '';}
+				if(isset($NErroresMax)) {       $x4  = $NErroresMax;       }else{$x4  = '';}
+				if(isset($NErroresActual)) {    $x5  = $NErroresActual;    }else{$x5  = '';}
+				if(isset($valor_error)) {       $x6  = $valor_error;       }else{$x6  = '';}
+				if(isset($valor_diferencia)) {  $x7  = $valor_diferencia;  }else{$x7  = '';}
+				if(isset($Rango_ini)) {         $x8  = $Rango_ini;         }else{$x8  = '';}
+				if(isset($Rango_fin)) {         $x9  = $Rango_fin;         }else{$x9  = '';}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
+				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
 				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
-				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x2, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
-				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x3, 2);
-				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x4, 1);
+				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x3, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x4, 2);
+				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x5, 1);
 				//opcionales ocultos
-				$Form_Inputs->form_input_number('Valor de error','valor_error', $x5, 1);
-				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x6, 1);
-				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x7, 1);
-				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x8, 1);
+				$Form_Inputs->form_input_number('Valor de error','valor_error', $x6, 1);
+				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x7, 1);
+				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x8, 1);
+				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x9, 1);
 				
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				
@@ -840,24 +685,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>	
 	
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {// tomo los datos del usuario
-$query = "SELECT Nombre, idUsoContrato, id_Geo, id_Sensores, idUsoGeocerca, cantSensores
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+ } else  {	  
+// tomo los datos del equipo
+$rowdata = db_select_data (false, 'Nombre, idUsoContrato, id_Geo, id_Sensores, idUsoGeocerca, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //defino los nombres de los sensores
 $subsql = '';
@@ -866,9 +696,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
     $subsql .= ',telemetria_listado.SensoresGrupo_'.$i; 
 }
 
-// Se trae un listado con todas las alarmas
-$arrAlarmas = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado_alarmas_perso.idAlarma, 
 telemetria_listado_alarmas_perso.Nombre,
 telemetria_listado_alarmas_perso.idTipo,
@@ -880,58 +708,24 @@ telemetria_listado_alarmas_perso_tipos.Nombre AS Tipo,
 telemetria_listado_alarmas_perso_items.Sensor_N,
 telemetria_listado_alarmas_perso_items.Rango_ini,
 telemetria_listado_alarmas_perso_items.Rango_fin,
-telemetria_listado_alarmas_perso_items.valor_especifico
-
-".$subsql."
-
-FROM `telemetria_listado_alarmas_perso`
+telemetria_listado_alarmas_perso_items.valor_especifico,
+core_telemetria_tipo_alertas.Nombre AS Prioridad,
+telemetria_listado_alarmas_perso.idTipoAlerta'.$subsql;
+$SIS_join  = '
 LEFT JOIN `telemetria_listado_alarmas_perso_tipos` ON telemetria_listado_alarmas_perso_tipos.idTipo    = telemetria_listado_alarmas_perso.idTipo
 LEFT JOIN `telemetria_listado_alarmas_perso_items` ON telemetria_listado_alarmas_perso_items.idAlarma  = telemetria_listado_alarmas_perso.idAlarma
 LEFT JOIN `telemetria_listado`                     ON telemetria_listado.idTelemetria                  = telemetria_listado_alarmas_perso.idTelemetria
+LEFT JOIN `core_telemetria_tipo_alertas`           ON core_telemetria_tipo_alertas.idTipoAlerta        = telemetria_listado_alarmas_perso.idTipoAlerta';
+$SIS_where = 'telemetria_listado_alarmas_perso.idTelemetria ='.$_GET['id'];
+$SIS_order = 'telemetria_listado_alarmas_perso.idAlarma ASC';
+$arrAlarmas = array();
+$arrAlarmas = db_select_array (false, $SIS_query, 'telemetria_listado_alarmas_perso', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlarmas');
 
-WHERE telemetria_listado_alarmas_perso.idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAlarmas,$row );
-}
-
-//Se traen todos los grupos
 $arrGrupos = array();
-$query = "SELECT idGrupo,Nombre
-FROM `telemetria_listado_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-									
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupos,$row );
-}
-$arrGruposEx = array();
-foreach ($arrGrupos as $grup) {
-	$arrGruposEx[$grup['idGrupo']] = $grup['Nombre'];
-}
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+
+$arrGruposEx    = array();
+foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']; }								
 
 
 ?>
@@ -1001,7 +795,16 @@ foreach ($arrGrupos as $grup) {
 						<tr class="odd">		
 							<td>
 								<?php 
+								//Si es normal
+								if(isset($equip['idTipoAlerta'])&&$equip['idTipoAlerta']==1){
+									$label_color = 'label-success';
+								//si es catastrofica 
+								}else{
+									$label_color = 'label-danger';
+								}
+								//imprimo
 								echo '<strong>Tipo: </strong>'.$alarmas[0]['Tipo'].'<br/>'; 
+								echo '<strong>Prioridad Alarma: </strong><label class="label '.$label_color.'">'.$alarmas[0]['Prioridad'].'</label><br/>'; 
 								echo '<strong>N° Maximo Errores: </strong>'.$alarmas[0]['NErroresMax'].'<br/>';
 								echo '<strong>N° Actual Errores: </strong>'.$alarmas[0]['NErroresActual'].'<br/>';
 								?>
