@@ -22,7 +22,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 /********************************************************************/
-//Se traen todos los grupos
+//Se consultan datos
 $arrGruposRev = array();
 $query = "SELECT idGrupo, Valor, idSupervisado
 FROM `telemetria_listado_grupos_uso`

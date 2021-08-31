@@ -24,7 +24,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
-//Se traen todos los grupos
+//Se consultan datos
 $arrGruposRev = array();
 $query = "SELECT idGrupo, Valor, idSupervisado
 FROM `telemetria_listado_grupos_uso`

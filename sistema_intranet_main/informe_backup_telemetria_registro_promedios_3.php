@@ -852,7 +852,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				array_push( $arrSelect,$row );
 				}
 
-				//Se traen todos los grupos
+				//Se consultan datos
 				$arrGrupos = array();
 				$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
 				

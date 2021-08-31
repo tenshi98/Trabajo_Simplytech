@@ -375,7 +375,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				}
 
 			
-				//Se traen todos los grupos
+				//Se consultan datos
 				$arrGrupos = array();
 				$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
 				

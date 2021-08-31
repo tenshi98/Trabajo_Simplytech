@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 $X_cantSensores = simpleDecode($_GET['cantSensores'], fecha_actual());
 /**************************************************************/
-//Se traen todos los grupos
+//Se consultan datos
 $arrGruposRev = array();
 $query = "SELECT idGrupo, Valor, idSupervisado
 FROM `telemetria_listado_grupos_uso`

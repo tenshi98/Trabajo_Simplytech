@@ -368,7 +368,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				array_push( $arrSelect,$row );
 				}
 
-				//Se traen todos los grupos
+				//Se consultan datos
 				$arrGrupos = array();
 				$query = "SELECT idGrupo,Nombre
 				FROM `telemetria_listado_grupos`

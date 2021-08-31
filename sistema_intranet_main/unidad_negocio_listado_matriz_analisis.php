@@ -381,7 +381,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrTipos,$row );
 }
 
-//Se traen todos los grupos
+//Se consultan datos
 $arrGrupos = array();
 $query = "SELECT idGrupo,Nombre
 FROM `maquinas_listado_matriz_grupos`

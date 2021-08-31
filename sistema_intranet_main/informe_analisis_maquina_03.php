@@ -172,7 +172,7 @@ array_push( $arrResultados,$row );
 
 
 /**********************************************************************/
-//Se traen todos los grupos
+//Se consultan datos
 $arrGrupo = array();
 $query = "SELECT idGrupo, Nombre
 FROM `maquinas_listado_matriz_grupos`

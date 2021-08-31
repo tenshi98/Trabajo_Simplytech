@@ -137,7 +137,7 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 	$subf.=" AND (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 /**********************************************************************/
-//Se traen todos los grupos
+//Se consultan datos
 $arrGrupo = array();
 $query = "SELECT idGrupo, Nombre
 FROM `telemetria_listado_grupos` ";

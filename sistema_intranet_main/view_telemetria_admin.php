@@ -331,7 +331,7 @@ foreach ($arrUnimed as $sen) {
 						array_push( $arrSensores,$row );
 						}
 						
-						//Se traen todos los grupos
+						//Se consultan datos
 						$arrGrupos = array();
 						$query = "SELECT idGrupo,Nombre
 						FROM `telemetria_listado_grupos`

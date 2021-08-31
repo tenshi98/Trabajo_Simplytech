@@ -171,7 +171,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)) {
 array_push( $arrUnimed,$row );
 }
 /**********************************************************************/
-//Se traen todos los grupos
+//Se consultan datos
 $arrGrupo = array();
 $query = "SELECT idGrupo, Nombre
 FROM `maquinas_listado_matriz_grupos`

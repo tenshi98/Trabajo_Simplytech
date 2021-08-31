@@ -77,7 +77,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 //Consultas
 $rowdata = db_select_data (false, 'cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-//Se traen todos los grupos
+//Se consultan datos
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
 				
@@ -217,7 +217,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 //Consultas
 $rowdata = db_select_data (false, 'cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-//Se traen todos los grupos
+//Se consultan datos
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
 				

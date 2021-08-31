@@ -112,7 +112,7 @@ foreach ($arrUnimed as $sen) {
 }
 						
 /****************************************************************/
-//Se traen todos los grupos
+//Se consultan datos
 $arrGrupos = array();
 $query = "SELECT idGrupo,Nombre
 FROM `telemetria_listado_grupos`

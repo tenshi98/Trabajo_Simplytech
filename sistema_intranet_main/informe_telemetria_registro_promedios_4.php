@@ -65,7 +65,7 @@ foreach ($arrUnimed as $sen) {
 	$Unimed[$sen['idUniMed']] = ' '.$sen['Nombre'];
 }
 /**********************************************************************/
-//Se traen todos los grupos
+//Se consultan datos
 $arrGrupo = array();
 $query = "SELECT idGrupo, Nombre
 FROM `telemetria_listado_grupos` ";
@@ -885,7 +885,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				array_push( $arrSelect,$row );
 				}
 
-				//Se traen todos los grupos
+				//Se consultan datos
 				$arrGrupos = array();
 				$query = "SELECT idGrupo,Nombre
 				FROM `telemetria_listado_grupos`

@@ -33,7 +33,7 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
 /**********************************************************/
-//Se traen todos los grupos
+//Se consultan datos
 $arrGruposRev = array();
 $query = "SELECT idGrupo, Valor, idSupervisado
 FROM `telemetria_listado_grupos_uso`
