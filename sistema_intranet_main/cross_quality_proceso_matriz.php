@@ -98,7 +98,7 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>  
@@ -607,7 +607,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_3', $x13, 1);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
 				?> 
@@ -851,7 +851,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idNota_1', 2, 2);

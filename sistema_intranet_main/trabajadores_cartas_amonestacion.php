@@ -133,7 +133,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				}
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCartaAmo', $_GET['id'], 2);
 				
@@ -185,7 +185,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Amonestacion', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Fecha_ingreso', fecha_actual(), 2);

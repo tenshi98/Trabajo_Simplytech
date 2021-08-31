@@ -112,7 +112,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_phone('Fono Emergencias 24 hrs', 'Fac_nEmergencia', $x10, 2);
 				$Form_Inputs->form_input_phone('Fono Consultas', 'Fac_nConsultas', $x11, 2);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idDato', $_GET['id'], 2);
 				?>
@@ -171,7 +171,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_phone('Fono Consultas', 'Fac_nConsultas', $x11, 2);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				
 				?>

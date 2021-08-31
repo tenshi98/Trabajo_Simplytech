@@ -89,7 +89,7 @@ if ( ! empty($_GET['clone_idUsuario']) ) {
 
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_GET['clone_idUsuario'], 2);
 				?>  
@@ -776,7 +776,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('password', 1234, 2);

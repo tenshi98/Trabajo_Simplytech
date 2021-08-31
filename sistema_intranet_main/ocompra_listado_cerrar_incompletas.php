@@ -247,8 +247,8 @@ switch ($_GET['type']) {
 						if(isset($cant_ingresada)) {   $x3  = $cant_ingresada;  }else{$x3  = Cantidades_decimales_justos($row_data['cant_ingresada']);}
 						
 						//se dibujan los inputs
-						$Form_Inputs->form_input_disabled('Producto','Producto_fake', $x1, 1);
-						$Form_Inputs->form_input_disabled('Cantidad Solicitada','Cantidad_fake', $x2, 1);
+						$Form_Inputs->form_input_disabled('Producto','Producto_fake', $x1);
+						$Form_Inputs->form_input_disabled('Cantidad Solicitada','Cantidad_fake', $x2);
 						$Form_Inputs->form_input_number('Cantidad Recibida', 'cant_ingresada', $x3, 2);
 						
 						$Form_Inputs->form_input_hidden('CantComp', $x2, 2);	
@@ -262,9 +262,9 @@ switch ($_GET['type']) {
 						$x4  = 0;
 						
 						//se dibujan los inputs
-						$Form_Inputs->form_input_disabled('Trabajador','Producto_fake', $x1, 1);
-						$Form_Inputs->form_input_disabled('Boleta Honorarios N°','Boleta_fake', $x2, 1);
-						$Form_Inputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x3, 1);
+						$Form_Inputs->form_input_disabled('Trabajador','Producto_fake', $x1);
+						$Form_Inputs->form_input_disabled('Boleta Honorarios N°','Boleta_fake', $x2);
+						$Form_Inputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x3);
 						$Form_Inputs->form_input_number('Monto Declarado', 'cant_ingresada', $x4, 2);
 						
 						$Form_Inputs->form_input_hidden('CantComp', $x3, 2);
@@ -278,8 +278,8 @@ switch ($_GET['type']) {
 						$x3  = Cantidades_decimales_justos($row_data['Total_Ingresado']);
 						
 						//se dibujan los inputs
-						$Form_Inputs->form_input_disabled('Descripcion','Producto_fake', $x1, 1);
-						$Form_Inputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x2, 1);
+						$Form_Inputs->form_input_disabled('Descripcion','Producto_fake', $x1);
+						$Form_Inputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x2);
 						$Form_Inputs->form_input_number('Monto Declarado', 'cant_ingresada', $x3, 2);
 						
 						$Form_Inputs->form_input_hidden('CantComp', $x2, 2);

@@ -1,15 +1,19 @@
 <?php
 //Variables
-$z = " WHERE idNoti!=0 AND idEstado='1' ";
-$z.= " AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$z.= " AND idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_where = ' idEstado=1';
+$SIS_where.= ' AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where.= ' AND idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
 $query = "SELECT COUNT(idNoti) AS Notificacion FROM principal_notificaciones_ver ".$z; 
 $resultado = mysqli_query($dbConn, $query);	
 $notificaciones = mysqli_fetch_assoc($resultado);
 
-
+$nNoti = db_select_nrows (false, 'idNoti', 
+'principal_notificaciones_ver', 
+'', 
+$SIS_where, 
+$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'nNoti');
 ?>
 
 
@@ -26,8 +30,8 @@ $notificaciones = mysqli_fetch_assoc($resultado);
               
     <div class="btn-group">
         <a href="principal_notificaciones.php?pagina=1" title="Notificaciones" class="btn btn-default btn-sm tooltip">
-            <i class="fa fa-commenting-o <?php if($notificaciones['Notificacion']!=0){ echo 'faa-horizontal animated'; } ?>" aria-hidden="true"></i>
-            <?php if(isset($notificaciones['Notificacion'])&&$notificaciones['Notificacion']!=0){echo '<span class="label label-danger">'.$notificaciones['Notificacion'].'</span>';}?>
+            <i class="fa fa-commenting-o <?php if($nNoti!=0){ echo 'faa-horizontal animated'; } ?>" aria-hidden="true"></i>
+            <?php if(isset($nNoti)&&$nNoti!=0){echo '<span class="label label-danger">'.$nNoti.'</span>';}?>
         </a> 
         
         <a href="principal_ayuda.php" title="Ayuda" class="btn btn-default btn-sm tooltip">

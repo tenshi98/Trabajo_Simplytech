@@ -214,7 +214,7 @@ $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_progr
 				$Form_Inputs->form_time('Hora termino requerido','horaProg_fin', $x5, 2, 1);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 2, 160);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -338,9 +338,9 @@ array_push( $arrTipo,$row );
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Producto Químico a aplicar');
 				$Form_Inputs->form_select_filter('Producto Químico','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', 'idEstado=1', '', $dbConn);
-				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0, 1);
+				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0);
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
-				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0, 1);
+				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
 				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1, 160);
 				
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
@@ -437,9 +437,9 @@ array_push( $arrTipo,$row );
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Producto Químico a aplicar');
 				$Form_Inputs->form_select_filter('Producto Químico','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', 'idEstado=1', '', $dbConn);
-				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0, 1);
+				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0);
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
-				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0, 1);
+				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
 				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1, 160);
 				
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
@@ -1176,7 +1176,7 @@ array_push( $arrCuenta2,$row );
 				$Form_Inputs->form_input_number_spinner('Humedad','HumTempMax', $x5, -20, 500, '0.1', 1, 2);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -1298,7 +1298,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 2, 160);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -2131,7 +2131,7 @@ array_push( $arrCuenta2,$row );
 				$Form_Inputs->form_input_number_spinner('Humedad','HumTempMax', $x5, -20, 500, '0.1', 1, 2);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -2253,7 +2253,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_time('Hora termino requerido','horaProg_fin', $x11, 2, 1);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 2, 160);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);

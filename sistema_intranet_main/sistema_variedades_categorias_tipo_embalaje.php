@@ -103,7 +103,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x2, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);	
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idEmbalaje',$_GET['edit'], 2);
@@ -148,7 +148,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x2, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);	
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);
 			

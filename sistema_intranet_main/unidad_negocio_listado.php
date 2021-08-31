@@ -807,7 +807,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2); 
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idConfig_1', 2, 2);

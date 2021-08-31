@@ -218,7 +218,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Inputs->form_input_icon('ID Google (Mapas)', 'Config_IDGoogle', $x1, 1,'fa fa-google-plus-square');
 					$Form_Inputs->form_input_icon('ApiKey (Android)', 'Config_Google_apiKey', $x2, 1,'fa fa-google-plus-square');
 					
-					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					?>
 

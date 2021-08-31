@@ -101,7 +101,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'idEstado=1 AND idTipoUsuario!=1', '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idAprobador', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				
@@ -137,7 +137,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'idEstado=1 AND idTipoUsuario!=1', '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 				

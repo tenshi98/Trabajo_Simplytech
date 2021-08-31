@@ -130,7 +130,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 					$Form_Inputs->form_multiple_upload('Seleccionar Archivo','Archivo', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
 				}
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idOtrosCargos', $_GET['id'], 2);
@@ -181,7 +181,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x5, 1, 160);
 				$Form_Inputs->form_multiple_upload('Seleccionar Archivo','Archivo', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>

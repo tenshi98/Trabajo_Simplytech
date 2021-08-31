@@ -346,7 +346,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x4, 2);
 				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);		
 				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);				
-				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7);
 				
 					
 					
@@ -791,10 +791,9 @@ foreach ($arrPermisos as $prod) {
 					break;
 							
 					case 4: //Otro
-						$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);   
+						$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7);   
 					break;
 				}
-				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);
 				
 					
 				$Form_Inputs->form_input_hidden('tabla', $_GET['tabla'], 2);
@@ -1710,7 +1709,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_time('Tiempo Programado','horaProg', $x7, 2, 1);
 				}			
 							
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				

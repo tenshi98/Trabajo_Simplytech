@@ -240,7 +240,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x4, 2);
 				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);		
 				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);				
-				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7, 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7);
 				
 					
 					
@@ -873,7 +873,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x4, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -1170,7 +1170,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x5, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1, 160);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);

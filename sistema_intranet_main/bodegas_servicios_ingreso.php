@@ -339,7 +339,7 @@ if ( ! empty($_GET['addOC']) ) { ?>
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				$Form_Inputs->form_select_disabled('Frecuencia','idFrecuencia_fake', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['servicios_ing_productos'][$_GET['editProd']]['ValorIngreso']), 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['servicios_ing_productos'][$_GET['editProd']]['ValorIngreso']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['servicios_ing_productos'][$_GET['editProd']]['ValorIngreso']), 2);
 				
@@ -397,7 +397,7 @@ if ( ! empty($_GET['addOC']) ) { ?>
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad_ing', $x2, 2);
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
@@ -566,7 +566,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 1, 2);			
@@ -1066,7 +1066,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 1, 2);

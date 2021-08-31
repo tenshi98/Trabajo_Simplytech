@@ -1050,7 +1050,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_disabled('Saldo','fake_emp', $x1, 1);
+				$Form_Inputs->form_input_disabled('Saldo','fake_emp', $x1);
 				$Form_Inputs->form_input_number('Monto a Pagar', 'PPM_MontoPago', $x2, 2);
 				
 				$Form_Inputs->form_input_hidden('edit_ppm', $_GET['edit_ppm'], 1);
@@ -1126,8 +1126,8 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 				
 				
 				
-				$Form_Inputs->form_input_disabled('Saldo IVA Total','fake_emp', $x0, 1);
-				$Form_Inputs->form_input_disabled($xtext,'fake_emp', $x1, 1);
+				$Form_Inputs->form_input_disabled('Saldo IVA Total','fake_emp', $x0);
+				$Form_Inputs->form_input_disabled($xtext,'fake_emp', $x1);
 				$Form_Inputs->form_input_number('Monto a Pagar', 'IVA_MontoPago', $x2, 2);
 				
 				$Form_Inputs->form_input_hidden('edit_iva', $_GET['edit_iva'], 1);
@@ -1173,7 +1173,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
@@ -1746,7 +1746,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);

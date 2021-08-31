@@ -105,7 +105,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 										 $dbConn, 'form1');
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idVarMatriz',$_GET['edit'], 2);
@@ -152,7 +152,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				
 				
 					
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);
 			

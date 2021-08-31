@@ -106,7 +106,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				if($rowdata['idUsuario']==9999){
 					$Form_Inputs->form_input_hidden('idUsuario', 9999, 2);
 				}
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCalendario', $_GET['id'], 2);
 				?>
@@ -229,7 +229,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);  ?>
 				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idUsuario', 9999, 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>

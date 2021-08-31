@@ -107,7 +107,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_select_filter('Turno','idTurnos', $x3, 2, 'idTurnos', 'Nombre', 'core_horas_extras_turnos', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idServicios', $_GET['id'], 2);
 				
@@ -154,7 +154,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_select_filter('Turno','idTurnos', $x3, 2, 'idTurnos', 'Nombre', 'core_horas_extras_turnos', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);

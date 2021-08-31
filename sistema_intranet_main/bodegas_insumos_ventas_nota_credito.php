@@ -245,9 +245,9 @@ foreach ($arrPermisos as $prod) {
 				
 				
 				if(isset($row_data['Cliente'])&&$row_data['Cliente']!=''){$prov=$row_data['Cliente'];}else{$prov='Sin cliente';}
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed'], 1);
-				$Form_Inputs->form_input_disabled('Cliente Actual','cliente', $prov, 1);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['insumos_egr_nc_productos'][$_GET['editProd']]['ValorIngreso']), 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+				$Form_Inputs->form_input_disabled('Cliente Actual','cliente', $prov);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['insumos_egr_nc_productos'][$_GET['editProd']]['ValorIngreso']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('ValorIngreso', Cantidades_decimales_justos($_SESSION['insumos_egr_nc_productos'][$_GET['editProd']]['ValorIngreso']), 2);
 				
@@ -633,7 +633,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 13, 2);			
@@ -1013,7 +1013,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 13, 2);			

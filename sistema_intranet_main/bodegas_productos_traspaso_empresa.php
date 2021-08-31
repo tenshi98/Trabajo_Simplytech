@@ -180,9 +180,9 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 				
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed'], 1);
-				$Form_Inputs->form_input_disabled('Existencias','Existencias', Cantidades_decimales_justos($Total_existencias), 1);
-				$Form_Inputs->form_input_disabled('Valor Unitario','Unitario', Cantidades_decimales_justos($_SESSION['productos_traspasoempresa_productos'][$_GET['editProd']]['ValorEgreso']), 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+				$Form_Inputs->form_input_disabled('Existencias','Existencias', Cantidades_decimales_justos($Total_existencias));
+				$Form_Inputs->form_input_disabled('Valor Unitario','Unitario', Cantidades_decimales_justos($_SESSION['productos_traspasoempresa_productos'][$_GET['editProd']]['ValorEgreso']));
 				$Form_Inputs->form_input_hidden('ValorEgreso', Cantidades_decimales_justos($_SESSION['productos_traspasoempresa_productos'][$_GET['editProd']]['ValorEgreso']), 2);
 				
 				echo prod_print_venta($bodega, 'ValorEgreso', 'productos_listado','bodegas_productos_facturacion_existencias', 
@@ -468,7 +468,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 6, 2);			
@@ -676,7 +676,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 6, 2);			

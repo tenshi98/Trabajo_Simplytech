@@ -318,8 +318,8 @@ array_push( $arrPuntos,$row );
 						<?php 
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
-						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowUbicacion['Latitud'], 1);
-						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowUbicacion['Longitud'], 1);
+						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowUbicacion['Latitud']);
+						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowUbicacion['Longitud']);
 						
 						$Form_Inputs->form_input_hidden('Latitud', $rowUbicacion['Latitud'], 2);
 						$Form_Inputs->form_input_hidden('Longitud', $rowUbicacion['Longitud'], 2);
@@ -650,8 +650,8 @@ array_push( $arrZonas,$row );
 						<?php 
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
-						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', '', 1);
-						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', '', 1);
+						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', '');
+						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', '');
 						
 						$Form_Inputs->form_input_hidden('Latitud', 0, 2);
 						$Form_Inputs->form_input_hidden('Longitud', 0, 2);

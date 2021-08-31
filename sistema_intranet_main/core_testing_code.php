@@ -597,8 +597,8 @@ array_push( $arrZonas,$row );
 						
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
-						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $Latitud, 1);
-						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $Longitud, 1);
+						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $Latitud);
+						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $Longitud);
 						
 						$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 0, '', $dbConn);	
 						$Form_Inputs->form_input_number('Velocidad','GeoVelocidad', $x3, 2);

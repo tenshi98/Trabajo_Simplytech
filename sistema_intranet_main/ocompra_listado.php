@@ -522,16 +522,16 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				/****************************/
-				$Form_Inputs->form_input_disabled('Nombre','Nombre_fake', $x1, 1);
-				$Form_Inputs->form_input_disabled('Cantidad de dias','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_input_disabled('Nombre','Nombre_fake', $x1);
+				$Form_Inputs->form_input_disabled('Cantidad de dias','Cantidad_fake', $x2);
 				/****************************/
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_otros'][$_GET['editOtros']]['idOtros'], 2);
 				
 				//if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
-				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_otros'][$_GET['editOtros']]['vUnitario']), 1);
+				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_otros'][$_GET['editOtros']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['ocompra_otros'][$_GET['editOtros']]['vUnitario']), 2);
 				
@@ -590,8 +590,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '');
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
@@ -639,14 +639,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				/****************************/
 				$Form_Inputs->form_select_disabled('Servicio','idServicio_fake', $x1, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', $dbConn);
-				$Form_Inputs->form_input_disabled('Cantidad de dias','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_input_disabled('Cantidad de dias','Cantidad_fake', $x2);
 				/****************************/
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_servicios'][$_GET['editServicios']]['idServicio'], 2);
 				
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_servicios'][$_GET['editServicios']]['vUnitario']), 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_servicios'][$_GET['editServicios']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['ocompra_servicios'][$_GET['editServicios']]['vUnitario']), 2);
 				
@@ -706,7 +706,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
@@ -750,13 +750,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				/****************************/
 				$Form_Inputs->form_select_disabled('Equipos','idEquipo_fake', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
-				$Form_Inputs->form_input_disabled('Cantidad de dias','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_input_disabled('Cantidad de dias','Cantidad_fake', $x2);
 				/****************************/
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_arriendos'][$_GET['editArriendo']]['idEquipo'], 2);
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_arriendos'][$_GET['editArriendo']]['vUnitario']), 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_arriendos'][$_GET['editArriendo']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['ocompra_arriendos'][$_GET['editArriendo']]['vUnitario']), 2);
 				
@@ -817,7 +817,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
@@ -914,15 +914,15 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				/****************************/
 				$Form_Inputs->form_select_disabled('Insumo','idProducto_fake', $x1, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, $dbConn);
-				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2);
 				/****************************/
 				
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_insumos'][$_GET['editIns']]['idProducto'], 2);
 				
 				if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed'], 1);
-				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_insumos'][$_GET['editIns']]['vUnitario']), 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_insumos'][$_GET['editIns']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['ocompra_insumos'][$_GET['editIns']]['vUnitario']), 2);
 				
@@ -1008,9 +1008,9 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '', 1);
-				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '');
+				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '');
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
@@ -1105,15 +1105,15 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				/****************************/
 				$Form_Inputs->form_select_disabled('Producto','idProducto_fake', $x1, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, $dbConn);
-				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2, 1);
+				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2);
 				/****************************/
 				
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_productos'][$_GET['editProd']]['idProducto'], 2);
 				
 				if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed'], 1);
-				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov, 1);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_productos'][$_GET['editProd']]['vUnitario']), 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_productos'][$_GET['editProd']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['ocompra_productos'][$_GET['editProd']]['vUnitario']), 2);
 				
@@ -1198,9 +1198,9 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '', 1);
-				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '', 1);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '');
+				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '');
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
@@ -1250,7 +1250,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				
@@ -1739,7 +1739,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);

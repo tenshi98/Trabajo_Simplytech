@@ -229,7 +229,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x5, 2);
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('password', 1234, 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);	 

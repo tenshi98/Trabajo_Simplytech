@@ -188,7 +188,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad_eg', $x2, 2);
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['arriendos_ing_nc_productos'][$_GET['editProd']]['ValorIngreso']), 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['arriendos_ing_nc_productos'][$_GET['editProd']]['ValorIngreso']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['arriendos_ing_nc_productos'][$_GET['editProd']]['ValorIngreso']), 2);
 				
@@ -234,7 +234,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad_eg', $x2, 2);
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
@@ -396,7 +396,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 11, 2);			
@@ -878,7 +878,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_join_filter('Bodega origen','idBodega', $x4, 2, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $z, $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 11, 2);			

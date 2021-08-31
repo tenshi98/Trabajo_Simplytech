@@ -173,7 +173,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				echo '<h3 class="register-heading">Datos Apoderado</h3>';
 				$Form_Inputs->form_input_icon('Email de notificacion', 'email_noti', $x4, 2,'fa fa-envelope-o');
 						
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('F_Ingreso', fecha_actual(), 2);			
 				$Form_Inputs->form_input_hidden('idEstadoFidelizacion', 1, 2);			

@@ -119,7 +119,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 											 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x9, 1,'fa fa-map');	 
 					
-					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idAlumno', $_GET['id'], 2);
 					?>

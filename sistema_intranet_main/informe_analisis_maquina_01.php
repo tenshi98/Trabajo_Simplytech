@@ -854,7 +854,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_date('Fecha Muestreo Termino','f_termino', $x4, 2);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>        
 	   

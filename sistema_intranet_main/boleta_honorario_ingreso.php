@@ -154,7 +154,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				$Form_Inputs->form_textarea('Descripcion','Nombre', $x1, 2, 160);
 				//Si existe la OC valor no se modifica
 				if(isset($_SESSION['boleta_ing_servicios'][$_GET['editOtros']]['idExistencia'])&&$_SESSION['boleta_ing_servicios'][$_GET['editOtros']]['idExistencia']!=''){
-					$Form_Inputs->form_input_disabled('Valor Total Neto','vTotal_fake', $x2, 1);
+					$Form_Inputs->form_input_disabled('Valor Total Neto','vTotal_fake', $x2);
 				}else{
 					$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
 				}
@@ -240,7 +240,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				$Form_Inputs->form_input_number('Numero Orden Compra', 'idOcompra', $x5, 1);
 
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 1, 2);
@@ -475,7 +475,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
 				$Form_Inputs->form_input_number('Numero Orden Compra', 'idOcompra', $x5, 1);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 1, 2);

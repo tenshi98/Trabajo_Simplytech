@@ -237,7 +237,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 						$Form_Inputs->form_date('Fecha de Pago','fechaPago', $x1, 2);
 						$Form_Inputs->form_select('Documento de Pago','idTipoPago', $x2, 2, 'idTipoPago', 'Nombre', 'aguas_facturacion_listado_detalle_tipo_pago', 0, '', $dbConn);
 						$Form_Inputs->form_input_number('N° Documento', 'nDocPago', $x3, 1);
-						$Form_Inputs->form_input_disabled('Total a Pagar','fake_emp', Valores($calculo, 0), 1);
+						$Form_Inputs->form_input_disabled('Total a Pagar','fake_emp', Valores($calculo, 0));
 						$Form_Inputs->form_values('Monto Pagado', 'montoPago', $x4, 2);
 						
 						$Form_Inputs->form_input_hidden('idUsuarioPago', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -550,7 +550,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z, 'ORDER BY Identificador ASC', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2);
 				?>
 								

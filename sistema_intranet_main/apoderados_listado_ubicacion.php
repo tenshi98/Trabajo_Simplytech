@@ -170,8 +170,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<?php 
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
-						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowdata['GeoLatitud'], 1);
-						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowdata['GeoLongitud'], 1);
+						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowdata['GeoLatitud']);
+						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowdata['GeoLongitud']);
 						
 						$Form_Inputs->form_input_hidden('GeoLatitud', $rowdata['GeoLatitud'], 2);
 						$Form_Inputs->form_input_hidden('GeoLongitud', $rowdata['GeoLongitud'], 2);

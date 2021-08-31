@@ -113,7 +113,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map'); 
 					$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 					
-					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idLaboratorio', $_GET['id'], 2);
 					?>

@@ -105,7 +105,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 2, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 0, '', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCorreos', $_GET['id'], 2);
 				?>
@@ -152,7 +152,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 2, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 0, '', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 

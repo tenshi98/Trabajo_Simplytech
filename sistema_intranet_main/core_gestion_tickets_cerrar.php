@@ -89,7 +89,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Descripcion Cierre','DescripcionCierre', $x1, 2, 160);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idTicket', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 2, 2);
 				$Form_Inputs->form_input_hidden('idUsuarioAsignado', $_SESSION['usuario']['basic_data']['idUsuario'], 2);

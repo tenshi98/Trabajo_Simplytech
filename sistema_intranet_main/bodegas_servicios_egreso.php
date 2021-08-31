@@ -291,7 +291,7 @@ if ( ! empty($_GET['editDescuentos']) ) {  ?>
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad_eg', $x2, 2);
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['servicios_egr_productos'][$_GET['editProd']]['ValorIngreso']), 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['servicios_egr_productos'][$_GET['editProd']]['ValorIngreso']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['servicios_egr_productos'][$_GET['editProd']]['ValorIngreso']), 2);
 				
@@ -336,7 +336,7 @@ if ( ! empty($_GET['editDescuentos']) ) {  ?>
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad_eg', $x2, 2);
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '', 1);
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
@@ -508,7 +508,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_post_data(1, 'Solo las empresas que no sean contribuyentes del Impuesto al Valor Agregado (IVA) y las que gocen de exención del IVA de conformidad a lo dispuesto en los Artículos 12 y 13 de la <a href="http://www.sii.cl/pagina/jurisprudencia/legislacion/basica/dl825.doc">Ley del IVA</a> pueden elegir la opcion <strong>SI</strong>, para el resto es de uso obligatorio la opcion <strong>NO</strong>. ');
 				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 2, 2);	
@@ -959,7 +959,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_post_data(1, 'Solo las empresas que no sean contribuyentes del Impuesto al Valor Agregado (IVA) y las que gocen de exención del IVA de conformidad a lo dispuesto en los Artículos 12 y 13 de la <a href="http://www.sii.cl/pagina/jurisprudencia/legislacion/basica/dl825.doc">Ley del IVA</a> pueden elegir la opcion <strong>SI</strong>, para el resto es de uso obligatorio la opcion <strong>NO</strong>. ');
 				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 2, 2);			

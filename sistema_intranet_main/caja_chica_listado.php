@@ -181,7 +181,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_number('MontoProgramado', 'MontoProgramado', $x2, 2);
 				
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 				

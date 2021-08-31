@@ -935,7 +935,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Utilizar Itemizado','idOpcionItem', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Estado Aprobacion','idAprobado', $x12, 2, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
 					
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idLicitacion', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);		 
 				?> 
@@ -1039,7 +1039,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select('Bodega Insumos','idBodegaIns', $x9, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Utilizar Itemizado','idOpcionItem', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idAprobado', 2, 2);
 				$Form_Inputs->form_input_hidden('idCliente', $_GET['id'], 2);

@@ -352,7 +352,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x14, 1);
 				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x15, 1);
 				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x16, 1);
-				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x17, 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x17);
 				$Form_Inputs->form_input_text('Unidad de Medida','idUml', $x18, 1);
 				$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
 				$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
@@ -999,7 +999,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x14, 1);
 				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x15, 1);
 				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x16, 1);
-				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x17, 1);
+				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x17);
 				$Form_Inputs->form_input_text('Unidad de Medida','idUml', $x18, 1);
 				$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
 				$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);

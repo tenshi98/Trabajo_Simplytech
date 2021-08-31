@@ -129,7 +129,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_select('Tipo Licencia','idTipoLicencia', $x13, 2, 'idTipoLicencia', 'Nombre', 'core_tipos_licencia_conducir', 0, '', $dbConn);
 					$Form_Inputs->form_values('Pretenciones','SueldoLiquido', $x14, 1);
 					
-					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idPostulante', $_GET['id'], 2);
 					?>

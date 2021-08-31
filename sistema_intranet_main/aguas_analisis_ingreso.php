@@ -181,10 +181,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				
 				//en caso de ser relacionado
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x17, 2, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z.' AND aguas_clientes_listado.idEstado=1', 'ORDER BY Identificador ASC', $dbConn);
-				$Form_Inputs->form_input_disabled('Sector','idSector_fake1', '', 1);
-				$Form_Inputs->form_input_disabled('UTM norte','UTM_norte_fake1', '', 1);
-				$Form_Inputs->form_input_disabled('UTM este','UTM_este_fake1', '', 1);
-				$Form_Inputs->form_input_disabled('Tipo de Medicion','idPuntoMuestreo_fake1', '', 1);
+				$Form_Inputs->form_input_disabled('Sector','idSector_fake1', '');
+				$Form_Inputs->form_input_disabled('UTM norte','UTM_norte_fake1', '');
+				$Form_Inputs->form_input_disabled('UTM este','UTM_este_fake1', '');
+				$Form_Inputs->form_input_disabled('Tipo de Medicion','idPuntoMuestreo_fake1', '');
 				$Form_Inputs->form_input_hidden('idSector_fake2', '', 2);
 				$Form_Inputs->form_input_hidden('UTM_norte_fake2', '', 2);
 				$Form_Inputs->form_input_hidden('UTM_este_fake2', '', 2);
@@ -194,7 +194,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_tittle(3, 'Datos del Analisis');
 				$Form_Inputs->form_select('Estado','idEstado', $x18, 2, 'idEstado', 'Nombre', 'aguas_analisis_aguas_estado', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x19, 1, 160);
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('codigoProceso', 1, 2);
 				$Form_Inputs->form_input_hidden('codigoArchivo', 1, 2);
@@ -491,10 +491,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				
 				//en caso de ser relacionado
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x17, 2, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z.' AND aguas_clientes_listado.idEstado=1', 'ORDER BY Identificador ASC', $dbConn);
-				$Form_Inputs->form_input_disabled('Sector','idSector_fake1', '', 1);
-				$Form_Inputs->form_input_disabled('UTM norte','UTM_norte_fake1', '', 1);
-				$Form_Inputs->form_input_disabled('UTM este','UTM_este_fake1', '', 1);
-				$Form_Inputs->form_input_disabled('Tipo de Medicion','idPuntoMuestreo_fake1', '', 1);
+				$Form_Inputs->form_input_disabled('Sector','idSector_fake1', '');
+				$Form_Inputs->form_input_disabled('UTM norte','UTM_norte_fake1', '');
+				$Form_Inputs->form_input_disabled('UTM este','UTM_este_fake1', '');
+				$Form_Inputs->form_input_disabled('Tipo de Medicion','idPuntoMuestreo_fake1', '');
 				$Form_Inputs->form_input_hidden('idSector_fake2', '', 2);
 				$Form_Inputs->form_input_hidden('UTM_norte_fake2', '', 2);
 				$Form_Inputs->form_input_hidden('UTM_este_fake2', '', 2);
@@ -504,7 +504,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_tittle(3, 'Datos del Analisis');
 				$Form_Inputs->form_select('Estado','idEstado', $x18, 2, 'idEstado', 'Nombre', 'aguas_analisis_aguas_estado', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x19, 1, 160);
-				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial'], 1);
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('codigoProceso', 1, 2);
 				$Form_Inputs->form_input_hidden('codigoArchivo', 1, 2);
