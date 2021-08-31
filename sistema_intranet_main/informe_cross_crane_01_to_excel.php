@@ -28,31 +28,43 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /**********************************************************/
-$z = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
+$SIS_where = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
-	$z.=" AND telemetria_listado_errores.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
+	$SIS_where.=" AND telemetria_listado_errores.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
 }elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z.=" AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.=" AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $z.=" AND telemetria_listado_errores.idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $SIS_where.=" AND telemetria_listado_errores.idTelemetria=".$_GET['idTelemetria'];}
+//Filtro por unidad medida de energia electrica
+$SIS_where.=" AND (telemetria_listado_errores.idUniMed=4 OR telemetria_listado_errores.idUniMed=5 OR telemetria_listado_errores.idUniMed=10)";
 //Agrupo
-$w1 =" GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Descripcion, telemetria_listado_errores.Fecha";
+$w1 =" GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Descripcion, telemetria_listado_errores.Fecha, telemetria_listado_errores.idUniMed";
 $w2 =" GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Fecha";
-
-$arrEquipos1 = array();
-$arrEquipos1 = db_select_array (false, '
+/*********************************************************/									
+$SIS_query = '
 COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
 telemetria_listado.Nombre AS Equipo,
 telemetria_listado_errores.Fecha,
 telemetria_listado_errores.Descripcion,
-telemetria_listado_errores.Valor_min,
-telemetria_listado_errores.Valor_max', 'telemetria_listado_errores', 'LEFT JOIN telemetria_listado ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria', $z.$w1, 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripcion ASC, telemetria_listado_errores.Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos1');
+telemetria_listado_unidad_medida.Nombre AS Unimed,
+MIN(telemetria_listado_errores.Valor) AS Valor_min,
+MAX(telemetria_listado_errores.Valor) AS Valor_max';
+$SIS_join  = '
+LEFT JOIN telemetria_listado               ON telemetria_listado.idTelemetria             = telemetria_listado_errores.idTelemetria
+LEFT JOIN telemetria_listado_unidad_medida ON telemetria_listado_unidad_medida.idUniMed   = telemetria_listado_errores.idUniMed';
+$SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripcion ASC, telemetria_listado_errores.Fecha ASC';	
+$arrEquipos1 = array();
+$arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where.$w1, $SIS_order, $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos1');
 
-$arrEquipos2 = array();
-$arrEquipos2 = db_select_array (false, '
+/*********************************************************/	
+$SIS_query = '
 COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
 telemetria_listado.Nombre AS Equipo,
-telemetria_listado_errores.Fecha', 'telemetria_listado_errores', 'LEFT JOIN telemetria_listado ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria', $z.$w2, 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos2');
+telemetria_listado_errores.Fecha';
+$SIS_join  = 'LEFT JOIN telemetria_listado ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';
+$SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Fecha ASC';
+$arrEquipos2 = array();
+$arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where.$w2, $SIS_order, $dbConn, 'arrEquipos2', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos2');
 
 
 // Create new PHPExcel object
@@ -147,20 +159,14 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('C'.$nn, 'Fecha')
             ->setCellValue('D'.$nn, 'N° Registros')
             ->setCellValue('E'.$nn, 'Minimo Observado')
-            ->setCellValue('F'.$nn, 'Maximo Observado');
+            ->setCellValue('F'.$nn, 'Maximo Observado')
+            ->setCellValue('G'.$nn, 'Unidad Medida');
             
          
 
 //variables
 $nn     = 3;
-$ObsMin = 9999999;
-$ObsMax = 0;
 
-//Obtengo el minimo y maximo
-foreach ($arrEquipos1 as $equip) {
-	if(){}
-	if(){}
-}
 foreach ($arrEquipos1 as $equip) {
 	
 	$objPHPExcel->setActiveSheetIndex(0)
@@ -169,7 +175,8 @@ foreach ($arrEquipos1 as $equip) {
 				->setCellValue('C'.$nn, fecha_estandar($equip['Fecha']))
 				->setCellValue('D'.$nn, $equip['Cuenta'])
 				->setCellValue('E'.$nn, Cantidades($equip['Valor_min'], 2))
-				->setCellValue('F'.$nn, Cantidades($equip['Valor_max'], 2));
+				->setCellValue('F'.$nn, Cantidades($equip['Valor_max'], 2))
+				->setCellValue('G'.$nn, $equip['Unimed']);
 				
 	//Se suma 1
 	$nn++;
@@ -183,15 +190,16 @@ $objPHPExcel->getActiveSheet(0)->getColumnDimension('C')->setWidth(12);
 $objPHPExcel->getActiveSheet(0)->getColumnDimension('D')->setWidth(12);
 $objPHPExcel->getActiveSheet(0)->getColumnDimension('E')->setWidth(20);
 $objPHPExcel->getActiveSheet(0)->getColumnDimension('F')->setWidth(20);
+$objPHPExcel->getActiveSheet(0)->getColumnDimension('G')->setWidth(20);
 //negrita
-$objPHPExcel->getActiveSheet(0)->getStyle('A1:F2')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet(0)->getStyle('A1:G2')->getFont()->setBold(true);
 //Coloreo celdas
-$objPHPExcel->getActiveSheet(0)->getStyle('A1:F1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
-$objPHPExcel->getActiveSheet(0)->getStyle('A2:F2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
+$objPHPExcel->getActiveSheet(0)->getStyle('A1:G1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
+$objPHPExcel->getActiveSheet(0)->getStyle('A2:G2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
 //coloreo fuentes
-$objPHPExcel->getActiveSheet(0)->getStyle('A2:F2')->getFont()->getColor()->setRGB('FFFFFF');
+$objPHPExcel->getActiveSheet(0)->getStyle('A2:G2')->getFont()->getColor()->setRGB('FFFFFF');
 //Pongo los bordes
-$objPHPExcel->getActiveSheet(0)->getStyle('A1:F'.$nn)->applyFromArray(
+$objPHPExcel->getActiveSheet(0)->getStyle('A1:G'.$nn)->applyFromArray(
     array(
         'borders' => array(
             'allborders' => array(
