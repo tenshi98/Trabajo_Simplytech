@@ -4,16 +4,8 @@ $SIS_where = ' idEstado=1';
 $SIS_where.= ' AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where.= ' AND idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 
-//consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$query = "SELECT COUNT(idNoti) AS Notificacion FROM principal_notificaciones_ver ".$z; 
-$resultado = mysqli_query($dbConn, $query);	
-$notificaciones = mysqli_fetch_assoc($resultado);
-
-$nNoti = db_select_nrows (false, 'idNoti', 
-'principal_notificaciones_ver', 
-'', 
-$SIS_where, 
-$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'nNoti');
+//Busco cuantos mensajes hay
+$nNoti = db_select_nrows (false, 'idNoti', 'principal_notificaciones_ver', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'nNoti');
 ?>
 
 
