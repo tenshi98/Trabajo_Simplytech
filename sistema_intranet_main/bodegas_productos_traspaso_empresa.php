@@ -465,7 +465,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_depend1('Empresa Destino','idSistemaDestino', $x3, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, 0,
 								 'Bodega Destino','idBodegaDestino', $x4, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, 0, 
 								 $dbConn, 'form1');
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -673,7 +673,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 								 'Bodega Destino','idBodegaDestino', $x4, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, 0, 
 								 $dbConn, 'form1');
 					 
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -855,7 +855,7 @@ array_push( $arrTipo,$row );
 								 'Bodega Destino','idBodegaDestino', $x6, 1, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, 0, 
 								 $dbConn, 'form1');
 					 
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x7, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x7, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);

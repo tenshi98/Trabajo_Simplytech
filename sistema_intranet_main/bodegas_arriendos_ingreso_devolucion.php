@@ -232,7 +232,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x4, 1);
 				$Form_Inputs->form_date('F Devolucion Estimada','Devolucion_fecha', $x5, 1);
 				$Form_Inputs->form_select_join_filter('Bodega destino','idBodega', $x6, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $y, $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x7, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x7, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);

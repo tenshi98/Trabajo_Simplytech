@@ -75,7 +75,7 @@ if ( ! empty($_GET['cancel_ejecution']) ) { ?>
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 2, 160);		
+				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 2);		
 				
 				
 				$Form_Inputs->form_input_hidden('f_ejecucion', '0000-00-00', 2);
@@ -146,7 +146,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_time('Hora inicio cierre','horaTermino', $x2, 2, 2);
 				$Form_Inputs->form_date('Fecha termino  cierre','f_termino_fin', $x3, 2);
 				$Form_Inputs->form_time('Hora termino  cierre','horaTermino_fin', $x4, 2, 2);
-				$Form_Inputs->form_textarea('Observacion','Observacion', $x5, 1, 160);		
+				$Form_Inputs->form_textarea('Observacion','Observacion', $x5, 1);		
 				
 				
 				$Form_Inputs->form_input_hidden('idEstado', 3, 2);

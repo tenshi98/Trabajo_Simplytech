@@ -129,7 +129,7 @@ $rowdatax = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('idEstado','idEstado', $x3, 2, 'idEstado', 'Nombre', 'core_estado_estudio', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x4, 2);
 				$Form_Inputs->form_input_text('Casa de Estudios', 'CasaEstudios', $x5, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x6, 1, 160);						 
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x6, 1);						 
 				
 				$Form_Inputs->form_input_hidden('idEstudioPost', $_GET['edit'], 2);
 				?>
@@ -174,7 +174,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select('idEstado','idEstado', $x3, 2, 'idEstado', 'Nombre', 'core_estado_estudio', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x4, 2);
 				$Form_Inputs->form_input_text('Casa de Estudios', 'CasaEstudios', $x4, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 1, 160);	
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 1);	
 		
 				$Form_Inputs->form_input_hidden('idPostulante', $_GET['id'], 2);
 				?>

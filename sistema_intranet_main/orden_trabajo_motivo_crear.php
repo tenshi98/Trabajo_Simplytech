@@ -163,7 +163,7 @@ if ( ! empty($_GET['cancel']) ) {  ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Motivo Cancelacion','ObservacionesCancel', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Motivo Cancelacion','ObservacionesCancel', $x1, 2);
 				
 				
 				$Form_Inputs->form_input_hidden('idOT', $_GET['cancel'], 2);
@@ -322,7 +322,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										  'Nivel 23','idLevel_23',$x23 ,1,'idLevel_23','Nombre','licitacion_listado_level_23',0,0,
 										  'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','licitacion_listado_level_24',0,0,
 										  $dbConn, 'form1');
-				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1, 160);
+				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1);
 				
 				$Form_Inputs->form_input_hidden('idEstadoTarea', 1, 2);
 				
@@ -637,7 +637,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x7, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x8, 2, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x9, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x10, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x10, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -891,7 +891,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x8, 2, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x9, 2);
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x10, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x11, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x11, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);

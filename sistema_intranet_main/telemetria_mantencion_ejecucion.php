@@ -82,7 +82,7 @@ if ( ! empty($_GET['edit']) ) { ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['edit'], 2);
 				?>

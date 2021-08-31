@@ -109,7 +109,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_select_filter('Bono Asignado','idBonoTemporal', $x3, 2, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Monto','Monto', $x4, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -162,7 +162,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_select_filter('Bono Asignado','idBonoTemporal', $x3, 2, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Monto','Monto', $x4, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

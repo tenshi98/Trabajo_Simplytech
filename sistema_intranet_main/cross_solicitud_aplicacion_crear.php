@@ -212,7 +212,7 @@ $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_progr
 				$Form_Inputs->form_time('Hora inicio requerido','horaProg', $x3, 2, 1);
 				$Form_Inputs->form_date('Fecha termino requerido','f_programacion_fin', $x4, 2);
 				$Form_Inputs->form_time('Hora termino requerido','horaProg_fin', $x5, 2, 1);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 2);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -341,7 +341,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0);
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
-				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1);
 				
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
 				$Form_Inputs->form_input_hidden('idInterno3', $_GET['edit_prod'], 2);
@@ -440,7 +440,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0);
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
-				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1);
 				
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
 				?>
@@ -1295,7 +1295,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_time('Hora inicio requerido','horaProg', $x9, 2, 1);
 				$Form_Inputs->form_date('Fecha termino requerido','f_programacion_fin', $x10, 2);
 				$Form_Inputs->form_time('Hora termino requerido','horaProg_fin', $x11, 2, 1);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 2);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -2251,7 +2251,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_time('Hora inicio requerido','horaProg', $x9, 2, 1);
 				$Form_Inputs->form_date('Fecha termino requerido','f_programacion_fin', $x10, 2);
 				$Form_Inputs->form_time('Hora termino requerido','horaProg_fin', $x11, 2, 1);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 2);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);

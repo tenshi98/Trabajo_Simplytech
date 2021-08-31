@@ -105,9 +105,9 @@ mysqli_free_result($resultado);
 				$Form_Inputs->form_input_icon('Direccion web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
 				$Form_Inputs->form_visualizacion('Visualizacion','visualizacion', $x5, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, $dbConn);
 				$Form_Inputs->form_input_number('Version del Archivo', 'Version', $x6, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x7, 2, 160);
-				$Form_Inputs->form_textarea('Habilitacion de tabs Usuario','Habilita', $x8, 1, 160);
-				$Form_Inputs->form_textarea('Habilitacion de tabs Principal','Principal', $x9, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x7, 2);
+				$Form_Inputs->form_textarea('Habilitacion de tabs Usuario','Habilita', $x8, 1);
+				$Form_Inputs->form_textarea('Habilitacion de tabs Principal','Principal', $x9, 1);
 				$Form_Inputs->form_select_n_auto('Limite Nivel','Level_Limit', $x10, 2, 1, 4);
 				
 				$Form_Inputs->form_input_hidden('idAdmpm', $_GET['id'], 2);
@@ -167,9 +167,9 @@ mysqli_free_result($resultado);
 				$Form_Inputs->form_input_icon('Direccion web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
 				$Form_Inputs->form_visualizacion('Visualizacion','visualizacion', $x5, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, $dbConn);
 				$Form_Inputs->form_input_number('Version del Archivo', 'Version', $x6, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x7, 2, 160);
-				$Form_Inputs->form_textarea('Habilitacion de tabs','Habilita', $x8, 1, 160);
-				$Form_Inputs->form_textarea('Habilitacion de tabs Principal','Principal', $x9, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x7, 2);
+				$Form_Inputs->form_textarea('Habilitacion de tabs','Habilita', $x8, 1);
+				$Form_Inputs->form_textarea('Habilitacion de tabs Principal','Principal', $x9, 1);
 				$Form_Inputs->form_select_n_auto('Limite Nivel','Level_Limit', $x10, 2, 1, 4);
 				?>
 			   

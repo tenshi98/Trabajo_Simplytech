@@ -379,7 +379,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				
 				
 				$Form_Inputs->form_tittle(3, 'Otros');
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x29, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x29, 1);
 				
 				
 
@@ -733,7 +733,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
 				
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1);
 				
 				
 

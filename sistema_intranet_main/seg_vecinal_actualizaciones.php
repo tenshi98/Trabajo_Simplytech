@@ -99,7 +99,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x2, 1);
 				
 				$Form_Inputs->form_input_hidden('idLog', $_GET['id'], 2);
 				?>
@@ -140,7 +140,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x2, 1);
 				?>
 	 
 				<div class="form-group">

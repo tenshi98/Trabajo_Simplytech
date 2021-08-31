@@ -98,7 +98,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								//se dibujan los inputs
 								$Form_Inputs = new Form_Inputs();
 								$Form_Inputs->form_input_icon('Email', 'email', $x1, 2,'fa fa-envelope-o');
-								$Form_Inputs->form_textarea('Texto','texto', $x2, 2, 160);
+								$Form_Inputs->form_textarea('Texto','texto', $x2, 2);
 								
 								$Form_Inputs->form_input_hidden('email_principal', $rowEmpresa['email_principal'], 2);
 								
@@ -130,7 +130,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								//se dibujan los inputs
 								$Form_Inputs = new Form_Inputs();
 								$Form_Inputs->form_input_icon('Email', 'email', $x1, 2,'fa fa-envelope-o');
-								$Form_Inputs->form_textarea('Texto','texto', $x2, 2, 160);
+								$Form_Inputs->form_textarea('Texto','texto', $x2, 2);
 								
 								$Form_Inputs->form_input_hidden('email_principal', $rowEmpresa['email_principal'], 2);
 								
@@ -164,7 +164,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								//se dibujan los inputs
 								$Form_Inputs = new Form_Inputs();
 								$Form_Inputs->form_input_icon('Email', 'email', $x1, 2,'fa fa-envelope-o');
-								$Form_Inputs->form_textarea('Texto','texto', $x2, 2, 160);
+								$Form_Inputs->form_textarea('Texto','texto', $x2, 2);
 								
 								$Form_Inputs->form_input_icon('Gmail Usuario', 'GmailUsuario', $x3, 2,'fa fa-envelope-o');
 								$Form_Inputs->form_input_icon('Gmail Password', 'GmailPassword', $x4, 2,'fa fa-envelope-o');

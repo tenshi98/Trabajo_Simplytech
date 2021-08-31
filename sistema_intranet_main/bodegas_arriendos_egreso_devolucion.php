@@ -234,7 +234,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_date('F Devolucion Estimada','Devolucion_fecha', $x5, 1);
 				$Form_Inputs->form_select('Vendedor','idTrabajador', $x6, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
 				$Form_Inputs->form_select_join_filter('Bodega origen','idBodega', $x7, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $v, $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1);
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>

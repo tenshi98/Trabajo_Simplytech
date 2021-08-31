@@ -109,14 +109,14 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Vecino','idCliente', $x1, 2, 'idCliente', 'Nombre', 'seg_vecinal_clientes_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Evento','idTipo', $x2, 2, 'idTipo', 'Nombre', 'seg_vecinal_eventos_tipos', 0, '',$dbConn);
-				$Form_Inputs->form_textarea('Caracteristicas Agresor', 'DescripcionTipo', $x3, 2, 160);
+				$Form_Inputs->form_textarea('Caracteristicas Agresor', 'DescripcionTipo', $x3, 2);
 				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x4, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												  'Comuna','idComuna', $x5, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x6, 2,'fa fa-map');
 				$Form_Inputs->form_date('Fecha','Fecha', $x7, 2);
 				$Form_Inputs->form_time('Hora','Hora', $x8, 2, 1);
-				$Form_Inputs->form_textarea('Descripcion Situacion', 'DescripcionSituacion', $x9, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion Situacion', 'DescripcionSituacion', $x9, 2);
 				$Form_Inputs->form_select('Validado','idValidado', $x10, 2, 'idValidado', 'Nombre', 'core_seguridad_validacion', 0, '',$dbConn);
 				
 				$Form_Inputs->form_input_hidden('idEvento', $_GET['id'], 2);

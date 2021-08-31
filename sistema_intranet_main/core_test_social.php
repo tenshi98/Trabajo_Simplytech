@@ -81,7 +81,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 					$Form_Inputs->form_input_icon('Token', 'Token', $x1, 2,'fa fa-key');
 					$Form_Inputs->form_input_icon('InstanceId', 'InstanceId', $x2, 2,'fa fa-key');
 					$Form_Inputs->form_input_icon('Telefono', 'fono', $x3, 2,'fa fa-phone ');
-					$Form_Inputs->form_textarea('Mensaje','mensaje', $x4, 2, 160);
+					$Form_Inputs->form_textarea('Mensaje','mensaje', $x4, 2);
 								
 					$Form_Inputs->form_input_hidden('email_principal', $rowEmpresa['email_principal'], 2);
 								

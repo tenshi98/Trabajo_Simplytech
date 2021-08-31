@@ -151,7 +151,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Descripcion','Nombre', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Nombre', $x1, 2);
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
 				
 				
@@ -190,7 +190,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Descripcion','Nombre', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Nombre', $x1, 2);
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x2, 2);
 				
 
@@ -236,7 +236,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
 				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
 				$Form_Inputs->form_input_number('Numero Orden Compra', 'idOcompra', $x5, 1);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -467,7 +467,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 2);
 				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
 				$Form_Inputs->form_input_number('Numero Orden Compra', 'idOcompra', $x5, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

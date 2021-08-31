@@ -1170,7 +1170,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_n_auto('Periodo Año','Periodo_Ano', $x1, 2, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago','Pago_fecha', $x3, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -1743,7 +1743,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_n_auto('Periodo Año','Periodo_Ano', $x1, 2, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago','Pago_fecha', $x3, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

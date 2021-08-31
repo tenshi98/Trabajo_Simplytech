@@ -321,7 +321,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 										 'Egreso Pendiente','idFacturacionRelacionada', $x2, 2, 'idFacturacion', 'idFacturacion', 'caja_chica_facturacion', $w, 'ORDER BY idCajaChica ASC', 
 										 $dbConn, 'form1');
 				$Form_Inputs->form_date('Fecha Rendicion','Creacion_fecha', $x3, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -591,7 +591,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 										 $dbConn, 'form1');
 										 
 				$Form_Inputs->form_date('Fecha Rendicion','Creacion_fecha', $x3, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

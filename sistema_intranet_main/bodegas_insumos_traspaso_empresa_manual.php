@@ -462,7 +462,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_date('Fecha','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x2, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z, $dbConn);
 				$Form_Inputs->form_select('Empresa Destino','idSistemaDestino', $x3, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 2);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -662,7 +662,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_date('Fecha','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x2, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z, $dbConn);
 				$Form_Inputs->form_select('Empresa Destino','idSistemaDestino', $x3, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 2);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -838,7 +838,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_select_filter('Mes Documento','Creacion_mes', $x3, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x4, 1, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $w, $dbConn);
 				$Form_Inputs->form_select('Empresa Destino','idSistemaDestino', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);

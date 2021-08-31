@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
 				$Form_Inputs->form_input_number('Peso', 'Peso', $x3, 1);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x4, 1, 130);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x4, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -147,7 +147,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
 				$Form_Inputs->form_input_number('Peso', 'Peso', $x3, 1);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x4, 1, 130);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x4, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

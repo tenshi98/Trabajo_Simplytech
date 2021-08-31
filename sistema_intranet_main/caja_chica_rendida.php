@@ -324,7 +324,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				}
 				$Form_Inputs->form_date('Fecha Rendicion','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x3, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $x, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
 				$Form_Inputs->form_select_filter('Solicitado Por','idSolicitado', $x5, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $x, '', $dbConn);
 				$Form_Inputs->form_select_filter('Revisado Por','idRevisado', $x6, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $x, '', $dbConn);
 				$Form_Inputs->form_select_filter('Aprobado Por','idAprobado', $x7, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $x, '', $dbConn);
@@ -616,7 +616,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				}
 				$Form_Inputs->form_date('Fecha Rendicion','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x3, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $x, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
 				$Form_Inputs->form_select_filter('Solicitado Por','idSolicitado', $x5, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $x, '', $dbConn);
 				$Form_Inputs->form_select_filter('Revisado Por','idRevisado', $x6, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $x, '', $dbConn);
 				$Form_Inputs->form_select_filter('Aprobado Por','idAprobado', $x7, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $x, '', $dbConn);

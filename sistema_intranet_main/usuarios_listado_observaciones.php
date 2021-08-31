@@ -100,7 +100,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idObservacion', $_GET['edit'], 2);
 				?>
@@ -135,7 +135,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idUsuario_observado', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);

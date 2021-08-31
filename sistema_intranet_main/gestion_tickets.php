@@ -110,7 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Tipo Ticket','idTipoTicket', $x2, 2, 'idTipoTicket', 'Nombre', 'core_tipo_ticket', 0, '', $dbConn);
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x3, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -158,7 +158,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select('Tipo Ticket','idTipoTicket', $x2, 2, 'idTipoTicket', 'Nombre', 'core_tipo_ticket', 0, '', $dbConn);
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x3, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

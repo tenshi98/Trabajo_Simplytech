@@ -115,7 +115,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha inicio','Fecha', $x2, 2);
 				$Form_Inputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 2, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observacion', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x4, 1);
 				
 				if(isset($rowdata['File_Amonestacion'])&&$rowdata['File_Amonestacion']!=''){?>
         
@@ -181,7 +181,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha inicio','Fecha', $x2, 2);
 				$Form_Inputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 2, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observacion', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x4, 1);
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Amonestacion', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 				
 				

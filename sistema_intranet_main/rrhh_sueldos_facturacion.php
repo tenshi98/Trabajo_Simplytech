@@ -389,7 +389,7 @@ array_push( $arrArchivos,$row );
 				$Form_Inputs->form_input_number('Tope APV Mensual', 'TopeAPVMensual', $x10, 2);
 				$Form_Inputs->form_input_number('Tope Deposito Convenido', 'TopeDepConv', $x11, 2);
 				
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -608,7 +608,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				
 				
 				
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);

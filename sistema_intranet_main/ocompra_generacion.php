@@ -91,7 +91,7 @@ if ( ! empty($_GET['new_oc']) ) {  ?>
 				//se dibujan los inputs	
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

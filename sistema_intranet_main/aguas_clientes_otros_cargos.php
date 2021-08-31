@@ -115,7 +115,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_date('Fecha Ejecucion','FechaEjecucion', $x2, 2);
 				$Form_Inputs->form_date('Fecha Facturacion (9 del mes)','Fecha', $x3, 2);
 				$Form_Inputs->form_values('Valor','ValorCargo', $x4, 2 );
-				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x5, 1);
 				//si existe archivo se mustra previsualizador
 				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){?>
         
@@ -178,7 +178,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_date('Fecha Ejecucion','FechaEjecucion', $x2, 2);
 				$Form_Inputs->form_date('Fecha Facturacion (9 del mes)','Fecha', $x3, 2);
 				$Form_Inputs->form_values('Valor','ValorCargo', $x4, 2 );
-				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x5, 1);
 				$Form_Inputs->form_multiple_upload('Seleccionar Archivo','Archivo', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

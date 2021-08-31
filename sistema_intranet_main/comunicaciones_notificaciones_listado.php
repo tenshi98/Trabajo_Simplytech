@@ -150,7 +150,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x1, 2);
-				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x2, 2, 160);
+				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x2, 2);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -281,7 +281,7 @@ array_push( $arrNotificaciones,$row );
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x1, 1);
-				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x2, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);

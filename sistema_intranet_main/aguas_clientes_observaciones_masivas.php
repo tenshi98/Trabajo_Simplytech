@@ -102,7 +102,7 @@ alert_post_data(2,1,2, $Alert_Text);
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
 				$Form_Inputs->form_multiple_upload('Seleccionar Formulario','Formulario', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
 				$Form_Inputs->form_multiple_upload('Seleccionar Foto','Foto', 1, '"jpg", "png", "gif", "jpeg"');
 				

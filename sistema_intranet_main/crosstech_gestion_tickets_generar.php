@@ -105,7 +105,7 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 				$Form_Inputs->form_select('Area Ticket','idArea', $x2, 2, 'idArea', 'Nombre', 'crosstech_gestion_tickets_area', 0, '', $dbConn);
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x3, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2);
 				
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idTicket', $_GET['id'], 2);
@@ -153,7 +153,7 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 				$Form_Inputs->form_select('Area Ticket','idArea', $x2, 2, 'idArea', 'Nombre', 'crosstech_gestion_tickets_area', 0, '', $dbConn);
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x3, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2);
 				
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);

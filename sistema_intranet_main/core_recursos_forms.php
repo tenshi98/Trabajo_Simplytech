@@ -195,8 +195,8 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 				$Form_Inputs->form_color_picker( 'color picker', 'form_input_color2', $x32, 2);
 				
 				$Form_Inputs->form_tittle(3, 'Grandes Textos');
-				$Form_Inputs->form_textarea('texto', 'form_textarea1', $x33, 1, 160);
-				$Form_Inputs->form_textarea('texto', 'form_textarea2', $x34, 2, 160);
+				$Form_Inputs->form_textarea('texto', 'form_textarea1', $x33, 1);
+				$Form_Inputs->form_textarea('texto', 'form_textarea2', $x34, 2);
 				$Form_Inputs->form_ckeditor('ckeditor','form_ckeditor1', $x35, 1, 2);
 				$Form_Inputs->form_ckeditor('ckeditor','form_ckeditor2', $x36, 2, 2);
 				

@@ -294,7 +294,7 @@ array_push( $arrGrupo,$row );
 										break;
 									//Texto Libre sin Validacion
 									case 7:
-										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 160);
+										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
 										break;
 									//Seleccion 1 a 3
 									case 8:
@@ -514,7 +514,7 @@ foreach ($arrPermisos as $prod) {
 										break;
 									//Texto Libre
 									case 7:
-										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $sx_val, 1, 160);
+										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $sx_val, 1);
 										break;
 									//Seleccion 1 a 3
 									case 8:
@@ -732,7 +732,7 @@ foreach ($arrPermisos as $prod) {
 										break;
 									//Texto Libre
 									case 7:
-										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 160);
+										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
 										break;
 									//Seleccion 1 a 3
 									case 8:
@@ -960,7 +960,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
 							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
 				
 				
 				
@@ -1316,7 +1316,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 							                 $dbConn, 'form1');
 				
 				
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
 				
 				
 

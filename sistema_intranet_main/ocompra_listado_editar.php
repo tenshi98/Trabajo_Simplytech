@@ -482,7 +482,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x2, 2);
 				
 				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editBoletaEmp'], 2);
@@ -521,7 +521,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x2, 2);
 				
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
@@ -584,7 +584,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $z, '', $dbConn);
 				$Form_Inputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x4, 2);
 				
 				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editBoleta'], 2);
@@ -629,7 +629,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $z, '', $dbConn);
 				$Form_Inputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x4, 2);
 				
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
@@ -1608,7 +1608,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);

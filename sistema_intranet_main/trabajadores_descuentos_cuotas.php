@@ -188,7 +188,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_filter('Tipo','idTipo', $x3, 2, 'idTipo', 'Nombre', 'trabajadores_descuentos_cuotas_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Monto', 'Monto', $x4, 2);
 				$Form_Inputs->form_select_n_auto('N° Cuotas','N_Cuotas', $x5, 2, 1, 72);	
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -417,7 +417,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_filter('Tipo','idTipo', $x3, 2, 'idTipo', 'Nombre', 'trabajadores_descuentos_cuotas_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Monto', 'Monto', $x4, 2);
 				$Form_Inputs->form_select_n_auto('N° Cuotas','N_Cuotas', $x5, 2, 1, 72);	
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);

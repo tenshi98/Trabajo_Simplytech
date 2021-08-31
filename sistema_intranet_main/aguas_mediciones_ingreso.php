@@ -110,7 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	 ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Facturacion','Fecha', $x1, 2);
-				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x2, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -389,7 +389,7 @@ alert_post_data(2,1,2, $Alert_Text);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Facturacion','Fecha', $x1, 2);
-				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x2, 1);
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Med', 1, '"csv", "xls", "xlsx"');
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

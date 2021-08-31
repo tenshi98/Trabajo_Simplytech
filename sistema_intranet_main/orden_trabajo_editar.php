@@ -220,7 +220,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observaciones','Observacion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
@@ -1622,7 +1622,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observacion','Observaciones', $x1, 1, 160);
+				$Form_Inputs->form_textarea('Observacion','Observaciones', $x1, 1);
 				
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				?>

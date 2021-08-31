@@ -232,7 +232,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					$Form_Inputs->form_select_join_filter('Caja destino','idCajaChica', $x1, 2, 'idCajaChica', 'Nombre', 'caja_chica_listado', 'usuarios_cajas_chicas', $z, $dbConn);
 				}
 				$Form_Inputs->form_date('Fecha Ingreso','Creacion_fecha', $x2, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -446,7 +446,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					$Form_Inputs->form_select_join_filter('Caja destino','idCajaChica', $x1, 2, 'idCajaChica', 'Nombre', 'caja_chica_listado', 'usuarios_cajas_chicas', $z, $dbConn);
 				}
 				$Form_Inputs->form_date('Fecha Ingreso','Creacion_fecha', $x2, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

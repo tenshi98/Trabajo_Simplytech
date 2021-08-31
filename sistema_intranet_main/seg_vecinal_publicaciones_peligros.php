@@ -115,7 +115,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
 				$Form_Inputs->form_date('Fecha','Fecha', $x6, 1);
 				$Form_Inputs->form_time('Hora','Hora', $x7, 1, 1);
-				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x8, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x8, 2);
 				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_estados', 0, '',$dbConn);
 				$Form_Inputs->form_select('Validado','idValidado', $x10, 2, 'idValidado', 'Nombre', 'core_seguridad_validacion', 0, '',$dbConn);
 				

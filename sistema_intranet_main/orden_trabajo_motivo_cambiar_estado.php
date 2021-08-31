@@ -95,7 +95,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Estado','idEstado', $x1, 2, 'idEstado', 'Nombre', 'core_estado_ot_motivos', 0, '', $dbConn);
-				$Form_Inputs->form_textarea('Observacion Cierre','Observaciones', $x2, 2, 160);
+				$Form_Inputs->form_textarea('Observacion Cierre','Observaciones', $x2, 2);
 				
 				$Form_Inputs->form_input_hidden('idOT', $_GET['cambioEstado'], 2);
 				

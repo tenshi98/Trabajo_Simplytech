@@ -300,7 +300,7 @@ function print_select ($tipo, $Nombre, $idNombre, $valor, $Validacion) {
 			break;
 		//Texto Libre
 		case 7:
-			return form_textarea($Nombre,$idNombre, $valor, 1, 160);
+			return form_textarea($Nombre,$idNombre, $valor, 1);
 			break;
 		//Seleccion 1 a 3
 		case 8:

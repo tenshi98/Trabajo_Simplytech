@@ -118,7 +118,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_date('Fecha inicio','Fecha_inicio', $x2, 2);
 				$Form_Inputs->form_date('Fecha termino','Fecha_termino', $x3, 2);
 				$Form_Inputs->form_input_number('N° Dias', 'N_Dias', $x4, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1);
 				
 				if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){?>
         
@@ -185,7 +185,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha inicio','Fecha_inicio', $x2, 2);
 				$Form_Inputs->form_date('Fecha termino','Fecha_termino', $x3, 2);
 				$Form_Inputs->form_input_number('N° Dias', 'N_Dias', $x4, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1);
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Licencia', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

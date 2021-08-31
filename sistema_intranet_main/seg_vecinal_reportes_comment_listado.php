@@ -101,7 +101,7 @@ $ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x2, 1);
 				
 				$Form_Inputs->form_input_hidden('idCliente', $_GET['idCreador'], 2);
 				?>

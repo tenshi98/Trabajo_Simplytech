@@ -100,7 +100,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_time('Hora inicio programación','horaEjecucion', $x2, 2, 2);
 				$Form_Inputs->form_date('Fecha termino programación','f_ejecucion_fin', $x3, 2);
 				$Form_Inputs->form_time('Hora termino programación','horaEjecucion_fin', $x4, 2, 1);
-				$Form_Inputs->form_textarea('Observacion','Observacion', $x5, 1, 160);		
+				$Form_Inputs->form_textarea('Observacion','Observacion', $x5, 1);		
 			
 				
 				$Form_Inputs->form_input_hidden('idEstado', 2, 2);

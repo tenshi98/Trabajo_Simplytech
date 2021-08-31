@@ -105,7 +105,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
 				$Form_Inputs->form_input_text('IP Cliente', 'IP_Client', $x3, 2);
-				$Form_Inputs->form_textarea('Motivo', 'Motivo', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Motivo', 'Motivo', $x4, 1);
 				
 				$Form_Inputs->form_input_hidden('idBloqueo', $_GET['id'], 2);
 				?>
@@ -150,7 +150,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
 				$Form_Inputs->form_input_text('IP Cliente', 'IP_Client', $x3, 2);
-				$Form_Inputs->form_textarea('Motivo', 'Motivo', $x4, 1, 160);
+				$Form_Inputs->form_textarea('Motivo', 'Motivo', $x4, 1);
 				?>
 	 
 				<div class="form-group">

@@ -93,7 +93,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_time('Tiempo Inicio','Hora_ini', $x2, 2, 2);
 				$Form_Inputs->form_time('Tiempo Termino','Hora_fin', $x3, 2, 2);
-				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x4, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x4, 2);
 				
 				$Form_Inputs->form_input_hidden('idMantencion', $_GET['id'], 2);
 				?>
@@ -136,7 +136,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_time('Tiempo Inicio','Hora_ini', $x2, 2, 2);
 				$Form_Inputs->form_time('Tiempo Termino','Hora_fin', $x3, 2, 2);
-				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x4, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x4, 2);
 				
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>

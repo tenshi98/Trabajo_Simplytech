@@ -107,7 +107,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2);
 				$Form_Inputs->form_select('Licencia','idLicencia', $x3, 2, 'idLicencia', 'Nombre', 'soporte_software_listado_licencias', 0, '', $dbConn);
 				$Form_Inputs->form_input_icon('Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
 				$Form_Inputs->form_input_icon('Descargar', 'SitioDescarga', $x7, 2,'fa fa-internet-explorer');
@@ -154,7 +154,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2);
 				$Form_Inputs->form_select('Licencia','idLicencia', $x3, 2, 'idLicencia', 'Nombre', 'soporte_software_listado_licencias', 0, '', $dbConn);
 				$Form_Inputs->form_input_icon('Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
 				$Form_Inputs->form_input_icon('Descargar', 'SitioDescarga', $x7, 2,'fa fa-internet-explorer');
@@ -294,7 +294,7 @@ array_push( $arrImpuestos,$row );
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
-				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 1);
 				$Form_Inputs->form_select('Licencia','idLicencia', $x3, 1, 'idLicencia', 'Nombre', 'soporte_software_listado_licencias', 0, '', $dbConn);
 				$Form_Inputs->form_input_icon('Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
 				$Form_Inputs->form_input_icon('Descargar', 'SitioDescarga', $x7, 1,'fa fa-internet-explorer');

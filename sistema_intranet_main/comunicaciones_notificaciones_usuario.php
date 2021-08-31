@@ -158,7 +158,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Usuario Receptor','idUsrReceptor', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
-				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x3, 2, 160);
+				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x3, 2);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -296,7 +296,7 @@ array_push( $arrNotificaciones,$row );
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Usuario Receptor','idUsrReceptor', $x1, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 1);
-				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x3, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);

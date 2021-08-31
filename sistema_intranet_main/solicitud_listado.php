@@ -665,7 +665,7 @@ foreach ($arrPermisos as $prod) {
 				//se dibujan los inputs	
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -929,7 +929,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//se dibujan los inputs	
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -1082,7 +1082,7 @@ array_push( $arrSolicitudes,$row );
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();	
 				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 1);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);

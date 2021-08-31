@@ -104,7 +104,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_select_filter('Vecino','idCliente', $x2, 2, 'idCliente', 'Nombre', 'seg_vecinal_clientes_listado', $z, '', $dbConn);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1);
 				
 				$Form_Inputs->form_input_hidden('idInfraccion', $_GET['id'], 2);
 				?>
@@ -147,7 +147,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_select_filter('Vecino','idCliente', $x2, 2, 'idCliente', 'Nombre', 'seg_vecinal_clientes_listado', $z, '', $dbConn);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1);
 				?>
 	 
 				<div class="form-group">

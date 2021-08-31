@@ -253,7 +253,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										  'Nivel 23','idLevel_23',$x23 ,1,'idLevel_23','Nombre','licitacion_listado_level_23',0,0,
 										  'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','licitacion_listado_level_24',0,0,
 										  $dbConn, 'form1');
-				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1, 160);
+				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
@@ -411,7 +411,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										  'Nivel 23','idLevel_23',$x23 ,1,'idLevel_23','Nombre','licitacion_listado_level_23',0,0,
 										  'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','licitacion_listado_level_24',0,0,
 										  $dbConn, 'form1');
-				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1, 160);
+				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
@@ -1167,7 +1167,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observacion','Observaciones', $x1, 1, 160);
+				$Form_Inputs->form_textarea('Observacion','Observaciones', $x1, 1);
 				
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				?>

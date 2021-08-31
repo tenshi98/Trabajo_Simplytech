@@ -76,7 +76,7 @@ if ( ! empty($_GET['compra_rechazo']) ) { ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['compra_rechazo'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
@@ -111,7 +111,7 @@ if ( ! empty($_GET['compra_rechazo']) ) { ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['compra_nula'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);

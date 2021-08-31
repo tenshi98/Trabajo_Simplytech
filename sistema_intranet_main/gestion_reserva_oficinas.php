@@ -119,7 +119,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_select('Servicio de Cafeteria','idServicioCafeteria', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad de Asistentes','CantidadAsistentes', $x6, 2);
 				$Form_Inputs->form_select('Sala de Reuniones','idOficina', $x7, 2, 'idOficina', 'Nombre', 'oficinas_listado', 'idEstado=1', '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -181,7 +181,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select('Servicio de Cafeteria','idServicioCafeteria', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad de Asistentes','CantidadAsistentes', $x6, 2);
 				$Form_Inputs->form_select('Sala de Reuniones','idOficina', $x7, 2, 'idOficina', 'Nombre', 'oficinas_listado', 'idEstado=1', '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

@@ -64,7 +64,7 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 1, 160);
+				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);

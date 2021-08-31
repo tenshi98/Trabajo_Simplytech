@@ -193,7 +193,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					
 				$Form_Inputs->form_tittle(3, 'Datos del Analisis');
 				$Form_Inputs->form_select('Estado','idEstado', $x18, 2, 'idEstado', 'Nombre', 'aguas_analisis_aguas_estado', 0, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x19, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x19, 1);
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('codigoProceso', 1, 2);
@@ -503,7 +503,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					
 				$Form_Inputs->form_tittle(3, 'Datos del Analisis');
 				$Form_Inputs->form_select('Estado','idEstado', $x18, 2, 'idEstado', 'Nombre', 'aguas_analisis_aguas_estado', 0, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x19, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x19, 1);
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('codigoProceso', 1, 2);

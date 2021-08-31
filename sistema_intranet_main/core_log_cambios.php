@@ -89,7 +89,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2);
 				
 				$Form_Inputs->form_input_hidden('idLog', $_GET['id'], 2);
 				?>
@@ -128,7 +128,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2);
 				?>
 	 
 				<div class="form-group">

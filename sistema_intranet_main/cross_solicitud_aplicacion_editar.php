@@ -151,7 +151,7 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 1, 160);
+				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 1);
 				
 				
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
@@ -320,7 +320,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0);
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
-				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1);
 				
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['cuartel_id'], 2);
@@ -418,7 +418,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0);
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
-				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1);
 				
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['cuartel_id'], 2);
@@ -820,7 +820,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0);
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x12, 0, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
-				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x13, 1, 160);
+				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x13, 1);
 				
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				?>				

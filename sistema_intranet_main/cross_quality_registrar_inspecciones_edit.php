@@ -391,7 +391,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 										break;
 									//Texto Libre
 									case 7:
-										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 160);
+										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
 										break;
 									//Seleccion 1 a 3
 									case 8:
@@ -647,7 +647,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 										break;
 									//Texto Libre
 									case 7:
-										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 160);
+										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
 										break;
 									//Seleccion 1 a 3
 									case 8:
@@ -856,7 +856,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 										break;
 									//Texto Libre
 									case 7:
-										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 160);
+										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
 										break;
 									//Seleccion 1 a 3
 									case 8:
@@ -1213,7 +1213,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
 				
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

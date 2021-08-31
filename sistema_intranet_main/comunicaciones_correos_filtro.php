@@ -122,7 +122,7 @@ foreach ($arrNotificaciones as $noti) {
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Asunto', 'Asunto', $x1, 2);
-				$Form_Inputs->form_textarea('Mensaje','Cuerpo', $x2, 2, 160);
+				$Form_Inputs->form_textarea('Mensaje','Cuerpo', $x2, 2);
 				
 				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);

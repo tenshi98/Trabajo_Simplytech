@@ -503,7 +503,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Facturacion Desde','fecha_fact_desde', $x5, 1);
 				$Form_Inputs->form_date('Facturacion Hasta','fecha_fact_hasta', $x6, 1);
 				$Form_Inputs->form_select('Vendedor','idTrabajador', $x7, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1);
 				$Form_Inputs->form_input_text('OC Relacionada','OC_Ventas', $x9, 1);
 				$Form_Inputs->form_post_data(1, 'Solo las empresas que no sean contribuyentes del Impuesto al Valor Agregado (IVA) y las que gocen de exención del IVA de conformidad a lo dispuesto en los Artículos 12 y 13 de la <a href="http://www.sii.cl/pagina/jurisprudencia/legislacion/basica/dl825.doc">Ley del IVA</a> pueden elegir la opcion <strong>SI</strong>, para el resto es de uso obligatorio la opcion <strong>NO</strong>. ');
 				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
@@ -954,7 +954,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Facturacion Desde','fecha_fact_desde', $x5, 1);
 				$Form_Inputs->form_date('Facturacion Hasta','fecha_fact_hasta', $x6, 1);
 				$Form_Inputs->form_select('Vendedor','idTrabajador', $x7, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1);
 				$Form_Inputs->form_input_text('OC Relacionada','OC_Ventas', $x9, 1);
 				$Form_Inputs->form_post_data(1, 'Solo las empresas que no sean contribuyentes del Impuesto al Valor Agregado (IVA) y las que gocen de exención del IVA de conformidad a lo dispuesto en los Artículos 12 y 13 de la <a href="http://www.sii.cl/pagina/jurisprudencia/legislacion/basica/dl825.doc">Ley del IVA</a> pueden elegir la opcion <strong>SI</strong>, para el resto es de uso obligatorio la opcion <strong>NO</strong>. ');
 				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
@@ -1159,7 +1159,7 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_select_n_auto('Año Documento','Creacion_ano', $x5, 1, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes Documento','Creacion_mes', $x6, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_select('Vendedor','idTrabajador', $x7, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x8, 1);
 				$Form_Inputs->form_post_data(1, 'Solo las empresas que no sean contribuyentes del Impuesto al Valor Agregado (IVA) y las que gocen de exención del IVA de conformidad a lo dispuesto en los Artículos 12 y 13 de la <a href="http://www.sii.cl/pagina/jurisprudencia/legislacion/basica/dl825.doc">Ley del IVA</a> pueden elegir la opcion <strong>SI</strong>, para el resto es de uso obligatorio la opcion <strong>NO</strong>. ');
 				$Form_Inputs->form_select('Exento de IVA','idUsoIVA', $x9, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				

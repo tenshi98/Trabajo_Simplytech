@@ -458,7 +458,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				
 				
 				$Form_Inputs->form_tittle(3, 'Otros');
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x29, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x29, 1);
 				
 				
 

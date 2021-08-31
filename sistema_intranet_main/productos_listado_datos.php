@@ -128,7 +128,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_select('Tipo Producto','idTipoProducto', $x6, 2, 'idTipoProducto', 'Nombre', 'core_tipo_producto', 0, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de Receta','idTipoReceta', $x7, 1, 'idTipoReceta', 'Nombre', 'core_tipo_receta', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('Codigo', 'Codigo', $x8, 1);
-					$Form_Inputs->form_textarea('Ingredientes Activos','IngredienteActivo', $x9, 1, 160);
+					$Form_Inputs->form_textarea('Ingredientes Activos','IngredienteActivo', $x9, 1);
 					//$Form_Inputs->form_ckeditor('Ingredientes Activos','IngredienteActivo', $x9, 1, 2);
 					$Form_Inputs->form_input_number_spinner('Dosis Recomendada','DosisRecomendada', $x11, 0, 99999, '0.01', 2, 1);
 					$Form_Inputs->form_input_number_spinner('Carencia Etiqueta','CarenciaExportador', $x14, 0, 500, 1, 0, 1);

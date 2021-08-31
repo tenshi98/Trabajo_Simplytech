@@ -364,7 +364,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 			
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x2, 2);
 				
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_boletasEmp'][$_GET['editBoletaEmp']]['idBoleta'], 2);
@@ -400,7 +400,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 			
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x2, 2);
 				
 				?>
@@ -441,7 +441,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $z, '', $dbConn);
 				$Form_Inputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x4, 2);
 				
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_boletas'][$_GET['editBoleta']]['idBoleta'], 2);
@@ -483,7 +483,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $z, '', $dbConn);
 				$Form_Inputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
-				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x4, 2);
 				
 				?>
@@ -1246,7 +1246,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
 				
 				
 				
@@ -1735,7 +1735,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
-				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
 				
 				
 				

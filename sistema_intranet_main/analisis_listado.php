@@ -253,8 +253,8 @@ foreach ($arrPermisos as $prod) {
 				
 				
 				$Form_Inputs->form_tittle(3, 'Final');
-				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', $x7, 1, 160);
-				$Form_Inputs->form_textarea('Accion','obs_Accion', $x8, 1, 160);
+				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', $x7, 1);
+				$Form_Inputs->form_textarea('Accion','obs_Accion', $x8, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['id'], 2);
@@ -471,8 +471,8 @@ foreach ($arrPermisos as $prod) {
 				
 				
 				$Form_Inputs->form_tittle(3, 'Final');
-				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', '', 1, 160);
-				$Form_Inputs->form_textarea('Accion','obs_Accion', '', 1, 160);
+				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', '', 1);
+				$Form_Inputs->form_textarea('Accion','obs_Accion', '', 1);
 				$Form_Inputs->form_select('Estado','idEstado', '', 2, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2);

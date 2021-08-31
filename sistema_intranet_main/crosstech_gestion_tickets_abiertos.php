@@ -91,8 +91,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Estado Ticket','idEstado', $x1, 1, 'idEstado', 'Nombre', 'core_estado_ticket', 'idEstado!=1', '', $dbConn);
-				$Form_Inputs->form_textarea('Descripcion Cierre','DescripcionCierre', $x2, 1, 160);
-				$Form_Inputs->form_textarea('Descripcion Cancelacion','DescripcionCancelacion', $x3, 1, 160);
+				$Form_Inputs->form_textarea('Descripcion Cierre','DescripcionCierre', $x2, 1);
+				$Form_Inputs->form_textarea('Descripcion Cancelacion','DescripcionCancelacion', $x3, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idTicket', $_GET['id'], 2);
