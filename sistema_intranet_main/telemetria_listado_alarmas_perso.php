@@ -393,7 +393,7 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editAlarma']) ) { 
 // consulto los datos
-$SIS_query = 'Nombre, idTipoAlerta, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
+$SIS_query = 'Nombre, idTipoAlerta, idUniMed, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
 NErroresMax, NErroresActual';
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso', '', 'idAlarma ='.$_GET['editAlarma'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
@@ -413,19 +413,23 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				//Se verifican si existen los datos
 				if(isset($Nombre)) {            $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
 				if(isset($idTipoAlerta)) {      $x2  = $idTipoAlerta;      }else{$x2  = $rowdata['idTipoAlerta'];}
-				if(isset($idTipo)) {            $x3  = $idTipo;            }else{$x3  = $rowdata['idTipo'];}
-				if(isset($NErroresMax)) {       $x4  = $NErroresMax;       }else{$x4  = Cantidades_decimales_justos($rowdata['NErroresMax']);}
-				if(isset($NErroresActual)) {    $x5  = $NErroresActual;    }else{$x5  = Cantidades_decimales_justos($rowdata['NErroresActual']);}
-				if(isset($valor_error)) {       $x6  = $valor_error;       }else{$x6  = Cantidades_decimales_justos($rowdata['valor_error']);}
-				if(isset($valor_diferencia)) {  $x7  = $valor_diferencia;  }else{$x7  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
-				if(isset($Rango_ini)) {         $x8  = $Rango_ini;         }else{$x8  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
-				if(isset($Rango_fin)) {         $x9  = $Rango_fin;         }else{$x9  = Cantidades_decimales_justos($rowdata['Rango_fin']);}
+				if(isset($idUniMed)) {          $x3  = $idUniMed;          }else{$x3  = $rowdata['idUniMed'];}
+				if(isset($idTipo)) {            $x4  = $idTipo;            }else{$x4  = $rowdata['idTipo'];}
+				if(isset($NErroresMax)) {       $x5  = $NErroresMax;       }else{$x5  = Cantidades_decimales_justos($rowdata['NErroresMax']);}
+				if(isset($NErroresActual)) {    $x6  = $NErroresActual;    }else{$x6  = Cantidades_decimales_justos($rowdata['NErroresActual']);}
+				if(isset($valor_error)) {       $x7  = $valor_error;       }else{$x7  = Cantidades_decimales_justos($rowdata['valor_error']);}
+				if(isset($valor_diferencia)) {  $x8  = $valor_diferencia;  }else{$x8  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
+				if(isset($Rango_ini)) {         $x9  = $Rango_ini;         }else{$x9  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
+				if(isset($Rango_fin)) {         $x10 = $Rango_fin;         }else{$x10 = Cantidades_decimales_justos($rowdata['Rango_fin']);}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				
 				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
+				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x2, 2, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
+				
 				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
 				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x3, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x4, 2);
@@ -558,19 +562,23 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				//Se verifican si existen los datos
 				if(isset($Nombre)) {            $x1  = $Nombre;            }else{$x1  = '';}
 				if(isset($idTipoAlerta)) {      $x2  = $idTipoAlerta;      }else{$x2  = '';}
-				if(isset($idTipo)) {            $x3  = $idTipo;            }else{$x3  = '';}
-				if(isset($NErroresMax)) {       $x4  = $NErroresMax;       }else{$x4  = '';}
-				if(isset($NErroresActual)) {    $x5  = $NErroresActual;    }else{$x5  = '';}
-				if(isset($valor_error)) {       $x6  = $valor_error;       }else{$x6  = '';}
-				if(isset($valor_diferencia)) {  $x7  = $valor_diferencia;  }else{$x7  = '';}
-				if(isset($Rango_ini)) {         $x8  = $Rango_ini;         }else{$x8  = '';}
-				if(isset($Rango_fin)) {         $x9  = $Rango_fin;         }else{$x9  = '';}
+				if(isset($idUniMed)) {          $x3  = $idUniMed;          }else{$x3  = '';}
+				if(isset($idTipo)) {            $x4  = $idTipo;            }else{$x4  = '';}
+				if(isset($NErroresMax)) {       $x5  = $NErroresMax;       }else{$x5  = '';}
+				if(isset($NErroresActual)) {    $x6  = $NErroresActual;    }else{$x6  = '';}
+				if(isset($valor_error)) {       $x7  = $valor_error;       }else{$x7  = '';}
+				if(isset($valor_diferencia)) {  $x8  = $valor_diferencia;  }else{$x8  = '';}
+				if(isset($Rango_ini)) {         $x9  = $Rango_ini;         }else{$x9  = '';}
+				if(isset($Rango_fin)) {         $x10 = $Rango_fin;         }else{$x10 = '';}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				
 				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
+				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x2, 2, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
+				
 				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
 				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x3, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x4, 2);
@@ -710,12 +718,14 @@ telemetria_listado_alarmas_perso_items.Rango_ini,
 telemetria_listado_alarmas_perso_items.Rango_fin,
 telemetria_listado_alarmas_perso_items.valor_especifico,
 core_telemetria_tipo_alertas.Nombre AS Prioridad,
+telemetria_listado_unidad_medida.Nombre AS Unimed,
 telemetria_listado_alarmas_perso.idTipoAlerta'.$subsql;
 $SIS_join  = '
 LEFT JOIN `telemetria_listado_alarmas_perso_tipos` ON telemetria_listado_alarmas_perso_tipos.idTipo    = telemetria_listado_alarmas_perso.idTipo
 LEFT JOIN `telemetria_listado_alarmas_perso_items` ON telemetria_listado_alarmas_perso_items.idAlarma  = telemetria_listado_alarmas_perso.idAlarma
 LEFT JOIN `telemetria_listado`                     ON telemetria_listado.idTelemetria                  = telemetria_listado_alarmas_perso.idTelemetria
-LEFT JOIN `core_telemetria_tipo_alertas`           ON core_telemetria_tipo_alertas.idTipoAlerta        = telemetria_listado_alarmas_perso.idTipoAlerta';
+LEFT JOIN `core_telemetria_tipo_alertas`           ON core_telemetria_tipo_alertas.idTipoAlerta        = telemetria_listado_alarmas_perso.idTipoAlerta
+LEFT JOIN `telemetria_listado_unidad_medida`       ON telemetria_listado_unidad_medida.idUniMed        = telemetria_listado_alarmas_perso.idUniMed';
 $SIS_where = 'telemetria_listado_alarmas_perso.idTelemetria ='.$_GET['id'];
 $SIS_order = 'telemetria_listado_alarmas_perso.idAlarma ASC';
 $arrAlarmas = array();
@@ -805,6 +815,7 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 								//imprimo
 								echo '<strong>Tipo: </strong>'.$alarmas[0]['Tipo'].'<br/>'; 
 								echo '<strong>Prioridad Alarma: </strong><label class="label '.$label_color.'">'.$alarmas[0]['Prioridad'].'</label><br/>'; 
+								echo '<strong>Unidad Medida: </strong>'.$alarmas[0]['Unimed'].'<br/>'; 
 								echo '<strong>N° Maximo Errores: </strong>'.$alarmas[0]['NErroresMax'].'<br/>';
 								echo '<strong>N° Actual Errores: </strong>'.$alarmas[0]['NErroresActual'].'<br/>';
 								?>
