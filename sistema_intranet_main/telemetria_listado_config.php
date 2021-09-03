@@ -45,7 +45,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,Identificador,id_Geo,id_Sensores,cantSensores, idDispositivo, idShield, TiempoFueraLinea, idUsoContrato, idUsoPredio, idUsoGeocerca, NErroresGeocercaMax,idTab, idBackup, NregBackup, idGenerador', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, 'Nombre,Identificador,id_Geo,id_Sensores,cantSensores, idDispositivo, idShield, TiempoFueraLinea, idUsoContrato, idUsoPredio, idUsoGeocerca, NErroresGeocercaMax,idTab, idBackup, NregBackup, idGenerador, idAlertaTemprana', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
@@ -71,7 +71,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							<li class=""><a href="<?php echo 'telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_alerta_general.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarma General</a></li>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
@@ -119,6 +118,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					if(isset($NErroresGeocercaMax)) {  $x13 = $NErroresGeocercaMax;  }else{$x13 = $rowdata['NErroresGeocercaMax'];}
 					if(isset($idBackup)) {             $x14 = $idBackup;             }else{$x14 = $rowdata['idBackup'];}
 					if(isset($NregBackup)) {           $x15 = $NregBackup;           }else{$x15 = $rowdata['NregBackup'];}
+					if(isset($idAlertaTemprana)) {     $x16 = $idAlertaTemprana;     }else{$x16 = $rowdata['idAlertaTemprana'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -159,6 +159,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					$Form_Inputs->form_post_data(2, 'Indica si la alimentacion electrica es directa o por generador.' );
 					$Form_Inputs->form_select('Uso Generador','idGenerador', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					
+					$Form_Inputs->form_post_data(2, 'Indica si el equipo de telemetria notificara de inmediato a los usuarios respecto a un error.' );
+					$Form_Inputs->form_select('Alerta Temprana','idAlertaTemprana', $x16, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					
 					
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
