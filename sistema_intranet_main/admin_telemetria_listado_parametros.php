@@ -127,7 +127,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 //Armo cadena
 $cadena  = 'SensoresMedMin_'.$_GET['mod'].' AS MedMin';
 $cadena .= ',SensoresMedMax_'.$_GET['mod'].' AS MedMax';
-$cadena .= ',SensoresMedAlerta_'.$_GET['mod'].' AS Alerta';
 $cadena .= ',SensoresUniMed_'.$_GET['mod'].' AS UniMed';
 
 $cadena .= ',SensoresUso_'.$_GET['mod'].' AS Uso';
@@ -176,7 +175,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_number('Maximo Medicion','SensoresMedMax_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['MedMax']), 1);
 				
 				$Form_Inputs->form_tittle(3, 'Configuracion');
-				$Form_Inputs->form_select('Enviar Alerta Temprana','SensoresMedAlerta_'.$_GET['mod'], $rowdata['Alerta'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				$Form_Inputs->form_select('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowdata['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
 				
 				$Form_Inputs->form_tittle(3, 'Uso');
@@ -212,7 +210,6 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$qry .= ', SensoresTipo_'.$i;
 	$qry .= ', SensoresMedMin_'.$i;
 	$qry .= ', SensoresMedMax_'.$i;
-	$qry .= ', SensoresMedAlerta_'.$i;
 	$qry .= ', SensoresGrupo_'.$i;
 	$qry .= ', SensoresUniMed_'.$i;
 } 
@@ -310,7 +307,6 @@ $arrFinalUnimed[0]    = 'No configurado';
 						<th>Grupo</th>
 						<th style="text-align: center;">Minimo<br/>Medicion</th>
 						<th style="text-align: center;">Maximo<br/>Medicion</th>
-						<th style="text-align: center;">Enviar Alerta<br/>Temprana</th>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
@@ -326,7 +322,6 @@ $arrFinalUnimed[0]    = 'No configurado';
 							<td><?php echo $Grupos; ?></td>
 							<td style="text-align: center;"><?php echo Cantidades_decimales_justos($rowdata['SensoresMedMin_'.$i]).' '.$Unimed; ?></td>		
 							<td style="text-align: center;"><?php echo Cantidades_decimales_justos($rowdata['SensoresMedMax_'.$i]).' '.$Unimed; ?></td>
-							<td style="text-align: center;"><?php if($rowdata['SensoresMedAlerta_'.$i]==1){ echo 'Si'; }elseif($rowdata['SensoresMedAlerta_'.$i]==2){ echo 'No'; } ?></td>			
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
