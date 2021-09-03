@@ -36,383 +36,96 @@ require_once '../../A2XRXS_gears/xrxs_funciones/Helpers.Functions.Server.Web.php
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-/* Toma dos input y calcula valores*/
-function prod_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $dbConn) {
-    
-    $arrProductos = array();
-	$query = "SELECT 
-	".$tabla1.".idProducto AS IdAlgo,
-	sistema_productos_uml.Nombre AS Unimed,
-	proveedor_listado.Nombre AS Proveedor
-	FROM `".$tabla1."`
-	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = ".$tabla1.".idUml
-	LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = ".$tabla1.".idProveedor
-	ORDER BY sistema_productos_uml.Nombre ASC";
-	$resultado = mysqli_query($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrProductos,$row );
+//Funcion para guardar el log de errores
+function EscribirLog($file, $data, $type){
+    switch ($type) {
+		case 1:  $tipo = 'r';  break;	//Apertura para sólo lectura; coloca el puntero al fichero al principio del fichero.
+		case 2:  $tipo = 'r+'; break; 	//Apertura para lectura y escritura; coloca el puntero al fichero al principio del fichero.
+		case 3:  $tipo = 'w';  break; 	//Apertura para sólo escritura; coloca el puntero al fichero al principio del fichero y trunca el fichero a longitud cero. Si el fichero no existe se intenta crear.
+		case 4:  $tipo = 'w+'; break; 	//Apertura para lectura y escritura; coloca el puntero al fichero al principio del fichero y trunca el fichero a longitud cero. Si el fichero no existe se intenta crear.
+		case 5:  $tipo = 'a';  break; 	//Apertura para sólo escritura; coloca el puntero del fichero al final del mismo. Si el fichero no existe, se intenta crear. En este modo, fseek() solamente afecta a la posición de lectura; las lecturas siempre son pospuestas.
+		case 6:  $tipo = 'a+'; break; 	//Apertura para lectura y escritura; coloca el puntero del fichero al final del mismo. Si el fichero no existe, se intenta crear. En este modo, fseek() no tiene efecto, las escrituras siempre son pospuestas.
+		case 7:  $tipo = 'x';  break; 	//Creación y apertura para sólo escritura; coloca el puntero del fichero al principio del mismo. Si el fichero ya existe, la llamada a fopen() fallará devolviendo false y generando un error de nivel E_WARNING. Si el fichero no existe se intenta crear. Esto es equivalente a especificar las banderas O_EXCL|O_CREAT para la llamada al sistema de open(2) subyacente.
+		case 8:  $tipo = 'x+'; break; 	//Creación y apertura para lectura y escritura; de otro modo tiene el mismo comportamiento que 'x'.
+		case 9:  $tipo = 'c';  break; 	//Abrir el fichero para sólo escritura. Si el fichero no existe, se crea. Si existe no es truncado (a diferencia de 'w'), ni la llamada a esta función falla (como en el caso con 'x'). El puntero al fichero se posiciona en el principio del fichero. Esto puede ser útil si se desea obtener un bloqueo asistido (véase flock()) antes de intentar modificar el fichero, ya que al usar 'w' se podría truncar el fichero antes de haber obtenido el bloqueo (si se desea truncar el fichero, se puede usar ftruncate() después de solicitar el bloqueo).
+		case 10: $tipo = 'c+'; break; 	//Abrir el fichero para lectura y escritura; de otro modo tiene el mismo comportamiento que 'c'.
+		case 11: $tipo = 'e';  break; 	//Establecer la bandera 'close-on-exec' en el descriptor de fichero abierto. Disponible solamente en PHP compilado en sistemas que se ajustan a POSIX.1-2008. 
 	}
-	
-	$cadena = '';			
-	$cadena .= '<script>';
-	foreach ($arrProductos as $prod) {
-		$cadena .= 'let id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
-	}
-	foreach ($arrProductos as $prod) {
-		if(isset($prod['Proveedor'])&&$prod['Proveedor']!=''){$prov=$prod['Proveedor'];}else{$prov='Sin proveedor';}
-		$cadena .= 'let id_prov_'.$prod['IdAlgo'].'= "'.$prov.'";';	
-	}
-	$cadena .= '</script>';
-				
-    
-    $cadena .= '
-    <script>
-		document.getElementById("'.$input_1.'").onchange = function() {myFunction_'.$input_1.'()};
-
-		function myFunction_'.$input_1.'() {
-			const Componente = document.getElementById("'.$input_1.'").value;
-			if (Componente != "") {
-				document.getElementById("'.$input_result_1.'").value = eval("id_data_" + Componente);
-				document.getElementById("'.$input_result_2.'").value = eval("id_prov_" + Componente);
+    //Se verifica si archivo existe
+    if (file_exists($file)) {
+        //se guarda en el archivo
+		try {
+			if ($FP = fopen ($file, $tipo)){
+				fwrite ($FP, $data);
+				fclose ($FP);
 			}
+		} catch (Exception $e) {
+			error_log('No se ha podido abrir el archivo '.$file.', verifiqoe el siguiente error: '.$e->getMessage(), 0);
+		}	
+    }else{
+		//se crea archivo
+		if ($FP = fopen ($file, $tipo)){
+			fclose ($FP);
 		}
-	</script>
-    ';
-    return $cadena;
+		//se guarda log
+		error_log('No existe el archivo '.$file, 0);
+	}
 }
 /*******************************************************************************************************************/
-/* Toma dos input y calcula valores*/
-function sell_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $dbConn) {
-    
-    $arrProductos = array();
-	$query = "SELECT 
-	".$tabla1.".idProducto AS IdAlgo,
-	sistema_productos_uml.Nombre AS Unimed,
-	clientes_listado.Nombre AS Cliente
-	FROM `".$tabla1."`
-	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = ".$tabla1.".idUml
-	LEFT JOIN `clientes_listado`        ON clientes_listado.idCliente    = ".$tabla1.".idCliente
-	ORDER BY sistema_productos_uml.Nombre";
-	$resultado = mysqli_query($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrProductos,$row );
-	}
-	
-	$cadena = '';			
-	$cadena .= '<script>';
-	foreach ($arrProductos as $prod) {
-		$cadena .= 'let id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
-	}
-	foreach ($arrProductos as $prod) {
-		if(isset($prod['Cliente'])&&$prod['Cliente']!=''){$prov=$prod['Cliente'];}else{$prov='Sin cliente';}
-		$cadena .= 'let id_prov_'.$prod['IdAlgo'].'= "'.$prov.'";';	
-	}
-	$cadena .= '</script>';
-				
-    
-    $cadena .= '
-    <script>
-		document.getElementById("'.$input_1.'").onchange = function() {myFunction_'.$input_1.'()};
-
-		function myFunction_'.$input_1.'() {
-			const Componente = document.getElementById("'.$input_1.'").value;
-			if (Componente != "") {
-				document.getElementById("'.$input_result_1.'").value = eval("id_data_" + Componente);
-				document.getElementById("'.$input_result_2.'").value = eval("id_prov_" + Componente);
+//Funcion para saber si esta o no dentro de un area
+function inLocationPoint($arrZonas, $pointLocation, $GeoLatitud, $GeoLongitud){
+	//variable
+	$nx = 0;
+	//recorro las areas
+	foreach ($arrZonas as $todaszonas=>$zonas) {
+		//arreglo para el pligono
+		$polygon = array();
+		//variables para cerrar el poligono
+		$ini     = 0;
+		$f_lat   = 0;
+		$f_long  = 0;
+		//recorro las zonas
+		foreach ($zonas as $puntos) {
+			array_push( $polygon,$puntos['Latitud'].' '.$puntos['Longitud'] );
+			//si es el primer dato
+			if($ini==0){
+				$f_lat  = $puntos['Latitud'];
+				$f_long = $puntos['Longitud'];
 			}
+			$ini++;
 		}
-	</script>
-    ';
-    return $cadena;
-}
-/*******************************************************************************************************************/
-/* Toma dos input y calcula valores*/
-function venta_print_value($tabla1, $input_1, $input_result_1, $dbConn) {
-    
-    $arrProductos = array();
-	$query = "SELECT 
-	".$tabla1.".idProducto AS IdAlgo,
-	sistema_productos_uml.Nombre AS Unimed
-	FROM `".$tabla1."`
-	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = ".$tabla1.".idUml
-	ORDER BY sistema_productos_uml.Nombre";
-	$resultado = mysqli_query($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrProductos,$row );
-	}
-	
-	$cadena = '';			
-	$cadena .= '<script>';
-	foreach ($arrProductos as $prod) {
-		$cadena .= 'let id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
-	}
-	$cadena .= '</script>';
-				
-    
-    $cadena .= '
-    <script>
-		document.getElementById("'.$input_1.'").onchange = function() {myFunction_'.$input_1.'()};
-
-		function myFunction_'.$input_1.'() {
-			const Componente = document.getElementById("'.$input_1.'").value;
-			if (Componente != "") {
-				document.getElementById("'.$input_result_1.'").value = eval("id_data_" + Componente);
+		//inserto el primer dato como el ultimo para cerrar poligono
+		array_push( $polygon,$f_lat.' '.$f_long );
+		//verifico
+		$c_chek =  $pointLocation->pointInPolygon($GeoLatitud.' '.$GeoLongitud, $polygon);
+		//si esta dentro de la zona
+		if($c_chek=='inside'){
+			if($nx_UsoPredio==0){
+				$nx = $todaszonas;
 			}
+		//si esta fuera de la zona
+		}else{
+			$nx = 0;
 		}
-	</script>
-    ';
-    return $cadena;
+	}
+	//devuelvo
+	return $nx;
 }
 /*******************************************************************************************************************/
-/* Toma dos input y calcula valores*/
-function operacion_input($input_1, $input_2, $input_result_1, $input_result_2, $operation) {
-    
-    switch ($operation) {
-		case 1: $oper = '+'; break;
-		case 2: $oper = '-'; break;
-		case 3: $oper = '*'; break;
-		case 4: $oper = '/'; break;
-	}
-    
-    $cadena = '
-    <script>
-		document.getElementById("'.$input_1.'").onkeyup = function() {myFunction_'.$input_1.'()};
-		document.getElementById("'.$input_2.'").onkeyup = function() {myFunction_'.$input_2.'()};
+//Limpieza input
+function LimpiarInput($Data){
 
-		function myFunction_'.$input_1.'() {
-			const elem1 = document.getElementById("'.$input_1.'").value;
-			const elem2 = document.getElementById("'.$input_2.'").value;
-			if (elem1 != "" && elem2 != "") {
-				document.getElementById("'.$input_result_1.'").value = elem2 '.$oper.' elem1;
-				document.getElementById("'.$input_result_2.'").value = elem2 '.$oper.' elem1;
-			}
-		}
-		
-		function myFunction_'.$input_2.'() {
-			const elem1 = document.getElementById("'.$input_2.'").value;
-			const elem2 = document.getElementById("'.$input_1.'").value;
-			if (elem1 != "" && elem2 != "") {
-				document.getElementById("'.$input_result_1.'").value = elem1 '.$oper.' elem2;
-				document.getElementById("'.$input_result_2.'").value = elem1 '.$oper.' elem2;
-			}
-		}
-	</script>
-    ';
-    return $cadena;
-}
-/*******************************************************************************************************************/
-/* Toma dos input y calcula valores*/
-function prod_print_venta($idBodega, $dato, $tabla1, $tabla2, $input_select, $input_result_1, $input_result_2, 
-						  $input_result_3,$input_result_4, $dbConn) {
-    
-   //Imprimo las variables
-	$arrTipo = array();
-	$query = "SELECT 
-	".$tabla1.".idProducto,
-	".$tabla1.".".$dato." AS Valorizacion,
-	sistema_productos_uml.Nombre AS Unimed,
-				
-		(SELECT 
-		SUM(Cantidad_ing) AS ingreso
-		FROM `".$tabla2."`
-		WHERE idProducto = ".$tabla1.".idProducto 
-		AND idBodega=".$idBodega.") AS ingreso,
-					
-		(SELECT 
-		SUM(Cantidad_eg) AS egreso
-		FROM `".$tabla2."`
-		WHERE idProducto = ".$tabla1.".idProducto 
-		AND idBodega=".$idBodega.") AS egreso
-					
-	FROM `".$tabla1."`
-	LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = ".$tabla1.".idUml
-	WHERE ".$tabla1.".idEstado=1
-	ORDER BY sistema_productos_uml.Nombre";
-	$resultado = mysqli_query($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrTipo,$row );
-	}
-				
+	$Data = str_replace('%20', '', $Data);
+	$Data = str_replace(' ', '', $Data);
+	$Data = str_replace("'", '', $Data);
+	$Data = str_replace('"', '', $Data);
 	
-	$cadena = '';
-	
-	$cadena .= '<script>';
-	foreach ($arrTipo as $tipo) {
-		$cadena .= 'let uml_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
-	}
-	foreach ($arrTipo as $tipo) {
-		$cadena .= 'let valor_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['Valorizacion']).'";';	
-	}
-	foreach ($arrTipo as $tipo) {
-		$Total_existencias = $tipo['ingreso'] - $tipo['egreso'];
-		$cadena .= 'let existencia_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';	
-	}
-	$cadena .= '</script>';			
-							
-	
-				
-    
-    $cadena .= '
-    <script>
-    document.getElementById("'.$input_select.'").onchange = function() {myFunction_'.$input_select.'()};
+	return $Data;
 
-		function myFunction_'.$input_select.'() {
-			const Componente = document.getElementById("'.$input_select.'").value;
-			if (Componente != "") {
-				document.getElementById("'.$input_result_1.'").value = eval("uml_data_" + Componente);
-				document.getElementById("'.$input_result_2.'").value = eval("valor_data_" + Componente);
-				document.getElementById("'.$input_result_3.'").value = eval("existencia_" + Componente);
-				document.getElementById("'.$input_result_4.'").value = eval("valor_data_" + Componente);
-			}
-		}
-	</script>
-    ';
-    return $cadena;
 }
-/*******************************************************************************************************************/
-//Funcion para seleccionar el tipo de input en los analisis
-function print_select ($tipo, $Nombre, $idNombre, $valor, $Validacion) {
-	//Verifico el tipo de dato
-	switch ($tipo) {
-		//Medicion (Decimal) con parametros limitantes
-		case 1:
-			return form_input_number($Nombre, $idNombre, $valor, 1);
-			break;
-		//Medicion (Decimal) sin parametros limitantes
-		case 2:
-			return form_input_number($Nombre, $idNombre, $valor, 1);
-			break;
-		//Medicion (Enteros) con parametros limitantes
-		case 3:
-			return form_input_number_integer($Nombre, $idNombre, $valor, 1);
-			break;
-		//Medicion (Enteros) sin parametros limitantes
-		case 4:
-			return form_input_number_integer($Nombre, $idNombre, $valor, 1);
-			break;
-		//Fecha
-		case 5:
-			return form_date($Nombre,$idNombre, $valor, 1);
-			break;
-		//Hora
-		case 6:
-			return form_time_popover($Nombre,$idNombre, $valor, 1, 1, 24);
-			break;
-		//Texto Libre
-		case 7:
-			return form_textarea($Nombre,$idNombre, $valor, 1);
-			break;
-		//Seleccion 1 a 3
-		case 8:
-			return form_select_n_auto($Nombre,$idNombre, $valor, 1, 1, 3);
-			break;
-		//Seleccion 1 a 5
-		case 9:
-			return form_select_n_auto($Nombre,$idNombre, $valor, 1, 1, 5);
-			break;
-		//Seleccion 1 a 10
-		case 10:
-			return form_select_n_auto($Nombre,$idNombre, $valor, 1, 1, 10);
-			break;
-		//Texto Libre con Validacion
-		case 11:
-			echo form_input_validate($Nombre,$idNombre, $valor, 1, $Validacion);
-			break;		
-										
-	}
- 
-}
-/*******************************************************************************************************************/
-//Verifico si los parametros estan dentro del radio
-function TituloMenu( $Nombre ) {  
-    
-    $xdata  = array("1 - ", "2 - ", "3 - ", "4 - ", "5 - ", "6 - ", "7 - ", "8 - ", "9 - ", "10 - ", 
-					"11 - ", "12 - ", "13 - ", "14 - ", "15 - ", "16 - ", "17 - ", "18 - ", "19 - ", "20 - ", 
-					"21 - ", "22 - ", "23 - ", "24 - ", "25 - ", "26 - ", "27 - ", "28 - ", "29 - ", "30 - ", 
-					"31 - ", "32 - ", "33 - ", "34 - ", "35 - ", "36 - ", "37 - ", "38 - ", "39 - ", "40 - ", 
-					"41 - ", "42 - ", "43 - ", "44 - ", "45 - ", "46 - ", "47 - ", "48 - ", "49 - ", "50 - ", 
-					"51 - ", "52 - ", "53 - ", "54 - ", "55 - ", "56 - ", "57 - ", "58 - ", "59 - ", "60 - ", 
-					"61 - ", "62 - ", "63 - ", "64 - ", "65 - ", "66 - ", "67 - ", "68 - ", "69 - ", "70 - ", 
-					"71 - ", "72 - ", "73 - ", "74 - ", "75 - ", "76 - ", "77 - ", "78 - ", "79 - ", "80 - ", 
-					"81 - ", "82 - ", "83 - ", "84 - ", "85 - ", "86 - ", "87 - ", "88 - ", "89 - ", "90 - ");
-	
-	$newText = str_replace($xdata, "", $Nombre);
 
-    return $newText;  
-}
-/*******************************************************************************************************************/
-//Permite verificar si se trata de ingresar a un sitio a la fuerza
-function checkbrute($usuario, $email, $IP_Client, $table, $dbConn) {
-    // Obtiene el timestamp del tiempo actual.
-    $now = time();
- 
-    // Todos los intentos de inicio de sesión se cuentan desde las 2 horas anteriores.
-    $valid_attempts = $now - (2 * 60 * 60);
-		
-	//variables vacias
-	$num_rows = 0;
-	
-	//Consulto si el usuario ha tratado de ingresar en reiteradas ocaciones
-	if(isset($usuario)&&$usuario!=''&&$num_rows==0){
-		$query      = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE usuario = '".$usuario."' AND Time > '".$valid_attempts."'";
-		$resultado  = mysqli_query($dbConn, $query);
-		$rowSis     = mysqli_fetch_array($resultado);
-		$num_rows   = $num_rows + $rowSis['Acceso'];
-	}
 
-	//Consulto si el ip ha tratado de ingresar en reiteradas ocaciones
-	if(isset($IP_Client)&&$IP_Client!=''&&$num_rows==0){
-		$query      = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE IP_Client = '".$IP_Client."' AND Time > '".$valid_attempts."'";
-		$resultado  = mysqli_query($dbConn, $query);
-		$rowSis     = mysqli_fetch_array($resultado);
-		$num_rows   = $num_rows + $rowSis['Acceso'];
-	}
-	
-	//Consulto si el ip ha tratado de ingresar en reiteradas ocaciones
-	if(isset($email)&&$email!=''&&$num_rows==0){
-		$query      = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE email = '".$email."' AND Time > '".$valid_attempts."'";
-		$resultado  = mysqli_query($dbConn, $query);
-		$rowSis     = mysqli_fetch_array($resultado);
-		$num_rows   = $num_rows + $rowSis['Acceso'];
-	}
-   
-    // Si ha habido más de 5 intentos de inicio de sesión fallidos.
-    if ($num_rows > 5) {
-        return true;
-    } else {
-        return false;
-    }
-        
-}
-/*******************************************************************************************************************/
-//Funcion para guardar datos
-function valida_latxlong($Direccion, $Config_IDGoogle,  $idSubasta, $dbConn){
-	$geocodeData = getGeocodeData($Direccion, $Config_IDGoogle);
-	if($geocodeData) {         
-		return true;
-    } else {
-        return false;
-    }
-}
-/*******************************************************************************************************************/
-//Funcion para guardar datos
-function latxlong($Direccion, $Config_IDGoogle,  $idSubasta, $dbConn){
-	$geocodeData = getGeocodeData($Direccion, $Config_IDGoogle);
-	if($geocodeData) {         
-		$GeoLatitud  = $geocodeData[0];
-		$GeoLongitud = $geocodeData[1];
-					
-		if(isset($idSubasta) && $idSubasta != ''){        $a  = "'".$idSubasta."'" ;      }else{$a  = "''";}
-		if(isset($GeoLatitud) && $GeoLatitud != ''){      $a .= ",'".$GeoLatitud."'" ;    }else{$a .= ",''";}
-		if(isset($GeoLongitud) && $GeoLongitud != ''){    $a .= ",'".$GeoLongitud."'" ;   }else{$a .= ",''";}
-		if(isset($Direccion) && $Direccion != ''){        $a .= ",'".$Direccion."'" ;     }else{$a .= ",''";}
-								
-		// inserto los datos de registro en la db
-		$query  = "INSERT INTO `subastas_listado_ubicaciones` (idSubasta, GeoLatitud,GeoLongitud,Direccion) 
-		VALUES (".$a.")";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-			
-	}
-}
+
+
+
 ?>
