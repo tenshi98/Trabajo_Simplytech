@@ -121,6 +121,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Capacidad']) )                         $Capacidad                          = $_POST['Capacidad'];
 	if ( !empty($_POST['idBackup']) )                          $idBackup                           = $_POST['idBackup'];
 	if ( !empty($_POST['NregBackup']) )                        $NregBackup                         = $_POST['NregBackup'];
+	if ( !empty($_POST['idAlertaTemprana']) )                  $idAlertaTemprana                   = $_POST['idAlertaTemprana'];
 	
 	//Recorro la configuracion de los sensores
 	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
@@ -129,7 +130,6 @@ require_once '0_validate_user_1.php';
 		if ( isset($_POST['SensoresMedMin_'.$i]) )             $SensoresMedMin[$i]         = $_POST['SensoresMedMin_'.$i];
 		if ( isset($_POST['SensoresMedMax_'.$i]) )             $SensoresMedMax[$i]         = $_POST['SensoresMedMax_'.$i];
 		if ( isset($_POST['SensoresMedErrores_'.$i]) )         $SensoresMedErrores_1[$i]   = $_POST['SensoresMedErrores_'.$i];
-		if ( isset($_POST['SensoresMedAlerta_'.$i]) )          $SensoresMedAlerta[$i]      = $_POST['SensoresMedAlerta_'.$i];
 		if ( !empty($_POST['SensoresGrupo_'.$i]) )             $SensoresGrupo[$i]          = $_POST['SensoresGrupo_'.$i];
 		if ( !empty($_POST['SensoresUniMed_'.$i]) )            $SensoresUniMed[$i]         = $_POST['SensoresUniMed_'.$i];
 		if ( !empty($_POST['SensoresActivo_'.$i]) )            $SensoresActivo[$i]         = $_POST['SensoresActivo_'.$i];
@@ -255,6 +255,7 @@ require_once '0_validate_user_1.php';
 			case 'Capacidad':                         if(empty($Capacidad)){                         $error['Capacidad']                     = 'error/No ha ingresado la capacidad';}break;
 			case 'idBackup':                          if(empty($idBackup)){                          $error['idBackup']                      = 'error/No ha Seleccionado si se respalda la tabla relacionada';}break;
 			case 'NregBackup':                        if(empty($NregBackup)){                        $error['NregBackup']                    = 'error/No ha ingresado la cantidad de registros a respaldar';}break;
+			case 'idAlertaTemprana':                  if(empty($idAlertaTemprana)){                  $error['idAlertaTemprana']              = 'error/No ha Seleccionado si se envia la alerta temprana';}break;
 			
 	
 		}
@@ -354,6 +355,7 @@ require_once '0_validate_user_1.php';
 				if(isset($CrossCrane_grupo_motor_bajada) && $CrossCrane_grupo_motor_bajada != ''){  $a .= ",'".$CrossCrane_grupo_motor_bajada."'" ;     }else{$a .= ",''";}
 				if(isset($idBackup) && $idBackup != ''){                                            $a .= ",'".$idBackup."'" ;                          }else{$a .= ",''";}
 				if(isset($idGenerador) && $idGenerador != ''){                                      $a .= ",'".$idGenerador."'" ;                       }else{$a .= ",''";}
+				if(isset($idAlertaTemprana) && $idAlertaTemprana != ''){                            $a .= ",'".$idAlertaTemprana."'" ;                  }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `telemetria_listado` (idSistema, Identificador, Nombre, id_Geo, 
@@ -366,7 +368,7 @@ require_once '0_validate_user_1.php';
 				idMantencion, idEstadoEncendido, idUsoPredio, idUsoGeocerca,CrossCrane_tiempo_revision,
 				CrossCrane_grupo_amperaje, CrossCrane_grupo_elevacion, CrossCrane_grupo_giro,
 				CrossCrane_grupo_carro, CrossCrane_grupo_voltaje, CrossCrane_grupo_motor_subida,
-				CrossCrane_grupo_motor_bajada, idBackup, idGenerador) 
+				CrossCrane_grupo_motor_bajada, idBackup, idGenerador, idAlertaTemprana) 
 				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -495,6 +497,7 @@ require_once '0_validate_user_1.php';
 				if(isset($NDetenciones) ){                                                                $a .= ",NDetenciones='".$NDetenciones."'" ;}
 				if(isset($NErrores) ){                                                                    $a .= ",NErrores='".$NErrores."'" ;}
 				if(isset($NAlertas) ){                                                                    $a .= ",NAlertas='".$NAlertas."'" ;}
+				if(isset($idAlertaTemprana)&& $idAlertaTemprana != '' ){                                  $a .= ",idAlertaTemprana='".$idAlertaTemprana."'" ;}
 				if(isset($idBackup)&& $idBackup != '' ){                                                  $a .= ",idBackup='".$idBackup."'" ;}
 				if(isset($NregBackup) ){                                                                  $a .= ",NregBackup='".$NregBackup."'" ;}
 				if(isset($Estado) ){                                                                      $a .= ",Estado='".$Estado."'" ;}
@@ -572,7 +575,6 @@ require_once '0_validate_user_1.php';
 					if(isset($SensoresMedMin[$i]) && $SensoresMedMin[$i] != ''){                 $a .= ",SensoresMedMin_".$i."='".$SensoresMedMin[$i]."'" ;}
 					if(isset($SensoresMedMax[$i]) && $SensoresMedMax[$i] != ''){                 $a .= ",SensoresMedMax_".$i."='".$SensoresMedMax[$i]."'" ;}
 					if(isset($SensoresMedErrores_1[$i]) && $SensoresMedErrores_1[$i] != ''){     $a .= ",SensoresMedErrores_".$i."='".$SensoresMedErrores_1[$i]."'" ;}
-					if(isset($SensoresMedAlerta[$i]) && $SensoresMedAlerta[$i] != ''){           $a .= ",SensoresMedAlerta_".$i."='".$SensoresMedAlerta[$i]."'" ;}
 					if(isset($SensoresGrupo[$i]) && $SensoresGrupo[$i] != ''){                   $a .= ",SensoresGrupo_".$i."='".$SensoresGrupo[$i]."'" ;}
 					if(isset($SensoresUniMed[$i]) && $SensoresUniMed[$i] != ''){                 $a .= ",SensoresUniMed_".$i."='".$SensoresUniMed[$i]."'" ;}
 					if(isset($SensoresActivo[$i]) && $SensoresActivo[$i] != ''){                 $a .= ",SensoresActivo_".$i."='".$SensoresActivo[$i]."'" ;}
@@ -933,7 +935,6 @@ require_once '0_validate_user_1.php';
 					$qry .= ',SensoresTipo_'.$i;
 					$qry .= ',SensoresMedMin_'.$i;
 					$qry .= ',SensoresMedMax_'.$i;
-					$qry .= ',SensoresMedAlerta_'.$i;
 					$qry .= ',SensoresGrupo_'.$i;
 					$qry .= ',SensoresUniMed_'.$i;
 					$qry .= ',SensoresActivo_'.$i;
@@ -952,8 +953,7 @@ require_once '0_validate_user_1.php';
 				NDetenciones, TiempoFueraLinea, TiempoDetencion, idZona, Direccion_img,SensorActivacionID, SensorActivacionValor,
 				Hor_idActivo_dia1, Hor_idActivo_dia2, Hor_idActivo_dia3, Hor_idActivo_dia4, Hor_idActivo_dia5, Hor_idActivo_dia6, Hor_idActivo_dia7,
 				Hor_Inicio_dia1, Hor_Inicio_dia2, Hor_Inicio_dia3, Hor_Inicio_dia4, Hor_Inicio_dia5, Hor_Inicio_dia6, Hor_Inicio_dia7,
-				Hor_Termino_dia1, Hor_Termino_dia2, Hor_Termino_dia3, Hor_Termino_dia4, Hor_Termino_dia5, Hor_Termino_dia6, Hor_Termino_dia7,
-				idBackup, idGenerador '.$qry;
+				Hor_Termino_dia1, Hor_Termino_dia2, Hor_Termino_dia3, Hor_Termino_dia4, Hor_Termino_dia5, Hor_Termino_dia6, Hor_Termino_dia7 '.$qry;
 				$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria = '.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*******************************************************************/
@@ -1010,6 +1010,7 @@ require_once '0_validate_user_1.php';
 				$a .= ",'2'" ; //mantencion
 				$a .= ",'2'" ; //backup
 				$a .= ",'2'" ; //generador
+				$a .= ",'2'" ; //AlertaTemprana
 				
 				//Recorro la configuracion de los sensores
 				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
@@ -1017,7 +1018,6 @@ require_once '0_validate_user_1.php';
 					if(isset($rowdata['SensoresTipo_'.$i]) && $rowdata['SensoresTipo_'.$i] != ''){                    $a .= ",'".$rowdata['SensoresTipo_'.$i]."'" ;           }else{$a .= ",''";}
 					if(isset($rowdata['SensoresMedMin_'.$i]) && $rowdata['SensoresMedMin_'.$i] != ''){                $a .= ",'".$rowdata['SensoresMedMin_'.$i]."'" ;         }else{$a .= ",''";}
 					if(isset($rowdata['SensoresMedMax_'.$i]) && $rowdata['SensoresMedMax_'.$i] != ''){                $a .= ",'".$rowdata['SensoresMedMax_'.$i]."'" ;         }else{$a .= ",''";}
-					if(isset($rowdata['SensoresMedAlerta_'.$i]) && $rowdata['SensoresMedAlerta_'.$i] != ''){          $a .= ",'".$rowdata['SensoresMedAlerta_'.$i]."'" ;      }else{$a .= ",''";}
 					if(isset($rowdata['SensoresGrupo_'.$i]) && $rowdata['SensoresGrupo_'.$i] != ''){                  $a .= ",'".$rowdata['SensoresGrupo_'.$i]."'" ;          }else{$a .= ",''";}
 					if(isset($rowdata['SensoresUniMed_'.$i]) && $rowdata['SensoresUniMed_'.$i] != ''){                $a .= ",'".$rowdata['SensoresUniMed_'.$i]."'" ;         }else{$a .= ",''";}
 					if(isset($rowdata['SensoresActivo_'.$i]) && $rowdata['SensoresActivo_'.$i] != ''){                $a .= ",'".$rowdata['SensoresActivo_'.$i]."'" ;         }else{$a .= ",''";}
@@ -1037,7 +1037,7 @@ require_once '0_validate_user_1.php';
 				Hor_idActivo_dia1, Hor_idActivo_dia2, Hor_idActivo_dia3, Hor_idActivo_dia4, Hor_idActivo_dia5, Hor_idActivo_dia6, Hor_idActivo_dia7,
 				Hor_Inicio_dia1, Hor_Inicio_dia2, Hor_Inicio_dia3, Hor_Inicio_dia4, Hor_Inicio_dia5, Hor_Inicio_dia6, Hor_Inicio_dia7,
 				Hor_Termino_dia1, Hor_Termino_dia2, Hor_Termino_dia3, Hor_Termino_dia4, Hor_Termino_dia5, Hor_Termino_dia6, Hor_Termino_dia7 ,
-				idMantencion, idBackup, idGenerador
+				idMantencion, idBackup, idGenerador, idAlertaTemprana
 				".$qry.") 
 				VALUES (".$a.")";
 				//Consulta
