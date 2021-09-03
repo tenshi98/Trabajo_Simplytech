@@ -31,6 +31,9 @@ $FechaSistema   = fecha_actual();
 $Fecha_inicio   = restarDias(fecha_actual(),1);
 $Fecha_fin      = fecha_actual();
 $principioMes   = fecha2Ano($FechaSistema).'-'.fecha2NMes($FechaSistema).'-01';
+$HoraSistema    = hora_actual(); 
+$arrGruas       = array();
+$nicon          = 0;
 		
 //condicionales
 if(isset($_GET['idZona'])&&$_GET['idZona']!=''){
@@ -52,8 +55,6 @@ $arrZonas = db_select_array (false, 'idZona, Nombre', 'vehiculos_zonas', '', '',
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
 	$subquery .= ',SensoresMedActual_'.$i;
 }	
 //Listar los equipos
@@ -63,7 +64,6 @@ telemetria_listado.Nombre,
 telemetria_listado.Identificador, 
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.cantSensores,
 telemetria_listado.GeoLatitud, 
 telemetria_listado.GeoLongitud, 
 telemetria_listado.TiempoFueraLinea,
@@ -93,10 +93,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 
 /**************************************************************************/
 //variables
-$HoraSistema    = hora_actual(); 
-$FechaSistema   = fecha_actual();
-$arrGruas       = array();
-$nicon          = 0;
+
 /**************************************************************************/
 //transaccion a verificar
 $transx = "admin_telemetria_encendido_apagado.php";   //Transaccion de encendido-apagado
@@ -165,20 +162,8 @@ foreach ($arrEquipo as $data) {
 	}
 				
 	/**********************************************/
-	//alertas
-	$xx = 0;
-	for ($i = 1; $i <= $data['cantSensores']; $i++) {
-		$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
-		if($xx<0){
-			$in_eq_alertas++;
-		}
-	}
-
-	/**********************************************/
 	//Equipos Errores
-	if($data['NErrores']>0){
-		$in_eq_alertas++;	
-	}
+	if($data['NErrores']>0){ $in_eq_alertas++; }
 				
 	/*******************************************************/
 	//rearmo
@@ -195,7 +180,7 @@ foreach ($arrEquipo as $data) {
 	/*******************************************************/
 	//traspasan los estados
 	if($in_eq_ok==1){
-		$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+		$eq_ok_icon = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 	}else{
 		$eq_ok_icon = $dataex;
 	}

@@ -47,19 +47,15 @@ $arrZonas = db_select_array (false, 'idZona, Nombre', 'vehiculos_zonas', '', '',
 $N_Maximo_Sensores = 20;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
 	$subquery .= ',SensoresMedActual_'.$i;
 }	
 //Listar los equipos
 $SIS_query = '
 telemetria_listado.idTelemetria, 
 telemetria_listado.idTelemetria AS ID, 
-telemetria_listado.Nombre, 
-telemetria_listado.Identificador, 
+telemetria_listado.Nombre,  
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.cantSensores,
 telemetria_listado.GeoLatitud, 
 telemetria_listado.GeoLongitud, 
 telemetria_listado.NDetenciones,
@@ -180,37 +176,17 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			
 			/**********************************************/
 			//GPS con problemas
-			if($data['GeoErrores']>0){
-				$in_eq_gps_fuera++;	
-			}
-			if(isset($data['GeoLatitud'])&&$data['GeoLatitud']==0){
-				$in_eq_gps_fuera++;	
-			}
-			if(isset($data['GeoLongitud'])&&$data['GeoLongitud']==0){
-				$in_eq_gps_fuera++;	
-			}
-
-			/**********************************************/
-			//alertas
-			$xx = 0;
-			for ($i = 1; $i <= $data['cantSensores']; $i++) {
-				$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
-				if($xx<0){
-					$in_eq_alertas++;
-				}
-			}
+			if($data['GeoErrores']>0){                                $in_eq_gps_fuera++; }
+			if(isset($data['GeoLatitud'])&&$data['GeoLatitud']==0){   $in_eq_gps_fuera++; }
+			if(isset($data['GeoLongitud'])&&$data['GeoLongitud']==0){ $in_eq_gps_fuera++; }
 
 			/**********************************************/
 			//Equipos Errores
-			if($data['NErrores']>0){
-				$in_eq_alertas++;	
-			}
+			if($data['NErrores']>0){ $in_eq_alertas++; }
 			
 			/**********************************************/
 			//Equipos detenidos
-			if($data['NDetenciones']>0){
-				$in_eq_detenidos++;	
-			}
+			if($data['NDetenciones']>0){ $in_eq_detenidos++; }
 						
 			/*******************************************************/
 			//rearmo
@@ -232,7 +208,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			/*******************************************************/
 			//traspasan los estados
 			if($in_eq_ok==1){
-				$eq_ok = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+				$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 			}else{
 				$eq_ok = $dataex;
 			}

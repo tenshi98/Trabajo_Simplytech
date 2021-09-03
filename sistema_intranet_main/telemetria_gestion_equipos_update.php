@@ -13,19 +13,14 @@ require_once 'core/Load.Utils.Web.php';
 //variables
 $HoraSistema    = hora_actual(); 
 $FechaSistema   = fecha_actual();
-$eq_alertas     = 0; 
-$eq_fueralinea  = 0; 
-$eq_fueraruta   = 0;
-$eq_detenidos   = 0;
-$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';		
 
 //Variable
-$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
-$z .= " AND telemetria_listado.id_Geo = 2";//solo los equipos que tengan el seguimiento desactivado
+$SIS_where  = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+$SIS_where .= " AND telemetria_listado.id_Geo = 2";//solo los equipos que tengan el seguimiento desactivado
 //verifico que sea un administrador
-$z .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
+	$SIS_where .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
 }
 
 //numero sensores equipo
@@ -36,12 +31,11 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresMedErrores_'.$i;
 	$subquery .= ',SensoresErrorActual_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
-}				
-//Listar los equipos
-$query = "SELECT 
+}	
+
+//Se consultan datos
+$SIS_query = '
 telemetria_listado.GeoLatitud, 
 telemetria_listado.GeoLongitud,
 telemetria_listado.idTelemetria,
@@ -51,57 +45,29 @@ telemetria_listado.LastUpdateHora,
 telemetria_listado.LastUpdateFecha, 
 telemetria_listado.cantSensores,
 telemetria_listado.TiempoFueraLinea,
-core_sistemas.idOpcionesGen_3
-".$subquery."
+telemetria_listado.NErrores,
+core_sistemas.idOpcionesGen_3'.$subquery;
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema';
+$rowDatos = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowDatos');
 
-FROM `telemetria_listado`
-LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema
-".$z."
-ORDER BY telemetria_listado.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowDatos = mysqli_fetch_assoc ($resultado);
-
-//Se traen todas las unidades de medida
+//Se consultan datos
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 
+//Se consultan datos
+$arrGrupos = array();
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+
+//Guardo los datos en un arreglo
 $arrFinalUnimed = array();
 foreach ($arrUnimed as $sen) {
 	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
 }
 
-//Se consultan datos
-$arrGrupos = array();
-$query = "SELECT idGrupo,Nombre
-FROM `telemetria_listado_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupos,$row );
+//Guardo los datos en un arreglo
+$arrFinalGrupos = array();
+foreach ($arrGrupos as $sen) {
+	$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
 }
 ?>
 
@@ -115,59 +81,57 @@ array_push( $arrGrupos,$row );
 	</thead>
 	<tbody role="alert" aria-live="polite" aria-relevant="all">
 		<?php 
-			//alertas
-			$xx = 0;
-			$xy = 0;
-			$xz = 0;
-			$dataex = '';
-			$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
-			for ($i = 1; $i <= $rowDatos['cantSensores']; $i++) {
-				//solo sensores activos
-				if(isset($rowDatos['SensoresActivo_'.$i])&&$rowDatos['SensoresActivo_'.$i]==1){
-					$xx = $rowDatos['SensoresMedErrores_'.$i] - $rowDatos['SensoresErrorActual_'.$i];
-					if($xx<0){$xy = 1;$eq_ok = '';}						
-				}
+		/**********************************************/
+		//Se resetean
+		$in_eq_alertas     = 0;
+		$in_eq_fueralinea  = 0;
+																		
+		/**********************************************/
+		//Fuera de linea
+		$diaInicio   = $rowDatos['LastUpdateFecha'];
+		$diaTermino  = $FechaSistema;
+		$tiempo1     = $rowDatos['LastUpdateHora'];
+		$tiempo2     = $HoraSistema;
+		//calculo diferencia de dias
+		$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+		//calculo del tiempo transcurrido
+		$Tiempo = restahoras($tiempo1, $tiempo2);
+		//Calculo del tiempo transcurrido
+		if($n_dias!=0){
+			if($n_dias>=2){
+				$n_dias = $n_dias-1;
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
 			}
-			$eq_alertas = $eq_alertas + $xy;
-			
-			//Fuera de linea
-			//Verifico la resta de la hora de la ulima actualizacion contra  la hora actual
-			$diaInicio   = $rowDatos['LastUpdateFecha'];
-			$diaTermino  = $FechaSistema;
-			$tiempo1     = $rowDatos['LastUpdateHora'];
-			$tiempo2     = $HoraSistema;
-			//calculo diferencia de dias
-			$n_dias = dias_transcurridos($diaInicio,$diaTermino);
-			//calculo del tiempo transcurrido
-			$Tiempo = restahoras($tiempo1, $tiempo2);
-			//Calculo del tiempo transcurrido
-			if($n_dias!=0){
-				if($n_dias>=2){
-					$n_dias = $n_dias-1;
-					$horas_trans2 = multHoras('24:00:00',$n_dias);
-					$Tiempo = sumahoras($Tiempo,$horas_trans2);
-				}
-				if($n_dias==1&&$tiempo1<$tiempo2){
-					$horas_trans2 = multHoras('24:00:00',$n_dias);
-					$Tiempo = sumahoras($Tiempo,$horas_trans2);
-				}
+			if($n_dias==1&&$tiempo1<$tiempo2){
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
 			}
-			if($Tiempo>$rowDatos['TiempoFueraLinea']&&$rowDatos['TiempoFueraLinea']!='00:00:00'){
-				$eq_fueralinea = $eq_fueralinea + 1;	
-				$eq_ok = '';
-			}
+		}	
+		if($Tiempo>$rowDatos['TiempoFueraLinea']&&$rowDatos['TiempoFueraLinea']!='00:00:00'){	
+			$in_eq_fueralinea++;
+		}
+									
+		/**********************************************/
+		//NErrores
+		if(isset($rowDatos['NErrores'])&&$rowDatos['NErrores']>0){ $in_eq_alertas++; }
+											
+		/*******************************************************/
+		//rearmo
+		if($in_eq_alertas>0){    
+			$danger = 'warning';
+			$eq_ok  = '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
+		}elseif($in_eq_fueralinea>0){ 
+			$danger = 'danger';
+			$eq_ok  = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';
+		}else{
+			$danger = '';
+			$eq_ok  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+		}	
 			
-			
-			
-			//equipos ok
-			if($eq_alertas>0){$xz = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
-			if($eq_fueralinea>0){$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
-			
-			$eq_ok .= $dataex;
-			
-			
-			?>
-		<tr class="odd <?php if($xz!=0){echo 'danger';}?>">		
+		?>
+		
+		<tr class="odd <?php echo $danger; ?>">		
 			<td><?php echo $rowDatos['Nombre']; ?></td>		
 			<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>			
 			<td>
@@ -189,12 +153,7 @@ array_push( $arrGrupos,$row );
 			//Unidad medida
 			$unimed = ' '.$arrFinalUnimed[$rowDatos['SensoresUniMed_'.$i]];
 			//Titulo del cuadro
-			$Titulo = '';
-			foreach ($arrGrupos as $group) { 
-				if($rowDatos['SensoresGrupo_'.$i]==$group['idGrupo']){
-					$Titulo = $group['Nombre'];
-				}
-			}	
+			$Titulo = $arrFinalGrupos[$rowDatos['SensoresGrupo_'.$i]];
 			//Verifico que no sea el mismo sensor
 			if(isset($rowDatos['SensoresMedActual_'.$i])&&$rowDatos['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowDatos['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
 			if($rowDatos['SensoresErrorActual_'.$i]> 0){

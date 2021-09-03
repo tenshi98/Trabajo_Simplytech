@@ -30,89 +30,51 @@ if ( ! empty($_GET['submit_filter']) ) {
 $arrRutas = array();
 $HoraSistema    = hora_actual();
 $FechaSistema   = fecha_actual(); 
-$eq_alertas     = 0; 
-$eq_fueralinea  = 0; 
-$eq_fueraruta   = 0;
-$eq_detenidos   = 0;
-
 	
 //Se traen las rutas si se ingresaron
 if(isset($_GET['idRuta'])&&$_GET['idRuta']!=''){
 	
-	$query = "SELECT idUbicaciones, Latitud, Longitud, direccion
-	FROM `telemetria_rutas_ubicaciones`
-	WHERE idRuta = ".$_GET['idRuta']."
-	ORDER BY idUbicaciones ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRutas,$row );
-	}
+	//Se consultan datos
+	$arrRutas = array();
+	$arrRutas = db_select_array (false, 'idUbicaciones, Latitud, Longitud, direccion', 'telemetria_rutas_ubicaciones', '', 'idRuta ='.$_GET['idRuta'], 'idUbicaciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRutas');
+
 } 
 
 
 //Variable
-$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
-$z .= " AND telemetria_listado.id_Geo = 1";//solo los equipos que tengan el seguimiento activado
+$SIS_where  = "telemetria_listado.idEstado = 1 ";//solo equipos activos
+$SIS_where .= " AND telemetria_listado.id_Geo = 1";//solo los equipos que tengan el seguimiento activado
 $enlace = "?dd=true";
 //verifico que sea un administrador
-$z .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$enlace .= "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$enlace    .= "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 if (isset($_GET['idRuta'])&&$_GET['idRuta']!=''){
-	$z .= " AND telemetria_listado.idRuta=".$_GET['idRuta'];
-	$enlace .= "&idRuta=".$_GET['idRuta'];	
+	$SIS_where .= " AND telemetria_listado.idRuta=".$_GET['idRuta'];
+	$enlace    .= "&idRuta=".$_GET['idRuta'];	
 }
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
-	$enlace .= "&idTelemetria=".$_GET['idTelemetria'];	
+	$SIS_where .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
+	$enlace    .= "&idTelemetria=".$_GET['idTelemetria'];	
 }
 
-//numero sensores equipo
-$N_Maximo_Sensores = 72;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
-}				
-//Listar los equipos
-$arrUsers = array();
-$query = "SELECT 
-GeoLatitud, GeoLongitud,idTelemetria,Nombre,LastUpdateFecha,
-LastUpdateHora,cantSensores,TiempoFueraLinea,NDetenciones
-".$subquery."
+//Se consultan datos
+$SIS_query = '
+telemetria_listado.idTelemetria,
+telemetria_listado.Nombre,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.LastUpdateFecha, 
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.GeoLatitud,
+telemetria_listado.GeoLongitud,
+telemetria_listado.NDetenciones,
+telemetria_listado.NErrores';
+$SIS_join = '';
+$SIS_order = 'telemetria_listado.Nombre ASC';
+$arrEquipo = array();
+$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipo');
 
-FROM `telemetria_listado`
-".$z."
-ORDER BY telemetria_listado.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+
 ?>
 
 <div class="col-sm-12">
@@ -134,25 +96,16 @@ array_push( $arrUsers,$row );
 								</tr>
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php foreach ($arrUsers as $data) { 
+								<?php foreach ($arrEquipo as $data) { 
 									
-									//alertas
-									$xx = 0;
-									$xy = 0;
-									$xz = 0;
-									$dataex = '';
-									$eq_ok = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
-									for ($i = 1; $i <= $data['cantSensores']; $i++) {
-										//solo sensores activos
-										if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
-											$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
-											if($xx<0){$xy = 1;$eq_ok = '';}
-										}	
-									}
-									$eq_alertas = $eq_alertas + $xy;
-									
+									/**********************************************/
+									//Se resetean
+									$in_eq_alertas     = 0;
+									$in_eq_fueralinea  = 0;
+									$in_eq_detenidos   = 0;
+																		
+									/**********************************************/
 									//Fuera de linea
-									//Verifico la resta de la hora de la ulima actualizacion contra  la hora actual
 									$diaInicio   = $data['LastUpdateFecha'];
 									$diaTermino  = $FechaSistema;
 									$tiempo1     = $data['LastUpdateHora'];
@@ -172,34 +125,45 @@ array_push( $arrUsers,$row );
 											$horas_trans2 = multHoras('24:00:00',$n_dias);
 											$Tiempo = sumahoras($Tiempo,$horas_trans2);
 										}
-									}
-									if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){
-										$eq_fueralinea = $eq_fueralinea + 1;	
-										$eq_ok = '';
+									}	
+									if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+										$in_eq_fueralinea++;
 									}
 									
+									/**********************************************/
+									//NErrores
+									if(isset($data['NErrores'])&&$data['NErrores']>0){ $in_eq_alertas++; }
+									
+									/**********************************************/
 									//Equipos detenidos
-									if($data['NDetenciones']>0){
-										$eq_detenidos = $eq_detenidos + 1;	
+									if(isset($data['NDetenciones'])&&$data['NDetenciones']>0){ $in_eq_detenidos++; }
+											
+									/*******************************************************/
+									//rearmo
+									if($in_eq_alertas>0){    
+										$danger = 'warning';
+										$eq_ok  = '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
+									}elseif($in_eq_fueralinea>0){ 
+										$danger = 'danger';
+										$eq_ok  = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';
+									}elseif($in_eq_detenidos>0){ 
+										$danger = 'danger';
+										$eq_ok  = '<a href="#" title="Vehiculo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></a>';
+									}else{
+										$danger = '';
+										$eq_ok  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 									}
-									
-									//equipos ok
-									if($eq_alertas>0){$xz = 1;$dataex .= '<a href="#" title="Con Alertas" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
-									if($eq_fueralinea>0){$xz = 1;$dataex .= '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
-									if($eq_detenidos>0){$xz = 1;$dataex .= '<a href="#" title="Vehiculo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></a>';}
-									
-									$eq_ok .= $dataex;
-									
 									?>
-								<tr class="odd <?php if($xz!=0){echo 'danger';}?>">		
-									<td><?php echo $data['Nombre']; ?></td>		
-									<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>			
-									<td>
-										<div class="btn-group" style="width: 35px;" >
-											<a href="<?php echo 'telemetria_gestion_flota_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
-										</div>
-									</td>
-								</tr>
+									
+									<tr class="odd <?php echo $danger; ?>">		
+										<td><?php echo $data['Nombre']; ?></td>		
+										<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>			
+										<td>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="<?php echo 'telemetria_gestion_flota_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
+											</div>
+										</td>
+									</tr>
 								<?php } ?>                    
 							</tbody>
 						</table>
@@ -232,7 +196,7 @@ array_push( $arrUsers,$row );
 							var markers={}
 							
 							var introx = [ 
-								<?php foreach ( $arrUsers as $pos ) { ?>
+								<?php foreach ( $arrEquipo as $pos ) { ?>
 									[ <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
 								<?php } ?>
 								];

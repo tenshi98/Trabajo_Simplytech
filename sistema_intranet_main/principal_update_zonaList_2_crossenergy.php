@@ -30,6 +30,10 @@ if(isset($_SESSION['usuario']['zona']['id_Geo'])&&$_SESSION['usuario']['zona']['
 $FechaSistema   = fecha_actual();
 $Fecha_inicio   = restarDias(fecha_actual(),1);
 $Fecha_fin      = fecha_actual();
+$HoraSistema    = hora_actual(); 
+$arrGruas       = array();
+$nicon          = 0;
+
 		
 //condicionales
 if(isset($_GET['idZona'])&&$_GET['idZona']!=''){
@@ -48,21 +52,17 @@ $arrZonas = db_select_array (false, 'idZona, Nombre', 'vehiculos_zonas', '', '',
 	
 /************************************************/
 //numero sensores equipo
-$N_Maximo_Sensores = 72;
+$N_Maximo_Sensores = 20;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
 	$subquery .= ',SensoresMedActual_'.$i;
 }	
 //Listar los equipos
 $SIS_query = '
 telemetria_listado.idTelemetria, 
 telemetria_listado.Nombre, 
-telemetria_listado.Identificador, 
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.cantSensores,
 telemetria_listado.GeoLatitud, 
 telemetria_listado.GeoLongitud, 
 telemetria_listado.TiempoFueraLinea,
@@ -86,12 +86,6 @@ $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrEquipo = array();
 $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 
-/**************************************************************************/
-//variables
-$HoraSistema    = hora_actual(); 
-$FechaSistema   = fecha_actual();
-$arrGruas       = array();
-$nicon          = 0;
 
 /**************************************************************************/								
 foreach ($arrEquipo as $data) { 
@@ -129,20 +123,8 @@ foreach ($arrEquipo as $data) {
 	}
 				
 	/**********************************************/
-	//alertas
-	$xx = 0;
-	for ($i = 1; $i <= $data['cantSensores']; $i++) {
-		$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
-		if($xx<0){
-			$in_eq_alertas++;
-		}
-	}
-
-	/**********************************************/
 	//Equipos Errores
-	if($data['NErrores']>0){
-		$in_eq_alertas++;	
-	}
+	if($data['NErrores']>0){ $in_eq_alertas++; }
 				
 	/*******************************************************/
 	//rearmo
@@ -159,7 +141,7 @@ foreach ($arrEquipo as $data) {
 	/*******************************************************/
 	//traspasan los estados
 	if($in_eq_ok==1){
-		$eq_ok_icon = '<a href="#" title="Sin Problemas" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+		$eq_ok_icon = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 	}else{
 		$eq_ok_icon = $dataex;
 	}

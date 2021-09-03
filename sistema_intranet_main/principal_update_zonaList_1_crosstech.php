@@ -42,27 +42,17 @@ $arrZonas = array();
 $arrZonas = db_select_array (false, 'idZona, Nombre', 'vehiculos_zonas', '', '', 'idZona ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
 
 /************************************************/
-//numero sensores equipo
-$N_Maximo_Sensores = 72;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-}	
 //Listar los equipos
 $SIS_query = '
 telemetria_listado.Nombre, 
-telemetria_listado.Identificador, 
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.cantSensores,
 telemetria_listado.GeoLatitud, 
 telemetria_listado.GeoLongitud, 
 telemetria_listado.NDetenciones,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.GeoErrores,
-telemetria_listado.NErrores'.$subquery;
+telemetria_listado.NErrores';
 $SIS_join  = '';
 $SIS_where = 'telemetria_listado.idEstado = 1';                //solo equipos activos
 $SIS_where.= ' AND telemetria_listado.id_Geo = '.$id_Geo;       //solo los equipos que tengan el seguimiento activado
@@ -174,37 +164,17 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			
 			/**********************************************/
 			//GPS con problemas
-			if($data['GeoErrores']>0){
-				$in_eq_gps_fuera++;	
-			}
-			if(isset($data['GeoLatitud'])&&$data['GeoLatitud']==0){
-				$in_eq_gps_fuera++;	
-			}
-			if(isset($data['GeoLongitud'])&&$data['GeoLongitud']==0){
-				$in_eq_gps_fuera++;	
-			}
-
-			/**********************************************/
-			//alertas
-			$xx = 0;
-			for ($i = 1; $i <= $data['cantSensores']; $i++) {
-				$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
-				if($xx<0){
-					$in_eq_alertas++;
-				}
-			}
+			if($data['GeoErrores']>0){                                $in_eq_gps_fuera++; }
+			if(isset($data['GeoLatitud'])&&$data['GeoLatitud']==0){   $in_eq_gps_fuera++; }
+			if(isset($data['GeoLongitud'])&&$data['GeoLongitud']==0){ $in_eq_gps_fuera++; }
 
 			/**********************************************/
 			//Equipos Errores
-			if($data['NErrores']>0){
-				$in_eq_alertas++;	
-			}
+			if($data['NErrores']>0){ $in_eq_alertas++; }
 			
 			/**********************************************/
 			//Equipos detenidos
-			if($data['NDetenciones']>0){
-				$in_eq_detenidos++;	
-			}
+			if($data['NDetenciones']>0){ $in_eq_detenidos++; }
 						
 			/*******************************************************/
 			//rearmo
