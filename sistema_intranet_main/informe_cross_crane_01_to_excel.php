@@ -25,7 +25,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /**********************************************************/
 $SIS_where = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
@@ -82,8 +82,8 @@ $objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
 
 $x = 1;
 $arrData = array();
-$arrData[$x] = "B"; $x++;
-$arrData[$x] = "C"; $x++;
+//$arrData[$x] = "B"; $x++;
+//$arrData[$x] = "C"; $x++;
 $arrData[$x] = "D"; $x++;
 $arrData[$x] = "E"; $x++;
 $arrData[$x] = "F"; $x++;
@@ -227,7 +227,12 @@ $nn=2;
 $objPHPExcel->setActiveSheetIndex(1)
             ->setCellValue('A'.$nn, 'Equipo');
             
-
+$objPHPExcel->setActiveSheetIndex(1)
+				->setCellValue('B'.$nn, 'Total Registros');
+			
+$objPHPExcel->setActiveSheetIndex(1)
+				->setCellValue('C'.$nn, 'Promedio Registros');
+				
 //Creo las columnas            
 $ndias = dias_transcurridos($_GET['f_inicio'], $_GET['f_termino']);
 for ($i = 1; $i <= $ndias; $i++) {
@@ -236,27 +241,17 @@ for ($i = 1; $i <= $ndias; $i++) {
 				->setCellValue($arrData[$i].$nn, Dia_Mes($nuevoDia));
 }   
 
-$objPHPExcel->setActiveSheetIndex(1)
-				->setCellValue($arrData[$i].$nn, 'Total Registros');
-$i++;				
-$objPHPExcel->setActiveSheetIndex(1)
-				->setCellValue($arrData[$i].$nn, 'Promedio Registros');
-				
-
 								                 
 /**************************************************************/
 //variables
 $nn           = 3;
 $ndias        = dias_transcurridos($_GET['f_inicio'], $_GET['f_termino']);
-$nColumnTotal = 1;
 $nColumnProm  = 1;
 //filtro por equipo
 filtrar($arrEquipos2, 'Equipo'); 
 //recorro los equipos 
 foreach($arrEquipos2 as $equipo=>$dias){
-	//Nombre del equipo
-	$objPHPExcel->setActiveSheetIndex(1)
-				->setCellValue('A'.$nn, $equipo);
+	
             
 	//creo un arreglo
 	$DiaActual = array();
@@ -278,29 +273,29 @@ foreach($arrEquipos2 as $equipo=>$dias){
 			}
 		}
 	}
-						
+	
+	//Nombre del equipo
+	$objPHPExcel->setActiveSheetIndex(1)
+				->setCellValue('A'.$nn, $equipo);
+	//Total Errores
+	$objPHPExcel->setActiveSheetIndex(1)
+					->setCellValue('B'.$nn, $TotalErrores);
+	//Promedios
+	if($ndias!=0){$ss_to = $TotalErrores/$ndias;}else{$ss_to = 0;}			
+	$objPHPExcel->setActiveSheetIndex(1)
+					->setCellValue('C'.$nn, cantidades($ss_to, 2));			
+									
 	//recorro los datos guardados
-
 	for ($i = 1; $i <= $ndias; $i++) {
 		$objPHPExcel->setActiveSheetIndex(1)
 					->setCellValue($arrData[$i].$nn, $DiaActual[$i]['valor']);
 	}					
-						
-	//Creo las columnas  
-	$objPHPExcel->setActiveSheetIndex(1)
-					->setCellValue($arrData[$i].$nn, $TotalErrores);
-	//Guardo la columna donde estan los totales
-	$nColumnTotal = $i;
+
 			
-	$i++;	
-	$ss_to = 0;
-	if($ndias!=0){$ss_to = $TotalErrores/$ndias;}			
-	$objPHPExcel->setActiveSheetIndex(1)
-					->setCellValue($arrData[$i].$nn, cantidades($ss_to, 2));
-	//Guardo la columna donde estan los promedios
-	$nColumnProm  = $i;			
 	//Se suma 1
 	$nn++;
+	//Guardo la columna donde estan los promedios
+	$nColumnProm  = $i;
 }				
 				                       
 //seteo el nombre de la hoja
@@ -322,21 +317,19 @@ $objPHPExcel->getActiveSheet(1)->getStyle('A1:'.$arrData[$i].$nn)->applyFromArra
 );
 //ancho de columnas
 $objPHPExcel->getActiveSheet(1)->getColumnDimension('A')->setWidth(60);
+$objPHPExcel->getActiveSheet(1)->getColumnDimension('B')->setWidth(20);
+$objPHPExcel->getActiveSheet(1)->getColumnDimension('C')->setWidth(20);
 for ($i = 1; $i <= $ndias; $i++) {
 	$objPHPExcel->getActiveSheet(1)->getColumnDimension($arrData[$i])->setWidth(10);
 }
-$objPHPExcel->getActiveSheet(1)->getColumnDimension($arrData[$i])->setWidth(20);
-$i++;
-$objPHPExcel->getActiveSheet(1)->getColumnDimension($arrData[$i])->setWidth(20);
-
 
 /**************************************************************/
 
 
   
 //datos de origen
-/*$categories = new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$A$3:$A$'.$nn);
-$values     = new PHPExcel_Chart_DataSeriesValues('Number', 'Worksheet!$'.$arrData[$nColumnTotal].'$3:$'.$arrData[$nColumnTotal].'$'.$nn);
+$categories = new PHPExcel_Chart_DataSeriesValues('String', 'Recuento Total por Dia!$A$3:$A$'.$nn);
+$values     = new PHPExcel_Chart_DataSeriesValues('Number', 'Recuento Total por Dia!$D$3:$'.$arrData[$nColumnProm].'$'.$nn);
 
 //Opciones
 $series = new PHPExcel_Chart_DataSeries(
@@ -362,7 +355,7 @@ $title    = new PHPExcel_Chart_Title('Test Area Chart');
 $chart = new PHPExcel_Chart('sample', $title, $legend, $plotarea, true,0,$xTitle,$yTitle);
 
 $LeftPos = $nn + 3;
-$RightPos = $nn + 3;
+$RightPos = $nn + 15;
 $chart->setTopLeftPosition('A'.$LeftPos);
 $chart->setBottomRightPosition('J'.$RightPos);
 
@@ -377,7 +370,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 
 // Redirect output to a client’s web browser (Excel5)
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="CrossCrane - Alertas por Grua.xls"');
+header('Content-Disposition: attachment;filename="CrossCrane - Alertas por Grua.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
@@ -388,7 +381,7 @@ header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
 header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 header ('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->setIncludeCharts(TRUE);
 $objWriter->save('php://output');
 exit;
