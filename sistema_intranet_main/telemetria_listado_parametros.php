@@ -122,7 +122,6 @@ $cadena .= ',SensoresMedMin_'.$_GET['mod'].' AS MedMin';
 $cadena .= ',SensoresMedMax_'.$_GET['mod'].' AS MedMax';
 $cadena .= ',SensoresMedErrores_'.$_GET['mod'].' AS Errores_1';
 $cadena .= ',SensoresTipo_'.$_GET['mod'].' AS Sensor';
-$cadena .= ',SensoresMedAlerta_'.$_GET['mod'].' AS Alerta';
 $cadena .= ',SensoresGrupo_'.$_GET['mod'].' AS Grupo';
 $cadena .= ',SensoresUniMed_'.$_GET['mod'].' AS UniMed';
 $cadena .= ',SensoresActivo_'.$_GET['mod'].' AS Activo';
@@ -161,7 +160,6 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listad
 				
 				$Form_Inputs->form_tittle(3, 'Configuracion');
 				$Form_Inputs->form_select('Tipo de Sensor','SensoresTipo_'.$_GET['mod'], $rowdata['Sensor'], 1, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Enviar Alerta Temprana','SensoresMedAlerta_'.$_GET['mod'], $rowdata['Alerta'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				$Form_Inputs->form_select('Grupo','SensoresGrupo_'.$_GET['mod'], $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
 				$Form_Inputs->form_select('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowdata['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
 				$Form_Inputs->form_select('Estado Sensor','SensoresActivo_'.$_GET['mod'], $rowdata['Activo'], 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
@@ -321,7 +319,6 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedMin_'.$i;
 	$subquery .= ',SensoresMedMax_'.$i;
 	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresMedAlerta_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
@@ -361,11 +358,11 @@ foreach ($arrEstado as $sen) {    $arrFinalEstado[$sen['idEstado']] = $sen['Nomb
 foreach ($arrGruposRev as $sen) { $arrFinalGruposRev[$sen['idGrupo']] = $sen['Nombre']; }
 
 //no configurado
-$arrFinalSensores[0]  = 'No configurado';
-$arrFinalGrupos[0]    = 'No configurado';
-$arrFinalUnimed[0]    = 'No configurado';
-$arrFinalEstado[0]    = 'No configurado';
-$arrFinalGruposRev[0] = 'No configurado';
+$arrFinalSensores[0]  = 'S/C';
+$arrFinalGrupos[0]    = 'S/C';
+$arrFinalUnimed[0]    = 'S/C';
+$arrFinalEstado[0]    = 'S/C';
+$arrFinalGruposRev[0] = 'S/C';
 
 
 ?>
@@ -390,7 +387,6 @@ $arrFinalGruposRev[0] = 'No configurado';
 							<li class=""><a href="<?php echo 'telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_alerta_general.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarma General</a></li>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
@@ -467,7 +463,6 @@ $arrFinalGruposRev[0] = 'No configurado';
 						<th style="text-align: center;">Minimo<br/>Medicion</th>
 						<th style="text-align: center;">Maximo<br/>Medicion</th>
 						<th style="text-align: center;">Maximo Errores<br/>Permitidos</th>
-						<th style="text-align: center;">Enviar Alerta<br/>Temprana</th>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
@@ -498,7 +493,6 @@ $arrFinalGruposRev[0] = 'No configurado';
 							<td style="text-align: center;"><?php echo Cantidades_decimales_justos($rowdata['SensoresMedMin_'.$i]).' '.$Unimed; ?></td>		
 							<td style="text-align: center;"><?php echo Cantidades_decimales_justos($rowdata['SensoresMedMax_'.$i]).' '.$Unimed; ?></td>
 							<td style="text-align: center;"><?php echo $rowdata['SensoresMedErrores_'.$i]; ?></td>
-							<td style="text-align: center;"><?php if($rowdata['SensoresMedAlerta_'.$i]==1){ echo 'Si'; }elseif($rowdata['SensoresMedAlerta_'.$i]==2){ echo 'No'; } ?></td>			
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
