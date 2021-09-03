@@ -1057,7 +1057,7 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
 	}else{
 		
-		
+		/*******************************************************************************/
 		//variables
 		$HoraSistema    = hora_actual(); 
 		$FechaSistema   = fecha_actual();
@@ -1067,36 +1067,27 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 		$eq_detenidos   = 0;
 		$eq_gps_fuera   = 0;
 		$eq_ok          = 0;
-
-		$google = $IDGoogle;
+		$google         = $IDGoogle;
 			
+		/*******************************************************************************/
 		//Variable
-		$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+		$SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 		//solo los equipos que tengan el seguimiento activado
 		if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
-			$z .= " AND telemetria_listado.id_Geo = ".$seguimiento;
+			$SIS_where .= " AND telemetria_listado.id_Geo = ".$seguimiento;
 		}
 		//Filtro el sistema al cual pertenece	
 		if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-			$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+			$SIS_where .= " AND telemetria_listado.idSistema = ".$idSistema;	
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
-		$join = "";	
+		$SIS_join = "";	
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
-			$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
 		}
 		
-		//numero sensores equipo
-		$N_Maximo_Sensores = 60;
-		$subquery = '';
-		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresMedErrores_'.$i;
-			$subquery .= ',SensoresErrorActual_'.$i;
-		}	
-		//Listar los equipos
-		$arrEquipo = array();
-		$query = "SELECT 
+		$SIS_query = '
 		telemetria_listado.LastUpdateFecha,
 		telemetria_listado.LastUpdateHora,
 		telemetria_listado.cantSensores,
@@ -1105,33 +1096,14 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 		telemetria_listado.NDetenciones,
 		telemetria_listado.TiempoFueraLinea,
 		telemetria_listado.GeoErrores,
-		telemetria_listado.NErrores
-		
-		".$subquery."
-	
-		FROM `telemetria_listado`
-		".$join."
-		".$z."
-		ORDER BY telemetria_listado.Nombre ASC  ";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-							
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
-		array_push( $arrEquipo,$row );
-		}
+		telemetria_listado.NErrores';
+		$SIS_order = 'telemetria_listado.Nombre ASC';
+		$arrEquipo = array();
+		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, 'Components.UI.Widgets.Extended', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 
 
-
+		/*******************************************************************************/
+		//recorro
 		foreach ($arrEquipo as $data) {
 			
 			/**********************************************/
@@ -1171,31 +1143,15 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 			
 			/**********************************************/
 			//GPS con problemas
-			if($data['GeoErrores']>0){
-				$in_eq_gps_fuera++;	
-			}
+			if($data['GeoErrores']>0){ $in_eq_gps_fuera++; }
 			
 			/**********************************************/
-			//alertas
-			$xx = 0;
-			for ($i = 1; $i <= $data['cantSensores']; $i++) {
-				$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
-				if($xx<0){
-					$in_eq_alertas++;
-				}
-			}
-
-			/**********************************************/
 			//Equipos Errores
-			if($data['NErrores']>0){
-				$in_eq_alertas++;	
-			}
+			if($data['NErrores']>0){ $in_eq_alertas++; }
 			
 			/**********************************************/
 			//Equipos detenidos
-			if($data['NDetenciones']>0){
-				$in_eq_detenidos++;	
-			}
+			if($data['NDetenciones']>0){ $in_eq_detenidos++; }
 						
 			/*******************************************************/
 			//rearmo
@@ -1217,6 +1173,8 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 
 
 
+		/*******************************************************************************/
+		//Imprimo
 		$GPS = '<h3 class="supertittle text-primary">'.$titulo.'</h3>';
 		$GPS.= '<div class="clearfix"></div>';	
 		
@@ -1568,140 +1526,105 @@ return $GPS;
 //Muestra los equipos
 function widget_Equipos($nombreEquipo, $seguimiento, $equipo, $enlace, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
 
-//variables
-$HoraSistema    = hora_actual(); 
-$FechaSistema   = fecha_actual();
-$eq_alertas     = 0; 
-$eq_fueralinea  = 0; 
-$eq_ok          = 0;
+	/*********************************************************************/
+	//variables
+	$HoraSistema    = hora_actual(); 
+	$FechaSistema   = fecha_actual();
+	$eq_alertas     = 0; 
+	$eq_fueralinea  = 0; 
+	$eq_ok          = 0;
 
-//Variable
-$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
-//solo los equipos que tengan el seguimiento activado
-if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
-	$z .= " AND telemetria_listado.id_Geo = ".$seguimiento;
-}
-//Filtro el sistema al cual pertenece	
-if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
-}	
-//El equipo a ver
-if (isset($equipo)&&$equipo!=''&&$equipo!=0){
-	$z .= " AND telemetria_listado.idTelemetria=".$equipo;
-}
-//Verifico el tipo de usuario que esta ingresando y el id
-$join = "";	
-if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
-}
-
-//numero sensores equipo
-$N_Maximo_Sensores = 60;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
-}	
-//Listar los equipos
-$arrEquipo = array();
-$query = "SELECT 
-telemetria_listado.LastUpdateFecha,
-telemetria_listado.LastUpdateHora,
-telemetria_listado.cantSensores,
-telemetria_listado.GeoLatitud, 
-telemetria_listado.GeoLongitud, 
-telemetria_listado.NDetenciones,
-telemetria_listado.TiempoFueraLinea,
-telemetria_listado.NErrores
-		
-".$subquery."
-
-FROM `telemetria_listado`
-".$join."
-".$z."
-ORDER BY telemetria_listado.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEquipo,$row );
-}
-
-
-foreach ($arrEquipo as $data) {
-	
-	/**********************************************/
-	//Se resetean
-	$in_eq_alertas     = 0;
-	$in_eq_fueralinea  = 0;
-	$in_eq_ok          = 1;
-										
-	/**********************************************/
-	//Fuera de linea
-	$diaInicio   = $data['LastUpdateFecha'];
-	$diaTermino  = $FechaSistema;
-	$tiempo1     = $data['LastUpdateHora'];
-	$tiempo2     = $HoraSistema;
-	//calculo diferencia de dias
-	$n_dias = dias_transcurridos($diaInicio,$diaTermino);
-	//calculo del tiempo transcurrido
-	$Tiempo = restahoras($tiempo1, $tiempo2);
-	//Calculo del tiempo transcurrido
-	if($n_dias!=0){
-		if($n_dias>=2){
-			$n_dias = $n_dias-1;
-			$horas_trans2 = multHoras('24:00:00',$n_dias);
-			$Tiempo = sumahoras($Tiempo,$horas_trans2);
-		}
-		if($n_dias==1&&$tiempo1<$tiempo2){
-			$horas_trans2 = multHoras('24:00:00',$n_dias);
-			$Tiempo = sumahoras($Tiempo,$horas_trans2);
-		}
+	/*********************************************************************/
+	//Variable
+	$SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
+	//solo los equipos que tengan el seguimiento activado
+	if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
+		$SIS_where .= " AND telemetria_listado.id_Geo = ".$seguimiento;
+	}
+	//Filtro el sistema al cual pertenece	
+	if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+		$SIS_where .= " AND telemetria_listado.idSistema = ".$idSistema;	
 	}	
-	if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
-		$in_eq_fueralinea++;
+	//El equipo a ver
+	if (isset($equipo)&&$equipo!=''&&$equipo!=0){
+		$SIS_where .= " AND telemetria_listado.idTelemetria=".$equipo;
+	}
+	//Verifico el tipo de usuario que esta ingresando y el id
+	$SIS_join = "";	
+	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
 	}
 
-	/**********************************************/
-	//alertas
-	$xx = 0;
-	for ($i = 1; $i <= $data['cantSensores']; $i++) {
-		$xx = $data['SensoresMedErrores_'.$i] - $data['SensoresErrorActual_'.$i];
-		if($xx<0){
-			$in_eq_alertas++;
-		}
-	}
-	//NErrores
-	if(isset($data['NErrores'])&&$data['NErrores']>0){	
-		$in_eq_alertas++;
-	}
-			
-	/*******************************************************/
-	//rearmo
-	if($in_eq_alertas>0){    $in_eq_ok = 0;$in_eq_alertas = 1;    }
-	if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_alertas = 0;}
+	$SIS_query = '
+	telemetria_listado.LastUpdateFecha,
+	telemetria_listado.LastUpdateHora,
+	telemetria_listado.cantSensores,
+	telemetria_listado.GeoLatitud, 
+	telemetria_listado.GeoLongitud, 
+	telemetria_listado.NDetenciones,
+	telemetria_listado.TiempoFueraLinea,
+	telemetria_listado.NErrores';
+	$SIS_order = 'telemetria_listado.Nombre ASC';
+	$arrEquipo = array();
+	$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, 'Components.UI.Widgets.Extended', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 	
-	//Se guardan los valores
-	$eq_alertas     = $eq_alertas + $in_eq_alertas; 
-	$eq_fueralinea  = $eq_fueralinea + $in_eq_fueralinea; 
-	$eq_ok          = $eq_ok + $in_eq_ok; 
+	/*********************************************************************/
+	//recorro
+	foreach ($arrEquipo as $data) {
+		
+		/**********************************************/
+		//Se resetean
+		$in_eq_alertas     = 0;
+		$in_eq_fueralinea  = 0;
+		$in_eq_ok          = 1;
+											
+		/**********************************************/
+		//Fuera de linea
+		$diaInicio   = $data['LastUpdateFecha'];
+		$diaTermino  = $FechaSistema;
+		$tiempo1     = $data['LastUpdateHora'];
+		$tiempo2     = $HoraSistema;
+		//calculo diferencia de dias
+		$n_dias = dias_transcurridos($diaInicio,$diaTermino);
+		//calculo del tiempo transcurrido
+		$Tiempo = restahoras($tiempo1, $tiempo2);
+		//Calculo del tiempo transcurrido
+		if($n_dias!=0){
+			if($n_dias>=2){
+				$n_dias = $n_dias-1;
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
+			}
+			if($n_dias==1&&$tiempo1<$tiempo2){
+				$horas_trans2 = multHoras('24:00:00',$n_dias);
+				$Tiempo = sumahoras($Tiempo,$horas_trans2);
+			}
+		}	
+		if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+			$in_eq_fueralinea++;
+		}
 
-}
+		/**********************************************/
+		//NErrores
+		if(isset($data['NErrores'])&&$data['NErrores']>0){ $in_eq_alertas++; }
+				
+		/*******************************************************/
+		//rearmo
+		if($in_eq_alertas>0){    $in_eq_ok = 0;$in_eq_alertas = 1;    }
+		if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_alertas = 0;}
+		
+		//Se guardan los valores
+		$eq_alertas     = $eq_alertas + $in_eq_alertas; 
+		$eq_fueralinea  = $eq_fueralinea + $in_eq_fueralinea; 
+		$eq_ok          = $eq_ok + $in_eq_ok; 
+
+	}
 
 
-	$GPS = '';
-	$GPS .= '
+	/*********************************************************************/
+	//imprimo
+	$GPS = '
 	<div class="row">  
 		<h3 class="supertittle text-primary">'.$nombreEquipo.'</h3>';
 		
@@ -1712,7 +1635,6 @@ foreach ($arrEquipo as $data) {
 		$GPS .= '
 	</div> 
 	
-	 
 	<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
 	<script>
 		$(document).ready(function(){
@@ -1743,88 +1665,65 @@ return $GPS;
 //Muestra una tabla con los equipos gps
 function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
 	
-	//Consulto por los equipos dentro de las zonas
+	/********************************************************************/
 	//Variable
-$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
-//solo los equipos que tengan el seguimiento activado
-if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
-	$z .= " AND telemetria_listado.id_Geo = ".$seguimiento;
-}
-//Filtro el sistema al cual pertenece	
-if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
-}
-//Verifico el tipo de usuario que esta ingresando y el id
-$join = "";	
-if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
-}	
+	$SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
+	//solo los equipos que tengan el seguimiento activado
+	if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
+		$SIS_where .= " AND telemetria_listado.id_Geo = ".$seguimiento;
+	}
+	//Filtro el sistema al cual pertenece	
+	if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+		$SIS_where .= " AND telemetria_listado.idSistema = ".$idSistema;	
+	}
+	//Verifico el tipo de usuario que esta ingresando y el id
+	$SIS_join = "";	
+	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+	}	
 
-//numero sensores equipo
-$N_Maximo_Sensores = 60;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
-}
-//Listar los equipos
-$arrEquipo = array();
-$query = "SELECT 
-telemetria_listado.Nombre,
-telemetria_listado.cantSensores,
-telemetria_listado.LastUpdateFecha,
-telemetria_listado.LastUpdateHora,
-telemetria_listado.id_Sensores,
-telemetria_listado.TiempoFueraLinea,
-telemetria_listado.NErrores
-
-".$subquery."
-		
-FROM `telemetria_listado`
-".$join."
-".$z."
-ORDER BY telemetria_listado.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEquipo,$row );
-}
+	//numero sensores equipo
+	$N_Maximo_Sensores = 60;
+	$subquery = '';
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		$subquery .= ',SensoresNombre_'.$i;
+		$subquery .= ',SensoresUniMed_'.$i;
+		$subquery .= ',SensoresMedActual_'.$i;
+		$subquery .= ',SensoresMedErrores_'.$i;
+		$subquery .= ',SensoresErrorActual_'.$i;
+		$subquery .= ',SensoresActivo_'.$i;
+	}
 	
+	$SIS_query = '
+	telemetria_listado.Nombre,
+	telemetria_listado.cantSensores,
+	telemetria_listado.LastUpdateFecha,
+	telemetria_listado.LastUpdateHora,
+	telemetria_listado.id_Sensores,
+	telemetria_listado.TiempoFueraLinea,
+	telemetria_listado.NErrores'.$subquery;
+	$SIS_order = 'telemetria_listado.Nombre ASC';
+	$arrEquipo = array();
+	$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, 'Components.UI.Widgets.Extended', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 
-//Se traen todas las unidades de medida
-$arrUnimed = array();
-$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
+	//Se traen todas las unidades de medida
+	$arrUnimed = array();
+	$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 
-$arrFinalUnimed = array();
-foreach ($arrUnimed as $sen) {
-	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
-}
+	$arrFinalUnimed = array();
+	foreach ($arrUnimed as $sen) {
+		$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
+	}
 
-$Subicon = array();	
-$Subicon[1] = 'fa fa-truck';
-$Subicon[2] = 'fa fa-industry';
+	$Subicon = array();	
+	$Subicon[1] = 'fa fa-truck';
+	$Subicon[2] = 'fa fa-industry';
 
 
-
-	
+	/********************************************************************/
+	//Imprimo
 	$GPS = '<div class="row">';  	
-	
 	
 		$GPS .= '
 		<div class="col-sm-12">
@@ -1930,8 +1829,7 @@ $Subicon[2] = 'fa fa-industry';
 														</div>
 													</div>
 												</div>';
-												
-												
+											
 										}
 									$GPS .= '
 									</td>
