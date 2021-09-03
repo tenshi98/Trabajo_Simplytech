@@ -426,19 +426,21 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
+				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
+				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x4, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x5, 2);
+				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x6, 1);
+				//opcionales ocultos
+				$Form_Inputs->form_input_number('Valor de error','valor_error', $x7, 1);
+				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x8, 1);
+				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
+				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
+				
 				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
-				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x2, 2, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 2, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
 				
-				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
-				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x3, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
-				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x4, 2);
-				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x5, 1);
-				//opcionales ocultos
-				$Form_Inputs->form_input_number('Valor de error','valor_error', $x6, 1);
-				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x7, 1);
-				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x8, 1);
-				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x9, 1);
+				
 				
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idAlarma', $_GET['editAlarma'], 2);
@@ -575,19 +577,20 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
+				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
+				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x4, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x5, 2);
+				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x6, 1);
+				//opcionales ocultos
+				$Form_Inputs->form_input_number('Valor de error','valor_error', $x7, 1);
+				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x8, 1);
+				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
+				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
+				
 				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
-				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x2, 2, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 2, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
 				
-				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
-				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x3, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
-				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x4, 2);
-				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x5, 1);
-				//opcionales ocultos
-				$Form_Inputs->form_input_number('Valor de error','valor_error', $x6, 1);
-				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x7, 1);
-				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x8, 1);
-				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x9, 1);
 				
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				
@@ -762,7 +765,6 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 							<li class=""><a href="<?php echo 'telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_alerta_general.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarma General</a></li>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class="active"><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
