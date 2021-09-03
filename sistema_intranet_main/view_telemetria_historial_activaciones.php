@@ -72,20 +72,7 @@ for ($i = 1; $i <= $X_cantSensores; $i++) {
 	$subquery .= ',telemetria_listado.SensoresRevisionGrupo_'.$i;
 	$subquery .= ',telemetria_listado.SensoresNombre_'.$i;
 	$subquery .= ',telemetria_listado_tablarelacionada_'.$X_Puntero.'.Sensor_'.$i;
-	
-	/*
-	$subquery .= ',telemetria_listado.SensoresGrupo_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMedMin_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMedMax_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMedAlerta_'.$i;
-	$subquery .= ',telemetria_listado.SensoresErrorActual_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMedActual_'.$i;
-	$subquery .= ',telemetria_listado.SensoresUso_'.$i;
-	$subquery .= ',telemetria_listado.SensoresAccionMedC_'.$i;
-	$subquery .= ',telemetria_listado.SensoresAccionMedT_'.$i;
-	$subquery .= ',telemetria_listado.SensoresTipo_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMant_'.$i;*/
-	
+
 }
 
 //Se consulta en la bd y se traen sus datos
@@ -117,10 +104,6 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 		
 }
-/*while ( $row = mysqli_fetch_assoc ($resultado) ) {
-array_push( $arrConsulta,$row );
-
-}*/
 
 
 
