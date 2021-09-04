@@ -23,6 +23,8 @@ if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){   $location .= "&N_Do
 if(isset($_GET['Monto']) && $_GET['Monto'] != ''){           $location .= "&Monto=".$_GET['Monto'];          $search .= "&Monto=".$_GET['Monto'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $location .= "&idUsuario=".$_GET['idUsuario'];  $search .= "&idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['Fecha_Inicio'])&&$_GET['Fecha_Inicio']!=''&&isset($_GET['Fecha_Termino'])&&$_GET['Fecha_Termino']!=''){
+	$location .="&f_programacion_desde=".$_GET['Fecha_Inicio'];
+	$location .="&f_programacion_hasta=".$_GET['Fecha_Termino'];
 	$search .="&f_programacion_desde=".$_GET['Fecha_Inicio'];
 	$search .="&f_programacion_hasta=".$_GET['Fecha_Termino'];
 }
@@ -34,6 +36,9 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /************************************************************/
 //formulario para borrar
 if ( !empty($_GET['del_idDocPago']) )  { 
+	//Nueva ubicacion
+	$location = $original;
+	$location.='?pagina=1';
 	//Llamamos al formulario
 	$form_trabajo= 'del_pagos';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_proveedores_reversa.php';
@@ -189,7 +194,7 @@ array_push( $arrReversa,$row );
 											/*Factura Servicios*/ case 3: $docu = $productos[0]['ServicioDocumentoTipo'].' N'.$productos[0]['ServicioDocumentoNumero']; break;
 											/*Factura Arriendos*/ case 4: $docu = $productos[0]['ArriendoDocumentoTipo'].' N'.$productos[0]['ArriendoDocumentoNumero']; break;
 										} 
-										$ubicacion = $location.'?submit_filter=Filtrar&del_idDocPago='.simpleEncode($productos[0]['idDocPago'], fecha_actual()).'&del_N_DocPago='.simpleEncode($menu, fecha_actual());
+										$ubicacion = $location.'&submit_filter=Filtrar&del_idDocPago='.simpleEncode($productos[0]['idDocPago'], fecha_actual()).'&del_N_DocPago='.simpleEncode($menu, fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el documento '.$docu.'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Reversar Pago" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange" aria-hidden="true"></i></a>
 									</div>	

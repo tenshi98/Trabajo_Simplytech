@@ -184,7 +184,7 @@ require_once '0_validate_user_1.php';
 						if($resultado==true){
 							
 							//redirijo
-							header( 'Location: '.$location.'?reversa=true' );
+							header( 'Location: '.$location.'&reversa=true' );
 							die;
 							
 						}

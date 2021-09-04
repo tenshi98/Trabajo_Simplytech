@@ -23,6 +23,8 @@ if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){   $location .= "&N_Do
 if(isset($_GET['Monto']) && $_GET['Monto'] != ''){           $location .= "&Monto=".$_GET['Monto'];          $search .= "&Monto=".$_GET['Monto'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $location .= "&idUsuario=".$_GET['idUsuario'];  $search .= "&idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['Fecha_Inicio'])&&$_GET['Fecha_Inicio']!=''&&isset($_GET['Fecha_Termino'])&&$_GET['Fecha_Termino']!=''){
+	$location .="&f_programacion_desde=".$_GET['Fecha_Inicio'];
+	$location .="&f_programacion_hasta=".$_GET['Fecha_Termino'];
 	$search .="&f_programacion_desde=".$_GET['Fecha_Inicio'];
 	$search .="&f_programacion_hasta=".$_GET['Fecha_Termino'];
 }    
@@ -34,6 +36,9 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /************************************************************/
 //formulario para borrar
 if ( !empty($_GET['del_idDocPago']) )  { 
+	//Nueva ubicacion
+	$location = $original;
+	$location.='?pagina=1';
 	//Llamamos al formulario
 	$form_trabajo= 'del_pagos';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_clientes_reversa.php';
@@ -190,7 +195,7 @@ array_push( $arrReversa,$row );
 											/*Factura Servicios*/ case 3: $docu = $productos[0]['ServicioDocumentoTipo'].' N'.$productos[0]['ServicioDocumentoNumero']; break;
 											/*Factura Arriendos*/ case 4: $docu = $productos[0]['ArriendoDocumentoTipo'].' N'.$productos[0]['ArriendoDocumentoNumero']; break;
 										} 
-										$ubicacion = $location.'?submit_filter=Filtrar&del_idDocPago='.simpleEncode($productos[0]['idDocPago'], fecha_actual()).'&del_N_DocPago='.simpleEncode($menu, fecha_actual());
+										$ubicacion = $location.'&submit_filter=Filtrar&del_idDocPago='.simpleEncode($productos[0]['idDocPago'], fecha_actual()).'&del_N_DocPago='.simpleEncode($menu, fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el documento '.$docu.'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Reversar Pago" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange" aria-hidden="true"></i></a>
 									</div>	
@@ -344,14 +349,14 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':        $order_by = 'ORDER BY pagos_facturas_clientes_reversa.Fecha ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':       $order_by = 'ORDER BY pagos_facturas_clientes_reversa.Fecha DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'fecha_asc':        $order_by = 'ORDER BY pagos_facturas_clientes_reversa.Fecha ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':       $order_by = 'ORDER BY pagos_facturas_clientes_reversa.Fecha DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		case 'documento_asc':    $order_by = 'ORDER BY sistema_documentos_pago.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Documento Ascendente'; break;
 		case 'documento_desc':   $order_by = 'ORDER BY sistema_documentos_pago.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Documento Descendente';break;
-		case 'n_documento_asc':  $order_by = 'ORDER BY pagos_facturas_clientes_reversa.N_DocPago ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Documento Ascendente'; break;
-		case 'n_documento_desc': $order_by = 'ORDER BY pagos_facturas_clientes_reversa.N_DocPago DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Documento Descendente';break;
-		case 'monto_asc':        $order_by = 'ORDER BY pagos_facturas_clientes_reversa.Monto ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente'; break;
-		case 'monto_desc':       $order_by = 'ORDER BY pagos_facturas_clientes_reversa.Monto DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
+		case 'n_documento_asc':  $order_by = 'ORDER BY pagos_facturas_clientes_reversa.N_DocPago ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Documento Ascendente'; break;
+		case 'n_documento_desc': $order_by = 'ORDER BY pagos_facturas_clientes_reversa.N_DocPago DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Documento Descendente';break;
+		case 'monto_asc':        $order_by = 'ORDER BY pagos_facturas_clientes_reversa.Monto ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente'; break;
+		case 'monto_desc':       $order_by = 'ORDER BY pagos_facturas_clientes_reversa.Monto DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
 		case 'usuario_asc':      $order_by = 'ORDER BY usuarios_listado.Nombre AS Usuario ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
 		case 'usuario_desc':     $order_by = 'ORDER BY usuarios_listado.Nombre AS Usuario DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
 		
