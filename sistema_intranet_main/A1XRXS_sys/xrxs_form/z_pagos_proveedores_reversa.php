@@ -66,19 +66,22 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
+			//Variable
+			$errorn = 0;
+			
 			/************************************************************/
 			//verifico si se envia un entero
-			if((!validarNumero($indice1) OR !validaEntero($indice1))&&$indice1!=''){
-				$indice1 = simpleDecode($indice1, fecha_actual());
+			if((!validarNumero($_GET['del_idDocPago']) OR !validaEntero($_GET['del_idDocPago']))&&$_GET['del_idDocPago']!=''){
+				$indice1 = simpleDecode($_GET['del_idDocPago'], fecha_actual());
 			}else{
-				$indice1 = $indice1;
+				$indice1 = $_GET['del_idDocPago'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 			}
-			if((!validarNumero($indice2) OR !validaEntero($indice2))&&$indice2!=''){
-				$indice2 = simpleDecode($indice2, fecha_actual());
+			if((!validarNumero($_GET['del_N_DocPago']) OR !validaEntero($_GET['del_N_DocPago']))&&$_GET['del_N_DocPago']!=''){
+				$indice2 = simpleDecode($_GET['del_N_DocPago'], fecha_actual());
 			}else{
-				$indice2 = $indice2;
+				$indice2 = $_GET['del_N_DocPago'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 			}
@@ -458,7 +461,7 @@ require_once '0_validate_user_1.php';
 										
 					}else{
 						//redirijo
-						header( 'Location: '.$location.'?reversa=true' );
+						header( 'Location: '.$location.'&reversa=true' );
 						die;
 					}
 					
