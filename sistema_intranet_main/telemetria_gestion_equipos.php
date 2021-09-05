@@ -183,9 +183,17 @@ foreach ($arrGrupos as $sen) {
 								$sensor = 0;
 								for ($i = 1; $i <= $rowDatos['cantSensores']; $i++) {
 									//Unidad medida
-									$unimed = ' '.$arrFinalUnimed[$rowDatos['SensoresUniMed_'.$i]];
+									if(isset($arrFinalUnimed[$rowDatos['SensoresUniMed_'.$i]])){
+										$unimed = ' '.$arrFinalUnimed[$rowDatos['SensoresUniMed_'.$i]];
+									}else{
+										$unimed = '';
+									}
 									//Titulo del cuadro
-									$Titulo = $arrFinalGrupos[$rowDatos['SensoresGrupo_'.$i]];
+									if(isset($arrFinalGrupos[$rowDatos['SensoresGrupo_'.$i]])){
+										$Titulo = $arrFinalGrupos[$rowDatos['SensoresGrupo_'.$i]];
+									}else{
+										$Titulo = '';
+									}
 									//Verifico que no sea el mismo sensor
 									if(isset($rowDatos['SensoresMedActual_'.$i])&&$rowDatos['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowDatos['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
 									if($rowDatos['SensoresErrorActual_'.$i]> 0){
