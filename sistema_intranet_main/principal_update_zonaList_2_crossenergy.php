@@ -192,17 +192,6 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 
 ?>
 
-<script>
-	<!--
-	$(document).ready(function() {
-		$('.tooltip').tooltipster({
-			animation: 'grow',
-			delay: 130,
-			maxWidth: 300
-		});
-	});
-	//-->
-</script>
 
 <script>
 	//se actualizan los widgets superiores

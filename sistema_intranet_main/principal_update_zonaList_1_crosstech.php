@@ -73,17 +73,6 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 
 ?>
 
-<script>
-	<!--
-	$(document).ready(function() {
-		$('.tooltip').tooltipster({
-			animation: 'grow',
-			delay: 130,
-			maxWidth: 300
-		});
-	});
-	//-->
-</script>
 
 <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 	<thead>
