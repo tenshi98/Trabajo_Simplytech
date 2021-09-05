@@ -59,7 +59,7 @@ if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
 	$SIS_where = "telemetria_listado.idEstado = 1 ";
 	$SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC';
 	$arrEquipo = array();
-	$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipo');
+	$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 			
 }			
 			

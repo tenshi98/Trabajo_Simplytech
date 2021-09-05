@@ -41,7 +41,6 @@ $z9_2 = "(idFactSocial!=0)";      //siempre pasa
 $z9_3 = "(idFactSocial!=0)";      //siempre pasa
 
 //variable
-$search = '?bla=bla';
 if(isset($_GET['idCentroCosto'])&&$_GET['idCentroCosto']!=''){ 
 	// Se trae el dato seleccionado
 	$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$_GET['idCentroCosto'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'submit_filter');
@@ -409,56 +408,56 @@ $SIS_table_9 = 'pagos_leyes_sociales';
 
 //Bodega de Arriendos
 $arrTemporal_1 = array();
-$arrTemporal_1 = db_select_array (false, return_query(1, $SIS_table_1), $SIS_table_1, return_join(1, $SIS_table_1), return_filter(1, $SIS_table_1, $z1), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_1');
+$arrTemporal_1 = db_select_array (false, return_query(1, $SIS_table_1), $SIS_table_1, return_join(1, $SIS_table_1), return_filter(1, $SIS_table_1, $z1), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_1');
 //Bodega de Insumos
 $arrTemporal_2 = array();
-$arrTemporal_2 = db_select_array (false, return_query(1, $SIS_table_2), $SIS_table_2, return_join(1, $SIS_table_2), return_filter(1, $SIS_table_2, $z2), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_2');
+$arrTemporal_2 = db_select_array (false, return_query(1, $SIS_table_2), $SIS_table_2, return_join(1, $SIS_table_2), return_filter(1, $SIS_table_2, $z2), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_2');
 //Bodega de Productos
 $arrTemporal_3 = array();
-$arrTemporal_3 = db_select_array (false, return_query(1, $SIS_table_3), $SIS_table_3, return_join(1, $SIS_table_3), return_filter(1, $SIS_table_3, $z3), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_3');
+$arrTemporal_3 = db_select_array (false, return_query(1, $SIS_table_3), $SIS_table_3, return_join(1, $SIS_table_3), return_filter(1, $SIS_table_3, $z3), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_3');
 //Bodega de Servicios
 $arrTemporal_4 = array();
-$arrTemporal_4 = db_select_array (false, return_query(1, $SIS_table_4), $SIS_table_4, return_join(1, $SIS_table_4), return_filter(1, $SIS_table_4, $z4), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_4');
+$arrTemporal_4 = db_select_array (false, return_query(1, $SIS_table_4), $SIS_table_4, return_join(1, $SIS_table_4), return_filter(1, $SIS_table_4, $z4), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_4');
 //Boleta de honorarios
 $arrTemporal_5 = array();
-$arrTemporal_5 = db_select_array (false, return_query(2, $SIS_table_5), $SIS_table_5, return_join(2, $SIS_table_5), return_filter(2, $SIS_table_5, $z5), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_5');
+$arrTemporal_5 = db_select_array (false, return_query(2, $SIS_table_5), $SIS_table_5, return_join(2, $SIS_table_5), return_filter(2, $SIS_table_5, $z5), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_5');
 //Liquidaciones de sueldo
 $arrTemporal_6 = array();
-$arrTemporal_6 = db_select_array (false, return_query(3, $SIS_table_6), $SIS_table_6, return_join(2, $SIS_table_6), return_filter(2, $SIS_table_6, $z6), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_6');
+$arrTemporal_6 = db_select_array (false, return_query(3, $SIS_table_6), $SIS_table_6, return_join(2, $SIS_table_6), return_filter(2, $SIS_table_6, $z6), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_6');
 //Rendiciones
 $arrTemporal_7 = array();
-$arrTemporal_7 = db_select_array (false, return_query(4, $SIS_table_7), $SIS_table_7, return_join(2, $SIS_table_7), return_filter(2, $SIS_table_7, $z7), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_7');
+$arrTemporal_7 = db_select_array (false, return_query(4, $SIS_table_7), $SIS_table_7, return_join(2, $SIS_table_7), return_filter(2, $SIS_table_7, $z7), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_7');
 //Formulario 29 IVA
 $arrTemporal_8_1 = array();
-$arrTemporal_8_1 = db_select_array (false, return_query(5, $SIS_table_8), $SIS_table_8, return_join(3, $SIS_table_8), return_filter(3, $SIS_table_8, $z8_1), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_8_1');
+$arrTemporal_8_1 = db_select_array (false, return_query(5, $SIS_table_8), $SIS_table_8, return_join(3, $SIS_table_8), return_filter(3, $SIS_table_8, $z8_1), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_8_1');
 //Formulario 29 PPM
 $arrTemporal_8_2 = array();
-$arrTemporal_8_2 = db_select_array (false, return_query(6, $SIS_table_8), $SIS_table_8, return_join(4, $SIS_table_8), return_filter(4, $SIS_table_8, $z8_2), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_8_2');
+$arrTemporal_8_2 = db_select_array (false, return_query(6, $SIS_table_8), $SIS_table_8, return_join(4, $SIS_table_8), return_filter(4, $SIS_table_8, $z8_2), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_8_2');
 //Formulario 29 Retenciones
 $arrTemporal_8_3 = array();
-$arrTemporal_8_3 = db_select_array (false, return_query(7, $SIS_table_8), $SIS_table_8, return_join(5, $SIS_table_8), return_filter(5, $SIS_table_8, $z8_3), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_8_3');
+$arrTemporal_8_3 = db_select_array (false, return_query(7, $SIS_table_8), $SIS_table_8, return_join(5, $SIS_table_8), return_filter(5, $SIS_table_8, $z8_3), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_8_3');
 //Formulario 29 Impuesto a la Renta
 $arrTemporal_8_4 = array();
-$arrTemporal_8_4 = db_select_array (false, return_query(8, $SIS_table_8), $SIS_table_8, return_join(6, $SIS_table_8), return_filter(6, $SIS_table_8, $z8_4), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_8_4');
+$arrTemporal_8_4 = db_select_array (false, return_query(8, $SIS_table_8), $SIS_table_8, return_join(6, $SIS_table_8), return_filter(6, $SIS_table_8, $z8_4), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_8_4');
 //Previred AFP
 $arrTemporal_9_1 = array();
-$arrTemporal_9_1 = db_select_array (false, return_query(9, $SIS_table_9), $SIS_table_9, return_join(7, $SIS_table_9), return_filter(7, $SIS_table_9, $z9_1), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_9_1');
+$arrTemporal_9_1 = db_select_array (false, return_query(9, $SIS_table_9), $SIS_table_9, return_join(7, $SIS_table_9), return_filter(7, $SIS_table_9, $z9_1), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_9_1');
 //Previred SALUD
 $arrTemporal_9_2 = array();
-$arrTemporal_9_2 = db_select_array (false, return_query(10, $SIS_table_9), $SIS_table_9, return_join(8, $SIS_table_9), return_filter(8, $SIS_table_9, $z9_2), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_9_2');
+$arrTemporal_9_2 = db_select_array (false, return_query(10, $SIS_table_9), $SIS_table_9, return_join(8, $SIS_table_9), return_filter(8, $SIS_table_9, $z9_2), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_9_2');
 //Previred SEGURIDAD
 $arrTemporal_9_3 = array();
-$arrTemporal_9_3 = db_select_array (false, return_query(11, $SIS_table_9), $SIS_table_9, return_join(9, $SIS_table_9), return_filter(9, $SIS_table_9, $z9_3), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_9_3');
+$arrTemporal_9_3 = db_select_array (false, return_query(11, $SIS_table_9), $SIS_table_9, return_join(9, $SIS_table_9), return_filter(9, $SIS_table_9, $z9_3), 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_9_3');
 
 //Centro Costo
 $arrCentroCosto = array();
-$arrCentroCosto = db_select_array (false, 'idCentroCosto, Nombre', 'centrocosto_listado', '', '', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_4');
+$arrCentroCosto = db_select_array (false, 'idCentroCosto, Nombre', 'centrocosto_listado', '', '', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_4');
 //Centro Costo
 $arrCentroCosto_lv1 = array();
-$arrCentroCosto_lv1 = db_select_array (false, 'idLevel_1, Nombre', 'centrocosto_listado_level_1', '', '', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_4');
+$arrCentroCosto_lv1 = db_select_array (false, 'idLevel_1, Nombre', 'centrocosto_listado_level_1', '', '', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_4');
 //Centro Costo
 $arrCentroCosto_lv2 = array();
-$arrCentroCosto_lv2 = db_select_array (false, 'idLevel_2, Nombre', 'centrocosto_listado_level_2', '', '', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_4');
+$arrCentroCosto_lv2 = db_select_array (false, 'idLevel_2, Nombre', 'centrocosto_listado_level_2', '', '', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_4');
 
 /**************************************************************************/
 $arrTemp = array();

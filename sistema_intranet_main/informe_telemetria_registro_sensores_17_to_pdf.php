@@ -42,7 +42,7 @@ if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_
 }
 
 //obtengo la cantidad real de sensores
-$rowEquipo = db_select_data (false, 'cantSensores', 'telemetria_listado', '', 'idTelemetria='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
+$rowEquipo = db_select_data (false, 'cantSensores', 'telemetria_listado', '', 'idTelemetria='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
 
 $consql = '';
@@ -88,7 +88,7 @@ array_push( $arrRutas,$row );
 
 //consultas
 $arrUnimed = array();
-$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 	
 $rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$idGrupo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
 

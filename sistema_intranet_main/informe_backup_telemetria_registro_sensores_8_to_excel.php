@@ -83,7 +83,7 @@ $arrData[$xx] = "BA";$xx++;
 /*******************************************************************************/
 // Se trae un listado con todas las unidades de medida
 $arrUnimed = array();
-$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 
 //Creo un arreglo con los datos
 $arrUni = array();

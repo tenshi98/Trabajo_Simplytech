@@ -5,7 +5,7 @@ $SIS_where.= ' AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where.= ' AND idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 
 //Busco cuantos mensajes hay
-$nNoti = db_select_nrows (false, 'idNoti', 'principal_notificaciones_ver', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'nNoti');
+$nNoti = db_select_nrows (false, 'idNoti', 'principal_notificaciones_ver', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'nNoti');
 ?>
 
 

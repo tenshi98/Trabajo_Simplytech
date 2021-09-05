@@ -100,7 +100,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 /*******************************************/
 //Listado con los tabs
 $arrTabs = array();
-$arrTabs = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'idTab ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTabs');
+$arrTabs = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'idTab ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTabs');
 
 //recorro
 $arrTabsSorter = array();

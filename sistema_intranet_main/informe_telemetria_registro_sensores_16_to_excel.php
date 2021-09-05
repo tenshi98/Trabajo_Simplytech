@@ -95,8 +95,8 @@ if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
 
 //consulto
 $arrGrupos = array();
-$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_where, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
-$rowUnimed = db_select_data (false, 'idUniMed, Nombre', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['idUniMed'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
+$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_where, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+$rowUnimed = db_select_data (false, 'idUniMed, Nombre', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['idUniMed'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowUnimed');
 
 
 //se arman datos
