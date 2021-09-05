@@ -1415,73 +1415,23 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 
 		if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==1){
 
-			$GPS .= '
-			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
-			<div class="row">';
+			$GPS .= '<div class="row">';
 				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_alertas, 4, $nombreEquipo.' con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-red', 'fa-truck faa-float animated', $eq_fueralinea, 4, $nombreEquipo.' fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
 				$GPS .= widget_Ficha_2('box-green', 'fa-truck faa-float animated', $eq_fueraruta, 4, $nombreEquipo.' fuera de ruta', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 3, fecha_actual()), 'Ver Mas', 'btn-success', 1, 2);    
 				$GPS .= widget_Ficha_2('box-purple', 'fa-truck faa-float animated', $eq_detenidos, 4, $nombreEquipo.' detenidos', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
 				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_gps_fuera, 4, $nombreEquipo.' con GPS en 0', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-blue', 'fa-truck faa-float animated', $eq_ok, 4, $nombreEquipo.' OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
-				$GPS .= '
-			</div>  
-			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-			<script>
-				$(document).ready(function(){
-					//Examples of how to assign the Colorbox event to elements
-					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-					$(".callbacks").colorbox({
-						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-					});
-
-							
-					//Example of preserving a JavaScript event for inline calls.
-					$("#click").click(function(){ 
-						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-						return false;
-					});
-				});
-			</script>';
+			$GPS .= '</div>';
 			
 			
 		}elseif(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==2){
 
-			$GPS .= '
-			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
-			<div class="row">';    
+			$GPS .= '<div class="row">';    
 				$GPS .= widget_Ficha_2('box-yellow', 'fa-industry', $eq_alertas, 4, $nombreEquipo.' con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, $nombreEquipo.' fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
 				$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, $nombreEquipo.' OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
-				$GPS .= '
-			</div>  
-			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-			<script>
-				$(document).ready(function(){
-					//Examples of how to assign the Colorbox event to elements
-					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-					$(".callbacks").colorbox({
-						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-					});
-
-							
-					//Example of preserving a JavaScript event for inline calls.
-					$("#click").click(function(){ 
-						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-						return false;
-					});
-				});
-			</script>';
+			$GPS .= '</div>';
 		}
 	}
 
@@ -1597,32 +1547,7 @@ function widget_Equipos($nombreEquipo, $seguimiento, $equipo, $enlace, $idSistem
 		$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, $nombreEquipo.' fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
 		$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, $nombreEquipo.' OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
 		
-		$GPS .= '
-	</div> 
-	
-	<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-	<script>
-		$(document).ready(function(){
-			//Examples of how to assign the Colorbox event to elements
-			$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-			$(".callbacks").colorbox({
-				onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-				onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-				onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-				onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-				onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-			});
-
-					
-			//Example of preserving a JavaScript event for inline calls.
-			$("#click").click(function(){ 
-				$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-				return false;
-			});
-		});
-	</script>
-
-	';
+	$GPS .= '</div>';
 
 return $GPS;						
 }
@@ -1781,8 +1706,16 @@ function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUs
 																	for ($i = 1; $i <= $equip['cantSensores']; $i++) { 
 																		//solo sensores activos
 																		if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
-																			$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
-																			$GPS .= '<strong>'.$equip['SensoresNombre_'.$i].' :</strong>';
+																			//Unidad de medida
+																			if(isset($arrFinalUnimed[$equip['SensoresUniMed_'.$i]])){
+																				$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+																			}else{
+																				$unimed = '';
+																			}
+																			//Nombre del sensor
+																			if(isset($equip['SensoresNombre_'.$i])){
+																				$GPS .= '<strong>'.$equip['SensoresNombre_'.$i].' :</strong>';
+																			}
 																			if(isset($equip['SensoresMedActual_'.$i])&&$equip['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($equip['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
 																			$GPS .= $xdata.'<br/>';
 																		}
@@ -1881,12 +1814,7 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 	
 	
 
-$GPS = '';
-$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
-
-
-
-$GPS .= '
+$GPS = '
 <div class="row">
 	<div class="col-sm-12">
 		<div class="box">
@@ -2009,10 +1937,22 @@ $GPS .= '
 														//solo sensores activos
 														if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
 															//Unidad medida
-															$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+															if(isset($arrFinalUnimed[$equip['SensoresUniMed_'.$i]])){
+																$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+															}else{
+																$unimed = '';
+															}
 															//Titulo del cuadro
-															$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
-															$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];	
+															if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'])){
+																$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
+															}else{
+																$Titulo    = '';
+															}
+															if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'])){
+																$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];	
+															}else{
+																$nColumnas = '';	
+															}
 															//Verifico que no sea el mismo sensor
 															if(isset($equip['SensoresMedActual_'.$i])&&$equip['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($equip['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
 															if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
@@ -2170,36 +2110,8 @@ $GPS .= '
 			</div>	
 		</div>
 	</div>
-</div>
+</div>';
 
-';
-
-
-$GPS .= '
-<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-<script>
-	$(document).ready(function(){
-		//Examples of how to assign the Colorbox event to elements
-		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-		$(".callbacks").colorbox({
-			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-		});
-
-				
-		//Example of preserving a JavaScript event for inline calls.
-		$("#click").click(function(){ 
-			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-			return false;
-		});
-	});
-</script>
-	
-	';
 	
 	return $GPS;
 }
@@ -2248,11 +2160,7 @@ $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrEquipo = array();
 $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 
-$GPS = '';
-$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
-
-
-	$GPS .= '	
+$GPS = '	
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="box">
@@ -2389,32 +2297,6 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 	</div>';
 
 
-
-$GPS .= '
-<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-<script>
-	$(document).ready(function(){
-		//Examples of how to assign the Colorbox event to elements
-		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-		$(".callbacks").colorbox({
-			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-		});
-
-				
-		//Example of preserving a JavaScript event for inline calls.
-		$("#click").click(function(){ 
-			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-			return false;
-		});
-	});
-</script>
-	
-	';
 	
 	return $GPS;
 }
@@ -2463,11 +2345,7 @@ $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrEquipo = array();
 $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 
-$GPS = '';
-$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
-
-
-	$GPS .= '	
+$GPS = '	
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="box">
@@ -2603,34 +2481,6 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 		</div>
 	</div>';
 
-
-
-$GPS .= '
-<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-<script>
-	$(document).ready(function(){
-		//Examples of how to assign the Colorbox event to elements
-		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-		$(".callbacks").colorbox({
-			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-		});
-
-				
-		//Example of preserving a JavaScript event for inline calls.
-		$("#click").click(function(){ 
-			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-			return false;
-		});
-	});
-</script>
-	
-	';
-	
 	return $GPS;
 }
 /*******************************************************************************************************************/
@@ -2699,12 +2549,7 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 
 	
 
-$GPS = '';
-$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
-
-
-
-$GPS .= '
+$GPS = '
 <div class="row">    
 		
 	<h3 class="supertittle text-primary">'.$titulo_cuadro.'</h3>';
@@ -2775,10 +2620,22 @@ $GPS .= '
 								//solo sensores activos
 								if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
 									//Unidad medida
-									$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+									if(isset($arrFinalUnimed[$equip['SensoresUniMed_'.$i]])){
+										$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+									}else{
+										$unimed = '';
+									}
 									//Titulo del cuadro
-									$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
-									$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];	
+									if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'])){
+										$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
+									}else{
+										$Titulo    = '';
+									}
+									if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'])){
+										$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];	
+									}else{
+										$nColumnas = '';	
+									}
 									//Guardo el valor correspondiente
 									$arrGruposTitulo[$Titulo][$i]['valor']     = $equip['SensoresMedActual_'.$i];
 									$arrGruposTitulo[$Titulo][$i]['unimed']    = $unimed;
@@ -2866,42 +2723,8 @@ $GPS .= '
 		</div>';
 	}
 	
-	
-		
 $GPS .= '</div> ';
-	
-	
-	
-	
 
-
-
-$GPS .= '
-<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-<script>
-	$(document).ready(function(){
-		//Examples of how to assign the Colorbox event to elements
-		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-		$(".callbacks").colorbox({
-			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-		});
-
-				
-		//Example of preserving a JavaScript event for inline calls.
-		$("#click").click(function(){ 
-			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-			return false;
-		});
-	});
-</script>
-	
-	';
-	
 	return $GPS;
 }
 /*******************************************************************************************************************/
@@ -2972,12 +2795,7 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 
 	
 
-$GPS = '';
-$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
-
-
-
-$GPS .= '
+$GPS = '
 <div class="row">    
 		
 	<h3 class="supertittle text-primary">'.$titulo_cuadro.'</h3>';
@@ -3033,18 +2851,33 @@ $GPS .= '
 							//solo sensores activos
 							if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
 								//Unidad medida
-								$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+								if(isset($arrFinalUnimed[$equip['SensoresUniMed_'.$i]])){
+									$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+								}else{
+									$unimed = '';
+								}
 								//Titulo del cuadro
-								$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
-								$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];
-								$s_idGrupo = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['idGrupo'];	
+								if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'])){
+									$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
+								}else{
+									$Titulo    = '';
+								}
+								if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'])){
+									$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];
+								}else{
+									$nColumnas = '';
+								}
+								if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['idGrupo'])){
+									$s_idGrupo = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['idGrupo'];
+								}else{
+									$s_idGrupo = '';
+								}	
 								//Verificacion de alertas para cambios de color del widget
 								if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
 									$arrGruposTitulo[$Titulo][$i]['Color'] = 'yellow';
 								}else{
 									$arrGruposTitulo[$Titulo][$i]['Color'] = 'blue';
-								}
-															
+								}							
 								//Guardo el valor correspondiente
 								$arrGruposTitulo[$Titulo][$i]['valor']     = $equip['SensoresMedActual_'.$i];
 								$arrGruposTitulo[$Titulo][$i]['unimed']    = $unimed;
@@ -3164,31 +2997,6 @@ $GPS .= '
 		
 $GPS .= '</div> ';
 
-$GPS .= '
-<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-<script>
-	$(document).ready(function(){
-		//Examples of how to assign the Colorbox event to elements
-		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-		$(".callbacks").colorbox({
-			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-		});
-
-				
-		//Example of preserving a JavaScript event for inline calls.
-		$("#click").click(function(){ 
-			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-			return false;
-		});
-	});
-</script>
-	
-	';
 	
 	return $GPS;
 }
@@ -3898,7 +3706,11 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 					//verifico que sensor este activo
 					if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 						//Unidad medida
-						$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]])){
+							$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						}else{
+							$unimed = '';
+						}
 						//cadena
 						if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
 						$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
@@ -4070,40 +3882,14 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 ';
 
 								
-			$GPS .= '
-			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
-			<div class="row">';
+			$GPS .= '<div class="row">';
 				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_alertas, 4, 'Vehiculos con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-red', 'fa-truck faa-float animated', $eq_fueralinea, 4, 'Vehiculos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
 				$GPS .= widget_Ficha_2('box-orange', 'fa-truck faa-float animated', $eq_fueraruta, 4, 'Vehiculos fuera de ruta', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 3, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-purple', 'fa-truck faa-float animated', $eq_gps_fuera, 4, 'Vehiculos sin cobertura GPS', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
 				$GPS .= widget_Ficha_2('box-green', 'fa-truck faa-float animated', ($eq_ok+$eq_detenidos), 4, 'Vehiculos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-success', 1, 2);    
 				
-				$GPS .= '
-			</div>  
-			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-			<script>
-				$(document).ready(function(){
-					//Examples of how to assign the Colorbox event to elements
-					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-					$(".callbacks").colorbox({
-						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-					});
-
-							
-					//Example of preserving a JavaScript event for inline calls.
-					$("#click").click(function(){ 
-						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-						return false;
-					});
-				});
-			</script>';
-		
+			$GPS .= '</div>';
 		
 		
 		return $GPS;
@@ -4361,7 +4147,11 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 					//verifico que sensor este activo
 					if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 						//Unidad medida
-						$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]])){
+							$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						}else{
+							$unimed = '';
+						}
 						//cadena
 						if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
 						$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
@@ -4529,39 +4319,11 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 ';
 
 								
-			$GPS .= '
-			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
-			<div class="row">';
+			$GPS .= '<div class="row">';
 				$GPS .= widget_Ficha_2('box-yellow', 'fa-industry', $eq_alertas, 4, 'Equipos con alertas', 'Sensores', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, 'Equipos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
 				$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, 'Equipos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
-				
-				$GPS .= '
-			</div>  
-			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-			<script>
-				$(document).ready(function(){
-					//Examples of how to assign the Colorbox event to elements
-					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-					$(".callbacks").colorbox({
-						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-					});
-
-							
-					//Example of preserving a JavaScript event for inline calls.
-					$("#click").click(function(){ 
-						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-						return false;
-					});
-				});
-			</script>';
-		
-		
+			$GPS .= '</div>';
 		
 		return $GPS;
 								
@@ -4849,7 +4611,11 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 							//verifico que sensor este activo
 							if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 								//Unidad medida
-								$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+								if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]])){
+									$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+								}else{
+									$unimed = '';
+								}
 								//cadena
 								if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
 								$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
@@ -5010,42 +4776,14 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 			/* ************************************************************************** */
 			google.maps.event.addDomListener(window, "load", initialize());
 		</script> ';
-
-								
-			$GPS .= '
-			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
-			<div class="row">';
+					
+			$GPS .= '<div class="row">';
 				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_alertas, 4, 'Vehiculos con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-red', 'fa-truck faa-float animated', $eq_fueralinea, 4, 'Vehiculos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
 				$GPS .= widget_Ficha_2('box-orange', 'fa-truck faa-float animated', $eq_fueraruta, 4, 'Vehiculos fuera de ruta', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 3, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-purple', 'fa-truck faa-float animated', $eq_gps_fuera, 4, 'Vehiculos sin cobertura GPS', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
 				$GPS .= widget_Ficha_2('box-green', 'fa-truck faa-float animated', ($eq_ok+$eq_detenidos), 4, 'Vehiculos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-success', 1, 2);    
-				$GPS .= '
-			</div>  
-			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-			<script>
-				$(document).ready(function(){
-					//Examples of how to assign the Colorbox event to elements
-					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-					$(".callbacks").colorbox({
-						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-					});
-
-							
-					//Example of preserving a JavaScript event for inline calls.
-					$("#click").click(function(){ 
-						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-						return false;
-					});
-				});
-			</script>';
-		
-		
+			$GPS .= '</div>';
 		
 		return $GPS;
 								
@@ -5377,7 +5115,11 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 							//verifico que sensor este activo
 							if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 								//Unidad medida
-								$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+								if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]])){
+									$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+								}else{
+									$unimed = '';
+								}
 								//cadena
 								if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
 								$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
@@ -5548,43 +5290,17 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		
 		//despliega el resumen
 		if(isset($miniwidget)&&$miniwidget==1){
-			$GPS .= '
-			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
-			<div class="row">';
+			$GPS .= '<div class="row">';
 				$GPS .= widget_Ficha_2('box-yellow', 'fa-truck faa-float animated', $eq_alertas, 4, 'Vehiculos con alertas', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-red', 'fa-truck faa-float animated', $eq_fueralinea, 4, 'Vehiculos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
 				$GPS .= widget_Ficha_2('box-orange', 'fa-truck faa-float animated', $eq_fueraruta, 4, 'Vehiculos fuera de ruta', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 3, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-purple', 'fa-truck faa-float animated', $eq_gps_fuera, 4, 'Vehiculos sin cobertura GPS', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 5, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
 				$GPS .= widget_Ficha_2('box-green', 'fa-truck faa-float animated', ($eq_ok+$eq_detenidos), 4, 'Vehiculos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 1, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-success', 1, 2);    
-				$GPS .= '
-			</div>  
-			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-			<script>
-				$(document).ready(function(){
-					//Examples of how to assign the Colorbox event to elements
-					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-					$(".callbacks").colorbox({
-						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-					});
-
-							
-					//Example of preserving a JavaScript event for inline calls.
-					$("#click").click(function(){ 
-						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-						return false;
-					});
-				});
-			</script>';
+			$GPS .= '</div>';
 		}
 
 		return $GPS;
-								
-
+		
 	}
 }
 /*******************************************************************************************************************/
@@ -5689,38 +5405,12 @@ function widget_Equipos_Crosstech($nombreEquipo, $seguimiento, $equipo, $enlace,
 	}
 
 
-		$GPS = '
-		<div class="row">    
+		$GPS = '<div class="row">    
 			<h3 class="supertittle text-primary">'.$nombreEquipo.'</h3>';
 			$GPS .= widget_Ficha_2('box-yellow', 'fa-industry', $eq_alertas, 4, $nombreEquipo.' con alertas', 'Sensores', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 			$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, $nombreEquipo.' fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
 			$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, $nombreEquipo.' OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode($seguimiento, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
-			$GPS .= '
-		</div> 
-		
-		<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-		<script>
-			$(document).ready(function(){
-				//Examples of how to assign the Colorbox event to elements
-				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-				$(".callbacks").colorbox({
-					onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-					onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-					onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-					onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-					onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-				});
-
-						
-				//Example of preserving a JavaScript event for inline calls.
-				$("#click").click(function(){ 
-					$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-					return false;
-				});
-			});
-		</script>
-
-		';
+		$GPS .= '</div>';
 
 	return $GPS;						
 }
@@ -5794,12 +5484,7 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 
 	
 
-$GPS = '';
-$GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />';
-
-
-
-$GPS .= '
+$GPS = '
 <div class="row">    
 		
 	<h3 class="supertittle text-primary">'.$titulo_cuadro.'</h3>';
@@ -5858,19 +5543,33 @@ $GPS .= '
 							//solo sensores activos
 							if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
 								//Unidad medida
-								$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+								if(isset($arrFinalUnimed[$equip['SensoresUniMed_'.$i]])){
+									$unimed = ' '.$arrFinalUnimed[$equip['SensoresUniMed_'.$i]];
+								}else{
+									$unimed = '';
+								}
 								//Titulo del cuadro
-								$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
-								$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];
-								$s_idGrupo = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['idGrupo'];
-											
+								if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'])){
+									$Titulo    = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['Nombre'];
+								}else{
+									$Titulo    = '';
+								}
+								if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'])){
+									$nColumnas = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['nColumnas'];
+								}else{
+									$nColumnas = '';
+								}
+								if(isset($arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['idGrupo'])){
+									$s_idGrupo = $arrFinalGrupos[$equip['SensoresGrupo_'.$i]]['idGrupo'];
+								}else{
+									$s_idGrupo = '';
+								}			
 								//Verificacion de alertas para cambios de color del widget
 								if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
 									$arrGruposTitulo[$Titulo][$i]['Color'] = 1;
 								}else{
 									$arrGruposTitulo[$Titulo][$i]['Color'] = 0;
-								}
-															
+								}						
 								//Guardo el valor correspondiente
 								$arrGruposTitulo[$Titulo][$i]['valor']     = $equip['SensoresMedActual_'.$i];
 								$arrGruposTitulo[$Titulo][$i]['unimed']    = $unimed;
@@ -6003,32 +5702,6 @@ $GPS .= '
 		
 $GPS .= '</div> ';
 
-$GPS .= '
-<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-<script>
-	$(document).ready(function(){
-		//Examples of how to assign the Colorbox event to elements
-		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-		$(".callbacks").colorbox({
-			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-		});
-
-				
-		//Example of preserving a JavaScript event for inline calls.
-		$("#click").click(function(){ 
-			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-			return false;
-		});
-	});
-</script>
-	
-	';
-	
 	return $GPS;
 }
 /*******************************************************************************************************************/
@@ -6366,7 +6039,11 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 						//verifico que sensor este activo
 						if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 							//Unidad medida
-							$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+							if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]])){
+								$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+							}else{
+								$unimed = '';
+							}
 							//cadena
 							if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
 							$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
@@ -6504,36 +6181,11 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 
 		//despliega el resumen
 		if(isset($miniwidget)&&$miniwidget==1){						
-			$GPS .= '
-			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
-			<div class="row">';
+			$GPS .= '<div class="row">';
 				$GPS .= widget_Ficha_2('box-yellow', 'fa-industry', $eq_alertas, 4, 'Equipos con alertas', 'Sensores', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 1, fecha_actual()), 'Ver Mas', 'btn-warning', 1, 2);    
 				$GPS .= widget_Ficha_2('box-red', 'fa-industry', $eq_fueralinea, 4, 'Equipos fuera de linea', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 2, fecha_actual()), 'Ver Mas', 'btn-danger', 1, 2);    
 				$GPS .= widget_Ficha_2('box-blue', 'fa-industry', $eq_ok, 4, 'Equipos OK', 'Equipos', 'principal_gps_view.php?seguimiento='.simpleEncode( 2, fecha_actual()).'&idSistema='.simpleEncode($idSistema, fecha_actual()).'&dataType='.simpleEncode( 4, fecha_actual()), 'Ver Mas', 'btn-primary', 1, 2);    
-				$GPS .= '
-			</div>  
-			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
-
-			<script>
-				$(document).ready(function(){
-					//Examples of how to assign the Colorbox event to elements
-					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-					$(".callbacks").colorbox({
-						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-					});
-
-							
-					//Example of preserving a JavaScript event for inline calls.
-					$("#click").click(function(){ 
-						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-						return false;
-					});
-				});
-			</script>';
+			$GPS .= '</div>';
 		}
 		
 		
@@ -6760,6 +6412,18 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			}
 			
 			/*************************************************************************/
+			//Unidad de medida
+			if(isset($arrFinalUnimed[$data['SensoresUniMed_37']])){
+				$UniMed_37 = $arrFinalUnimed[$data['SensoresUniMed_37']];
+			}else{
+				$UniMed_37 = '';
+			}
+			//Unidad de medida
+			if(isset($arrFinalUnimed[$data['SensoresUniMed_39']])){
+				$UniMed_39 = $arrFinalUnimed[$data['SensoresUniMed_39']];
+			}else{
+				$UniMed_39 = '';
+			}	
 			//Guardo todos los datos
 			$arrGruas[$xdanger][$data['idTelemetria']]['tr_color']     = $danger;
 			$arrGruas[$xdanger][$data['idTelemetria']]['wid_status']   = $wid_status;
@@ -6768,12 +6432,12 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']       = $data['Nombre'];
 			$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']   = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
 			if(isset($data['SensoresMedActual_37'])&&$data['SensoresMedActual_37']!=''&&$data['SensoresMedActual_37']!=0&&$data['SensoresMedActual_37']<99900){
-				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).' '.$arrFinalUnimed[$data['SensoresUniMed_37']];
+				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).' '.$UniMed_37;
 			}else{
-				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0 '.$arrFinalUnimed[$data['SensoresUniMed_37']];
+				$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0 '.$UniMed_37;
 			}
 			if(isset($data['SensoresMedActual_39'])&&$data['SensoresMedActual_39']!=''&&$data['SensoresMedActual_39']!=0&&$data['SensoresMedActual_39']<99900){
-				$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).' '.$arrFinalUnimed[$data['SensoresUniMed_39']];
+				$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).' '.$UniMed_39;
 			}else{
 				$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = 'N/A';
 			}
@@ -6832,7 +6496,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			if(isset($data['NAlertas'])&&$data['NAlertas']!=''&&$data['NAlertas']!=0){
 				//Alertas
 				$link_Alertas  = 'informe_telemetria_errores_6.php';
-				$link_Alertas .= '?bla=bla';
+				$link_Alertas .= '?pagina=1';
 				//$link_Alertas .= '?f_inicio='.$Fecha_inicio;
 				//$link_Alertas .= '&f_termino='.$Fecha_fin;
 				$link_Alertas .= '&idTelemetria='.$data['idTelemetria'];
@@ -6853,9 +6517,9 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		$Count_FueraLinea = 0;
 		$Count_Total      = 0;
 				
-		if($arrGruas[2]){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
-		if($arrGruas[1]){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
-		if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
+		if(isset($arrGruas[2])){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
+		if(isset($arrGruas[1])){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
+		if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
 		
 		$GPS = '';
 									
@@ -6909,8 +6573,9 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
-									
-									if($arrGruas[2]){
+									/************************************************************/
+									//Con alertas
+									if(isset($arrGruas[2])){
 										foreach ( $arrGruas[2] as $categoria=>$grua ) { 
 											$GPS .= '
 											<tr class="odd '.$grua['tr_color'].'">
@@ -6940,7 +6605,9 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 										}
 									}
 									
-									if($arrGruas[1]){
+									/************************************************************/
+									//Ok
+									if(isset($arrGruas[1])){
 										foreach ( $arrGruas[1] as $categoria=>$grua ) { 
 											$GPS .= '
 											<tr class="odd '.$grua['tr_color'].'">
@@ -6970,7 +6637,9 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 										}
 									}
 									
-									if($arrGruas[3]){
+									/************************************************************/
+									//Fuera de linea
+									if(isset($arrGruas[3])){
 										foreach ( $arrGruas[3] as $categoria=>$grua ) { 
 											$GPS .= '
 											<tr class="odd '.$grua['tr_color'].'">
@@ -7046,7 +6715,11 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 					//verifico que sensor este activo
 					if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 						//Unidad medida
-						$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]])){
+							$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+						}else{
+							$unimed = '';
+						}
 						//cadena
 						if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
 						$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
@@ -7219,35 +6892,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		
 ';
 
-								
-			$GPS .= '
-			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
-			 
-			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
 
-			<script>
-				$(document).ready(function(){
-					//Examples of how to assign the Colorbox event to elements
-					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-					$(".callbacks").colorbox({
-						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-					});
-
-							
-					//Example of preserving a JavaScript event for inline calls.
-					$("#click").click(function(){ 
-						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-						return false;
-					});
-				});
-			</script>';
-		
-		
-		
 		return $GPS;
 								
 
@@ -7890,12 +7535,6 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
         markers = [];
     }
 
-
-	
-	
-	
-	
-	
 	/* ************************************************************************** */
 	google.maps.event.addDomListener(window, "load", initialize());
 </script>	
@@ -7904,33 +7543,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 ';
 
 								
-			$GPS .= '
-			<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.css" />
-			 
-			<script src="'.DB_SITE_REPO.'/LIBS_js/modal/jquery.colorbox.js"></script>
 
-			<script>
-				$(document).ready(function(){
-					//Examples of how to assign the Colorbox event to elements
-					$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-					$(".callbacks").colorbox({
-						onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-						onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-						onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-						onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-						onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
-					});
-
-							
-					//Example of preserving a JavaScript event for inline calls.
-					$("#click").click(function(){ 
-						$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-						return false;
-					});
-				});
-			</script>';
-		
-		
 		
 		return $GPS;
 								
