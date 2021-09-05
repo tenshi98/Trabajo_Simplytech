@@ -56,6 +56,7 @@ $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
+	$subquery .= ',SensoresUniMed_'.$i;
 }	
 //Listar los equipos
 $SIS_query = '
@@ -89,7 +90,16 @@ $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrEquipo = array();
 $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 
+/*************************************************************/
+//Se traen todas las unidades de medida
+$arrUnimed = array();
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 
+//Ordeno las unidades de medida
+$arrFinalUnimed = array();
+foreach ($arrUnimed as $data) {
+	$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
+}
 
 /**************************************************************************/
 //variables
@@ -214,6 +224,18 @@ foreach ($arrEquipo as $data) {
 	}
 	
 	/*************************************************************************/
+	//Unidad de medida
+	if(isset($arrFinalUnimed[$data['SensoresUniMed_37']])){
+		$UniMed_37 = $arrFinalUnimed[$data['SensoresUniMed_37']];
+	}else{
+		$UniMed_37 = '';
+	}
+	//Unidad de medida
+	if(isset($arrFinalUnimed[$data['SensoresUniMed_39']])){
+		$UniMed_39 = $arrFinalUnimed[$data['SensoresUniMed_39']];
+	}else{
+		$UniMed_39 = '';
+	}	
 	//Guardo todos los datos
 	$arrGruas[$xdanger][$data['idTelemetria']]['tr_color']     = $danger;
 	$arrGruas[$xdanger][$data['idTelemetria']]['wid_status']   = $wid_status;
@@ -222,12 +244,12 @@ foreach ($arrEquipo as $data) {
 	$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']       = $data['Nombre'];
 	$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']   = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
 	if(isset($data['SensoresMedActual_37'])&&$data['SensoresMedActual_37']!=''&&$data['SensoresMedActual_37']!=0&&$data['SensoresMedActual_37']<99900){
-		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).' '.$arrFinalUnimed[$data['SensoresUniMed_37']];
+		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = cantidades($data['SensoresMedActual_37'], 1).' '.$UniMed_37;
 	}else{
-		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0 '.$arrFinalUnimed[$data['SensoresUniMed_37']];
+		$arrGruas[$xdanger][$data['idTelemetria']]['Voltaje'] = '0 '.$UniMed_37;
 	}
 	if(isset($data['SensoresMedActual_39'])&&$data['SensoresMedActual_39']!=''&&$data['SensoresMedActual_39']!=0&&$data['SensoresMedActual_39']<99900){
-		$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).' '.$arrFinalUnimed[$data['SensoresUniMed_39']];
+		$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = cantidades($data['SensoresMedActual_39'], 1).' '.$UniMed_39;
 	}else{
 		$arrGruas[$xdanger][$data['idTelemetria']]['Viento'] = 'N/A';
 	}
@@ -307,23 +329,11 @@ $Count_Ok          = 0;
 $Count_FueraLinea  = 0;
 $Count_Total       = 0;
 				
-if($arrGruas[2]){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
-if($arrGruas[1]){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
-if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
+if(isset($arrGruas[2])){foreach ( $arrGruas[2] as $categoria=>$grua ) { $Count_Alerta++;$Count_Total++;}}
+if(isset($arrGruas[1])){foreach ( $arrGruas[1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
+if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
 
 ?>
-
-<script>
-	<!--
-	$(document).ready(function() {
-		$('.tooltip').tooltipster({
-			animation: 'grow',
-			delay: 130,
-			maxWidth: 300
-		});
-	});
-	//-->
-</script>
 
 <script>
 	//se actualizan los widgets superiores
@@ -367,7 +377,7 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 		<?php 
 		/*************************************************************/
 		//Alertas
-		if($arrGruas[2]){
+		if(isset($arrGruas[2])){
 			foreach ( $arrGruas[2] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
@@ -394,7 +404,7 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 		} 
 		/*************************************************************/
 		//Ok
-		if($arrGruas[1]){
+		if(isset($arrGruas[1])){
 			foreach ( $arrGruas[1] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
@@ -421,7 +431,7 @@ if($arrGruas[3]){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_FueraLin
 		} 
 		/*************************************************************/
 		//Fuera de linea
-		if($arrGruas[3]){
+		if(isset($arrGruas[3])){
 			foreach ( $arrGruas[3] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
