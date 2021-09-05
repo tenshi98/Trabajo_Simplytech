@@ -157,62 +157,67 @@ $Temp_1         = '';
 $arrData        = array();
 
 //se arman datos
-foreach ($arrGraficos as $data) {
-	
-	//variables							
-	$Temp_1 .= "'".$data['HoraSistema']."',";
+//Si existen
+if(isset($arrGraficos)&&$arrGraficos!=false){
 	//recorro
-	for ($x = 1; $x <= 3; $x++) {
-		//verifico si existe
-		if(isset($arrData[$x]['Value'])&&$arrData[$x]['Value']!=''){
-			$arrData[$x]['Value'] .= ", ".$data['Sensor_'.$x];
-		//si no lo crea
-		}else{
-			$arrData[$x]['Value'] = $data['Sensor_'.$x];
-		}			
+	foreach ($arrGraficos as $data) {
+		
+		//variables							
+		$Temp_1 .= "'".$data['HoraSistema']."',";
+		//recorro
+		for ($x = 1; $x <= 3; $x++) {
+			//verifico si existe
+			if(isset($arrData[$x]['Value'])&&$arrData[$x]['Value']!=''){
+				$arrData[$x]['Value'] .= ", ".$data['Sensor_'.$x];
+			//si no lo crea
+			}else{
+				$arrData[$x]['Value'] = $data['Sensor_'.$x];
+			}			
+		}
 	}
-} 
-//nombres
-$arrData[1]['Name'] = "'Fase 1'";
-$arrData[2]['Name'] = "'Fase 2'";
-$arrData[3]['Name'] = "'Fase 3'";
 
-//variables
-$Graphics_xData       = 'var xData = [';
-$Graphics_yData       = 'var yData = [';
-$Graphics_names       = 'var names = [';
-$Graphics_types       = 'var types = [';
-$Graphics_texts       = 'var texts = [';
-$Graphics_lineColors  = 'var lineColors = [';
-$Graphics_lineDash    = 'var lineDash = [';
-$Graphics_lineWidth   = 'var lineWidth = [';
-//Se crean los datos
-for ($x = 1; $x <= 3; $x++) {
-	//las fechas
-	$Graphics_xData      .='['.$Temp_1.'],';
-	//los valores
-	$Graphics_yData      .='['.$arrData[$x]['Value'].'],';
-	//los nombres
-	$Graphics_names      .= $arrData[$x]['Name'].',';
-	//los tipos
-	$Graphics_types      .= "'lines',";
-	//si lleva texto en las burbujas
-	$Graphics_texts      .= "[],";
-	//los colores de linea
-	$Graphics_lineColors .= "'',";
-	//los tipos de linea
-	$Graphics_lineDash   .= "'',";
-	//los anchos de la linea
-	$Graphics_lineWidth  .= "'',";
-}
-$Graphics_xData      .= '];';
-$Graphics_yData      .= '];';
-$Graphics_names      .= '];';
-$Graphics_types      .= '];';
-$Graphics_texts      .= '];';
-$Graphics_lineColors .= '];';
-$Graphics_lineDash   .= '];';
-$Graphics_lineWidth  .= '];';  
+ 
+	//nombres
+	$arrData[1]['Name'] = "'Fase 1'";
+	$arrData[2]['Name'] = "'Fase 2'";
+	$arrData[3]['Name'] = "'Fase 3'";
+
+	//variables
+	$Graphics_xData       = 'var xData = [';
+	$Graphics_yData       = 'var yData = [';
+	$Graphics_names       = 'var names = [';
+	$Graphics_types       = 'var types = [';
+	$Graphics_texts       = 'var texts = [';
+	$Graphics_lineColors  = 'var lineColors = [';
+	$Graphics_lineDash    = 'var lineDash = [';
+	$Graphics_lineWidth   = 'var lineWidth = [';
+	//Se crean los datos
+	for ($x = 1; $x <= 3; $x++) {
+		//las fechas
+		$Graphics_xData      .='['.$Temp_1.'],';
+		//los valores
+		$Graphics_yData      .='['.$arrData[$x]['Value'].'],';
+		//los nombres
+		$Graphics_names      .= $arrData[$x]['Name'].',';
+		//los tipos
+		$Graphics_types      .= "'lines',";
+		//si lleva texto en las burbujas
+		$Graphics_texts      .= "[],";
+		//los colores de linea
+		$Graphics_lineColors .= "'',";
+		//los tipos de linea
+		$Graphics_lineDash   .= "'',";
+		//los anchos de la linea
+		$Graphics_lineWidth  .= "'',";
+	}
+	$Graphics_xData      .= '];';
+	$Graphics_yData      .= '];';
+	$Graphics_names      .= '];';
+	$Graphics_types      .= '];';
+	$Graphics_texts      .= '];';
+	$Graphics_lineColors .= '];';
+	$Graphics_lineDash   .= '];';
+	$Graphics_lineWidth  .= '];';  
 
 
 ?>
@@ -333,7 +338,14 @@ $Graphics_lineWidth  .= '];';
 		</div>	
 	</div>
 </div>
-
+<?php
+//Si no hay datos
+}else{
+	echo '<div class="col-sm-12" style="margin-top:10px;">';
+		alert_post_data(4,2,2, 'No existen datos');
+	echo '</div>';
+}
+?>
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
