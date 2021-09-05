@@ -94,7 +94,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 /************************************************************************************/
 // Listado con los nombres del tab
 $arrTabMenu = array();
-$arrTabMenu = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTabMenu');
+$arrTabMenu = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTabMenu');
 //Recorro																						
 foreach ($arrTabMenu as $tab) {
 	$arrOrderTabMenu[$tab['idTab']] = $tab['Nombre'];
