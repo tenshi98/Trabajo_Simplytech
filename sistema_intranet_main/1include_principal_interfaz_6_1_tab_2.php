@@ -1,3 +1,4 @@
+<div role="tabpanel" class="tab-pane fade" id="online">
 <?php
 $idTipoUsuario  = $_SESSION['usuario']['zona']['idTipoUsuario'];
 $idSistema      = $_SESSION['usuario']['zona']['idSistema'];
@@ -9,54 +10,35 @@ if(isset($_SESSION['usuario']['zona']['id_Geo'])&&$_SESSION['usuario']['zona']['
 }	
 		/************************************************************************/		
 //Variable
-$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+$SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento activado
-$z .= " AND telemetria_listado.id_Geo = ".$id_Geo;
+$SIS_where .= " AND telemetria_listado.id_Geo = ".$id_Geo;
 //Filtro de los tab
-$z .= " AND telemetria_listado.idTab = 1";//CrossChecking
+$SIS_where .= " AND telemetria_listado.idTab = 1";//CrossChecking
 //Filtro el sistema al cual pertenece	
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+	$SIS_where .= " AND telemetria_listado.idSistema = ".$idSistema;	
 }
 //Verifico el tipo de usuario que esta ingresando y el id
-$join = "";	
+$SIS_join  = '';
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+	$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
 }
 //filtro la zona
 if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
-	$z .= " AND telemetria_listado.idZona = ".$idZona;
+	$SIS_where .= " AND telemetria_listado.idZona = ".$idZona;
 }
 
-//Listar los equipos
-$arrEquipo = array();
-$query = "SELECT 
+//Se consulta
+$SIS_query = '
 telemetria_listado.idTelemetria, 
 telemetria_listado.cantSensores, 
 telemetria_listado.Nombre, 
-telemetria_listado.Identificador
-FROM `telemetria_listado`
-".$join."
-".$z."
-ORDER BY telemetria_listado.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-							
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEquipo,$row );
-}
-
+telemetria_listado.Identificador';
+$SIS_order = 'telemetria_listado.Nombre ASC';
+$arrEquipo = array();
+$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 
 
 /***************************************/
@@ -77,48 +59,22 @@ if(hora_actual()<$timeback){
 $arrMediciones = array();
 
 if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
-	//se verifica si se ingreso la hora, es un dato optativo
-	$z = " WHERE (TimeStamp BETWEEN '".$f_inicio." ".$h_inicio ."' AND '".$f_termino." ".$h_termino."')";
-
 	/*****************************************/	
 	//datos extras
-	$aa = '';
-	$aa .= ',FechaSistema';
-	$aa .= ',HoraSistema';
-	$aa .= ',GeoLatitud';
-	$aa .= ',GeoLongitud';
-	$aa .= ',GeoVelocidad';
+	$extraData = '';
 	//se recorre deacuerdo a la cantidad de sensores
 	for ($i = 1; $i <= $arrEquipo[0]['cantSensores']; $i++) { 
-		$aa .= ',Sensor_'.$i;
+		$extraData .= ',Sensor_'.$i;
 	}					
 	/*****************************************/				
-	//Insumos
+	//Consulto
+	$SIS_query = 'idTabla,FechaSistema,HoraSistema,GeoLatitud,GeoLongitud,GeoVelocidad'.$extraData;
+	$SIS_join  = '';
+	$SIS_where = '(TimeStamp BETWEEN "'.$f_inicio.' '.$h_inicio .'" AND "'.$f_termino.' '.$h_termino.'")';
+	$SIS_order = 'FechaSistema ASC, HoraSistema ASC';
+	$arrMediciones = array();
+	$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$arrEquipo[0]['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
 
-	$query = "SELECT idTabla
-	".$aa."
-						
-	FROM `telemetria_listado_tablarelacionada_".$arrEquipo[0]['idTelemetria']."`
-	".$z."
-	ORDER BY FechaSistema ASC, HoraSistema ASC ";
-								
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrMediciones,$row );
-	}
-}
 
 ?>
 <style>
@@ -128,7 +84,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 
 
 
-<div role="tabpanel" class="tab-pane fade" id="online">
+
 
 	<div class="col-sm-12">
 		<div class="box">
@@ -669,5 +625,5 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 		</div>
 	</div>
 
-    
+    <?php } ?>
 </div>

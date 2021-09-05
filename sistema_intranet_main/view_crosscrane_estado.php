@@ -81,9 +81,9 @@ $H_termino = hora_actual();
 		
 //Variable de busqueda
 if($H_inicio>$H_termino){
-	$z = "telemetria_listado_tablarelacionada_".$X_Puntero.".TimeStamp BETWEEN '".$F_inicio2." ".$H_inicio."' AND '".$F_termino." ".$H_termino."'";
+	$SIS_where = "telemetria_listado_tablarelacionada_".$X_Puntero.".TimeStamp BETWEEN '".$F_inicio2." ".$H_inicio."' AND '".$F_termino." ".$H_termino."'";
 }else{
-	$z = "telemetria_listado_tablarelacionada_".$X_Puntero.".TimeStamp BETWEEN '".$F_inicio." ".$H_inicio."' AND '".$F_termino." ".$H_termino."'";
+	$SIS_where = "telemetria_listado_tablarelacionada_".$X_Puntero.".TimeStamp BETWEEN '".$F_inicio." ".$H_inicio."' AND '".$F_termino." ".$H_termino."'";
 }
 
 //numero sensores equipo
@@ -109,7 +109,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 
 /**********************************************************/
 //se consulta
-$rowResult = db_select_data (false, 'Fecha, Hora'.$subquery, 'telemetria_listado_tablarelacionada_'.$X_Puntero, '', $z, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
+$rowResult = db_select_data (false, 'Fecha, Hora'.$subquery, 'telemetria_listado_tablarelacionada_'.$X_Puntero, '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
 /**********************************************************/
 //Se traen todas las unidades de medida
