@@ -9,7 +9,6 @@ li{list-style-image: none !important;list-style-type: none !important;	}
 #left #menu a .margin_width{margin-right: 15px !important;}
 .navvisibility{display:none;}
 .sidebar-left-mini .fa.fa-angle-right.fright.margin_width{display:none !important;} 
-#menu li > ul, .sidebar-left-mini #menu li > ul, .sidebar-left-mini #menu li > a .link-title  {min-width: 300px !important;}
 .filter{background-image: url(../img/search-dark.png);background-repeat: no-repeat;background-position: 7px center;}
 .navbar-brand img{height: 50px;}
 .frame_border {border: 1px solid #666;}
