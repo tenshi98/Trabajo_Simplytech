@@ -48,15 +48,15 @@ telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
 core_sistemas.idOpcionesGen_3'.$subquery;
 $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema';
-$rowDatos = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowDatos');
+$rowDatos = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowDatos');
 
 //Se consultan datos
 $arrUnimed = array();
-$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 
 //Se consultan datos
 $arrGrupos = array();
-$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 
 //Guardo los datos en un arreglo
 $arrFinalUnimed = array();
@@ -151,9 +151,17 @@ foreach ($arrGrupos as $sen) {
 		$sensor = 0;
 		for ($i = 1; $i <= $rowDatos['cantSensores']; $i++) {
 			//Unidad medida
-			$unimed = ' '.$arrFinalUnimed[$rowDatos['SensoresUniMed_'.$i]];
+			if(isset($arrFinalUnimed[$rowDatos['SensoresUniMed_'.$i]])){
+				$unimed = ' '.$arrFinalUnimed[$rowDatos['SensoresUniMed_'.$i]];
+			}else{
+				$unimed = '';
+			}
 			//Titulo del cuadro
-			$Titulo = $arrFinalGrupos[$rowDatos['SensoresGrupo_'.$i]];
+			if(isset($arrFinalGrupos[$rowDatos['SensoresGrupo_'.$i]])){
+				$Titulo = $arrFinalGrupos[$rowDatos['SensoresGrupo_'.$i]];
+			}else{
+				$Titulo = '';
+			}
 			//Verifico que no sea el mismo sensor
 			if(isset($rowDatos['SensoresMedActual_'.$i])&&$rowDatos['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowDatos['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
 			if($rowDatos['SensoresErrorActual_'.$i]> 0){

@@ -85,12 +85,12 @@ array_push( $arrEquipo,$row );
 /*************************************************************/
 //Se traen todas las unidades de medida
 $arrUnimed = array();
-$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 	
 //Ordeno las unidades de medida
 $arrFinalUnimed = array();
 foreach ($arrUnimed as $data) {
-	$arrFinalUnimed[$data['idUniMed']]['Nombre'] = $data['Nombre'];
+	$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
 }	
 
 ?>
@@ -112,7 +112,11 @@ foreach ($arrUnimed as $data) {
 						//verifico que sensor este activo
 						if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 							//Unidad medida
-							$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]]['Nombre'];
+							if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]])){
+								$unimed = ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+							}else{
+								$unimed = '';
+							}
 							//cadena
 							if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
 							$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
