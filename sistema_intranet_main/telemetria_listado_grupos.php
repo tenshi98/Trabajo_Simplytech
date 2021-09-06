@@ -180,7 +180,7 @@ $cuenta_registros = db_select_nrows (false, 'idGrupo', 'telemetria_listado_grupo
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$SIS_order     = $order_by;
+$SIS_order     = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrCategorias = array();
 $arrCategorias = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 

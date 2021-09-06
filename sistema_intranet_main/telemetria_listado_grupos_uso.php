@@ -187,7 +187,7 @@ $cuenta_registros = db_select_nrows (false, 'idGrupo', 'telemetria_listado_grupo
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$SIS_order     = $order_by;
+$SIS_order     = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrCategorias = array();
 $arrCategorias = db_select_array (false, 'telemetria_listado_grupos_uso.idGrupo,telemetria_listado_grupos_uso.Nombre, telemetria_listado_grupos_uso.Valor,core_sistemas_opciones.Nombre AS Supervisado', 'telemetria_listado_grupos_uso', 'LEFT JOIN `core_sistemas_opciones` ON core_sistemas_opciones.idOpciones = telemetria_listado_grupos_uso.idSupervisado', $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 

@@ -170,11 +170,10 @@ if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){ $SIS_where .= " AND telemet
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idDispositivo', 'telemetria_listado_dispositivos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
-
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$SIS_order     = $order_by;
+$SIS_order     = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrCategorias = array();
 $arrCategorias = db_select_array (false, 'idDispositivo,Nombre', 'telemetria_listado_dispositivos', '', $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 

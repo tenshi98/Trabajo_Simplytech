@@ -548,7 +548,7 @@ if(isset($_GET['id_Geo']) && $_GET['id_Geo'] != ''){                $SIS_where .
 if(isset($_GET['idTab']) && $_GET['idTab'] != ''){                  $SIS_where .= " AND telemetria_listado.idTab=".$_GET['idTab'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$cuenta_registros = db_select_nrows (false, 'idTelemetria', 'telemetria_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 't_clientes');
+$cuenta_registros = db_select_nrows (false, 'idTelemetria', 'telemetria_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
@@ -566,7 +566,7 @@ LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema             = tel
 LEFT JOIN `core_estados`            ON core_estados.idEstado               = telemetria_listado.idEstado
 LEFT JOIN `core_sistemas_opciones`  ON core_sistemas_opciones.idOpciones   = telemetria_listado.id_Geo
 LEFT JOIN `core_telemetria_tabs`    ON core_telemetria_tabs.idTab          = telemetria_listado.idTab';
-$SIS_order = $order_by;
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrEquipos = array();
 $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 ?>

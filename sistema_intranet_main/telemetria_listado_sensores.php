@@ -187,7 +187,7 @@ $cuenta_registros = db_select_nrows (false, 'idSensores', 'telemetria_listado_se
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$SIS_order     = $order_by;
+$SIS_order     = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrCategorias = array();
 $arrCategorias = db_select_array (false, 'telemetria_listado_sensores.idSensores,telemetria_listado_sensores.Nombre, telemetria_listado_sensores.Funcion,core_sensores_funciones.Nombre AS SensorFuncion', 'telemetria_listado_sensores', 'LEFT JOIN `core_sensores_funciones` ON core_sensores_funciones.idSensorFuncion = telemetria_listado_sensores.idSensorFuncion', $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 
