@@ -65,23 +65,11 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 // consulto los datos
-$query = "SELECT idUsuario, idSistema
-FROM `sistema_aprobador_oc`
-WHERE idAprobador = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$SIS_query = 'idUsuario, idSistema';
+$SIS_join  = '';
+$SIS_where = 'idAprobador ='.$_GET['edit'];
+$rowdata = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
  ?>
 
 <div class="col-sm-8 fcenter">
@@ -156,49 +144,21 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
 // consulto los datos
-$query = "SELECT Nombre
-FROM `core_sistemas`
-WHERE idSistema = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idSistema ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 // consulto los datos
-$arrAprobador = array();
-$query = "SELECT 
+$SIS_query = '
 sistema_aprobador_oc.idAprobador,
-usuarios_listado.Nombre AS nombre_usuario
-FROM `sistema_aprobador_oc`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = sistema_aprobador_oc.idUsuario
-WHERE sistema_aprobador_oc.idSistema = ".$_GET['id']."
-ORDER BY usuarios_listado.Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAprobador,$row );
-}
+usuarios_listado.Nombre AS nombre_usuario';
+$SIS_join  = 'LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = sistema_aprobador_oc.idUsuario';
+$SIS_where = 'sistema_aprobador_oc.idSistema ='.$_GET['id'];
+$SIS_order = 'usuarios_listado.Nombre ASC';
+$arrAprobador = array();
+$arrAprobador = db_select_array (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAprobador');
+
 ?>
 
 <div class="col-sm-12">
@@ -222,7 +182,7 @@ array_push( $arrAprobador,$row );
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'core_sistemas_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
-						<li class=""><a href="<?php echo 'core_sistemas_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >APIS</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> APIS</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_facturacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>

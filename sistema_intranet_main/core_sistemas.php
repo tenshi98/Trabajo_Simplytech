@@ -48,7 +48,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 core_sistemas.Nombre,  
 core_sistemas.Rut, 
 core_ubicacion_ciudad.Nombre AS Ciudad, 
@@ -73,6 +73,8 @@ core_theme_colors.Nombre AS Tema,
 core_sistemas.Config_CorreoRespaldo,
 core_sistemas.Config_Gmail_Usuario,
 core_sistemas.Config_Gmail_Password,
+core_sistemas.Config_WhatsappToken,
+core_sistemas.Config_WhatsappInstanceId,
 opc1.Nombre AS OpcionesGen_1,
 opc2.Nombre AS OpcionesGen_2,
 opc3.Nombre AS OpcionesGen_3,
@@ -96,9 +98,8 @@ core_sistemas.Social_instagram,
 core_sistemas.Social_linkedin,
 core_sistemas.Social_rss,
 core_sistemas.Social_youtube,
-core_sistemas.Social_tumblr
-
-FROM `core_sistemas`
+core_sistemas.Social_tumblr';
+$SIS_join  = '
 LEFT JOIN `core_ubicacion_ciudad`              ON core_ubicacion_ciudad.idCiudad                   = core_sistemas.idCiudad
 LEFT JOIN `core_ubicacion_comunas`             ON core_ubicacion_comunas.idComuna                  = core_sistemas.idComuna
 LEFT JOIN `core_theme_colors`                  ON core_theme_colors.idTheme                        = core_sistemas.Config_idTheme
@@ -115,24 +116,9 @@ LEFT JOIN `bodegas_insumos_listado`            ON bodegas_insumos_listado.idBode
 LEFT JOIN `core_sistemas_opciones_telemetria`  ON core_sistemas_opciones_telemetria.idOpcionesTel  = core_sistemas.idOpcionesTel
 LEFT JOIN `core_config_ram`                    ON core_config_ram.idConfigRam                      = core_sistemas.idConfigRam
 LEFT JOIN `core_config_time`                   ON core_config_time.idConfigTime                    = core_sistemas.idConfigTime
-LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                             = core_sistemas.Social_idUso
-
-WHERE core_sistemas.idSistema = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                             = core_sistemas.Social_idUso';
+$SIS_where = 'core_sistemas.idSistema ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 <div class="col-sm-12">
@@ -153,7 +139,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'core_sistemas_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
-						<li class=""><a href="<?php echo 'core_sistemas_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >APIS</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> APIS</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_facturacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
@@ -228,6 +214,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								<strong>Correo Envio Notificaciones : </strong><?php echo $rowdata['email_principal']; ?><br/>
 								<strong>Usuario Gmail Envio Notificaciones : </strong><?php echo $rowdata['Config_Gmail_Usuario']; ?><br/>
 								<strong>Password Usuario Gmail : </strong><?php echo $rowdata['Config_Gmail_Password']; ?><br/>
+								<strong>Whatsapp Token : </strong><?php echo $rowdata['Config_WhatsappToken']; ?><br/>
+								<strong>Whatsapp Instance Id : </strong><?php echo $rowdata['Config_WhatsappInstanceId']; ?><br/>
 							</p>
 									
 							<h2 class="text-primary">APIS</h2>
@@ -367,55 +355,24 @@ if (!$num_pag){
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
 //Creo la variable con la ubicacion
-$z = "WHERE core_sistemas.idSistema!=0 ";
+$SIS_where = "core_sistemas.idSistema!=0 ";
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT core_sistemas.idSistema FROM `core_sistemas` LEFT JOIN `core_estados`  ON core_estados.idEstado  = core_sistemas.idEstado ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'core_sistemas.idSistema', 'core_sistemas', 'LEFT JOIN `core_estados`  ON core_estados.idEstado  = core_sistemas.idEstado', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
-// Se trae u listado con todos los tipos de sistema
-$arrTipoCliente = array();
-$query = "SELECT 
+// Se trae un listado con todos los elementos
+$SIS_query = '
 core_sistemas.idSistema,
 core_sistemas.Nombre,
 core_sistemas.Rut,
 core_sistemas.idEstado,
-core_estados.Nombre AS estado
-
-FROM `core_sistemas`
-LEFT JOIN `core_estados`  ON core_estados.idEstado  = core_sistemas.idEstado
-".$z."
-ORDER BY core_estados.Nombre ASC, core_sistemas.Nombre ASC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipoCliente,$row );
-}
+core_estados.Nombre AS estado';
+$SIS_join  = 'LEFT JOIN `core_estados`  ON core_estados.idEstado  = core_sistemas.idEstado';
+$SIS_order = 'core_estados.Nombre ASC, core_sistemas.Nombre ASC LIMIT '.$comienzo.', '.$cant_reg;
+$arrSistemas = array();
+$arrSistemas = db_select_array (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
+/**********************************************************/
 //paginacion
 $search='';
 ?>
@@ -447,7 +404,7 @@ $search='';
 				</thead>
 								 
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrTipoCliente as $tipo) { ?>
+				<?php foreach ($arrSistemas as $tipo) { ?>
 					<tr class="odd">
 						<td><?php echo $tipo['Nombre']; ?></td>
 						<td><?php echo $tipo['Rut']; ?></td>
