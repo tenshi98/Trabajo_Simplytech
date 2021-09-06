@@ -147,7 +147,7 @@ if (!$num_pag){
 } else {
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
-
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idUniMed', 'telemetria_listado_unidad_medida', '', '', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
