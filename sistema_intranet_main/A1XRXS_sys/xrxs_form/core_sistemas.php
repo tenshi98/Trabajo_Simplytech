@@ -41,6 +41,8 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Config_CorreoRespaldo']) )            $Config_CorreoRespaldo             = $_POST['Config_CorreoRespaldo'];
 	if ( !empty($_POST['Config_Gmail_Usuario']) )             $Config_Gmail_Usuario              = $_POST['Config_Gmail_Usuario'];
 	if ( !empty($_POST['Config_Gmail_Password']) )            $Config_Gmail_Password             = $_POST['Config_Gmail_Password'];
+	if ( !empty($_POST['Config_WhatsappToken']) )             $Config_WhatsappToken              = $_POST['Config_WhatsappToken'];
+	if ( !empty($_POST['Config_WhatsappInstanceId']) )        $Config_WhatsappInstanceId         = $_POST['Config_WhatsappInstanceId'];
 	if ( !empty($_POST['idOpcionesGen_1']) )                  $idOpcionesGen_1                   = $_POST['idOpcionesGen_1'];
 	if ( !empty($_POST['idOpcionesGen_2']) )                  $idOpcionesGen_2                   = $_POST['idOpcionesGen_2'];
 	if ( !empty($_POST['idOpcionesGen_3']) )                  $idOpcionesGen_3                   = $_POST['idOpcionesGen_3'];
@@ -135,6 +137,8 @@ require_once '0_validate_user_1.php';
 			case 'Config_CorreoRespaldo':              if(empty($Config_CorreoRespaldo)){               $error['Config_CorreoRespaldo']               = 'error/No ha ingresado el correo de respaldo';}break;
 			case 'Config_Gmail_Usuario':               if(empty($Config_Gmail_Usuario)){                $error['Config_Gmail_Usuario']                = 'error/No ha ingresado el usuario de gmail';}break;
 			case 'Config_Gmail_Password':              if(empty($Config_Gmail_Password)){               $error['Config_Gmail_Password']               = 'error/No ha ingresado la contraseña del usuario de gmail';}break;
+			case 'Config_WhatsappToken':               if(empty($Config_WhatsappToken)){                $error['Config_WhatsappToken']                = 'error/No ha ingresado el Whatsapp Token';}break;
+			case 'Config_WhatsappInstanceId':          if(empty($Config_WhatsappInstanceId)){           $error['Config_WhatsappInstanceId']           = 'error/No ha ingresado el Whatsapp Instance Id';}break;
 			case 'idOpcionesGen_1':                    if(empty($idOpcionesGen_1)){                     $error['idOpcionesGen_1']                     = 'error/No ha seleccionado la opcion 1';}break;
 			case 'idOpcionesGen_2':                    if(empty($idOpcionesGen_2)){                     $error['idOpcionesGen_2']                     = 'error/No ha seleccionado la opcion 2';}break;
 			case 'idOpcionesGen_3':                    if(empty($idOpcionesGen_3)){                     $error['idOpcionesGen_3']                     = 'error/No ha seleccionado la opcion 3';}break;
@@ -262,6 +266,8 @@ require_once '0_validate_user_1.php';
 				if(isset($Config_CorreoRespaldo) && $Config_CorreoRespaldo != ''){                 $a .= ",'".$Config_CorreoRespaldo."'" ;              }else{$a .= ",''";}
 				if(isset($Config_Gmail_Usuario) && $Config_Gmail_Usuario != ''){                   $a .= ",'".$Config_Gmail_Usuario."'" ;               }else{$a .= ",''";}
 				if(isset($Config_Gmail_Password) && $Config_Gmail_Password != ''){                 $a .= ",'".$Config_Gmail_Password."'" ;              }else{$a .= ",''";}
+				if(isset($Config_WhatsappToken) && $Config_WhatsappToken != ''){                   $a .= ",'".$Config_WhatsappToken."'" ;               }else{$a .= ",''";}
+				if(isset($Config_WhatsappInstanceId) && $Config_WhatsappInstanceId != ''){         $a .= ",'".$Config_WhatsappInstanceId."'" ;          }else{$a .= ",''";}
 				if(isset($idOpcionesGen_1) && $idOpcionesGen_1 != ''){                             $a .= ",'".$idOpcionesGen_1."'" ;                    }else{$a .= ",''";}
 				if(isset($idOpcionesGen_2) && $idOpcionesGen_2 != ''){                             $a .= ",'".$idOpcionesGen_2."'" ;                    }else{$a .= ",''";}
 				if(isset($idOpcionesGen_3) && $idOpcionesGen_3 != ''){                             $a .= ",'".$idOpcionesGen_3."'" ;                    }else{$a .= ",''";}
@@ -316,7 +322,7 @@ require_once '0_validate_user_1.php';
 				CajaChica, Contacto_Nombre, Contacto_Fono1, Contacto_Fono2, Contacto_Fax, Contacto_Email, Contacto_Web, 
 				Contrato_Nombre, Contrato_Numero, Contrato_Fecha, Contrato_Duracion, Config_IDGoogle,Config_Google_apiKey,
 				Config_FCM_apiKey, Config_FCM_Main_apiKey, Config_imgLogo, Config_idTheme, Config_CorreoRespaldo, 
-				Config_Gmail_Usuario, Config_Gmail_Password,
+				Config_Gmail_Usuario, Config_Gmail_Password, Config_WhatsappToken, Config_WhatsappInstanceId, 
 				idOpcionesGen_1, idOpcionesGen_2, idOpcionesGen_3, idOpcionesGen_4, idOpcionesGen_5, idOpcionesGen_6, 
 				idOpcionesGen_7, idOpcionesGen_8, idOpcionesGen_9, idOpcionesGen_10, idOpcionesGen_11, idOpcionesGen_12, 
 				idOpcionesGen_13, idOpcionesGen_14, idOpcionesGen_15, idOpcionesGen_16, idOpcionesGen_17, 
@@ -406,6 +412,8 @@ require_once '0_validate_user_1.php';
 				if(isset($Config_CorreoRespaldo) && $Config_CorreoRespaldo != ''){                 $a .= ",Config_CorreoRespaldo='".$Config_CorreoRespaldo."'" ;}
 				if(isset($Config_Gmail_Usuario) && $Config_Gmail_Usuario != ''){                   $a .= ",Config_Gmail_Usuario='".$Config_Gmail_Usuario."'" ;}
 				if(isset($Config_Gmail_Password) && $Config_Gmail_Password != ''){                 $a .= ",Config_Gmail_Password='".$Config_Gmail_Password."'" ;}
+				if(isset($Config_WhatsappToken) && $Config_WhatsappToken != ''){                   $a .= ",Config_WhatsappToken='".$Config_WhatsappToken."'" ;}
+				if(isset($Config_WhatsappInstanceId) && $Config_WhatsappInstanceId != ''){         $a .= ",Config_WhatsappInstanceId='".$Config_WhatsappInstanceId."'" ;}
 				if(isset($idOpcionesGen_1) && $idOpcionesGen_1 != ''){                             $a .= ",idOpcionesGen_1='".$idOpcionesGen_1."'" ;}
 				if(isset($idOpcionesGen_2) && $idOpcionesGen_2 != ''){                             $a .= ",idOpcionesGen_2='".$idOpcionesGen_2."'" ;}
 				if(isset($idOpcionesGen_3) && $idOpcionesGen_3 != ''){                             $a .= ",idOpcionesGen_3='".$idOpcionesGen_3."'" ;}

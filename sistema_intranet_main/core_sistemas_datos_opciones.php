@@ -42,24 +42,14 @@ if (isset($_GET['deleted'])) {$error['Cliente'] 	  = 'sucess/Sistema borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT Nombre, Config_IDGoogle, Config_Google_apiKey, Config_FCM_apiKey, Config_FCM_Main_apiKey
-FROM `core_sistemas`
-WHERE idSistema = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre, Config_IDGoogle, Config_Google_apiKey, Config_FCM_apiKey, Config_FCM_Main_apiKey,
+Config_WhatsappToken, Config_WhatsappInstanceId';
+$SIS_join  = '';
+$SIS_where = 'idSistema ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar APIS');?>
 </div>
@@ -77,7 +67,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'core_sistemas_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
-						<li class="active"><a href="<?php echo 'core_sistemas_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >APIS</a></li>
+						<li class="active"><a href="<?php echo 'core_sistemas_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> APIS</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_facturacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
@@ -96,25 +86,29 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Config_IDGoogle)) {         $x1 = $Config_IDGoogle;         }else{$x1 = $rowdata['Config_IDGoogle'];}
-					if(isset($Config_Google_apiKey)) {    $x2 = $Config_Google_apiKey;    }else{$x2 = $rowdata['Config_Google_apiKey'];}
-					if(isset($Config_FCM_apiKey)) {       $x3 = $Config_FCM_apiKey;       }else{$x3 = $rowdata['Config_FCM_apiKey'];}
-					if(isset($Config_FCM_Main_apiKey)) {  $x4 = $Config_FCM_Main_apiKey;  }else{$x4 = $rowdata['Config_FCM_Main_apiKey'];}
+					if(isset($Config_IDGoogle)) {            $x1 = $Config_IDGoogle;            }else{$x1 = $rowdata['Config_IDGoogle'];}
+					if(isset($Config_Google_apiKey)) {       $x2 = $Config_Google_apiKey;       }else{$x2 = $rowdata['Config_Google_apiKey'];}
+					if(isset($Config_FCM_apiKey)) {          $x3 = $Config_FCM_apiKey;          }else{$x3 = $rowdata['Config_FCM_apiKey'];}
+					if(isset($Config_FCM_Main_apiKey)) {     $x4 = $Config_FCM_Main_apiKey;     }else{$x4 = $rowdata['Config_FCM_Main_apiKey'];}
+					if(isset($Config_WhatsappToken)) {       $x5 = $Config_WhatsappToken;       }else{$x5 = $rowdata['Config_WhatsappToken'];}
+					if(isset($Config_WhatsappInstanceId)) {  $x6 = $Config_WhatsappInstanceId;  }else{$x6 = $rowdata['Config_WhatsappInstanceId'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_icon('ID Google (Mapas)', 'Config_IDGoogle', $x1, 1,'fa fa-google-plus-square');
 					$Form_Inputs->form_input_icon('ApiKey (Android)', 'Config_Google_apiKey', $x2, 1,'fa fa-google-plus-square');
 					$Form_Inputs->form_input_icon('ApiKey (Firebase)', 'Config_FCM_apiKey', $x3, 1,'fa fa-google-plus-square');
+					$Form_Inputs->form_post_data(2, '<strong>Main ApiKey (Firebase)</strong> sirve para la notificacion desde varias plataformas a una misma APP.');	
 					$Form_Inputs->form_input_icon('Main ApiKey (Firebase)', 'Config_FCM_Main_apiKey', $x4, 1,'fa fa-google-plus-square');
 					
-					$Form_Inputs->form_post_data(2, '<strong>Main ApiKey (Firebase)</strong> sirve para la notificacion desde varias plataformas a una misma APP');	
+					$Form_Inputs->form_post_data(2, 'El Token y el Instance ID de Whatsapp se obtienen con el proveedor del servicio.');	
+					$Form_Inputs->form_input_icon('Whatsapp Token', 'Config_WhatsappToken', $x5, 1,'fa fa-google-plus-square');
+					$Form_Inputs->form_input_icon('Whatsapp Instance Id', 'Config_WhatsappInstanceId', $x6, 1,'fa fa-google-plus-square');
+					
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					
 					?>
 					
-					
-
 					<div class="form-group">	
 						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
 					</div>

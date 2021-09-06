@@ -60,6 +60,8 @@ core_theme_colors.Nombre AS Tema,
 core_sistemas.Config_CorreoRespaldo,
 core_sistemas.Config_Gmail_Usuario,
 core_sistemas.Config_Gmail_Password,
+core_sistemas.Config_WhatsappToken,
+core_sistemas.Config_WhatsappInstanceId,
 opc1.Nombre AS OpcionesGen_1,
 opc2.Nombre AS OpcionesGen_2,
 opc3.Nombre AS OpcionesGen_3,
@@ -188,6 +190,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								<strong>Correo Envio Notificaciones : </strong><?php echo $rowdata['email_principal']; ?><br/>
 								<strong>Usuario Gmail Envio Notificaciones : </strong><?php echo $rowdata['Config_Gmail_Usuario']; ?><br/>
 								<strong>Password Usuario Gmail : </strong><?php echo $rowdata['Config_Gmail_Password']; ?><br/>
+								<strong>Whatsapp Token : </strong><?php echo $rowdata['Config_WhatsappToken']; ?><br/>
+								<strong>Whatsapp Instance Id : </strong><?php echo $rowdata['Config_WhatsappInstanceId']; ?><br/>
 							</p>
 									
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> APIS</h2>
