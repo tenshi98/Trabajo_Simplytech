@@ -64,10 +64,9 @@ $count    = 0;
 //se arman datos
 foreach ($arrEquipos as $fac) {
 	
-	//variables							
+	//Guardo la fecha							
 	$Temp_1 .= "'".Fecha_estandar($fac['FechaSistema'])." - ".$fac['HoraSistema']."',";
-	$xcount  = 0;
-							
+	
 	//Que el valor medido sea distinto de 999
 	if(isset($fac['SensorValue'])&&$fac['SensorValue']<99900){
 		
@@ -162,7 +161,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 					$gr_tittle = 'Grafico ('.$uni.')';
 					$gr_unimed = $uni;
 				}
-				GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth); ?>
+				echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); ?>
 								
 			</div>
 		</div>
