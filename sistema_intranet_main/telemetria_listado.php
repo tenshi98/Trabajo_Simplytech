@@ -568,7 +568,7 @@ LEFT JOIN `core_sistemas_opciones`  ON core_sistemas_opciones.idOpciones   = tel
 LEFT JOIN `core_telemetria_tabs`    ON core_telemetria_tabs.idTab          = telemetria_listado.idTab';
 $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrEquipos = array();
-$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
+$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
 ?>
 <div class="col-sm-12 breadcrumb-bar">
 
