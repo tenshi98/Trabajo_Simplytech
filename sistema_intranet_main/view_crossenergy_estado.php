@@ -239,7 +239,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false){
 				<div class="row">
 					<div class="col-sm-12">
 						
-						<?php GraphLinear_1('graphLinear_1', 'Comportamiento Lineas Trifasicas (Ultima Hora)', 'Hora', 'Amperaje', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth); ?>
+						<?php echo GraphLinear_1('graphLinear_1', 'Comportamiento Lineas Trifasicas (Ultima Hora)', 'Hora', 'Amperaje', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); ?>
 				
 					</div>
 				</div>
