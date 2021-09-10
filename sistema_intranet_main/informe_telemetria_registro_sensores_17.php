@@ -26,28 +26,25 @@ require_once 'core/Web.Header.Main.php';
 if ( ! empty($_GET['submit_filter']) ) { 
 
 //se verifica si se ingreso la hora, es un dato optativo
-$z       = '';
-$zx      = '';
-$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$search .= '&idGrupo='.$_GET['idGrupo'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
+$SIS_where = '';
+$search    = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$search   .= '&idGrupo='.$_GET['idGrupo'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 //si se definio el minimo y maximo
 if(isset($_GET['RangoMinimo'])&&$_GET['RangoMinimo']!=''&&isset($_GET['RangoMaximo'])&&$_GET['RangoMaximo']!=''){
 	$search .= '&RangoMinimo='.$_GET['RangoMinimo'].'&RangoMaximo='.$_GET['RangoMaximo'];													
 }
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
-	$zx.=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
-	$search.="&h_inicio=".$_GET['h_inicio']."&h_termino=".$_GET['h_termino'];
+	$SIS_where .= " (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$search    .= "&h_inicio=".$_GET['h_inicio']."&h_termino=".$_GET['h_termino'];
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
-	$zx.=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where .= " (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'telemetria_listado.Nombre', 
 							'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], 
 							'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria', 
-							$zx, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
+							$SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
 			
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
@@ -67,37 +64,18 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$consql .= ',telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$i.' AS SensorValue_'.$i;
 		
 	}
-	//Se traen todos los registros
-	$arrRutas = array();
-	$query = "SELECT 
+	
+	/****************************************************************/
+	//se traen lo datos del equipo
+	$SIS_query = '
 	telemetria_listado.Nombre AS NombreEquipo,
 	telemetria_listado.cantSensores AS cantSensores,
-	telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema,
-	telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema
-	".$consql."
-	FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-	LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-
-	".$z."
-	ORDER BY telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema ASC,
-	telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema ASC
-	LIMIT 10000";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRutas,$row );
-	}
+	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
+	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema'.$consql;
+	$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
+	$SIS_order = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC, telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema ASC LIMIT 10000';
+	$arrEquipos = array();
+	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_logo');
 
 	//consultas
 	$arrUnimed = array();
@@ -113,7 +91,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		
 	//cuento la cantidad de registros obtenidos
 	$cant = 0;
-	foreach ($arrRutas as $fac) {
+	foreach ($arrEquipos as $fac) {
 		$cant++;
 	}
 	?>	
@@ -128,7 +106,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</script>
 							
 	<div class="col-sm-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trazabilidad', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$arrRutas[0]['NombreEquipo']);?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trazabilidad', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$arrEquipos[0]['NombreEquipo']);?>
 		<div class="col-md-6 col-sm-6 col-xs-12 clearfix">
 			<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_17_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 		
@@ -161,7 +139,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					<div class="box">
 						<header>
 							<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-							<h5> Graficos grupo <?php echo $rowGrupo['Nombre'].' del equipo '.$arrRutas[0]['NombreEquipo']; ?></h5>
+							<h5> Graficos grupo <?php echo $rowGrupo['Nombre'].' del equipo '.$arrEquipos[0]['NombreEquipo']; ?></h5>
 							
 						</header>
 						<div class="table-responsive" id="grf">
@@ -182,9 +160,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									$Colors .= ",'#E6E6FA'";
 									$Colors .= ",'#ADD8E6'";
 									$Colors .= ",'#8B6914'";
-									for ($i = 1; $i <= $arrRutas[0]['cantSensores']; $i++) { 
-										if($arrRutas[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){ ?>
-											data.addColumn('number', '<?php echo $arrRutas[0]['SensorNombre_'.$i]; ?>');
+									for ($i = 1; $i <= $arrEquipos[0]['cantSensores']; $i++) { 
+										if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){ ?>
+											data.addColumn('number', '<?php echo $arrEquipos[0]['SensorNombre_'.$i]; ?>');
 											<?php if(isset($cant)&&$cant<30){?>
 												data.addColumn({type: 'string', role: 'annotation'});
 											<?php } ?>	
@@ -195,7 +173,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		
 									data.addRows([
 										<?php 
-										foreach ($arrRutas as $rutas) { 
+										foreach ($arrEquipos as $rutas) { 
 											//defino variables
 											$y_counter = 0;
 											$x_counter = 0;
@@ -353,7 +331,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-				<h5>Registro Sensores grupo <?php echo $rowGrupo['Nombre'].' del equipo '.$arrRutas[0]['NombreEquipo']; ?></h5>
+				<h5>Registro Sensores grupo <?php echo $rowGrupo['Nombre'].' del equipo '.$arrEquipos[0]['NombreEquipo']; ?></h5>
 				
 			</header>
 			<div class="table-responsive"> 
@@ -363,9 +341,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<td></td>
 							<td></td>
 							<?php 
-							for ($i = 1; $i <= $arrRutas[0]['cantSensores']; $i++) { 
-								if($arrRutas[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-									echo '<th style="text-align:center">'.$arrRutas[0]['SensorNombre_'.$i].'</th>';
+							for ($i = 1; $i <= $arrEquipos[0]['cantSensores']; $i++) { 
+								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
+									echo '<th style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
 								}
 							}
 							?>
@@ -374,8 +352,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Fecha</th>
 							<th>Hora</th>
 							<?php 
-							for ($i = 1; $i <= $arrRutas[0]['cantSensores']; $i++) { 
-								if($arrRutas[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
+							for ($i = 1; $i <= $arrEquipos[0]['cantSensores']; $i++) { 
+								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									echo '<th>Medicion</th>';
 								}
 							}
@@ -383,7 +361,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						</tr>
 						
 						<?php 
-						foreach ($arrRutas as $rutas) { 
+						foreach ($arrEquipos as $rutas) { 
 							//variables
 							$y_counter = 0;
 							$x_counter = 0;
