@@ -1,0 +1,498 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Views.php';
+/**********************************************************************************************************************************/
+/*                                                 Variables Globales                                                             */
+/**********************************************************************************************************************************/
+//Tiempo Maximo de la consulta, 40 minutos por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+//Memora RAM Maxima del servidor, 4GB por defecto
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+/**********************************************************************************************************************************/
+/*                                                      Consulta                                                                  */
+/**********************************************************************************************************************************/
+//Obtengo datos configuracion
+
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
+	$idTelemetria  = $_GET['idTelemetria'];	
+	$_SESSION['usuario']['widget_CrossC']['idTelemetria']  = $_GET['idTelemetria'];	
+}else{
+	$idTelemetria  = $_SESSION['usuario']['widget_CrossC']['idTelemetria'];	
+}
+if(isset($_GET['cantSensores'])&&$_GET['cantSensores']!=''){
+	$cantSensores  = $_GET['cantSensores'];	
+	$_SESSION['usuario']['widget_CrossC']['cantSensores']  = $_GET['cantSensores'];	
+}else{
+	$cantSensores  = $_SESSION['usuario']['widget_CrossC']['cantSensores'];
+}
+	
+$timeBack      = $_SESSION['usuario']['widget_CrossC']['timeBack'];	
+$seguimiento   = $_SESSION['usuario']['widget_CrossC']['seguimiento'];	
+$idSistema     = $_SESSION['usuario']['widget_CrossC']['idSistema'];	
+$idTipoUsuario = $_SESSION['usuario']['widget_CrossC']['idTipoUsuario'];	
+$idUsuario     = $_SESSION['usuario']['widget_CrossC']['idUsuario'];	
+
+//variables
+$HoraInicio     = restahoras($timeBack,hora_actual());
+$FechaInicio    = fecha_actual();
+$HoraTermino    = hora_actual(); 
+$FechaTermino   = fecha_actual();
+if($HoraTermino<$timeBack){
+	$FechaInicio = restarDias($FechaTermino,1);
+}																
+	
+	/*************************************************************/
+	//Se consulta
+	//numero sensores equipo
+	$N_Maximo_Sensores = $cantSensores;
+	$consql = '';
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		$consql .= ',SensoresGrupo_'.$i;
+		$consql .= ',SensoresRevisionGrupo_'.$i;
+		$consql .= ',SensoresUniMed_'.$i;
+		$consql .= ',SensoresMedMin_'.$i;
+		$consql .= ',SensoresMedMax_'.$i;
+		$consql .= ',SensoresMedActual_'.$i;
+		$consql .= ',SensoresActivo_'.$i;
+	}
+	/*****************************/
+	$SIS_query = 'LastUpdateFecha,LastUpdateHora,TiempoFueraLinea'.$consql;
+	$SIS_join  = '';
+	$SIS_where = 'idTelemetria='.$idTelemetria;
+	$rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
+	
+	//busco los grupos disponibles
+	$arrSubgrupo          = array();
+	$arrSubgrupoUso       = array();
+	$SIS_whereSubgrupo    = 'idGrupo=0';
+	$SIS_whereSubgrupoUso = 'idGrupo=0';		
+	//creo arreglo
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		$arrSubgrupo[$rowEquipo['SensoresGrupo_'.$i]]['idGrupo']            = $rowEquipo['SensoresGrupo_'.$i];
+		$arrSubgrupoUso[$rowEquipo['SensoresRevisionGrupo_'.$i]]['idGrupo'] = $rowEquipo['SensoresRevisionGrupo_'.$i];
+	}
+	//se crea cadena
+	foreach($arrSubgrupo as $categoria=>$sub){
+		$SIS_whereSubgrupo .= ' OR idGrupo='.$sub['idGrupo'];	
+	}
+	foreach($arrSubgrupoUso as $categoria=>$sub){
+		$SIS_whereSubgrupoUso .= ' OR idGrupo='.$sub['idGrupo'];	
+	}
+	
+	/*************************************************************/
+	//Se consulta
+	//numero sensores equipo
+	$consql = '';
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		$consql .= ',Sensor_'.$i.' AS SensorValue_'.$i; 
+	}
+	/*****************************/
+	$SIS_query = 'FechaSistema,HoraSistema'.$consql;
+	$SIS_join  = '';
+	$SIS_where = '(TimeStamp BETWEEN "'.$FechaInicio.' '.$HoraInicio.'" AND "'.$FechaTermino.' '.$HoraTermino.'")';
+	$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
+	$arrMediciones = array();
+	$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
+
+	/*************************************************************/
+	//Se consulta
+	$arrGrupos = array();
+	$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_whereSubgrupo, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+	//se recorre
+	$arrGruposTemp = array();
+	foreach ($arrGrupos as $gru) {
+		$arrGruposTemp[$gru['idGrupo']] = $gru['Nombre'];
+	}
+	
+	/*************************************************************/
+	//Se consulta
+	$arrGruposUso = array();
+	$arrGruposUso = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', $SIS_whereSubgrupoUso, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposUso');
+	//se recorre
+	$arrGruposUsoTemp = array();
+	foreach ($arrGruposUso as $gruUso) {
+		$arrGruposUsoTemp[$gruUso['idGrupo']] = $gruUso['Nombre'];
+	}
+
+	/*************************************************************/
+	//Variables
+	$arrTempGrupos = array();
+	$arrTempSensor = array();
+	$arrTempMed    = array();
+	$Temp_1        = '';
+	$arrData       = array();
+	
+	//Se recorren las mediciones
+	foreach($arrMediciones as $cli) {
+		
+		//variables
+		$arrDato = array();
+		
+		//recorro los sensores
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			//Verifico si el sensor esta activo para guardar el dato
+			if(isset($rowEquipo['SensoresActivo_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1){
+				//Valido valores
+				if(isset($cli['SensorValue_'.$i])&&$cli['SensorValue_'.$i]<99900){
+					/********************************/
+					//datos
+					//Sumo los sensores
+					if(isset($arrTempMed[$i]['Suma'])&&$arrTempMed[$i]['Suma']!=''){
+						$arrTempMed[$i]['Suma'] = $arrTempMed[$i]['Suma'] + $cli['SensorValue_'.$i];
+					}else{
+						$arrTempMed[$i]['Suma'] = $cli['SensorValue_'.$i];
+					}
+					//Cuento los sensores
+					if(isset($arrTempMed[$i]['Cuenta'])&&$arrTempMed[$i]['Cuenta']!=''){
+						$arrTempMed[$i]['Cuenta']++;
+					}else{
+						$arrTempMed[$i]['Cuenta'] = 1;
+					}
+					
+					/********************************/
+					//Grafico
+					//Si es temperatura
+					if($rowEquipo['SensoresUniMed_'.$i]==3){
+						//verifico si existe
+						if(isset($arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
+							$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
+							$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta']++;
+						//si no lo crea
+						}else{
+							$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
+							$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
+						}
+					}
+				//si da error
+				}else{
+					/********************************/
+					//datos
+					//Sumo los sensores
+					if(isset($arrTempMed[$i]['Suma'])&&$arrTempMed[$i]['Suma']!=''){
+						$arrTempMed[$i]['Suma'] = $arrTempMed[$i]['Suma'] + 0;
+					}else{
+						$arrTempMed[$i]['Suma'] = 0;
+					}
+					
+					/********************************/
+					//Grafico
+					//Si es temperatura
+					if($rowEquipo['SensoresUniMed_'.$i]==3){
+						//verifico si existe
+						if(isset($arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
+							$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + 0;
+						//si no lo crea
+						}else{
+							$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = 0;
+						}
+					}
+				}
+			}
+		}
+		
+		//Guardo la fecha							
+		$Temp_1 .= "'".Fecha_estandar($cli['FechaSistema'])." - ".$cli['HoraSistema']."',";
+	
+		/********************************/
+		//Grafico
+		//recorro grupo de uso
+		foreach ($arrGruposUso as $gruUso) {
+			//recorro los grupos
+			foreach ($arrGrupos as $gru) {
+				
+				/***********************************************/
+				//realizo los calculos
+				//verifico si hay datos
+				if(isset($arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'])&&$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']!=0){  
+					$New_Dato = $arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Valor']/$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']; 
+				}else{
+					$New_Dato = 0;
+				}
+				/***********************************************/
+				//guardo dentro del grupo
+				//verifico si existe
+				if(isset($arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'])&&$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value']!=''){
+					$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'] .= ", ".$New_Dato;
+				//si no lo crea
+				}else{
+					$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'] = $New_Dato;
+				}
+			}
+		}	
+	}
+	
+	//variables
+	$Graphics_xData       = 'var xData = [';
+	$Graphics_yData       = 'var yData = [';
+	$Graphics_names       = 'var names = [';
+	$Graphics_types       = 'var types = [';
+	$Graphics_texts       = 'var texts = [';
+	$Graphics_lineColors  = 'var lineColors = [';
+	$Graphics_lineDash    = 'var lineDash = [';
+	$Graphics_lineWidth   = 'var lineWidth = [';
+	//Se crean los datos
+	foreach ($arrGruposUso as $gruUso) {
+		foreach ($arrGrupos as $gru) {
+			if(isset($arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'])&&$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value']!=''){
+				//las fechas
+				$Graphics_xData      .='['.$Temp_1.'],';
+				//los valores
+				$Graphics_yData      .='['.$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'].'],';
+				//los nombres
+				$Graphics_names      .= '"'.$gruUso['Nombre'].' - '.$gru['Nombre'].'",';
+				//los tipos
+				$Graphics_types      .= "'',";
+				//si lleva texto en las burbujas
+				$Graphics_texts      .= "[],";
+				//los colores de linea
+				$Graphics_lineColors .= "'',";
+				//los tipos de linea
+				$Graphics_lineDash   .= "'',";
+				//los anchos de la linea
+				$Graphics_lineWidth  .= "'',";
+			}
+		}
+	} 
+	$Graphics_xData      .= '];';
+	$Graphics_yData      .= '];';
+	$Graphics_names      .= '];';
+	$Graphics_types      .= '];';
+	$Graphics_texts      .= '];';
+	$Graphics_lineColors .= '];';
+	$Graphics_lineDash   .= '];';
+	$Graphics_lineWidth  .= '];';
+	
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		//Verifico si el sensor esta activo para guardar el dato
+		if(isset($rowEquipo['SensoresActivo_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1){
+			/*****************************************/
+			//Grupo Uso
+			$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['Nombre']  = $arrGruposUsoTemp[$rowEquipo['SensoresRevisionGrupo_'.$i]];
+			$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['idGrupo'] = $rowEquipo['SensoresRevisionGrupo_'.$i];
+			/*****************************************/
+			//Grupo
+			//Si es temperatura
+			if($rowEquipo['SensoresUniMed_'.$i]==3){
+				//Nombre y grupo
+				$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Nombre']  = $arrGruposTemp[$rowEquipo['SensoresGrupo_'.$i]];
+				$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['idGrupo'] = $rowEquipo['SensoresGrupo_'.$i];
+				//Temperatura Minima
+				if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmin'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmin']!=''){
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmin'] = $arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmin'] + $rowEquipo['SensoresMedMin_'.$i];
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountTmin']++;
+				}else{
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmin'] = $rowEquipo['SensoresMedMin_'.$i];
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountTmin'] = 0;
+				}
+				//Temperatura Maxima
+				if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmax'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmax']!=''){
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmax'] = $arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmax'] + $rowEquipo['SensoresMedMax_'.$i];
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountTmax']++;
+				}else{
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Tmax'] = $rowEquipo['SensoresMedMax_'.$i];
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountTmax'] = 0;
+				}
+				//valido que este dentro del rango deseado
+				if($rowEquipo['SensoresMedActual_'.$i]<99900){
+					//Temperatura Actual
+					if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual']!=''){
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual'] = $arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual'] + $rowEquipo['SensoresMedActual_'.$i];
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountTActual']++;
+					}else{
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual'] = $rowEquipo['SensoresMedActual_'.$i];
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountTActual'] = 0;
+					}
+				//si da error
+				}else{
+					//Temperatura Actual
+					if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual']!=''){
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual'] = $arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual'] + 0;
+					}else{
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual'] = 0;
+					}
+				}
+				//promedio
+				if(isset($arrTempMed[$i]['Suma'])){
+					if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Prom'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Prom']!=''){
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Prom']      = $arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Prom'] + $arrTempMed[$i]['Suma'];
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountProm'] = $arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountProm'] + $arrTempMed[$i]['Cuenta'];
+					}else{
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Prom']      = $arrTempMed[$i]['Suma'];
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountProm'] = $arrTempMed[$i]['Cuenta'];
+					}
+				}else{
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Prom']      = 0;
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountProm'] = 0;
+				}
+				
+				//estado
+				//si esta configurado
+				if($rowEquipo['SensoresMedMin_'.$i]!=0&&$rowEquipo['SensoresMedMax_'.$i]!=0){
+					//si esta fuera de parametros
+					if($rowEquipo['SensoresMedActual_'.$i] < $rowEquipo['SensoresMedMin_'.$i] OR $rowEquipo['SensoresMedActual_'.$i]>$rowEquipo['SensoresMedMax_'.$i]){
+						//Error del grupo de uso
+						if(isset($arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'])&&$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']!=''){
+							$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']++;
+						}else{
+							$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
+						}
+						//Error de grupo
+						if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']!=''){
+							$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']++;
+						}else{
+							$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
+						}
+					}
+				}
+			//si es humedad	
+			}elseif($rowEquipo['SensoresUniMed_'.$i]==2){
+				//valido que este dentro del rango deseado
+				if($rowEquipo['SensoresMedActual_'.$i]<99900){
+					//Humedad
+					if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum']!=''){
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum'] = $arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum'] + $rowEquipo['SensoresMedActual_'.$i];
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountHum']++;
+					}else{
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum'] = $rowEquipo['SensoresMedActual_'.$i];
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountHum'] = 0;
+					}
+				//si da error
+				}else{
+					//Humedad
+					if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum']!=''){
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum'] = $arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum'] + 0;
+					}else{
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Hum'] = 0;
+					}
+				}
+				//estado
+				//si esta configurado
+				if($rowEquipo['SensoresMedMin_'.$i]!=0&&$rowEquipo['SensoresMedMax_'.$i]!=0){
+					//si esta fuera de parametros
+					if($rowEquipo['SensoresMedActual_'.$i] < $rowEquipo['SensoresMedMin_'.$i] OR $rowEquipo['SensoresMedActual_'.$i]>$rowEquipo['SensoresMedMax_'.$i]){
+						//Error del grupo de uso
+						if(isset($arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'])&&$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']!=''){
+							$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']++;
+						}else{
+							$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
+						}
+						//Error de grupo
+						if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']!=''){
+							$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']++;
+						}else{
+							$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
+						}
+					}
+				}
+			}	
+		}
+	}
+	
+/*************************************************************/
+//Se dibuja
+$widget = '
+<div class="col-sm-7">
+						<div class="row">
+							<div class="table-wrapper-scroll-y my-custom-scrollbar">
+								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+									<thead>
+										<tr role="row">
+											<th colspan="3">Grupo - Subgrupo</th>
+											<th>T° Actual</th>
+											<th>T° Max</th>
+											<th>T° Min</th>
+											<th>T° Prom</th>
+											<th>Hr. Prom</th>
+											<th>Acciones</th>
+										</tr>
+									</thead>
+									<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+										
+										
+										$widget .= '
+											<tr class="odd">
+												<th colspan="9">Ultima Medicion: '.fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs.</th>
+											</tr>';
+										
+										foreach ($arrTempGrupos as $gruUso) {
+											//verificar errores
+											if(isset($gruUso['NErrores'])&&$gruUso['NErrores']!=0){
+												$danger_color = 'warning';
+												$danger_icon  = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
+											}else{
+												$danger_color = '';
+												$danger_icon  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+											}
+											$widget .= '
+											<tr class="odd '.$danger_color.'">
+												<th><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></th>
+												<th colspan="7">'.$gruUso['Nombre'].'</th>
+												<th>
+													<div class="btn-group" style="width: 35px;" >
+														<button onClick="chngGroupUsoGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].')" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
+													</div>
+												</th>
+											</tr>';
+											foreach ($arrTempSensor[$gruUso['idGrupo']] as $gru) {
+												//verificar errores
+												if(isset($gru['NErrores'])&&$gru['NErrores']!=0){
+													$danger_color = 'warning';
+													$danger_icon  = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
+												}else{
+													$danger_color = '';
+													$danger_icon  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+												}
+												//variables
+												if(isset($gru['CountTmin'])&&$gru['CountTmin']!=0){       $Tmin    = Cantidades(($gru['Tmin']/$gru['CountTmin']), 1);       }else{ $Tmin    = 0; }
+												if(isset($gru['CountTmax'])&&$gru['CountTmax']!=0){       $Tmax    = Cantidades(($gru['Tmax']/$gru['CountTmax']), 1);       }else{ $Tmax    = 0; }
+												if(isset($gru['CountTActual'])&&$gru['CountTActual']!=0){ $TActual = Cantidades(($gru['TActual']/$gru['CountTActual']), 1); }else{ $TActual = 0; }
+												if(isset($gru['CountProm'])&&$gru['CountProm']!=0){       $Prom    = Cantidades(($gru['Prom']/$gru['CountProm']), 1);       }else{ $Prom    = 0; }
+												if(isset($gru['CountHum'])&&$gru['CountHum']!=0){         $Hum     = Cantidades(($gru['Hum']/$gru['CountHum']), 1);         }else{ $Hum     = 0; }
+												
+												$widget .= '
+												<tr class="odd '.$danger_color.'">
+													<td></td>
+													<td><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></td>
+													<td>'.$gru['Nombre'].'</td>
+													<td>'.$TActual.' °C</td>
+													<td>'.$Tmax.' °C</td>
+													<td>'.$Tmin.' °C</td>
+													<td>'.$Prom.' °C</td>
+													<td>'.$Hum.' %</td>
+													<td>
+														<div class="btn-group" style="width: 70px;" >
+															<button onClick="chngGroupGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].', '.$gru['idGrupo'].')" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
+														</div>
+													</td>
+												</tr>';
+											}
+										}
+			
+										
+									$widget .= '                 
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<div class="row" id="update_graphics">';
+						
+							$gr_tittle = 'Grafico (°C)';
+							$gr_unimed = '°C';
+							$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
+							
+							$widget .= '  
+						</div>
+					</div>';
+
+echo $widget;
+?>
+
+

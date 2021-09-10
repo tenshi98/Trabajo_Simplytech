@@ -23,27 +23,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$query = "SELECT idOpcionesGen_6, idOpcionesGen_4, idOpcionesTel
-FROM core_sistemas
-WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}	
-$n_permisos = mysqli_fetch_assoc($resultado);
+$SIS_query = 'idOpcionesGen_6, idOpcionesGen_4, idOpcionesTel';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'n_permisos');
 /************************************************************************************/
 //variable de numero de permiso
 $x_nperm = 0;
-
 
 //CrossCheking
 $x_nperm++; $trans[$x_nperm] = "cross_solicitud_aplicacion_crear.php";          //01 - Solicitud Aplicacion - 01 Crear
@@ -158,6 +143,8 @@ foreach ($arrTabMenu as $tab) {
 .noborderbox .header .nav-tabs > li > a {color: #665F5F !important;}
 .noborderbox .header .nav-tabs > li > a:hover, .noborderbox .header .nav-tabs > li > a:focus {color: #fff !important;background-color: #2E2424;}
 .noborderbox .header .nav-tabs > li.active > a:hover, .noborderbox .header .nav-tabs > li.active > a:focus{color: #333 !important;}
+.float_table table{margin-right: auto !important;margin-left: auto !important;float: none !important;}
+#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
 </style>
 
 <div class="">
@@ -176,56 +163,84 @@ foreach ($arrTabMenu as $tab) {
 		</header>
 		<div class="tab-content">
 			<?php
-			//si los segundos no estan configurados
-			if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
-				$x_seg = $n_permisos['idOpcionesGen_6'] * 1000;
-			}else{
-				$x_seg = 60000;
+			
+			
+			//Lista de id de empresas a mostrar nueva interfaz
+			$int_empresas = array(2,6,8,9,10,11,12,13,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35);
+			
+			//contador
+			$contador = 0;
+			//se revisa una a una
+			for ($i=0; $i < count($int_empresas); $i++) { 
+				if($_SESSION['usuario']['basic_data']['idSistema']==$int_empresas[$i]){
+					$contador++;
+				}
 			}
+			
+			/*********************************************************/
+			//por defecto la nueva
+			if($contador==0){
 				
-			//Verifico si esta activada la actualizacion de la pagina
-			if($n_permisos['idOpcionesGen_4']=='1'&&$n_permisos['idOpcionesTel']!=11&&$n_permisos['idOpcionesTel']!=12) { 
+				echo widget_CrossC('Gestion de equipos', '06:00:00', 2, 
+									$_SESSION['usuario']['basic_data']['idSistema'], 
+									$_SESSION['usuario']['basic_data']['idTipoUsuario'], 
+									$_SESSION['usuario']['basic_data']['idUsuario'], 
+									$dbConn);
 				
-				$Url  = 'principal_telemetria_alt_crosstech.php';
-				$Url .= '?bla=bla';
-				$Url .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
-				$Url .= '&prm_x_7='.$prm_x[301];
-				$Url .= '&prm_x_8='.$prm_x[302];
-				$Url .= '&prm_x_9='.$prm_x[303];
-				$Url .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-				$Url .= '&Config_IDGoogle='.$_SESSION['usuario']['basic_data']['Config_IDGoogle'];
-				$Url .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
-				$Url .= '&trans_8='.$prm_x[302];
-				$Url .= '&trans_9='.$prm_x[303];
-				$Url .= '&idOpcionesTel='.$n_permisos['idOpcionesTel'];
+			/*********************************************************/
+			//los seleccionados para mostrar la antigua
+			}else{
+				//si los segundos no estan configurados
+				if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
+					$x_seg = $n_permisos['idOpcionesGen_6'] * 1000;
+				}else{
+					$x_seg = 60000;
+				}
+					
+				//Verifico si esta activada la actualizacion de la pagina
+				if($n_permisos['idOpcionesGen_4']=='1'&&$n_permisos['idOpcionesTel']!=11&&$n_permisos['idOpcionesTel']!=12) { 
+					
+					$Url  = 'principal_telemetria_alt_crosstech.php';
+					$Url .= '?bla=bla';
+					$Url .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+					$Url .= '&prm_x_7='.$prm_x[301];
+					$Url .= '&prm_x_8='.$prm_x[302];
+					$Url .= '&prm_x_9='.$prm_x[303];
+					$Url .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+					$Url .= '&Config_IDGoogle='.$_SESSION['usuario']['basic_data']['Config_IDGoogle'];
+					$Url .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+					$Url .= '&trans_8='.$prm_x[302];
+					$Url .= '&trans_9='.$prm_x[303];
+					$Url .= '&idOpcionesTel='.$n_permisos['idOpcionesTel'];
+						
+					echo '
+					<script type="text/javascript">
+						function actualiza_contenido() {
+							$("#update_tel").load('.$Url.');
+						}
+						setInterval("actualiza_contenido()", '.$x_seg.');
+
+					</script>';
+				}
+				echo '
+				<div class="panel-heading">
+					<span class="panel-title"  style="color: #666;font-weight: 700 !important;">Telemetria</span>
+				</div>';
 					
 				echo '
-				<script type="text/javascript">
-					function actualiza_contenido() {
-						$("#update_tel").load('.$Url.');
-					}
-					setInterval("actualiza_contenido()", '.$x_seg.');
-
-				</script>';
-			}
-			echo '
-			<div class="panel-heading">
-				<span class="panel-title"  style="color: #666;font-weight: 700 !important;">Telemetria</span>
-			</div>';
+				<div class="col-sm-12" id="update_tel">
+					<span class="panel-title"  style="color: #1E90FF;font-weight: 700 !important;" id="update_text_HoraRefresco">Hora Refresco: '.hora_actual().'</span>';
 				
-			echo '
-			<div class="col-sm-12" id="update_tel">
-				<span class="panel-title"  style="color: #1E90FF;font-weight: 700 !important;" id="update_text_HoraRefresco">Hora Refresco: '.hora_actual().'</span>';
-			
-				echo widget_Equipos_Crosstech('Equipos Telemetria', 2, 0,$prm_x[303], $_SESSION['usuario']['basic_data']['idSistema'],
-												$_SESSION['usuario']['basic_data']['idTipoUsuario'],
-												$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
-				echo widget_Promedios_equipo_grupos_Crosstech('Mediciones Promedios Actuales', 2, 0, 0, 
-															$_SESSION['usuario']['basic_data']['idSistema'],
-															$_SESSION['usuario']['basic_data']['idTipoUsuario'],
-															$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
-															
-			echo '</div>';
+					echo widget_Equipos_Crosstech('Equipos Telemetria', 2, 0,$prm_x[303], $_SESSION['usuario']['basic_data']['idSistema'],
+													$_SESSION['usuario']['basic_data']['idTipoUsuario'],
+													$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
+					echo widget_Promedios_equipo_grupos_Crosstech('Mediciones Promedios Actuales', 2, 0, 0, 
+																$_SESSION['usuario']['basic_data']['idSistema'],
+																$_SESSION['usuario']['basic_data']['idTipoUsuario'],
+																$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
+																
+				echo '</div>';
+			}
 			
 			?>
 
