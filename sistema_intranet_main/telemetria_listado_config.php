@@ -45,7 +45,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,Identificador,id_Geo,id_Sensores,cantSensores, idDispositivo, idShield, TiempoFueraLinea, idUsoContrato, idUsoPredio, idUsoGeocerca, NErroresGeocercaMax,idTab, idBackup, NregBackup, idGenerador, idAlertaTemprana', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, 'Nombre,Identificador,id_Geo,id_Sensores,cantSensores, idDispositivo, idShield, TiempoFueraLinea, idUsoContrato, idUsoPredio, idUsoGeocerca, NErroresGeocercaMax,idTab, idBackup, NregBackup, idGenerador, idAlertaTemprana, idUsoFTP, FTP_Carpeta', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
@@ -119,6 +119,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					if(isset($idBackup)) {             $x14 = $idBackup;             }else{$x14 = $rowdata['idBackup'];}
 					if(isset($NregBackup)) {           $x15 = $NregBackup;           }else{$x15 = $rowdata['NregBackup'];}
 					if(isset($idAlertaTemprana)) {     $x16 = $idAlertaTemprana;     }else{$x16 = $rowdata['idAlertaTemprana'];}
+					if(isset($idUsoFTP)) {             $x17 = $idUsoFTP;             }else{$x17 = $rowdata['idUsoFTP'];}
+					if(isset($FTP_Carpeta)) {          $x18 = $FTP_Carpeta;          }else{$x18 = $rowdata['FTP_Carpeta'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -162,6 +164,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					$Form_Inputs->form_post_data(2, 'Indica si el equipo de telemetria notificara de inmediato a los usuarios respecto a un error.' );
 					$Form_Inputs->form_select('Alerta Temprana','idAlertaTemprana', $x16, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					
+					$Form_Inputs->form_post_data(2, 'Indica si el equipo de telemetria notificara de inmediato a los usuarios respecto a un error.' );
+					$Form_Inputs->form_select('Uso de Carpeta FTP','idUsoFTP', $x17, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_input_icon('Nombre Carpeta FTP', 'FTP_Carpeta', $x18, 1,'fa fa-flag');
 					
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>
@@ -170,6 +175,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						document.getElementById('div_cantSensores').style.display = 'none';
 						document.getElementById('div_NErroresGeocercaMax').style.display = 'none';
 						document.getElementById('div_NregBackup').style.display = 'none';
+						document.getElementById('div_FTP_Carpeta').style.display = 'none';
 						
 						//se ejecuta al cargar la página (OBLIGATORIO)
 						$(document).ready(function(){ 
@@ -177,6 +183,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							let id_Sensores   = $("#id_Sensores").val();
 							let idUsoGeocerca = $("#idUsoGeocerca").val();
 							let idBackup      = $("#idBackup").val();
+							let idUsoFTP      = $("#idUsoFTP").val();
 							/*******************************/
 							//si es SI
 							if(id_Sensores == 1){ 
@@ -206,6 +213,16 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_NregBackup').style.display = 'none';	
 								//Reseteo los valores a 0
 								document.getElementById('NregBackup').value = "0";
+							}
+							/*******************************/
+							//si es SI
+							if(idUsoFTP == 1){ 
+								document.getElementById('div_FTP_Carpeta').style.display = '';						
+							//si es NO
+							} else if(idUsoFTP == 2){ 
+								document.getElementById('div_FTP_Carpeta').style.display = 'none';	
+								//Reseteo los valores a 0
+								document.getElementById('FTP_Carpeta').value = "";
 							}
 							
 						}); 
@@ -252,6 +269,21 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_NregBackup').style.display = 'none';
 								//Reseteo los valores a 0
 								document.getElementById('NregBackup').value = "0";
+							}
+						});
+						
+						$("#idUsoFTP").on("change", function(){ //se ejecuta al cambiar valor del select
+							let idUsoFTPSelected = $(this).val(); //Asignamos el valor seleccionado
+					
+							//si es SI
+							if(idUsoFTPSelected == 1){ 
+								document.getElementById('div_FTP_Carpeta').style.display = '';
+															
+							//si es NO
+							} else if(idUsoFTPSelected == 2){ 
+								document.getElementById('div_FTP_Carpeta').style.display = 'none';
+								//Reseteo los valores a 0
+								document.getElementById('FTP_Carpeta').value = "";
 							}
 						});
 					

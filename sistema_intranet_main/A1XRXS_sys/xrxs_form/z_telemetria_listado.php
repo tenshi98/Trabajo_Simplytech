@@ -122,6 +122,8 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idBackup']) )                          $idBackup                           = $_POST['idBackup'];
 	if ( !empty($_POST['NregBackup']) )                        $NregBackup                         = $_POST['NregBackup'];
 	if ( !empty($_POST['idAlertaTemprana']) )                  $idAlertaTemprana                   = $_POST['idAlertaTemprana'];
+	if ( !empty($_POST['idUsoFTP']) )                          $idUsoFTP                           = $_POST['idUsoFTP'];
+	if ( !empty($_POST['FTP_Carpeta']) )                       $FTP_Carpeta                        = $_POST['FTP_Carpeta'];
 	
 	//Recorro la configuracion de los sensores
 	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
@@ -256,6 +258,8 @@ require_once '0_validate_user_1.php';
 			case 'idBackup':                          if(empty($idBackup)){                          $error['idBackup']                      = 'error/No ha Seleccionado si se respalda la tabla relacionada';}break;
 			case 'NregBackup':                        if(empty($NregBackup)){                        $error['NregBackup']                    = 'error/No ha ingresado la cantidad de registros a respaldar';}break;
 			case 'idAlertaTemprana':                  if(empty($idAlertaTemprana)){                  $error['idAlertaTemprana']              = 'error/No ha Seleccionado si se envia la alerta temprana';}break;
+			case 'idUsoFTP':                          if(empty($idUsoFTP)){                          $error['idUsoFTP']                      = 'error/No ha Seleccionado si utiliza carpeta';}break;
+			case 'FTP_Carpeta':                       if(empty($FTP_Carpeta)){                       $error['FTP_Carpeta']                   = 'error/No ha ingresado el nombre de la carpeta';}break;
 			
 	
 		}
@@ -278,6 +282,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Patente)&&contar_palabras_censuradas($Patente)!=0){              $error['Patente']       = 'error/Edita Patente, contiene palabras no permitidas'; }	
 	if(isset($Num_serie)&&contar_palabras_censuradas($Num_serie)!=0){          $error['Num_serie']     = 'error/Edita Num_serie, contiene palabras no permitidas'; }	
 	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){      $error['Observacion']   = 'error/Edita Observacion, contiene palabras no permitidas'; }	
+	if(isset($FTP_Carpeta)&&contar_palabras_censuradas($FTP_Carpeta)!=0){      $error['FTP_Carpeta']   = 'error/Edita FTP Carpeta, contiene palabras no permitidas'; }	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -356,6 +361,8 @@ require_once '0_validate_user_1.php';
 				if(isset($idBackup) && $idBackup != ''){                                            $a .= ",'".$idBackup."'" ;                          }else{$a .= ",''";}
 				if(isset($idGenerador) && $idGenerador != ''){                                      $a .= ",'".$idGenerador."'" ;                       }else{$a .= ",''";}
 				if(isset($idAlertaTemprana) && $idAlertaTemprana != ''){                            $a .= ",'".$idAlertaTemprana."'" ;                  }else{$a .= ",''";}
+				if(isset($idUsoFTP) && $idUsoFTP != ''){                                            $a .= ",'".$idUsoFTP."'" ;                          }else{$a .= ",''";}
+				if(isset($FTP_Carpeta) && $FTP_Carpeta != ''){                                      $a .= ",'".$FTP_Carpeta."'" ;                       }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `telemetria_listado` (idSistema, Identificador, Nombre, id_Geo, 
@@ -368,7 +375,8 @@ require_once '0_validate_user_1.php';
 				idMantencion, idEstadoEncendido, idUsoPredio, idUsoGeocerca,CrossCrane_tiempo_revision,
 				CrossCrane_grupo_amperaje, CrossCrane_grupo_elevacion, CrossCrane_grupo_giro,
 				CrossCrane_grupo_carro, CrossCrane_grupo_voltaje, CrossCrane_grupo_motor_subida,
-				CrossCrane_grupo_motor_bajada, idBackup, idGenerador, idAlertaTemprana) 
+				CrossCrane_grupo_motor_bajada, idBackup, idGenerador, idAlertaTemprana,
+				idUsoFTP, FTP_Carpeta) 
 				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -498,6 +506,8 @@ require_once '0_validate_user_1.php';
 				if(isset($NErrores) ){                                                                    $a .= ",NErrores='".$NErrores."'" ;}
 				if(isset($NAlertas) ){                                                                    $a .= ",NAlertas='".$NAlertas."'" ;}
 				if(isset($idAlertaTemprana)&& $idAlertaTemprana != '' ){                                  $a .= ",idAlertaTemprana='".$idAlertaTemprana."'" ;}
+				if(isset($idUsoFTP)&& $idUsoFTP != '' ){                                                  $a .= ",idUsoFTP='".$idUsoFTP."'" ;}
+				if(isset($FTP_Carpeta)&& $FTP_Carpeta != '' ){                                            $a .= ",FTP_Carpeta='".$FTP_Carpeta."'" ;}
 				if(isset($idBackup)&& $idBackup != '' ){                                                  $a .= ",idBackup='".$idBackup."'" ;}
 				if(isset($NregBackup) ){                                                                  $a .= ",NregBackup='".$NregBackup."'" ;}
 				if(isset($Estado) ){                                                                      $a .= ",Estado='".$Estado."'" ;}
@@ -1011,6 +1021,7 @@ require_once '0_validate_user_1.php';
 				$a .= ",'2'" ; //backup
 				$a .= ",'2'" ; //generador
 				$a .= ",'2'" ; //AlertaTemprana
+				$a .= ",'2'" ; //UsoFTP
 				
 				//Recorro la configuracion de los sensores
 				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
@@ -1037,7 +1048,7 @@ require_once '0_validate_user_1.php';
 				Hor_idActivo_dia1, Hor_idActivo_dia2, Hor_idActivo_dia3, Hor_idActivo_dia4, Hor_idActivo_dia5, Hor_idActivo_dia6, Hor_idActivo_dia7,
 				Hor_Inicio_dia1, Hor_Inicio_dia2, Hor_Inicio_dia3, Hor_Inicio_dia4, Hor_Inicio_dia5, Hor_Inicio_dia6, Hor_Inicio_dia7,
 				Hor_Termino_dia1, Hor_Termino_dia2, Hor_Termino_dia3, Hor_Termino_dia4, Hor_Termino_dia5, Hor_Termino_dia6, Hor_Termino_dia7 ,
-				idMantencion, idBackup, idGenerador, idAlertaTemprana
+				idMantencion, idBackup, idGenerador, idAlertaTemprana, idUsoFTP
 				".$qry.") 
 				VALUES (".$a.")";
 				//Consulta

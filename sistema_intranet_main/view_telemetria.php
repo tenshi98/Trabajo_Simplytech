@@ -113,6 +113,8 @@ core_telemetria_tabs.Nombre AS Tab,
 opc7.Nombre AS Backup,
 telemetria_listado.NregBackup,
 opc8.Nombre AS Generador,
+opc9.Nombre AS AlertaTemprana,
+opc10.Nombre AS UsoFTP,
 
 telemetria_listado.CrossCrane_tiempo_revision AS TiempoRevision,
 grupo_1.Nombre AS Grupo_amperaje,
@@ -142,6 +144,8 @@ LEFT JOIN `vehiculos_tipo`                       ON vehiculos_tipo.idTipo       
 LEFT JOIN `core_telemetria_tabs`                 ON core_telemetria_tabs.idTab                         = telemetria_listado.idTab
 LEFT JOIN `core_sistemas_opciones`        opc7   ON opc7.idOpciones                                    = telemetria_listado.idBackup
 LEFT JOIN `core_sistemas_opciones`        opc8   ON opc8.idOpciones                                    = telemetria_listado.idGenerador
+LEFT JOIN `core_sistemas_opciones`        opc9   ON opc9.idOpciones                                    = telemetria_listado.idAlertaTemprana
+LEFT JOIN `core_sistemas_opciones`       opc10   ON opc10.idOpciones                                   = telemetria_listado.idUsoFTP
 LEFT JOIN `telemetria_listado_grupos`  grupo_1   ON grupo_1.idGrupo                                    = telemetria_listado.CrossCrane_grupo_amperaje
 LEFT JOIN `telemetria_listado_grupos`  grupo_2   ON grupo_2.idGrupo                                    = telemetria_listado.CrossCrane_grupo_elevacion
 LEFT JOIN `telemetria_listado_grupos`  grupo_3   ON grupo_3.idGrupo                                    = telemetria_listado.CrossCrane_grupo_giro
@@ -264,13 +268,15 @@ $arrFinalUnimed[0] = 'No Asignado';
 							
 							<br/>
 							<strong class="color-red-dark">Funciones</strong><br/>
-							<?php if(isset($rowdata['Geo'])&&$rowdata['Geo']!=''){ ?>                     <strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sensores'])&&$rowdata['Sensores']!=''){ ?>           <strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/><?php } ?>
-							<?php if(isset($rowdata['Predio'])&&$rowdata['Predio']!=''){ ?>               <strong>Utilizacion de Predios : </strong><?php echo $rowdata['Predio'];?><br/><?php } ?>
-							<?php if(isset($rowdata['Geocerca'])&&$rowdata['Geocerca']!=''){ ?>           <strong>Utilizacion de Geocercas : </strong><?php echo $rowdata['Geocerca'].' ';if($rowdata['idUsoGeocerca']==1){echo '('.$rowdata['NErroresGeocercaMax'].' Errores Maximo)';} ?><br/><?php } ?>
-							<?php if(isset($rowdata['Backup'])&&$rowdata['Backup']!=''){ ?>               <strong>Utilizacion de Backup : </strong><?php echo $rowdata['Backup'].' ';if(isset($rowdata['NregBackup'])&&$rowdata['NregBackup']!=''){echo '('.$rowdata['NregBackup'].' Registros)';} ?><br/><?php } ?>
-							<?php if(isset($rowdata['Generador'])&&$rowdata['Generador']!=''){ ?>         <strong>Generador Electrico : </strong><?php echo $rowdata['Generador']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['AlarmaGeneral'])&&$rowdata['AlarmaGeneral']!=''){ ?> <strong>Alarma General : </strong><?php echo $rowdata['AlarmaGeneral']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Geo'])&&$rowdata['Geo']!=''){ ?>                        <strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sensores'])&&$rowdata['Sensores']!=''){ ?>              <strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/><?php } ?>
+							<?php if(isset($rowdata['Predio'])&&$rowdata['Predio']!=''){ ?>                  <strong>Utilizacion de Predios : </strong><?php echo $rowdata['Predio'];?><br/><?php } ?>
+							<?php if(isset($rowdata['Geocerca'])&&$rowdata['Geocerca']!=''){ ?>              <strong>Utilizacion de Geocercas : </strong><?php echo $rowdata['Geocerca'].' ';if($rowdata['idUsoGeocerca']==1){echo '('.$rowdata['NErroresGeocercaMax'].' Errores Maximo)';} ?><br/><?php } ?>
+							<?php if(isset($rowdata['Backup'])&&$rowdata['Backup']!=''){ ?>                  <strong>Utilizacion de Backup : </strong><?php echo $rowdata['Backup'].' ';if(isset($rowdata['NregBackup'])&&$rowdata['NregBackup']!=''){echo '('.$rowdata['NregBackup'].' Registros)';} ?><br/><?php } ?>
+							<?php if(isset($rowdata['Generador'])&&$rowdata['Generador']!=''){ ?>            <strong>Generador Electrico : </strong><?php echo $rowdata['Generador']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['AlarmaGeneral'])&&$rowdata['AlarmaGeneral']!=''){ ?>    <strong>Alarma General : </strong><?php echo $rowdata['AlarmaGeneral']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['AlertaTemprana'])&&$rowdata['AlertaTemprana']!=''){ ?>  <strong>Alerta Temprana : </strong><?php echo $rowdata['AlertaTemprana']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['UsoFTP'])&&$rowdata['UsoFTP']!=''){ ?>                  <strong>Uso FTP : </strong><?php echo $rowdata['UsoFTP']; ?><br/><?php } ?>
 							
 							
 							<br/>
