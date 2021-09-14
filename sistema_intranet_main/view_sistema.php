@@ -70,6 +70,7 @@ core_pdf_motores.Nombre AS OpcionesGen_5,
 opc7.Nombre AS OpcionesGen_7,
 opc8.Nombre AS OpcionesGen_8,
 opc9.Nombre AS OpcionesGen_9,
+opc10.Nombre AS OpcionesGen_10,
 core_sistemas.idOpcionesGen_6,
 bodegas_productos_listado.Nombre AS BodegaProd,
 bodegas_insumos_listado.Nombre AS BodegaIns,
@@ -99,6 +100,7 @@ LEFT JOIN `core_pdf_motores`                   ON core_pdf_motores.idPDF        
 LEFT JOIN `core_interfaces`          opc7      ON opc7.idInterfaz                                  = core_sistemas.idOpcionesGen_7
 LEFT JOIN `core_sistemas_opciones`   opc8      ON opc8.idOpciones                                  = core_sistemas.idOpcionesGen_8
 LEFT JOIN `core_sistemas_opciones`   opc9      ON opc9.idOpciones                                  = core_sistemas.idOpcionesGen_9
+LEFT JOIN `core_sistemas_opciones`   opc10     ON opc10.idOpciones                                 = core_sistemas.idOpcionesGen_10
 LEFT JOIN `bodegas_productos_listado`          ON bodegas_productos_listado.idBodega               = core_sistemas.OT_idBodegaProd
 LEFT JOIN `bodegas_insumos_listado`            ON bodegas_insumos_listado.idBodega                 = core_sistemas.OT_idBodegaIns
 LEFT JOIN `core_sistemas_opciones_telemetria`  ON core_sistemas_opciones_telemetria.idOpcionesTel  = core_sistemas.idOpcionesTel
@@ -179,6 +181,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								<strong>Widget Comunes : </strong><?php echo $rowdata['OpcionesGen_1']; ?><br/>
 								<strong>Widget de acceso directo : </strong><?php echo $rowdata['OpcionesGen_2']; ?><br/>
 								<strong>Valores promedios de las mediciones : </strong><?php echo $rowdata['OpcionesGen_3']; ?><br/>
+								<strong>Nuevo Widget CrossC : </strong><?php echo $rowdata['OpcionesGen_10']; ?><br/>
 							</p>
 									
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Configuracion Sistema</h3>

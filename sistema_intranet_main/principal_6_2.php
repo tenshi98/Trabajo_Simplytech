@@ -23,7 +23,7 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$SIS_query = 'idOpcionesGen_6, idOpcionesGen_4, idOpcionesTel';
+$SIS_query = 'idOpcionesGen_6, idOpcionesGen_4, idOpcionesGen_10';
 $SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'n_permisos');
 /************************************************************************************/
@@ -164,22 +164,9 @@ foreach ($arrTabMenu as $tab) {
 		<div class="tab-content">
 			<?php
 			
-			
-			//Lista de id de empresas a mostrar nueva interfaz
-			$int_empresas = array(2,6,8,9,10,11,12,13,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35);
-			
-			//contador
-			$contador = 0;
-			//se revisa una a una
-			for ($i=0; $i < count($int_empresas); $i++) { 
-				if($_SESSION['usuario']['basic_data']['idSistema']==$int_empresas[$i]){
-					$contador++;
-				}
-			}
-			
 			/*********************************************************/
-			//por defecto la nueva
-			if($contador==0){
+			//Si esta configurado para usar el nuevo widget
+			if($n_permisos['idOpcionesGen_10']==1){
 				
 				echo widget_CrossC('Gestion de equipos', '06:00:00', 2, 
 									$_SESSION['usuario']['basic_data']['idSistema'], 
@@ -198,7 +185,7 @@ foreach ($arrTabMenu as $tab) {
 				}
 					
 				//Verifico si esta activada la actualizacion de la pagina
-				if($n_permisos['idOpcionesGen_4']=='1'&&$n_permisos['idOpcionesTel']!=11&&$n_permisos['idOpcionesTel']!=12) { 
+				if($n_permisos['idOpcionesGen_4']=='1') { 
 					
 					$Url  = 'principal_telemetria_alt_crosstech.php';
 					$Url .= '?bla=bla';
@@ -211,7 +198,6 @@ foreach ($arrTabMenu as $tab) {
 					$Url .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 					$Url .= '&trans_8='.$prm_x[302];
 					$Url .= '&trans_9='.$prm_x[303];
-					$Url .= '&idOpcionesTel='.$n_permisos['idOpcionesTel'];
 						
 					echo '
 					<script type="text/javascript">
