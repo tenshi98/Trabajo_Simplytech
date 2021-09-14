@@ -136,7 +136,7 @@ foreach($arrMediciones as $cli) {
 		//Verifico si el sensor esta activo para guardar el dato
 		if(isset($rowEquipo['SensoresActivo_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1){
 			//Valido valores
-			if(isset($cli['SensorValue_'.$i])&&$cli['SensorValue_'.$i]<99900){
+			if(isset($cli['SensorValue_'.$i])&&$cli['SensorValue_'.$i]<999){
 				/********************************/
 				//Grafico
 				//Si es temperatura
@@ -151,20 +151,6 @@ foreach($arrMediciones as $cli) {
 						$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
 					}
 				
-				}
-			//si da error
-			}else{
-				/********************************/
-				//Grafico
-				//Si es temperatura
-				if($rowEquipo['SensoresUniMed_'.$i]==3){
-					//verifico si existe
-					if(isset($arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
-						$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + 0;
-					//si no lo crea
-					}else{
-						$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = 0;
-					}
 				}
 			}
 		}
@@ -248,7 +234,7 @@ $widget = '
 <script type="text/javascript" src="'.DB_SITE_REPO.'/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
 ';			
 
-$gr_tittle = 'Grafico (°C)';
+$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$idGrupoUso];
 $gr_unimed = '°C';
 $widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
 		

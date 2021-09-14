@@ -85,6 +85,15 @@ $SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
 $arrMediciones = array();
 $arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
 
+/*************************************************************/
+//Se consulta
+$arrGrupos = array();
+$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$idGrupo, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+//se recorre
+$arrGruposTemp = array();
+foreach ($arrGrupos as $gru) {
+	$arrGruposTemp[$gru['idGrupo']] = $gru['Nombre'];
+}
 
 /*************************************************************/
 //Variables
@@ -106,24 +115,13 @@ foreach($arrMediciones as $cli) {
 			//Verifico si el sensor esta activo para guardar el dato
 			if(isset($rowEquipo['SensoresActivo_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1){
 				//Que el valor medido sea distinto de 999
-				if(isset($cli['SensorValue_'.$i])&&$cli['SensorValue_'.$i]<99900){
+				if(isset($cli['SensorValue_'.$i])&&$cli['SensorValue_'.$i]<999){
 					//verifico si existe
 					if(isset($arrData[$i]['Value'])&&$arrData[$i]['Value']!=''){
 						$arrData[$i]['Value'] .= ", ".$cli['SensorValue_'.$i];
 					//si no lo crea
 					}else{
 						$arrData[$i]['Value'] = $cli['SensorValue_'.$i];
-					}
-					//titulo grafico
-					$arrData[$i]['Name'] = "'".$rowEquipo['SensoresNombre_'.$i]."'";
-				//si esta dando error
-				}else{
-					//verifico si existe
-					if(isset($arrData[$i]['Value'])&&$arrData[$i]['Value']!=''){
-						$arrData[$i]['Value'] .= ", 0";
-					//si no lo crea
-					}else{
-						$arrData[$i]['Value'] = "0";
 					}
 					//titulo grafico
 					$arrData[$i]['Name'] = "'".$rowEquipo['SensoresNombre_'.$i]."'";
@@ -177,7 +175,7 @@ $widget = '
 <script type="text/javascript" src="'.DB_SITE_REPO.'/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
 ';			
 
-$gr_tittle = 'Grafico (°C)';
+$gr_tittle = 'Grafico '.$arrGruposTemp[$idGrupo];
 $gr_unimed = '°C';
 $widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
 		
