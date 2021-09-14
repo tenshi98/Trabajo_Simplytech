@@ -413,38 +413,7 @@ require_once '0_validate_user_1.php';
 					$arrTelTemp[$idTelemetria[$j2]]['idTelemetria']  = $idTelemetria[$j2];
 				}
 			}
-			//Recorro los cuarteles
-			/*for($j1 = 0; $j1 < $ndata_1; $j1++){
-				//variable interna
-				$nmc1 = $j1 + 1;
-					
-				//Recorro los tractores
-				for($j2 = 0; $j2 < $ndata_2; $j2++){
-					//variable interna
-					$nmc2 = $j2 + 1;
-					//Para mostrar en la creacion
-					if(isset($arrVehTemp[$idVehiculo[$j2]]['idVehiculo'])&&$arrVehTemp[$idVehiculo[$j2]]['idVehiculo']==$idVehiculo[$j2]){
-						$error['Vehiculos_'.$idVehiculo[$j2]] = 'error/Vehiculo repetido, seleccione otro';
-					}else{
-						$arrVehTemp[$idVehiculo[$j2]]['idVehiculo']  = $idVehiculo[$j2];
-					}
-					if(isset($arrTelTemp[$idTelemetria[$j2]]['idTelemetria'])&&$arrTelTemp[$idTelemetria[$j2]]['idTelemetria']==$idTelemetria[$j2]){
-						$error['Telemetria_'.$idTelemetria[$j2]] = 'error/Equipo nebulizador repetido, seleccione otro';
-					}else{
-						$arrTelTemp[$idTelemetria[$j2]]['idTelemetria']  = $idTelemetria[$j2];
-					}
-				
-				
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idVehiculo']    = $idVehiculo[$j2];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idTelemetria']  = $idTelemetria[$j2];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idTrabajador']  = $idTrabajador[$j2];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['valor_id']      = $nmc2;	
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['Vehiculo']      = $arrVeh[$idVehiculo[$j2]]['Nombre'];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['Telemetria']    = $arrTel[$idTelemetria[$j2]]['Nombre'];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['Trabajador']    = $arrTrab[$idTrabajador[$j2]]['Nombre'];
-							
-				}	
-			}
+			
 			/*******************************************************************/
 			
 				
@@ -454,33 +423,39 @@ require_once '0_validate_user_1.php';
 				//Obtengo la ultima solicitud del predio
 				$rowSolicitud = db_select_data (false, 'idSolicitud', 'cross_solicitud_aplicacion_listado', '', 'idEstado = 3 AND idPredio = '.$_SESSION['sol_apli_basicos']['idPredio'].' ORDER BY f_termino_fin DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				//Consulto en base a esta
-				$SIS_query = '
-				cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
-				cross_solicitud_aplicacion_listado_cuarteles.idZona,
-				cross_solicitud_aplicacion_listado_productos.idProducto,
-				cross_predios_listado_zonas.Nombre AS Cuartel,
-				productos_listado.EfectoRetroactivo,
-				productos_listado.Nombre';
-				$SIS_join  = '
-				LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud  = cross_solicitud_aplicacion_listado.idSolicitud
-				LEFT JOIN `cross_solicitud_aplicacion_listado_productos`   ON cross_solicitud_aplicacion_listado_productos.idCuarteles  = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
-				LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                        = cross_solicitud_aplicacion_listado_cuarteles.idZona
-				LEFT JOIN `productos_listado`                              ON productos_listado.idProducto                              = cross_solicitud_aplicacion_listado_productos.idProducto';
-				$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud='.$rowSolicitud['idSolicitud'].' 
-				AND productos_listado.EfectoRetroactivo!=0 
-				AND cross_solicitud_aplicacion_listado_cuarteles.f_cierre!="0000-00-00"
-				AND cross_solicitud_aplicacion_listado_cuarteles.idEstado=2';
-				$SIS_order = 0;
-				$arrCarencias = array();
-				$arrCarencias = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-				$arrFinalCarencia = array();
-				foreach ($arrCarencias as $prod) {
-					$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Nombre']   = $prod['Nombre'];
-					$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Cuartel']  = $prod['Cuartel'];
-					$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Fecha']    = sumarDias($prod['f_cierre'],cantidades($prod['EfectoRetroactivo'], 0));
-				}							
+				//Verifico si existe
+				if(isset($rowSolicitud['idSolicitud'])&&$rowSolicitud['idSolicitud']!=''){
+					//Consulto en base a esta
+					$SIS_query = '
+					cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
+					cross_solicitud_aplicacion_listado_cuarteles.idZona,
+					cross_solicitud_aplicacion_listado_productos.idProducto,
+					cross_predios_listado_zonas.Nombre AS Cuartel,
+					productos_listado.EfectoRetroactivo,
+					productos_listado.Nombre';
+					$SIS_join  = '
+					LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud  = cross_solicitud_aplicacion_listado.idSolicitud
+					LEFT JOIN `cross_solicitud_aplicacion_listado_productos`   ON cross_solicitud_aplicacion_listado_productos.idCuarteles  = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
+					LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                        = cross_solicitud_aplicacion_listado_cuarteles.idZona
+					LEFT JOIN `productos_listado`                              ON productos_listado.idProducto                              = cross_solicitud_aplicacion_listado_productos.idProducto';
+					$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud='.$rowSolicitud['idSolicitud'].' 
+					AND productos_listado.EfectoRetroactivo!=0 
+					AND cross_solicitud_aplicacion_listado_cuarteles.f_cierre!="0000-00-00"
+					AND cross_solicitud_aplicacion_listado_cuarteles.idEstado=2';
+					$SIS_order = 0;
+					$arrCarencias = array();
+					$arrCarencias = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+					$arrFinalCarencia = array();
+					foreach ($arrCarencias as $prod) {
+						$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Nombre']   = $prod['Nombre'];
+						$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Cuartel']  = $prod['Cuartel'];
+						$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Fecha']    = sumarDias($prod['f_cierre'],cantidades($prod['EfectoRetroactivo'], 0));
+					}
+				}else{
+					$arrFinalCarencia = array();
+				}
+											
 				
 				
 				/**********************************************/
@@ -861,38 +836,7 @@ require_once '0_validate_user_1.php';
 					$arrTelTemp[$idTelemetria[$j2]]['idTelemetria']  = $idTelemetria[$j2];
 				}
 			}
-			//Recorro los cuarteles
-			/*for($j1 = 0; $j1 < $ndata_1; $j1++){
-				//variable interna
-				$nmc1 = $j1 + 1;
-					
-				//Recorro los tractores
-				for($j2 = 0; $j2 < $ndata_2; $j2++){
-					//variable interna
-					$nmc2 = $j2 + 1;
-					//Para mostrar en la creacion
-					if(isset($arrVehTemp[$idVehiculo[$j2]]['idVehiculo'])&&$arrVehTemp[$idVehiculo[$j2]]['idVehiculo']==$idVehiculo[$j2]){
-						$error['Vehiculos_'.$idVehiculo[$j2]] = 'error/Vehiculo repetido, seleccione otro';
-					}else{
-						$arrVehTemp[$idVehiculo[$j2]]['idVehiculo']  = $idVehiculo[$j2];
-					}
-					if(isset($arrTelTemp[$idTelemetria[$j2]]['idTelemetria'])&&$arrTelTemp[$idTelemetria[$j2]]['idTelemetria']==$idTelemetria[$j2]){
-						$error['Telemetria_'.$idTelemetria[$j2]] = 'error/Equipo nebulizador repetido, seleccione otro';
-					}else{
-						$arrTelTemp[$idTelemetria[$j2]]['idTelemetria']  = $idTelemetria[$j2];
-					}
-				
-				
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idVehiculo']    = $idVehiculo[$j2];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idTelemetria']  = $idTelemetria[$j2];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idTrabajador']  = $idTrabajador[$j2];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['valor_id']      = $nmc2;	
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['Vehiculo']      = $arrVeh[$idVehiculo[$j2]]['Nombre'];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['Telemetria']    = $arrTel[$idTelemetria[$j2]]['Nombre'];
-					$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['Trabajador']    = $arrTrab[$idTrabajador[$j2]]['Nombre'];
-							
-				}	
-			}
+			
 			/*******************************************************************/
 			
 				
@@ -902,33 +846,39 @@ require_once '0_validate_user_1.php';
 				//Obtengo la ultima solicitud del predio
 				$rowSolicitud = db_select_data (false, 'idSolicitud', 'cross_solicitud_aplicacion_listado', '', 'idEstado = 3 AND idPredio = '.$_SESSION['sol_apli_basicos']['idPredio'].' ORDER BY f_termino_fin DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				//Consulto en base a esta
-				$SIS_query = '
-				cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
-				cross_solicitud_aplicacion_listado_cuarteles.idZona,
-				cross_solicitud_aplicacion_listado_productos.idProducto,
-				cross_predios_listado_zonas.Nombre AS Cuartel,
-				productos_listado.EfectoRetroactivo,
-				productos_listado.Nombre';
-				$SIS_join  = '
-				LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud  = cross_solicitud_aplicacion_listado.idSolicitud
-				LEFT JOIN `cross_solicitud_aplicacion_listado_productos`   ON cross_solicitud_aplicacion_listado_productos.idCuarteles  = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
-				LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                        = cross_solicitud_aplicacion_listado_cuarteles.idZona
-				LEFT JOIN `productos_listado`                              ON productos_listado.idProducto                              = cross_solicitud_aplicacion_listado_productos.idProducto';
-				$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud='.$rowSolicitud['idSolicitud'].' 
-				AND productos_listado.EfectoRetroactivo!=0 
-				AND cross_solicitud_aplicacion_listado_cuarteles.f_cierre!="0000-00-00"
-				AND cross_solicitud_aplicacion_listado_cuarteles.idEstado=2';
-				$SIS_order = 0;
-				$arrCarencias = array();
-				$arrCarencias = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-				$arrFinalCarencia = array();
-				foreach ($arrCarencias as $prod) {
-					$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Nombre']   = $prod['Nombre'];
-					$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Cuartel']  = $prod['Cuartel'];
-					$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Fecha']    = sumarDias($prod['f_cierre'],cantidades($prod['EfectoRetroactivo'], 0));
+				//verifico si existe
+				if(isset($rowSolicitud['idSolicitud'])&&$rowSolicitud['idSolicitud']!=''){
+					//Consulto en base a esta
+					$SIS_query = '
+					cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
+					cross_solicitud_aplicacion_listado_cuarteles.idZona,
+					cross_solicitud_aplicacion_listado_productos.idProducto,
+					cross_predios_listado_zonas.Nombre AS Cuartel,
+					productos_listado.EfectoRetroactivo,
+					productos_listado.Nombre';
+					$SIS_join  = '
+					LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud  = cross_solicitud_aplicacion_listado.idSolicitud
+					LEFT JOIN `cross_solicitud_aplicacion_listado_productos`   ON cross_solicitud_aplicacion_listado_productos.idCuarteles  = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
+					LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                        = cross_solicitud_aplicacion_listado_cuarteles.idZona
+					LEFT JOIN `productos_listado`                              ON productos_listado.idProducto                              = cross_solicitud_aplicacion_listado_productos.idProducto';
+					$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud='.$rowSolicitud['idSolicitud'].' 
+					AND productos_listado.EfectoRetroactivo!=0 
+					AND cross_solicitud_aplicacion_listado_cuarteles.f_cierre!="0000-00-00"
+					AND cross_solicitud_aplicacion_listado_cuarteles.idEstado=2';
+					$SIS_order = 0;
+					$arrCarencias = array();
+					$arrCarencias = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+					$arrFinalCarencia = array();
+					foreach ($arrCarencias as $prod) {
+						$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Nombre']   = $prod['Nombre'];
+						$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Cuartel']  = $prod['Cuartel'];
+						$arrFinalCarencia[$prod['idZona']][$prod['idProducto']]['Fecha']    = sumarDias($prod['f_cierre'],cantidades($prod['EfectoRetroactivo'], 0));
+					}
+				}else{
+					$arrFinalCarencia = array();
 				}
+				
 				
 				/**********************************************/
 				//se listan los cuarteles
