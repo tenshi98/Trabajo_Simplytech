@@ -34,8 +34,9 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
 /**********************************************************/
-$SIS_where_1 = "telemetria_listado_errores_999.idErrores!=0"; //siempre pasa
-$SIS_where_2 = "telemetria_listado_error_fuera_linea.idFueraLinea!=0"; //siempre pasa
+$SIS_where_1 = "telemetria_listado_errores_999.idErrores!=0";           //siempre pasa
+$SIS_where_2 = "telemetria_listado_error_fuera_linea.idFueraLinea!=0";  //siempre pasa
+$SIS_where_3 = "telemetria_listado.idEstado = 1";                       //solo activos
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
 	$SIS_where_1.=" AND telemetria_listado_errores_999.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
@@ -46,6 +47,7 @@ if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  
 	$SIS_where_1.=" AND telemetria_listado_errores_999.idTelemetria=".$_GET['idTelemetria'];
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.idTelemetria=".$_GET['idTelemetria'];
+	$SIS_where_3.=" AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
 }
 
 
@@ -73,7 +75,6 @@ LEFT JOIN core_sistemas          ON core_sistemas.idSistema          = telemetri
 LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetria_listado.idTab';
 $SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_errores_999.Sensor ASC, telemetria_listado_errores_999.Descripcion ASC, telemetria_listado_errores_999.Valor ASC';	
 $SIS_where_1.= ' GROUP BY core_sistemas.Nombre, telemetria_listado.Nombre, core_telemetria_tabs.Nombre, telemetria_listado_errores_999.Sensor, telemetria_listado_errores_999.Descripcion, telemetria_listado_errores_999.Valor';
-
 $arrEquipos1 = array();
 $arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos1');
 
@@ -95,6 +96,22 @@ LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetri
 $SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_error_fuera_linea.Fecha_inicio ASC';	
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where_2, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
+
+/*********************************************************/	
+//Consulto
+$SIS_query = '
+core_sistemas.Nombre AS Sistema,
+telemetria_listado.Nombre AS EquipoNombre,
+core_telemetria_tabs.Nombre AS EquipoTab,
+telemetria_listado.LastUpdateFecha, 
+telemetria_listado.LastUpdateHora, 
+telemetria_listado.TiempoFueraLinea';
+$SIS_join  = '
+LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema      = telemetria_listado.idSistema
+LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab   = telemetria_listado.idTab';
+$SIS_order = 'telemetria_listado.idSistema ASC';	
+$arrTelemetria = array();
+$arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where_3, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
 
 /*********************************************************/	
@@ -125,6 +142,7 @@ foreach ($arrGrupos as $sen) {
 				<li class="active"><a href="#99900" data-toggle="tab"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 99900</a></li>
 				<li class=""><a href="#99901" data-toggle="tab"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 99901</a></li>
 				<li class=""><a href="#fuera" data-toggle="tab"><i class="fa fa-bolt" aria-hidden="true"></i> Fuera Linea</a></li>
+				<li class=""><a href="#fuera_actual" data-toggle="tab"><i class="fa fa-bolt" aria-hidden="true"></i> Fuera Linea Actual</a></li>
 			</ul>
 		</header>
 		 <div id="div-3" class="tab-content">
@@ -165,6 +183,7 @@ foreach ($arrGrupos as $sen) {
 					</table>
 				</div>
 			</div>
+			
 			<div class="tab-pane fade" id="99901">
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -201,6 +220,7 @@ foreach ($arrGrupos as $sen) {
 					</table>
 				</div>
 			</div>
+			
 			<div class="tab-pane fade" id="fuera">
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -229,6 +249,55 @@ foreach ($arrGrupos as $sen) {
 									<td><?php echo $error['Tiempo']; ?></td>
 								</tr>
 							<?php } ?>                    
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+			
+			<div class="tab-pane fade" id="fuera_actual">
+				<div class="table-responsive">
+					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+						<thead>
+							<tr role="row">
+								<th>Sistema</th>
+								<th>Equipo</th>
+								<th>Tab</th>
+								<th>Fecha Inicio</th>
+								<th>Hora Inicio</th>
+								<th>Tiempo Actual</th>
+							</tr>
+						</thead>
+						<tbody role="alert" aria-live="polite" aria-relevant="all">
+							<?php 
+							/*************************************************************/
+							//Listado de fuera de linea actuales							
+							foreach ($arrTelemetria as $tel) {
+								//calculo diferencia de dias
+								$n_dias = dias_transcurridos($tel['LastUpdateFecha'],fecha_actual());
+								//calculo del tiempo transcurrido
+								$Tiempo = restahoras($tel['LastUpdateHora'], hora_actual());
+								//Calculo del tiempo transcurrido
+								if($n_dias!=0){
+									if($n_dias>=2){
+										$n_dias       = $n_dias-1;
+										$horas_trans2 = multHoras('24:00:00',$n_dias);
+										$Tiempo       = sumahoras($Tiempo,$horas_trans2);
+									}
+								}
+								//imprimo
+								if($Tiempo>$tel['TiempoFueraLinea']&&$tel['TiempoFueraLinea']!='00:00:00'){
+									echo '
+									<tr class="odd">
+										<td>'.$tel['Sistema'].'</td>
+										<td>'.$tel['EquipoNombre'].'</td>
+										<td>'.$tel['EquipoTab'].'</td>
+										<td>'.fecha_estandar($tel['LastUpdateFecha']).'</td>
+										<td>'.$tel['LastUpdateHora'].' hrs</td>
+										<td>'.$Tiempo.' hrs</td>
+									</tr>';
+								}
+							}?>
 						</tbody>
 					</table>
 				</div>

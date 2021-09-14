@@ -28,8 +28,9 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /**********************************************************/
-$SIS_where_1 = "telemetria_listado_errores_999.idErrores!=0"; //siempre pasa
-$SIS_where_2 = "telemetria_listado_error_fuera_linea.idFueraLinea!=0"; //siempre pasa
+$SIS_where_1 = "telemetria_listado_errores_999.idErrores!=0";           //siempre pasa
+$SIS_where_2 = "telemetria_listado_error_fuera_linea.idFueraLinea!=0";  //siempre pasa
+$SIS_where_3 = "telemetria_listado.idEstado = 1";                       //solo activos
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
 	$SIS_where_1.=" AND telemetria_listado_errores_999.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
@@ -40,6 +41,7 @@ if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  
 	$SIS_where_1.=" AND telemetria_listado_errores_999.idTelemetria=".$_GET['idTelemetria'];
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.idTelemetria=".$_GET['idTelemetria'];
+	$SIS_where_3.=" AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
 }
 
 
@@ -67,7 +69,6 @@ LEFT JOIN core_sistemas          ON core_sistemas.idSistema          = telemetri
 LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetria_listado.idTab';
 $SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_errores_999.Sensor ASC, telemetria_listado_errores_999.Descripcion ASC, telemetria_listado_errores_999.Valor ASC';	
 $SIS_where_1.= ' GROUP BY core_sistemas.Nombre, telemetria_listado.Nombre, core_telemetria_tabs.Nombre, telemetria_listado_errores_999.Sensor, telemetria_listado_errores_999.Descripcion, telemetria_listado_errores_999.Valor';
-
 $arrEquipos1 = array();
 $arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos1');
 
@@ -89,6 +90,22 @@ LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetri
 $SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_error_fuera_linea.Fecha_inicio ASC';	
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where_2, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
+
+/*********************************************************/	
+//Consulto
+$SIS_query = '
+core_sistemas.Nombre AS Sistema,
+telemetria_listado.Nombre AS EquipoNombre,
+core_telemetria_tabs.Nombre AS EquipoTab,
+telemetria_listado.LastUpdateFecha, 
+telemetria_listado.LastUpdateHora, 
+telemetria_listado.TiempoFueraLinea';
+$SIS_join  = '
+LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema      = telemetria_listado.idSistema
+LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab   = telemetria_listado.idTab';
+$SIS_order = 'telemetria_listado.idSistema ASC';	
+$arrTelemetria = array();
+$arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where_3, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
 
 /*********************************************************/	
@@ -312,6 +329,86 @@ $objPHPExcel->getActiveSheet(2)->getStyle('A1:H1')->getFill()->setFillType(PHPEx
 $objPHPExcel->getActiveSheet(2)->getStyle('A1:H1')->getFont()->getColor()->setRGB('FFFFFF');
 //Pongo los bordes
 $objPHPExcel->getActiveSheet(2)->getStyle('A1:H'.$nn)->applyFromArray(
+    array(
+        'borders' => array(
+            'allborders' => array(
+                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                'color' => array('rgb' => '333333')
+            )
+        )
+    )
+);
+
+/**********************************************************************************/
+/*                                    Pagina 4                                    */ 
+/**********************************************************************************/   			
+//Se crea nueva hoja
+$objPHPExcel->createSheet();
+
+//variables
+$nn = 1;
+//Titulo columnas
+$objPHPExcel->setActiveSheetIndex(3)
+            ->setCellValue('A'.$nn, 'Sistema')
+            ->setCellValue('B'.$nn, 'Equipo')
+            ->setCellValue('C'.$nn, 'Tab')
+            ->setCellValue('D'.$nn, 'Fecha Inicio')
+            ->setCellValue('E'.$nn, 'Hora Inicio')
+            ->setCellValue('F'.$nn, 'Tiempo Actual');
+							
+//variables
+$nn = 2;
+//Recorro
+/*************************************************************/
+//Listado de fuera de linea actuales							
+foreach ($arrTelemetria as $tel) {
+	//calculo diferencia de dias
+	$n_dias = dias_transcurridos($tel['LastUpdateFecha'],fecha_actual());
+	//calculo del tiempo transcurrido
+	$Tiempo = restahoras($tel['LastUpdateHora'], hora_actual());
+	//Calculo del tiempo transcurrido
+	if($n_dias!=0){
+		if($n_dias>=2){
+			$n_dias       = $n_dias-1;
+			$horas_trans2 = multHoras('24:00:00',$n_dias);
+			$Tiempo       = sumahoras($Tiempo,$horas_trans2);
+		}
+	}
+	//imprimo
+	if($Tiempo>$tel['TiempoFueraLinea']&&$tel['TiempoFueraLinea']!='00:00:00'){
+
+		$objPHPExcel->setActiveSheetIndex(3)
+					->setCellValue('A'.$nn, $tel['Sistema'])
+					->setCellValue('B'.$nn, $tel['EquipoNombre'])
+					->setCellValue('C'.$nn, $tel['EquipoTab'])
+					->setCellValue('D'.$nn, $tel['LastUpdateFecha'])
+					->setCellValue('E'.$nn, $tel['LastUpdateHora'])
+					->setCellValue('F'.$nn, $Tiempo);
+						
+		//Se suma 1
+		$nn++;
+	}
+									
+}
+						
+//seteo el nombre de la hoja
+$objPHPExcel->getActiveSheet(3)->setTitle('Fuera de Linea Actual');
+//ancho de columnas
+/*$objPHPExcel->getActiveSheet(3)->getColumnDimension('A')->setWidth(50);
+$objPHPExcel->getActiveSheet(3)->getColumnDimension('B')->setWidth(80);
+$objPHPExcel->getActiveSheet(3)->getColumnDimension('C')->setWidth(12);
+$objPHPExcel->getActiveSheet(3)->getColumnDimension('D')->setWidth(12);
+$objPHPExcel->getActiveSheet(3)->getColumnDimension('E')->setWidth(20);
+$objPHPExcel->getActiveSheet(3)->getColumnDimension('F')->setWidth(20);
+$objPHPExcel->getActiveSheet(3)->getColumnDimension('G')->setWidth(20);*/
+//negrita
+$objPHPExcel->getActiveSheet(3)->getStyle('A1:F1')->getFont()->setBold(true);
+//Coloreo celdas
+$objPHPExcel->getActiveSheet(3)->getStyle('A1:F1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
+//coloreo fuentes
+$objPHPExcel->getActiveSheet(3)->getStyle('A1:F1')->getFont()->getColor()->setRGB('FFFFFF');
+//Pongo los bordes
+$objPHPExcel->getActiveSheet(3)->getStyle('A1:F'.$nn)->applyFromArray(
     array(
         'borders' => array(
             'allborders' => array(
