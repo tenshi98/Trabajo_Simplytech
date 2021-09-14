@@ -23,7 +23,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 //Cargamos la ubicacion 
-$original = "view_notificacion.php";
+$original = "view_correos_masivos.php";
 $location = $original;
 //Se agregan ubicaciones
 $location .='?view='.$X_Puntero;
