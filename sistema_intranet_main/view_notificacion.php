@@ -17,10 +17,10 @@ if (validarNumero($_GET['view'])){
 	if (validaEntero($_GET['view'])){ 
 		$X_Puntero = $_GET['view'];
 	} else { 
-		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+		$X_Puntero = simpleDecode($_GET['view'], '123333');
 	}
 } else { 
-	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	$X_Puntero = simpleDecode($_GET['view'], '123333');
 }
 //Cargamos la ubicacion 
 $original = "view_notificacion.php";

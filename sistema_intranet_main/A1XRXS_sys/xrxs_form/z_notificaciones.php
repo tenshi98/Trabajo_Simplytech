@@ -150,7 +150,7 @@ require_once '0_validate_user_1.php';
 					$ultimo_id = mysqli_insert_id($dbConn);
 					
 					//variables para armar el mensaje
-					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
+					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, '123333').'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
 					$Estado = '1';
 					
@@ -234,7 +234,7 @@ require_once '0_validate_user_1.php';
 					$ultimo_id = mysqli_insert_id($dbConn);
 					
 					//variables para armar el mensaje
-					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
+					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, '123333').'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
 					$Estado = '1';
 					
@@ -330,7 +330,7 @@ require_once '0_validate_user_1.php';
 					$ultimo_id = mysqli_insert_id($dbConn);
 					
 					//variables para armar el mensaje
-					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
+					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, '123333').'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
 					$Estado        = '1';
 					
