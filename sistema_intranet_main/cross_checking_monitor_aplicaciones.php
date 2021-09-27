@@ -23,37 +23,19 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Se traen todas las solicitudes		
-$arrSolicitud = array();
-$query = "SELECT 
+//Se traen todas las solicitudes	
+$SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,
 cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.idEstado,
 cross_solicitud_aplicacion_listado.f_programacion,
 cross_solicitud_aplicacion_listado.horaProg,
-cross_predios_listado.Nombre AS NombrePredio
-
-FROM `cross_solicitud_aplicacion_listado`
-LEFT JOIN `cross_predios_listado`     ON cross_predios_listado.idPredio      = cross_solicitud_aplicacion_listado.idPredio
-WHERE cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."
-ORDER BY cross_solicitud_aplicacion_listado.idEstado ASC, cross_solicitud_aplicacion_listado.NSolicitud DESC
-LIMIT 100";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrSolicitud,$row );
-}
+cross_predios_listado.Nombre AS NombrePredio';
+$SIS_join  = 'LEFT JOIN `cross_predios_listado` ON cross_predios_listado.idPredio = cross_solicitud_aplicacion_listado.idPredio';
+$SIS_where = 'cross_solicitud_aplicacion_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'cross_solicitud_aplicacion_listado.idEstado ASC, cross_solicitud_aplicacion_listado.NSolicitud DESC LIMIT 100';
+$arrSolicitud = array();
+$arrSolicitud = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSolicitud');
 
 //Nuevos arreglos
 $arrProgramadas  = array();
