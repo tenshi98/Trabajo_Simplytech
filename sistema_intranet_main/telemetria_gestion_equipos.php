@@ -67,7 +67,7 @@ telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
 core_sistemas.idOpcionesGen_3'.$subquery;
 $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema';
-$rowDatos = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowDatos');
+$rowDatos = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowDatos');
 
 //Se consultan datos
 $arrUnimed = array();
@@ -88,7 +88,6 @@ $arrFinalGrupos = array();
 foreach ($arrGrupos as $sen) {
 	$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
 }
-
 
 ?>
 
