@@ -474,69 +474,32 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
-$query = "SELECT idUml,Nombre
-FROM `sistema_analisis_uml`
-ORDER BY idUml ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUnimed,$row );
-}
+$arrUnimed = db_select_array (false, 'idUml,Nombre', 'sistema_analisis_uml', '', 'idUml!=0', 'idUml ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 
 //Se traen todos los tipos
 $arrTipos = array();
-$query = "SELECT idTipo,Nombre
-FROM `core_analisis_tipos`
-ORDER BY idTipo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipos,$row );
-}
+$arrTipos = db_select_array (false, 'idTipo,Nombre', 'core_analisis_tipos', '', 'idTipo!=0', 'idTipo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipos');
 
 //Se consultan datos
 $arrGrupos = array();
-$query = "SELECT idGrupo,Nombre
-FROM `maquinas_listado_matriz_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'maquinas_listado_matriz_grupos', '', 'idGrupo!=0', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+
+
+$arrFinalUnimed = array();
+foreach ($arrUnimed as $sen) {
+	$arrFinalUnimed[$sen['idUml']] = $sen['Nombre'];
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupos,$row );
+
+$arrFinalTipos = array();
+foreach ($arrTipos as $sen) {
+	$arrFinalTipos[$sen['idTipo']] = $sen['Nombre'];
 }
+
+$arrFinalGrupos = array();
+foreach ($arrGrupos as $sen) {
+	$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
+}
+
 ?>
 
 
@@ -546,8 +509,6 @@ array_push( $arrGrupos,$row );
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Puntos de Analisis</h5>		
 		</header>
-		
-		
         <div class="table-responsive">    
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
@@ -565,28 +526,24 @@ array_push( $arrGrupos,$row );
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) { 
 						//Unidad medida
-						$unimed = '';
-						foreach ($arrUnimed as $sen) { 
-							if($rowdata['PuntoUniMed_'.$i]==$sen['idUml']){
-								$unimed = ' '.$sen['Nombre'];
-							}
-						}
+						$unimed = $arrFinalGrupos[$rowdata['PuntoUniMed_'.$i]];
+						$tipo   = $arrFinalTipos[$rowdata['PuntoidTipo_'.$i]];
+						$grupo  = $arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]];
 						?>
-					<tr class="odd">		
-						<td><?php echo 'p'.$i ?></td>
-						<td><?php foreach ($arrTipos as $tipo) { if($rowdata['PuntoidTipo_'.$i]==$tipo['idTipo']){ echo $tipo['Nombre'];}} ?></td>	
-						<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
-						<td><?php foreach ($arrGrupos as $gru) { if($rowdata['PuntoidGrupo_'.$i]==$gru['idGrupo']){ echo $gru['Nombre'];}} ?></td>		
-						<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>		
-						<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAlerta_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>
-						<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>
-									
-						<td>
-							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&matriz='.$_GET['matriz'].'&idMatriz='.$_GET['idMatriz'].'&modMatriz='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-							</div>
-						</td>
-					</tr>
+						<tr class="odd">		
+							<td><?php echo 'p'.$i ?></td>
+							<td><?php echo $tipo; ?></td>	
+							<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
+							<td><?php echo $grupo; ?></td>		
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>		
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAlerta_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>
+							<td>
+								<div class="btn-group" style="width: 35px;" >
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&matriz='.$_GET['matriz'].'&idMatriz='.$_GET['idMatriz'].'&modMatriz='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								</div>
+							</td>
+						</tr>
 					<?php } ?>                    
 				</tbody>
 			</table>
