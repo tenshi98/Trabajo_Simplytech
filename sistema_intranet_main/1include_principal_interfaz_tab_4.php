@@ -274,7 +274,7 @@ echo '
 						echo '<li class="'.$xactive.'"><a href="#xid_'.$cli['idCliente'].'" data-toggle="tab"><i class="fa fa-user" aria-hidden="true"></i> '.$cli['Nombre'].'</a></li>';
 						$xcounter++;
 					}
-					if($xcounter>3){echo '</ul></li>';}
+					if($xcounter>4){echo '</ul></li>';}
 				echo '
 				</ul>	
 			</header>

@@ -8,7 +8,7 @@ if(isset($_SESSION['usuario']['zona']['id_Geo'])&&$_SESSION['usuario']['zona']['
 	$id_Geo = 1;//seguimiento activo
 }
 		
-		/************************************************************************/		
+/************************************************************************/		
 //Variable
 $z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento activado
@@ -136,7 +136,7 @@ array_push( $arrMediciones,$row );
 						<li class="<?php echo $xactive; ?>"><a href="" onClick="chngEquipo(<?php echo $cli['idTelemetria']; ?>, '<?php echo $cli['Nombre']; ?>', '<?php echo $cli['Identificador']; ?>', <?php echo $cli['cantSensores']; ?>)"  data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> <?php echo $cli['Nombre']; ?></a></li>
 						<?php $xcounter++;
 					}
-					if($xcounter>3){?></ul></li><?php } ?>
+					if($xcounter>7){?></ul></li><?php } ?>
 				</ul>	
 			</header>
 			

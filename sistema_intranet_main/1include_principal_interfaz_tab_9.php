@@ -95,7 +95,7 @@ $meses=array(1=>"Enero",
 						echo '<li class="'.$xactive.'"><a href="#res_id_'.$idOficina.'" data-toggle="tab"><i class="fa fa-tag" aria-hidden="true"></i> '.$reservas[0]['Oficina'].'</a></li>';
 						$xcounter++;
 					}
-					if($xcounter>3){echo '</ul></li>';}
+					if($xcounter>4){echo '</ul></li>';}
 					?>
 				
 				</ul>	

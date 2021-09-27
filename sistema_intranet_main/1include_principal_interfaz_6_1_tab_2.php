@@ -97,11 +97,11 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 					$xcounter = 1;
 					foreach($arrEquipo as $cli) {	
 						if($xcounter==1){$xactive = 'active';}else{$xactive = '';}
-						if($xcounter>3){ ?> <li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu"> <?php } ?>
+						if($xcounter==4){ ?> <li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu"> <?php } ?>
 						<li class="<?php echo $xactive; ?>"><a href="" onClick="chngEquipo(<?php echo $cli['idTelemetria']; ?>, '<?php echo $cli['Nombre']; ?>', '<?php echo $cli['Identificador']; ?>', <?php echo $cli['cantSensores']; ?>)"  data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> <?php echo $cli['Nombre']; ?></a></li>
 						<?php $xcounter++;
 					}
-					if($xcounter>3){?></ul></li><?php } ?>
+					if($xcounter>4){?></ul></li><?php } ?>
 				</ul>	
 			</header>
 			
