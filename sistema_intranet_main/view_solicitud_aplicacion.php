@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud, 
 cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.idEstado,
@@ -82,9 +82,8 @@ core_cross_prioridad.Nombre AS NombrePrioridad,
 cross_solicitud_aplicacion_listado.idDosificador,
 trabajadores_listado.Rut AS TrabajadorRut,
 trabajadores_listado.Nombre AS TrabajadorNombre,
-trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat
-
-FROM `cross_solicitud_aplicacion_listado`
+trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                     = cross_solicitud_aplicacion_listado.idUsuario
 LEFT JOIN `core_sistemas`   sistema_origen          ON sistema_origen.idSistema                       = cross_solicitud_aplicacion_listado.idSistema
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                         = sistema_origen.idCiudad
@@ -96,28 +95,13 @@ LEFT JOIN `cross_checking_estado_fenologico`        ON cross_checking_estado_fen
 LEFT JOIN `sistema_variedades_categorias`           ON sistema_variedades_categorias.idCategoria      = cross_solicitud_aplicacion_listado.idCategoria
 LEFT JOIN `variedades_listado`                      ON variedades_listado.idProducto                  = cross_solicitud_aplicacion_listado.idProducto
 LEFT JOIN `core_cross_prioridad`                    ON core_cross_prioridad.idPrioridad               = cross_solicitud_aplicacion_listado.idPrioridad
-LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador              = cross_solicitud_aplicacion_listado.idDosificador
-
-WHERE cross_solicitud_aplicacion_listado.idSolicitud = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador              = cross_solicitud_aplicacion_listado.idDosificador';
+$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 /*****************************************/				
 //Cuarteles
-$arrCuarteles = array();
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,
 sistema_variedades_categorias.Nombre AS EspecieNombre,
 variedades_listado.Nombre AS VariedadNombre,
@@ -134,35 +118,20 @@ cross_solicitud_aplicacion_listado_cuarteles.VelPromedio AS CuartelVelPromedio,
 
 cross_solicitud_aplicacion_listado_cuarteles.idCuarteles AS ID_1,
 (SELECT AVG(NULLIF(IF(GeoVelocidadProm!=0,GeoVelocidadProm,0),0)) FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idCuarteles=ID_1 LIMIT 1 ) AS VelPromedio,
-(SELECT SUM(Diferencia)                                           FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idCuarteles=ID_1 LIMIT 1 ) AS LitrosAplicados
-
-FROM `cross_solicitud_aplicacion_listado_cuarteles` 
+(SELECT SUM(Diferencia)                                           FROM `cross_solicitud_aplicacion_listado_tractores` WHERE idCuarteles=ID_1 LIMIT 1 ) AS LitrosAplicados';
+$SIS_join  = '
 LEFT JOIN `cross_predios_listado_zonas`        ON cross_predios_listado_zonas.idZona              = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `sistema_variedades_categorias`      ON sistema_variedades_categorias.idCategoria       = cross_solicitud_aplicacion_listado_cuarteles.idCategoria
 LEFT JOIN `variedades_listado`                 ON variedades_listado.idProducto                   = cross_solicitud_aplicacion_listado_cuarteles.idProducto
-LEFT JOIN `cross_solicitud_aplicacion_listado` ON cross_solicitud_aplicacion_listado.idSolicitud  = cross_solicitud_aplicacion_listado_cuarteles.idSolicitud
+LEFT JOIN `cross_solicitud_aplicacion_listado` ON cross_solicitud_aplicacion_listado.idSolicitud  = cross_solicitud_aplicacion_listado_cuarteles.idSolicitud';
+$SIS_where = 'cross_solicitud_aplicacion_listado_cuarteles.idSolicitud ='.$X_Puntero;
+$SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
+$arrCuarteles = array();
+$arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrCuarteles');
 
-WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCuarteles,$row );
-}
-
-//Se trae un listado con los productos	
-$arrTractores = array();
-$query = "SELECT 
+/*****************************************/	
+//Tractores
+$SIS_query = '
 telemetria_listado.Nombre AS TelemetriaNombre,
 telemetria_listado.Capacidad AS TelemetriaCapacidad,
 vehiculos_listado.Nombre AS VehiculoNombre,
@@ -172,72 +141,36 @@ trabajadores_listado.ApellidoPat,
 contratista_listado.Nombre AS Contratista,
 SUM(cross_solicitud_aplicacion_listado_tractores.Diferencia) AS Diferencia,
 AVG(cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm) AS GeoVelocidadProm,
-SEC_TO_TIME( SUM( TIME_TO_SEC(cross_solicitud_aplicacion_listado_tractores.T_Aplicacion))) AS T_Aplicacion
-
-FROM `cross_solicitud_aplicacion_listado_tractores`
+SEC_TO_TIME( SUM( TIME_TO_SEC(cross_solicitud_aplicacion_listado_tractores.T_Aplicacion))) AS T_Aplicacion';
+$SIS_join  = '
 LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria      = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `vehiculos_listado`     ON vehiculos_listado.idVehiculo         = cross_solicitud_aplicacion_listado_tractores.idVehiculo
 LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador    = cross_solicitud_aplicacion_listado_tractores.idTrabajador
-LEFT JOIN `contratista_listado`   ON contratista_listado.idContratista    = trabajadores_listado.idContratista
+LEFT JOIN `contratista_listado`   ON contratista_listado.idContratista    = trabajadores_listado.idContratista';
+$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud ='.$X_Puntero.' GROUP BY cross_solicitud_aplicacion_listado_tractores.idTelemetria, cross_solicitud_aplicacion_listado_tractores.idVehiculo';
+$SIS_order = 'telemetria_listado.Nombre ASC';
+$arrTractores = array();
+$arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTractores');
 
-WHERE cross_solicitud_aplicacion_listado_tractores.idSolicitud = ".$X_Puntero." 
-GROUP BY cross_solicitud_aplicacion_listado_tractores.idTelemetria, cross_solicitud_aplicacion_listado_tractores.idVehiculo
-ORDER BY telemetria_listado.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTractores,$row );
-}
-
-//Se trae un listado con los productos	
-$arrTracxCuartel = array();
-$query = "SELECT 
+/*****************************************/	
+//tractores por cuartel
+$SIS_query = '
 cross_solicitud_aplicacion_listado_cuarteles.idZona,
 telemetria_listado.Nombre AS TelemetriaNombre,
 vehiculos_listado.Nombre AS VehiculoNombre,
-SUM(cross_solicitud_aplicacion_listado_tractores.Diferencia) AS Diferencia
-
-FROM `cross_solicitud_aplicacion_listado_tractores`
+SUM(cross_solicitud_aplicacion_listado_tractores.Diferencia) AS Diferencia';
+$SIS_join  = '
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                           = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                              = cross_solicitud_aplicacion_listado_tractores.idVehiculo
-LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles  = cross_solicitud_aplicacion_listado_tractores.idCuarteles
+LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles  = cross_solicitud_aplicacion_listado_tractores.idCuarteles';
+$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud = '.$X_Puntero.' AND Diferencia!=0 GROUP BY cross_solicitud_aplicacion_listado_cuarteles.idZona, cross_solicitud_aplicacion_listado_tractores.idTelemetria, cross_solicitud_aplicacion_listado_tractores.idVehiculo';
+$SIS_order = 'cross_solicitud_aplicacion_listado_cuarteles.idZona ASC, telemetria_listado.Nombre ASC';
+$arrTracxCuartel = array();
+$arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTracxCuartel');
 
-WHERE cross_solicitud_aplicacion_listado_tractores.idSolicitud = ".$X_Puntero." 
-AND Diferencia!=0
-GROUP BY cross_solicitud_aplicacion_listado_cuarteles.idZona, 
-cross_solicitud_aplicacion_listado_tractores.idTelemetria, 
-cross_solicitud_aplicacion_listado_tractores.idVehiculo
-ORDER BY cross_solicitud_aplicacion_listado_cuarteles.idZona ASC, 
-telemetria_listado.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTracxCuartel,$row );
-}
-
+/*****************************************/	
 //Se trae un listado con los productos	
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado_productos.idProdQuim,
 cross_solicitud_aplicacion_listado_productos.idCuarteles,
 cross_solicitud_aplicacion_listado_productos.DosisRecomendada,
@@ -249,85 +182,42 @@ productos_listado.Carencia AS ProductoCarencia,
 productos_listado.EfectoResidual AS ProductoResidual, 
 productos_listado.EfectoRetroactivo AS ProductoRetroactivo,
 productos_listado.CarenciaExportador AS ProductoExportador,
-sistema_productos_uml.Nombre AS Unimed
-
-FROM `cross_solicitud_aplicacion_listado_productos`
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = '
 LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = cross_solicitud_aplicacion_listado_productos.idProducto
-LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = cross_solicitud_aplicacion_listado_productos.idUml
-WHERE cross_solicitud_aplicacion_listado_productos.idSolicitud = ".$X_Puntero." 
-GROUP BY cross_solicitud_aplicacion_listado_productos.idProducto
-ORDER BY productos_listado.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
+LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = cross_solicitud_aplicacion_listado_productos.idUml';
+$SIS_where = 'cross_solicitud_aplicacion_listado_productos.idSolicitud = '.$X_Puntero.' GROUP BY cross_solicitud_aplicacion_listado_productos.idProducto';
+$SIS_order = 'productos_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 	
-
-//Se trae un listado con los productos	
-$arrMateriales = array();
-$query = "SELECT 
+/*****************************************/	
+//Se trae un listado con los materiales	
+$SIS_query = '
 cross_checking_materiales_seguridad.Nombre,
-cross_checking_materiales_seguridad.Codigo
-FROM `cross_solicitud_aplicacion_listado_materiales`
-LEFT JOIN `cross_checking_materiales_seguridad`   ON cross_checking_materiales_seguridad.idMatSeguridad   = cross_solicitud_aplicacion_listado_materiales.idMatSeguridad
-WHERE cross_solicitud_aplicacion_listado_materiales.idSolicitud = ".$X_Puntero." 
-ORDER BY cross_checking_materiales_seguridad.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMateriales,$row );
-}
+cross_checking_materiales_seguridad.Codigo';
+$SIS_join  = 'LEFT JOIN `cross_checking_materiales_seguridad`   ON cross_checking_materiales_seguridad.idMatSeguridad   = cross_solicitud_aplicacion_listado_materiales.idMatSeguridad';
+$SIS_where = 'cross_solicitud_aplicacion_listado_materiales.idSolicitud = '.$X_Puntero;
+$SIS_order = 'cross_checking_materiales_seguridad.Nombre ASC';
+$arrMateriales = array();
+$arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_materiales', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMateriales');
 
 /*****************************************/		
 // Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado_historial.Creacion_fecha, 
 cross_solicitud_aplicacion_listado_historial.Observacion,
 usuarios_listado.Nombre AS Usuario,
-core_estado_solicitud.Nombre AS Estado
-
-FROM `cross_solicitud_aplicacion_listado_historial` 
+core_estado_solicitud.Nombre AS Estado';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario      = cross_solicitud_aplicacion_listado_historial.idUsuario
-LEFT JOIN `core_estado_solicitud`    ON core_estado_solicitud.idEstado  = cross_solicitud_aplicacion_listado_historial.idEstado
-WHERE cross_solicitud_aplicacion_listado_historial.idSolicitud = ".$X_Puntero." 
-ORDER BY cross_solicitud_aplicacion_listado_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_estado_solicitud`    ON core_estado_solicitud.idEstado  = cross_solicitud_aplicacion_listado_historial.idEstado';
+$SIS_where = 'cross_solicitud_aplicacion_listado_historial.idSolicitud ='.$X_Puntero;
+$SIS_order = 'cross_solicitud_aplicacion_listado_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
+
 ?>
 
 <div class="row no-print">
