@@ -183,7 +183,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 				<div class="col-sm-4">
 					<div class="usercard usercard-widget widget-user">
-						<div class="widget-user-header text-white" style="background: url('<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/photo1.png') center center;">
+						<div class="widget-user-header text-white" style="background: url('<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/photo1.jpg') center center;">
 							<h3 class="widget-user-username text-right">Bienvenido</h3>
 							<h5 class="widget-user-desc text-right"><?php echo $_SESSION['usuario']['basic_data']['Nombre']; ?></h5>
 						</div>
