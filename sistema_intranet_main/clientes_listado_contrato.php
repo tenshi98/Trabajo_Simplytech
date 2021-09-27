@@ -152,8 +152,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_tittle(3, 'Valores');
 					$Form_Inputs->form_values('Valor Mensual', 'Contrato_Valor_Mensual', $x10, 1);
 					$Form_Inputs->form_values('Valor Anual', 'Contrato_Valor_Anual', $x11, 1);
-					$Form_Inputs->form_values('Valor UF instalacion', 'Contrato_UF_Instalacion', $x12, 1);
-					$Form_Inputs->form_values('Valor UF servicio mensual', 'Contrato_UF_Mensual', $x13, 1);
+					$Form_Inputs->form_input_number('Valor UF instalacion', 'Contrato_UF_Instalacion', $x12, 1);
+					$Form_Inputs->form_input_number('Valor UF servicio mensual', 'Contrato_UF_Mensual', $x13, 1);
 					
 					//Solo para plataforma Intranet
 					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
