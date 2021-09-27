@@ -115,6 +115,8 @@ telemetria_listado.NregBackup,
 opc8.Nombre AS Generador,
 opc9.Nombre AS AlertaTemprana,
 opc10.Nombre AS UsoFTP,
+telemetria_listado.idUsoFTP,
+telemetria_listado.FTP_Carpeta,
 
 telemetria_listado.CrossCrane_tiempo_revision AS TiempoRevision,
 grupo_1.Nombre AS Grupo_amperaje,
@@ -277,7 +279,7 @@ $arrFinalUnimed[0] = 'No Asignado';
 							<?php if(isset($rowdata['AlarmaGeneral'])&&$rowdata['AlarmaGeneral']!=''){ ?>    <strong>Alarma General : </strong><?php echo $rowdata['AlarmaGeneral']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['AlertaTemprana'])&&$rowdata['AlertaTemprana']!=''){ ?>  <strong>Alerta Temprana : </strong><?php echo $rowdata['AlertaTemprana']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['UsoFTP'])&&$rowdata['UsoFTP']!=''){ ?>                  <strong>Uso FTP : </strong><?php echo $rowdata['UsoFTP']; ?><br/><?php } ?>
-							
+							<?php if(isset($rowdata['idUsoFTP'])&&$rowdata['idUsoFTP']==1){ ?>               <strong>Carpeta FTP : </strong><?php echo $rowdata['FTP_Carpeta']; ?><br/><?php } ?>
 							
 							<br/>
 							<strong class="color-red-dark">Otros Datos</strong><br/>
