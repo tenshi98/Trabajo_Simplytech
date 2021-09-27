@@ -2086,7 +2086,7 @@ array_push( $arrCuenta2,$row );
 			echo 'let id_distancia_h_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaHileras']).'";';	
 		}
 		?>
-		let Componente = elect.options[select.selectedIndex].value;
+		let Componente = select.options[select.selectedIndex].value;
 		if (Componente != "") {
 			//escribo dentro del input
 			$(select).closest('.cuartel_container').find('.escribeme1').val('Cod: '+eval("id_codigo_" + Componente));
