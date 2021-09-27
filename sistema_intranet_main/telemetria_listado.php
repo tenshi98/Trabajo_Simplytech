@@ -104,6 +104,7 @@ if ( ! empty($_GET['clone_idTelemetria']) ) {
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 /********************************************/
+//se consulta
 $SIS_query = '
 telemetria_listado.Identificador,
 telemetria_listado.Nombre,
@@ -184,6 +185,8 @@ telemetria_listado.NregBackup,
 opc8.Nombre AS Generador,
 opc9.Nombre AS AlertaTemprana,
 opc10.Nombre AS UsoFTP,
+telemetria_listado.idUsoFTP,
+telemetria_listado.FTP_Carpeta,
 
 telemetria_listado.CrossCrane_tiempo_revision AS TiempoRevision,
 grupo_1.Nombre AS Grupo_amperaje,
@@ -221,7 +224,7 @@ LEFT JOIN `telemetria_listado_grupos`  grupo_4   ON grupo_4.idGrupo             
 LEFT JOIN `telemetria_listado_grupos`  grupo_5   ON grupo_5.idGrupo                                    = telemetria_listado.CrossCrane_grupo_voltaje
 LEFT JOIN `telemetria_listado_grupos`  grupo_6   ON grupo_6.idGrupo                                    = telemetria_listado.CrossCrane_grupo_motor_subida
 LEFT JOIN `telemetria_listado_grupos`  grupo_7   ON grupo_7.idGrupo                                    = telemetria_listado.CrossCrane_grupo_motor_bajada';
-$SIS_where = 'idTelemetria = '.$_GET['id'];
+$SIS_where = 'telemetria_listado.idTelemetria = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 $arrContratos = array();
@@ -332,6 +335,7 @@ $arrEXOpciones[0] = 'No Asignado';
 							<?php if(isset($rowdata['AlarmaGeneral'])&&$rowdata['AlarmaGeneral']!=''){ ?>    <strong>Alarma General : </strong><?php echo $rowdata['AlarmaGeneral']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['AlertaTemprana'])&&$rowdata['AlertaTemprana']!=''){ ?>  <strong>Alerta Temprana : </strong><?php echo $rowdata['AlertaTemprana']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['UsoFTP'])&&$rowdata['UsoFTP']!=''){ ?>                  <strong>Uso FTP : </strong><?php echo $rowdata['UsoFTP']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['idUsoFTP'])&&$rowdata['idUsoFTP']==1){ ?>               <strong>Carpeta FTP : </strong><?php echo $rowdata['FTP_Carpeta']; ?><br/><?php } ?>
 							
 							<br/>
 							<strong class="color-red-dark">Otros Datos</strong><br/>
