@@ -4838,7 +4838,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		}
 		
 		//numero sensores equipo
-		$N_Maximo_Sensores = 60;
+		$N_Maximo_Sensores = 10;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 			$subquery .= ',SensoresNombre_'.$i;
@@ -8028,7 +8028,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 	/*************************************************************/
 	//Se consulta
 	$arrGrupos = array();
-	$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_whereSubgrupo, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+	$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_whereSubgrupo, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
 	//se recorre
 	$arrGruposTemp = array();
 	foreach ($arrGrupos as $gru) {
@@ -8038,7 +8038,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 	/*************************************************************/
 	//Se consulta
 	$arrGruposUso = array();
-	$arrGruposUso = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', $SIS_whereSubgrupoUso, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposUso');
+	$arrGruposUso = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', $SIS_whereSubgrupoUso, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposUso');
 	//se recorre
 	$arrGruposUsoTemp = array();
 	foreach ($arrGruposUso as $gruUso) {
@@ -8166,7 +8166,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 				//los valores
 				$Graphics_yData      .='['.$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'].'],';
 				//los nombres
-				$Graphics_names      .= '"'.$gruUso['Nombre'].' - '.$gru['Nombre'].'",';
+				$Graphics_names      .= '"'.TituloMenu($gruUso['Nombre']).' - '.TituloMenu($gru['Nombre']).'",';
 				//los tipos
 				$Graphics_types      .= "'',";
 				//si lleva texto en las burbujas
@@ -8313,13 +8313,13 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 					$xcounter = 1;
 					foreach($arrEquipo as $cli) {	
 						if($xcounter==1){$xactive = 'active';}else{$xactive = '';}
-						if($xcounter>3){
+						if($xcounter==4){
 							$widget .= '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';
 						}
 						$widget .= '<li class="'.$xactive.'"><a href="" onClick="chngEquipo('.$cli['idTelemetria'].', '.$cli['cantSensores'].')"  data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> '.$cli['Nombre'].'</a></li>';
 						$xcounter++;
 					}
-					if($xcounter>3){ $widget .= '</ul></li>'; }
+					if($xcounter>4){ $widget .= '</ul></li>'; }
 				$widget .= '
 				</ul>	
 			</header>
@@ -8398,13 +8398,16 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 											$widget .= '
 											<tr class="odd '.$danger_color.'">
 												<th><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></th>
-												<th colspan="7">'.$gruUso['Nombre'].'</th>
+												<th colspan="7">'.TituloMenu($gruUso['Nombre']).'</th>
 												<th>
 													<div class="btn-group" style="width: 35px;" >
 														<button onClick="chngGroupUsoGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].')" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
 													</div>
 												</th>
 											</tr>';
+											//se ordena el arreglo
+											sort($arrTempSensor[$gruUso['idGrupo']]);
+											//recorro el arreglo
 											foreach ($arrTempSensor[$gruUso['idGrupo']] as $gru) {
 												//verificar errores
 												if(isset($gru['NErrores'])&&$gru['NErrores']!=0){
@@ -8425,7 +8428,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 												<tr class="odd '.$danger_color.'">
 													<td></td>
 													<td><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></td>
-													<td>'.$gru['Nombre'].'</td>
+													<td>'.TituloMenu($gru['Nombre']).'</td>
 													<td>'.$TActual.' °C</td>
 													<td>'.$Tmax.' °C</td>
 													<td>'.$Tmin.' °C</td>
