@@ -42,6 +42,15 @@ $arrZonas = array();
 $arrZonas = db_select_array (false, 'idZona, Nombre', 'vehiculos_zonas', '', '', 'idZona ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
 
 /************************************************/
+//numero sensores equipo
+$N_Maximo_Sensores = 10;
+$subquery = '';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresMedActual_'.$i;
+	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+}		
 //Listar los equipos
 $SIS_query = '
 telemetria_listado.Nombre, 
@@ -52,7 +61,7 @@ telemetria_listado.GeoLongitud,
 telemetria_listado.NDetenciones,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.GeoErrores,
-telemetria_listado.NErrores';
+telemetria_listado.NErrores'.$subquery;
 $SIS_join  = '';
 $SIS_where = 'telemetria_listado.idEstado = 1';                //solo equipos activos
 $SIS_where.= ' AND telemetria_listado.id_Geo = '.$id_Geo;       //solo los equipos que tengan el seguimiento activado
