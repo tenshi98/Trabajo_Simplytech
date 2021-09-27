@@ -41,14 +41,14 @@ $Total_Presion     = 0;
 $Count_Data        = 0;
 		
 //Variable
-$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+$SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento desactivado
-$z .= " AND telemetria_listado.id_Geo = 2";
+$SIS_where .= " AND telemetria_listado.id_Geo = 2";
 //Filtro de los tab
-$z .= " AND telemetria_listado.idTab = 4 ";//CrossWeather
+$SIS_where .= " AND telemetria_listado.idTab = 4 ";//CrossWeather
 //Filtro el equipo	
 if(isset($idTelemetria)&&$idTelemetria!=''&&$idTelemetria!=0){
-	$z .= " AND telemetria_listado.idTelemetria = ".$idTelemetria;	
+	$SIS_where .= " AND telemetria_listado.idTelemetria = ".$idTelemetria;	
 }
 			
 //numero sensores equipo
@@ -61,53 +61,18 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresActivo_'.$i;
 }	
 
-//Listar los equipos
-$query = "SELECT Nombre, TiempoFueraLinea, LastUpdateFecha, 
-LastUpdateHora,GeoLatitud, GeoLongitud, cantSensores,
-id_Sensores
-".$subquery."
-FROM `telemetria_listado`
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-			
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+//Listar los datos
+$SIS_query = 'Nombre, TiempoFueraLinea, LastUpdateFecha, LastUpdateHora,GeoLatitud, GeoLongitud, cantSensores, id_Sensores'.$subquery;
+$SIS_join  = '';
+$rowTel = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowTel');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowTel = mysqli_fetch_assoc ($resultado);
 
 /*************************************************************/
 //se traen todas las zonas
-$query = "SELECT Helada, UnidadesFrio, CrossTech_FechaUnidadFrio,
-HorasSobreGrados, CrossTech_TempMax, CrossTech_FechaTempMax,
-Dias_acumulado, Dias_anterior, CrossTech_DiasTempMin,
-CrossTech_FechaDiasTempMin
-
-FROM `telemetria_listado_aux_equipo` 
-WHERE idTelemetria=".$idTelemetria." 
-ORDER BY idAuxiliar DESC
-LIMIT 1";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-			
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowAux = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Helada, UnidadesFrio, CrossTech_FechaUnidadFrio, HorasSobreGrados, CrossTech_TempMax, CrossTech_FechaTempMax, Dias_acumulado, Dias_anterior, CrossTech_DiasTempMin, CrossTech_FechaDiasTempMin';
+$SIS_join  = '';
+$SIS_where = 'idTelemetria='.$idTelemetria.' ORDER BY idAuxiliar DESC LIMIT 1';
+$rowAux = db_select_data (false, $SIS_query, 'telemetria_listado_aux_equipo', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowAux');
 				
 /*************************************************************/
 //Se traen todas las unidades de medida
