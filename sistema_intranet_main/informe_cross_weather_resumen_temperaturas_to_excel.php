@@ -33,43 +33,25 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 }
 //se verifica si se ingreso la hora, es un dato optativo
 //Variable de busqueda
-$z = "WHERE ".$x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = $x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.=" AND (".$x_table.".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$SIS_where.= " AND (".$x_table.".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND (".$x_table.".Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where.= " AND (".$x_table.".Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
-	$z.=" AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
+	$SIS_where.= " AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
 }
 /**********************************************************/
 // Se trae un listado con todos los datos
+$SIS_query = 'Fecha, Hora, HeladaDia, HeladaHora, Temperatura, Helada, CrossTech_TempMin ,
+Fecha_Anterior, Hora_Anterior, Tiempo_Helada';
+$SIS_join  = '';
+$SIS_order = 'idAuxiliar ASC';
 $arrHistorial = array();
-$query = "SELECT Fecha, Hora, HeladaDia, HeladaHora, Temperatura, Helada, CrossTech_TempMin ,
-Fecha_Anterior, Hora_Anterior, Tiempo_Helada
+$arrHistorial = db_select_array (false, $SIS_query, $x_table, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
-FROM `".$x_table."`
-".$z."
-ORDER BY idAuxiliar ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
-
-
-
-
+/****************************************************************************/
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
 

@@ -80,7 +80,7 @@ $SIS_where.= " AND telemetria_listado_errores.idTipo!='999'";
 $SIS_where.= " AND telemetria_listado_errores.Valor<'99900'";
 $SIS_where.= " AND telemetria_listado.id_Geo='2'";
 $SIS_where.= " AND telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$SIS_join  = "LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria";
+
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$SIS_where .= " AND telemetria_listado.idTab=9";//CrossEnergy			
@@ -102,6 +102,7 @@ if(isset($_GET['idLeido'])&&$_GET['idLeido']!=''){
 	$SIS_where.=" AND telemetria_listado_errores.idLeido='".$_GET['idLeido']."'";
 }
 //Verifico el tipo de usuario que esta ingresando
+$SIS_join  = "LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria";
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";	
 	$SIS_where.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];

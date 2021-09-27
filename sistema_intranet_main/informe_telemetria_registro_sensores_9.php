@@ -31,26 +31,12 @@ if ( ! empty($_GET['submit_filter']) ) {
 //Verifico si se selecciono el equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	//Se traen todos los registros
-	$query = "SELECT 
-	telemetria_listado.Nombre,
-	COUNT(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla) AS Total
-	FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-	LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-	WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."') ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	$row_data = mysqli_fetch_assoc ($resultado);
+	$SIS_query = 'telemetria_listado.Nombre,
+	COUNT(telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla) AS Total';
+	$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
+	$SIS_where = '(telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'")';
+	$row_data = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	
 	/*****************************************/
 	//Se escribe el dato
 	$Alert_Text  = 'Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0);
@@ -74,9 +60,9 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
 }else{
 	//Inicia variable
-	$z = "WHERE telemetria_listado.idTelemetria>0"; 
-	$z.= " AND telemetria_listado.id_Geo='1'";
-	$z.= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_where = "telemetria_listado.idTelemetria>0"; 
+	$SIS_where.= " AND telemetria_listado.id_Geo='1'";
+	$SIS_where.= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	$datosx  = '&f_inicio='.$_GET['f_inicio'];
 	$datosx .= '&f_termino='.$_GET['f_termino'];
 	$datosx .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
@@ -84,62 +70,27 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$datosx .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 
 	//Verifico el tipo de usuario que esta ingresando
-	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-		$join = "";	
-	}else{
-		$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_join  = '';
+	if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+		$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
+		$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
 	
 	/*********************************************/
 	// Se trae un listado con todos los elementos
+	$SIS_query = 'telemetria_listado.idTelemetria, telemetria_listado.Nombre';
+	$SIS_order = 'idTelemetria ASC';
 	$arrEquipos = array();
-	$query = "SELECT idTelemetria, Nombre
-	FROM `telemetria_listado`
-	".$join."  ".$z."
-	ORDER BY idTelemetria ASC ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrEquipos,$row );
-	}
-	
+	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
 
-	
 	/*********************************************/
 	$s_max = 0;
 	$Alert_Text  = '';
 	foreach ($arrEquipos as $equipo) {
 		//Se traen todos los registros
-		$query = "SELECT 
-		COUNT(idTabla) AS Total
-		FROM `telemetria_listado_tablarelacionada_".$equipo['idTelemetria']."`
-		WHERE (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."') ";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-							
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-		}
-		$row_data = mysqli_fetch_assoc ($resultado);
+		$SIS_query = 'COUNT(idTabla) AS Total';
+		$SIS_where = '(FechaSistema BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'")';
+		$row_data = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 		
 		$Alert_Text .= 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($row_data['Total'], 0).'<br/>';
 		//verifico el valor maximo

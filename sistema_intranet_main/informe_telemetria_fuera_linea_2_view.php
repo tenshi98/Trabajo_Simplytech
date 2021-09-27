@@ -12,7 +12,7 @@ require_once 'core/Load.Utils.Views.php';
 /**********************************************************************************************************************************/
 /**********************************************************************************************************************************/
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 telemetria_listado_error_fuera_linea.Fecha_inicio, 
 telemetria_listado_error_fuera_linea.Hora_inicio, 
 telemetria_listado_error_fuera_linea.Fecha_termino, 
@@ -22,25 +22,11 @@ telemetria_listado_error_fuera_linea.GeoLatitud,
 telemetria_listado_error_fuera_linea.GeoLongitud,
 telemetria_listado_error_fuera_linea.GeoLatitud_Last,
 telemetria_listado_error_fuera_linea.GeoLongitud_Last,
-telemetria_listado.Nombre AS NombreEquipo
+telemetria_listado.Nombre AS NombreEquipo';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria';
+$SIS_where = 'telemetria_listado_error_fuera_linea.idFueraLinea ='.simpleDecode($_GET['view'], fecha_actual());
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-FROM `telemetria_listado_error_fuera_linea`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria
-WHERE idFueraLinea = ".simpleDecode($_GET['view'], fecha_actual());
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/

@@ -137,24 +137,14 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 	$subf.=" AND (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 /**********************************************************************/
-//Se consultan datos
+//Se traen todos los grupos
 $arrGrupo = array();
-$query = "SELECT idGrupo, Nombre
-FROM `telemetria_listado_grupos` ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrGrupo = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupo,$row );
+//guardo los grupos
+$Grupo = array();
+foreach ($arrGrupo as $sen) { 
+	$Grupo[$sen['idGrupo']] = ' '.$sen['Nombre'];
 }
 
 /**********************************************************************/
@@ -196,36 +186,17 @@ function crear_data($cantsens, $filtro, $idTelemetria, $f_inicio, $f_termino, $d
 			$consql .= ',STDDEV(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedDesStan_'.$i;
 		}
 	}
-
+	
+	/*******************************************************/
 	//Se traen todos los registros
-	$arrRutas = array();
-	$query = "SELECT 
-	telemetria_listado.Nombre AS NombreEquipo,
-	telemetria_listado.cantSensores AS cantSensores,
-	telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema
-	".$consql."
-	FROM `telemetria_listado_tablarelacionada_".$idTelemetria."`
-	LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_tablarelacionada_".$idTelemetria.".idTelemetria
-	WHERE idTabla!=0
-	".$filtro.$subfiltro." 
-	GROUP BY telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema
-	ORDER BY telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRutas,$row );
-	}
-	return $arrRutas;
+	$SIS_query = 'telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema'.$consql;
+	$SIS_join  = 'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria';
+	$SIS_where = 'idTabla!=0 '.$filtro.$subfiltro.' GROUP BY telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema';
+	$SIS_order = 'telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema ASC';
+	$arrTemp = array();
+	$arrTemp = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemp');
+	
+	return $arrTemp;
 	
 }
 
@@ -244,275 +215,39 @@ $objPHPExcel->getProperties()->setCreator("Office 2007")
 							 ->setCategory("office 2007 result file");
 
 
-/*********************************************************************************/
+
+/*******************************************************/
+//Inicia variable
+$SIS_where  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
+$SIS_where .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
+$SIS_where .= " AND telemetria_listado.id_Sensores=1";                                           //sensores activos
+//Solo para plataforma CrossTech
+if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
+	$SIS_where .= " AND telemetria_listado.idTab=2";//CrossC			
+}
 //Verifico si se selecciono el equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	//Consulta por la cantidad de sensores
-	$query = "SELECT cantSensores, Nombre
-	FROM `telemetria_listado`
-	WHERE idTelemetria=".$_GET['idTelemetria'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-	}
-	$rowEquipo = mysqli_fetch_assoc ($resultado);
-	//Variable temporal
-	$arrTemporal = array();	
-	//Llamo a la funcion
-	$arrTemporal = crear_data($rowEquipo['cantSensores'], $subf, $_GET['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'], $_GET['desde'], $_GET['hasta'] , $dbConn);
-	
-	/***********************************************************/
-	$yy = 1;
-	//Grupos de los sensores
-	for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) { 
-		$grupo = '';
-		foreach ($arrGrupo as $sen) { 
-			if($arrTemporal[0]['SensoresGrupo_'.$i]==$sen['idGrupo']){
-				$grupo = $sen['Nombre'];
-			}
-		}
-		if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-			if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-				//Si se ven detalles
-				if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-					$objPHPExcel->setActiveSheetIndex(0)
-								->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
-								$yy++;
-								$yy++;
-								$yy++;
-								$yy++;
-				//Si no se ven detalles	
-				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-					$objPHPExcel->setActiveSheetIndex(0)
-								->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
-								$yy++;
-				}
-			}
-		}else{
-			//Si se ven detalles
-			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-				$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
-							$yy++;
-							$yy++;
-							$yy++;
-							$yy++;
-			//Si no se ven detalles	
-			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-				$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
-							$yy++;
-			}
-		}
-							
-	}
-						
-						
-
-	 
-	/***********************************************************/
-	//Titulo columnas
-	$objPHPExcel->setActiveSheetIndex(0)
-				->setCellValue('A2', 'Equipo')
-				->setCellValue('B2', 'Fecha');
-	
-	$yy = 1;			
-	for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
-		if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-			if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-				//Si se ven detalles
-				if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-					$yy1 = $yy;
-					$yy2 = $yy + 1;
-					$yy3 = $yy + 2;
-					$yy4 = $yy + 3;
-					$objPHPExcel->setActiveSheetIndex(0)
-								->setCellValue($arrData[$yy1].'2', 'Promedio' )
-								->setCellValue($arrData[$yy2].'2', 'Maximo' )
-								->setCellValue($arrData[$yy3].'2', 'Minimo' )
-								->setCellValue($arrData[$yy4].'2', 'Dev. Std.' );
-								$yy++;
-								$yy++;
-								$yy++;
-								$yy++;
-				//Si no se ven detalles	
-				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-					$objPHPExcel->setActiveSheetIndex(0)
-								->setCellValue($arrData[$yy].'2', 'Promedio');
-								$yy++;
-				}
-			}
-		}else{
-			//Si se ven detalles
-			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-				$yy1 = $yy;
-				$yy2 = $yy + 1;
-				$yy3 = $yy + 2;
-				$yy4 = $yy + 3;
-				$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue($arrData[$yy1].'2', 'Promedio' )
-							->setCellValue($arrData[$yy2].'2', 'Maximo' )
-							->setCellValue($arrData[$yy3].'2', 'Minimo' )
-							->setCellValue($arrData[$yy4].'2', 'Dev. Std.' );
-							$yy++;
-							$yy++;
-							$yy++;
-							$yy++;
-			//Si no se ven detalles	
-			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-				$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue($arrData[$yy].'2', 'Promedio');
-							$yy++;
-			}
-		}
-	}
-				
-	 
-	/***********************************************************/
-	//Datos        
-	$nn=3;
-	foreach ($arrTemporal as $rutas) {
-		//Verifico la existencia de datos
-		$cuenta_xx = 0;
-		for ($i = 1; $i <= $rutas['cantSensores']; $i++) {
-			if(isset($rutas['MedMin_'.$i])&&$rutas['MedMin_'.$i]!=0&&$rutas['MedMin_'.$i]!=''&&isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]!=0&&$rutas['MedMax_'.$i]!=''){
-				$cuenta_xx++;
-			}	
-		}			
-		//Si existen datos imprimo
-		if($cuenta_xx!=0){ 
-												
-			$objPHPExcel->setActiveSheetIndex(0)
-						->setCellValue('A'.$nn, $rutas['NombreEquipo'])
-						->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']));
-			$yy = 1;
-			for ($i = 1; $i <= $rutas['cantSensores']; $i++) {
-				if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-					if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-						//Si se ven detalles
-						if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-							$yy1 = $yy;
-							$yy2 = $yy + 1;
-							$yy3 = $yy + 2;
-							$yy4 = $yy + 3;
-							if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_1 = Cantidades($rutas['MedProm_'.$i], 2);    }else{$mvar_1 = 'Sin Datos';}
-							if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_2 = Cantidades($rutas['MedMax_'.$i], 2);     }else{$mvar_2 = 'Sin Datos';}
-							if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_3 = Cantidades($rutas['MedMin_'.$i], 2);     }else{$mvar_3 = 'Sin Datos';}
-							if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_4 = Cantidades($rutas['MedDesStan_'.$i], 2); }else{$mvar_4 = 'Sin Datos';}
-							$objPHPExcel->setActiveSheetIndex(0)
-										->setCellValue($arrData[$yy1].$nn, $mvar_1 )
-										->setCellValue($arrData[$yy2].$nn, $mvar_2 )
-										->setCellValue($arrData[$yy3].$nn, $mvar_3 )
-										->setCellValue($arrData[$yy4].$nn, $mvar_4 );
-										$yy++;
-										$yy++;
-										$yy++;
-										$yy++;
-									
-						//Si no se ven detalles	
-						}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-							if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_1 = Cantidades($rutas['MedProm_'.$i], 2);}else{$mvar_1 = 'Sin Datos';}
-							$objPHPExcel->setActiveSheetIndex(0)
-										->setCellValue($arrData[$yy].$nn, $mvar_1);
-										$yy++;
-						}
-					}
-				}else{
-					//Si se ven detalles
-					if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-						$yy1 = $yy;
-						$yy2 = $yy + 1;
-						$yy3 = $yy + 2;
-						$yy4 = $yy + 3;
-						if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_1 = Cantidades($rutas['MedProm_'.$i], 2);     }else{$mvar_1 = 'Sin Datos';}
-						if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_2 = Cantidades($rutas['MedMax_'.$i], 2);      }else{$mvar_2 = 'Sin Datos';}
-						if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_3 = Cantidades($rutas['MedMin_'.$i], 2);      }else{$mvar_3 = 'Sin Datos';}
-						if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_4 = Cantidades($rutas['MedDesStan_'.$i], 2);  }else{$mvar_4 = 'Sin Datos';}
-						$objPHPExcel->setActiveSheetIndex(0)
-									->setCellValue($arrData[$yy1].$nn, $mvar_1 )
-									->setCellValue($arrData[$yy2].$nn, $mvar_2 )
-									->setCellValue($arrData[$yy3].$nn, $mvar_3 )
-									->setCellValue($arrData[$yy4].$nn, $mvar_4 );
-									$yy++;
-									$yy++;
-									$yy++;
-									$yy++;
-					//Si no se ven detalles	
-					}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-						if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){$mvar_1 = Cantidades($rutas['MedProm_'.$i], 2);}else{$mvar_1 = 'Sin Datos';}
-						$objPHPExcel->setActiveSheetIndex(0)
-									->setCellValue($arrData[$yy].$nn, $mvar_1);
-									$yy++;
-					}
-				} 
-												
-			}
-		}
-	
-			   
-	 $nn++;           
-	   
-	} 
-	/***********************************************************/
-	// Rename worksheet
-	$super_titulo = 'Hoja 1';
-	if(isset($arrTemporal[0]['NombreEquipo'])&&$arrTemporal[0]['NombreEquipo']!=''){
-		$super_titulo = cortar($arrTemporal[0]['NombreEquipo'], 25);
-	}
-	$objPHPExcel->getActiveSheet(0)->setTitle($super_titulo);
-	
-//Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
+	$SIS_where.= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
+}
+//Verifico el tipo de usuario que esta ingresando
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+	$SIS_join = "";	
 }else{
-	//Inicia variable
-	$z = "WHERE telemetria_listado.idTelemetria>0"; 
-	$z.= " AND telemetria_listado.id_Geo='2'";
-	$z.= " AND telemetria_listado.idSistema=".$_GET['idSistema'];
-	//Solo para plataforma CrossTech
-	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-		$z .= " AND telemetria_listado.idTab=2";//CrossC			
-	}
+	$SIS_join   = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
+	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+}
 
-	//Verifico el tipo de usuario que esta ingresando
-	if($_GET['idTipoUsuario']==1){
-		$join = "";	
-	}else{
-		$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_GET['idUsuario'];	
-	}
-	
-	/*********************************************/
-	// Se trae un listado con todos los elementos
-	$arrEquipos = array();
-	$query = "SELECT 
-	telemetria_listado.idTelemetria, 
-	telemetria_listado.Nombre, 
-	telemetria_listado.cantSensores
-	FROM `telemetria_listado`
-	".$join."  ".$z."
-	ORDER BY telemetria_listado.idTelemetria ASC ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+/*******************************************************/
+//se trae un listado con los equipos
+$SIS_query = '
+telemetria_listado.idTelemetria, 
+telemetria_listado.Nombre AS NombreEquipo, 
+telemetria_listado.cantSensores';
+$SIS_order = 'telemetria_listado.idTelemetria ASC';
+$arrEquipos = array();
+$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
 
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrEquipos,$row );
-	}
+
 
 	/*********************************************/
 	$sheet = 0;
@@ -528,7 +263,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		/***********************************************************/
 		//Grupos de los sensores
 		$yy = 1;
-		for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) { 
+		for ($i = 1; $i <= $equipo['cantSensores']; $i++) { 
 			$grupo = '';
 			foreach ($arrGrupo as $sen) { 
 				if($arrTemporal[0]['SensoresGrupo_'.$i]==$sen['idGrupo']){
@@ -579,7 +314,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 					->setCellValue('B2', 'Fecha');
 	
 		$yy = 1;			
-		for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
+		for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
 			if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
 				if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 					//Si se ven detalles
@@ -638,7 +373,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		foreach ($arrTemporal as $rutas) {
 			//Verifico la existencia de datos
 			$cuenta_xx = 0;
-			for ($i = 1; $i <= $rutas['cantSensores']; $i++) {
+			/*for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
 				if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
 					if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){			
 						if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){
@@ -648,15 +383,15 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 						}
 					}
 				}	
-			}			
+			}	*/		
 			//Si no existen datos imprimo
 			if($cuenta_xx==0){
 													
 				$objPHPExcel->setActiveSheetIndex($sheet)
-							->setCellValue('A'.$nn, $rutas['NombreEquipo'])
+							->setCellValue('A'.$nn, $equipo['NombreEquipo'])
 							->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']));
 				$yy = 1;
-				for ($i = 1; $i <= $rutas['cantSensores']; $i++) {
+				for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
 					if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
 						if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 							//Si se ven detalles
@@ -716,8 +451,8 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		/***********************************************************/
 		// Rename worksheet
 		$super_titulo = 'Hoja 1';
-		if(isset($arrTemporal[0]['NombreEquipo'])&&$arrTemporal[0]['NombreEquipo']!=''){
-			$super_titulo = cortar($arrTemporal[0]['NombreEquipo'], 25);
+		if(isset($equipo['NombreEquipo'])&&$equipo['NombreEquipo']!=''){
+			$super_titulo = cortar($equipo['NombreEquipo'], 25);
 		}
 		$objPHPExcel->getActiveSheet($sheet)->setTitle($super_titulo);
 		
@@ -725,7 +460,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	}
 
 
-}	
+	
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex(0);
@@ -733,7 +468,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 
 // Redirect output to a client’s web browser (Excel5)
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Desviacion estandar.xls"');
+header('Content-Disposition: attachment;filename="Max – Min Camara.xls"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

@@ -32,44 +32,32 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$x_table = 'telemetria_listado_aux';
 }
 //se verifica si se ingreso la hora, es un dato optativo
-$z = "WHERE ".$x_table.".idSistema=".$_GET['idSistema'];
+$SIS_where = $x_table.".idSistema=".$_GET['idSistema'];
 //Se aplican los filtros
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$z.=" AND ".$x_table.".Fecha BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
+	$SIS_where.= " AND ".$x_table.".Fecha BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
-	$z.=" AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
+	$SIS_where.= " AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
 }
 /**********************************************************/
 // Se trae un listado con todos los datos
+$SIS_query = 
+$x_table.'.Fecha,
+'.$x_table.'.Hora,
+'.$x_table.'.TimeStamp,
+'.$x_table.'.Temperatura,
+'.$x_table.'.PuntoRocio,
+'.$x_table.'.PresionAtmos,
+'.$x_table.'.HorasBajoGrados,
+'.$x_table.'.Tiempo_Helada,
+'.$x_table.'.Dias_acumulado,
+'.$x_table.'.UnidadesFrio';
+$SIS_join  = '';
+$SIS_order = $x_table.'.Fecha ASC';
 $arrMediciones = array();
-$query = "SELECT 
-".$x_table.".Fecha,
-".$x_table.".Hora,
-".$x_table.".TimeStamp,
-".$x_table.".Temperatura,
-".$x_table.".HorasBajoGrados,
-".$x_table.".Tiempo_Helada,
-".$x_table.".Dias_acumulado
+$arrMediciones = db_select_array (false, $SIS_query, $x_table, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
 
-FROM `".$x_table."`
-".$z."
-ORDER BY ".$x_table.".Fecha ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMediciones,$row );
-}
 
 //Variables
 $arrMed  = array();

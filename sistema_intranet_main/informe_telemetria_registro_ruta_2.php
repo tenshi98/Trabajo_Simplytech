@@ -25,329 +25,292 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
 //se verifica si se ingreso la hora, es un dato optativo
-$z='';
+$SIS_where = '';
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$SIS_where.= "(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where.= "(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 //solo mostrar aplicaciones
 if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''&&$_GET['idOpciones']==1){
-	$z.=" AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_1!=0 OR telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_2!=0)";
+	$SIS_where.= " AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_1!=0 OR telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_2!=0)";
 }
-
-//Se traen todos los registros
-$arrRutas = array();
-$query = "SELECT 
-telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoLatitud,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoLongitud,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoVelocidad,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_1,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_2,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_3
-
-FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-
-".$z."
-ORDER BY telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema ASC,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema ASC
-LIMIT 10000";
-  
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRutas,$row );
-}
-
-
-?>	
-
-<?php if($arrRutas){ 
-/*****************************************/	
-//Variable para almacenar los recorridos
-$arrMedTractores = array();	
-//recorro los resultados
-foreach ($arrRutas as $med) {
-	//Guardo los datos temporales
-	$arrMedTractores['caudales']     .= '["'.$med['HoraSistema'].'",'.Cantidades_decimales_justos($med['Sensor_1']).','.Cantidades_decimales_justos($med['Sensor_2']).'],';
-	$arrMedTractores['niveles']      .= '["'.$med['HoraSistema'].'",'.Cantidades_decimales_justos($med['Sensor_3']).',],';
-	$arrMedTractores['velocidades']  .= '["'.$med['HoraSistema'].'", '.Cantidades_decimales_justos($med['GeoVelocidad']).'],';
-
-}
-
-					
-?>
+//verifico el numero de datos antes de hacer la consulta
+$ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
+			
+//si el dato es superior a 10.000
+if(isset($ndata_1)&&$ndata_1>=10001){
+	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+}else{
 	
-	
-	
-	<div class="col-sm-12">
-		<div class="box">
-			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ruta</h5>	
-			</header>
-			<div class="table-responsive">
-				<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-				<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>	
+	//obtengo la cantidad real de sensores
+	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
+
+
+	//Se traen todos los registros
+	$SIS_query = 'idTabla, GeoLatitud, GeoLongitud, GeoVelocidad, HoraSistema, Sensor_1, Sensor_2, Sensor_3';
+	$SIS_join  = '';
+	$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
+	$arrEquipos = array();
+	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
+
+	/*****************************************/	
+	if(isset($arrEquipos)){ 
+		/*****************************************/	
+		//Variable para almacenar los recorridos
+		$Temp_1   = '';
+		$arrData  = array();
+		//recorro los resultados
+		foreach ($arrEquipos as $med) {
+			//Se obtiene la fecha
+			$Temp_1 .= "'".$med['HoraSistema']."',";
+			
+			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$med['Sensor_1'];    }else{ $arrData[1]['Value'] = $med['Sensor_1']; }
+			if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$med['Sensor_2'];     }else{ $arrData[2]['Value'] = $med['Sensor_2']; }
+			if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){ $arrData[3]['Value'] .= ", ".$med['Sensor_3'];   }else{ $arrData[3]['Value'] = $med['Sensor_3']; }
+			if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){ $arrData[4]['Value'] .= ", ".$med['GeoVelocidad'];   }else{ $arrData[4]['Value'] = $med['GeoVelocidad']; }
+		}
+
+		$arrData[1]['Name'] = "'Caudal Derecho'";
+		$arrData[2]['Name'] = "'Caudal Izquierdo'";
+		$arrData[3]['Name'] = "'Nivel Estanque'";
+		$arrData[4]['Name'] = "'Velocidad'";
 		
-				<div class="col-sm-12">
-					<div class="row">
-						<?php
-						//Si no existe una ID se utiliza una por defecto
-						if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
-							$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
-							alert_post_data(4,2,2, $Alert_Text);
-						}else{
-							$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; 
-							
-							/********************************************************************/
-							//solo mostrar aplicaciones
-							if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''&&$_GET['idOpciones']==1){
-								/********************************************************************/
-								//Caudales
-								echo '
-								<script>				
-									google.charts.setOnLoadCallback(drawChart_caudales);
-
-									function drawChart_caudales() {
-										var data_caud = new google.visualization.DataTable();
-										data_caud.addColumn("string", "Hora"); 
-										data_caud.addColumn("number", "Caudal Derecho");
-										data_caud.addColumn("number", "Caudal Izquierdo"); 
-										
-										data_caud.addRows(['.$arrMedTractores['caudales'].']);
-
-										var options1 = {
-											title: "Grafico Caudal / Homogeneidad de '.$arrRutas[0]['NombreEquipo'].'",
-											hAxis: {title: "Hora"},
-											vAxis: { title: "Litros * Minutos" },
-											width: $(window).width()*0.95,
-											height: 300,
-											curveType: "function",
-											colors: ["#FFB347", "#8DB652","#f5b75f","#ec693c"]
-										};
-										var chart1 = new google.visualization.LineChart(document.getElementById("chart_caudales"));
-											chart1.draw(data_caud, options1);
-									}
-								</script> 
-								<div id="chart_caudales" style="height: 300px; width: 100%;"></div>';
+		
+		?>
+		
+		
+		
+		<div class="col-sm-12">
+			<div class="box">
+				<header>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ruta</h5>	
+				</header>
+				<div class="table-responsive">
+					<div class="col-sm-12">
+						<div class="row">
+							<?php
+							//Si no existe una ID se utiliza una por defecto
+							if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
+								$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+								alert_post_data(4,2,2, $Alert_Text);
+							}else{
+								$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; 
 								
 								/********************************************************************/
-								//Nivel Estanque
-								echo '
-								<script>				
-									google.charts.setOnLoadCallback(drawChart_niveles);
+								//solo mostrar aplicaciones
+								if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''&&$_GET['idOpciones']==1){
+									
+									/*******************************************************************************/
+									//las fechas
+									$Graphics_xData      ='var xData = [['.$Temp_1.'],['.$Temp_1.'],];';
+									//los valores
+									$Graphics_yData      ='var yData = [['.$arrData[1]['Value'].'],['.$arrData[2]['Value'].'],];';
+									//los nombres
+									$Graphics_names      = 'var names = ['.$arrData[1]['Name'].','.$arrData[2]['Name'].',];';
+									//los tipos
+									$Graphics_types      = "var types = ['','',];";
+									//si lleva texto en las burbujas
+									$Graphics_texts      = "var texts = [[],[],];";
+									//los colores de linea
+									$Graphics_lineColors = "var lineColors = ['','',];";
+									//los tipos de linea
+									$Graphics_lineDash   = "var lineDash = ['','',];";
+									//los anchos de la linea
+									$Graphics_lineWidth  = "var lineWidth = ['','',];";	
 
-									function drawChart_niveles() {
-										var data_niveles = new google.visualization.DataTable();
-										data_niveles.addColumn("string", "Hora"); 
-										data_niveles.addColumn("number", "Nivel Estanque");
+									$gr_tittle = 'Grafico Caudal / Homogeneidad de '.$rowEquipo['NombreEquipo'];
+									$gr_unimed = 'Litros * Minutos';
+									echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+									/*******************************************************************************/
+									//las fechas
+									$Graphics_xData      ='var xData = [['.$Temp_1.'],];';
+									//los valores
+									$Graphics_yData      ='var yData = [['.$arrData[3]['Value'].'],];';
+									//los nombres
+									$Graphics_names      = 'var names = ['.$arrData[3]['Name'].',];';
+									//los tipos
+									$Graphics_types      = "var types = ['',];";
+									//si lleva texto en las burbujas
+									$Graphics_texts      = "var texts = [[],];";
+									//los colores de linea
+									$Graphics_lineColors = "var lineColors = ['',];";
+									//los tipos de linea
+									$Graphics_lineDash   = "var lineDash = ['',];";
+									//los anchos de la linea
+									$Graphics_lineWidth  = "var lineWidth = ['',];";	
+
+									$gr_tittle = 'Grafico Nivel Estanque de '.$rowEquipo['NombreEquipo'];
+									$gr_unimed = '% de llenado';
+									echo GraphLinear_1('graphLinear_2', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+									/*******************************************************************************/
+									//las fechas
+									$Graphics_xData      ='var xData = [['.$Temp_1.'],];';
+									//los valores
+									$Graphics_yData      ='var yData = [['.$arrData[4]['Value'].'],];';
+									//los nombres
+									$Graphics_names      = 'var names = ['.$arrData[4]['Name'].',];';
+									//los tipos
+									$Graphics_types      = "var types = ['',];";
+									//si lleva texto en las burbujas
+									$Graphics_texts      = "var texts = [[],];";
+									//los colores de linea
+									$Graphics_lineColors = "var lineColors = ['',];";
+									//los tipos de linea
+									$Graphics_lineDash   = "var lineDash = ['',];";
+									//los anchos de la linea
+									$Graphics_lineWidth  = "var lineWidth = ['',];";	
+
+									$gr_tittle = 'Grafico Velocidades de '.$rowEquipo['NombreEquipo'];
+									$gr_unimed = 'Km * hr';
+									echo GraphLinear_1('graphLinear_3', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+									
+								} ?>
+								
+								<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+								
+								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+								
+								<script>
+									
+									var map;
+									var marker;
+									var speed = 500; // km/h
+									var delay = 100;
+									
+									var locations = [ 
+										<?php foreach ( $arrEquipos as $pos ) { 
+											if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){?>
+											['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
+										<?php } 
+										}?>
+										];
+
+
+									/* ************************************************************************** */
+									function initialize() {
 										
-										data_niveles.addRows(['.$arrMedTractores['niveles'].']);
-
-										var options2 = {
-											title: "Grafico Nivel Estanque de '.$arrRutas[0]['NombreEquipo'].'",
-											hAxis: {title: "Hora"},
-											vAxis: { title: "% de llenado" },
-											width: $(window).width()*0.95,
-											height: 300,
-											curveType: "function",
-											colors: ["#FFB347", "#8DB652","#f5b75f","#ec693c"]
+										var myOptions = {
+											zoom: 19,
+											center: new google.maps.LatLng(locations[0][1], locations[0][2]),
+											zoomControl: true,
+											scaleControl: false,
+											scrollwheel: false,
+											disableDoubleClickZoom: true,
+											mapTypeId: google.maps.MapTypeId.SATELLITE
 										};
-										var chart2 = new google.visualization.LineChart(document.getElementById("chart_niveles"));
-											chart2.draw(data_niveles, options2);
-									}
-								</script> 
-								<div id="chart_niveles" style="height: 300px; width: 100%;"></div>';
-								
-								/********************************************************************/
-								//Velocidades
-								echo '
-								<script>				
-									google.charts.setOnLoadCallback(drawChart_velocidades);
-
-									function drawChart_velocidades() {
-										var data_vel = new google.visualization.DataTable();
-										data_vel.addColumn("string", "Hora"); 
-										data_vel.addColumn("number", "Velocidad");
+										map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 										
-										data_vel.addRows(['.$arrMedTractores['velocidades'].']);
-
-										var options3 = {
-											title: "Grafico Velocidades de '.$arrRutas[0]['NombreEquipo'].'",
-											hAxis: {title: "Hora"},
-											vAxis: { title: "Km * hr" },
-											width: $(window).width()*0.95,
-											height: 300,
-											curveType: "function",
-											colors: ["#FFB347", "#8DB652","#f5b75f","#ec693c"]
-										};
-										var chart3 = new google.visualization.LineChart(document.getElementById("chart_velocidades"));
-											chart3.draw(data_vel, options3);
-									}
-								</script> 
-								<div id="chart_velocidades" style="height: 300px; width: 100%;"></div>';
-
-							} ?>
-							
-							<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-							
-							<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-							
-							<script>
+										//Se llama a la ruta
+										RutasAlternativas();
+										//Se llama al marcador y se anima
+										marker = new google.maps.Marker({
+											position	: new google.maps.LatLng(locations[0][1], locations[0][2]),
+											map			: map,
+											animation 	: google.maps.Animation.DROP,
+											icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
+										});
+										
+										google.maps.event.addListenerOnce(map, 'idle', function()
+										{
+											animateMarker(marker, [
+												<?php foreach ( $arrEquipos as $pos ) { ?>
+													[<?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
+												<?php } ?>
+											], speed);
+										})
 								
-								var map;
-								var marker;
-								var speed = 500; // km/h
-								var delay = 100;
-								
-								var locations = [ 
-									<?php foreach ( $arrRutas as $pos ) { 
-										if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){?>
-										['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
-									<?php } 
-									}?>
-									];
-
-
-								/* ************************************************************************** */
-								function initialize() {
-									
-									var myOptions = {
-										zoom: 19,
-										center: new google.maps.LatLng(locations[0][1], locations[0][2]),
-										zoomControl: true,
-										scaleControl: false,
-										scrollwheel: false,
-										disableDoubleClickZoom: true,
-										mapTypeId: google.maps.MapTypeId.SATELLITE
-									};
-									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-									
-									//Se llama a la ruta
-									RutasAlternativas();
-									//Se llama al marcador y se anima
-									marker = new google.maps.Marker({
-										position	: new google.maps.LatLng(locations[0][1], locations[0][2]),
-										map			: map,
-										animation 	: google.maps.Animation.DROP,
-										icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
-									});
-									
-									google.maps.event.addListenerOnce(map, 'idle', function()
-									{
-										animateMarker(marker, [
-											<?php foreach ( $arrRutas as $pos ) { ?>
-												[<?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
-											<?php } ?>
-										], speed);
-									})
-							
-								}
-								
-								/* ************************************************************************** */
-								function RutasAlternativas() {
-									
-									var route=[];
-									var tmp;
-									
-									for(var i in locations){
-										tmp=new google.maps.LatLng(locations[i][1], locations[i][2]);
-										route.push(tmp);
 									}
 									
-									var drawn = new google.maps.Polyline({
-										map: map,
-										path: route,
-										strokeColor: 'blue',
-										strokeOpacity: 1,
-										strokeWeight: 5
-									});
-								}
-								/* ************************************************************************** */
-								function animateMarker(marker, coords, km_h){
-									var target = 0;
-									var targetx = 0;
-									var km_h = km_h || 50;
-									coords.push([locations[0][1], locations[0][2]]);
-									goToPoint();
-									
-									function goToPoint(){
-										var lat = marker.position.lat();
-										var lng = marker.position.lng();
-										var step = (km_h * 1000 * delay) / 3600000; // in meters
+									/* ************************************************************************** */
+									function RutasAlternativas() {
 										
-										var dest = new google.maps.LatLng(
-										coords[target][0], coords[target][1]);
+										var route=[];
+										var tmp;
 										
-										var distance =
-										google.maps.geometry.spherical.computeDistanceBetween(
-										dest, marker.position); // in meters
-										
-										var numStep = distance / step;
-										let i = 0;
-										var deltaLat = (coords[target][0] - lat) / numStep;
-										var deltaLng = (coords[target][1] - lng) / numStep;
-										
-										function moveMarker(){
-											lat += deltaLat;
-											lng += deltaLng;
-											i += step;
-											
-											if (i < distance){
-												marker.setPosition(new google.maps.LatLng(lat, lng));
-												setTimeout(moveMarker, delay);
-											}else{   
-												if(targetx==0){
-													marker.setPosition(dest);
-													target++;
-													if (target == coords.length){ target = 0; }
-													setTimeout(goToPoint, delay);
-													targetx=1;
-												}
-											}
-											 
+										for(var i in locations){
+											tmp=new google.maps.LatLng(locations[i][1], locations[i][2]);
+											route.push(tmp);
 										}
-										//centralizo el mapa en base al ultimo dato obtenido
-										map.panTo(marker.getPosition());
-										//muevo el marcador
-										moveMarker();
+										
+										var drawn = new google.maps.Polyline({
+											map: map,
+											path: route,
+											strokeColor: 'blue',
+											strokeOpacity: 1,
+											strokeWeight: 5
+										});
+									}
+									/* ************************************************************************** */
+									function animateMarker(marker, coords, km_h){
+										var target = 0;
+										var targetx = 0;
+										var km_h = km_h || 50;
+										coords.push([locations[0][1], locations[0][2]]);
+										goToPoint();
+										
+										function goToPoint(){
+											var lat = marker.position.lat();
+											var lng = marker.position.lng();
+											var step = (km_h * 1000 * delay) / 3600000; // in meters
+											
+											var dest = new google.maps.LatLng(
+											coords[target][0], coords[target][1]);
+											
+											var distance =
+											google.maps.geometry.spherical.computeDistanceBetween(
+											dest, marker.position); // in meters
+											
+											var numStep = distance / step;
+											let i = 0;
+											var deltaLat = (coords[target][0] - lat) / numStep;
+											var deltaLng = (coords[target][1] - lng) / numStep;
+											
+											function moveMarker(){
+												lat += deltaLat;
+												lng += deltaLng;
+												i += step;
+												
+												if (i < distance){
+													marker.setPosition(new google.maps.LatLng(lat, lng));
+													setTimeout(moveMarker, delay);
+												}else{   
+													if(targetx==0){
+														marker.setPosition(dest);
+														target++;
+														if (target == coords.length){ target = 0; }
+														setTimeout(goToPoint, delay);
+														targetx=1;
+													}
+												}
+												 
+											}
+											//centralizo el mapa en base al ultimo dato obtenido
+											map.panTo(marker.getPosition());
+											//muevo el marcador
+											moveMarker();
+											
+										}
 										
 									}
-									
-								}
-								/* ************************************************************************** */
-								google.maps.event.addDomListener(window, "load", initialize());
-							</script>
-				
-						<?php } ?>
+									/* ************************************************************************** */
+									google.maps.event.addDomListener(window, "load", initialize());
+								</script>
+					
+							<?php } ?>
+						</div>
 					</div>
-				</div>
-				
-				
-				
-			</div>	
+					
+					
+					
+				</div>	
+			</div>
 		</div>
-	</div>
-<?php }else{ 
-	$Alert_Text  = 'No hay registros relacionados al equipo seleccionado entre las fechas ingresadas';
-	alert_post_data(4,2,2, $Alert_Text);
-} ?>
-
+	<?php }else{ 
+		$Alert_Text  = 'No hay registros relacionados al equipo seleccionado entre las fechas ingresadas';
+		alert_post_data(4,2,2, $Alert_Text);
+	} ?>
+<?php } ?>
 
 
 
@@ -388,8 +351,8 @@ alert_post_data(2,1,1, $Alert_Text);
 				<?php 
 				//Se verifican si existen los datos
 				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($f_termino)) {     $x2  = $f_termino;    }else{$x2  = '';}
-				if(isset($h_inicio)) {      $x3  = $h_inicio;     }else{$x3  = '';}
+				if(isset($h_inicio)) {      $x2  = $h_inicio;     }else{$x2  = '';}
+				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = '';}
 				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
 				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = '';}
 				if(isset($idOpciones)) {    $x6  = $idOpciones;   }else{$x6  = '';}
@@ -397,8 +360,8 @@ alert_post_data(2,1,1, $Alert_Text);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
-				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
-				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x3, 1, 1);
+				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x2, 1, 1);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){

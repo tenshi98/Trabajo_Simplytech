@@ -22,84 +22,39 @@ require_once 'core/Web.Header.Views.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
+$SIS_where = "telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $z .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $z .= " AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $SIS_where .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $SIS_where .= " AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$z.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
+	$SIS_where.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
-/**********************************************************/
+$SIS_where .=" GROUP BY cross_predios_listado_zonas.idPredio, telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona, telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria";
+
+/****************************************/
 //Numero del sensor
 $NSensor = 1;
-/**********************************************************/
-// Se trae un listado con todos los datos separados por tractores
-$arrMediciones = array();
-$query = "SELECT 
+//consulto
+$SIS_query = '
 telemetria_listado.Nombre AS EquipoNombre,
 cross_predios_listado.Nombre AS PredioNombre,
 cross_predios_listado_zonas.Nombre AS CuartelNombre,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoLatitud,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoLongitud,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor." AS CantidadMuestra					
-
-FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona     = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona
+telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.GeoLatitud,
+telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.GeoLongitud,
+telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.' AS CantidadMuestra';
+$SIS_join  = '
+LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona     = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idZona
 LEFT JOIN `cross_predios_listado`         ON cross_predios_listado.idPredio         = cross_predios_listado_zonas.idPredio
-LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria        = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
+LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria        = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
+$SIS_order = 'cross_predios_listado_zonas.idPredio ASC, telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idZona ASC, telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria ASC LIMIT 10000';
+$arrMediciones = array();
+$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');
 
-".$z."
-
-GROUP BY cross_predios_listado_zonas.idPredio, 
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-
-ORDER BY cross_predios_listado_zonas.idPredio ASC, 
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona ASC,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria ASC
-
-LIMIT 10000
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMediciones,$row );
-}
-
-//Se traen las rutas
+/*******************************************************/
+//consulto
 $arrPuntos = array();
-$query = "SELECT idUbicaciones, Latitud, Longitud
-FROM `cross_predios_listado_zonas_ubicaciones`
-WHERE idZona = ".$_GET['idZona']."
-ORDER BY idUbicaciones ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPuntos,$row );
-}
+$arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_predios_listado_zonas_ubicaciones', '', 'idZona ='.$_GET['idZona'], 'idUbicaciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPuntos');
 
 ?>
 
@@ -114,16 +69,14 @@ array_push( $arrPuntos,$row );
 	</div>
 	
 	<div class="row invoice-info">
-		<?php echo '
-			<div class="col-sm-4 invoice-col">
-				<strong>Identificacion</strong>
-				<address>
-					Equipo: '.$arrMediciones[0]['EquipoNombre'].'<br/>
-					Predio: '.$arrMediciones[0]['PredioNombre'].'<br/>
-					Cuartel: '.$arrMediciones[0]['CuartelNombre'].'<br/>
-				</address>
-			</div>';
-		?>					
+		<div class="col-sm-4 invoice-col">
+			<strong>Identificacion</strong>
+			<address>
+				Equipo: <?php echo $arrMediciones[0]['EquipoNombre']; ?><br/>
+				Predio: <?php echo$arrMediciones[0]['PredioNombre']; ?><br/>
+				Cuartel: <?php echo$arrMediciones[0]['CuartelNombre']; ?><br/>
+			</address>
+		</div>					
 	</div>
 	
 	<div class="row">
@@ -189,18 +142,16 @@ array_push( $arrPuntos,$row );
 							?>
 						];
 							
-								
-								
-									// Construct the polygon.
-									var bermudaTriangle = new google.maps.Polygon({
-										paths: triangleCoords,
-										strokeColor: '#FF0000',
-										strokeOpacity: 0.8,
-										strokeWeight: 2,
-										fillColor: '#FF0000',
-										fillOpacity: 0
-									});
-									bermudaTriangle.setMap(map);
+						// Construct the polygon.
+						var bermudaTriangle = new google.maps.Polygon({
+							paths: triangleCoords,
+							strokeColor: '#FF0000',
+							strokeOpacity: 0.8,
+							strokeWeight: 2,
+							fillColor: '#FF0000',
+							fillOpacity: 0
+						});
+						bermudaTriangle.setMap(map);
 
 					}
 

@@ -41,69 +41,54 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE ".$x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = $x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$z.=" AND ".$x_table.".Fecha BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
+	$SIS_where.= " AND ".$x_table.".Fecha BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
-	$z.=" AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
+	$SIS_where.= " AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
 }
 /**********************************************************/
 // Se trae un listado con todos los datos
+$SIS_query = 
+$x_table.'.Fecha,
+'.$x_table.'.Hora,
+'.$x_table.'.TimeStamp,
+'.$x_table.'.Temperatura,
+'.$x_table.'.PuntoRocio,
+'.$x_table.'.PresionAtmos,
+'.$x_table.'.HorasBajoGrados,
+'.$x_table.'.Tiempo_Helada,
+'.$x_table.'.Dias_acumulado,
+'.$x_table.'.UnidadesFrio';
+$SIS_join  = '';
+$SIS_order = $x_table.'.Fecha ASC';
 $arrMediciones = array();
-$query = "SELECT 
-".$x_table.".Fecha,
-".$x_table.".Hora,
-".$x_table.".TimeStamp,
-".$x_table.".Temperatura,
-".$x_table.".PuntoRocio,
-".$x_table.".PresionAtmos,
-".$x_table.".HorasBajoGrados,
-".$x_table.".Tiempo_Helada,
-".$x_table.".Dias_acumulado,
-".$x_table.".UnidadesFrio
+$arrMediciones = db_select_array (false, $SIS_query, $x_table, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');
 
-FROM `".$x_table."`
-".$z."
-ORDER BY ".$x_table.".Fecha ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMediciones,$row );
-}
 
 //Variables
-$arrMed             = array();
-$counter            = 0;
-$Var_Temperatura    = '';
-$Var_Presion        = '';
-$Var_UnidadDeFrio   = '';
-$Var_DiasGradoAcum  = '';
-				
+$arrMed   = array();
+$counter  = 0;
+$Temp_1   = '';
+$arrData  = array();
+
+			
 //recorro los datos
 foreach ($arrMediciones as $med) {
 	//verifico que exista fecha
 	if(isset($med['Fecha'])&&$med['Fecha']!='0000-00-00'){
+		
 		//Se obtiene la fecha
-		$z_date  = "'".Fecha_estandar($med['Fecha'])." - ".Hora_estandar($med['Hora'])."'";
-		//se arman las cadenas
-		$Var_Temperatura    .= '['.$z_date.', '.$med['Temperatura'].', '.$med['PuntoRocio'].'],';
-		$Var_Presion        .= '['.$z_date.', '.$med['PresionAtmos'].'],';
-		$Var_UnidadDeFrio   .= '['.$z_date.', '.$med['UnidadesFrio'].'],';
-		$Var_DiasGradoAcum  .= '['.$z_date.', '.$med['Dias_acumulado'].'],';
+		$Temp_1 .= "'".Fecha_estandar($med['Fecha'])." - ".$med['Hora']."',";
+		
+		if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$med['Temperatura'];    }else{ $arrData[1]['Value'] = $med['Temperatura']; }
+		if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$med['PuntoRocio'];     }else{ $arrData[2]['Value'] = $med['PuntoRocio']; }
+		if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){ $arrData[3]['Value'] .= ", ".$med['PresionAtmos'];   }else{ $arrData[3]['Value'] = $med['PresionAtmos']; }
+		if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){ $arrData[4]['Value'] .= ", ".$med['UnidadesFrio'];   }else{ $arrData[4]['Value'] = $med['UnidadesFrio']; }
+		if(isset($arrData[5]['Value'])&&$arrData[5]['Value']!=''){ $arrData[5]['Value'] .= ", ".$med['Dias_acumulado']; }else{ $arrData[5]['Value'] = $med['Dias_acumulado']; }
 		
 		//verifico cambio de dia
 		if((isset($arrMed[$counter]['Fecha'])&&$arrMed[$counter]['Fecha']!=$med['Fecha']) OR $counter==0){
@@ -135,8 +120,17 @@ foreach ($arrMediciones as $med) {
 		}
 	}
 }
-								
+
+$arrData[1]['Name'] = "'Temperatura'";
+$arrData[2]['Name'] = "'Punto de Rocio'";
+$arrData[3]['Name'] = "'Presion Atmosferica'";
+$arrData[4]['Name'] = "'Unidades de Frio'";
+$arrData[5]['Name'] = "'Acumulado Dias Grado'";
+
+
+							
 ?>
+
 <style>
 #loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
 </style>
@@ -228,196 +222,161 @@ document.getElementById("loading").style.display = "none";
 <?php 
 //Se verifica si se pidieron los graficos
 if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">google.charts.load('current', {'packages':['line','corechart']});</script>
 	
 	<div class="col-sm-12">
-		<div class="box">
-			<header>
+		<div class="box">	
+			<header>		
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-				<h5> Graficos</h5>
+				<h5>Graficos</h5>
 			</header>
-			<div class="table-responsive" id="grf">	
-				<script>
-					google.charts.setOnLoadCallback(drawTemperatura);
-					google.charts.setOnLoadCallback(drawPresion);
-					google.charts.setOnLoadCallback(drawUnidadDeFrio);
-					google.charts.setOnLoadCallback(drawDiasGradoAcum);
-					/*********************************************************/
-					function drawTemperatura() {
-						var data_1 = new google.visualization.DataTable();
-						data_1.addColumn('string', 'Fecha');
-						data_1.addColumn('number', 'Temperatura (°C)');
-						data_1.addColumn('number', 'Punto de Rocio (°C)');
-						data_1.addRows([<?php echo $Var_Temperatura; ?>]);
-						
-						var chart_1 = new google.charts.Line(document.getElementById('chart_Temperatura'));
+			<div class="table-responsive"> 
+				<div class="col-sm-12" id="grf">
+					<?php
+					/*******************************************************************************/
+					//las fechas
+					$Graphics_xData      ='var xData = [['.$Temp_1.'],['.$Temp_1.'],];';
+					//los valores
+					$Graphics_yData      ='var yData = [['.$arrData[1]['Value'].'],['.$arrData[2]['Value'].'],];';
+					//los nombres
+					$Graphics_names      = 'var names = ['.$arrData[1]['Name'].','.$arrData[2]['Name'].',];';
+					//los tipos
+					$Graphics_types      = "var types = ['','',];";
+					//si lleva texto en las burbujas
+					$Graphics_texts      = "var texts = [[],[],];";
+					//los colores de linea
+					$Graphics_lineColors = "var lineColors = ['','',];";
+					//los tipos de linea
+					$Graphics_lineDash   = "var lineDash = ['','',];";
+					//los anchos de la linea
+					$Graphics_lineWidth  = "var lineWidth = ['','',];";	
 
-						var options_1 = {
-							chart: {
-								title: 'Temperatura y Punto de Rocio'
-							},
-							series: {
-								// Gives each series an axis name that matches the Y-axis below.
-								0: {axis: 'Temperatura (°C)'},
-								1: {axis: 'Punto de Rocio (°C)'}
-							},
-							axes: {
-								// Adds labels to each axis; they don't have to match the axis names.
-								y: {
-									Temps: {label: 'Temperatura (°C)'},
-									Temps: {label: 'Punto de Rocio (°C)'}
-								}
-							}
-						};
+					$gr_tittle = 'Temperatura y Punto de Rocio';
+					$gr_unimed = '(°C)';
+					echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+					/*******************************************************************************/
+					//las fechas
+					$Graphics_xData      ='var xData = [['.$Temp_1.'],];';
+					//los valores
+					$Graphics_yData      ='var yData = [['.$arrData[3]['Value'].'],];';
+					//los nombres
+					$Graphics_names      = 'var names = ['.$arrData[3]['Name'].',];';
+					//los tipos
+					$Graphics_types      = "var types = ['',];";
+					//si lleva texto en las burbujas
+					$Graphics_texts      = "var texts = [[],];";
+					//los colores de linea
+					$Graphics_lineColors = "var lineColors = ['',];";
+					//los tipos de linea
+					$Graphics_lineDash   = "var lineDash = ['',];";
+					//los anchos de la linea
+					$Graphics_lineWidth  = "var lineWidth = ['',];";	
 
-						chart_1.draw(data_1, options_1);
-					}
-					/*********************************************************/
-					function drawPresion() {
-						var data_2 = new google.visualization.DataTable();
-						data_2.addColumn('string', 'Fecha');
-						data_2.addColumn('number', 'Presion Atmosferica (hPa)');
-						data_2.addRows([<?php echo $Var_Presion; ?>]);
-						
-						var chart_2 = new google.charts.Line(document.getElementById('chart_Presion'));
+					$gr_tittle = 'Presion Atmosferica';
+					$gr_unimed = '(hPa)';
+					echo GraphLinear_1('graphLinear_2', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+					/*******************************************************************************/
+					//las fechas
+					$Graphics_xData      ='var xData = [['.$Temp_1.'],];';
+					//los valores
+					$Graphics_yData      ='var yData = [['.$arrData[4]['Value'].'],];';
+					//los nombres
+					$Graphics_names      = 'var names = ['.$arrData[4]['Name'].',];';
+					//los tipos
+					$Graphics_types      = "var types = ['',];";
+					//si lleva texto en las burbujas
+					$Graphics_texts      = "var texts = [[],];";
+					//los colores de linea
+					$Graphics_lineColors = "var lineColors = ['',];";
+					//los tipos de linea
+					$Graphics_lineDash   = "var lineDash = ['',];";
+					//los anchos de la linea
+					$Graphics_lineWidth  = "var lineWidth = ['',];";	
 
-						var options_2 = {
-							chart: {
-								title: 'Presion Atmosferica'
-							},
-							series: {
-								// Gives each series an axis name that matches the Y-axis below.
-								0: {axis: 'Presion Atmosferica (hPa)'}
-							},
-							axes: {
-								// Adds labels to each axis; they don't have to match the axis names.
-								y: {
-									Temps: {label: 'Presion Atmosferica (hPa)'}
-								}
-							}
-						};
+					$gr_tittle = 'Unidades de Frio';
+					$gr_unimed = 'Unidades Frio';
+					echo GraphLinear_1('graphLinear_3', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+					/*******************************************************************************/
+					//las fechas
+					$Graphics_xData      ='var xData = [['.$Temp_1.'],];';
+					//los valores
+					$Graphics_yData      ='var yData = [['.$arrData[5]['Value'].'],];';
+					//los nombres
+					$Graphics_names      = 'var names = ['.$arrData[5]['Name'].',];';
+					//los tipos
+					$Graphics_types      = "var types = ['',];";
+					//si lleva texto en las burbujas
+					$Graphics_texts      = "var texts = [[],];";
+					//los colores de linea
+					$Graphics_lineColors = "var lineColors = ['',];";
+					//los tipos de linea
+					$Graphics_lineDash   = "var lineDash = ['',];";
+					//los anchos de la linea
+					$Graphics_lineWidth  = "var lineWidth = ['',];";	
 
-						chart_2.draw(data_2, options_2);
-					}
-					/*********************************************************/
-					function drawUnidadDeFrio() {
-						var data_3 = new google.visualization.DataTable();
-						data_3.addColumn('string', 'Fecha');
-						data_3.addColumn('number', 'Unidades de Frio');
-						data_3.addRows([<?php echo $Var_UnidadDeFrio; ?>]);
-						
-						var chart_3 = new google.charts.Line(document.getElementById('chart_UnidadDeFrio'));
-
-						var options_3 = {
-							chart: {
-								title: 'Unidades de Frio'
-							},
-							series: {
-								// Gives each series an axis name that matches the Y-axis below.
-								0: {axis: 'Unidades de Frio'}
-							},
-							axes: {
-								// Adds labels to each axis; they don't have to match the axis names.
-								y: {
-									Temps: {label: 'Unidades de Frio'}
-								}
-							}
-						};
-
-						chart_3.draw(data_3, options_3);
-					}
-					/*********************************************************/
-					function drawDiasGradoAcum() {
-						var data_4 = new google.visualization.DataTable();
-						data_4.addColumn('string', 'Fecha');
-						data_4.addColumn('number', 'Acumulado Dias Grado');
-						data_4.addRows([<?php echo $Var_DiasGradoAcum; ?>]);
-						
-						var chart_4 = new google.charts.Line(document.getElementById('chart_DiasGradoAcum'));
-
-						var options_4 = {
-							chart: {
-								title: 'Acumulado Dias Grado'
-							},
-							series: {
-								// Gives each series an axis name that matches the Y-axis below.
-								0: {axis: 'Acumulado Dias Grado'}
-							},
-							axes: {
-								// Adds labels to each axis; they don't have to match the axis names.
-								y: {
-									Temps: {label: 'Acumulado Dias Grado'}
-								}
-							}
-						};
-
-						chart_4.draw(data_4, options_4);
-					}
-					
-					
-
-
-				</script> 
-				<div id="chart_Temperatura"    style="width: 95%; height: 500px; margin-bottom:10px;"></div>
-				<div id="chart_Presion"        style="width: 95%; height: 500px; margin-bottom:10px;"></div>
-				<div id="chart_UnidadDeFrio"   style="width: 95%; height: 500px; margin-bottom:10px;"></div>
-				<div id="chart_DiasGradoAcum"  style="width: 95%; height: 500px; margin-bottom:10px;"></div>
+					$gr_tittle = 'Acumulado Dias Grado';
+					$gr_unimed = 'Acumulado Dias Grado';
+					echo GraphLinear_1('graphLinear_4', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
 									
+					
+					?>	
+				</div>
+						
+						
+				<div class="col-sm-12" style="display: none;">
+
+					<form method="post" id="make_pdf" action="informe_cross_weather_ejecutivo_to_pdf.php">
+						<input type="hidden" name="img_adj" id="img_adj" />
+						
+						<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
+						<input type="hidden" name="fecha_desde"   id="fecha_desde"  value="<?php echo $_GET['fecha_desde']; ?>" />
+						<input type="hidden" name="fecha_hasta"   id="fecha_hasta"  value="<?php echo $_GET['fecha_hasta']; ?>" />
+						<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ ?>
+							<input type="hidden" name="idTelemetria"   id="idTelemetria"  value="<?php echo $_GET['idTelemetria']; ?>" />
+						<?php }?>
+						
+						<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
+					
+					</form>
+
+					<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>		
+					<script>
+						var node = document.getElementById('grf');
+								
+						function sendDatatoSRV(img) {
+							$('#img_adj').val(img);
+							//$('#img_adj').val($('#img-out').html());
+							$('#make_pdf').submit();
+							//oculto el loader
+							document.getElementById("loading").style.display = "none";
+						}
+						function Export() {
+							//muestro el loader
+							document.getElementById("loading").style.display = "block";
+							//Exporto
+							setTimeout(
+								function(){
+									domtoimage.toPng(node)
+									.then(function (dataUrl) {
+										var img = new Image();
+										img.src = dataUrl;
+										//document.getElementById('img-out').appendChild(img);
+										//alert(img.src);
+										sendDatatoSRV(img.src);
+									})
+									.catch(function (error) {
+										console.error('oops, something went wrong!', error);
+										alert('No se puede exportar!');
+										document.getElementById("loading").style.display = "none";
+									});		
+								}
+							, 3000);
+						}
+					</script>	
+				</div>	
 			</div>
 		</div>
-	</div>
-			
-			
-	<div class="col-sm-12" style="display: none;">
-
-		<form method="post" id="make_pdf" action="informe_cross_weather_ejecutivo_to_pdf.php">
-			<input type="hidden" name="img_adj" id="img_adj" />
-			
-			<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
-			<input type="hidden" name="fecha_desde"   id="fecha_desde"  value="<?php echo $_GET['fecha_desde']; ?>" />
-			<input type="hidden" name="fecha_hasta"   id="fecha_hasta"  value="<?php echo $_GET['fecha_hasta']; ?>" />
-			<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ ?>
-				<input type="hidden" name="idTelemetria"   id="idTelemetria"  value="<?php echo $_GET['idTelemetria']; ?>" />
-			<?php }?>
-			
-			<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
-		
-		</form>
-
-		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>		
-		<script>
-			var node = document.getElementById('grf');
-					
-			function sendDatatoSRV(img) {
-				$('#img_adj').val(img);
-				//$('#img_adj').val($('#img-out').html());
-				$('#make_pdf').submit();
-				//oculto el loader
-				document.getElementById("loading").style.display = "none";
-			}
-			function Export() {
-				//muestro el loader
-				document.getElementById("loading").style.display = "block";
-				//Exporto
-				setTimeout(
-					function(){
-						domtoimage.toPng(node)
-						.then(function (dataUrl) {
-							var img = new Image();
-							img.src = dataUrl;
-							//document.getElementById('img-out').appendChild(img);
-							//alert(img.src);
-							sendDatatoSRV(img.src);
-						})
-						.catch(function (error) {
-							console.error('oops, something went wrong!', error);
-						});		
-					}
-				, 3000);
-			}
-		</script>	
 	</div>	
+	
 <?php } ?>
 
 

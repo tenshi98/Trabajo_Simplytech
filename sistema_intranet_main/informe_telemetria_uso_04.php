@@ -34,26 +34,7 @@ require_once 'core/Web.Header.Main.php';
 if ( ! empty($_GET['submit_filter']) ) { 
 //Se consultan datos
 $arrGruposRev = array();
-$query = "SELECT idGrupo, Nombre
-FROM `telemetria_listado_grupos_uso`
-WHERE idSupervisado=1
-ORDER BY Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGruposRev,$row );
-}
+$arrGruposRev = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', 'idSupervisado=1', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGruposRev');
 /**********************************************************/
 
 //numero sensores equipo
@@ -63,24 +44,8 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresRevisionGrupo_'.$i;
 }
 // consulto los datos
-$query = "SELECT Nombre 
-".$subquery."
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['idTelemetria'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowdata = db_select_data (false, 'Nombre,cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 /**********************************************************/
 //Se crean las columnas
 $arrColumnas = array(); 
@@ -96,46 +61,24 @@ foreach ($arrGruposRev as $sen) {
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_listado_historial_uso.idUso!=0";
+$SIS_where = "telemetria_listado_historial_uso.idUso!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){       $z.=" AND telemetria_listado_historial_uso.idTelemetria =".$_GET['idTelemetria'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){       $SIS_where.=" AND telemetria_listado_historial_uso.idTelemetria =".$_GET['idTelemetria'];}
 if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''){ 
-	$z.=" AND telemetria_listado_historial_uso.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
+	$SIS_where.=" AND telemetria_listado_historial_uso.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 /**********************************************************/
 
 //numero sensores equipo
-$N_Maximo_Sensores = 72;
 $subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	$subquery .= ',Horas_'.$i;
 }
 //se consulta
-$arrConsulta = array(); 
-$query = "SELECT Fecha, Horas_Sensor_activo
-".$subquery."
+$arrConsulta = array();
+$arrConsulta = db_select_array (false, 'Fecha, Horas_Sensor_activo'.$subquery, 'telemetria_listado_historial_uso', '', $SIS_where, 'telemetria_listado_historial_uso.Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
 
-FROM `telemetria_listado_historial_uso`
-".$z."
-ORDER BY telemetria_listado_historial_uso.Fecha ASC
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrConsulta,$row );
-}
 ?>
 
 
@@ -169,7 +112,12 @@ array_push( $arrConsulta,$row );
 							<td><?php echo gmdate("H:i:s", $con['Horas_Sensor_activo']);$t_s_activo = $t_s_activo + $con['Horas_Sensor_activo']; ?></td>
 							<?php foreach ($arrColumnas as $col) { 
 								echo '<td>'.gmdate("H:i:s", $con['Horas_'.$col['idGrupo']]).'</td>';
-								$arrSuma[$col['idGrupo']] = $arrSuma[$col['idGrupo']] + $con['Horas_'.$col['idGrupo']];
+								//verifico si existe
+								if(isset($arrSuma[$col['idGrupo']])&&$arrSuma[$col['idGrupo']]!=0){
+									$arrSuma[$col['idGrupo']] = $arrSuma[$col['idGrupo']] + $con['Horas_'.$col['idGrupo']];
+								}else{
+									$arrSuma[$col['idGrupo']] = $con['Horas_'.$col['idGrupo']];
+								}
 							} ?>
 						</tr>
 					<?php } ?> 
@@ -178,7 +126,12 @@ array_push( $arrConsulta,$row );
 						<td><strong><?php echo segundos2horas($t_s_activo); ?></strong></td>
 						<?php 
 						foreach ($arrColumnas as $col) { 
+							//verifico si existe
+							if(isset($arrSuma[$col['idGrupo']])&&$arrSuma[$col['idGrupo']]!=''){
 								echo '<td><strong>'.segundos2horas($arrSuma[$col['idGrupo']]).'</strong></td>';
+							}else{
+								echo '<td></td>';
+							}	
 						} ?>
 					</tr>
 					                   

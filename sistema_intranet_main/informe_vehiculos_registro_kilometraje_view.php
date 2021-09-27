@@ -15,33 +15,17 @@ require_once 'core/Web.Header.Views.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 vehiculos_listado.Nombre AS NombreEquipo,
-vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".FechaSistema,
-vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".HoraSistema,
-vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".GeoLatitud,
-vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".GeoLongitud,
-vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".GeoVelocidad,
-vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".GeoMovimiento
-
-FROM `vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual())."`
-LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".idVehiculo
- WHERE vehiculos_listado_tablarelacionada_".simpleDecode($_GET['idVehiculo'], fecha_actual()).".idTabla = ".simpleDecode($_GET['view'], fecha_actual())."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+vehiculos_listado_tablarelacionada_'.simpleDecode($_GET['idVehiculo'], fecha_actual()).'.FechaSistema,
+telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idVehiculo'], fecha_actual()).'.HoraSistema,
+telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idVehiculo'], fecha_actual()).'.GeoLatitud,
+telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idVehiculo'], fecha_actual()).'.GeoLongitud,
+telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idVehiculo'], fecha_actual()).'.GeoVelocidad,
+telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idVehiculo'], fecha_actual()).'.GeoMovimiento';
+$SIS_join  = 'LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_tablarelacionada_'.simpleDecode($_GET['idVehiculo'], fecha_actual()).'.idVehiculo';
+$SIS_where = 'vehiculos_listado_tablarelacionada_'.simpleDecode($_GET['idVehiculo'], fecha_actual()).'.idTabla = '.simpleDecode($_GET['view'], fecha_actual());
+$rowdata = db_select_data (false, $SIS_query, 'vehiculos_listado_tablarelacionada_'.simpleDecode($_GET['idVehiculo'], fecha_actual()), $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 
 ?>

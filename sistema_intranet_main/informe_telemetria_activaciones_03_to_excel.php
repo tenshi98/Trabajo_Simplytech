@@ -30,20 +30,18 @@ $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='
 
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_listado_historial_activaciones.idEstado=1";
+$SIS_where = "telemetria_listado_historial_activaciones.idEstado=1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){       $z.=" AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];}
-
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){    $SIS_where.= " AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];}
 if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino'] != ''){ 
-	$z.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
+	$SIS_where.= " AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
 }elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''){ 
-	$z.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.= " AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /**********************************************************/
 //se consulta
-$arrConsulta = array(); 
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado_historial_activaciones.idTelemetria,
 telemetria_listado_historial_activaciones.Fecha AS EquipoFecha,
 telemetria_listado_historial_activaciones.Hora AS EquipoHora,
@@ -58,31 +56,15 @@ telemetria_listado.Colacion_inicio AS EquipoColacion_inicio,
 telemetria_listado.Colacion_termino AS EquipoColacion_termino,
 telemetria_listado.Microparada AS EquipoMicroparada,
 
-telemetria_listado_contratos.Codigo AS ContratoCodigo
-
-FROM `telemetria_listado_historial_activaciones`
+telemetria_listado_contratos.Codigo AS ContratoCodigo';
+$SIS_join  = '
 LEFT JOIN `telemetria_listado`             ON telemetria_listado.idTelemetria          = telemetria_listado_historial_activaciones.idTelemetria
-LEFT JOIN `telemetria_listado_contratos`   ON telemetria_listado_contratos.idContrato  = telemetria_listado_historial_activaciones.idContrato
-".$z."
-ORDER BY telemetria_listado_historial_activaciones.idTelemetria ASC, 
-telemetria_listado_historial_activaciones.Fecha ASC, 
-telemetria_listado_historial_activaciones.Hora ASC
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `telemetria_listado_contratos`   ON telemetria_listado_contratos.idContrato  = telemetria_listado_historial_activaciones.idContrato';
+$SIS_order = 'telemetria_listado_historial_activaciones.idTelemetria ASC, telemetria_listado_historial_activaciones.Fecha ASC, telemetria_listado_historial_activaciones.Hora ASC';
+$arrConsulta = array();
+$arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_historial_activaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrConsulta');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrConsulta,$row );
-}
+
 
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();

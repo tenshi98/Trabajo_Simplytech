@@ -25,26 +25,25 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Inicia variable
-$z="WHERE telemetria_listado_error_fuera_linea.idFueraLinea>0"; 
-$z.=" AND telemetria_listado.id_Geo='2'";
+$SIS_where = "telemetria_listado_error_fuera_linea.idFueraLinea>0"; 
+$SIS_where.= " AND telemetria_listado.id_Geo='2'";
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=2";//CrossC			
+	$SIS_where .= " AND telemetria_listado.idTab=2";//CrossC			
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND telemetria_listado_error_fuera_linea.Fecha_inicio BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.= " AND telemetria_listado_error_fuera_linea.Fecha_inicio BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z.=" AND telemetria_listado_error_fuera_linea.idTelemetria='".$_GET['idTelemetria']."'";
+	$SIS_where.= " AND telemetria_listado_error_fuera_linea.idTelemetria='".$_GET['idTelemetria']."'";
 }
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND telemetria_listado_error_fuera_linea.idSistema=".$_GET['idSistema'];	
-
-// Se trae un listado con todos los elementos
-$arrErrores = array();
-$query = "SELECT 
+$SIS_where.= " AND telemetria_listado_error_fuera_linea.idSistema=".$_GET['idSistema'];	
+/********************************************************************/
+//Se consulta
+$SIS_query = '
 telemetria_listado_error_fuera_linea.idFueraLinea,
 telemetria_listado_error_fuera_linea.Fecha_inicio, 
 telemetria_listado_error_fuera_linea.Hora_inicio, 
@@ -52,27 +51,12 @@ telemetria_listado_error_fuera_linea.Fecha_termino,
 telemetria_listado_error_fuera_linea.Hora_termino, 
 telemetria_listado_error_fuera_linea.Tiempo,
 telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.id_Geo
+telemetria_listado.id_Geo';
+$SIS_join = "LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria";
+$SIS_order = 'idFueraLinea DESC';
+$arrErrores = array();
+$arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
-FROM `telemetria_listado_error_fuera_linea`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria
-".$z."
-ORDER BY idFueraLinea DESC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrErrores,$row );
-} 
 
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();

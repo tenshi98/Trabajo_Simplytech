@@ -48,12 +48,8 @@ if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']
 }
 
 //verifico el numero de datos antes de hacer la consulta
-$ndata_1 = db_select_nrows (false, 'telemetria_listado_historial_activaciones.idTelemetria', 
-							'telemetria_listado_historial_activaciones', 
-							'LEFT JOIN `telemetria_listado`             ON telemetria_listado.idTelemetria          = telemetria_listado_historial_activaciones.idTelemetria
-							 LEFT JOIN `telemetria_listado_contratos`   ON telemetria_listado_contratos.idContrato  = telemetria_listado_historial_activaciones.idContrato', 
-							$SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
-							
+$ndata_1 = db_select_nrows (false, 'idTelemetria', 'telemetria_listado_historial_activaciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
+	
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
@@ -158,267 +154,267 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		filtrar($arrConsulta, 'EquipoNombre');
 		foreach($arrConsulta as $categoria=>$permisos){ ?>
 					                               
-		<div class="col-sm-12">
-			<div class="box">
-				<header>
-					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Actividad del equipo <?php echo $categoria.' ('.$permisos[0]['EquipoJornada_inicio'].' a '.$permisos[0]['EquipoJornada_termino'].')'; ?></h5>
-				</header>
-				<div class="table-responsive">
-					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-						<thead>
-							<tr role="row">
-								<th>Equipo</th>
-								<th>Fecha</th>
-								<th>Contrato</th>
-								<th>Hora<br/>Inicio     <a title="Hora de inicio real del equipo (Hora Programada:<?php echo $permisos[0]['EquipoJornada_inicio']; ?> hrs)" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
-								<th>Hora<br/>Termino    <a title="Hora de termino real del equipo (Hora Programada:<?php echo $permisos[0]['EquipoJornada_termino']; ?> hrs)" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
-								<th>Tiempo<br/>Colacion <a title="Detencion para la hora de colacion programada entre las <?php echo $permisos[0]['EquipoColacion_inicio']; ?> y las <?php echo $permisos[0]['EquipoColacion_termino']; ?>" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
-								<th>Tiempo<br/>Muerto   <a title="Todas las detenciones superiores a <?php echo $permisos[0]['EquipoMicroparada']; ?> entre la hora de inicio y termino real del equipo" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
-								<th>Tiempo<br/>Perdido  <a title="Corresponde a la detencion entre la hora de inicio programada y la hora de inicio real, solo en el caso de que la hora de inicio real sea superior a la programada.Tambien corresponde a la detencion entre la hora de termino real y la hora de termino programada, solo en el caso de que la hora de termino real sea inferior a la programada" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
-								<th>Sobre<br/>Tiempo    <a title="Corresponde a la diferencia de tiempo entre la hora de inicio real y la programada, solo en el caso de que la hora de inicio real sea inferior a la programada. Tambien corresponde a la diferencia entre la hora de termino real y la programada, solo en el caso de que la hora de termino real sea superior a la programada " class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
-								<th>Detalles</th>
-							</tr>
-						</thead>	
-				
-								  
-						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<?php 
-							//Variables
-							$fecha              = '';
-							$HoraInicio         = '00:00:00';
-							$HoraTermino        = '00:00:00';
-							$TiempoColacionIni  = '00:00:00';
-							$TiempoColacionTer  = '00:00:00';
-							$TiempoColacionTot  = '00:00:00';
-							$TiempoMuerto       = '00:00:00';
-							$TiempoMuertoTemp   = '00:00:00';
-							$TiempoPerdido      = '00:00:00';
-							$SobreTiempo_1      = '00:00:00';
-							$SobreTiempo_2      = '00:00:00';
-							$colacion           = 0;
-							$FueraHorario       = 0;
-							//Recorrido
-							foreach ($permisos as $con) { 
-								//Contrato Codigo
-								$ContratoCodigo = $con['ContratoCodigo'];
+			<div class="col-sm-12">
+				<div class="box">
+					<header>
+						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Actividad del equipo <?php echo $categoria.' ('.$permisos[0]['EquipoJornada_inicio'].' a '.$permisos[0]['EquipoJornada_termino'].')'; ?></h5>
+					</header>
+					<div class="table-responsive">
+						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+							<thead>
+								<tr role="row">
+									<th>Equipo</th>
+									<th>Fecha</th>
+									<th>Contrato</th>
+									<th>Hora<br/>Inicio     <a title="Hora de inicio real del equipo (Hora Programada:<?php echo $permisos[0]['EquipoJornada_inicio']; ?> hrs)" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
+									<th>Hora<br/>Termino    <a title="Hora de termino real del equipo (Hora Programada:<?php echo $permisos[0]['EquipoJornada_termino']; ?> hrs)" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
+									<th>Tiempo<br/>Colacion <a title="Detencion para la hora de colacion programada entre las <?php echo $permisos[0]['EquipoColacion_inicio']; ?> y las <?php echo $permisos[0]['EquipoColacion_termino']; ?>" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
+									<th>Tiempo<br/>Muerto   <a title="Todas las detenciones superiores a <?php echo $permisos[0]['EquipoMicroparada']; ?> entre la hora de inicio y termino real del equipo" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
+									<th>Tiempo<br/>Perdido  <a title="Corresponde a la detencion entre la hora de inicio programada y la hora de inicio real, solo en el caso de que la hora de inicio real sea superior a la programada.Tambien corresponde a la detencion entre la hora de termino real y la hora de termino programada, solo en el caso de que la hora de termino real sea inferior a la programada" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
+									<th>Sobre<br/>Tiempo    <a title="Corresponde a la diferencia de tiempo entre la hora de inicio real y la programada, solo en el caso de que la hora de inicio real sea inferior a la programada. Tambien corresponde a la diferencia entre la hora de termino real y la programada, solo en el caso de que la hora de termino real sea superior a la programada " class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
+									<th>Detalles</th>
+								</tr>
+							</thead>	
+					
+									  
+							<tbody role="alert" aria-live="polite" aria-relevant="all">
+								<?php 
+								//Variables
+								$fecha              = '';
+								$HoraInicio         = '00:00:00';
+								$HoraTermino        = '00:00:00';
+								$TiempoColacionIni  = '00:00:00';
+								$TiempoColacionTer  = '00:00:00';
+								$TiempoColacionTot  = '00:00:00';
+								$TiempoMuerto       = '00:00:00';
+								$TiempoMuertoTemp   = '00:00:00';
+								$TiempoPerdido      = '00:00:00';
+								$SobreTiempo_1      = '00:00:00';
+								$SobreTiempo_2      = '00:00:00';
+								$colacion           = 0;
+								$FueraHorario       = 0;
+								//Recorrido
+								foreach ($permisos as $con) { 
+									//Contrato Codigo
+									$ContratoCodigo = $con['ContratoCodigo'];
 
-								/*****************************************************************/
-								//Verifico si esta dentro del mismo dia
-								if($fecha!=''&&$fecha==$con['EquipoFecha']){
-									
-									/***************************************/
-									//Verifico hora inicio
-									if($HoraInicio>$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
-										$HoraInicio = $con['EquipoHora'];
-									}
-									//verifico hora termino
-									if($HoraTermino<$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
-										$HoraTermino = $con['EquipoHora'];
-									}
-									/***************************************/
-									//verifico la hora de inicio de colacion
-									if($con['EquipoColacion_inicio']<=$con['EquipoHora']&&$con['EquipoColacion_termino']>=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
-										$TiempoColacionIni = $con['EquipoHora'];
-										$colacion = 1;
-									}
-									//se verifica el termino de la colacion
-									if($colacion==1&&$TiempoColacionTot=='00:00:00'&&$con['EquipoValor']==$con['EquipoActivacionValor']){
-										//reseteo
-										$colacion = 0;
-										$TiempoColacionTer = $con['EquipoHora'];
-										//Calculo colacion
-										$Tiempo = restahoras($TiempoColacionIni, $TiempoColacionTer);
-										if($Tiempo>'00:30:00'){
-											$TiempoColacionTot = $Tiempo;
+									/*****************************************************************/
+									//Verifico si esta dentro del mismo dia
+									if($fecha!=''&&$fecha==$con['EquipoFecha']){
+										
+										/***************************************/
+										//Verifico hora inicio
+										if($HoraInicio>$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
+											$HoraInicio = $con['EquipoHora'];
+										}
+										//verifico hora termino
+										if($HoraTermino<$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
+											$HoraTermino = $con['EquipoHora'];
+										}
+										/***************************************/
+										//verifico la hora de inicio de colacion
+										if($con['EquipoColacion_inicio']<=$con['EquipoHora']&&$con['EquipoColacion_termino']>=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
+											$TiempoColacionIni = $con['EquipoHora'];
+											$colacion = 1;
+										}
+										//se verifica el termino de la colacion
+										if($colacion==1&&$TiempoColacionTot=='00:00:00'&&$con['EquipoValor']==$con['EquipoActivacionValor']){
+											//reseteo
+											$colacion = 0;
+											$TiempoColacionTer = $con['EquipoHora'];
+											//Calculo colacion
+											$Tiempo = restahoras($TiempoColacionIni, $TiempoColacionTer);
+											if($Tiempo>'00:30:00'){
+												$TiempoColacionTot = $Tiempo;
+											}
+											
+										}
+										/***************************************/
+										//Verifico el tiempo muerto
+										if($con['EquipoValor']!=$con['EquipoActivacionValor']){
+											$TiempoMuertoTemp  = $con['EquipoHora'];
+										}
+										if($con['EquipoValor']==$con['EquipoActivacionValor']&&$TiempoMuertoTemp!='00:00:00'){
+											//calculo los tiempos
+											$Tiempo = restahoras($TiempoMuertoTemp ,$con['EquipoHora']);
+											//verifico que sea superior a la microparadas
+											if($Tiempo>=$con['EquipoMicroparada']){
+												$TiempoMuerto1 = sumahoras($TiempoMuerto,$Tiempo);
+												//validacion
+												if($TiempoMuerto1!='El dato ingresado no es una hora'){
+													$TiempoMuerto = $TiempoMuerto1;
+												}
+												//le resto el tiempo de colacion solo si el tiempo muerto es igual o superior
+												if($TiempoMuerto>=$TiempoColacionTot){
+													$TiempoMuerto = restahoras($TiempoColacionTot ,$TiempoMuerto);
+												}
+											}
 										}
 										
-									}
-									/***************************************/
-									//Verifico el tiempo muerto
-									if($con['EquipoValor']!=$con['EquipoActivacionValor']){
-										$TiempoMuertoTemp  = $con['EquipoHora'];
-									}
-									if($con['EquipoValor']==$con['EquipoActivacionValor']&&$TiempoMuertoTemp!='00:00:00'){
-										//calculo los tiempos
-										$Tiempo = restahoras($TiempoMuertoTemp ,$con['EquipoHora']);
-										//verifico que sea superior a la microparadas
-										if($Tiempo>=$con['EquipoMicroparada']){
-											$TiempoMuerto1 = sumahoras($TiempoMuerto,$Tiempo);
-											//validacion
-											if($TiempoMuerto1!='El dato ingresado no es una hora'){
-												$TiempoMuerto = $TiempoMuerto1;
-											}
-											//le resto el tiempo de colacion solo si el tiempo muerto es igual o superior
-											if($TiempoMuerto>=$TiempoColacionTot){
-												$TiempoMuerto = restahoras($TiempoColacionTot ,$TiempoMuerto);
-											}
+										/***************************************/
+										//Verifico el sobretiempo
+										if($SobreTiempo_1=='00:00:00'&&$con['EquipoJornada_inicio']>=$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
+											$SobreTiempo_1 = sumahoras($SobreTiempo_1, restahoras($con['EquipoHora'], $con['EquipoJornada_inicio']));
+										}
+										if($con['EquipoJornada_termino']<=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
+											$SobreTiempo_2 = restahoras($con['EquipoJornada_termino'],$con['EquipoHora'] );
+										}
+										
+										/***************************************/
+										//Verifico si tiene algun dato que figure como fuera de horario
+										if(isset($con['FueraHorario'])&&$con['FueraHorario']==1){
+											$FueraHorario++;
+										}
+										
+
+									/*****************************************************************/
+									//Si cambia de dia
+									}elseif($fecha!=''&&$fecha!=$con['EquipoFecha']){ 
+										
+										//Calculo de la perdida de tiempo
+										if($con['EquipoJornada_inicio']<=$HoraInicio){
+											$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($con['EquipoJornada_inicio'], $HoraInicio));
+										}
+										if($con['EquipoJornada_termino']>=$HoraTermino){
+											$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($HoraTermino, $con['EquipoJornada_termino'] ));
+										}
+									
+										?>
+										<tr class="odd">
+											<td><?php echo $categoria; ?></td>
+											<td><?php echo fecha_estandar($fecha); ?></td>
+											<td><?php echo $ContratoCodigo; ?></td>
+											<td><?php echo $HoraInicio; ?></td>
+											<td><?php echo $HoraTermino; ?></td>
+											<td><?php echo $TiempoColacionTot; ?></td>
+											<td><?php echo $TiempoMuerto; ?></td>
+											<td><?php echo $TiempoPerdido; ?></td>
+											<td><?php echo sumahoras($SobreTiempo_1,$SobreTiempo_2); ?></td>
+											<td>
+												<div class="btn-group" style="width: 105px;" >
+													<?php if ($rowlevel['level']>=1&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_historial_activaciones.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&cantSensores='.simpleEncode($con['EquipoN_Sensores'], fecha_actual()).$Ampx; ?>" title="Ver Amperes" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-file-text-o" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1&&$FueraHorario!=0&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&fueraHorario=true'; ?>" title="Ver Apagado por Amp." class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
+												</div>
+											</td>
+										</tr>
+									<?php
+										//redeclaro variables
+										$fecha              = $con['EquipoFecha'];
+										$HoraInicio         = $con['EquipoHora'];
+										$HoraTermino        = $con['EquipoHora'];
+										$TiempoColacionIni  = '00:00:00';
+										$TiempoColacionTer  = '00:00:00';
+										$TiempoColacionTot  = '00:00:00';
+										$TiempoMuerto       = '00:00:00';
+										$TiempoMuertoTemp   = '00:00:00';
+										$TiempoPerdido      = '00:00:00';
+										$SobreTiempo_1      = '00:00:00';
+										$SobreTiempo_2      = '00:00:00';
+										$colacion           = 0;
+										$FueraHorario       = 0;
+										/***************************************/
+										//Verifico el sobretiempo
+										if($SobreTiempo_1=='00:00:00'&&$con['EquipoJornada_inicio']>=$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
+											$SobreTiempo_1 = sumahoras($SobreTiempo_1, restahoras($con['EquipoHora'], $con['EquipoJornada_inicio']));
+										}
+										if($con['EquipoJornada_termino']<=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
+											$SobreTiempo_2 = restahoras($con['EquipoJornada_termino'],$con['EquipoHora'] );
+										}
+										/***************************************/
+										//Verifico si tiene algun dato que figure como fuera de horario
+										if(isset($con['FueraHorario'])&&$con['FueraHorario']==1){
+											$FueraHorario++;
+										}
+									/*****************************************************************/
+									//Primer dato
+									}else{
+										$fecha              = $con['EquipoFecha'];
+										$HoraInicio         = $con['EquipoHora'];
+										$HoraTermino        = $con['EquipoHora'];
+										$TiempoColacionIni  = '00:00:00';
+										$TiempoColacionTer  = '00:00:00';
+										$TiempoColacionTot  = '00:00:00';
+										$TiempoMuerto       = '00:00:00';
+										$TiempoMuertoTemp   = '00:00:00';
+										$TiempoPerdido      = '00:00:00';
+										$SobreTiempo_1      = '00:00:00';
+										$SobreTiempo_2      = '00:00:00';
+										$colacion           = 0;
+										$FueraHorario       = 0;
+										/***************************************/
+										//Verifico el sobretiempo
+										if($SobreTiempo_1=='00:00:00'&&$con['EquipoJornada_inicio']>=$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
+											$SobreTiempo_1 = sumahoras($SobreTiempo_1, restahoras($con['EquipoHora'], $con['EquipoJornada_inicio']));
+										}
+										if($con['EquipoJornada_termino']<=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
+											$SobreTiempo_2 = restahoras($con['EquipoJornada_termino'],$con['EquipoHora'] );
+										}
+										/***************************************/
+										//Verifico si tiene algun dato que figure como fuera de horario
+										if(isset($con['FueraHorario'])&&$con['FueraHorario']==1){
+											$FueraHorario++;
 										}
 									}
 									
-									/***************************************/
-									//Verifico el sobretiempo
-									if($SobreTiempo_1=='00:00:00'&&$con['EquipoJornada_inicio']>=$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
-										$SobreTiempo_1 = sumahoras($SobreTiempo_1, restahoras($con['EquipoHora'], $con['EquipoJornada_inicio']));
-									}
-									if($con['EquipoJornada_termino']<=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
-										$SobreTiempo_2 = restahoras($con['EquipoJornada_termino'],$con['EquipoHora'] );
-									}
+									$l_ejti = $con['EquipoJornada_inicio'];
+									$l_ejtt = $con['EquipoJornada_termino'];
+									$l_mp   = $con['EquipoMicroparada'];
+									$l_v1   = $con['EquipoValor'];
+									$l_v2   = $con['EquipoActivacionValor'];
 									
-									/***************************************/
-									//Verifico si tiene algun dato que figure como fuera de horario
-									if(isset($con['FueraHorario'])&&$con['FueraHorario']==1){
-										$FueraHorario++;
-									}
-									
-
-								/*****************************************************************/
-								//Si cambia de dia
-								}elseif($fecha!=''&&$fecha!=$con['EquipoFecha']){ 
-									
-									//Calculo de la perdida de tiempo
-									if($con['EquipoJornada_inicio']<=$HoraInicio){
-										$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($con['EquipoJornada_inicio'], $HoraInicio));
-									}
-									if($con['EquipoJornada_termino']>=$HoraTermino){
-										$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($HoraTermino, $con['EquipoJornada_termino'] ));
-									}
+								} 
 								
-									?>
-									<tr class="odd">
-										<td><?php echo $categoria; ?></td>
-										<td><?php echo fecha_estandar($fecha); ?></td>
-										<td><?php echo $ContratoCodigo; ?></td>
-										<td><?php echo $HoraInicio; ?></td>
-										<td><?php echo $HoraTermino; ?></td>
-										<td><?php echo $TiempoColacionTot; ?></td>
-										<td><?php echo $TiempoMuerto; ?></td>
-										<td><?php echo $TiempoPerdido; ?></td>
-										<td><?php echo sumahoras($SobreTiempo_1,$SobreTiempo_2); ?></td>
-										<td>
-											<div class="btn-group" style="width: 105px;" >
-												<?php if ($rowlevel['level']>=1&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_historial_activaciones.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&cantSensores='.simpleEncode($con['EquipoN_Sensores'], fecha_actual()).$Ampx; ?>" title="Ver Amperes" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-file-text-o" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=1&&$FueraHorario!=0&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&fueraHorario=true'; ?>" title="Ver Apagado por Amp." class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
-											</div>
-										</td>
-									</tr>
-								<?php
-									//redeclaro variables
-									$fecha              = $con['EquipoFecha'];
-									$HoraInicio         = $con['EquipoHora'];
-									$HoraTermino        = $con['EquipoHora'];
-									$TiempoColacionIni  = '00:00:00';
-									$TiempoColacionTer  = '00:00:00';
-									$TiempoColacionTot  = '00:00:00';
-									$TiempoMuerto       = '00:00:00';
-									$TiempoMuertoTemp   = '00:00:00';
-									$TiempoPerdido      = '00:00:00';
-									$SobreTiempo_1      = '00:00:00';
-									$SobreTiempo_2      = '00:00:00';
-									$colacion           = 0;
-									$FueraHorario       = 0;
-									/***************************************/
-									//Verifico el sobretiempo
-									if($SobreTiempo_1=='00:00:00'&&$con['EquipoJornada_inicio']>=$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
-										$SobreTiempo_1 = sumahoras($SobreTiempo_1, restahoras($con['EquipoHora'], $con['EquipoJornada_inicio']));
-									}
-									if($con['EquipoJornada_termino']<=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
-										$SobreTiempo_2 = restahoras($con['EquipoJornada_termino'],$con['EquipoHora'] );
-									}
-									/***************************************/
-									//Verifico si tiene algun dato que figure como fuera de horario
-									if(isset($con['FueraHorario'])&&$con['FueraHorario']==1){
-										$FueraHorario++;
-									}
-								/*****************************************************************/
-								//Primer dato
-								}else{
-									$fecha              = $con['EquipoFecha'];
-									$HoraInicio         = $con['EquipoHora'];
-									$HoraTermino        = $con['EquipoHora'];
-									$TiempoColacionIni  = '00:00:00';
-									$TiempoColacionTer  = '00:00:00';
-									$TiempoColacionTot  = '00:00:00';
-									$TiempoMuerto       = '00:00:00';
-									$TiempoMuertoTemp   = '00:00:00';
-									$TiempoPerdido      = '00:00:00';
-									$SobreTiempo_1      = '00:00:00';
-									$SobreTiempo_2      = '00:00:00';
-									$colacion           = 0;
-									$FueraHorario       = 0;
-									/***************************************/
-									//Verifico el sobretiempo
-									if($SobreTiempo_1=='00:00:00'&&$con['EquipoJornada_inicio']>=$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
-										$SobreTiempo_1 = sumahoras($SobreTiempo_1, restahoras($con['EquipoHora'], $con['EquipoJornada_inicio']));
-									}
-									if($con['EquipoJornada_termino']<=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
-										$SobreTiempo_2 = restahoras($con['EquipoJornada_termino'],$con['EquipoHora'] );
-									}
-									/***************************************/
-									//Verifico si tiene algun dato que figure como fuera de horario
-									if(isset($con['FueraHorario'])&&$con['FueraHorario']==1){
-										$FueraHorario++;
-									}
+								/**********************************************************************************/
+								//ultimo dato
+								//Calculo colacion
+								//$TiempoColacionTot = restahoras($TiempoColacionIni, $TiempoColacionTer);
+								//Calculo de la perdida de tiempo
+								if($l_ejti<=$HoraInicio){
+									$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($l_ejti, $HoraInicio));
 								}
-								
-								$l_ejti = $con['EquipoJornada_inicio'];
-								$l_ejtt = $con['EquipoJornada_termino'];
-								$l_mp   = $con['EquipoMicroparada'];
-								$l_v1   = $con['EquipoValor'];
-								$l_v2   = $con['EquipoActivacionValor'];
-								
-							} 
-							
-							/**********************************************************************************/
-							//ultimo dato
-							//Calculo colacion
-							//$TiempoColacionTot = restahoras($TiempoColacionIni, $TiempoColacionTer);
-							//Calculo de la perdida de tiempo
-							if($l_ejti<=$HoraInicio){
-								$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($l_ejti, $HoraInicio));
-							}
-							if($l_ejtt>=$HoraTermino){
-								$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($HoraTermino, $l_ejtt ));
-							}
-							//Verifico el sobretiempo
-							if($l_ejti>=$HoraInicio&&$l_v1==$l_v2){
-								$SobreTiempo_1 = sumahoras($SobreTiempo_1, restahoras($HoraInicio,$l_ejti));
-							}
-							if($l_ejtt<=$HoraInicio&&$l_v1!=$l_v2){
-								$SobreTiempo_2 = sumahoras($SobreTiempo_2, restahoras($l_ejtt,$HoraInicio ));
-							}
-									
-							?>
-							<tr class="odd">
-								<td><?php echo $categoria; ?></td>
-								<td><?php echo fecha_estandar($fecha); ?></td>
-								<td><?php echo $ContratoCodigo; ?></td>
-								<td><?php echo $HoraInicio; ?></td>
-								<td><?php echo $HoraTermino; ?></td>
-								<td><?php echo $TiempoColacionTot; ?></td>
-								<td><?php echo $TiempoMuerto; ?></td>
-								<td><?php echo $TiempoPerdido; ?></td>
-								<td><?php echo sumahoras($SobreTiempo_1,$SobreTiempo_2); ?></td>
-								<td>
-									<div class="btn-group" style="width: 105px;" >
-										<?php if ($rowlevel['level']>=1&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_historial_activaciones.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&cantSensores='.simpleEncode($con['EquipoN_Sensores'], fecha_actual()).$Ampx; ?>" title="Ver Amperes" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-file-text-o" aria-hidden="true"></i></a><?php } ?>
-										<?php if ($rowlevel['level']>=1&&$FueraHorario!=0&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&fueraHorario=true'; ?>" title="Ver Apagado por Amp." class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
-									</div>
-								</td>
-							</tr>
-												   
-						</tbody>
-					</table>
+								if($l_ejtt>=$HoraTermino){
+									$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($HoraTermino, $l_ejtt ));
+								}
+								//Verifico el sobretiempo
+								if($l_ejti>=$HoraInicio&&$l_v1==$l_v2){
+									$SobreTiempo_1 = sumahoras($SobreTiempo_1, restahoras($HoraInicio,$l_ejti));
+								}
+								if($l_ejtt<=$HoraInicio&&$l_v1!=$l_v2){
+									$SobreTiempo_2 = sumahoras($SobreTiempo_2, restahoras($l_ejtt,$HoraInicio ));
+								}
+										
+								?>
+								<tr class="odd">
+									<td><?php echo $categoria; ?></td>
+									<td><?php echo fecha_estandar($fecha); ?></td>
+									<td><?php echo $ContratoCodigo; ?></td>
+									<td><?php echo $HoraInicio; ?></td>
+									<td><?php echo $HoraTermino; ?></td>
+									<td><?php echo $TiempoColacionTot; ?></td>
+									<td><?php echo $TiempoMuerto; ?></td>
+									<td><?php echo $TiempoPerdido; ?></td>
+									<td><?php echo sumahoras($SobreTiempo_1,$SobreTiempo_2); ?></td>
+									<td>
+										<div class="btn-group" style="width: 105px;" >
+											<?php if ($rowlevel['level']>=1&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_historial_activaciones.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&cantSensores='.simpleEncode($con['EquipoN_Sensores'], fecha_actual()).$Ampx; ?>" title="Ver Amperes" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-file-text-o" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1&&$FueraHorario!=0&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&fueraHorario=true'; ?>" title="Ver Apagado por Amp." class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
+										</div>
+									</td>
+								</tr>
+													   
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
-		</div>
-	<?php 
-			} 
-		}else{
-			alert_post_data(2,1,1, 'No hay datos, intenta con otro rango de fechas.');
-		}
+			<?php 
+		} 
+	}else{
+		alert_post_data(2,1,1, 'No hay datos, intenta con otro rango de fechas.');
 	}
+}
 
 
 ?>							

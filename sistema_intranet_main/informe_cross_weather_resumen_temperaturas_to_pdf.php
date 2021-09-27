@@ -43,39 +43,23 @@ if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 }
 /********************************************************************/
 //Variable de busqueda
-$z = "WHERE ".$x_table.".idSistema=".$idSistema;
+$SIS_where = $x_table.".idSistema=".$idSistema;
 if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
-	$z.=" AND (".$x_table.".TimeStamp BETWEEN '".$f_inicio." ".$h_inicio."' AND '".$f_termino." ".$h_termino."')";
+	$SIS_where.= " AND (".$x_table.".TimeStamp BETWEEN '".$f_inicio." ".$h_inicio."' AND '".$f_termino." ".$h_termino."')";
 }elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
-	$z.=" AND (".$x_table.".Fecha BETWEEN '".$f_inicio."' AND '".$f_termino."')";
+	$SIS_where.= " AND (".$x_table.".Fecha BETWEEN '".$f_inicio."' AND '".$f_termino."')";
 }
 if(isset($idTelemetria)&&$idTelemetria!=''){
-	$z.=" AND ".$x_table.".idTelemetria='".$idTelemetria."'";
+	$SIS_where.= " AND ".$x_table.".idTelemetria='".$idTelemetria."'";
 }
 /**********************************************************/
 // Se trae un listado con todos los datos
+$SIS_query = 'Fecha, Hora, HeladaDia, HeladaHora, Temperatura, Helada, CrossTech_TempMin ,
+Fecha_Anterior, Hora_Anterior, Tiempo_Helada';
+$SIS_join  = '';
+$SIS_order = 'idAuxiliar ASC';
 $arrHistorial = array();
-$query = "SELECT Fecha, Hora, HeladaDia, HeladaHora, Temperatura, Helada, CrossTech_TempMin ,
-Fecha_Anterior, Hora_Anterior, Tiempo_Helada
-
-FROM `".$x_table."`
-".$z."
-ORDER BY idAuxiliar ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
+$arrHistorial = db_select_array (false, $SIS_query, $x_table, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
 /****************************************************************************/
 $arrTemp   = array();

@@ -23,229 +23,214 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 }
 /********************************************************************/
 //se verifica si se ingreso la hora, es un dato optativo
-$z='';
+$SIS_where = '';
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.="WHERE (TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$SIS_where .= "(TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.="WHERE (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where .= "(FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
-//desde y hasta activo
-if(isset($_GET['desde'])&&$_GET['desde']!=''&&isset($_GET['hasta'])&&$_GET['hasta']!=''){
-	$subquery = "
-	MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedMin,
-	MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedMax,
-	AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedProm,
-	STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedDesStan,
-	";
-//solo desde	
-}elseif(isset($_GET['desde'])&&$_GET['desde']!=''&&(!isset($_GET['hasta']) OR $_GET['hasta']=='')){
-	$subquery = "
-	MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
-	MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMax,
-	AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
-	STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
-	";
-//solo hasta	
-}elseif(isset($_GET['hasta'])&&$_GET['hasta']!=''&&(!isset($_GET['desde']) OR $_GET['desde']=='')){
-	$subquery = "
-	MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
-	MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMax,
-	AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
-	STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
-	";
-//ninguno
-}else{
-	$subquery = "
-	MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedMin,
-	MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedMax,
-	AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedProm,
-	STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedDesStan,
-	";
-}	
-//Se traen todos los registros
-$arrRutas = array();
-$query = "SELECT 
+//verifico el numero de datos antes de hacer la consulta
+$ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'ndata_1');
+			
+//si el dato es superior a 10.000
+if(isset($ndata_1)&&$ndata_1>=10001){
+	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+}else{			
+	//obtengo la cantidad real de sensores
+	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
-telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.SensoresNombre_".$_GET['sensorn']." AS SensorNombre,
+	//desde y hasta activo
+	if(isset($_GET['desde'])&&$_GET['desde']!=''&&isset($_GET['hasta'])&&$_GET['hasta']!=''){
+		$subquery = "
+		MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedMin,
+		MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedMax,
+		AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedProm,
+		STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedDesStan,
+		";
+	//solo desde	
+	}elseif(isset($_GET['desde'])&&$_GET['desde']!=''&&(!isset($_GET['hasta']) OR $_GET['hasta']=='')){
+		$subquery = "
+		MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
+		MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMax,
+		AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
+		STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
+		";
+	//solo hasta	
+	}elseif(isset($_GET['hasta'])&&$_GET['hasta']!=''&&(!isset($_GET['desde']) OR $_GET['desde']=='')){
+		$subquery = "
+		MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
+		MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMax,
+		AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
+		STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
+		";
+	//ninguno
+	}else{
+		$subquery = "
+		MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedMin,
+		MAX(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedMax,
+		AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedProm,
+		STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedDesStan,
+		";
+	}	
+	
+	//se traen lo datos del equipo
+	$SIS_query = '
+	telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
+	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
+	'.$subquery.'
+	telemetria_listado_unidad_medida.Nombre AS Unimed';
+	$SIS_join  = '
+	LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria            = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria
+	LEFT JOIN `telemetria_listado_unidad_medida`  ON telemetria_listado_unidad_medida.idUniMed  = telemetria_listado.SensoresUniMed_'.$_GET['sensorn'];
+	$SIS_where .= ' GROUP BY telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema';
+	$SIS_order  = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC LIMIT 10000';
+	$arrEquipos = array();
+	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'test_logo');
 
+	/********************************************************************/
+	//Se define el contenido del PDF
+	$html = '
+	<style>
+		tbody tr:nth-child(odd) {background-color: #dfdfdf;}
+	</style>';
 
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema,
-
-".$subquery."
-
-telemetria_listado_unidad_medida.Nombre AS Unimed
-
-FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria            = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-LEFT JOIN `telemetria_listado_unidad_medida`  ON telemetria_listado_unidad_medida.idUniMed  = telemetria_listado.SensoresUniMed_".$_GET['sensorn']."
-
-".$z."
-GROUP BY telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema
-ORDER BY telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema ASC
-LIMIT 10000
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRutas,$row );
-} 
-/********************************************************************/
-//Se define el contenido del PDF
-$html = '
-<style>
-	tbody tr:nth-child(odd) {background-color: #dfdfdf;}
-</style>';
-
-
-$html .= '
-<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
-	<thead>
-		<tr>
-			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>';
-			//Si se ven detalles
-			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-				$html .= '
-				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Promedio</th>
-				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Minimo</th>
-				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Maximo</th>
-				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Dev. Std.</th>';		
-			//Si no se ven detalles	
-			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-				$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Promedio</th>';	
-			} 
-			$html .= '         
-		</tr>
-	</thead>
-	<tbody>';
-							
-		foreach ($arrRutas as $rutas) {
-			//Verifico si existen datos
-			if(isset($rutas['MedMin'])&&$rutas['MedMin']!=0&&$rutas['MedMin']!=''&&isset($rutas['MedMax'])&&$rutas['MedMax']!=0&&$rutas['MedMax']!=''){
-								
-				$html .='<tr><td>'.$rutas['FechaSistema'].'</td>';
+	$html .= '
+	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+		<thead>
+			<tr>
+				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>';
 				//Si se ven detalles
 				if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
 					$html .= '
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.$rutas['Unimed'].'</td>
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMin'], 2).' '.$rutas['Unimed'].'</td>
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMax'], 2).' '.$rutas['Unimed'].'</td>
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedDesStan'], 2).' '.$rutas['Unimed'].'</td>
-					';		
+					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Promedio</th>
+					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Minimo</th>
+					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Maximo</th>
+					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Dev. Std.</th>';		
 				//Si no se ven detalles	
 				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-					$html .= '
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.$rutas['Unimed'].'</td>
-					';
+					$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Promedio</th>';	
 				} 
-				$html .= '</tr>';
-			}						
-		}
-							
-$html .='</tbody>
-</table>';
- 
+				$html .= '         
+			</tr>
+		</thead>
+		<tbody>';
+								
+			foreach ($arrEquipos as $rutas) {
+				//Verifico si existen datos
+				if(isset($rutas['MedMin'])&&$rutas['MedMin']!=0&&$rutas['MedMin']!=''&&isset($rutas['MedMax'])&&$rutas['MedMax']!=0&&$rutas['MedMax']!=''){
+									
+					$html .='<tr><td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$rutas['FechaSistema'].'</td>';
+					//Si se ven detalles
+					if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
+						$html .= '
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.$rutas['Unimed'].'</td>
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMin'], 2).' '.$rutas['Unimed'].'</td>
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMax'], 2).' '.$rutas['Unimed'].'</td>
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedDesStan'], 2).' '.$rutas['Unimed'].'</td>
+						';		
+					//Si no se ven detalles	
+					}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
+						$html .= '
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.$rutas['Unimed'].'</td>
+						';
+					} 
+					$html .= '</tr>';
+				}						
+			}
+								
+	$html .='</tbody>
+	</table>';
+	 
 
-/**********************************************************************************************************************************/
-/*                                                          Impresion PDF                                                         */
-/**********************************************************************************************************************************/
-//Config
-$pdf_titulo     = 'Desviacion estandar';
-$pdf_subtitulo  = 'CONTROL Sensor N° '.$_GET['sensorn'].' '.$arrRutas[0]['SensorNombre'].' '.$arrRutas[0]['NombreEquipo'];
-$pdf_file       = 'Desviacion estandar.pdf';
-$OpcDom         = "'A4', 'landscape'";
-$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
-$OpcTcpPg       = "A4"; //Tipo de Hoja
-/********************************************************************************/
-//Se verifica que este configurado el motor de pdf
-if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
-	switch ($rowEmpresa['idOpcionesGen_5']) {
-		/************************************************************************/
-		//TCPDF
-		case 1:
-			
-			require_once('../LIBS_php/tcpdf/tcpdf.php');
+	/**********************************************************************************************************************************/
+	/*                                                          Impresion PDF                                                         */
+	/**********************************************************************************************************************************/
+	//Config
+	$pdf_titulo     = 'Max – Min Sensor';
+	$pdf_subtitulo  = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' '.$rowEquipo['NombreEquipo'];
+	$pdf_file       = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' '.$rowEquipo['NombreEquipo'].'.pdf';
+	$OpcDom         = "'A4', 'landscape'";
+	$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
+	$OpcTcpPg       = "A4"; //Tipo de Hoja
+	/********************************************************************************/
+	//Se verifica que este configurado el motor de pdf
+	if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
+		switch ($rowEmpresa['idOpcionesGen_5']) {
+			/************************************************************************/
+			//TCPDF
+			case 1:
+				
+				require_once('../LIBS_php/tcpdf/tcpdf.php');
 
-			// create new PDF document
-			$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+				// create new PDF document
+				$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-			// set document information
-			$pdf->SetCreator(PDF_CREATOR);
-			$pdf->SetAuthor('Victor Reyes');
-			$pdf->SetTitle('');
-			$pdf->SetSubject('');
-			$pdf->SetKeywords('');
+				// set document information
+				$pdf->SetCreator(PDF_CREATOR);
+				$pdf->SetAuthor('Victor Reyes');
+				$pdf->SetTitle('');
+				$pdf->SetSubject('');
+				$pdf->SetKeywords('');
 
-			// set default header data
-			if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
-				if(isset($rowEmpresa['Config_imgLogo'])&&$rowEmpresa['Config_imgLogo']!=''){
-					$logo = '../../../../'.DB_SITE_MAIN_PATH.'/upload/'.$rowEmpresa['Config_imgLogo'];
+				// set default header data
+				if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
+					if(isset($rowEmpresa['Config_imgLogo'])&&$rowEmpresa['Config_imgLogo']!=''){
+						$logo = '../../../../'.DB_SITE_MAIN_PATH.'/upload/'.$rowEmpresa['Config_imgLogo'];
+					}else{
+						$logo = '../../../../Legacy/gestion_modular/img/logo_empresa.jpg';
+					}
 				}else{
 					$logo = '../../../../Legacy/gestion_modular/img/logo_empresa.jpg';
 				}
-			}else{
-				$logo = '../../../../Legacy/gestion_modular/img/logo_empresa.jpg';
-			}
-			$pdf->SetHeaderData($logo, 40, $pdf_titulo, $pdf_subtitulo);
+				$pdf->SetHeaderData($logo, 40, $pdf_titulo, $pdf_subtitulo);
 
-			// set header and footer fonts
-			$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-			$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+				// set header and footer fonts
+				$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+				$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
-			// set default monospaced font
-			$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+				// set default monospaced font
+				$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
-			// set margins
-			$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-			$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-			$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+				// set margins
+				$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+				$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+				$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
-			// set auto page breaks
-			$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+				// set auto page breaks
+				$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
-			// set image scale factor
-			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+				// set image scale factor
+				$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-			// set some language-dependent strings (optional)
-			if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-				require_once(dirname(__FILE__).'/lang/eng.php');
-				$pdf->setLanguageArray($l);
-			}
+				// set some language-dependent strings (optional)
+				if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+					require_once(dirname(__FILE__).'/lang/eng.php');
+					$pdf->setLanguageArray($l);
+				}
 
-			//Se crea el archivo
-			$pdf->SetFont('helvetica', '', 10);
-			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
-			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
-	
-			break;
-		/************************************************************************/
-		//DomPDF (Solo compatible con PHP 5.x)
-		case 2:
-			require_once '../LIBS_php/dompdf/autoload.inc.php';
-			// reference the Dompdf namespace
-			//use Dompdf\Dompdf;
-			// instantiate and use the dompdf class
-			$dompdf = new Dompdf();
-			$dompdf->loadHtml($html);
-			$dompdf->setPaper($OpcDom);
-			$dompdf->render();
-			$dompdf->stream($pdf_file);
-			break;
+				//Se crea el archivo
+				$pdf->SetFont('helvetica', '', 10);
+				$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
+				$pdf->writeHTML($html, true, false, true, false, '');
+				$pdf->lastPage();
+				$pdf->Output($pdf_file, 'I');
+		
+				break;
+			/************************************************************************/
+			//DomPDF (Solo compatible con PHP 5.x)
+			case 2:
+				require_once '../LIBS_php/dompdf/autoload.inc.php';
+				// reference the Dompdf namespace
+				//use Dompdf\Dompdf;
+				// instantiate and use the dompdf class
+				$dompdf = new Dompdf();
+				$dompdf->loadHtml($html);
+				$dompdf->setPaper($OpcDom);
+				$dompdf->render();
+				$dompdf->stream($pdf_file);
+				break;
 
+		}
 	}
 }
-
 ?>

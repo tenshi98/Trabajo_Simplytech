@@ -25,279 +25,279 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
 
-             
-  
-
 //se verifica si se ingreso la hora, es un dato optativo
-$z='';
-$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$search .='&idGrupo='.$_GET['idGrupo'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
+$SIS_where = '';
+$search    = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$search   .= '&idGrupo='.$_GET['idGrupo'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$SIS_where.=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 	$search.="&h_inicio=".$_GET['h_inicio']."&h_termino=".$_GET['h_termino'];
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" WHERE (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where.=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 $search.="&idDetalle=".$_GET['idDetalle'];
 
-//numero sensores equipo
-$N_Maximo_Sensores = 72;
-$consql = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-    $consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
-    $consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-    $consql .= ',telemetria_listado.SensoresMedMin_'.$i.' AS SensoresMedMin_'.$i;
-    $consql .= ',telemetria_listado.SensoresMedMax_'.$i.' AS SensoresMedMax_'.$i;
-    $consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
-    $consql .= ',telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$i.' AS SensorValue_'.$i;
-   
-}
-//Se traen todos los registros
-$arrRutas = array();
-$query = "SELECT 
-telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.cantSensores AS cantSensores,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema
-".$consql."
-FROM `telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
+//verifico el numero de datos antes de hacer la consulta
+$ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
 
-".$z."
-ORDER BY telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema ASC,
-telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema ASC
-LIMIT 10000";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRutas,$row );
-}
-
-//Se traen todas las unidades de medida
-$arrUnimed = array();
-$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
-
-//guardo las unidades de medida
-$Unimed = array();
-foreach ($arrUnimed as $sen) { 
-	$Unimed[$sen['idUniMed']] = ' '.$sen['Nombre'];
-}
-
-//Se traen todas las unidades de medida
-$query = "SELECT Nombre
-FROM `telemetria_listado_grupos`
-WHERE idGrupo='".$_GET['idGrupo']."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowGrupo = mysqli_fetch_assoc ($resultado);
-
-//cuento la cantidad de registros obtenidos
-$cant = 0;
-foreach ($arrRutas as $fac) {
-	$cant++;
-}
-?>	
-
-<div class="col-sm-12 clearfix">		
-	<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_6_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
-	<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_6_to_pdf.php?bla=bla'.$search ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
-</div> 
-
-
-<?php 
-//Se verifica si se pidieron los graficos
-if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script>google.charts.load('current', {'packages':['corechart']});</script>
-	<?php
-	//Hago recuento de los datos
-	$xsi = 1;
-	?>
+//si el dato es superior a 10.000
+if(isset($ndata_1)&&$ndata_1>=10001){
+	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+}else{			
+	//obtengo la cantidad real de sensores
+	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo,cantSensores', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
 	
-			<div class="col-sm-12">
-				<div class="box">
-					<header>
-						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-						<h5> Graficos <?php echo $arrRutas[0]['SensorNombre_'.$i]; ?></h5>
-						
-					</header>
-					<div class="table-responsive">
+	//numero sensores equipo
+	$consql = '';
+	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
+		$consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
+		$consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
+		$consql .= ',telemetria_listado.SensoresMedMin_'.$i.' AS SensoresMedMin_'.$i;
+		$consql .= ',telemetria_listado.SensoresMedMax_'.$i.' AS SensoresMedMax_'.$i;
+		$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
+		$consql .= ',telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$i.' AS SensorValue_'.$i;
+	}
+	
+	/****************************************/
+	//consulto
+	$SIS_query = '
+	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
+	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema'.$consql;
+	$SIS_join  = 'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
+	$SIS_order = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC, telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema ASC LIMIT 10000';
+	$arrEquipos = array();
+	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
 
-						<script>
-							google.charts.setOnLoadCallback(drawChart_<?php echo $xsi; ?>);
+	/****************************************/
+	//Se traen todas las unidades de medida
+	$arrUnimed = array();
+	$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
+	
+	//guardo las unidades de medida
+	$Unimed = array();
+	foreach ($arrUnimed as $sen) { 
+		$Unimed[$sen['idUniMed']] = ' '.$sen['Nombre'];
+	}
+	
+	/****************************************/
+	//Se trae grupo
+	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowGrupo');
 
-							function drawChart_<?php echo $xsi; ?>() {
-								var data = new google.visualization.DataTable();
-								data.addColumn('string', 'Fecha'); 
-								
-								<?php 
-								$Colors  = "'#FFB347'";
-								$Colors .= ",'#008000'";
-								for ($i = 1; $i <= $arrRutas[0]['cantSensores']; $i++) { 
-									if($arrRutas[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){ ?>
-										data.addColumn('number', '<?php echo $arrRutas[0]['SensorNombre_'.$i]; ?>');	
-								<?php } } ?>
-								<?php if(isset($cant)&&$cant<30){?>
-									data.addColumn({type: 'string', role: 'annotation'});
-									data.addColumn({type: 'string', role: 'annotation'});
-								<?php } ?>	
-						
-								data.addRows([
-								<?php foreach ($arrRutas as $fac) {
-									$chain  = "'".Fecha_estandar($fac['FechaSistema'])." - ".Hora_estandar($fac['HoraSistema'])."'";
-										//numero sensores equipo
-										$N_Maximo_Sensores = $fac['cantSensores'];
-										for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
-											if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
-												//Que el valor medido sea distinto de 999
-												if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
-													$chain .= ", ".$fac['SensorValue_'.$x];
-												}else{
-													$chain .= ", 0";
-												}
-											}
-										}
-										if(isset($cant)&&$cant<30){
-											for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
-												if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
-													//Que el valor medido sea distinto de 999
-													if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
-														$chain .= ",'".Cantidades_decimales_justos($fac['SensorValue_'.$x])."'";
-													}else{
-														$chain .= ", '0'";
-													}
-												}
-											}
-										}	
-								?>	
-									[<?php echo $chain; ?>],
-								<?php }  ?>
-								  
-								]);
+	?>
 
-								var options = {
-									title: 'Informe Sensores ',
-									hAxis: { 
-										title: 'Fechas',
-										<?php if(isset($cant)&&$cant>=30){?> 
-											baselineColor: '#fff',
-											gridlineColor: '#fff',
-											textPosition: 'none'
-										<?php } ?>
-									},
-									vAxis: { title: 'Medicion' },
-									curveType: 'function',
-									//puntos dentro de las curvas
-									series: {
-										0: {
-											pointsVisible: true
-										},
-										1: {
-											pointsVisible: true
-										}, 
-									},
-					
-									annotations: {
-												  alwaysOutside: true,
-												  textStyle: {
-													fontSize: 14,
-													color: '#000',
-													auraColor: 'none'
-												  }
-												},
-									colors: [<?php echo $Colors; ?>]
-								};
+	<div class="col-sm-12 clearfix">		
+		<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_6_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+		<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>	
+			<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
+		<?php }else{ ?>
+			<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_6_to_pdf.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
+		<?php } ?>
+	</div> 
 
-								var chart = new google.visualization.LineChart(document.getElementById('curve_chart_<?php echo $xsi; ?>'));
 
-								chart.draw(data, options);
-							}
-
-						</script> 
-						<div id="curve_chart_<?php echo $xsi; ?>" style="height: 500px"></div>
-									
-					</div>
+	<?php 
+	//Se verifica si se pidieron los graficos
+	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ 
+		
+		/****************************************************************/				
+		//Variables
+		$Temp_1   = '';
+		$arrData  = array();
+		$xcount   = 0;
+		$count    = 0;
+		//se arman datos
+		foreach ($arrEquipos as $fac) {
+			
+			//variables							
+			$Temp_1  .= "'".Fecha_estandar($fac['FechaSistema'])." - ".$fac['HoraSistema']."',";
+			$xcount   = 0;
+										
+			for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
+				if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
+					//Que el valor medido sea distinto de 999
+					if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
+						//Numero de sensor
+						$xcount++;
+						//verifico si existe
+						if(isset($arrData[$xcount]['Value'])&&$arrData[$xcount]['Value']!=''){
+							$arrData[$xcount]['Value'] .= ", ".$fac['SensorValue_'.$x];
+						//si no lo crea
+						}else{
+							$arrData[$xcount]['Value'] = $fac['SensorValue_'.$x];
+						}
+						//si es el primer recorrido
+						if($count==0){
+							//titulo grafico
+							$arrData[$xcount]['Name'] = "'".$fac['SensorNombre_'.$x]."'";
+						}
+					}
+				}
+			}
+			//contador									
+			$count++;		
+		}
+		/******************************************/  
+		//variables
+		$Graphics_xData       = 'var xData = [';
+		$Graphics_yData       = 'var yData = [';
+		$Graphics_names       = 'var names = [';
+		$Graphics_types       = 'var types = [';
+		$Graphics_texts       = 'var texts = [';
+		$Graphics_lineColors  = 'var lineColors = [';
+		$Graphics_lineDash    = 'var lineDash = [';
+		$Graphics_lineWidth   = 'var lineWidth = [';
+		//Se crean los datos
+		for ($x = 1; $x <= $xcount; $x++) {
+			//las fechas
+			$Graphics_xData      .='['.$Temp_1.'],';
+			//los valores
+			$Graphics_yData      .='['.$arrData[$x]['Value'].'],';
+			//los nombres
+			$Graphics_names      .= $arrData[$x]['Name'].',';
+			//los tipos
+			$Graphics_types      .= "'',";
+			//si lleva texto en las burbujas
+			$Graphics_texts      .= "[],";
+			//los colores de linea
+			$Graphics_lineColors .= "'',";
+			//los tipos de linea
+			$Graphics_lineDash   .= "'',";
+			//los anchos de la linea
+			$Graphics_lineWidth  .= "'',";
+		}
+		$Graphics_xData      .= '];';
+		$Graphics_yData      .= '];';
+		$Graphics_names      .= '];';
+		$Graphics_types      .= '];';
+		$Graphics_texts      .= '];';
+		$Graphics_lineColors .= '];';
+		$Graphics_lineDash   .= '];';
+		$Graphics_lineWidth  .= '];';
+		
+		?>
+		
+		
+		<div class="col-sm-12">
+			<div class="box">
+				<header>
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
+					<h5> Graficos grupo <?php echo $rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']; ?></h5>
+				</header>
+				<div class="table-responsive" id="grf">
+					<?php echo GraphLinear_1('graphLinear_1', 'Informe Sensores', 'Fecha', 'Mediciones', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); ?>
 				</div>
 			</div>
+		</div>
 		
-		<?php
-		$xsi++;
-} ?>
+		<div class="col-sm-12" style="display: none;">
 
-<div class="col-sm-12">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Registro Sensores grupo <?php echo $rowGrupo['Nombre'].' del equipo '.$arrRutas[0]['NombreEquipo']; ?></h5>
+			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_19_to_pdf.php">
+				<input type="hidden" name="img_adj" id="img_adj" />
+				
+				<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
+				<input type="hidden" name="f_inicio"      id="f_inicio"     value="<?php echo $_GET['f_inicio']; ?>" />
+				<input type="hidden" name="f_termino"     id="f_termino"    value="<?php echo $_GET['f_termino']; ?>" />
+				<input type="hidden" name="idTelemetria"  id="idTelemetria" value="<?php echo $_GET['idTelemetria']; ?>" />
+				<input type="hidden" name="idGrupo"       id="idGrupo"      value="<?php echo $_GET['idGrupo']; ?>" />
+				<input type="hidden" name="idDetalle"     id="idDetalle"    value="<?php echo $_GET['idDetalle']; ?>" />
+				
+				<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){ ?>   <input type="hidden" name="h_inicio"   id="h_inicio"  value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
+				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){ ?> <input type="hidden" name="h_termino"  id="h_termino" value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
+				
+				<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
 			
-		</header>
-		<div class="table-responsive"> 
-			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<tr class="odd">
-						<td></td>
-						<td></td>
-						<?php 
-						for ($i = 1; $i <= $arrRutas[0]['cantSensores']; $i++) { 
-							if($arrRutas[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-								//Si se ven detalles
-								if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-									echo '<th colspan="3"  style="text-align:center">'.$arrRutas[0]['SensorNombre_'.$i].'</th>';
-								//Si no se ven detalles	
-								}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-									echo '<th style="text-align:center">'.$arrRutas[0]['SensorNombre_'.$i].'</th>';
+			</form>
+
+			<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>		
+			<script>
+				var node = document.getElementById('graphLinear_1');
+				
+				function sendDatatoSRV(img) {
+					$('#img_adj').val(img);
+					//$('#img_adj').val($('#img-out').html());
+					$('#make_pdf').submit();
+					//oculto el loader
+					document.getElementById("loading").style.display = "none";
+				}
+				function Export() {
+					//muestro el loader
+					document.getElementById("loading").style.display = "block";
+					//Exporto
+					setTimeout(
+						function(){
+							domtoimage.toPng(node)
+							.then(function (dataUrl) {
+								var img = new Image();
+								img.src = dataUrl;
+								//document.getElementById('img-out').appendChild(img);
+								//alert(img.src);
+								sendDatatoSRV(img.src);
+							})
+							.catch(function (error) {
+								console.error('oops, something went wrong!', error);
+								alert('No se puede exportar!');
+								document.getElementById("loading").style.display = "none";
+							});		
+						}
+					, 3000);
+				}
+
+			</script>	
+		</div>
+			
+	<?php } ?>
+
+	<div class="col-sm-12">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
+				<h5>Registro Sensores grupo <?php echo $rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']; ?></h5>
+				
+			</header>
+			<div class="table-responsive"> 
+				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+					<tbody role="alert" aria-live="polite" aria-relevant="all">
+						<tr class="odd">
+							<td></td>
+							<td></td>
+							<?php 
+							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
+								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
+									//Si se ven detalles
+									if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
+										echo '<th colspan="3"  style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
+									//Si no se ven detalles	
+									}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
+										echo '<th style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
+									}
 								}
 							}
-						}
-						?>
-					</tr>
-					<tr class="odd">
-						<th>Fecha</th>
-						<th>Hora</th>
-						<?php 
-						for ($i = 1; $i <= $arrRutas[0]['cantSensores']; $i++) { 
-							if($arrRutas[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-								//Si se ven detalles
-								if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-									echo '<th>Medicion</th><th>Minimo</th><th>Maximo</th>';
-								//Si no se ven detalles	
-								}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-									echo '<th>Medicion</th>';
+							?>
+						</tr>
+						<tr class="odd">
+							<th>Fecha</th>
+							<th>Hora</th>
+							<?php 
+							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
+								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
+									//Si se ven detalles
+									if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
+										echo '<th>Medicion</th><th>Minimo</th><th>Maximo</th>';
+									//Si no se ven detalles	
+									}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
+										echo '<th>Medicion</th>';
+									}
 								}
 							}
-						}
-						?>
-					</tr>
-					
-				<?php foreach ($arrRutas as $rutas) { ?>
-					<tr class="odd">
-						<td><?php echo fecha_estandar($rutas['FechaSistema']); ?></td>
-						<td><?php echo $rutas['HoraSistema']; ?></td>
-						<?php //numero sensores equipo
-							$N_Maximo_Sensores = $rutas['cantSensores'];
-							for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+							?>
+						</tr>
+						
+					<?php foreach ($arrEquipos as $rutas) { ?>
+						<tr class="odd">
+							<td><?php echo fecha_estandar($rutas['FechaSistema']); ?></td>
+							<td><?php echo $rutas['HoraSistema']; ?></td>
+							<?php 
+							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 								if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
 										$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]).$Unimed[$rutas['SensoresUniMed_'.$i]];
@@ -315,15 +315,14 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 									}
 								}
 							} ?>
-
-					</tr>
-				<?php } ?>                     
-				</tbody>
-			</table>
+						</tr>
+					<?php } ?>                     
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-</div>
-
+<?php } ?>      
 
 
 <div class="clearfix"></div>
@@ -362,8 +361,8 @@ alert_post_data(2,1,1, $Alert_Text);
                <?php 
 				//Se verifican si existen los datos
 				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($f_termino)) {     $x2  = $f_termino;    }else{$x2  = '';}
-				if(isset($h_inicio)) {      $x3  = $h_inicio;     }else{$x3  = '';}
+				if(isset($h_inicio)) {      $x2  = $h_inicio;     }else{$x2  = '';}
+				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = '';}
 				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
 				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = '';}
 				if(isset($idDetalle)) {     $x6  = $idDetalle;    }else{$x6  = '';}
@@ -374,8 +373,8 @@ alert_post_data(2,1,1, $Alert_Text);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
-				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
-				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x3, 1, 1);
+				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x2, 1, 1);
+				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -383,151 +382,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
-				
-				
-				//numero sensores equipo
-				$N_Maximo_Sensores = 72;
-				$subquery = '';
-				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-					$subquery .= ',SensoresGrupo_'.$i;
-					$subquery .= ',SensoresNombre_'.$i;
-					$subquery .= ',SensoresActivo_'.$i;
-				}
-				// Se trae un listado de todos los registros
-				$arrSelect = array();
-				$query = "SELECT
-				idTelemetria, cantSensores
-				".$subquery."
-				
-				FROM `telemetria_listado`
-				ORDER BY idTelemetria ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrSelect,$row );
-				}
-
-				//Se consultan datos
-				$arrGrupos = array();
-				$query = "SELECT idGrupo,Nombre
-				FROM `telemetria_listado_grupos`
-				ORDER BY idGrupo ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrGrupos,$row );
-				}
-			
-				
-				$input = '<div class="form-group" id="div_sensorn" >
-								<label for="text2" class="control-label col-sm-4">Grupos</label>
-								<div class="col-sm-8 field">
-									<select name="idGrupo" id="idGrupo" class="form-control" required="">
-										<option value="" selected>Seleccione una Opcion</option>
-									</select>
-								</div>
-							</div>';
-					
-				//script
-				$input .= '<script>';
-				
-				$input .= 'document.getElementById("idTelemetria").onchange = function() {cambia_idTelemetria()};';
-					
-				foreach ($arrSelect as $select) {
-					$input .= 'let id_data_'.$select['idTelemetria'].'=new Array(""';
-					$valorx = 0;
-					for ($i = 1; $i <= $select['cantSensores']; $i++) {
-						//solo sensores activos
-						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-							//verifico que el grupo no este ingresado
-							if($valorx != $select['SensoresGrupo_'.$i]){
-								$valorx = $select['SensoresGrupo_'.$i];
-								$input .= ',"'.$valorx.'"';
-							}
-						}
-					}	
-					$input .= ')
-					';
-				}
-				foreach ($arrSelect as $select) {
-							
-					$input .= 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
-					$valorx = 0;
-					for ($i = 1; $i <= $select['cantSensores']; $i++) {
-						//solo sensores activos
-						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-							//verifico que el grupo no este ingresado
-							if($valorx != $select['SensoresGrupo_'.$i]){
-								$grupo = '';
-								foreach ($arrGrupos as $sen) { 
-									if($select['SensoresGrupo_'.$i]==$sen['idGrupo']){
-										$grupo = $sen['Nombre'];
-									}
-								}
-								$input .= ',"'.$grupo.'"';
-								$valorx = $select['SensoresGrupo_'.$i];
-							}
-						}
-					}	
-					$input .= ')
-					';
-				}	
-					
-				$input .= 'function cambia_idTelemetria(){
-					
-					let Componente = document.form1.idTelemetria[document.form1.idTelemetria.selectedIndex].value
-					try {
-					if (Componente != "") {
-						id_data = eval("id_data_" + Componente);
-						data    = eval("data_" + Componente);
-						num_int = id_data.length;
-						document.form1.idGrupo.length = num_int;
-						for(i=0;i<num_int;i++){
-						   document.form1.idGrupo.options[i].value=id_data[i];
-						   document.form1.idGrupo.options[i].text=data[i];
-						}
-						document.getElementById("div_sensorn").style.display = "block";	
-					}else{
-						document.form1.idGrupo.length = 1;
-						document.form1.idGrupo.options[0].value = "";
-						document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
-						document.getElementById("div_sensorn").style.display = "none";
-					}
-					} catch (e) {
-					document.form1.idGrupo.length = 1;
-					document.form1.idGrupo.options[0].value = "";
-					document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
-					document.getElementById("div_sensorn").style.display = "none";
-					
-				}
-					document.form1.idGrupo.options[0].selected = true;
-				}
-				</script>';					
-				
-				echo $input;	
-				
+				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
 				$Form_Inputs->form_select('Ver Otros Datos','idDetalle', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
 				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
 				?> 

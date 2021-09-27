@@ -69,24 +69,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$query = "SELECT idTracking, f_inicio, f_termino, h_inicio, h_termino, idTelemetria,
-idGrupo, idGrafico, idEstado, Observacion
-FROM `telemetria_tracking`
-WHERE idTracking = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$rowdata = db_select_data (false, 'idTracking, f_inicio, f_termino, h_inicio, h_termino, idTelemetria, idGrupo, idGrafico, idEstado, Observacion', 'telemetria_tracking', '', 'idTracking ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 $z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='2'";	 
 //Verifico el tipo de usuario que esta ingresando
@@ -131,156 +114,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
-				
-				
-				//numero sensores equipo
-				$N_Maximo_Sensores = 72;
-				$subquery = '';
-				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-					$subquery .= ',SensoresGrupo_'.$i;
-					$subquery .= ',SensoresNombre_'.$i;
-					$subquery .= ',SensoresActivo_'.$i;
-				}
-				// Se trae un listado de todos los registros
-				$arrSelect = array();
-				$query = "SELECT
-				idTelemetria, cantSensores
-				".$subquery."
-				
-				FROM `telemetria_listado`
-				ORDER BY idTelemetria ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrSelect,$row );
-				}
-
-				//Se consultan datos
-				$arrGrupos = array();
-				$query = "SELECT idGrupo,Nombre
-				FROM `telemetria_listado_grupos`
-				ORDER BY idGrupo ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrGrupos,$row );
-				}
-			
-				
-				$input = '<div class="form-group" id="div_sensorn" >
-								<label for="text2" class="control-label col-sm-4">Grupos</label>
-								<div class="col-sm-8 field">
-									<select name="idGrupo" id="idGrupo" class="form-control" required="">
-										<option value="" selected>Seleccione una Opcion</option>
-									</select>
-								</div>
-							</div>';
-					
-				//script
-				$input .= '<script>';
-				
-				$input .= 'document.getElementById("idTelemetria").onchange = function() {cambia_idTelemetria()};';
-				$input .= '
-				$(document).ready(function(){
-					cambia_idTelemetria();
-					document.getElementById("idGrupo").value = "'.$rowdata['idGrupo'].'";
-				});';
-					
-				foreach ($arrSelect as $select) {
-					$input .= 'let id_data_'.$select['idTelemetria'].'=new Array(""';
-					$valorx = 0;
-					for ($i = 1; $i <= $select['cantSensores']; $i++) {
-						//solo sensores activos
-						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-							//verifico que el grupo no este ingresado
-							if($valorx != $select['SensoresGrupo_'.$i]){
-								$valorx = $select['SensoresGrupo_'.$i];
-								$input .= ',"'.$valorx.'"';
-							}
-						}
-					}	
-					$input .= ')
-					';
-				}
-				foreach ($arrSelect as $select) {
-							
-					$input .= 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
-					$valorx = 0;
-					for ($i = 1; $i <= $select['cantSensores']; $i++) {
-						//solo sensores activos
-						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-							//verifico que el grupo no este ingresado
-							if($valorx != $select['SensoresGrupo_'.$i]){
-								$grupo = '';
-								foreach ($arrGrupos as $sen) { 
-									if($select['SensoresGrupo_'.$i]==$sen['idGrupo']){
-										$grupo = $sen['Nombre'];
-									}
-								}
-								$input .= ',"'.$grupo.'"';
-								$valorx = $select['SensoresGrupo_'.$i];
-							}
-						}
-					}	
-					$input .= ')
-					';
-				}	
-					
-				$input .= 'function cambia_idTelemetria(){
-					
-					let Componente = document.form1.idTelemetria[document.form1.idTelemetria.selectedIndex].value
-					try {
-					if (Componente != "") {
-						id_data = eval("id_data_" + Componente);
-						data    = eval("data_" + Componente);
-						num_int = id_data.length;
-						document.form1.idGrupo.length = num_int;
-						for(i=0;i<num_int;i++){
-						   document.form1.idGrupo.options[i].value=id_data[i];
-						   document.form1.idGrupo.options[i].text=data[i];
-						}
-						document.getElementById("div_sensorn").style.display = "block";	
-					}else{
-						document.form1.idGrupo.length = 1;
-						document.form1.idGrupo.options[0].value = "";
-						document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
-						document.getElementById("div_sensorn").style.display = "none";
-					}
-					} catch (e) {
-					document.form1.idGrupo.length = 1;
-					document.form1.idGrupo.options[0].value = "";
-					document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
-					document.getElementById("div_sensorn").style.display = "none";
-					
-				}
-					document.form1.idGrupo.options[0].selected = true;
-				}
-				</script>';					
-				
-				echo $input;	
-				
+				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
 				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
 				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);		
 				$Form_Inputs->form_input_text('Observacion', 'Observacion', $x10, 1);
@@ -347,151 +181,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
-				
-				
-				//numero sensores equipo
-				$N_Maximo_Sensores = 72;
-				$subquery = '';
-				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-					$subquery .= ',SensoresGrupo_'.$i;
-					$subquery .= ',SensoresNombre_'.$i;
-					$subquery .= ',SensoresActivo_'.$i;
-				}
-				// Se trae un listado de todos los registros
-				$arrSelect = array();
-				$query = "SELECT
-				idTelemetria, cantSensores
-				".$subquery."
-				
-				FROM `telemetria_listado`
-				ORDER BY idTelemetria ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrSelect,$row );
-				}
-
-				//Se consultan datos
-				$arrGrupos = array();
-				$query = "SELECT idGrupo,Nombre
-				FROM `telemetria_listado_grupos`
-				ORDER BY idGrupo ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrGrupos,$row );
-				}
-			
-				
-				$input = '<div class="form-group" id="div_sensorn" >
-								<label for="text2" class="control-label col-sm-4">Grupos</label>
-								<div class="col-sm-8 field">
-									<select name="idGrupo" id="idGrupo" class="form-control" required="">
-										<option value="" selected>Seleccione una Opcion</option>
-									</select>
-								</div>
-							</div>';
-					
-				//script
-				$input .= '<script>';
-				
-				$input .= 'document.getElementById("idTelemetria").onchange = function() {cambia_idTelemetria()};';
-					
-				foreach ($arrSelect as $select) {
-					$input .= 'let id_data_'.$select['idTelemetria'].'=new Array(""';
-					$valorx = 0;
-					for ($i = 1; $i <= $select['cantSensores']; $i++) {
-						//solo sensores activos
-						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-							//verifico que el grupo no este ingresado
-							if($valorx != $select['SensoresGrupo_'.$i]){
-								$valorx = $select['SensoresGrupo_'.$i];
-								$input .= ',"'.$valorx.'"';
-							}
-						}
-					}	
-					$input .= ')
-					';
-				}
-				foreach ($arrSelect as $select) {
-							
-					$input .= 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
-					$valorx = 0;
-					for ($i = 1; $i <= $select['cantSensores']; $i++) {
-						//solo sensores activos
-						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-							//verifico que el grupo no este ingresado
-							if($valorx != $select['SensoresGrupo_'.$i]){
-								$grupo = '';
-								foreach ($arrGrupos as $sen) { 
-									if($select['SensoresGrupo_'.$i]==$sen['idGrupo']){
-										$grupo = $sen['Nombre'];
-									}
-								}
-								$input .= ',"'.$grupo.'"';
-								$valorx = $select['SensoresGrupo_'.$i];
-							}
-						}
-					}	
-					$input .= ')
-					';
-				}	
-					
-				$input .= 'function cambia_idTelemetria(){
-					
-					let Componente = document.form1.idTelemetria[document.form1.idTelemetria.selectedIndex].value
-					try {
-					if (Componente != "") {
-						id_data = eval("id_data_" + Componente);
-						data    = eval("data_" + Componente);
-						num_int = id_data.length;
-						document.form1.idGrupo.length = num_int;
-						for(i=0;i<num_int;i++){
-						   document.form1.idGrupo.options[i].value=id_data[i];
-						   document.form1.idGrupo.options[i].text=data[i];
-						}
-						document.getElementById("div_sensorn").style.display = "block";	
-					}else{
-						document.form1.idGrupo.length = 1;
-						document.form1.idGrupo.options[0].value = "";
-						document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
-						document.getElementById("div_sensorn").style.display = "none";
-					}
-					} catch (e) {
-					document.form1.idGrupo.length = 1;
-					document.form1.idGrupo.options[0].value = "";
-					document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
-					document.getElementById("div_sensorn").style.display = "none";
-					
-				}
-					document.form1.idGrupo.options[0].selected = true;
-				}
-				</script>';					
-				
-				echo $input;	
-				
+				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
 				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
 				$Form_Inputs->form_input_text('Observacion', 'Observacion', $x9, 1);
 				
@@ -536,71 +226,51 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'tracking_asc':       $order_by = 'ORDER BY telemetria_tracking.idTracking ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Tracking Ascendente'; break;
-		case 'tracking_desc':      $order_by = 'ORDER BY telemetria_tracking.idTracking DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Tracking Descendente';break;
-		case 'desde_asc':          $order_by = 'ORDER BY telemetria_tracking.f_inicio ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Desde Ascendente'; break;
-		case 'desde_desc':         $order_by = 'ORDER BY telemetria_tracking.f_inicio DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Desde Descendente';break;
-		case 'hasta_asc':          $order_by = 'ORDER BY telemetria_tracking.f_termino ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hasta Ascendente'; break;
-		case 'hasta_desc':         $order_by = 'ORDER BY telemetria_tracking.f_termino DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hasta Descendente';break;
-		case 'equipo_asc':         $order_by = 'ORDER BY telemetria_listado.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Equipo Ascendente'; break;
-		case 'equipo_desc':        $order_by = 'ORDER BY telemetria_listado.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
-		case 'grupo_asc':          $order_by = 'ORDER BY telemetria_listado_grupos.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Grupo Ascendente'; break;
-		case 'grupo_desc':         $order_by = 'ORDER BY telemetria_listado_grupos.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Grupo Descendente';break;
-		case 'grafico_asc':        $order_by = 'ORDER BY core_sistemas_opciones.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opcion Grafico Ascendente'; break;
-		case 'grafico_desc':       $order_by = 'ORDER BY core_sistemas_opciones.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opcion Grafico Descendente';break;
-		case 'estado_asc':         $order_by = 'ORDER BY core_estados.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
-		case 'estado_desc':        $order_by = 'ORDER BY core_estados.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'observacion_asc':    $order_by = 'ORDER BY telemetria_tracking.idTracking ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Observacion Ascendente'; break;
-		case 'observacion_desc':   $order_by = 'ORDER BY telemetria_tracking.idTracking DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Observacion Descendente';break;
+		case 'tracking_asc':       $order_by = 'telemetria_tracking.idTracking ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Tracking Ascendente'; break;
+		case 'tracking_desc':      $order_by = 'telemetria_tracking.idTracking DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Tracking Descendente';break;
+		case 'desde_asc':          $order_by = 'telemetria_tracking.f_inicio ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Desde Ascendente'; break;
+		case 'desde_desc':         $order_by = 'telemetria_tracking.f_inicio DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Desde Descendente';break;
+		case 'hasta_asc':          $order_by = 'telemetria_tracking.f_termino ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hasta Ascendente'; break;
+		case 'hasta_desc':         $order_by = 'telemetria_tracking.f_termino DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hasta Descendente';break;
+		case 'equipo_asc':         $order_by = 'telemetria_listado.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Equipo Ascendente'; break;
+		case 'equipo_desc':        $order_by = 'telemetria_listado.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
+		case 'grupo_asc':          $order_by = 'telemetria_listado_grupos.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Grupo Ascendente'; break;
+		case 'grupo_desc':         $order_by = 'telemetria_listado_grupos.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Grupo Descendente';break;
+		case 'grafico_asc':        $order_by = 'core_sistemas_opciones.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opcion Grafico Ascendente'; break;
+		case 'grafico_desc':       $order_by = 'core_sistemas_opciones.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opcion Grafico Descendente';break;
+		case 'estado_asc':         $order_by = 'core_estados.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':        $order_by = 'core_estados.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'observacion_asc':    $order_by = 'telemetria_tracking.idTracking ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Observacion Ascendente'; break;
+		case 'observacion_desc':   $order_by = 'telemetria_tracking.idTracking DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Observacion Descendente';break;
 		
 
-		default: $order_by = 'ORDER BY telemetria_tracking.idEstado ASC, telemetria_tracking.idTracking DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Tracking Descendente';
+		default: $order_by = 'telemetria_tracking.idEstado ASC, telemetria_tracking.idTracking DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Tracking Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY telemetria_tracking.idEstado ASC, telemetria_tracking.idTracking DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Tracking Descendente';
+	$order_by = 'telemetria_tracking.idEstado ASC, telemetria_tracking.idTracking DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Tracking Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_tracking.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = "telemetria_tracking.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){          $z .= " AND telemetria_tracking.f_inicio='".$_GET['f_inicio']."'";}
-if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){        $z .= " AND telemetria_tracking.f_termino='".$_GET['f_termino']."'";}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''){          $z .= " AND telemetria_tracking.h_inicio='".$_GET['h_inicio']."'";}
-if(isset($_GET['h_termino']) && $_GET['h_termino'] != ''){        $z .= " AND telemetria_tracking.h_termino='".$_GET['h_termino']."'";}
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $z .= " AND telemetria_tracking.idTelemetria='".$_GET['idTelemetria']."'";}
-if(isset($_GET['idGrupo']) && $_GET['idGrupo'] != ''){            $z .= " AND telemetria_tracking.idGrupo='".$_GET['idGrupo']."'";}
-if(isset($_GET['idGrafico']) && $_GET['idGrafico'] != ''){        $z .= " AND telemetria_tracking.idGrafico='".$_GET['idGrafico']."'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){          $z .= " AND telemetria_tracking.idEstado='".$_GET['idEstado']."'";}
-if(isset($_GET['Observacion']) && $_GET['Observacion'] != ''){    $z .= " AND telemetria_tracking.Observacion LIKE '%".$_GET['Observacion']."%'";}
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){          $SIS_where .= " AND telemetria_tracking.f_inicio='".$_GET['f_inicio']."'";}
+if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){        $SIS_where .= " AND telemetria_tracking.f_termino='".$_GET['f_termino']."'";}
+if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''){          $SIS_where .= " AND telemetria_tracking.h_inicio='".$_GET['h_inicio']."'";}
+if(isset($_GET['h_termino']) && $_GET['h_termino'] != ''){        $SIS_where .= " AND telemetria_tracking.h_termino='".$_GET['h_termino']."'";}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $SIS_where .= " AND telemetria_tracking.idTelemetria='".$_GET['idTelemetria']."'";}
+if(isset($_GET['idGrupo']) && $_GET['idGrupo'] != ''){            $SIS_where .= " AND telemetria_tracking.idGrupo='".$_GET['idGrupo']."'";}
+if(isset($_GET['idGrafico']) && $_GET['idGrafico'] != ''){        $SIS_where .= " AND telemetria_tracking.idGrafico='".$_GET['idGrafico']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){          $SIS_where .= " AND telemetria_tracking.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['Observacion']) && $_GET['Observacion'] != ''){    $SIS_where .= " AND telemetria_tracking.Observacion LIKE '%".$_GET['Observacion']."%'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idTracking FROM `telemetria_tracking` 
-LEFT JOIN `telemetria_listado`         ON telemetria_listado.idTelemetria    = telemetria_tracking.idTelemetria
-LEFT JOIN `telemetria_listado_grupos`  ON telemetria_listado_grupos.idGrupo  = telemetria_tracking.idGrupo
-LEFT JOIN `core_sistemas_opciones`     ON core_sistemas_opciones.idOpciones  = telemetria_tracking.idGrafico
-LEFT JOIN `core_estados`               ON core_estados.idEstado              = telemetria_tracking.idEstado
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idTracking', 'telemetria_tracking', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCategorias = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_tracking.idTracking,
 telemetria_tracking.f_inicio,
 telemetria_tracking.f_termino,
@@ -616,33 +286,17 @@ telemetria_listado.Nombre AS equipo,
 telemetria_listado_grupos.Nombre AS grupo,
 core_sistemas_opciones.Nombre AS grafico,
 core_estados.Nombre AS estado,
-core_sistemas.Nombre AS RazonSocial
-
-FROM `telemetria_tracking`
+core_sistemas.Nombre AS RazonSocial';
+$SIS_join  = '
 LEFT JOIN `telemetria_listado`         ON telemetria_listado.idTelemetria    = telemetria_tracking.idTelemetria
 LEFT JOIN `telemetria_listado_grupos`  ON telemetria_listado_grupos.idGrupo  = telemetria_tracking.idGrupo
 LEFT JOIN `core_sistemas_opciones`     ON core_sistemas_opciones.idOpciones  = telemetria_tracking.idGrafico
 LEFT JOIN `core_estados`               ON core_estados.idEstado              = telemetria_tracking.idEstado
-LEFT JOIN `core_sistemas`              ON core_sistemas.idSistema            = telemetria_tracking.idSistema
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCategorias,$row );
-}
+LEFT JOIN `core_sistemas`              ON core_sistemas.idSistema            = telemetria_tracking.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCategorias = array();
+$arrCategorias = db_select_array (false, $SIS_query, 'telemetria_tracking', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
+
 //Filtro de busqueda
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
@@ -699,151 +353,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
-				
-				
-				//numero sensores equipo
-				$N_Maximo_Sensores = 72;
-				$subquery = '';
-				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-					$subquery .= ',SensoresGrupo_'.$i;
-					$subquery .= ',SensoresNombre_'.$i;
-					$subquery .= ',SensoresActivo_'.$i;
-				}
-				// Se trae un listado de todos los registros
-				$arrSelect = array();
-				$query = "SELECT
-				idTelemetria, cantSensores
-				".$subquery."
-				
-				FROM `telemetria_listado`
-				ORDER BY idTelemetria ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrSelect,$row );
-				}
-
-				//Se consultan datos
-				$arrGrupos = array();
-				$query = "SELECT idGrupo,Nombre
-				FROM `telemetria_listado_grupos`
-				ORDER BY idGrupo ASC";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrGrupos,$row );
-				}
-			
-				
-				$input = '<div class="form-group" id="div_sensorn" >
-								<label for="text2" class="control-label col-sm-4">Grupos</label>
-								<div class="col-sm-8 field">
-									<select name="idGrupo" id="idGrupo" class="form-control">
-										<option value="" selected>Seleccione una Opcion</option>
-									</select>
-								</div>
-							</div>';
-					
-				//script
-				$input .= '<script>';
-				
-				$input .= 'document.getElementById("idTelemetria").onchange = function() {cambia_idTelemetria()};';
-					
-				foreach ($arrSelect as $select) {
-					$input .= 'let id_data_'.$select['idTelemetria'].'=new Array(""';
-					$valorx = 0;
-					for ($i = 1; $i <= $select['cantSensores']; $i++) {
-						//solo sensores activos
-						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-							//verifico que el grupo no este ingresado
-							if($valorx != $select['SensoresGrupo_'.$i]){
-								$valorx = $select['SensoresGrupo_'.$i];
-								$input .= ',"'.$valorx.'"';
-							}
-						}
-					}	
-					$input .= ')
-					';
-				}
-				foreach ($arrSelect as $select) {
-							
-					$input .= 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
-					$valorx = 0;
-					for ($i = 1; $i <= $select['cantSensores']; $i++) {
-						//solo sensores activos
-						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-							//verifico que el grupo no este ingresado
-							if($valorx != $select['SensoresGrupo_'.$i]){
-								$grupo = '';
-								foreach ($arrGrupos as $sen) { 
-									if($select['SensoresGrupo_'.$i]==$sen['idGrupo']){
-										$grupo = $sen['Nombre'];
-									}
-								}
-								$input .= ',"'.$grupo.'"';
-								$valorx = $select['SensoresGrupo_'.$i];
-							}
-						}
-					}	
-					$input .= ')
-					';
-				}	
-					
-				$input .= 'function cambia_idTelemetria(){
-					
-					let Componente = document.form1.idTelemetria[document.form1.idTelemetria.selectedIndex].value
-					try {
-					if (Componente != "") {
-						id_data = eval("id_data_" + Componente);
-						data    = eval("data_" + Componente);
-						num_int = id_data.length;
-						document.form1.idGrupo.length = num_int;
-						for(i=0;i<num_int;i++){
-						   document.form1.idGrupo.options[i].value=id_data[i];
-						   document.form1.idGrupo.options[i].text=data[i];
-						}
-						document.getElementById("div_sensorn").style.display = "block";	
-					}else{
-						document.form1.idGrupo.length = 1;
-						document.form1.idGrupo.options[0].value = "";
-						document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
-						document.getElementById("div_sensorn").style.display = "none";
-					}
-					} catch (e) {
-					document.form1.idGrupo.length = 1;
-					document.form1.idGrupo.options[0].value = "";
-					document.form1.idGrupo.options[0].text = "Seleccione una Opcion";
-					document.getElementById("div_sensorn").style.display = "none";
-					
-				}
-					document.form1.idGrupo.options[0].selected = true;
-				}
-				</script>';					
-				
-				echo $input;	
-				
+				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 1, $dbConn);
 				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
 				$Form_Inputs->form_select('Estado','idEstado', $x9, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);		
 				$Form_Inputs->form_input_text('Observacion', 'Observacion', $x10, 1);

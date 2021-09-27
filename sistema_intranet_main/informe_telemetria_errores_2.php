@@ -25,9 +25,6 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
 
-             
-  
-
 //tomo el numero de la pagina si es que este existe
 if(isset($_GET["pagina"])){
 	$num_pag = $_GET["pagina"];	
@@ -43,14 +40,14 @@ if (!$num_pag){
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
 //Inicia variable
-$z="WHERE telemetria_listado_errores.idErrores>0"; 
-$z.=" AND telemetria_listado_errores.idTipo!='999'";
-$z.=" AND telemetria_listado_errores.Valor<'99900'";
-$z.=" AND telemetria_listado.id_Geo='2'";
-$z.=" AND telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = "telemetria_listado_errores.idErrores>0"; 
+$SIS_where.= " AND telemetria_listado_errores.idTipo!='999'";
+$SIS_where.= " AND telemetria_listado_errores.Valor<'99900'";
+$SIS_where.= " AND telemetria_listado.id_Geo='2'";
+$SIS_where.= " AND telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=2";//CrossC			
+	$SIS_where .= " AND telemetria_listado.idTab=2";//CrossC			
 }
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search .='&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
@@ -58,54 +55,37 @@ $search .='&submit_filter=Filtrar';
 $search .='&idOpciones=2';
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.=" AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$search .='&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z.=" AND telemetria_listado_errores.idTelemetria='".$_GET['idTelemetria']."'";
+	$SIS_where.=" AND telemetria_listado_errores.idTelemetria='".$_GET['idTelemetria']."'";
 	$search .='&idTelemetria='.$_GET['idTelemetria'];
 }
 //verifico el tipo de error
 if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
-	$z.=" AND telemetria_listado_errores.idTipo='".$_GET['idTipo']."'";
+	$SIS_where.=" AND telemetria_listado_errores.idTipo='".$_GET['idTipo']."'";
 	$search .='&idTipo='.$_GET['idTipo'];
 }
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$join = "";	
-}else{
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";	
-	$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_where.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT telemetria_listado_errores.idErrores FROM `telemetria_listado_errores`  LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria ".$join."  ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'telemetria_listado_errores.idErrores', 'telemetria_listado_errores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);
-
+/***********************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado.SensoresUniMed_'.$i;
 }
-// Se trae un listado con todos los elementos
-$arrErrores = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado_errores.idErrores,
 telemetria_listado_errores.Descripcion, 
 telemetria_listado_errores.Fecha, 
@@ -115,38 +95,15 @@ telemetria_listado_errores.Valor,
 telemetria_listado_errores.Valor_min,
 telemetria_listado_errores.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.id_Geo
-".$subquery."
-
-FROM `telemetria_listado_errores`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria
-".$join."  
-".$z."
-ORDER BY idErrores DESC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrErrores,$row );
-}
-
-
-
+telemetria_listado.id_Geo'.$subquery;
+$SIS_order = 'idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
+$arrErrores = array();
+$arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
+/***********************************/
 //Se traen todas las unidades de medida
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
-
+/***********************************/
 $arrFinalUnimed = array();
 foreach ($arrUnimed as $sen) {
 	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
@@ -162,9 +119,7 @@ foreach ($arrUnimed as $sen) {
 		<header>		
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resultados</h5>	
 			<div class="toolbar">
-				<?php 
-				
-				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+				<?php echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
 		<div class="table-responsive">    
@@ -205,9 +160,7 @@ foreach ($arrUnimed as $sen) {
 			</table>
 		</div>
 		<div class="pagrow">	
-			<?php 
-			
-			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+			<?php echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>

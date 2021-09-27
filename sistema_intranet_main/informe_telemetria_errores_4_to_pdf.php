@@ -23,24 +23,23 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 }
 /********************************************************************/
 //Inicia variable
-$z="WHERE telemetria_listado_errores_999.idErrores>0"; 
-$z.=" AND telemetria_listado_errores_999.idTipo='999'";
-$z.=" AND telemetria_listado.id_Geo='2'";
-$z.=" AND telemetria_listado_errores_999.idSistema=".$_GET['idSistema'];
+$SIS_where = "telemetria_listado_errores_999.idErrores>0"; 
+$SIS_where.= " AND telemetria_listado_errores_999.idTipo='999'";
+$SIS_where.= " AND telemetria_listado.id_Geo='2'";
+$SIS_where.= " AND telemetria_listado_errores_999.idSistema=".$_GET['idSistema'];
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.= " AND telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z.=" AND telemetria_listado_errores_999.idTelemetria='".$_GET['idTelemetria']."'";
+	$SIS_where.= " AND telemetria_listado_errores_999.idTelemetria='".$_GET['idTelemetria']."'";
 }
 //Verifico el tipo de usuario que esta ingresando
-if($_GET['idTipoUsuario']==1){
-	$join = "";	
-}else{
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores_999.idTelemetria ";
-	$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores_999.idTelemetria';
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores_999.idTelemetria ";
+	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 
 
@@ -51,8 +50,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresUniMed_'.$i;
 }
 // Se trae un listado con todos los elementos
-$arrErrores = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado_errores_999.idErrores,
 telemetria_listado_errores_999.Descripcion, 
 telemetria_listado_errores_999.Fecha, 
@@ -62,29 +60,10 @@ telemetria_listado_errores_999.Valor,
 telemetria_listado_errores_999.Valor_min,
 telemetria_listado_errores_999.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.id_Geo
-".$subquery."
-
-FROM `telemetria_listado_errores_999`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores_999.idTelemetria
-".$join."
-".$z."
-ORDER BY idErrores DESC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrErrores,$row );
-} 
+telemetria_listado.id_Geo'.$subquery;
+$SIS_order = 'idErrores DESC';
+$arrErrores = array();
+$arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();

@@ -29,47 +29,46 @@ $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='
 
 
 //Variable con la ubicacion
-$z="WHERE cross_shipping_consolidacion.idConsolidacion!=0";
+$SIS_where = "cross_shipping_consolidacion.idConsolidacion!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['CTNNombreCompañia'])&&$_GET['CTNNombreCompañia']!=''){          $z .=" AND cross_shipping_consolidacion.CTNNombreCompañia LIKE '%".$_GET['CTNNombreCompañia']."%'";}
-if(isset($_GET['NInforme'])&&$_GET['NInforme']!=''){                            $z .=" AND cross_shipping_consolidacion.NInforme LIKE '%".$_GET['NInforme']."%'";}
-if(isset($_GET['FechaInicioEmbarque'])&&$_GET['FechaInicioEmbarque']!=''){      $z .=" AND cross_shipping_consolidacion.FechaInicioEmbarque='".$_GET['FechaInicioEmbarque']."'";}
-if(isset($_GET['HoraInicioCarga'])&&$_GET['HoraInicioCarga']!=''){              $z .=" AND cross_shipping_consolidacion.HoraInicioCarga='".$_GET['HoraInicioCarga']."'";}
-if(isset($_GET['FechaTerminoEmbarque'])&&$_GET['FechaTerminoEmbarque']!=''){    $z .=" AND cross_shipping_consolidacion.FechaTerminoEmbarque='".$_GET['FechaTerminoEmbarque']."'";}
-if(isset($_GET['HoraTerminoCarga'])&&$_GET['HoraTerminoCarga']!=''){            $z .=" AND cross_shipping_consolidacion.HoraTerminoCarga='".$_GET['HoraTerminoCarga']."'";}
-if(isset($_GET['idPlantaDespacho'])&&$_GET['idPlantaDespacho']!=''){            $z .=" AND cross_shipping_consolidacion.idPlantaDespacho=".$_GET['idPlantaDespacho'];}
-if(isset($_GET['idCategoria'])&&$_GET['idCategoria']!=''){                      $z .=" AND cross_shipping_consolidacion.idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['idProducto'])&&$_GET['idProducto']!=''){                        $z .=" AND cross_shipping_consolidacion.idProducto=".$_GET['idProducto'];}
-if(isset($_GET['CantidadCajas'])&&$_GET['CantidadCajas']!=''){                  $z .=" AND cross_shipping_consolidacion.CantidadCajas LIKE '%".$_GET['CantidadCajas']."%'";}
-if(isset($_GET['idInstructivo'])&&$_GET['idInstructivo']!=''){                  $z .=" AND cross_shipping_consolidacion.idInstructivo=".$_GET['idInstructivo'];}
-if(isset($_GET['idNaviera'])&&$_GET['idNaviera']!=''){                          $z .=" AND cross_shipping_consolidacion.idNaviera=".$_GET['idNaviera'];}
-if(isset($_GET['idPuertoEmbarque'])&&$_GET['idPuertoEmbarque']!=''){            $z .=" AND cross_shipping_consolidacion.idPuertoEmbarque=".$_GET['idPuertoEmbarque'];}
-if(isset($_GET['idMercado'])&&$_GET['idMercado']!=''){                          $z .=" AND cross_shipping_consolidacion.idMercado=".$_GET['idMercado'];}
-if(isset($_GET['idPais'])&&$_GET['idPais']!=''){                                $z .=" AND cross_shipping_consolidacion.idPais=".$_GET['idPais'];}
-if(isset($_GET['idEmpresaTransporte'])&&$_GET['idEmpresaTransporte']!=''){      $z .=" AND cross_shipping_consolidacion.idEmpresaTransporte=".$_GET['idEmpresaTransporte'];}
-if(isset($_GET['ChoferNombreRut'])&&$_GET['ChoferNombreRut']!=''){              $z .=" AND cross_shipping_consolidacion.ChoferNombreRut LIKE '%".$_GET['ChoferNombreRut']."%'";}
-if(isset($_GET['PatenteCamion'])&&$_GET['PatenteCamion']!=''){                  $z .=" AND cross_shipping_consolidacion.PatenteCamion LIKE '%".$_GET['PatenteCamion']."%'";}
-if(isset($_GET['PatenteCarro'])&&$_GET['PatenteCarro']!=''){                    $z .=" AND cross_shipping_consolidacion.PatenteCarro LIKE '%".$_GET['PatenteCarro']."%'";}
-if(isset($_GET['idCondicion'])&&$_GET['idCondicion']!=''){                      $z .=" AND cross_shipping_consolidacion.idCondicion=".$_GET['idCondicion'];}
-if(isset($_GET['idSellado'])&&$_GET['idSellado']!=''){                          $z .=" AND cross_shipping_consolidacion.idSellado=".$_GET['idSellado'];}
-if(isset($_GET['TSetPoint'])&&$_GET['TSetPoint']!=''){                          $z .=" AND cross_shipping_consolidacion.TSetPoint=".$_GET['TSetPoint'];}
-if(isset($_GET['TVentilacion'])&&$_GET['TVentilacion']!=''){                    $z .=" AND cross_shipping_consolidacion.TVentilacion=".$_GET['TVentilacion'];}
-if(isset($_GET['TAmbiente'])&&$_GET['TAmbiente']!=''){                          $z .=" AND cross_shipping_consolidacion.TAmbiente=".$_GET['TAmbiente'];}
-if(isset($_GET['NumeroSello'])&&$_GET['NumeroSello']!=''){                      $z .=" AND cross_shipping_consolidacion.NumeroSello LIKE '%".$_GET['NumeroSello']."%'";}
-if(isset($_GET['idInspector'])&&$_GET['idInspector']!=''){                      $z .=" AND cross_shipping_consolidacion.idInspector=".$_GET['idInspector'];}
-if(isset($_GET['Observaciones'])&&$_GET['Observaciones']!=''){                  $z .=" AND cross_shipping_consolidacion.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){                          $z .=" AND cross_shipping_consolidacion.idSistema=".$_GET['idSistema'];}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                            $z .=" AND cross_shipping_consolidacion.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['CTNNombreCompañia'])&&$_GET['CTNNombreCompañia']!=''){          $SIS_where .=" AND cross_shipping_consolidacion.CTNNombreCompañia LIKE '%".$_GET['CTNNombreCompañia']."%'";}
+if(isset($_GET['NInforme'])&&$_GET['NInforme']!=''){                            $SIS_where .=" AND cross_shipping_consolidacion.NInforme LIKE '%".$_GET['NInforme']."%'";}
+if(isset($_GET['FechaInicioEmbarque'])&&$_GET['FechaInicioEmbarque']!=''){      $SIS_where .=" AND cross_shipping_consolidacion.FechaInicioEmbarque='".$_GET['FechaInicioEmbarque']."'";}
+if(isset($_GET['HoraInicioCarga'])&&$_GET['HoraInicioCarga']!=''){              $SIS_where .=" AND cross_shipping_consolidacion.HoraInicioCarga='".$_GET['HoraInicioCarga']."'";}
+if(isset($_GET['FechaTerminoEmbarque'])&&$_GET['FechaTerminoEmbarque']!=''){    $SIS_where .=" AND cross_shipping_consolidacion.FechaTerminoEmbarque='".$_GET['FechaTerminoEmbarque']."'";}
+if(isset($_GET['HoraTerminoCarga'])&&$_GET['HoraTerminoCarga']!=''){            $SIS_where .=" AND cross_shipping_consolidacion.HoraTerminoCarga='".$_GET['HoraTerminoCarga']."'";}
+if(isset($_GET['idPlantaDespacho'])&&$_GET['idPlantaDespacho']!=''){            $SIS_where .=" AND cross_shipping_consolidacion.idPlantaDespacho=".$_GET['idPlantaDespacho'];}
+if(isset($_GET['idCategoria'])&&$_GET['idCategoria']!=''){                      $SIS_where .=" AND cross_shipping_consolidacion.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto'])&&$_GET['idProducto']!=''){                        $SIS_where .=" AND cross_shipping_consolidacion.idProducto=".$_GET['idProducto'];}
+if(isset($_GET['CantidadCajas'])&&$_GET['CantidadCajas']!=''){                  $SIS_where .=" AND cross_shipping_consolidacion.CantidadCajas LIKE '%".$_GET['CantidadCajas']."%'";}
+if(isset($_GET['idInstructivo'])&&$_GET['idInstructivo']!=''){                  $SIS_where .=" AND cross_shipping_consolidacion.idInstructivo=".$_GET['idInstructivo'];}
+if(isset($_GET['idNaviera'])&&$_GET['idNaviera']!=''){                          $SIS_where .=" AND cross_shipping_consolidacion.idNaviera=".$_GET['idNaviera'];}
+if(isset($_GET['idPuertoEmbarque'])&&$_GET['idPuertoEmbarque']!=''){            $SIS_where .=" AND cross_shipping_consolidacion.idPuertoEmbarque=".$_GET['idPuertoEmbarque'];}
+if(isset($_GET['idMercado'])&&$_GET['idMercado']!=''){                          $SIS_where .=" AND cross_shipping_consolidacion.idMercado=".$_GET['idMercado'];}
+if(isset($_GET['idPais'])&&$_GET['idPais']!=''){                                $SIS_where .=" AND cross_shipping_consolidacion.idPais=".$_GET['idPais'];}
+if(isset($_GET['idEmpresaTransporte'])&&$_GET['idEmpresaTransporte']!=''){      $SIS_where .=" AND cross_shipping_consolidacion.idEmpresaTransporte=".$_GET['idEmpresaTransporte'];}
+if(isset($_GET['ChoferNombreRut'])&&$_GET['ChoferNombreRut']!=''){              $SIS_where .=" AND cross_shipping_consolidacion.ChoferNombreRut LIKE '%".$_GET['ChoferNombreRut']."%'";}
+if(isset($_GET['PatenteCamion'])&&$_GET['PatenteCamion']!=''){                  $SIS_where .=" AND cross_shipping_consolidacion.PatenteCamion LIKE '%".$_GET['PatenteCamion']."%'";}
+if(isset($_GET['PatenteCarro'])&&$_GET['PatenteCarro']!=''){                    $SIS_where .=" AND cross_shipping_consolidacion.PatenteCarro LIKE '%".$_GET['PatenteCarro']."%'";}
+if(isset($_GET['idCondicion'])&&$_GET['idCondicion']!=''){                      $SIS_where .=" AND cross_shipping_consolidacion.idCondicion=".$_GET['idCondicion'];}
+if(isset($_GET['idSellado'])&&$_GET['idSellado']!=''){                          $SIS_where .=" AND cross_shipping_consolidacion.idSellado=".$_GET['idSellado'];}
+if(isset($_GET['TSetPoint'])&&$_GET['TSetPoint']!=''){                          $SIS_where .=" AND cross_shipping_consolidacion.TSetPoint=".$_GET['TSetPoint'];}
+if(isset($_GET['TVentilacion'])&&$_GET['TVentilacion']!=''){                    $SIS_where .=" AND cross_shipping_consolidacion.TVentilacion=".$_GET['TVentilacion'];}
+if(isset($_GET['TAmbiente'])&&$_GET['TAmbiente']!=''){                          $SIS_where .=" AND cross_shipping_consolidacion.TAmbiente=".$_GET['TAmbiente'];}
+if(isset($_GET['NumeroSello'])&&$_GET['NumeroSello']!=''){                      $SIS_where .=" AND cross_shipping_consolidacion.NumeroSello LIKE '%".$_GET['NumeroSello']."%'";}
+if(isset($_GET['idInspector'])&&$_GET['idInspector']!=''){                      $SIS_where .=" AND cross_shipping_consolidacion.idInspector=".$_GET['idInspector'];}
+if(isset($_GET['Observaciones'])&&$_GET['Observaciones']!=''){                  $SIS_where .=" AND cross_shipping_consolidacion.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){                          $SIS_where .=" AND cross_shipping_consolidacion.idSistema=".$_GET['idSistema'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                            $SIS_where .=" AND cross_shipping_consolidacion.idEstado=".$_GET['idEstado'];}
 
 if(isset($_GET['Creacion_fechaDesde']) && $_GET['Creacion_fechaDesde'] != ''&&isset($_GET['Creacion_fechaHasta']) && $_GET['Creacion_fechaHasta'] != ''){ 
-	$z .= " AND cross_shipping_consolidacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fechaDesde']."' AND '".$_GET['Creacion_fechaHasta']."'" ;
+	$SIS_where .= " AND cross_shipping_consolidacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fechaDesde']."' AND '".$_GET['Creacion_fechaHasta']."'" ;
 }
 
 /**********************************************************/	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 cross_shipping_consolidacion.Creacion_fecha,
 cross_shipping_consolidacion.CTNNombreCompañia,
 cross_shipping_consolidacion.FechaInicioEmbarque,
@@ -125,9 +124,8 @@ core_estibas.Nombre AS Estiba,
 core_estibas_ubicacion.Nombre AS EstibaUbicacion,
 core_cross_shipping_consolidacion_posicion.Nombre AS Posicion,
 cross_shipping_envase.Nombre AS Envase,
-cross_shipping_termografo.Nombre AS Termografo
-
-FROM `cross_shipping_consolidacion_estibas`
+cross_shipping_termografo.Nombre AS Termografo';
+$SIS_join  = '
 LEFT JOIN `cross_shipping_consolidacion`                 ON cross_shipping_consolidacion.idConsolidacion              = cross_shipping_consolidacion_estibas.idConsolidacion
 LEFT JOIN `core_sistemas`                                ON core_sistemas.idSistema                                   = cross_shipping_consolidacion.idSistema
 LEFT JOIN `usuarios_listado`                             ON usuarios_listado.idUsuario                                = cross_shipping_consolidacion.idUsuario
@@ -148,25 +146,12 @@ LEFT JOIN `core_estibas`                                 ON core_estibas.idEstib
 LEFT JOIN `core_estibas_ubicacion`                       ON core_estibas_ubicacion.idEstibaUbicacion                  = cross_shipping_consolidacion_estibas.idEstibaUbicacion
 LEFT JOIN `core_cross_shipping_consolidacion_posicion`   ON core_cross_shipping_consolidacion_posicion.idPosicion     = cross_shipping_consolidacion_estibas.idPosicion
 LEFT JOIN `cross_shipping_envase`                        ON cross_shipping_envase.idEnvase                            = cross_shipping_consolidacion_estibas.idEnvase
-LEFT JOIN `cross_shipping_termografo`                    ON cross_shipping_termografo.idTermografo                    = cross_shipping_consolidacion_estibas.idTermografo
+LEFT JOIN `cross_shipping_termografo`                    ON cross_shipping_termografo.idTermografo                    = cross_shipping_consolidacion_estibas.idTermografo';
+$SIS_order = 'cross_shipping_consolidacion.Creacion_fecha ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_estibas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'],  basename($_SERVER["REQUEST_URI"], ".php"), 'arrTipo');
 
-						
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}
 
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
@@ -180,9 +165,7 @@ $objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
 
-
-
-            
+      
             
 //Titulo columnas
 $objPHPExcel->setActiveSheetIndex(0)

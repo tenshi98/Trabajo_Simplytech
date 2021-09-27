@@ -18,35 +18,17 @@ $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresUniMed_'.$i;
 }
-// consulto los datos
-$query = "SELECT
+//consulto
+$SIS_query = '
 telemetria_listado_error_geocerca.Descripcion, 
 telemetria_listado_error_geocerca.Fecha, 
 telemetria_listado_error_geocerca.Hora, 
 telemetria_listado_error_geocerca.GeoLatitud,
 telemetria_listado_error_geocerca.GeoLongitud,
-telemetria_listado.Nombre AS NombreEquipo
-".$subquery."
-
-FROM `telemetria_listado_error_geocerca`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_geocerca.idTelemetria
-WHERE telemetria_listado_error_geocerca.idErrores = ".simpleDecode($_GET['view'], fecha_actual())."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+telemetria_listado.Nombre AS NombreEquipo'.$subquery;
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_geocerca.idTelemetria';
+$SIS_where = 'telemetria_listado_error_geocerca.idErrores = '.simpleDecode($_GET['view'], fecha_actual());
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_error_geocerca', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 
 /**********************************************************************************************************************************/

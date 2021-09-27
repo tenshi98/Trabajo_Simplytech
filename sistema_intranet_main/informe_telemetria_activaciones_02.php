@@ -35,25 +35,19 @@ if ( ! empty($_GET['submit_filter']) ) {
 
 /**********************************************************/
 //Variable de busqueda
-$z  = "WHERE telemetria_listado_historial_activaciones.idTelemetria!=0";
-$zx = 'telemetria_listado_historial_activaciones.idTelemetria!=0';
+$SIS_where = 'telemetria_listado_historial_activaciones.idTelemetria!=0';
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){       $z.=" AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];}
 
 if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino'] != ''){ 
-	$z.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
-	$zx.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
+	$SIS_where.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
 }elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''){ 
-	$z.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
-	$zx.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
+	$SIS_where.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 
 //verifico el numero de datos antes de hacer la consulta
-$ndata_1 = db_select_nrows (false, 'telemetria_listado_historial_activaciones.idTelemetria', 
-							'telemetria_listado_historial_activaciones', 
-							'LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria  = telemetria_listado_historial_activaciones.idTelemetria', 
-							$zx, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
+$ndata_1 = db_select_nrows (false, 'idTelemetria', 'telemetria_listado_historial_activaciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
 							
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
@@ -62,35 +56,18 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	
 	/**********************************************************/
 	//se consulta
-	$arrConsulta = array(); 
-	$query = "SELECT 
+	$SIS_query = '
 	telemetria_listado.Nombre AS EquipoNombre,
 	telemetria_listado_historial_activaciones.Fecha AS EquipoFecha,
 	telemetria_listado_historial_activaciones.Hora AS EquipoHora,
 	telemetria_listado_historial_activaciones.SensorActivacionValor AS EquipoActivacionValor,
-	telemetria_listado_historial_activaciones.Valor AS EquipoValor
+	telemetria_listado_historial_activaciones.Valor AS EquipoValor';
+	$SIS_join  = 'LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria  = telemetria_listado_historial_activaciones.idTelemetria';
+	$SIS_order = 'telemetria_listado_historial_activaciones.Fecha ASC, telemetria_listado_historial_activaciones.Hora ASC';
+	$arrConsulta = array();
+	$arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_historial_activaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
 
-	FROM `telemetria_listado_historial_activaciones`
-	LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria  = telemetria_listado_historial_activaciones.idTelemetria
-	".$z."
-	ORDER BY telemetria_listado_historial_activaciones.Fecha ASC, telemetria_listado_historial_activaciones.Hora ASC
-	";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrConsulta,$row );
-	}
+
 				
 	?>
 

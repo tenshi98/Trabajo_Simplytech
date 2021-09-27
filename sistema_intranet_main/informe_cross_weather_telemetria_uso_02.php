@@ -34,53 +34,19 @@ require_once 'core/Web.Header.Main.php';
 if ( ! empty($_GET['submit_filter']) ) { 
 //Se consultan datos
 $arrGruposRev = array();
-$query = "SELECT idGrupo, Nombre
-FROM `telemetria_listado_grupos_uso`
-WHERE idSupervisado=1
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGruposRev,$row );
-}
+$arrGruposRev = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', 'idSupervisado=1', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGruposRev');
 /**********************************************************/
+// consulto los datos
+$row_data = db_select_data (false, 'cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //numero sensores equipo
-$N_Maximo_Sensores = 72;
 $subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 	$subquery .= ',SensoresRevisionGrupo_'.$i;
 }
 // consulto los datos
-$query = "SELECT Nombre 
-".$subquery."
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['idTelemetria'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowdata = db_select_data (false, 'Nombre'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 /**********************************************************/
 //Se crean las columnas
 $arrColumnas = array(); 
@@ -96,46 +62,24 @@ foreach ($arrGruposRev as $sen) {
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_listado_historial_uso.idUso!=0";
+$SIS_where = "telemetria_listado_historial_uso.idUso!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){       $z.=" AND telemetria_listado_historial_uso.idTelemetria =".$_GET['idTelemetria'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){       $SIS_where.= " AND telemetria_listado_historial_uso.idTelemetria =".$_GET['idTelemetria'];}
 if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''){ 
-	$z.=" AND telemetria_listado_historial_uso.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.= " AND telemetria_listado_historial_uso.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /**********************************************************/
 
 //numero sensores equipo
-$N_Maximo_Sensores = 72;
 $subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 	$subquery .= ',Horas_'.$i;
 }
 //se consulta
-$arrConsulta = array(); 
-$query = "SELECT Fecha
-".$subquery."
+$arrConsulta = array();
+$arrConsulta = db_select_array (false, 'Fecha'.$subquery, 'telemetria_listado_historial_uso', '', $SIS_where, 'telemetria_listado_historial_uso.Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
 
-FROM `telemetria_listado_historial_uso`
-".$z."
-ORDER BY telemetria_listado_historial_uso.Fecha ASC
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrConsulta,$row );
-}
 ?>
 
 
@@ -204,7 +148,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=4";//CrossWeather			
+	$w .= " AND telemetria_listado.idTab=4";//CrossWeather			
 }
 ?>
 <div class="col-sm-8 fcenter">
@@ -218,20 +162,20 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTelemetria)) {  $x1  = $idTelemetria;  }else{$x1  = '';}
-				if(isset($F_inicio)) {      $x2  = $F_inicio;      }else{$x2  = '';}
-				if(isset($F_termino)) {     $x3  = $F_termino;     }else{$x3  = '';}
+				if(isset($F_inicio)) {      $x1  = $F_inicio;      }else{$x1  = '';}
+				if(isset($F_termino)) {     $x2  = $F_termino;     }else{$x2  = '';}
+				if(isset($idTelemetria)) {  $x3  = $idTelemetria;  }else{$x3  = '';}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_date('Fecha Inicio','F_inicio', $x1, 2);
+				$Form_Inputs->form_date('Fecha Termino','F_termino', $x2, 2);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
 				}else{
-					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x3, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
-				$Form_Inputs->form_date('Fecha Inicio','F_inicio', $x2, 2);
-				$Form_Inputs->form_date('Fecha Termino','F_termino', $x3, 2);
 				
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>        

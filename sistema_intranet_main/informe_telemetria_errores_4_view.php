@@ -12,35 +12,18 @@ require_once 'core/Load.Utils.Views.php';
 /**********************************************************************************************************************************/
 /**********************************************************************************************************************************/
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 telemetria_listado_errores_999.Descripcion, 
 telemetria_listado_errores_999.Fecha, 
 telemetria_listado_errores_999.Hora, 
 telemetria_listado_errores_999.Valor,
 telemetria_listado_errores_999.GeoLatitud,
 telemetria_listado_errores_999.GeoLongitud,
-telemetria_listado.Nombre AS NombreEquipo
+telemetria_listado.Nombre AS NombreEquipo';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores_999.idTelemetria';
+$SIS_where = 'telemetria_listado_errores_999.idErrores = '.simpleDecode($_GET['view'], fecha_actual()).' AND telemetria_listado_errores_999.idTipo=999';
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-
-FROM `telemetria_listado_errores_999`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores_999.idTelemetria
-WHERE telemetria_listado_errores_999.idErrores = ".simpleDecode($_GET['view'], fecha_actual())."
-AND telemetria_listado_errores_999.idTipo='999'
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/

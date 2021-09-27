@@ -38,7 +38,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 } 
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE ".$x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = $x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['fecha'])&&$_GET['fecha']!=''){
@@ -50,39 +50,23 @@ if(isset($_GET['fecha'])&&$_GET['fecha']!=''){
 	$HoraSig   = '09:00:00';
 
 	//se crea query
-	$z.=" AND (".$x_table.".TimeStamp BETWEEN '".$Fecha." ".$Hora ."' AND '".$FechaSig." ".$HoraSig."')";
+	$SIS_where.= " AND (".$x_table.".TimeStamp BETWEEN '".$Fecha." ".$Hora ."' AND '".$FechaSig." ".$HoraSig."')";
 	
 }
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
-	$z.=" AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
+	$SIS_where.= " AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
 }
 
 
 /**********************************************************/
 // Se trae un listado con todos los datos
+$SIS_query = 'Fecha, Hora, HeladaDia, HeladaHora, Temperatura, Helada, CrossTech_TempMin ,
+Fecha_Anterior, Hora_Anterior, Tiempo_Helada';
+$SIS_join  = '';
+$SIS_order = 'idAuxiliar ASC';
 $arrHistorial = array();
-$query = "SELECT Fecha, Hora, HeladaDia, HeladaHora, Temperatura, Helada, CrossTech_TempMin ,
-Fecha_Anterior, Hora_Anterior, Tiempo_Helada
+$arrHistorial = db_select_array (false, $SIS_query, $x_table, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
 
-FROM `".$x_table."`
-".$z."
-ORDER BY idAuxiliar ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
 /****************************************************************************/
 $arrTemp   = array();
 $arrEvento = array();
@@ -136,7 +120,8 @@ foreach($arrHistorial as $hist2) {
 }
 
 /****************************************************************************/
-$cadena = '';
+$Temp_1   = '';
+$arrData  = array();
 foreach($arrHistorial as $hist) { 
 	//verifico que exista fecha
 	if(isset($hist['HeladaDia'])&&$hist['HeladaDia']!='0000-00-00'){
@@ -162,12 +147,16 @@ foreach($arrHistorial as $hist) {
 				$temp_real = 0;
 			}
 
-			//se arma cadena							
-			$z_date  = "'".Fecha_estandar($hist['HeladaDia'])." - ".Hora_estandar($hist['HeladaHora'])."'";
-			$cadena .= '['.$z_date.', '.$temp_real.', '.$temp_predic.'],';
+			//se arma cadena	
+			$Temp_1 .= "'".Fecha_estandar($hist['HeladaDia'])." - ".$hist['HeladaHora']."',";
+			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$temp_real;    }else{ $arrData[1]['Value'] = $temp_real; }
+			if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$temp_predic;  }else{ $arrData[2]['Value'] = $temp_predic; }
+		
 		}
 	}				
 }
+$arrData[1]['Name'] = "'Temperatura Real'";
+$arrData[2]['Name'] = "'Temperatura Proyectada'";
 /***********************************************************/
 $arrResumen = array();	
 $arrResumen['Tiempo']     = 0;
@@ -214,9 +203,6 @@ document.getElementById("loading").style.display = "none";
 <?php 
 //Se verifica si se pidieron los graficos
 if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">google.charts.load('current', {'packages':['line','corechart']});</script>
-	
 	<div class="col-sm-12">
 		<div class="box">
 			<header>
@@ -224,42 +210,29 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				<h5> Graficos</h5>
 			</header>
 			<div class="table-responsive" id="grf">	
-				<script type="text/javascript">
-					google.charts.setOnLoadCallback(drawChart);
+				<?php
+					/*******************************************************************************/
+					//las fechas
+					$Graphics_xData      ='var xData = [['.$Temp_1.'],['.$Temp_1.'],];';
+					//los valores
+					$Graphics_yData      ='var yData = [['.$arrData[1]['Value'].'],['.$arrData[2]['Value'].'],];';
+					//los nombres
+					$Graphics_names      = 'var names = ['.$arrData[1]['Name'].','.$arrData[2]['Name'].',];';
+					//los tipos
+					$Graphics_types      = "var types = ['','',];";
+					//si lleva texto en las burbujas
+					$Graphics_texts      = "var texts = [[],[],];";
+					//los colores de linea
+					$Graphics_lineColors = "var lineColors = ['','',];";
+					//los tipos de linea
+					$Graphics_lineDash   = "var lineDash = ['','',];";
+					//los anchos de la linea
+					$Graphics_lineWidth  = "var lineWidth = ['','',];";	
 
-					function drawChart() {
-						var data = new google.visualization.DataTable();
-						data.addColumn('string', 'Hora');
-						data.addColumn('number', 'Temperatura Real');
-						data.addColumn('number', 'Temperatura Proyectada');
-						data.addRows([<?php echo $cadena; ?>]);
-						
-						var chart = new google.charts.Line(document.getElementById('chart_div'));
-
-						var options = {
-							chart: {
-								title: 'Temperaturas'
-							},
-							series: {
-								// Gives each series an axis name that matches the Y-axis below.
-								0: {axis: 'Temperatura Real (°C)'},
-								1: {axis: 'Temperatura Proyectada (°C)'}
-							},
-							axes: {
-								// Adds labels to each axis; they don't have to match the axis names.
-								y: {
-									Temps: {label: 'Temperatura Real (°C)'},
-									Temps: {label: 'Temperatura Proyectada (°C)'}
-								}
-							}
-						};
-
-						chart.draw(data, options);
-					}
-
-				</script>
-				<div id='chart_div' style='width: 95%; height: 500px;'></div>
-									
+					$gr_tittle = 'Temperaturas';
+					$gr_unimed = '(°C)';
+					echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+				?>				
 			</div>
 		</div>
 	</div>
@@ -307,6 +280,8 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 						})
 						.catch(function (error) {
 							console.error('oops, something went wrong!', error);
+							alert('No se puede exportar!');
+							document.getElementById("loading").style.display = "none";
 						});		
 					}
 				, 3000);
