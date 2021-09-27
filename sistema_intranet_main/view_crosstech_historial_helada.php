@@ -50,30 +50,13 @@ if($HoraActual<$TimeBack){
 
 	
 // Se trae un listado con el historial
+$SIS_query = 'Hora, HeladaDia, HeladaHora, Temperatura, Helada';
+$SIS_join  = '';
+$SIS_where = '(TimeStamp BETWEEN "'.$FechaAnterior.' '.$HoraAnterior .'" AND "'.$FechaActual.' '.$HoraActual.'") AND idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'].' AND idTelemetria = '.$idTelemetria;
+$SIS_order = 'idAuxiliar ASC';
 $arrHistorial = array();
-$query = "SELECT Hora, HeladaDia, HeladaHora, Temperatura, Helada 
+$arrHistorial = db_select_array (false, $SIS_query, 'telemetria_listado_aux_equipo', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
-FROM `telemetria_listado_aux_equipo` 
-WHERE (TimeStamp BETWEEN '".$FechaAnterior." ".$HoraAnterior ."' AND '".$FechaActual." ".$HoraActual."')
-AND idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
-AND idTelemetria = ".$idTelemetria ."
-ORDER BY idAuxiliar ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
 
 $arrTemp = array();
 //Se busca la temperatura real							
@@ -89,7 +72,8 @@ foreach($arrHistorial as $hist2) {
 
 
 
-$cadena = '';
+$Temp_1   = '';
+$arrData  = array();
 foreach($arrHistorial as $hist) { 
 	
 	//variables
@@ -105,12 +89,16 @@ foreach($arrHistorial as $hist) {
 	}else{
 		$temp_real = 0;
 	}
-
-	$z_date  = "'".Fecha_estandar($hist['HeladaDia'])." - ".Hora_estandar($hist['HeladaHora'])."'";
-	$cadena .= '['.$z_date.', '.$temp_predic.'],';	
-	//$cadena .= '['.$z_date.', '.$temp_real.'],';						
-					
+	
+	//Se obtiene la fecha
+	$Temp_1 .= "'".Fecha_estandar($hist['HeladaDia'])." - ".$hist['HeladaHora']."',";
+	//valores	
+	if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$temp_predic;    }else{ $arrData[1]['Value'] = $temp_predic; }
+	//if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$temp_real;      }else{ $arrData[2]['Value'] = $temp_real; }
+				
 }
+$arrData[1]['Name'] = "'Temperatura Proyectada (°C)'";
+//$arrData[2]['Name'] = "'Temperatura Real (°C)'";
 
 ?>
 
@@ -125,43 +113,30 @@ foreach($arrHistorial as $hist) {
 			<h5>Historico Temperatura Proyectada</h5>	
 		</header>
 		<div class="tab-content">
-			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-			<script type="text/javascript">google.charts.load('current', {'packages':['line','corechart']});</script>
+			<?php
+			/*******************************************************************************/
+			//las fechas
+			$Graphics_xData      ='var xData = [['.$Temp_1.'],];';
+			//los valores
+			$Graphics_yData      ='var yData = [['.$arrData[1]['Value'].'],];';
+			//los nombres
+			$Graphics_names      = 'var names = ['.$arrData[1]['Name'].',];';
+			//los tipos
+			$Graphics_types      = "var types = ['',];";
+			//si lleva texto en las burbujas
+			$Graphics_texts      = "var texts = [[],];";
+			//los colores de linea
+			$Graphics_lineColors = "var lineColors = ['',];";
+			//los tipos de linea
+			$Graphics_lineDash   = "var lineDash = ['',];";
+			//los anchos de la linea
+			$Graphics_lineWidth  = "var lineWidth = ['',];";	
+
+			$gr_tittle = 'Temperaturas ';
+			$gr_unimed = '(°C)';
+			echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
 			
-			<script type="text/javascript">
-				google.charts.setOnLoadCallback(drawChart);
-
-				function drawChart() {
-					var data = new google.visualization.DataTable();
-					data.addColumn('string', 'Hora');
-					//data.addColumn('number', 'Temperatura Real');
-					data.addColumn('number', 'Temperatura Proyectada');
-					data.addRows([<?php echo $cadena; ?>]);
-					
-					var chart = new google.charts.Line(document.getElementById('chart_div'));
-
-					var options = {
-						chart: {
-							title: 'Temperaturas'
-						},
-						series: {
-							// Gives each series an axis name that matches the Y-axis below.
-							0: {axis: 'Temperatura Proyectada (°C)'}
-						},
-						axes: {
-							// Adds labels to each axis; they don't have to match the axis names.
-							y: {
-								Temps: {label: 'Temperatura Proyectada (°C)'}
-							}
-						}
-					};
-
-					chart.draw(data, options);
-				}
-
-			</script>
-			<div id='chart_div' style='width: 95%; height: 500px;'></div>
-
+			?>
 		</div>
 	</div>
 </div>	
