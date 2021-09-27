@@ -391,6 +391,241 @@ class Form_Inputs extends Basic_Form_Inputs{
 		//Imprimir dato	
 		echo $input;
 	}
+	/*******************************************************************************************************************/
+	public function form_select_tel_group_sens($placeholder,$name, $idChanged, $idForm, $required, $dbConn){
+		//si dato es requerido
+		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
+		
+		/******************************/
+		//numero sensores equipo
+		$N_Maximo_Sensores = 72;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresGrupo_'.$i;
+			$subquery .= ',SensoresNombre_'.$i;
+			$subquery .= ',SensoresActivo_'.$i;
+		}
+		// Se trae un listado de todos los registros
+		$arrSelect = array();
+		$arrSelect = db_select_array (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', '', 'idTelemetria ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
+		// Se trae un listado de todos los registros
+		$arrGrupos = array();
+		$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+		//se recorren los grupos
+		$arrFinalGrupos = array();
+		foreach ($arrGrupos as $sen) { 
+			$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
+		}
+		
+		/******************************/
+		//se dibuja
+		$input = '<div class="form-group" id="div_'.$name.'" >
+						<label for="text2" class="control-label col-sm-4">'.$placeholder.'</label>
+						<div class="col-sm-8 field">
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.'>
+								<option value="" selected>Seleccione una Opcion</option>
+							</select>
+						</div>
+					</div>';
+					
+		//script		
+		$input .= '<script>';
+		$input .= 'document.getElementById("'.$idChanged.'").onchange = function() {cambia_'.$idChanged.'()};';
+					
+		foreach ($arrSelect as $select) {
+			$input .= 'let id_data_'.$select['idTelemetria'].'=new Array(""';
+			for ($i = 1; $i <= $select['cantSensores']; $i++) {
+				//solo sensores activos
+				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
+					$input .= ',"'.$i.'"';
+				}
+			}	
+			$input .= ')
+			';
+		}
+		foreach ($arrSelect as $select) {
+			$input .= 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
+			for ($i = 1; $i <= $select['cantSensores']; $i++) {
+				//solo sensores activos
+				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
+					//verifico si existe
+					if(isset($arrFinalGrupos[$select['SensoresGrupo_'.$i]])){
+						$grupo = $arrFinalGrupos[$select['SensoresGrupo_'.$i]].' - ';
+					}else{
+						$grupo = '';
+					}
+					$input .= ',"'.$grupo.str_replace('"', '',$select['SensoresNombre_'.$i]).'"';
+				}
+			}	
+			$input .= ')
+			';
+		}
+	
+		$input .= '
+		function cambia_'.$idChanged.'(){
+					
+			let Componente = document.'.$idForm.'.'.$idChanged.'[document.'.$idForm.'.'.$idChanged.'.selectedIndex].value
+			try {
+				if (Componente != "") {
+					id_data = eval("id_data_" + Componente);
+					data    = eval("data_" + Componente);
+					num_int = id_data.length;
+					document.'.$idForm.'.'.$name.'.length = num_int;
+					for(i=0;i<num_int;i++){
+						document.'.$idForm.'.'.$name.'.options[i].value = id_data[i];
+						document.'.$idForm.'.'.$name.'.options[i].text  = data[i];
+					}
+					document.getElementById("div_'.$name.'").style.display = "block";	
+				}else{
+					document.'.$idForm.'.'.$name.'.length = 1;
+					document.'.$idForm.'.'.$name.'.options[0].value = "";
+					document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
+					document.getElementById("div_'.$name.'").style.display = "none";
+				}
+			} catch (e) {
+				document.'.$idForm.'.'.$name.'.length = 1;
+				document.'.$idForm.'.'.$name.'.options[0].value = "";
+				document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
+				document.getElementById("div_'.$name.'").style.display = "none";
+					
+			}
+			document.'.$idForm.'.'.$name.'.options[0].selected = true;
+		}
+		</script>';					
+				
+				
+		echo $input;
+	}
+	/*******************************************************************************************************************/
+	public function form_select_tel_group($placeholder,$name, $idChanged, $idForm, $required, $dbConn){
+		//si dato es requerido
+		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
+		
+		/******************************/
+		//numero sensores equipo
+		$N_Maximo_Sensores = 72;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',SensoresGrupo_'.$i;
+			$subquery .= ',SensoresActivo_'.$i;
+		}
+		// Se trae un listado de todos los registros
+		$arrSelect = array();
+		$arrSelect = db_select_array (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', '', 'idTelemetria ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
+		// Se trae un listado de todos los registros
+		$arrGrupos = array();
+		$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+		//se recorren los grupos
+		$arrFinalGrupos = array();
+		foreach ($arrGrupos as $sen) { 
+			$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
+		}
+		
+		/******************************/
+		//se dibuja
+		$input = '<div class="form-group" id="div_'.$name.'" >
+						<label for="text2" class="control-label col-sm-4">'.$placeholder.'</label>
+						<div class="col-sm-8 field">
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.'>
+								<option value="" selected>Seleccione una Opcion</option>
+							</select>
+						</div>
+					</div>';
+					
+		//script		
+		$input .= '<script>';
+		$input .= 'document.getElementById("'.$idChanged.'").onchange = function() {cambia_'.$idChanged.'()};';
+					
+		foreach ($arrSelect as $select) {
+			$input .= 'let id_data_'.$select['idTelemetria'].'=new Array(""';
+			$valorx = 0;
+			for ($i = 1; $i <= $select['cantSensores']; $i++) {
+				//solo sensores activos
+				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
+					//verifico que el grupo no este ingresado
+					if($valorx != $select['SensoresGrupo_'.$i]){
+						$valorx = $select['SensoresGrupo_'.$i];
+						$input .= ',"'.$valorx.'"';
+					}
+				}
+			}	
+			$input .= ')
+			';
+		}
+		foreach ($arrSelect as $select) {
+			$input .= 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
+			$valorx = 0;
+			for ($i = 1; $i <= $select['cantSensores']; $i++) {
+				//solo sensores activos
+				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
+					//verifico que el grupo no este ingresado
+					if($valorx != $select['SensoresGrupo_'.$i]){
+						if(isset($arrFinalGrupos[$select['SensoresGrupo_'.$i]])){
+							$grupo = $arrFinalGrupos[$select['SensoresGrupo_'.$i]];
+						}
+						$input .= ',"'.$grupo.'"';
+						$valorx = $select['SensoresGrupo_'.$i];
+					}
+				}
+			}	
+			$input .= ')
+			';
+		}
+	
+		$input .= '
+		function cambia_'.$idChanged.'(){
+					
+			let Componente = document.'.$idForm.'.'.$idChanged.'[document.'.$idForm.'.'.$idChanged.'.selectedIndex].value
+			try {
+				if (Componente != "") {
+					id_data = eval("id_data_" + Componente);
+					data    = eval("data_" + Componente);
+					num_int = id_data.length;
+					document.'.$idForm.'.'.$name.'.length = num_int;
+					for(i=0;i<num_int;i++){
+						document.'.$idForm.'.'.$name.'.options[i].value = id_data[i];
+						document.'.$idForm.'.'.$name.'.options[i].text  = data[i];
+					}
+					document.getElementById("div_'.$name.'").style.display = "block";	
+				}else{
+					document.'.$idForm.'.'.$name.'.length = 1;
+					document.'.$idForm.'.'.$name.'.options[0].value = "";
+					document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
+					document.getElementById("div_'.$name.'").style.display = "none";
+				}
+			} catch (e) {
+				document.'.$idForm.'.'.$name.'.length = 1;
+				document.'.$idForm.'.'.$name.'.options[0].value = "";
+				document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
+				document.getElementById("div_'.$name.'").style.display = "none";
+					
+			}
+			document.'.$idForm.'.'.$name.'.options[0].selected = true;
+		}
+		</script>';					
+				
+				
+		echo $input;
+	}
+	/*******************************************************************************************************************/
+	public function form_select_col_tem_hum($placeholder, $name, $required){
+		//si dato es requerido
+		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
+		
+		/****************************************************************/
+		//seleccionar temperatura o humedad
+		$input = '<div class="form-group" id="div_'.$name.'" >
+						<label for="text2" class="control-label col-sm-4">'.$placeholder.'</label>
+						<div class="col-sm-8 field">
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.'>
+								<option value="" selected>Seleccione una Opcion</option>
+								<option value="1">Temperatura</option>
+								<option value="2">Humedad</option>
+							</select>
+						</div>
+					</div>';
+		echo $input;
+	}
 	
 }
 
