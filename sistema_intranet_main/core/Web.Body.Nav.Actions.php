@@ -1,11 +1,17 @@
 <?php
-//Variables
-$SIS_where = ' idEstado=1';
-$SIS_where.= ' AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$SIS_where.= ' AND idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+//compruebo
+if(isset($_SESSION['usuario']['basic_data']['idSistema'])){
+	//Variables
+	$SIS_where = ' idEstado=1';
+	$SIS_where.= ' AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_where.= ' AND idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 
-//Busco cuantos mensajes hay
-$nNoti = db_select_nrows (false, 'idNoti', 'principal_notificaciones_ver', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'nNoti');
+	//Busco cuantos mensajes hay
+	$nNoti = db_select_nrows (false, 'idNoti', 'principal_notificaciones_ver', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'nNoti');
+}else{
+	$nNoti = 0;
+}
+
 ?>
 
 
