@@ -164,7 +164,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					$Form_Inputs->form_post_data(2, 'Indica si el equipo de telemetria notificara de inmediato a los usuarios respecto a un error.' );
 					$Form_Inputs->form_select('Alerta Temprana','idAlertaTemprana', $x16, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					
-					$Form_Inputs->form_post_data(2, 'Indica si el equipo de telemetria notificara de inmediato a los usuarios respecto a un error.' );
+					$Form_Inputs->form_post_data(2, 'Se utiliza para los raros casos que el equipo de telemetria requiera guardar los datos en una carpeta en especifico, se utiliza para varias opciones.' );
 					$Form_Inputs->form_select('Uso de Carpeta FTP','idUsoFTP', $x17, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					$Form_Inputs->form_input_icon('Nombre Carpeta FTP', 'FTP_Carpeta', $x18, 1,'fa fa-flag');
 					
