@@ -48,7 +48,7 @@ if(isset($_GET['idZona'])&&$_GET['idZona']!=''){
 /************************************************/
 //se traen todas las zonas
 $arrZonas = array();
-$arrZonas = db_select_array (false, 'idZona, Nombre', 'vehiculos_zonas', '', '', 'idZona ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
+$arrZonas = db_select_array (false, 'idZona, Nombre', 'telemetria_zonas', '', '', 'idZona ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
 	
 /************************************************/
 //numero sensores equipo
