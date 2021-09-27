@@ -43,37 +43,23 @@ switch ($X_Type) {
 }
 	
 // Se trae un listado con el historial
+$SIS_query = 'Fecha, Hora, TimeStamp'.$selected;
+$SIS_join  = '';
+$SIS_where = '(TimeStamp BETWEEN "'.$FechaAnterior.' '.$HoraAnterior .'" AND "'.$FechaActual.' '.$HoraActual.'") AND idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'].' AND idTelemetria = '.$idTelemetria;
+$SIS_order = 'idAuxiliar ASC';
 $arrHistorial = array();
-$query = "SELECT Fecha, Hora, TimeStamp ".$selected."
+$arrHistorial = db_select_array (false, $SIS_query, 'telemetria_listado_aux_equipo', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
-FROM `telemetria_listado_aux_equipo` 
-WHERE (TimeStamp BETWEEN '".$FechaAnterior." ".$HoraAnterior ."' AND '".$FechaActual." ".$HoraActual."')
-AND idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
-AND idTelemetria = ".$idTelemetria ."
-ORDER BY idAuxiliar ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
+$Temp_1   = '';
+$arrData  = array();
+foreach($arrHistorial as $hist) {
+	//Se obtiene la fecha
+	$Temp_1 .= "'".Fecha_estandar($hist['Fecha'])." - ".$hist['Hora']."',";
+	//valores	
+	if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$hist['Valor'];    }else{ $arrData[1]['Value'] = $hist['Valor']; }
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
-
-
-
+$arrData[1]['Name'] = "'".$Tittle."'";
 ?>
-
-
-
 
 
 <div class="col-sm-12">
@@ -83,48 +69,30 @@ array_push( $arrHistorial,$row );
 			<h5>Historico <?php echo $Tittle;?></h5>	
 		</header>
 		<div class="tab-content">
-			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-			<script type="text/javascript">google.charts.load('current', {'packages':['line','corechart']});</script>
+			<?php
+			/*******************************************************************************/
+			//las fechas
+			$Graphics_xData      ='var xData = [['.$Temp_1.'],];';
+			//los valores
+			$Graphics_yData      ='var yData = [['.$arrData[1]['Value'].'],];';
+			//los nombres
+			$Graphics_names      = 'var names = ['.$arrData[1]['Name'].',];';
+			//los tipos
+			$Graphics_types      = "var types = ['',];";
+			//si lleva texto en las burbujas
+			$Graphics_texts      = "var texts = [[],];";
+			//los colores de linea
+			$Graphics_lineColors = "var lineColors = ['',];";
+			//los tipos de linea
+			$Graphics_lineDash   = "var lineDash = ['',];";
+			//los anchos de la linea
+			$Graphics_lineWidth  = "var lineWidth = ['',];";	
+
+			$gr_tittle = 'Grafico '.$Tittle;
+			$gr_unimed = $Tittle;
+			echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
 			
-			<script type="text/javascript">
-				google.charts.setOnLoadCallback(drawChart);
-
-				function drawChart() {
-					var data = new google.visualization.DataTable();
-					data.addColumn('string', 'Hora');
-					data.addColumn('number', '<?php echo $Tittle;?>');
-					data.addRows([
-						<?php foreach($arrHistorial as $hist) { 
-								$z_date  = "'".Fecha_estandar($hist['Fecha'])." - ".Hora_estandar($hist['Hora'])."'";
-								echo '['.$z_date.','.$hist['Valor'].'],'; 
-						} ?>  
-							  
-							]);
-
-					var chart = new google.charts.Line(document.getElementById('chart_div'));
-
-					var options = {
-						chart: {
-							title: 'Grafico'
-						},
-						series: {
-							// Gives each series an axis name that matches the Y-axis below.
-							0: {axis: '<?php echo $Tittle;?>'}
-						},
-						axes: {
-							// Adds labels to each axis; they don't have to match the axis names.
-							y: {
-								Temps: {label: '<?php echo $Tittle;?>'}
-							}
-						}
-					};
-
-					chart.draw(data, options);
-				}
-
-			</script>
-			<div id='chart_div' style='width: 95%; height: 500px;'></div>
-
+			?>
 		</div>
 	</div>
 </div>	
