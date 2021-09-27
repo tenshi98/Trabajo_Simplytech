@@ -269,7 +269,8 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/	
 //Si se ingresaron la utilizacion de los sensores
 	if(isset($id_Sensores)&&$id_Sensores==1&&isset($cantSensores)&&$cantSensores==0){                    $error['cantSensores']         = 'error/No ha ingresado la cantidad de sensores a utilizar'; }	
-	if(isset($idUsoGeocerca)&&$idUsoGeocerca==1&&isset($NErroresGeocercaMax)&&$NErroresGeocercaMax==0){  $error['NErroresGeocercaMax']  = 'error/No ha ingresado la cantidad de errores de fuera de geocerca'; }	
+	if(isset($idUsoGeocerca)&&$idUsoGeocerca==1&&isset($NErroresGeocercaMax)&&$NErroresGeocercaMax==0){  $error['NErroresGeocercaMax']  = 'error/No ha ingresado la cantidad de errores de fuera de geocerca'; }
+	if(isset($FTP_Carpeta)&&strpos($FTP_Carpeta, " ")){                                                  $error['FTP_Carpeta']          = 'error/El nombre de la carpeta FTP contiene espacios';}	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
