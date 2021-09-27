@@ -28,18 +28,23 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /**********************************************************/
-$SIS_where = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
+$SIS_where_1 = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
+$SIS_where_2 = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
-	$SIS_where.=" AND telemetria_listado_errores.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
+	$SIS_where_1.=" AND telemetria_listado_errores.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
 }elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$SIS_where.=" AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where_1.=" AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $SIS_where.=" AND telemetria_listado_errores.idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  
+	$SIS_where_1.= " AND telemetria_listado_errores.idTelemetria=".$_GET['idTelemetria'];
+	$SIS_where_2.= " AND telemetria_listado_errores.idTelemetria=".$_GET['idTelemetria'];
+}
 //Filtro por unidad medida de energia electrica
-$SIS_where.=" AND (telemetria_listado_errores.idUniMed=4 OR telemetria_listado_errores.idUniMed=5 OR telemetria_listado_errores.idUniMed=10)";
+$SIS_where_1.= " AND (telemetria_listado_errores.idUniMed=4 OR telemetria_listado_errores.idUniMed=5 OR telemetria_listado_errores.idUniMed=10)";
+$SIS_where_2.= " AND (telemetria_listado_errores.idUniMed=4 OR telemetria_listado_errores.idUniMed=5 OR telemetria_listado_errores.idUniMed=10)";
 //Agrupo
-$w1 =" GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Descripcion, telemetria_listado_errores.Fecha, telemetria_listado_errores.idUniMed";
-$w2 =" GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Fecha";
+$SIS_where_1.= " GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Descripcion, telemetria_listado_errores.Fecha, telemetria_listado_errores.idUniMed";
+$SIS_where_2.= " GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Fecha";
 /*********************************************************/									
 $SIS_query = '
 COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
@@ -54,7 +59,7 @@ LEFT JOIN telemetria_listado               ON telemetria_listado.idTelemetria   
 LEFT JOIN telemetria_listado_unidad_medida ON telemetria_listado_unidad_medida.idUniMed   = telemetria_listado_errores.idUniMed';
 $SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripcion ASC, telemetria_listado_errores.Fecha ASC';	
 $arrEquipos1 = array();
-$arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where.$w1, $SIS_order, $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos1');
+$arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos1');
 
 /*********************************************************/	
 $SIS_query = '
@@ -62,9 +67,9 @@ COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
 telemetria_listado.Nombre AS Equipo,
 telemetria_listado_errores.Fecha';
 $SIS_join  = 'LEFT JOIN telemetria_listado ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';
-$SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Fecha ASC';
+$SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Fecha  DESC LIMIT 10000';
 $arrEquipos2 = array();
-$arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where.$w2, $SIS_order, $dbConn, 'arrEquipos2', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos2');
+$arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where_2, $SIS_order, $dbConn, 'arrEquipos2', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos2');
 
 
 // Create new PHPExcel object
