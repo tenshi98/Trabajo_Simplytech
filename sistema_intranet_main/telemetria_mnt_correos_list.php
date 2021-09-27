@@ -61,30 +61,21 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['id']) ) {
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+/********************************************/
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
-// consulto los datos
-$query = "SELECT idCorreosCat, idUsuario
-FROM `telemetria_mnt_correos_list`
-WHERE idCorreos = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); ?>
+/********************************************/
+//se consulta
+$SIS_query = 'idCorreosCat, idUsuario';
+$SIS_join  = '';
+$SIS_where = 'idCorreos = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_list', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
  
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -190,17 +181,17 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'categoria_asc':  $order_by = 'ORDER BY telemetria_mnt_correos_cat.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente';break;
-		case 'categoria_desc': $order_by = 'ORDER BY telemetria_mnt_correos_cat.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
-		case 'nombre_asc':     $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':    $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'email_asc':      $order_by = 'ORDER BY usuarios_listado.email ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Email Ascendente';break;
-		case 'email_desc':     $order_by = 'ORDER BY usuarios_listado.email DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Email Descendente';break;
+		case 'categoria_asc':  $order_by = 'telemetria_mnt_correos_cat.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente';break;
+		case 'categoria_desc': $order_by = 'telemetria_mnt_correos_cat.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
+		case 'nombre_asc':     $order_by = 'usuarios_listado.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':    $order_by = 'usuarios_listado.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'email_asc':      $order_by = 'usuarios_listado.email ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Email Ascendente';break;
+		case 'email_desc':     $order_by = 'usuarios_listado.email DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Email Descendente';break;
 		
-		default: $order_by = 'ORDER BY telemetria_mnt_correos_cat.Nombre ASC, usuarios_listado.email ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria, Email Ascendente';
+		default: $order_by = 'telemetria_mnt_correos_cat.Nombre ASC, usuarios_listado.email ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria, Email Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY telemetria_mnt_correos_cat.Nombre ASC, usuarios_listado.email ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria, Email Ascendente';
+	$order_by = 'telemetria_mnt_correos_cat.Nombre ASC, usuarios_listado.email ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria, Email Ascendente';
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
@@ -211,64 +202,33 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_mnt_correos_list.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = "telemetria_mnt_correos_list.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCorreosCat']) && $_GET['idCorreosCat'] != ''){  $z .= " AND telemetria_mnt_correos_list.idCorreosCat=".$_GET['idCorreosCat'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){        $z .= " AND telemetria_mnt_correos_list.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idCorreosCat']) && $_GET['idCorreosCat'] != ''){  $SIS_where .= " AND telemetria_mnt_correos_list.idCorreosCat=".$_GET['idCorreosCat'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){        $SIS_where .= " AND telemetria_mnt_correos_list.idUsuario=".$_GET['idUsuario'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT telemetria_mnt_correos_list.idCorreos FROM `telemetria_mnt_correos_list` 
-LEFT JOIN `telemetria_mnt_correos_cat` ON telemetria_mnt_correos_cat.idCorreosCat  = telemetria_mnt_correos_list.idCorreosCat
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'telemetria_mnt_correos_list.idCorreos', 'telemetria_mnt_correos_list', 'LEFT JOIN `telemetria_mnt_correos_cat` ON telemetria_mnt_correos_cat.idCorreosCat  = telemetria_mnt_correos_list.idCorreosCat', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrComunas = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_mnt_correos_list.idCorreos,
 usuarios_listado.Nombre AS NombreEmail,
 usuarios_listado.email AS Email,
 telemetria_mnt_correos_cat.Nombre AS Categoria,
-core_sistemas.Nombre AS sistema
-
-FROM `telemetria_mnt_correos_list`
+core_sistemas.Nombre AS sistema';
+$SIS_join  = '
 LEFT JOIN `telemetria_mnt_correos_cat` ON telemetria_mnt_correos_cat.idCorreosCat  = telemetria_mnt_correos_list.idCorreosCat
 LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario               = telemetria_mnt_correos_list.idUsuario
-LEFT JOIN `core_sistemas`              ON core_sistemas.idSistema                  = telemetria_mnt_correos_list.idSistema
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrComunas,$row );
-}?>
+LEFT JOIN `core_sistemas`              ON core_sistemas.idSistema                  = telemetria_mnt_correos_list.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCorreos = array();
+$arrCorreos = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_list', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
+
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -353,7 +313,7 @@ array_push( $arrComunas,$row );
 					</tr>
 				</thead>				  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrComunas as $comunas) { ?>
+				<?php foreach ($arrCorreos as $comunas) { ?>
 					<tr class="odd">
 						<td><?php echo $comunas['Categoria']; ?></td>
 						<td><?php echo $comunas['NombreEmail']; ?></td>
