@@ -63,6 +63,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$consql .= ',SensoresGrupo_'.$i;
 	$consql .= ',SensoresRevisionGrupo_'.$i;
 	$consql .= ',SensoresActivo_'.$i;
+	$consql .= ',SensoresUniMed_'.$i;
 }
 /*****************************/
 $SIS_query = 'idTelemetria'.$consql;
@@ -116,15 +117,18 @@ foreach($arrMediciones as $cli) {
 			if(isset($rowEquipo['SensoresActivo_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1){
 				//Que el valor medido sea distinto de 999
 				if(isset($cli['SensorValue_'.$i])&&$cli['SensorValue_'.$i]<999){
-					//verifico si existe
-					if(isset($arrData[$i]['Value'])&&$arrData[$i]['Value']!=''){
-						$arrData[$i]['Value'] .= ", ".$cli['SensorValue_'.$i];
-					//si no lo crea
-					}else{
-						$arrData[$i]['Value'] = $cli['SensorValue_'.$i];
+					//Si es temperatura
+					if($rowEquipo['SensoresUniMed_'.$i]==3){
+						//verifico si existe
+						if(isset($arrData[$i]['Value'])&&$arrData[$i]['Value']!=''){
+							$arrData[$i]['Value'] .= ", ".$cli['SensorValue_'.$i];
+						//si no lo crea
+						}else{
+							$arrData[$i]['Value'] = $cli['SensorValue_'.$i];
+						}
+						//titulo grafico
+						$arrData[$i]['Name'] = "'".$rowEquipo['SensoresNombre_'.$i]."'";
 					}
-					//titulo grafico
-					$arrData[$i]['Name'] = "'".$rowEquipo['SensoresNombre_'.$i]."'";
 				}
 			}
 		}	

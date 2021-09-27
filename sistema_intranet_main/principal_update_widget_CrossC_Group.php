@@ -206,7 +206,7 @@ foreach ($arrGruposUso as $gruUso) {
 			//los valores
 			$Graphics_yData      .='['.$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'].'],';
 			//los nombres
-			$Graphics_names      .= '"'.$gruUso['Nombre'].' - '.$gru['Nombre'].'",';
+			$Graphics_names      .= '"'.TituloMenu($gruUso['Nombre']).' - '.TituloMenu($gru['Nombre']).'",';
 			//los tipos
 			$Graphics_types      .= "'',";
 			//si lleva texto en las burbujas

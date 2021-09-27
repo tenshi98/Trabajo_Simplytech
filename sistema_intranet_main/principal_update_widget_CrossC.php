@@ -103,7 +103,7 @@ if($HoraTermino<$timeBack){
 	/*************************************************************/
 	//Se consulta
 	$arrGrupos = array();
-	$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_whereSubgrupo, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+	$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_whereSubgrupo, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
 	//se recorre
 	$arrGruposTemp = array();
 	foreach ($arrGrupos as $gru) {
@@ -113,7 +113,7 @@ if($HoraTermino<$timeBack){
 	/*************************************************************/
 	//Se consulta
 	$arrGruposUso = array();
-	$arrGruposUso = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', $SIS_whereSubgrupoUso, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposUso');
+	$arrGruposUso = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', $SIS_whereSubgrupoUso, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposUso');
 	//se recorre
 	$arrGruposUsoTemp = array();
 	foreach ($arrGruposUso as $gruUso) {
@@ -240,7 +240,7 @@ if($HoraTermino<$timeBack){
 				//los valores
 				$Graphics_yData      .='['.$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'].'],';
 				//los nombres
-				$Graphics_names      .= '"'.$gruUso['Nombre'].' - '.$gru['Nombre'].'",';
+				$Graphics_names      .= '"'.TituloMenu($gruUso['Nombre']).' - '.TituloMenu($gru['Nombre']).'",';
 				//los tipos
 				$Graphics_types      .= "'',";
 				//si lleva texto en las burbujas
@@ -430,7 +430,7 @@ $widget = '
 										//imprimo
 										$widget .= '
 											<tr class="odd">
-												<th colspan="9">Ultima Medicion: '.fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs.</th>
+												<th colspan="9">'.$in_eq_fueralinea.' Ultima Medicion: '.fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs.</th>
 											</tr>';
 										
 										foreach ($arrTempGrupos as $gruUso) {
@@ -445,13 +445,16 @@ $widget = '
 											$widget .= '
 											<tr class="odd '.$danger_color.'">
 												<th><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></th>
-												<th colspan="7">'.$gruUso['Nombre'].'</th>
+												<th colspan="7">'.TituloMenu($gruUso['Nombre']).'</th>
 												<th>
 													<div class="btn-group" style="width: 35px;" >
 														<button onClick="chngGroupUsoGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].')" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
 													</div>
 												</th>
 											</tr>';
+											//se ordena el arreglo
+											sort($arrTempSensor[$gruUso['idGrupo']]);
+											//recorro el arreglo
 											foreach ($arrTempSensor[$gruUso['idGrupo']] as $gru) {
 												//verificar errores
 												if(isset($gru['NErrores'])&&$gru['NErrores']!=0){
@@ -472,7 +475,7 @@ $widget = '
 												<tr class="odd '.$danger_color.'">
 													<td></td>
 													<td><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></td>
-													<td>'.$gru['Nombre'].'</td>
+													<td>'.TituloMenu($gru['Nombre']).'</td>
 													<td>'.$TActual.' °C</td>
 													<td>'.$Tmax.' °C</td>
 													<td>'.$Tmin.' °C</td>
