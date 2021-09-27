@@ -23,53 +23,44 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 }
 /********************************************************************/
 ///Inicia variable
-$z = "WHERE telemetria_listado_error_detenciones.idDetencion>0";
-$z.= " AND telemetria_listado_error_detenciones.idSistema=".$_GET['idSistema'];	
-$zn = ''; 
+$SIS_where = "telemetria_listado_error_detenciones.idDetencion>0";
+$SIS_where.= " AND telemetria_listado_error_detenciones.idSistema=".$_GET['idSistema'];	
+//Solo para plataforma CrossTech
+if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
+	$SIS_where.= " AND telemetria_listado.idTab=3";//CrossTrack			
+} 
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND telemetria_listado_error_detenciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.= " AND telemetria_listado_error_detenciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z.=" AND telemetria_listado_error_detenciones.idTelemetria='".$_GET['idTelemetria']."'";
+	$SIS_where.= " AND telemetria_listado_error_detenciones.idTelemetria='".$_GET['idTelemetria']."'";
 }
 //verifico si tiene la geolocalizacion activa
 if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''){
-	$z.=" AND telemetria_listado.id_Geo='".$_GET['idOpciones']."'";
+	$SIS_where.= " AND telemetria_listado.id_Geo='".$_GET['idOpciones']."'";
 }
-//Solo para plataforma CrossTech
-if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
+//Verifico el tipo de usuario que esta ingresando
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria';
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_error_detenciones.idTelemetria ";
+	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
+
 // Se trae un listado con todos los elementos
-$arrErrores = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado_error_detenciones.idDetencion,
 telemetria_listado_error_detenciones.Fecha, 
-telemetria_listado_error_detenciones.Hora,  
+telemetria_listado_error_detenciones.Hora, 
 telemetria_listado_error_detenciones.Tiempo,
-telemetria_listado.Nombre AS NombreEquipo
+telemetria_listado.Nombre AS NombreEquipo';
+$SIS_order = 'idDetencion DESC';
+$arrErrores = array();
+$arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_detenciones',  $SIS_join,  $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
-FROM `telemetria_listado_error_detenciones`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria
-".$z."
-ORDER BY idDetencion DESC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrErrores,$row );
-} 
+
 /********************************************************************/
 //Se define el contenido del PDF
 $html = '
@@ -113,8 +104,8 @@ $html .='</tbody>
 /**********************************************************************************************************************************/
 //Config
 $pdf_titulo     = 'Informe de Detenciones';
-$pdf_subtitulo  = $zn;
-$pdf_file       = 'Informe de Detenciones'.$zn.'.pdf';
+$pdf_subtitulo  = '';
+$pdf_file       = 'Informe de Detenciones.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja
