@@ -438,7 +438,9 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				
 				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
-				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 2, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
+				
+				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
+				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
 				
 				
 				
@@ -589,7 +591,9 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				
 				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
-				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 2, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
+				
+				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
+				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
 				
 				
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
