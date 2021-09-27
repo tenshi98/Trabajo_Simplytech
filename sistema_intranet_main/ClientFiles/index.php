@@ -8,6 +8,10 @@ if(isset($_GET['Rut'])&&$_GET['Rut']!=''){
 if(isset($_GET['NewFolder'])&&$_GET['NewFolder']!=''){
 	$_SESSION['NewFolder'] = $_GET['NewFolder'];
 }
+//obtengo nueva carpeta
+if(isset($_GET['FTPFolder'])&&$_GET['FTPFolder']!=''){
+	$_SESSION['FTPFolder'] = $_GET['FTPFolder'];
+}
 
 /******************************************/
 
@@ -46,6 +50,9 @@ if(isset($_SESSION['Rut'])&&$_SESSION['Rut']!=''){
 }
 if(isset($_SESSION['NewFolder'])&&$_SESSION['NewFolder']!=''){
 	$options['general']['root_dir'] = $_SESSION['NewFolder'].'/';
+}
+if(isset($_SESSION['FTPFolder'])&&$_SESSION['FTPFolder']!=''){
+	$options['general']['root_dir'] = '_data/'.$_SESSION['FTPFolder'].'/';
 }
 
 // Get this folder and files name.
