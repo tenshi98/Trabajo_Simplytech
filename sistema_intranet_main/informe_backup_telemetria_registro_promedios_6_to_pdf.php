@@ -82,78 +82,35 @@ function crear_data($INT_cantsens, $INT_filtro, $INT_idTelemetria, $INT_f_inicio
 		}
 	}
 
-	//Se traen todos los registros
+	/*******************************************************/
+	//se consulta
+	$SIS_query = 'backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria.'.FechaSistema'.$consql;
+	$SIS_join  = 'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria.'.idTelemetria';
+	$SIS_where = 'idTabla!=0 '.$INT_filtro.$subfiltro.' GROUP BY backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria.'.FechaSistema';
+	$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria.'.FechaSistema ASC LIMIT 10000';
 	$arrRutas = array();
-	$query = "SELECT 
-	telemetria_listado.Nombre AS NombreEquipo,
-	telemetria_listado.cantSensores AS cantSensores,
-	backup_telemetria_listado_tablarelacionada_".$INT_idTelemetria.".FechaSistema
-	".$consql."
-	FROM `backup_telemetria_listado_tablarelacionada_".$INT_idTelemetria."`
-	LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = backup_telemetria_listado_tablarelacionada_".$INT_idTelemetria.".idTelemetria
-	WHERE idTabla!=0
-	".$INT_filtro.$subfiltro." 
-	GROUP BY backup_telemetria_listado_tablarelacionada_".$INT_idTelemetria.".FechaSistema
-	ORDER BY backup_telemetria_listado_tablarelacionada_".$INT_idTelemetria.".FechaSistema ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	$arrRutas = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRutas');
 	
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRutas,$row );
-	}
 	return $arrRutas;
 	
 }
-/*********************************************************************************/
+/*******************************************************/
 //Consulta por la cantidad de sensores
-$query = "SELECT cantSensores, Nombre
-FROM `telemetria_listado`
-WHERE idTelemetria=".$idTelemetria;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$SIS_query = 'cantSensores, Nombre';
+$SIS_where = 'idTelemetria='.$idTelemetria;
+$rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-$rowEquipo = mysqli_fetch_assoc ($resultado);
+/*******************************************************/
+//se consulta
 //Variable temporal
 $arrTemporal = array();	
 //Llamo a la funcion
 $arrTemporal = crear_data($rowEquipo['cantSensores'], $subf, $idTelemetria, $f_inicio, $f_termino, $desde, $hasta , $dbConn);
 
+/*******************************************************/
+//Se trae el dato del grupo
+$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$idGrupo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
 
-//Se traen todas las unidades de medida
-$query = "SELECT Nombre
-FROM `telemetria_listado_grupos`
-WHERE idGrupo='".$idGrupo."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-$rowGrupo = mysqli_fetch_assoc ($resultado);
 /********************************************************************/
 //Se define el contenido del PDF
 $html = '
@@ -192,13 +149,12 @@ $html .= '
 							
 		foreach ($arrTemporal as $fac) {
 			//numero sensores equipo
-			$N_Maximo_Sensores = $fac['cantSensores'];
 			$Temperatura       = 0;
 			$Temperatura_N     = 0;
 			$Humedad           = 0;
 			$Humedad_N         = 0;
 													
-			for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
+			for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 				if($fac['SensoresGrupo_'.$x]==$idGrupo){
 					//Que el valor medido sea distinto de 999
 					if(isset($fac['MedProm_'.$x])&&$fac['MedProm_'.$x]<99900){
@@ -217,7 +173,7 @@ $html .= '
 			if($Temperatura_N!=0 OR $Humedad_N!=0){
 				//Se escriben Datos
 				$html .='<tr>';
-					$html .='<td style="font-size: 10px;text-align:center;">'.$fac['NombreEquipo'].'</td>';
+					$html .='<td style="font-size: 10px;text-align:center;">'.$rowEquipo['Nombre'].'</td>';
 					$html .='<td style="font-size: 10px;text-align:center;">'.$fac['FechaSistema'].'</td>';
 					
 					if(isset($idOpciones)&&$idOpciones!=''&&$idOpciones!=0){ 

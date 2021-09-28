@@ -19,7 +19,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresUniMed_'.$i;
 }
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 backup_telemetria_listado_errores.Descripcion, 
 backup_telemetria_listado_errores.Fecha, 
 backup_telemetria_listado_errores.Hora, 
@@ -29,31 +29,11 @@ backup_telemetria_listado_errores.Valor_min,
 backup_telemetria_listado_errores.Valor_max,
 backup_telemetria_listado_errores.GeoLatitud,
 backup_telemetria_listado_errores.GeoLongitud,
-telemetria_listado.Nombre AS NombreEquipo
-".$subquery."
+telemetria_listado.Nombre AS NombreEquipo'.$subquery;
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores.idTelemetria';
+$SIS_where = 'backup_telemetria_listado_errores.idErrores = '.simpleDecode($_GET['view'], fecha_actual()).' AND backup_telemetria_listado_errores.idTipo!=999 AND backup_telemetria_listado_errores.Valor<99900';
+$rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_errores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-FROM `backup_telemetria_listado_errores`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores.idTelemetria
-WHERE backup_telemetria_listado_errores.idErrores = ".simpleDecode($_GET['view'], fecha_actual())."
-AND backup_telemetria_listado_errores.idTipo!='999'
-AND backup_telemetria_listado_errores.Valor<'99900'
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
- 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');

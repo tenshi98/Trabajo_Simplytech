@@ -25,32 +25,18 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
 
-             
-  
+
 /*********************************************************************************/
 //Verifico si se selecciono el equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	//Se traen todos los registros
-	$query = "SELECT 
+	$SIS_query = '
 	telemetria_listado.Nombre,
-	COUNT(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla) AS Total
-	FROM `backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-	LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-	WHERE (backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."') ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	$row_data = mysqli_fetch_assoc ($resultado);
+	COUNT(backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla) AS Total';
+	$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
+	$SIS_where = '(backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'")';
+	$row_data = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	
 	/*****************************************/
 	//Se escribe el dato
 	$Alert_Text  = 'Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0);
@@ -75,12 +61,12 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
 }else{
 	//Inicia variable
-	$z="WHERE telemetria_listado.idTelemetria>0"; 
-	$z.=" AND telemetria_listado.id_Geo='2'";
-	$z.=" AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_where  = "telemetria_listado.idTelemetria>0"; 
+	$SIS_where .= " AND telemetria_listado.id_Geo='2'";
+	$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	//Solo para plataforma CrossTech
 	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-		$z .= " AND telemetria_listado.idTab=4";//CrossWeather			
+		$SIS_where .= " AND telemetria_listado.idTab=4";//CrossWeather			
 	}
 	$datosx  = '&f_inicio='.$_GET['f_inicio'];
 	$datosx .= '&f_termino='.$_GET['f_termino'];
@@ -90,37 +76,20 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 
 	//Verifico el tipo de usuario que esta ingresando
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-		$join = "";	
+		$SIS_join = "";	
 	}else{
-		$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+		$SIS_join   = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
+		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 	}
 	
 	/*********************************************/
 	// Se trae un listado con todos los elementos
-	$arrEquipos = array();
-	$query = "SELECT 
+	$SIS_query = '
 	telemetria_listado.idTelemetria, 
-	telemetria_listado.Nombre
-	FROM `telemetria_listado`
-	".$join."  ".$z."
-	ORDER BY idTelemetria ASC ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrEquipos,$row );
-	}
+	telemetria_listado.Nombre';
+	$SIS_order = 'idTelemetria ASC';
+	$arrEquipos = array();
+	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
 	
 
 	
@@ -129,24 +98,11 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$Alert_Text  = '';
 	foreach ($arrEquipos as $equipo) {
 		//Se traen todos los registros
-		$query = "SELECT 
-		COUNT(idTabla) AS Total
-		FROM `backup_telemetria_listado_tablarelacionada_".$equipo['idTelemetria']."`
-		WHERE (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."') ";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-							
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-		}
-		$row_data = mysqli_fetch_assoc ($resultado);
+		$SIS_query = 'COUNT(idTabla) AS Total';
+		$SIS_join  = '';
+		$SIS_where = '(FechaSistema BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'")';
+		$row_data = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$equipo['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+		
 		
 		$Alert_Text .= 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($row_data['Total'], 0).'<br/>';
 		//verifico el valor maximo
@@ -177,9 +133,6 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 ?>	
 
 
-
-
-
 <div class="clearfix"></div>
 <div class="col-sm-12" style="margin-bottom:30px">
 <a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -188,7 +141,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 			
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
-//Filtro de busqueda
+//filtros
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando

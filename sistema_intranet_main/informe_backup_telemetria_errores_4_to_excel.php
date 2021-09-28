@@ -25,24 +25,23 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Inicia variable
-$z="WHERE backup_telemetria_listado_errores_999.idErrores>0"; 
-$z.=" AND backup_telemetria_listado_errores_999.idTipo='999'";
-$z.=" AND telemetria_listado.id_Geo='2'";
-$z.=" AND backup_telemetria_listado_errores_999.idSistema=".$_GET['idSistema'];
+$SIS_where = "backup_telemetria_listado_errores_999.idErrores>0"; 
+$SIS_where.= " AND backup_telemetria_listado_errores_999.idTipo='999'";
+$SIS_where.= " AND telemetria_listado.id_Geo='2'";
+$SIS_where.= " AND backup_telemetria_listado_errores_999.idSistema=".$_GET['idSistema'];
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND backup_telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.=" AND backup_telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z.=" AND backup_telemetria_listado_errores_999.idTelemetria='".$_GET['idTelemetria']."'";
+	$SIS_where.=" AND backup_telemetria_listado_errores_999.idTelemetria='".$_GET['idTelemetria']."'";
 }
 //Verifico el tipo de usuario que esta ingresando
-if($_GET['idTipoUsuario']==1){
-	$join = "";	
-}else{
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria ";
-	$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria';
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria ";
+	$SIS_where.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 	
 
@@ -53,8 +52,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresUniMed_'.$i;
 }
 // Se trae un listado con todos los elementos
-$arrErrores = array();
-$query = "SELECT 
+$SIS_query = '
 backup_telemetria_listado_errores_999.idErrores,
 backup_telemetria_listado_errores_999.Descripcion, 
 backup_telemetria_listado_errores_999.Fecha, 
@@ -64,29 +62,10 @@ backup_telemetria_listado_errores_999.Valor,
 backup_telemetria_listado_errores_999.Valor_min,
 backup_telemetria_listado_errores_999.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.id_Geo
-".$subquery."
-
-FROM `backup_telemetria_listado_errores_999`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria
-".$join."
-".$z."
-ORDER BY idErrores DESC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrErrores,$row );
-} 
+telemetria_listado.id_Geo'.$subquery;
+$SIS_order = 'idErrores DESC';
+$arrErrores = array();
+$arrErrores = db_select_array (false, $SIS_query, 'backup_telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -130,16 +109,16 @@ foreach ($arrErrores as $error) {
 	//Guardo la unidad de medida
 	$unimed = ' '.$arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];
 						
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A'.$nn, $error['NombreEquipo'])
-            ->setCellValue('B'.$nn, $error['Descripcion'])
-            ->setCellValue('C'.$nn, $error['Fecha'])
-            ->setCellValue('D'.$nn, $error['Hora'])
-            ->setCellValue('E'.$nn, $error['Valor'])
-            ->setCellValue('F'.$nn, $error['Valor_min'])
-            ->setCellValue('G'.$nn, $error['Valor_max'])
-            ->setCellValue('G'.$nn, $unimed);
- $nn++;           
+	$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('A'.$nn, $error['NombreEquipo'])
+				->setCellValue('B'.$nn, $error['Descripcion'])
+				->setCellValue('C'.$nn, $error['Fecha'])
+				->setCellValue('D'.$nn, $error['Hora'])
+				->setCellValue('E'.$nn, $error['Valor'])
+				->setCellValue('F'.$nn, $error['Valor_min'])
+				->setCellValue('G'.$nn, $error['Valor_max'])
+				->setCellValue('G'.$nn, $unimed);
+	$nn++;           
    
 } 
 
@@ -153,7 +132,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 
 // Redirect output to a client’s web browser (Excel5)
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Resumen de Alertas.xls"');
+header('Content-Disposition: attachment;filename="Informe de Alertas.xls"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

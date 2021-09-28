@@ -15,34 +15,17 @@ require_once 'core/Web.Header.Views.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.LimiteVelocidad,
-backup_telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".FechaSistema,
-backup_telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".HoraSistema,
-backup_telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".GeoLatitud,
-backup_telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".GeoLongitud,
-backup_telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".GeoVelocidad
-
-FROM `backup_telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual())."`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".idTelemetria
-WHERE backup_telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual()).".idTabla = ".simpleDecode($_GET['view'], fecha_actual())."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.FechaSistema,
+backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.HoraSistema,
+backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.GeoLatitud,
+backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.GeoLongitud,
+backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.GeoVelocidad';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria';
+$SIS_where = 'backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTabla = '.simpleDecode($_GET['view'], fecha_actual());
+$rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()), $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

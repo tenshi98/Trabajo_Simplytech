@@ -43,48 +43,33 @@ if (!$num_pag){
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
 //Inicia variable
-$z="WHERE backup_telemetria_listado_errores_999.idErrores>0"; 
-$z.=" AND backup_telemetria_listado_errores_999.idTipo='999'";
-$z.=" AND telemetria_listado.id_Geo='1'";
-$z.=" AND backup_telemetria_listado_errores_999.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = "backup_telemetria_listado_errores_999.idErrores>0"; 
+$SIS_where.= " AND backup_telemetria_listado_errores_999.idTipo='999'";
+$SIS_where.= " AND telemetria_listado.id_Geo='1'";
+$SIS_where.= " AND backup_telemetria_listado_errores_999.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
-$search  ='&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search .='&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
 $search .='&submit_filter=Filtrar';
 $search .='&idOpciones=1';
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND backup_telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
-	$search .='&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
+	$SIS_where.= " AND backup_telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$search   .= '&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$z.=" AND backup_telemetria_listado_errores_999.idTelemetria='".$_GET['idTelemetria']."'";
-	$search .='&idTelemetria='.$_GET['idTelemetria'];
+	$SIS_where.= " AND backup_telemetria_listado_errores_999.idTelemetria='".$_GET['idTelemetria']."'";
+	$search   .= '&idTelemetria='.$_GET['idTelemetria'];
 }
 //Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$join = "";	
-}else{
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria ";
-	$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria';
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria ";
+	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT backup_telemetria_listado_errores_999.idErrores FROM `backup_telemetria_listado_errores_999`  LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria ".$join."  ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'backup_telemetria_listado_errores_999.idErrores', 'backup_telemetria_listado_errores_999', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);
 
@@ -95,8 +80,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresUniMed_'.$i;
 }
 // Se trae un listado con todos los elementos
-$arrErrores = array();
-$query = "SELECT 
+$SIS_query = '
 backup_telemetria_listado_errores_999.idErrores,
 backup_telemetria_listado_errores_999.Descripcion, 
 backup_telemetria_listado_errores_999.Fecha, 
@@ -106,31 +90,10 @@ backup_telemetria_listado_errores_999.Valor,
 backup_telemetria_listado_errores_999.Valor_min,
 backup_telemetria_listado_errores_999.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.id_Geo
-".$subquery."
-
-FROM `backup_telemetria_listado_errores_999`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria
-".$join."  ".$z."
-ORDER BY idErrores DESC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrErrores,$row );
-}
-
+telemetria_listado.id_Geo'.$subquery;
+$SIS_order = 'idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
+$arrErrores = array();
+$arrErrores = db_select_array (false, $SIS_query, 'backup_telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
 
 //Se traen todas las unidades de medida
@@ -144,8 +107,8 @@ foreach ($arrUnimed as $sen) {
  ?>	
 
 <div class="col-sm-12 clearfix">		
-	<a target="new" href="<?php echo 'informe_backup_telemetria_errores_1_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
-	<a target="new" href="<?php echo 'informe_backup_telemetria_errores_1_to_pdf.php?bla=bla'.$search ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
+	<a target="new" href="<?php echo 'informe_telemetria_errores_1_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
+	<a target="new" href="<?php echo 'informe_telemetria_errores_1_to_pdf.php?bla=bla'.$search ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 </div>
 
 <div class="col-sm-12">
@@ -187,7 +150,7 @@ foreach ($arrUnimed as $sen) {
 							<td><?php echo Cantidades_decimales_justos($error['Valor_max']).$unimed; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" > 
-									<a href="<?php echo 'informe_backup_telemetria_errores_1_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="<?php echo 'informe_telemetria_errores_1_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>	
 						</tr>

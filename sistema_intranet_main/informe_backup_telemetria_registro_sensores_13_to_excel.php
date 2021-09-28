@@ -87,30 +87,14 @@ $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unid
 
 //Creo un arreglo con los datos
 $arrUni = array();
-foreach ($arrUnidad as $uni) {
+foreach ($arrUnimed as $uni) {
 	$arrUni[$uni['idUniMed']] = $uni['Nombre'];
 }
 /*******************************************************************************/
 // Se trae un listado con todos los grupos
 $arrGrupo = array();
-$query = "SELECT idGrupo, Nombre
-FROM `telemetria_listado_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrGrupo = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupo');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupo,$row );
-}
 //Creo un arreglo con los datos
 $arrGru = array();
 foreach ($arrGrupo as $uni) {
@@ -130,37 +114,19 @@ function crear_data($limite, $idTelemetria, $f_inicio, $f_termino, $dbConn ) {
 		$subquery .= ',backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.' AS SensorValue_'.$i;
 	}
 	//Se traen todos los registros
-	$arrRutas = array();
-	$query = "SELECT 
+	$SIS_query = '
 	telemetria_listado.Nombre AS NombreEquipo,
 	telemetria_listado.cantSensores,
-	backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema,
-	backup_telemetria_listado_tablarelacionada_".$idTelemetria.".HoraSistema
-	".$subquery."
-
-	FROM `backup_telemetria_listado_tablarelacionada_".$idTelemetria."`
-	LEFT JOIN `telemetria_listado`     ON telemetria_listado.idTelemetria   = backup_telemetria_listado_tablarelacionada_".$idTelemetria.".idTelemetria
-	WHERE (FechaSistema BETWEEN '".$f_inicio."' AND '".$f_termino."') 
-	LIMIT ".$limite.", 5000";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRutas,$row );
-	}
+	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema,
+	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.HoraSistema'.$subquery;
+	$SIS_join  = 'LEFT JOIN `telemetria_listado`     ON telemetria_listado.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria';
+	$SIS_where = '(FechaSistema BETWEEN "'.$f_inicio.'" AND "'.$f_termino.'")';
+	$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria ASC LIMIT '.$limite.', 5000';
+	$arrRutas = array();
+	$arrRutas = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRutas');
 	
 	return $arrRutas;
 	
-
 }
 
 
@@ -240,45 +206,29 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
 }else{
 	//Inicia variable
-	$z = "WHERE telemetria_listado.idTelemetria>0"; 
-	$z.= " AND telemetria_listado.id_Geo='2'";
-	$z.= " AND telemetria_listado.idSistema=".$_GET['idSistema'];
+	$SIS_where = "telemetria_listado.idTelemetria>0"; 
+	$SIS_where.= " AND telemetria_listado.id_Geo='2'";
+	$SIS_where.= " AND telemetria_listado.idSistema=".$_GET['idSistema'];
 	//Solo para plataforma CrossTech
 	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-		$z .= " AND telemetria_listado.idTab=4";//CrossWeather			
+		$SIS_where .= " AND telemetria_listado.idTab=4";//CrossWeather			
 	}
 	//Verifico el tipo de usuario que esta ingresando
 	if($_GET['idTipoUsuario']==1){
-		$join = "";	
+		$SIS_join  = "";	
 	}else{
-		$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_GET['idUsuario'];	
+		$SIS_join  = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
+		$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_GET['idUsuario'];	
 	}
 	
 	/*********************************************/
 	// Se trae un listado con todos los elementos
-	$arrEquipos = array();
-	$query = "SELECT 
+	$SIS_query = '
 	telemetria_listado.idTelemetria, 
-	telemetria_listado.Nombre
-	FROM `telemetria_listado`
-	".$join."  ".$z."
-	ORDER BY idTelemetria ASC ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrEquipos,$row );
-	}
+	telemetria_listado.Nombre';
+	$SIS_order = 'idTelemetria ASC';
+	$arrEquipos = array();
+	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
 
 	/*********************************************/
 	$sheet = 0;

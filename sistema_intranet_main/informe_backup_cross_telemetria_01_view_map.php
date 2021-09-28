@@ -21,51 +21,27 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+/****************************************/
 //Numero del sensor
 $NSensor = 1;
-/**********************************************************/
-$query = "SELECT 
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoLatitud,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".GeoLongitud,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".HoraSistema,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor." AS CantidadMuestra,
-
+//consulto
+$SIS_query = '
+backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla,
+backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.GeoLatitud,
+backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.GeoLongitud,
+backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
+backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema,
+backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.' AS CantidadMuestra,
 telemetria_listado.Nombre AS EquipoNombre,
 telemetria_listado.Identificador AS EquipoIdentificador,
 cross_predios_listado.Nombre AS PredioNombre,
-cross_predios_listado_zonas.Nombre AS CuartelNombre
-
-					
-
-FROM `backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona     = backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona
+cross_predios_listado_zonas.Nombre AS CuartelNombre';
+$SIS_join  = '
+LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona     = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idZona
 LEFT JOIN `cross_predios_listado`         ON cross_predios_listado.idPredio         = cross_predios_listado_zonas.idPredio
-LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria        = backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-
-WHERE backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla=".$_GET['idTabla']."
-
-
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
-
-
+LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria        = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
+$SIS_where = 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla='.$_GET['idTabla'];
+$rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 

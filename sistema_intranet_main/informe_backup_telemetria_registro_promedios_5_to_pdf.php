@@ -17,18 +17,28 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){         $idSistema     = $_GET['idSistema'];     }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){        $idSistema     = $_POST['idSistema'];}
+if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){           $f_inicio      = $_GET['f_inicio'];      }elseif(isset($_POST['f_inicio'])&&$_POST['f_inicio']!=''){          $f_inicio      = $_POST['f_inicio'];}
+if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){         $f_termino     = $_GET['f_termino'];     }elseif(isset($_POST['f_termino'])&&$_POST['f_termino']!=''){        $f_termino     = $_POST['f_termino'];}
+if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){           $h_inicio      = $_GET['h_inicio'];      }elseif(isset($_POST['h_inicio'])&&$_POST['h_inicio']!=''){          $h_inicio      = $_POST['h_inicio'];}
+if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){         $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){        $h_termino     = $_POST['h_termino'];}
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){   $idTelemetria  = $_GET['idTelemetria'];  }elseif(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){  $idTelemetria  = $_POST['idTelemetria'];}
+if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){             $idGrupo       = $_GET['idGrupo'];       }elseif(isset($_POST['idGrupo'])&&$_POST['idGrupo']!=''){            $idGrupo       = $_POST['idGrupo'];}
+if(isset($_GET['desde'])&&$_GET['desde']!=''){                 $desde         = $_GET['desde'];         }elseif(isset($_POST['desde'])&&$_POST['desde']!=''){                $desde         = $_POST['desde'];           }else{$desde = '';}
+if(isset($_GET['hasta'])&&$_GET['hasta']!=''){                 $hasta         = $_GET['hasta'];         }elseif(isset($_POST['hasta'])&&$_POST['hasta']!=''){                $hasta         = $_POST['hasta'];           }else{$hasta = '';}
+if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''){       $idOpciones    = $_GET['idOpciones'];    }elseif(isset($_POST['idOpciones'])&&$_POST['idOpciones']!=''){      $idOpciones    = $_POST['idOpciones'];}
+
 //Se buscan la imagen i el tipo de PDF
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
-	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 /********************************************************************/
 //se verifica si se ingreso la hora, es un dato optativo
 $subf='';
-//Datos opcionales
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$subf.=" AND (TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
-}elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$subf.=" AND (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
+	$subf = " AND (TimeStamp BETWEEN '".$f_inicio." ".$h_inicio."' AND '".$f_termino." ".$h_termino."')";
+}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
+	$subf = " AND (FechaSistema BETWEEN '".$f_inicio."' AND '".$f_termino."')";
 }
 
 /**********************************************************************/
@@ -71,59 +81,34 @@ function crear_data($cantsens, $filtro, $idTelemetria, $f_inicio, $f_termino, $d
 		}
 	}
 
-	//Se traen todos los registros
+	/*******************************************************/
+	//se consulta
+	$SIS_query = 'backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria.'.FechaSistema'.$consql;
+	$SIS_join  = 'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria.'.idTelemetria';
+	$SIS_where = 'idTabla!=0 '.$INT_filtro.$subfiltro.' GROUP BY backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria.'.FechaSistema';
+	$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria.'.FechaSistema ASC LIMIT 10000';
 	$arrRutas = array();
-	$query = "SELECT 
-	telemetria_listado.Nombre AS NombreEquipo,
-	telemetria_listado.cantSensores AS cantSensores,
-	backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema
-	".$consql."
-	FROM `backup_telemetria_listado_tablarelacionada_".$idTelemetria."`
-	LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = backup_telemetria_listado_tablarelacionada_".$idTelemetria.".idTelemetria
-	WHERE idTabla!=0
-	".$filtro.$subfiltro." 
-	GROUP BY backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema
-	ORDER BY backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+	$arrRutas = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$INT_idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRutas');
 	
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRutas,$row );
-	}
 	return $arrRutas;
 	
 }
-/*********************************************************************************/
+/*******************************************************/
 //Consulta por la cantidad de sensores
-$query = "SELECT cantSensores, Nombre
-FROM `telemetria_listado`
-WHERE idTelemetria=".$_GET['idTelemetria'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$SIS_query = 'cantSensores, Nombre';
+$SIS_where = 'idTelemetria='.$idTelemetria;
+$rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-$rowEquipo = mysqli_fetch_assoc ($resultado);
+/*******************************************************/
+//se consulta
 //Variable temporal
 $arrTemporal = array();	
 //Llamo a la funcion
-$arrTemporal = crear_data($rowEquipo['cantSensores'], $subf, $_GET['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'], $_GET['desde'], $_GET['hasta'] , $dbConn);
+$arrTemporal = crear_data($rowEquipo['cantSensores'], $subf, $idTelemetria, $f_inicio, $f_termino, $desde, $hasta , $dbConn);
+
+/*******************************************************/
+//Se trae el dato del grupo
+$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$idGrupo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
  
 /********************************************************************/
 //Se define el contenido del PDF
@@ -132,6 +117,10 @@ $html = '
 	tbody tr:nth-child(odd) {background-color: #dfdfdf;}
 </style>';
 
+//se imprime la imagen 
+if(isset($_POST["img_adj"]) && $_POST["img_adj"] != ''){
+	$html .= '<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>';
+}
 
 $html .= '
 <table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
@@ -147,13 +136,12 @@ $html .= '
 							
 		foreach ($arrTemporal as $fac) {
 			//numero sensores equipo
-			$N_Maximo_Sensores = $fac['cantSensores'];
 			$Temperatura       = 0;
 			$Temperatura_N     = 0;
 			$Humedad           = 0;
 			$Humedad_N         = 0;
 													
-			for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
+			for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 				if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 					//Que el valor medido sea distinto de 999
 					if(isset($fac['MedProm_'.$x])&&$fac['MedProm_'.$x]<99900){
@@ -172,7 +160,7 @@ $html .= '
 			if($Temperatura_N!=0 OR $Humedad_N!=0){
 				//Se escriben Datos
 				$html .='<tr>';
-					$html .='<td>'.$fac['NombreEquipo'].'</td>';
+					$html .='<td>'.$rowEquipo['Nombre'].'</td>';
 					$html .='<td>'.$fac['FechaSistema'].'</td>';
 					$html .='<td>'.$New_Temperatura.'</td>';
 					$html .='<td>'.$New_Humedad.'</td>';
@@ -188,9 +176,17 @@ $html .='</tbody>
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/
 //Config
-$pdf_titulo     = 'Desviacion estandar';
-$pdf_subtitulo  = 'Equipo: '.$rowEquipo['Nombre'];
-$pdf_file       = 'Desviacion estandar.pdf';
+$pdf_titulo     = 'Informe Promedio Diario';
+$pdf_subtitulo  = $_SESSION['usuario']['basic_data']['RazonSocial'];
+$pdf_subtitulo .= '
+Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['Nombre'].'
+';
+if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
+	$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).'-'.$h_inicio.' hasta '.fecha_estandar($f_termino).'-'.$h_termino;
+}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
+	$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).' hasta '.fecha_estandar($f_termino);
+}
+$pdf_file       = 'Informe Promedio Diario del equipo '.$rowEquipo['Nombre'].'.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja
@@ -215,7 +211,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->SetKeywords('');
 
 			// set default header data
-			if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
+			if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 				if(isset($rowEmpresa['Config_imgLogo'])&&$rowEmpresa['Config_imgLogo']!=''){
 					$logo = '../../../../'.DB_SITE_MAIN_PATH.'/upload/'.$rowEmpresa['Config_imgLogo'];
 				}else{
@@ -253,6 +249,14 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			//Se crea el archivo
 			$pdf->SetFont('helvetica', '', 10);
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
+			
+			//se imprime la imagen 
+			if(isset($_POST["img_adj"]) && $_POST["img_adj"] != ''){
+				$imgdata = base64_decode(str_replace('data:image/png;base64,', '',$_POST["img_adj"]));
+				// The '@' character is used to indicate that follows an image data stream and not an image file name
+				$pdf->Image('@'.$imgdata, 15, 30, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
+			}
+			
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output($pdf_file, 'I');

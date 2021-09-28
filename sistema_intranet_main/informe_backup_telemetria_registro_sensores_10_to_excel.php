@@ -87,7 +87,7 @@ $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unid
 
 //Creo un arreglo con los datos
 $arrUni = array();
-foreach ($arrUnidad as $uni) {
+foreach ($arrUnimed as $uni) {
 	$arrUni[$uni['idUniMed']] = $uni['Nombre'];
 }
 /*******************************************************************************/
@@ -338,7 +338,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 
 		//generar log
 		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
+	
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)) {
 	array_push( $arrEquipos,$row );

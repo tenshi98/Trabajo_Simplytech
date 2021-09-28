@@ -26,25 +26,8 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 //Se consultan datos
 $arrGruposRev = array();
-$query = "SELECT idGrupo, Valor, idSupervisado
-FROM `telemetria_listado_grupos_uso`
-WHERE idSupervisado=1
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrGruposRev = db_select_array (false, 'idGrupo, Valor, idSupervisado', 'telemetria_listado_grupos_uso', '', 'idSupervisado=1', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposRev');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGruposRev,$row );
-}
 /*******************************************************/
 //Se arma la query con los datos justos recibidos
 //numero sensores equipo
@@ -59,22 +42,8 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }
 
 //Se traen todos los datos de la maquina
-$query = "SELECT Nombre, cantSensores ".$subquery."
-FROM `telemetria_listado`
-WHERE idTelemetria=".$_GET['idTelemetria'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$rowMaquina = db_select_data (false, 'Nombre, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), $form_trabajo);
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowMaquina = mysqli_fetch_assoc ($resultado);
 //Armo la consulta
 $subquery = '';
 for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
@@ -126,32 +95,9 @@ for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
 /**********************************************************/
 //Se traen todos los registros entre las fechas
 $arrMediciones = array();
-$query = "SELECT Fecha AS FechaConsultada
-".$subquery."
-FROM `telemetria_listado_historial_activaciones`
-WHERE idTelemetria=".$_GET['idTelemetria']."
-AND Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'
-GROUP BY Fecha
-ORDER BY Fecha ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrMediciones = db_select_array (false, 'Fecha AS FechaConsultada'.$subquery, 'telemetria_listado_historial_activaciones', '', 'idTelemetria='.$_GET['idTelemetria'].'AND Fecha BETWEEN "'.$_GET['F_inicio'].'" AND "'.$_GET['F_termino'].'" GROUP BY Fecha',  'Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMediciones,$row );
-}
-
-
- 
-
+/********************************************************************/
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
 

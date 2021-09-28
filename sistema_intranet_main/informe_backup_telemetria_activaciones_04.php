@@ -35,26 +35,8 @@ if ( ! empty($_GET['submit_filter']) ) {
 /**********************************************************/
 //Se consultan datos
 $arrGruposRev = array();
-$query = "SELECT idGrupo, Valor, idSupervisado
-FROM `telemetria_listado_grupos_uso`
-WHERE idSupervisado=1
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGruposRev,$row );
-}
+$arrGruposRev = db_select_array (false, 'idGrupo, Valor, idSupervisado', 'telemetria_listado_grupos_uso', '', 'idSupervisado=1', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGruposRev');
+
 /*******************************************************/
 //Se arma la query con los datos justos recibidos
 //numero sensores equipo
@@ -67,25 +49,9 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresRevision_'.$i;
 	$subquery .= ',SensoresRevisionGrupo_'.$i;
 }
-
 //Se traen todos los datos de la maquina
-$query = "SELECT Nombre, cantSensores ".$subquery."
-FROM `telemetria_listado`
-WHERE idTelemetria=".$_GET['idTelemetria'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowMaquina = mysqli_fetch_assoc ($resultado);
+$rowMaquina = db_select_data (false, 'Nombre, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 //Armo la consulta
 $subquery = '';
 for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
@@ -137,29 +103,8 @@ for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
 /**********************************************************/
 //Se traen todos los registros entre las fechas
 $arrMediciones = array();
-$query = "SELECT Fecha AS FechaConsultada
-".$subquery."
-FROM `telemetria_listado_historial_activaciones`
-WHERE idTelemetria=".$_GET['idTelemetria']."
-AND Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'
-GROUP BY Fecha
-ORDER BY Fecha ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMediciones,$row );
-}
+$arrMediciones = db_select_array (false, 'Fecha AS FechaConsultada'.$subquery, 'telemetria_listado_historial_activaciones', '', 'idTelemetria='.$_GET['idTelemetria'].'AND Fecha BETWEEN "'.$_GET['F_inicio'].'" AND "'.$_GET['F_termino'].'" GROUP BY Fecha',  'Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');
+
 /*******************************************************/
 ?>
 <div class="col-sm-12 clearfix">
@@ -235,8 +180,8 @@ array_push( $arrMediciones,$row );
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  {
-//Filtro de busqueda
-$w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
+//filtros
+$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		

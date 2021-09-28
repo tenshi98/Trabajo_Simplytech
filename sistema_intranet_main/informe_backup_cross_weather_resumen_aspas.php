@@ -28,39 +28,23 @@ if ( ! empty($_GET['submit_filter']) ) {
 $idTelemetria = $_GET['idTelemetria'];
 /**********************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado.Nombre AS EquipoNombre,
 telemetria_listado.cantSensores AS EquipoN_Sensores,
 telemetria_listado.SensorActivacionID AS EquipoSensorActivacionID,
 telemetria_listado.SensorActivacionValor AS EquipoSensorActivacionValor,
-core_sistemas.CrossTech_HeladaTemp AS TempMinima
-
-FROM `telemetria_listado`
-LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema
-WHERE telemetria_listado.idTelemetria=".$idTelemetria;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-
+core_sistemas.CrossTech_HeladaTemp AS TempMinima';
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema';
+$SIS_where = 'telemetria_listado.idTelemetria='.$idTelemetria;
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE backup_telemetria_listado_tablarelacionada_".$idTelemetria.".idTabla!=0";
+$SIS_where = "backup_telemetria_listado_tablarelacionada_".$idTelemetria.".idTabla!=0";
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z.=" AND backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.=" AND backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
-
 			
 //numero sensores equipo
 $N_Maximo_Sensores = $rowdata['EquipoN_Sensores'];
@@ -79,35 +63,15 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 
 /**********************************************************/
 //se consulta
+$SIS_query = '
+backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTabla,
+backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema,
+backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.HoraSistema'.$consql;
+$SIS_join  = '';
+$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTabla ASC';
 $arrConsulta = array();
-$query = "SELECT 
-backup_telemetria_listado_tablarelacionada_".$idTelemetria.".idTabla,
-backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema,
-backup_telemetria_listado_tablarelacionada_".$idTelemetria.".HoraSistema
-
-".$consql."
-
-FROM `backup_telemetria_listado_tablarelacionada_".$idTelemetria."`
-
-".$z."
-ORDER BY backup_telemetria_listado_tablarelacionada_".$idTelemetria.".idTabla ASC
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrConsulta,$row );
-}	
+$arrConsulta = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
+	
 /****************************************************************************/
 $arrEvento       = array();
 $nevento         = 0;
@@ -267,9 +231,6 @@ foreach($arrConsulta as $temp) {
 </div>
 
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>google.charts.load('current', {'packages':['line','corechart']});</script>
-
 <div class="col-sm-12">
 	<div class="box">
 		<header>
@@ -278,64 +239,27 @@ foreach($arrConsulta as $temp) {
 						
 		</header>
 		<div class="table-responsive">
-
-			<script>
-				google.charts.setOnLoadCallback(drawChart);
-
-				function drawChart() {
-								
-
-					var chartDiv = document.getElementById('curve_chart');
-
-					var data = new google.visualization.DataTable();
-					data.addColumn('string', 'Fecha'); 
-					data.addColumn('number', "Temperatura");
-					data.addColumn('number', "Funcionamiento");
-
-					data.addRows([
-						<?php foreach ($arrConsulta as $temp) {
-							//Que el valor medido sea distinto de 99900
-							if(isset($temp['SensorValue_1'])&&$temp['SensorValue_1']<99900){
-								$chain  = "'".Fecha_estandar($temp['FechaSistema'])." - ".Hora_estandar($temp['HoraSistema'])."'";
-								$chain .= ", ".$temp['SensorValue_1'].", ".$temp['SensorValue_11'];
-								//se imprime dato
-								?>[<?php echo $chain; ?>],<?php
-							}
-						}  ?>
-					]);
-
-					var materialOptions = {
-						chart: {
-							title: 'Informe Sensores'
-						},
-						series: {
-							// Gives each series an axis name that matches the Y-axis below.
-							0: {axis: 'Temperatura Real'},
-							1: {axis: 'Funcionamiento Aspa'}
-						},
-						axes: {
-							// Adds labels to each axis; they don't have to match the axis names.
-							y: {
-								Temps: {label: 'Temperatura (Celsius)'},
-								Daylight: {label: 'Funcionamiento (On-Off)'}
-							}
-						},
-						legend: { position: 'none' }
-					};
-
-
-
-					function drawMaterialChart() {
-						var materialChart = new google.charts.Line(chartDiv);
-						materialChart.draw(data, materialOptions);
-					}
-
-					drawMaterialChart();
-
+			<?php
+			$Temp_1     = '';
+			$arrData    = array();
+			foreach ($arrConsulta as $temp) {
+				//Que el valor medido sea distinto de 99900
+				if(isset($temp['SensorValue_1'])&&$temp['SensorValue_1']<99900){
+					//se arma cadena	
+					$Temp_1 .= "'".Fecha_estandar($temp['FechaSistema'])." - ".$temp['HoraSistema']."',";
+					if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$temp['SensorValue_1'];    }else{ $arrData[1]['Value'] = $temp['SensorValue_1']; }
+					if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$temp['SensorValue_11'];   }else{ $arrData[2]['Value'] = $temp['SensorValue_11']; }
+					
 				}
-
-			</script> 
-			<div id="curve_chart" style="height: 500px"></div>
+			}
+			$arrData[1]['Name'] = "'Temperatura (Celsius)'";
+			$arrData[2]['Name'] = "'Funcionamiento (On-Off)'";
+			
+			$gr_tittle = 'Informe Sensores';
+			echo GraphLinear_3('graphLinear_1', $gr_tittle, 'Fecha', 'Temperatura', 'Funcionamiento', $Temp_1, $arrData[1]['Value'], $arrData[1]['Name'], $Temp_1, $arrData[2]['Value'], $arrData[2]['Name'], 0);
+				
+			?>
+			
 			<div class="col-sm-12">
 				<p><span class="label label-default" style="background-color:#4285F4;">+</span> Temperatura (Grados Celsius)</p>
 				<p><span class="label label-default" style="background-color:#DB4437;">+</span> Funcionamiento (1:On - 0:Off)</p>

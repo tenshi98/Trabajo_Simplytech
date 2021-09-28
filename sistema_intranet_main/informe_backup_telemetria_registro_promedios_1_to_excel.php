@@ -25,170 +25,156 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //se verifica si se ingreso la hora, es un dato optativo
-$z='';
+$SIS_where = '';
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
-	$z.="WHERE (TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$SIS_where .= "(TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.="WHERE (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where .= "(FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
-//desde y hasta activo
-if(isset($_GET['desde'])&&$_GET['desde']!=''&&isset($_GET['hasta'])&&$_GET['hasta']!=''){
-	$subquery = "
-	MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedMin,
-	MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedMax,
-	AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedProm,
-	STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedDesStan,
-	";
-//solo desde	
-}elseif(isset($_GET['desde'])&&$_GET['desde']!=''&&(!isset($_GET['hasta']) OR $_GET['hasta']=='')){
-	$subquery = "
-	MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
-	MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMax,
-	AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
-	STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
-	";
-//solo hasta	
-}elseif(isset($_GET['hasta'])&&$_GET['hasta']!=''&&(!isset($_GET['desde']) OR $_GET['desde']=='')){
-	$subquery = "
-	MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
-	MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMax,
-	AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
-	STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
-	";
-//ninguno
-}else{
-	$subquery = "
-	MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedMin,
-	MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedMax,
-	AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedProm,
-	STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedDesStan,
-	";
-}	
-//Se traen todos los registros
-$arrRutas = array();
-$query = "SELECT 
-
-telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.SensoresNombre_".$_GET['sensorn']." AS SensorNombre,
-
-
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema,
-
-".$subquery."
-
-telemetria_listado_unidad_medida.Nombre AS Unimed
-
-FROM `backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria            = backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-LEFT JOIN `telemetria_listado_unidad_medida`  ON telemetria_listado_unidad_medida.idUniMed  = telemetria_listado.SensoresUniMed_".$_GET['sensorn']."
-
-".$z."
-GROUP BY backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema
-ORDER BY backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema ASC
-LIMIT 10000
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRutas,$row );
-}
-
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
-
-// Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
-							 ->setLastModifiedBy("Office 2007")
-							 ->setTitle("Office 2007")
-							 ->setSubject("Office 2007")
-							 ->setDescription("Document for Office 2007")
-							 ->setKeywords("office 2007")
-							 ->setCategory("office 2007 result file");
-
+//verifico el numero de datos antes de hacer la consulta
+$ndata_1 = db_select_nrows (false, 'idTabla', 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'ndata_1');
 			
-         
-            
-//Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'CONTROL Sensor N° '.$_GET['sensorn'].' '.$arrRutas[0]['SensorNombre'])
-            ->setCellValue('A3', 'Nombre Equipo')
-            ->setCellValue('B3', $arrRutas[0]['NombreEquipo'])
-            ->setCellValue('A5', 'Nombre Sensor')
-            ->setCellValue('B5', $arrRutas[0]['SensorNombre']);
-//Si se ven detalles
-if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('B6', $arrRutas[0]['Unimed'].' Promedio')
-            ->setCellValue('C6', $arrRutas[0]['Unimed'].' Minimo')
-            ->setCellValue('D6', $arrRutas[0]['Unimed'].' Maximo')
-            ->setCellValue('E6', 'Dev. Std.');					
-//Si no se ven detalles	
-}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('B6', $arrRutas[0]['Unimed'].' Promedio');								
+//si el dato es superior a 10.000
+if(isset($ndata_1)&&$ndata_1>=10001){
+	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+}else{			
+	//obtengo la cantidad real de sensores
+	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
+
+	//desde y hasta activo
+	if(isset($_GET['desde'])&&$_GET['desde']!=''&&isset($_GET['hasta'])&&$_GET['hasta']!=''){
+		$subquery = "
+		MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedMin,
+		MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedMax,
+		AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedProm,
+		STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedDesStan,
+		";
+	//solo desde	
+	}elseif(isset($_GET['desde'])&&$_GET['desde']!=''&&(!isset($_GET['hasta']) OR $_GET['hasta']=='')){
+		$subquery = "
+		MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
+		MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMax,
+		AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
+		STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
+		";
+	//solo hasta	
+	}elseif(isset($_GET['hasta'])&&$_GET['hasta']!=''&&(!isset($_GET['desde']) OR $_GET['desde']=='')){
+		$subquery = "
+		MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
+		MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMax,
+		AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
+		STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
+		";
+	//ninguno
+	}else{
+		$subquery = "
+		MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedMin,
+		MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedMax,
+		AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedProm,
+		STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedDesStan,
+		";
+	}	
+	
+	//se traen lo datos del equipo
+	$SIS_query = '
+	telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
+	backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
+	'.$subquery.'
+	telemetria_listado_unidad_medida.Nombre AS Unimed';
+	$SIS_join  = '
+	LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria            = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria
+	LEFT JOIN `telemetria_listado_unidad_medida`  ON telemetria_listado_unidad_medida.idUniMed  = telemetria_listado.SensoresUniMed_'.$_GET['sensorn'];
+	$SIS_where .= ' GROUP BY backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema';
+	$SIS_order  = 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC LIMIT 10000';
+	$arrEquipos = array();
+	$arrEquipos = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'test_logo');
+
+	/********************************************************************/
+	// Create new PHPExcel object
+	$objPHPExcel = new PHPExcel();
+
+	// Set document properties
+	$objPHPExcel->getProperties()->setCreator("Office 2007")
+								 ->setLastModifiedBy("Office 2007")
+								 ->setTitle("Office 2007")
+								 ->setSubject("Office 2007")
+								 ->setDescription("Document for Office 2007")
+								 ->setKeywords("office 2007")
+								 ->setCategory("office 2007 result file");
+		
+	//Titulo columnas
+	$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('A1', 'CONTROL Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'])
+				->setCellValue('A2', 'Nombre Equipo')
+				->setCellValue('B2', $rowEquipo['NombreEquipo'])
+				->setCellValue('A3', 'Nombre Sensor')
+				->setCellValue('B3', $arrEquipos[0]['SensorNombre']);
+	//Si se ven detalles
+	if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
+		$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('A5', 'Fecha')
+					->setCellValue('B5', $arrEquipos[0]['Unimed'].' Promedio')
+					->setCellValue('C5', $arrEquipos[0]['Unimed'].' Minimo')
+					->setCellValue('D5', $arrEquipos[0]['Unimed'].' Maximo')
+					->setCellValue('E5', 'Dev. Std.');					
+	//Si no se ven detalles	
+	}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
+		$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('B5', $arrEquipos[0]['Unimed'].' Promedio');								
+	}
+	  
+	  
+			 
+	$nn=6;
+	foreach ($arrEquipos as $rutas) {
+		//Verifico si existen datos
+		if(isset($rutas['MedMin'])&&$rutas['MedMin']!=0&&$rutas['MedMin']!=''&&isset($rutas['MedMax'])&&$rutas['MedMax']!=0&&$rutas['MedMax']!=''){
+												
+			$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue('A'.$nn, fecha_estandar($rutas['FechaSistema']));			
+			//Si se ven detalles
+			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
+			$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2))
+						->setCellValue('C'.$nn, Cantidades($rutas['MedMin'], 2))
+						->setCellValue('D'.$nn, Cantidades($rutas['MedMax'], 2))
+						->setCellValue('E'.$nn, Cantidades($rutas['MedDesStan'], 2));		
+			//Si no se ven detalles	
+			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
+			$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2));								
+			} 
+
+			$nn++; 
+		}           
+	   
+	} 
+
+
+
+
+	// Rename worksheet
+	$objPHPExcel->getActiveSheet()->setTitle('Max – Min Sensor');
+
+
+	// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+	$objPHPExcel->setActiveSheetIndex(0);
+
+
+	// Redirect output to a client’s web browser (Excel5)
+	header('Content-Type: application/vnd.ms-excel');
+	header('Content-Disposition: attachment;filename="Max – Min Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' '.$rowEquipo['NombreEquipo'].'.xls"');
+	header('Cache-Control: max-age=0');
+	// If you're serving to IE 9, then the following may be needed
+	header('Cache-Control: max-age=1');
+
+	// If you're serving to IE over SSL, then the following may be needed
+	header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+	header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+	header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+	header ('Pragma: public'); // HTTP/1.0
+
+	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+	$objWriter->save('php://output');
+	exit;
 }
-  
-  
-         
-$nn=7;
-foreach ($arrRutas as $rutas) {
-	//Verifico si existen datos
-	if(isset($rutas['MedMin'])&&$rutas['MedMin']!=0&&$rutas['MedMin']!=''&&isset($rutas['MedMax'])&&$rutas['MedMax']!=0&&$rutas['MedMax']!=''){
-											
-		$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('A'.$nn, fecha_estandar($rutas['FechaSistema']));			
-		//Si se ven detalles
-		if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-		$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2))
-					->setCellValue('C'.$nn, Cantidades($rutas['MedMin'], 2))
-					->setCellValue('D'.$nn, Cantidades($rutas['MedMax'], 2))
-					->setCellValue('E'.$nn, Cantidades($rutas['MedDesStan'], 2));		
-		//Si no se ven detalles	
-		}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-		$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2));								
-		} 
-
-		$nn++; 
-	}           
-   
-} 
-
-
-
-// Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Desviacion estandar');
-
-
-// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
-
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Desviacion estandar.xls"');
-header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
-
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
-exit;

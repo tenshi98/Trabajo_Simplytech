@@ -31,61 +31,33 @@ if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_has
 	$search .="&fecha_hasta=".$_GET['fecha_hasta'];
 }
 //Variable de busqueda
-$z = "WHERE backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
+$SIS_where = "backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $z .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $z .= " AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $SIS_where .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $SIS_where .= " AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$z.=" AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
+	$SIS_where.=" AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
-/**********************************************************/
+$SIS_where .=" GROUP BY cross_predios_listado_zonas.idPredio, backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona, backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria";
+
+/****************************************/
 //Numero del sensor
 $NSensor = 1;
-/**********************************************************/
-// Se trae un listado con todos los datos separados por tractores
-$arrMediciones = array();
-$query = "SELECT 
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla,
+//consulto
+$SIS_query = '
+backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla,
 telemetria_listado.Nombre AS EquipoNombre,
 cross_predios_listado.Nombre AS PredioNombre,
 cross_predios_listado_zonas.Nombre AS CuartelNombre,
-
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor." AS CantidadMuestra					
-
-FROM `backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona     = backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona
+backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.' AS CantidadMuestra';
+$SIS_join  = '
+LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona     = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idZona
 LEFT JOIN `cross_predios_listado`         ON cross_predios_listado.idPredio         = cross_predios_listado_zonas.idPredio
-LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria        = backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-
-".$z."
-
-GROUP BY cross_predios_listado_zonas.idPredio, 
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-
-ORDER BY cross_predios_listado_zonas.idPredio ASC, 
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona ASC,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria ASC
-
-LIMIT 10000
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMediciones,$row );
-}
+LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria        = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
+$SIS_order = 'cross_predios_listado_zonas.idPredio ASC, backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idZona ASC, backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria ASC LIMIT 10000';
+$arrMediciones = array();
+$arrMediciones = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');
 
 
 ?>

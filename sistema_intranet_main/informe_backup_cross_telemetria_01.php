@@ -36,128 +36,109 @@ require_once 'core/Web.Header.Main.php';
 if ( ! empty($_GET['submit_filter']) ) { 
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
+$SIS_where = "backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $z .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $z .= " AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $SIS_where .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $SIS_where .= " AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-	$z.=" AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
+	$SIS_where.=" AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
-/**********************************************************/
-//Numero del sensor
-$NSensor = 1;
-/**********************************************************/
-// Se trae un listado con todos los datos separados por tractores
-$arrMediciones = array();
-$query = "SELECT 
-telemetria_listado.Nombre AS EquipoNombre,
-cross_predios_listado.Nombre AS PredioNombre,
-cross_predios_listado_zonas.Nombre AS CuartelNombre,
+$SIS_where .=" GROUP BY cross_predios_listado_zonas.idPredio, backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona, backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria";
+$SIS_join  = '
+	LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona     = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idZona
+	LEFT JOIN `cross_predios_listado`         ON cross_predios_listado.idPredio         = cross_predios_listado_zonas.idPredio';
+	
+//verifico el numero de datos antes de hacer la consulta
+$ndata_1 = db_select_nrows (false, 'idTabla', 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
 
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona,
-cross_predios_listado_zonas.idPredio,
+//si el dato es superior a 10.000
+if(isset($ndata_1)&&$ndata_1>=10001){
+	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+}else{			
+	//obtengo la cantidad real de sensores
+	$rowEquipo = db_select_data (false, 'Nombre AS EquipoNombre', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
+	
+	/****************************************/
+	//Numero del sensor
+	$NSensor = 1;
+	//consulto
+	$SIS_query = '
+	cross_predios_listado.Nombre AS PredioNombre,
+	cross_predios_listado_zonas.Nombre AS CuartelNombre,
 
-MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedMin,
-MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedMax,
-AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedProm,
-STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$NSensor.",0),0)) AS MedDesStan,
-COUNT(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla) AS CantidadMuestra					
+	backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idZona,
+	cross_predios_listado_zonas.idPredio,
 
-FROM `backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria']."`
-LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona     = backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona
-LEFT JOIN `cross_predios_listado`         ON cross_predios_listado.idPredio         = cross_predios_listado_zonas.idPredio
-LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria        = backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-
-".$z."
-
-GROUP BY cross_predios_listado_zonas.idPredio, 
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria
-
-ORDER BY cross_predios_listado_zonas.idPredio ASC, 
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona ASC,
-backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria ASC
-
-LIMIT 10000
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMediciones,$row );
-}
-
+	MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.'<99900,backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.',0),0)) AS MedMin,
+	MAX(NULLIF(IF(backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.'<99900,backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.',0),0)) AS MedMax,
+	AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.'<99900,backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.',0),0)) AS MedProm,
+	STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.'<99900,backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$NSensor.',0),0)) AS MedDesStan,
+	COUNT(backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla) AS CantidadMuestra';
+	$SIS_order = 'cross_predios_listado_zonas.idPredio ASC, backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idZona ASC, backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria ASC LIMIT 10000';
+	$arrMediciones = array();
+	$arrMediciones = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');
 									
-?>
+	?>
 
 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen Mediciones</h5>
-		</header>
-		<div class="table-responsive">    
-			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-				<thead>
-					<tr role="row">
-						<th>Predio</th>
-						<th>Cuartel</th>
-						<th>Equipo</th>
-						<th>Cantidad Muestras</th>
-						<th>Minimo</th>
-						<th>Maximo</th>
-						<th>Promedio</th>
-						<th>Desviacion Estandar</th>
-						<th width="10">Acciones</th>
-					</tr>
-				</thead>
-				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrMediciones as $med) { ?>
-						<tr class="odd">		
-							<td><?php echo $med['PredioNombre']; ?></td>	
-							<td><?php echo $med['CuartelNombre']; ?></td>		
-							<td><?php echo $med['EquipoNombre']; ?></td>
-									
-							<td><?php echo $med['CantidadMuestra']; ?></td>		
-							<td><?php echo $med['MedMin']; ?></td>		
-							<td><?php echo $med['MedMax']; ?></td>		
-							<td><?php echo $med['MedProm']; ?></td>		
-							<td><?php echo $med['MedDesStan']; ?></td>		
-							
-							<td>
-								<div class="btn-group" style="width: 70px;" >
-									<?php
-									$search  = "&idTelemetria=".$_GET['idTelemetria'];
-									$search .= "&idZona=".$med['idZona'];
-									$search .= "&idPredio=".$med['idPredio'];
-									if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
-										$search .="&fecha_desde=".$_GET['fecha_desde'];
-										$search .="&fecha_hasta=".$_GET['fecha_hasta'];
-									}
-									?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_backup_cross_telemetria_01_map.php?bla=bla'.$search; ?>" title="Ver Mapa" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-map" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_backup_cross_telemetria_01_view.php?bla=bla'.$search; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								</div>
-							</td>
+	<div class="col-sm-12">
+		<div class="box">	
+			<header>		
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen Mediciones</h5>
+			</header>
+			<div class="table-responsive">    
+				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+					<thead>
+						<tr role="row">
+							<th>Predio</th>
+							<th>Cuartel</th>
+							<th>Equipo</th>
+							<th>Cantidad Muestras</th>
+							<th>Minimo</th>
+							<th>Maximo</th>
+							<th>Promedio</th>
+							<th>Desviacion Estandar</th>
+							<th width="10">Acciones</th>
 						</tr>
-					<?php } ?>                    
-				</tbody>
-			</table>
+					</thead>
+					<tbody role="alert" aria-live="polite" aria-relevant="all">
+						<?php foreach ($arrMediciones as $med) { ?>
+							<tr class="odd">		
+								<td><?php echo $med['PredioNombre']; ?></td>	
+								<td><?php echo $med['CuartelNombre']; ?></td>		
+								<td><?php echo $rowEquipo['EquipoNombre']; ?></td>
+										
+								<td><?php echo $med['CantidadMuestra']; ?></td>		
+								<td><?php echo $med['MedMin']; ?></td>		
+								<td><?php echo $med['MedMax']; ?></td>		
+								<td><?php echo $med['MedProm']; ?></td>		
+								<td><?php echo $med['MedDesStan']; ?></td>		
+								
+								<td>
+									<div class="btn-group" style="width: 70px;" >
+										<?php
+										$search  = "&idTelemetria=".$_GET['idTelemetria'];
+										$search .="&idZona=".$med['idZona'];
+										$search .="&idPredio=".$med['idPredio'];
+										if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
+											$search .="&fecha_desde=".$_GET['fecha_desde'];
+											$search .="&fecha_hasta=".$_GET['fecha_hasta'];
+										}
+										?>
+										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_backup_cross_telemetria_01_map.php?bla=bla'.$search; ?>" title="Ver Mapa" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-map" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_backup_cross_telemetria_01_view.php?bla=bla'.$search; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									</div>
+								</td>
+							</tr>
+						<?php } ?>                    
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-</div>
-<?php widget_modal(80, 95); ?>
+	<?php widget_modal(80, 95); ?>
+<?php } ?>
   
 <div class="clearfix"></div>
 <div class="col-sm-12" style="margin-bottom:30px">
