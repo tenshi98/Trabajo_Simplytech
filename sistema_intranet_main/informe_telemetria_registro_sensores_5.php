@@ -189,7 +189,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		
 		<div class="col-sm-12" style="display: none;">
 
-			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_19_to_pdf.php">
+			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_5_to_pdf.php">
 				<input type="hidden" name="img_adj" id="img_adj" />
 				
 				<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
