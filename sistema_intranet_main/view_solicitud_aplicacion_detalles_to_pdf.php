@@ -24,21 +24,20 @@ if(isset($_GET['view'])&&$_GET['view']!=''){              $view        = simpleD
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 	//Consulta
-	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema ='.simpleDecode($_GET['idSistema'], fecha_actual()), $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema ='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 
 //se recorre deacuerdo a la cantidad de sensores
-$aa = '';
+$subquery = '';
 $Nsens = 6;
 for ($i = 1; $i <= $Nsens; $i++) { 
-	$aa .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Prom';
-	$aa .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Min';
-	$aa .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Max';
-	$aa .= ',telemetria_listado.SensoresNombre_'.$i.' AS Sensor_'.$i.'_Nombre';
+	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Prom';
+	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Min';
+	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Max';
+	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Sensor_'.$i.'_Nombre';
 }
 
-// consulto los datos
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,
 cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.f_termino,
@@ -62,13 +61,8 @@ cross_solicitud_aplicacion_listado_tractores.idTelemetria,
 
 cross_solicitud_aplicacion_listado_cuarteles.VelTractor,
 cross_solicitud_aplicacion_listado_cuarteles.idZona,
-cross_solicitud_aplicacion_listado.f_ejecucion
-
-".$aa."
-
-
-			
-FROM `cross_solicitud_aplicacion_listado_tractores`
+cross_solicitud_aplicacion_listado.f_ejecucion'.$subquery;
+$SIS_join  = '
 LEFT JOIN `cross_solicitud_aplicacion_listado`             ON cross_solicitud_aplicacion_listado.idSolicitud             = cross_solicitud_aplicacion_listado_tractores.idSolicitud
 LEFT JOIN `cross_predios_listado`                          ON cross_predios_listado.idPredio                             = cross_solicitud_aplicacion_listado.idPredio
 LEFT JOIN `sistema_variedades_categorias`                  ON sistema_variedades_categorias.idCategoria                  = cross_solicitud_aplicacion_listado.idCategoria
@@ -76,23 +70,10 @@ LEFT JOIN `variedades_listado`                             ON variedades_listado
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles   = cross_solicitud_aplicacion_listado_tractores.idCuarteles
 LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
-LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
+LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo';
+$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idTractores ='.$view;
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-WHERE cross_solicitud_aplicacion_listado_tractores.idTractores = ".$view;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
 
 
 /********************************************************************/
@@ -253,7 +234,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			if(isset($_POST["img_adj"]) && $_POST["img_adj"] != ''){
 				$imgdata = base64_decode(str_replace('data:image/png;base64,', '',$_POST["img_adj"]));
 				// The '@' character is used to indicate that follows an image data stream and not an image file name
-				$pdf->Image('@'.$imgdata, 15, 100, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
+				$pdf->Image('@'.$imgdata, 15, 130, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
 			}
 			
 			$pdf->writeHTML($html, true, false, true, false, '');
