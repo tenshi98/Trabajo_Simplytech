@@ -73,7 +73,8 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Maquina borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['clone_idMatriz']) ) { 
-	
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);		
 ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -110,36 +111,20 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['mod']) ) { 
 //Armo cadena
-$cadena  = 'PuntoNombre_'.$_GET['mod'].' AS Nombre';
-$cadena .= ',PuntoMedAceptable_'.$_GET['mod'].' AS Aceptable';
-$cadena .= ',PuntoMedAlerta_'.$_GET['mod'].' AS Alerta';
-$cadena .= ',PuntoMedCondenatorio_'.$_GET['mod'].' AS Condenatorio';
-$cadena .= ',PuntoUniMed_'.$_GET['mod'].' AS UniMed';
-$cadena .= ',PuntoidTipo_'.$_GET['mod'].' AS Tipo';
-$cadena .= ',PuntoidGrupo_'.$_GET['mod'].' AS Grupo';
+$SIS_query  = 'PuntoNombre_'.$_GET['mod'].' AS Nombre';
+$SIS_query .= ',PuntoMedAceptable_'.$_GET['mod'].' AS Aceptable';
+$SIS_query .= ',PuntoMedAlerta_'.$_GET['mod'].' AS Alerta';
+$SIS_query .= ',PuntoMedCondenatorio_'.$_GET['mod'].' AS Condenatorio';
+$SIS_query .= ',PuntoUniMed_'.$_GET['mod'].' AS UniMed';
+$SIS_query .= ',PuntoidTipo_'.$_GET['mod'].' AS Tipo';
+$SIS_query .= ',PuntoidGrupo_'.$_GET['mod'].' AS Grupo';
 
-// consulto los datos
-$query = "SELECT ".$cadena."
-FROM `maquinas_listado_matriz`
-WHERE idMatriz = ".$_GET['idMatriz'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+// consulto los datos 
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idMatriz'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 	 
-
-	 
-	 ?>
+?>
 	 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -237,9 +222,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div> 
 	 	 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} elseif ( ! empty($_GET['idMatriz']) ) {    
+} elseif ( ! empty($_GET['idMatriz']) ) { 
 // consulto los datos
-$query = "SELECT Nombre,cantPuntos,
+$SIS_query = '
+Nombre,cantPuntos,
 PuntoNombre_1,PuntoNombre_2,PuntoNombre_3,PuntoNombre_4,PuntoNombre_5,
 PuntoNombre_6,PuntoNombre_7,PuntoNombre_8,PuntoNombre_9,PuntoNombre_10,
 PuntoNombre_11,PuntoNombre_12,PuntoNombre_13,PuntoNombre_14,PuntoNombre_15,
@@ -315,94 +301,29 @@ PuntoidTipo_26,PuntoidTipo_27,PuntoidTipo_28,PuntoidTipo_29,PuntoidTipo_30,
 PuntoidTipo_31,PuntoidTipo_32,PuntoidTipo_33,PuntoidTipo_34,PuntoidTipo_35,
 PuntoidTipo_36,PuntoidTipo_37,PuntoidTipo_38,PuntoidTipo_39,PuntoidTipo_40,
 PuntoidTipo_41,PuntoidTipo_42,PuntoidTipo_43,PuntoidTipo_44,PuntoidTipo_45,
-PuntoidTipo_46,PuntoidTipo_47,PuntoidTipo_48,PuntoidTipo_49,PuntoidTipo_50
+PuntoidTipo_46,PuntoidTipo_47,PuntoidTipo_48,PuntoidTipo_49,PuntoidTipo_50';
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idMatriz'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
-
-FROM `maquinas_listado_matriz`
-WHERE idMatriz = ".$_GET['idMatriz'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
-
-//Se traen todas las unidades de medida
+/************************************************/
+//consulto	
 $arrUnimed = array();
-$query = "SELECT idUml,Nombre
-FROM `sistema_analisis_uml`
-ORDER BY idUml ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUnimed,$row );
-}
-
-//Se traen todos los tipos
+$arrUnimed = db_select_array (false, 'idUml,Nombre', 'sistema_analisis_uml', '', 'idUml!=0', 'idUml ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 $arrTipos = array();
-$query = "SELECT idTipo,Nombre
-FROM `core_analisis_tipos`
-ORDER BY idTipo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipos,$row );
-}
-
-//Se consultan datos
+$arrTipos = db_select_array (false, 'idTipo,Nombre', 'core_analisis_tipos', '', 'idTipo!=0', 'idTipo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipos');
 $arrGrupos = array();
-$query = "SELECT idGrupo,Nombre
-FROM `maquinas_listado_matriz_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupos,$row );
-}
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'maquinas_listado_matriz_grupos', '', 'idGrupo!=0', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+
+/************************************************/
+//Ordeno 
+$arrFinalUnimed = array();
+$arrFinalTipos = array();
+$arrFinalGrupos = array();
+foreach ($arrUnimed as $data) {  $arrFinalUnimed[$data['idUml']]   = $data['Nombre'];}
+foreach ($arrTipos as $data) {   $arrFinalTipos[$data['idTipo']]   = $data['Nombre'];}
+foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nombre'];}
+
 ?>
 
 
@@ -430,29 +351,25 @@ array_push( $arrGrupos,$row );
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) { 
-						//Unidad medida
-						$unimed = '';
-						foreach ($arrUnimed as $sen) { 
-							if($rowdata['PuntoUniMed_'.$i]==$sen['idUml']){
-								$unimed = ' '.$sen['Nombre'];
-							}
-						}
+						//compruebo
+						if(isset($arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]])){ $unimed = $arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];  }else{ $unimed = ''; }
+						if(isset($arrFinalTipos[$rowdata['PuntoidTipo_'.$i]])){     $tipo   = $arrFinalTipos[$rowdata['PuntoidTipo_'.$i]];      }else{ $tipo   = ''; }
+						if(isset($arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]])){   $grupo  = $arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]];    }else{ $grupo  = ''; }
 						?>
-					<tr class="odd">		
-						<td><?php echo 'p'.$i ?></td>
-						<td><?php foreach ($arrTipos as $tipo) { if($rowdata['PuntoidTipo_'.$i]==$tipo['idTipo']){ echo $tipo['Nombre'];}} ?></td>	
-						<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
-						<td><?php foreach ($arrGrupos as $gru) { if($rowdata['PuntoidGrupo_'.$i]==$gru['idGrupo']){ echo $gru['Nombre'];}} ?></td>		
-						<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>		
-						<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAlerta_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>
-						<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>
-									
-						<td>
-							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-							</div>
-						</td>
-					</tr>
+						<tr class="odd">		
+							<td><?php echo 'p'.$i ?></td>
+							<td><?php echo $tipo; ?></td>	
+							<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
+							<td><?php echo $grupo; ?></td>		
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).' '.$unimed;    }else{echo 'No Aplica';} ?></td>		
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAlerta_'.$i]).' '.$unimed;       }else{echo 'No Aplica';} ?></td>
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).' '.$unimed; }else{echo 'No Aplica';} ?></td>
+							<td>
+								<div class="btn-group" style="width: 35px;" >
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								</div>
+							</td>
+						</tr>
 					<?php } ?>                    
 				</tbody>
 			</table>
@@ -470,23 +387,12 @@ array_push( $arrGrupos,$row );
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['idMatriz_2']) ) { 
 // consulto los datos
-$query = "SELECT Nombre, cantPuntos, idEstado
-FROM `maquinas_listado_matriz`
-WHERE idMatriz = ".$_GET['idMatriz_2'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$SIS_query = 'Nombre, cantPuntos, idEstado';
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idMatriz_2'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
  
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -571,54 +477,23 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 // consulto los datos
-$query = "SELECT  Nombre,  idConfig_1,  idConfig_2, idConfig_3
-FROM `maquinas_listado`
-WHERE idMaquina = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre, idConfig_1, idConfig_2, idConfig_3';
+$SIS_join  = '';
+$SIS_where = 'idMaquina ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 // Se trae un listado de la matriz
-$arrMatriz = array();
-$query = "SELECT 
+$SIS_query = '
 maquinas_listado_matriz.idMatriz, 
 maquinas_listado_matriz.Nombre, 
 maquinas_listado_matriz.cantPuntos,
 core_estados.Nombre AS Estado,
-maquinas_listado_matriz.idEstado
-
-FROM `maquinas_listado_matriz`
-LEFT JOIN `core_estados` ON core_estados.idEstado = maquinas_listado_matriz.idEstado
-WHERE maquinas_listado_matriz.idMaquina = ".$_GET['id']."
-ORDER BY maquinas_listado_matriz.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMatriz,$row );
-}
-
+maquinas_listado_matriz.idEstado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = maquinas_listado_matriz.idEstado';
+$SIS_where = 'maquinas_listado_matriz.idMaquina ='.$_GET['id'];
+$SIS_order = 'maquinas_listado_matriz.Nombre ASC';
+$arrMatriz = array();
+$arrMatriz = db_select_array (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMatriz');
 
 ?>
 
