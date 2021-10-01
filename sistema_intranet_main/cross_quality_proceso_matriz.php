@@ -79,8 +79,10 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tipo Planilla borra
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['clone_idMatriz']) ) { 
-	
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);	
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -118,37 +120,21 @@ if ( ! empty($_GET['clone_idMatriz']) ) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['mod']) ) { 
 //Armo cadena
-$cadena  = 'PuntoNombre_'.$_GET['mod'].' AS Nombre';
-$cadena .= ',PuntoMedAceptable_'.$_GET['mod'].' AS Aceptable';
-$cadena .= ',PuntoMedAlerta_'.$_GET['mod'].' AS Alerta';
-$cadena .= ',PuntoMedCondenatorio_'.$_GET['mod'].' AS Condenatorio';
-$cadena .= ',PuntoUniMed_'.$_GET['mod'].' AS UniMed';
-$cadena .= ',PuntoidTipo_'.$_GET['mod'].' AS Tipo';
-$cadena .= ',PuntoidGrupo_'.$_GET['mod'].' AS Grupo';
-$cadena .= ',Validacion_'.$_GET['mod'].' AS Validar';
+$SIS_query  = 'PuntoNombre_'.$_GET['mod'].' AS Nombre';
+$SIS_query .= ',PuntoMedAceptable_'.$_GET['mod'].' AS Aceptable';
+$SIS_query .= ',PuntoMedAlerta_'.$_GET['mod'].' AS Alerta';
+$SIS_query .= ',PuntoMedCondenatorio_'.$_GET['mod'].' AS Condenatorio';
+$SIS_query .= ',PuntoUniMed_'.$_GET['mod'].' AS UniMed';
+$SIS_query .= ',PuntoidTipo_'.$_GET['mod'].' AS Tipo';
+$SIS_query .= ',PuntoidGrupo_'.$_GET['mod'].' AS Grupo';
+$SIS_query .= ',Validacion_'.$_GET['mod'].' AS Validar';
 
-// consulto los datos
-$query = "SELECT ".$cadena."
-FROM `cross_quality_proceso_matriz`
-WHERE idMatriz = ".$_GET['idMatriz'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
-	 
+// consulto los datos 
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idMatriz'];
+$rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-	 
-	 ?>
+?>
 	 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -312,7 +298,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } elseif ( ! empty($_GET['idMatriz']) ) {    
 // consulto los datos
-$query = "SELECT Nombre,cantPuntos,
+$SIS_query = '
+Nombre,cantPuntos,
 PuntoNombre_1,PuntoNombre_2,PuntoNombre_3,PuntoNombre_4,PuntoNombre_5,
 PuntoNombre_6,PuntoNombre_7,PuntoNombre_8,PuntoNombre_9,PuntoNombre_10,
 PuntoNombre_11,PuntoNombre_12,PuntoNombre_13,PuntoNombre_14,PuntoNombre_15,
@@ -388,94 +375,29 @@ PuntoidTipo_26,PuntoidTipo_27,PuntoidTipo_28,PuntoidTipo_29,PuntoidTipo_30,
 PuntoidTipo_31,PuntoidTipo_32,PuntoidTipo_33,PuntoidTipo_34,PuntoidTipo_35,
 PuntoidTipo_36,PuntoidTipo_37,PuntoidTipo_38,PuntoidTipo_39,PuntoidTipo_40,
 PuntoidTipo_41,PuntoidTipo_42,PuntoidTipo_43,PuntoidTipo_44,PuntoidTipo_45,
-PuntoidTipo_46,PuntoidTipo_47,PuntoidTipo_48,PuntoidTipo_49,PuntoidTipo_50
+PuntoidTipo_46,PuntoidTipo_47,PuntoidTipo_48,PuntoidTipo_49,PuntoidTipo_50';
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idMatriz'];
+$rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
-
-FROM `cross_quality_proceso_matriz`
-WHERE idMatriz = ".$_GET['idMatriz'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
-
-//Se traen todas las unidades de medida
+/************************************************/
+//consulto	
 $arrUnimed = array();
-$query = "SELECT idUml,Nombre
-FROM `sistema_cross_analisis_uml`
-ORDER BY idUml ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUnimed,$row );
-}
-
-//Se traen todos los tipos
+$arrUnimed = db_select_array (false, 'idUml,Nombre', 'sistema_cross_analisis_uml', '', 'idUml!=0', 'idUml ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 $arrTipos = array();
-$query = "SELECT idTipo,Nombre
-FROM `core_cross_analisis_tipos`
-ORDER BY idTipo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipos,$row );
-}
-
-//Se consultan datos
+$arrTipos = db_select_array (false, 'idTipo,Nombre', 'core_cross_analisis_tipos', '', 'idTipo!=0', 'idTipo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipos');
 $arrGrupos = array();
-$query = "SELECT idGrupo,Nombre
-FROM `cross_quality_proceso_matriz_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupos,$row );
-}
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'cross_quality_proceso_matriz_grupos', '', 'idGrupo!=0', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+
+/************************************************/
+//Ordeno 
+$arrFinalUnimed = array();
+$arrFinalTipos = array();
+$arrFinalGrupos = array();
+foreach ($arrUnimed as $data) {  $arrFinalUnimed[$data['idUml']]   = $data['Nombre'];}
+foreach ($arrTipos as $data) {   $arrFinalTipos[$data['idTipo']]   = $data['Nombre'];}
+foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nombre'];}
+
 ?>
 
 
@@ -503,29 +425,25 @@ array_push( $arrGrupos,$row );
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) { 
-						//Unidad medida
-						$unimed = '';
-						foreach ($arrUnimed as $sen) { 
-							if($rowdata['PuntoUniMed_'.$i]==$sen['idUml']){
-								$unimed = ' '.$sen['Nombre'];
-							}
-						}
+						//compruebo
+						if(isset($arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]])){ $unimed = $arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];  }else{ $unimed = ''; }
+						if(isset($arrFinalTipos[$rowdata['PuntoidTipo_'.$i]])){     $tipo   = $arrFinalTipos[$rowdata['PuntoidTipo_'.$i]];      }else{ $tipo   = ''; }
+						if(isset($arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]])){   $grupo  = $arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]];    }else{ $grupo  = ''; }
 						?>
-					<tr class="odd">		
-						<td><?php echo 'p'.$i ?></td>
-						<td><?php foreach ($arrGrupos as $gru) { if($rowdata['PuntoidGrupo_'.$i]==$gru['idGrupo']){ echo $gru['Nombre'];}} ?></td>		
-						<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
-						<td><?php foreach ($arrTipos as $tipo) { if($rowdata['PuntoidTipo_'.$i]==$tipo['idTipo']){ echo $tipo['Nombre'];}} ?></td>	
-						<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>		
-						<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAlerta_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>
-						<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).$unimed;}else{echo 'No Aplica';} ?></td>
-									
-						<td>
-							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-							</div>
-						</td>
-					</tr>
+						<tr class="odd">		
+							<td><?php echo 'p'.$i ?></td>
+							<td><?php echo $grupo; ?></td>		
+							<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
+							<td><?php echo $tipo; ?></td>	
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).' '.$unimed;    }else{echo 'No Aplica';} ?></td>		
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAlerta_'.$i]).' '.$unimed;       }else{echo 'No Aplica';} ?></td>
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).' '.$unimed; }else{echo 'No Aplica';} ?></td>
+							<td>
+								<div class="btn-group" style="width: 35px;" >
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								</div>
+							</td>
+						</tr>
 					<?php } ?>                    
 				</tbody>
 			</table>
@@ -543,24 +461,12 @@ array_push( $arrGrupos,$row );
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['idMatriz_2']) ) { 
 // consulto los datos
-$query = "SELECT Nombre, cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1,
-idNotaTipo_2, idNotaTipo_3, idTipo, idSistema, Validar_1, Validar_2, Validar_3
-FROM `cross_quality_proceso_matriz`
-WHERE idMatriz = ".$_GET['idMatriz_2'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$SIS_query = 'Nombre, cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, idTipo, idSistema, Validar_1, Validar_2, Validar_3';
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idMatriz_2'];
+$rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
  
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -893,69 +799,47 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'npuntos_asc':   $order_by = 'ORDER BY cross_quality_proceso_matriz.cantPuntos ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N Puntos Ascendente'; break;
-		case 'npuntos_desc':  $order_by = 'ORDER BY cross_quality_proceso_matriz.cantPuntos DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N Puntos Descendente';break;
-		case 'nombre_asc':    $order_by = 'ORDER BY cross_quality_proceso_matriz.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY cross_quality_proceso_matriz.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'ops1_asc':      $order_by = 'ORDER BY ops1.Nombre ASC ';                                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opciones 1 Ascendente'; break;
-		case 'ops1_desc':     $order_by = 'ORDER BY ops1.Nombre DESC ';                                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opciones 1 Descendente';break;
-		case 'ops2_asc':      $order_by = 'ORDER BY ops2.Nombre ASC ';                                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opciones 2 Ascendente'; break;
-		case 'ops2_desc':     $order_by = 'ORDER BY ops2.Nombre DESC ';                                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opciones 2 Descendente';break;
-		case 'ops3_asc':      $order_by = 'ORDER BY ops3.Nombre ASC ';                                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opciones 3 Ascendente'; break;
-		case 'ops3_desc':     $order_by = 'ORDER BY ops3.Nombre DESC ';                                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opciones 3 Descendente';break;
-		case 'planilla_asc':  $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Planilla Ascendente'; break;
-		case 'planilla_desc': $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Planilla Descendente';break;
+		case 'npuntos_asc':   $order_by = 'cross_quality_proceso_matriz.cantPuntos ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N Puntos Ascendente'; break;
+		case 'npuntos_desc':  $order_by = 'cross_quality_proceso_matriz.cantPuntos DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N Puntos Descendente';break;
+		case 'nombre_asc':    $order_by = 'cross_quality_proceso_matriz.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'cross_quality_proceso_matriz.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'ops1_asc':      $order_by = 'ops1.Nombre ASC ';                                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opciones 1 Ascendente'; break;
+		case 'ops1_desc':     $order_by = 'ops1.Nombre DESC ';                                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opciones 1 Descendente';break;
+		case 'ops2_asc':      $order_by = 'ops2.Nombre ASC ';                                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opciones 2 Ascendente'; break;
+		case 'ops2_desc':     $order_by = 'ops2.Nombre DESC ';                                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opciones 2 Descendente';break;
+		case 'ops3_asc':      $order_by = 'ops3.Nombre ASC ';                                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opciones 3 Ascendente'; break;
+		case 'ops3_desc':     $order_by = 'ops3.Nombre DESC ';                                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opciones 3 Descendente';break;
+		case 'planilla_asc':  $order_by = 'core_cross_quality_analisis_calidad.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Planilla Ascendente'; break;
+		case 'planilla_desc': $order_by = 'core_cross_quality_analisis_calidad.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Planilla Descendente';break;
 		
-		default: $order_by = 'ORDER BY cross_quality_proceso_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'cross_quality_proceso_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY cross_quality_proceso_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'cross_quality_proceso_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE cross_quality_proceso_matriz.idMatriz!=0";
+$SIS_where = "cross_quality_proceso_matriz.idMatriz!=0";
 //verifico que sea un administrador
-$z.=" AND cross_quality_proceso_matriz.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.=" AND cross_quality_proceso_matriz.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){      $z .= " AND cross_quality_proceso_matriz.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['cantPuntos']) && $_GET['cantPuntos'] != ''){  $z .= " AND cross_quality_proceso_matriz.cantPuntos=".$_GET['cantPuntos'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){          $z .= " AND cross_quality_proceso_matriz.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idNota_1']) && $_GET['idNota_1'] != ''){      $z .= " AND cross_quality_proceso_matriz.idNota_1=".$_GET['idNota_1'];}
-if(isset($_GET['idNota_2']) && $_GET['idNota_2'] != ''){      $z .= " AND cross_quality_proceso_matriz.idNota_2=".$_GET['idNota_2'];}
-if(isset($_GET['idNota_3']) && $_GET['idNota_3'] != ''){      $z .= " AND cross_quality_proceso_matriz.idNota_3=".$_GET['idNota_3'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){          $z .= " AND cross_quality_proceso_matriz.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){      $SIS_where .= " AND cross_quality_proceso_matriz.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['cantPuntos']) && $_GET['cantPuntos'] != ''){  $SIS_where .= " AND cross_quality_proceso_matriz.cantPuntos=".$_GET['cantPuntos'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){          $SIS_where .= " AND cross_quality_proceso_matriz.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idNota_1']) && $_GET['idNota_1'] != ''){      $SIS_where .= " AND cross_quality_proceso_matriz.idNota_1=".$_GET['idNota_1'];}
+if(isset($_GET['idNota_2']) && $_GET['idNota_2'] != ''){      $SIS_where .= " AND cross_quality_proceso_matriz.idNota_2=".$_GET['idNota_2'];}
+if(isset($_GET['idNota_3']) && $_GET['idNota_3'] != ''){      $SIS_where .= " AND cross_quality_proceso_matriz.idNota_3=".$_GET['idNota_3'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){          $SIS_where .= " AND cross_quality_proceso_matriz.idTipo=".$_GET['idTipo'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idMatriz FROM `cross_quality_proceso_matriz` 
-LEFT JOIN `core_estados`                         ON core_estados.idEstado                        = cross_quality_proceso_matriz.idEstado
-LEFT JOIN `core_sistemas_opciones` ops1          ON ops1.idOpciones                              = cross_quality_proceso_matriz.idNota_1
-LEFT JOIN `core_sistemas_opciones` ops2          ON ops2.idOpciones                              = cross_quality_proceso_matriz.idNota_2
-LEFT JOIN `core_sistemas_opciones` ops3          ON ops3.idOpciones                              = cross_quality_proceso_matriz.idNota_3
-LEFT JOIN `core_cross_quality_analisis_calidad`  ON core_cross_quality_analisis_calidad.idTipo   = cross_quality_proceso_matriz.idTipo
-LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                      = cross_quality_proceso_matriz.idSistema
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idMatriz', 'cross_quality_proceso_matriz', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrMatriz = array();
-$query = "SELECT 
+$SIS_query = '
 cross_quality_proceso_matriz.idMatriz, 
 cross_quality_proceso_matriz.Nombre, 
 cross_quality_proceso_matriz.cantPuntos,
@@ -965,36 +849,19 @@ ops2.Nombre AS Opciones_2,
 ops3.Nombre AS Opciones_3,
 core_cross_quality_analisis_calidad.Nombre AS Planilla,
 core_sistemas.Nombre AS RazonSocial,
-cross_quality_proceso_matriz.idEstado
-
-
-FROM `cross_quality_proceso_matriz`
+cross_quality_proceso_matriz.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_estados`                         ON core_estados.idEstado                        = cross_quality_proceso_matriz.idEstado
 LEFT JOIN `core_sistemas_opciones` ops1          ON ops1.idOpciones                              = cross_quality_proceso_matriz.idNota_1
 LEFT JOIN `core_sistemas_opciones` ops2          ON ops2.idOpciones                              = cross_quality_proceso_matriz.idNota_2
 LEFT JOIN `core_sistemas_opciones` ops3          ON ops3.idOpciones                              = cross_quality_proceso_matriz.idNota_3
 LEFT JOIN `core_cross_quality_analisis_calidad`  ON core_cross_quality_analisis_calidad.idTipo   = cross_quality_proceso_matriz.idTipo
-LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                      = cross_quality_proceso_matriz.idSistema
+LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                      = cross_quality_proceso_matriz.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrMatriz = array();
+$arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMatriz');
 
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMatriz,$row );
-}?>
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 
@@ -1148,7 +1015,6 @@ array_push( $arrMatriz,$row );
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div> 
-		
 	</div>
 </div>
 
