@@ -317,6 +317,6 @@ foreach ($arrTabMenu as $tab) {
 
 
 
-
+<?php widget_whatsappFloatBtn('+56943497697', 'Necesito un poco de informacion'); ?>
 
 
