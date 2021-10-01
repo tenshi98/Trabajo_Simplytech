@@ -7372,9 +7372,9 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 					//verifico que sensor este activo
 					if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
 						//Unidad medida
-						$unimed = ' ';
+						$unimed = '';
 						if(isset($arrFinalUnimed[$data['SensoresUniMed_'.$i]])){
-							$unimed .= $arrFinalUnimed[$data['SensoresUniMed_'.$i]];
+							$unimed .= ' '.$arrFinalUnimed[$data['SensoresUniMed_'.$i]];
 						}
 						//cadena
 						if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades($data['SensoresMedActual_'.$i], 2).$unimed;}else{$xdata='Sin Datos';}
@@ -8525,6 +8525,21 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 	</script>
 	';					
 	return $widget;
+}
+/*******************************************************************************************************************/
+//Muestra los promedios de los equipos
+function widget_whatsappFloatBtn($Fono, $Mesage){
+	
+	$widget = '
+	<style>
+		.whatsappfloat{position:fixed;width:60px;height:60px;bottom:40px;right:40px;background-color:#25d366;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow: 2px 2px 3px #999;z-index:100;}
+		.whatsappfloat .float{margin-top:16px;}
+	</style>
+	<a class="whatsappfloat" target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone='.$Fono.'&text='.$Mesage.'" >
+		<i class="fa fa-whatsapp float"></i>
+	</a>';
+	
+	echo $widget;
 }
 /*******************************************************************************************************************/
 
