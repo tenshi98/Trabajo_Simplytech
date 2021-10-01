@@ -33,80 +33,42 @@ if (validarNumero($_GET['view'])){
 } else { 
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
-/**************************************************************/
-//se traen los datos basicos de la licitacion
-$query = "SELECT 
+/*****************************************/		
+// Se consulta
+$SIS_query = '
 centrocosto_listado.Nombre, 
-core_estados.Nombre AS Estado
-FROM `centrocosto_listado`
-LEFT JOIN `core_estados`    ON core_estados.idEstado    = centrocosto_listado.idEstado
-WHERE centrocosto_listado.idCentroCosto=".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+core_estados.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = centrocosto_listado.idEstado';
+$SIS_where = 'centrocosto_listado.idCentroCosto='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'centrocosto_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 
 
 //Se crean las variables
-$nmax = 5;
-$z = '';
-$leftjoin = '';
-$orderby = '';
+$nmax      = 5;
+$SIS_query = 'centrocosto_listado_level_1.idLevel_1 AS bla';
+$SIS_join  = '';
+$SIS_order = 'centrocosto_listado_level_1.Nombre ASC';
 for ($i = 1; $i <= $nmax; $i++) {
     //consulta
-    $z .= ',centrocosto_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
-    $z .= ',centrocosto_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
+    $SIS_query .= ',centrocosto_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
+    $SIS_query .= ',centrocosto_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
     //Joins
     $xx = $i + 1;
     if($xx<=$nmax){
-		$leftjoin .= ' LEFT JOIN `centrocosto_listado_level_'.$xx.'`   ON centrocosto_listado_level_'.$xx.'.idLevel_'.$i.'    = centrocosto_listado_level_'.$i.'.idLevel_'.$i;
+		$SIS_join .= ' LEFT JOIN `centrocosto_listado_level_'.$xx.'`   ON centrocosto_listado_level_'.$xx.'.idLevel_'.$i.'    = centrocosto_listado_level_'.$i.'.idLevel_'.$i;
     }
     //ORDER BY
-    $orderby .= ', centrocosto_listado_level_'.$i.'.Nombre ASC';
+    $SIS_order .= ', centrocosto_listado_level_'.$i.'.Nombre ASC';
 }
 
-//se hace la consulta
+/*****************************************/		
+// Se consulta
+$SIS_where = 'centrocosto_listado_level_1.idCentroCosto='.$X_Puntero;
 $arrLicitacion = array();
-$query = "SELECT
-centrocosto_listado_level_1.idLevel_1 AS bla
-".$z."
-FROM `centrocosto_listado_level_1`
-".$leftjoin."
-WHERE centrocosto_listado_level_1.idCentroCosto=".$X_Puntero."
-ORDER BY centrocosto_listado_level_1.Nombre ASC ".$orderby."
+$arrLicitacion = db_select_array (false, $SIS_query, 'centrocosto_listado_level_1', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrLicitacion');
 
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrLicitacion,$row );
-}
-
-
-	
-
-
+/*****************************************/	
 $array3d = array();
 foreach($arrLicitacion as $key) {
 	
@@ -136,18 +98,9 @@ foreach($arrLicitacion as $key) {
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['id']     = $d['5'];
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Nombre'] = $n['5'];
 	}
-	
-	
 }
-
-
-
-
-
-
-
-function arrayToUL(array $array, $lv, $nmax)
-{
+/*****************************************/	
+function arrayToUL(array $array, $lv, $nmax){
 	$lv++;
 	if($lv==1){
 		echo '<ul class="tree">';

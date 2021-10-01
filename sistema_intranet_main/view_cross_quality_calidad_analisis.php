@@ -38,47 +38,30 @@ if (validarNumero($_GET['view'])){
 $X_viewMuestra = simpleDecode($_GET['viewMuestra'], fecha_actual());
 $X_cantPuntos  = simpleDecode($_GET['cantPuntos'], fecha_actual());
 $X_idCalidad   = simpleDecode($_GET['idCalidad'], fecha_actual());
-/**************************************************************/
-//Verifico el tipo de usuario que esta ingresando
-$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-
 /***********************************************/
 //Armo cadena
-$cadena  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
+$SIS_query  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
 for ($i = 1; $i <= $X_cantPuntos; $i++) {
-	$cadena .= ',PuntoNombre_'.$i;
-	$cadena .= ',PuntoidTipo_'.$i;
-	$cadena .= ',PuntoidGrupo_'.$i;
-	$cadena .= ',PuntoUniMed_'.$i;
+	$SIS_query .= ',PuntoNombre_'.$i;
+	$SIS_query .= ',PuntoidTipo_'.$i;
+	$SIS_query .= ',PuntoidGrupo_'.$i;
+	$SIS_query .= ',PuntoUniMed_'.$i;
 }
 
 // consulto los datos
-$query = "SELECT ".$cadena."
-FROM `cross_quality_calidad_matriz`
-WHERE idMatriz = ".$X_idCalidad;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$X_idCalidad;
+$rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /***********************************************/
 //Armo cadena
-$cadena  = '';
+$subquery  = '';
 for ($i = 1; $i <= $X_cantPuntos; $i++) {
-	$cadena .= ',cross_quality_analisis_calidad_muestras.Medida_'.$i;
+	$subquery .= ',cross_quality_analisis_calidad_muestras.Medida_'.$i;
 }
 
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 cross_quality_analisis_calidad_muestras.n_folio_pallet,
 cross_quality_analisis_calidad_muestras.lote,
 cross_quality_analisis_calidad_muestras.f_embalaje,
@@ -89,71 +72,31 @@ cross_quality_analisis_calidad_muestras.peso,
 cross_quality_analisis_calidad_muestras.Resolucion_1,
 cross_quality_analisis_calidad_muestras.Resolucion_2,
 cross_quality_analisis_calidad_muestras.Resolucion_3,
-
-
 productores_listado.Nombre AS Cliente,
-sistema_cross_analisis_embalaje.Nombre AS Tipo
-
-".$cadena."
-FROM `cross_quality_analisis_calidad_muestras`
+sistema_cross_analisis_embalaje.Nombre AS Tipo'.$subquery;
+$SIS_join  = '
 LEFT JOIN `productores_listado`               ON productores_listado.idProductor         = cross_quality_analisis_calidad_muestras.idProductor
-LEFT JOIN `sistema_cross_analisis_embalaje`   ON sistema_cross_analisis_embalaje.idTipo  = cross_quality_analisis_calidad_muestras.idTipo
-
-WHERE cross_quality_analisis_calidad_muestras.idMuestras = ".$X_viewMuestra;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-$rowMuestras = mysqli_fetch_assoc ($resultado); 
+LEFT JOIN `sistema_cross_analisis_embalaje`   ON sistema_cross_analisis_embalaje.idTipo  = cross_quality_analisis_calidad_muestras.idTipo';
+$SIS_where = 'cross_quality_analisis_calidad_muestras.idMuestras ='.$X_viewMuestra;
+$rowMuestras = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad_muestras', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMuestras');
 
 /***********************************************/
-// Se trae un listado con todos los grupos
+// Se consulta
+$SIS_query = 'idGrupo, Nombre, Totales';
+$SIS_join  = '';
+$SIS_where = 'Nombre!=""';
+$SIS_order = 'Nombre ASC';
 $arrGrupo = array();
-$query = "SELECT idGrupo, Nombre, Totales
-FROM `cross_quality_calidad_matriz_grupos` ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupo');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupo,$row );
-}
 /***********************************************/
-// Se trae un listado con todas las unidades de medida
+// Se consulta
+$SIS_query = 'idUml, Nombre';
+$SIS_join  = '';
+$SIS_where = 'Nombre!=""';
+$SIS_order = 'Nombre ASC';
 $arrUnidadMedida = array();
-$query = "SELECT idUml, Nombre
-FROM `sistema_cross_analisis_uml` ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUnidadMedida,$row );
-}		
+$arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_uml', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnidadMedida');	
 	
 ?>		
 		
@@ -316,7 +259,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se traen todos los datos del analisis
-$query = "SELECT 
+ $query = "SELECT 
 cross_quality_analisis_calidad.fecha_auto,
 cross_quality_analisis_calidad.Creacion_fecha,
 cross_quality_analisis_calidad.Temporada,
@@ -368,7 +311,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 /***************************************************/				
 // Se trae un listado con todos los trabajadores
 $arrTrabajadores = array();
-$query = "SELECT 
+ $query = "SELECT 
 trabajadores_listado.Nombre, 
 trabajadores_listado.ApellidoPat, 
 trabajadores_listado.ApellidoMat, 
@@ -397,7 +340,7 @@ array_push( $arrTrabajadores,$row );
 /***************************************************/				
 // Se trae un listado con todas las maquinas
 $arrMaquinas = array();
-$query = "SELECT 
+ $query = "SELECT 
 maquinas_listado.Nombre
 
 FROM `cross_quality_analisis_calidad_maquina` 
@@ -422,7 +365,7 @@ array_push( $arrMaquinas,$row );
 /***************************************************/				
 // Se trae un listado con todas las muestras
 $arrMuestras = array();
-$query = "SELECT 
+ $query = "SELECT 
 cross_quality_analisis_calidad_muestras.idMuestras, 
 cross_quality_analisis_calidad_muestras.n_folio_pallet,
 cross_quality_analisis_calidad_muestras.lote,
@@ -450,7 +393,7 @@ array_push( $arrMuestras,$row );
 /***************************************************/				
 // Se trae un listado con todos los archivos
 $arrArchivos = array();
-$query = "SELECT Nombre
+ $query = "SELECT Nombre
 
 FROM `cross_quality_analisis_calidad_archivo` 
 WHERE idAnalisis = ".$X_Puntero;

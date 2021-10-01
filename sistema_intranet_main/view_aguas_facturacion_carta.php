@@ -35,23 +35,10 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT AguasInfFechaEmision, ClienteIdentificador, ClienteDireccion, DetalleTotalAPagar, DetalleSaldoAnterior
-FROM `aguas_facturacion_listado_detalle`
-WHERE idFacturacionDetalle = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$SIS_query = 'AguasInfFechaEmision, ClienteIdentificador, ClienteDireccion, DetalleTotalAPagar, DetalleSaldoAnterior';
+$SIS_join  = '';
+$SIS_where = 'idFacturacionDetalle ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 //Operaciones
 $dia = fecha2NdiaMes($rowdata['AguasInfFechaEmision']);

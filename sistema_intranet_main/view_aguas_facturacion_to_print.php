@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //Obtengo los datos principales
-$query = "SELECT 
+$SIS_query = '
 ClienteNombre,ClienteDireccion,ClienteIdentificador,ClienteNombreComuna,ClienteFechaVencimiento,ClienteEstado,
 							
 DetalleCargoFijoValor,
@@ -135,11 +135,8 @@ aguas_clientes_listado.idRemarcadores AS ClienteRemarcador,
 
 usuarios_listado.Nombre AS PagoUsuario,
 idTipoPago,nDocPago,fechaPago,montoPago,idPago,
-aguas_facturacion_listado_detalle.idEstado
-
-
-FROM `aguas_facturacion_listado_detalle`
-
+aguas_facturacion_listado_detalle.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                   = aguas_facturacion_listado_detalle.idSistema
 LEFT JOIN `aguas_clientes_facturable`               ON aguas_clientes_facturable.idFacturable    = aguas_facturacion_listado_detalle.SII_idFacturable
 LEFT JOIN `aguas_clientes_listado`                  ON aguas_clientes_listado.idCliente          = aguas_facturacion_listado_detalle.idCliente
@@ -147,23 +144,11 @@ LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuari
 LEFT JOIN `core_ubicacion_comunas`                  ON core_ubicacion_comunas.idComuna           = aguas_clientes_listado.idComunaFact
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                    = core_sistemas.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                    = core_sistemas.idComuna
-LEFT JOIN `aguas_datos_valores`                     ON aguas_datos_valores.idSistema             = aguas_facturacion_listado_detalle.idSistema
+LEFT JOIN `aguas_datos_valores`                     ON aguas_datos_valores.idSistema             = aguas_facturacion_listado_detalle.idSistema';
+$SIS_where = 'aguas_facturacion_listado_detalle.idFacturacionDetalle ='.$X_Puntero;
+$rowDatos = db_select_data (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowDatos');
 
-WHERE aguas_facturacion_listado_detalle.idFacturacionDetalle = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowDatos = mysqli_fetch_assoc ($resultado); 
 //se verifica si existe
 if(isset($rowDatos['SII_idFacturable'])&&$rowDatos['SII_idFacturable']!=''){
 	switch ($rowDatos['SII_idFacturable']) {

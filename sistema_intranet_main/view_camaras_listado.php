@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 seguridad_camaras_listado.idCamara,
 seguridad_camaras_listado.Nombre,
 seguridad_camaras_listado.idSubconfiguracion,
@@ -52,31 +52,18 @@ core_paises.Nombre AS Pais,
 core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 core_sistemas_opciones.Nombre AS Subconfiguracion,
-core_tipos_camara.Nombre AS TipoCamara
-
-FROM `seguridad_camaras_listado`
+core_tipos_camara.Nombre AS TipoCamara';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`              ON core_sistemas.idSistema             = seguridad_camaras_listado.idSistema
 LEFT JOIN `core_estados`               ON core_estados.idEstado               = seguridad_camaras_listado.idEstado
 LEFT JOIN `core_paises`                ON core_paises.idPais                  = seguridad_camaras_listado.idPais
 LEFT JOIN `core_ubicacion_ciudad`      ON core_ubicacion_ciudad.idCiudad      = seguridad_camaras_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`     ON core_ubicacion_comunas.idComuna     = seguridad_camaras_listado.idComuna
 LEFT JOIN `core_sistemas_opciones`     ON core_sistemas_opciones.idOpciones   = seguridad_camaras_listado.idSubconfiguracion
-LEFT JOIN `core_tipos_camara`          ON core_tipos_camara.idTipoCamara      = seguridad_camaras_listado.idTipoCamara
+LEFT JOIN `core_tipos_camara`          ON core_tipos_camara.idTipoCamara      = seguridad_camaras_listado.idTipoCamara';
+$SIS_where = 'seguridad_camaras_listado.idCamara ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-WHERE seguridad_camaras_listado.idCamara = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
  
 ?>
 

@@ -36,7 +36,7 @@ if (validarNumero($_GET['view'])){
 $X_idTab = simpleDecode($_GET['idTab'], fecha_actual());
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 clientes_listado.idCliente,
 clientes_listado.Contrato_Fecha_Ini,
 clientes_listado.Contrato_Representante_Legal,
@@ -49,27 +49,13 @@ core_ubicacion_comunas.Nombre AS Comuna,
 clientes_listado.Contrato_UF_Instalacion ,
 clientes_listado.Contrato_UF_Mensual,
 clientes_listado.Contrato_N_Meses,
-core_cross_cliente.Nombre AS Contrato_Periodo
+core_cross_cliente.Nombre AS Contrato_Periodo';
+$SIS_join  = '
+LEFT JOIN `core_ubicacion_comunas` ON core_ubicacion_comunas.idComuna = clientes_listado.idComuna
+LEFT JOIN `core_cross_cliente`     ON core_cross_cliente.idPeriodo    = clientes_listado.Contrato_idPeriodo';
+$SIS_where = 'clientes_listado.idCliente ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-FROM `clientes_listado`
-LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna          = clientes_listado.idComuna
-LEFT JOIN `core_cross_cliente`        ON core_cross_cliente.idPeriodo             = clientes_listado.Contrato_idPeriodo
-
-WHERE clientes_listado.idCliente = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
 
 /*******************************************/
 //Listado con los tabs

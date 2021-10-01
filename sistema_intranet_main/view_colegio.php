@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 colegios_listado.email, 
 colegios_listado.Nombre, 
 colegios_listado.Direccion, 
@@ -45,34 +45,16 @@ colegios_listado.Fax,
 core_ubicacion_ciudad.Nombre AS nombre_region,
 core_ubicacion_comunas.Nombre AS nombre_comuna,
 core_estados.Nombre AS estado,
-core_sistemas.Nombre AS sistema
-
-FROM `colegios_listado`
-LEFT JOIN `core_estados`              ON core_estados.idEstado                    = colegios_listado.idEstado
-LEFT JOIN `core_ubicacion_ciudad`     ON core_ubicacion_ciudad.idCiudad           = colegios_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna          = colegios_listado.idComuna
-LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                  = colegios_listado.idSistema
-WHERE colegios_listado.idColegio = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-
+core_sistemas.Nombre AS sistema';
+$SIS_join  = '
+LEFT JOIN `core_estados`            ON core_estados.idEstado            = colegios_listado.idEstado
+LEFT JOIN `core_ubicacion_ciudad`   ON core_ubicacion_ciudad.idCiudad   = colegios_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  ON core_ubicacion_comunas.idComuna  = colegios_listado.idComuna
+LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema          = colegios_listado.idSistema';
+$SIS_where = 'colegios_listado.idColegio ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'colegios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
-
-
-
 
 <div class="col-sm-12">
 	<div class="box">

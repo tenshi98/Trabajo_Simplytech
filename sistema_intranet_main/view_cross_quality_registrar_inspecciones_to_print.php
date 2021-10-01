@@ -31,7 +31,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se traen todos los datos del analisis
-$query = "SELECT 
+$SIS_query = '
 cross_quality_registrar_inspecciones.fecha_auto,
 cross_quality_registrar_inspecciones.Creacion_fecha,
 cross_quality_registrar_inspecciones.Temporada,
@@ -69,9 +69,8 @@ ubicacion_listado_level_1.Nombre AS UbicacionNombre_lvl_1,
 ubicacion_listado_level_2.Nombre AS UbicacionNombre_lvl_2,
 ubicacion_listado_level_3.Nombre AS UbicacionNombre_lvl_3,
 ubicacion_listado_level_4.Nombre AS UbicacionNombre_lvl_4,
-ubicacion_listado_level_5.Nombre AS UbicacionNombre_lvl_5
-
-FROM `cross_quality_registrar_inspecciones`
+ubicacion_listado_level_5.Nombre AS UbicacionNombre_lvl_5';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                          ON core_sistemas.idSistema                      = cross_quality_registrar_inspecciones.idSistema
 LEFT JOIN `usuarios_listado`                       ON usuarios_listado.idUsuario                   = cross_quality_registrar_inspecciones.idUsuario
 LEFT JOIN `core_cross_quality_analisis_calidad`    ON core_cross_quality_analisis_calidad.idTipo   = cross_quality_registrar_inspecciones.idTipo
@@ -82,107 +81,48 @@ LEFT JOIN `ubicacion_listado_level_1`              ON ubicacion_listado_level_1.
 LEFT JOIN `ubicacion_listado_level_2`              ON ubicacion_listado_level_2.idLevel_2          = cross_quality_registrar_inspecciones.idUbicacion_lvl_2
 LEFT JOIN `ubicacion_listado_level_3`              ON ubicacion_listado_level_3.idLevel_3          = cross_quality_registrar_inspecciones.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`              ON ubicacion_listado_level_4.idLevel_4          = cross_quality_registrar_inspecciones.idUbicacion_lvl_4
-LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.idLevel_5          = cross_quality_registrar_inspecciones.idUbicacion_lvl_5
-
-WHERE cross_quality_registrar_inspecciones.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.idLevel_5          = cross_quality_registrar_inspecciones.idUbicacion_lvl_5';
+$SIS_where = 'cross_quality_registrar_inspecciones.idAnalisis ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 /***************************************************/				
 // Se trae un listado con todos los trabajadores
-$arrTrabajadores = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_listado.Nombre, 
 trabajadores_listado.ApellidoPat, 
 trabajadores_listado.ApellidoMat, 
 trabajadores_listado.Cargo, 
-trabajadores_listado.Rut
+trabajadores_listado.Rut';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = cross_quality_registrar_inspecciones_trabajador.idTrabajador';
+$SIS_where = 'cross_quality_registrar_inspecciones_trabajador.idAnalisis ='.$X_Puntero;
+$SIS_order = 'trabajadores_listado.ApellidoPat ASC';
+$arrTrabajadores = array();
+$arrTrabajadores = db_select_array (false, $SIS_query, 'cross_quality_registrar_inspecciones_trabajador', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajadores');
 
-FROM `cross_quality_registrar_inspecciones_trabajador` 
-LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = cross_quality_registrar_inspecciones_trabajador.idTrabajador
-WHERE cross_quality_registrar_inspecciones_trabajador.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTrabajadores,$row );
-}
 /***************************************************/				
 // Se trae un listado con todas las maquinas
-$arrMaquinas = array();
-$query = "SELECT 
+$SIS_query = '
 maquinas_listado.Nombre,
-maquinas_listado.Codigo
+maquinas_listado.Codigo';
+$SIS_join  = 'LEFT JOIN `maquinas_listado`  ON maquinas_listado.idMaquina   = cross_quality_registrar_inspecciones_maquina.idMaquina';
+$SIS_where = 'cross_quality_registrar_inspecciones_maquina.idAnalisis ='.$X_Puntero;
+$SIS_order = 'maquinas_listado.Nombre ASC';
+$arrMaquinas = array();
+$arrMaquinas = db_select_array (false, $SIS_query, 'cross_quality_registrar_inspecciones_maquina', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMaquinas');
 
-FROM `cross_quality_registrar_inspecciones_maquina` 
-LEFT JOIN `maquinas_listado`  ON maquinas_listado.idMaquina   = cross_quality_registrar_inspecciones_maquina.idMaquina
-WHERE cross_quality_registrar_inspecciones_maquina.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMaquinas,$row );
-}
 /***************************************************/				
 // Se trae un listado con todas las muestras
-$arrMuestras = array();
-$query = "SELECT 
+$SIS_query = '
 cross_quality_registrar_inspecciones_muestras.idMuestras, 
 cross_quality_registrar_inspecciones_muestras.n_folio_pallet,
 cross_quality_registrar_inspecciones_muestras.lote,
-productores_listado.Nombre AS ClienteNombre
+productores_listado.Nombre AS ClienteNombre';
+$SIS_join  = 'LEFT JOIN `productores_listado`  ON productores_listado.idProductor   = cross_quality_registrar_inspecciones_muestras.idProductor';
+$SIS_where = 'cross_quality_registrar_inspecciones_muestras.idAnalisis ='.$X_Puntero;
+$SIS_order = 'productores_listado.Nombre ASC';
+$arrMuestras = array();
+$arrMuestras = db_select_array (false, $SIS_query, 'cross_quality_registrar_inspecciones_muestras', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMuestras');
 
-FROM `cross_quality_registrar_inspecciones_muestras` 
-LEFT JOIN `productores_listado`  ON productores_listado.idProductor   = cross_quality_registrar_inspecciones_muestras.idProductor
-WHERE cross_quality_registrar_inspecciones_muestras.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMuestras,$row );
-}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/

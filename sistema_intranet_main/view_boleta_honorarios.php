@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 boleta_honorarios_facturacion.idTipo,
 boleta_honorarios_facturacion.Creacion_fecha,
 boleta_honorarios_facturacion.N_Doc,
@@ -91,10 +91,8 @@ proveedor_listado.Fono1 AS Proveedor_Fono1,
 proveedor_listado.Fono2 AS Proveedor_Fono2,
 proveedor_listado.Fax AS Proveedor_Fax,
 proveedor_listado.PersonaContacto AS Proveedor_PersonaContacto,
-proveedor_listado.Giro AS Proveedor_Giro
-
-
-FROM `boleta_honorarios_facturacion`
+proveedor_listado.Giro AS Proveedor_Giro';
+$SIS_join  = '
 LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador            = boleta_honorarios_facturacion.idTrabajador
 LEFT JOIN `trabajadores_listado_tipos`              ON trabajadores_listado_tipos.idTipo            = trabajadores_listado.idTipo
 LEFT JOIN `clientes_listado`                        ON clientes_listado.idCliente                   = boleta_honorarios_facturacion.idCliente
@@ -109,195 +107,91 @@ LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna   
 LEFT JOIN `sistema_documentos_pago`                 ON sistema_documentos_pago.idDocPago            = boleta_honorarios_facturacion.idDocPago
 LEFT JOIN `proveedor_listado`                       ON proveedor_listado.idProveedor                = boleta_honorarios_facturacion.idProveedor
 LEFT JOIN `core_ubicacion_ciudad`    provciudad     ON provciudad.idCiudad                          = proveedor_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`   provcomuna     ON provcomuna.idComuna                          = proveedor_listado.idComuna
-
-WHERE boleta_honorarios_facturacion.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_ubicacion_comunas`   provcomuna     ON provcomuna.idComuna                          = proveedor_listado.idComuna';
+$SIS_where = 'boleta_honorarios_facturacion.idFacturacion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'boleta_honorarios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 /*****************************************/		
-// Se trae un listado con todos los otros
+// Se consulta
+$SIS_query = 'Nombre, vTotal';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrOtros = array();
-$query = "SELECT Nombre, vTotal
-FROM `boleta_honorarios_facturacion_servicios` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOtros,$row );
-}
+$arrOtros = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion_servicios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOtros');
 
 /*****************************************/		
-// Se trae un listado con todos los archivos adjuntos
+// Se consulta
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 0;
 $arrArchivo = array();
-$query = "SELECT Nombre
-FROM `boleta_honorarios_facturacion_archivos` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivo,$row );
-}
+$arrArchivo = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
 /*****************************************/		
-// Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
+// Se consulta
+$SIS_query = '
 boleta_honorarios_facturacion_historial.Creacion_fecha, 
 boleta_honorarios_facturacion_historial.Observacion,
 core_historial_tipos.Nombre,
 core_historial_tipos.FonAwesome,
-usuarios_listado.Nombre AS Usuario
-
-FROM `boleta_honorarios_facturacion_historial` 
+usuarios_listado.Nombre AS Usuario';
+$SIS_join  = '
 LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = boleta_honorarios_facturacion_historial.idTipo
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = boleta_honorarios_facturacion_historial.idUsuario
-WHERE boleta_honorarios_facturacion_historial.idFacturacion = ".$X_Puntero." 
-ORDER BY boleta_honorarios_facturacion_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = boleta_honorarios_facturacion_historial.idUsuario';
+$SIS_where = 'boleta_honorarios_facturacion_historial.idFacturacion ='.$X_Puntero;
+$SIS_order = 'boleta_honorarios_facturacion_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
-
-// Se trae un listado con todos los elementos
-$arrPagosTrab = array();
-$query = "SELECT 
+/*****************************************/		
+// Se consulta
+$SIS_query = '
 sistema_documentos_pago.Nombre,
 pagos_boletas_trabajadores.N_DocPago,
 pagos_boletas_trabajadores.F_Pago,
 pagos_boletas_trabajadores.MontoPagado,
-usuarios_listado.Nombre AS UsuarioPago
-
-FROM `pagos_boletas_trabajadores`
+usuarios_listado.Nombre AS UsuarioPago';
+$SIS_join  = '
 LEFT JOIN `sistema_documentos_pago`    ON sistema_documentos_pago.idDocPago    = pagos_boletas_trabajadores.idDocPago
-LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario           = pagos_boletas_trabajadores.idUsuario
-WHERE pagos_boletas_trabajadores.idFacturacion = ".$X_Puntero."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario           = pagos_boletas_trabajadores.idUsuario';
+$SIS_where = 'pagos_boletas_trabajadores.idFacturacion ='.$X_Puntero;
+$SIS_order = 'pagos_boletas_trabajadores.F_Pago ASC';
+$arrPagosTrab = array();
+$arrPagosTrab = db_select_array (false, $SIS_query, 'pagos_boletas_trabajadores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPagosTrab');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPagosTrab,$row );
-}
-
-// Se trae un listado con todos los elementos
-$arrPagosClien = array();
-$query = "SELECT 
+/*****************************************/		
+// Se consulta
+$SIS_query = '
 sistema_documentos_pago.Nombre,
 pagos_boletas_clientes.N_DocPago,
 pagos_boletas_clientes.F_Pago,
 pagos_boletas_clientes.MontoPagado,
-usuarios_listado.Nombre AS UsuarioPago
-
-FROM `pagos_boletas_clientes`
+usuarios_listado.Nombre AS UsuarioPago';
+$SIS_join  = '
 LEFT JOIN `sistema_documentos_pago`    ON sistema_documentos_pago.idDocPago    = pagos_boletas_clientes.idDocPago
-LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario           = pagos_boletas_clientes.idUsuario
-WHERE pagos_boletas_clientes.idFacturacion = ".$X_Puntero."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario           = pagos_boletas_clientes.idUsuario';
+$SIS_where = 'pagos_boletas_clientes.idFacturacion ='.$X_Puntero;
+$SIS_order = 'pagos_boletas_clientes.F_Pago ASC';
+$arrPagosClien = array();
+$arrPagosClien = db_select_array (false, $SIS_query, 'pagos_boletas_clientes', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPagosClien');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPagosClien,$row );
-}
-
-// Se trae un listado con todos los elementos
-$arrPagosProv = array();
-$query = "SELECT 
+/*****************************************/		
+// Se consulta
+$SIS_query = '
 sistema_documentos_pago.Nombre,
 pagos_boletas_empresas.N_DocPago,
 pagos_boletas_empresas.F_Pago,
 pagos_boletas_empresas.MontoPagado,
-usuarios_listado.Nombre AS UsuarioPago
-
-FROM `pagos_boletas_empresas`
+usuarios_listado.Nombre AS UsuarioPago';
+$SIS_join  = '
 LEFT JOIN `sistema_documentos_pago`    ON sistema_documentos_pago.idDocPago    = pagos_boletas_empresas.idDocPago
-LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario           = pagos_boletas_empresas.idUsuario
-WHERE pagos_boletas_empresas.idFacturacion = ".$X_Puntero."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPagosProv,$row );
-}
+LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario           = pagos_boletas_empresas.idUsuario';
+$SIS_where = 'pagos_boletas_empresas.idFacturacion ='.$X_Puntero;
+$SIS_order = 'pagos_boletas_empresas.F_Pago ASC';
+$arrPagosProv = array();
+$arrPagosProv = db_select_array (false, $SIS_query, 'pagos_boletas_empresas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPagosProv');
 
 //Si el documento esta pagado se muestran los datos relacionados al pago
 if($row_data['MontoPagado']!=0){?>

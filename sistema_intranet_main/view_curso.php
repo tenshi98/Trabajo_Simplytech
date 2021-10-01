@@ -35,86 +35,40 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 cursos_listado.Nombre AS CursoNombre,
 cursos_listado.Semanas AS CursoSemanas,
 cursos_listado.F_inicio AS CursoF_inicio,
 cursos_listado.F_termino AS CursoF_termino,
 core_estados.Nombre AS CursoEstado,
-core_sistemas.Nombre AS CursoSistema
+core_sistemas.Nombre AS CursoSistema';
+$SIS_join  = '
+LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = cursos_listado.idSistema
+LEFT JOIN `core_estados`  ON core_estados.idEstado   = cursos_listado.idEstado';
+$SIS_where = 'cursos_listado.idCurso ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-FROM `cursos_listado`
-LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema      = cursos_listado.idSistema
-LEFT JOIN `core_estados`        ON core_estados.idEstado        = cursos_listado.idEstado
-WHERE cursos_listado.idCurso = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-//Listado con los elearning
+/************************************************************/
+// Se consulta
+$SIS_query = 'alumnos_cursos.Nombre AS NombreElearning';
+$SIS_join  = 'LEFT JOIN `alumnos_cursos` ON alumnos_cursos.idCurso = cursos_listado_asignaturas.idAsignatura';
+$SIS_where = 'cursos_listado_asignaturas.idCurso ='.$X_Puntero;
+$SIS_order = 'alumnos_cursos.Nombre ASC';
 $arrElearnng = array();
-$query =
-"SELECT 
-alumnos_cursos.Nombre AS NombreElearning
+$arrElearnng = db_select_array (false, $SIS_query, 'cursos_listado_asignaturas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrElearnng');
 
-FROM `cursos_listado_asignaturas`
-LEFT JOIN `alumnos_cursos`   ON alumnos_cursos.idCurso     = cursos_listado_asignaturas.idAsignatura
-WHERE cursos_listado_asignaturas.idCurso = ".$X_Puntero."
-ORDER BY alumnos_cursos.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrElearnng,$row );
-}
-
-// Se trae un listado con todos los elementos
+/************************************************************/
+// Se consulta
+$SIS_query = 'idDocumentacion, File, Semana';
+$SIS_join  = '';
+$SIS_where = 'idCurso ='.$X_Puntero;
+$SIS_order = 'Semana ASC, File ASC';
 $arrArchivos = array();
-$query = "SELECT idDocumentacion, File, Semana
-FROM `cursos_listado_documentacion`
-WHERE idCurso = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrArchivos = db_select_array (false, $SIS_query, 'cursos_listado_documentacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
-
-
-//Listado con los elearning
-$arrVideo = array();
-$query = "SELECT 
+/************************************************************/
+// Se consulta
+$SIS_query = '
 cursos_listado_videoconferencia.Nombre AS NombreVideo, 
 cursos_listado_videoconferencia.HoraInicio, 
 cursos_listado_videoconferencia.HoraTermino,  
@@ -125,27 +79,13 @@ cursos_listado_videoconferencia.idDia_4,
 cursos_listado_videoconferencia.idDia_5,  
 cursos_listado_videoconferencia.idDia_6,  
 cursos_listado_videoconferencia.idDia_7,
-usuarios_listado.Nombre AS Usuario
+usuarios_listado.Nombre AS Usuario';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = cursos_listado_videoconferencia.idUsuario';
+$SIS_where = 'cursos_listado_videoconferencia.idCurso ='.$X_Puntero;
+$SIS_order = 'cursos_listado_videoconferencia.Nombre ASC';
+$arrVideo = array();
+$arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrVideo');
 
-FROM `cursos_listado_videoconferencia`
-LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = cursos_listado_videoconferencia.idUsuario
-WHERE cursos_listado_videoconferencia.idCurso = ".$X_Puntero."
-ORDER BY cursos_listado_videoconferencia.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrVideo,$row );
-}
 ?>
 
 <div class="col-sm-12">

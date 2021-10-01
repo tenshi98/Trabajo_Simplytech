@@ -53,7 +53,7 @@ require_once 'core/Web.Header.Views.php';
 
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.Direccion_img,
 telemetria_listado.Nombre,
@@ -69,26 +69,13 @@ telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
 core_estados.Nombre AS Estado,
 telemetria_listado.idEstadoEncendido,
-core_estado_encendido.Nombre AS EstadoEncendido
-
-FROM `telemetria_listado`
+core_estado_encendido.Nombre AS EstadoEncendido';
+$SIS_join  = '
 LEFT JOIN `core_estados`           ON core_estados.idEstado                    = telemetria_listado.idEstado
-LEFT JOIN `core_estado_encendido`  ON core_estado_encendido.idEstadoEncendido  = telemetria_listado.idEstadoEncendido
-WHERE telemetria_listado.idTelemetria = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_estado_encendido`  ON core_estado_encendido.idEstadoEncendido  = telemetria_listado.idEstadoEncendido';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 
 ?>
 

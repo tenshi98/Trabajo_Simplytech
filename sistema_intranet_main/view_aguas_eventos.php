@@ -34,8 +34,8 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se traen todos los datos de la subida
-$query = "SELECT 
+// Se traen todos los datos 
+$SIS_query = '
 aguas_clientes_eventos.FechaEjecucion,
 aguas_clientes_eventos.Fecha,
 aguas_clientes_eventos.NSello,
@@ -46,29 +46,14 @@ usuarios_listado.Nombre AS NombreUsuario,
 core_sistemas.Nombre AS Sistema,
 aguas_clientes_listado.Identificador AS ClienteIdentificador,
 aguas_clientes_listado.Nombre AS ClienteNombre,
-aguas_clientes_eventos_tipos.Nombre AS TipoEvento
-
-FROM `aguas_clientes_eventos`
+aguas_clientes_eventos_tipos.Nombre AS TipoEvento';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema               = aguas_clientes_eventos.idSistema
 LEFT JOIN `usuarios_listado`               ON usuarios_listado.idUsuario            = aguas_clientes_eventos.idUsuario
 LEFT JOIN `aguas_clientes_listado`         ON aguas_clientes_listado.idCliente      = aguas_clientes_eventos.idCliente
-LEFT JOIN `aguas_clientes_eventos_tipos`   ON aguas_clientes_eventos_tipos.idTipo   = aguas_clientes_eventos.idTipo
-WHERE aguas_clientes_eventos.idEventos = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-
+LEFT JOIN `aguas_clientes_eventos_tipos`   ON aguas_clientes_eventos_tipos.idTipo   = aguas_clientes_eventos.idTipo';
+$SIS_where = 'aguas_clientes_eventos.idEventos ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

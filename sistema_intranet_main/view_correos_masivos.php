@@ -53,51 +53,22 @@ require_once 'core/Web.Header.Views.php';
 
 /**************************************************************/
 // consulto los datos
-$query = "SELECT Fecha, Asunto, Cuerpo
-FROM `comunicaciones_internas_email` 
-WHERE idEmail = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$SIS_query = 'Fecha, Asunto, Cuerpo';
+$SIS_join  = '';
+$SIS_where = 'idEmail ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_internas_email', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-			
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+/*****************************************/	
 // consulto los datos
-$arrNotificaciones = array();
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.Nombre AS UsuarioNombre,
-usuarios_listado.email AS UsuarioEmail
+usuarios_listado.email AS UsuarioEmail';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = comunicaciones_internas_email_listado.idUsuario';
+$SIS_where = 'comunicaciones_internas_email_listado.idEmail ='.$X_Puntero;
+$SIS_order = 'usuarios_listado.Nombre ASC';
+$arrNotificaciones = array();
+$arrNotificaciones = db_select_array (false, $SIS_query, 'comunicaciones_internas_email_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrNotificaciones');
 
-FROM `comunicaciones_internas_email_listado`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = comunicaciones_internas_email_listado.idUsuario
-WHERE comunicaciones_internas_email_listado.idEmail = ".$X_Puntero."
-ORDER BY usuarios_listado.Nombre ASC 
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrNotificaciones,$row );
-}
 /*****************************************/				
 //cuento
 $total_usr = 0;

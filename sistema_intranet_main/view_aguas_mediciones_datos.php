@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se traen todos los datos de la subida
-$query = "SELECT 
+$SIS_query = '
 aguas_mediciones_datos.idDatos,
 aguas_mediciones_datos.fCreacion,
 aguas_mediciones_datos.Fecha,
@@ -50,67 +50,34 @@ aguas_mediciones_datos_tipo_medicion.Nombre AS MedidorTipoMed,
 aguas_marcadores_listado.Nombre AS MarcadorNombre,
 aguas_mediciones_datos.idMarcadoresUsado AS ID,
 (SELECT Identificador FROM `aguas_clientes_listado` WHERE idMarcadores = ID AND idFacturable = 3 LIMIT 1)AS ClienteIdentificador,
-(SELECT Nombre FROM `aguas_clientes_listado` WHERE idMarcadores = ID AND idFacturable = 3 LIMIT 1)AS ClienteNombre
-
-FROM `aguas_mediciones_datos`
+(SELECT Nombre FROM `aguas_clientes_listado` WHERE idMarcadores = ID AND idFacturable = 3 LIMIT 1)AS ClienteNombre';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                          ON core_sistemas.idSistema                               = aguas_mediciones_datos.idSistema
 LEFT JOIN `usuarios_listado`                       ON usuarios_listado.idUsuario                            = aguas_mediciones_datos.idUsuario
 LEFT JOIN `aguas_mediciones_datos_tipo_medicion`   ON aguas_mediciones_datos_tipo_medicion.idTipoMedicion   = aguas_mediciones_datos.idTipoMedicion
-LEFT JOIN `aguas_marcadores_listado`               ON aguas_marcadores_listado.idMarcadores                 = aguas_mediciones_datos.idMarcadoresUsado
-WHERE aguas_mediciones_datos.idDatos = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+LEFT JOIN `aguas_marcadores_listado`               ON aguas_marcadores_listado.idMarcadores                 = aguas_mediciones_datos.idMarcadoresUsado';
+$SIS_where = 'aguas_mediciones_datos.idDatos ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-// Se trae un listado con todos los datos subidos correctamente
-$arrDatosCorrectos = array();
-$query = "SELECT 
+/**********************************************************/
+// consulto los datos
+$SIS_query = '
 aguas_mediciones_datos_detalle.idDatosDetalle,
 aguas_clientes_listado.Nombre,
 aguas_clientes_listado.Direccion,
 aguas_clientes_listado.Identificador,
 aguas_clientes_listado.UnidadHabitacional,
 aguas_mediciones_datos_detalle.Consumo,
-
 aguas_marcadores_listado.Nombre AS Marcadores,
-aguas_marcadores_remarcadores.Nombre AS Remarcadores
-
-FROM `aguas_mediciones_datos_detalle` 
-
+aguas_marcadores_remarcadores.Nombre AS Remarcadores';
+$SIS_join  = '
 LEFT JOIN `aguas_clientes_listado`         ON aguas_clientes_listado.idCliente               = aguas_mediciones_datos_detalle.idCliente
 LEFT JOIN `aguas_marcadores_listado`       ON aguas_marcadores_listado.idMarcadores          = aguas_mediciones_datos_detalle.idMarcadores
-LEFT JOIN `aguas_marcadores_remarcadores`  ON aguas_marcadores_remarcadores.idRemarcadores   = aguas_mediciones_datos_detalle.idRemarcadores
-
-WHERE aguas_mediciones_datos_detalle.idDatos = ".$X_Puntero."
-ORDER BY aguas_mediciones_datos_detalle.idDatosDetalle ASC";
-//consulto
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDatosCorrectos,$row );
-}
-
+LEFT JOIN `aguas_marcadores_remarcadores`  ON aguas_marcadores_remarcadores.idRemarcadores   = aguas_mediciones_datos_detalle.idRemarcadores';
+$SIS_where = 'aguas_mediciones_datos_detalle.idDatos ='.$X_Puntero;
+$SIS_order = 'aguas_mediciones_datos_detalle.idDatosDetalle ASC';
+$arrDatosCorrectos = array();
+$arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos_detalle', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDatosCorrectos');
 
 ?>
 

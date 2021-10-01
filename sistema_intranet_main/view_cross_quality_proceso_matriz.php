@@ -35,75 +35,36 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //Armo cadena
-$cadena  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
+$SIS_query  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
 for ($i = 1; $i <= 50; $i++) {
-	$cadena .= ',PuntoNombre_'.$i;
-	$cadena .= ',PuntoidTipo_'.$i;
-	$cadena .= ',PuntoidGrupo_'.$i;
-	$cadena .= ',PuntoUniMed_'.$i;
+	$SIS_query .= ',PuntoNombre_'.$i;
+	$SIS_query .= ',PuntoidTipo_'.$i;
+	$SIS_query .= ',PuntoidGrupo_'.$i;
+	$SIS_query .= ',PuntoUniMed_'.$i;
 }
 
 // consulto los datos
-$query = "SELECT ".$cadena."
-FROM `cross_quality_proceso_matriz`
-WHERE idMatriz = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /***********************************************/
-// Se trae un listado con todos los grupos
+// Se consulta
+$SIS_query = 'idGrupo, Nombre, Totales';
+$SIS_join  = '';
+$SIS_where = 'Nombre!=""';
+$SIS_order = 'Nombre ASC';
 $arrGrupo = array();
-$query = "SELECT idGrupo, Nombre, Totales
-FROM `cross_quality_proceso_matriz_grupos` ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupo,$row );
-}
+$arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupo');
+
 /***********************************************/
-// Se trae un listado con todas las unidades de medida
+// Se consulta
+$SIS_query = 'idUml, Nombre';
+$SIS_join  = '';
+$SIS_where = 'Nombre!=""';
+$SIS_order = 'Nombre ASC';
 $arrUnidadMedida = array();
-$query = "SELECT idUml, Nombre
-FROM `sistema_cross_analisis_uml` ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUnidadMedida,$row );
-}
+$arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_uml', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnidadMedida');
 
 ?>
 

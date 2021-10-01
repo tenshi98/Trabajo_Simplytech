@@ -35,24 +35,11 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //Preconsulta
-$query = "SELECT maquinas_listado_matriz.cantPuntos
-FROM `analisis_listado`
-LEFT JOIN `maquinas_listado_matriz`   ON maquinas_listado_matriz.idMatriz   = analisis_listado.idMatriz
-WHERE analisis_listado.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
+$SIS_query = 'maquinas_listado_matriz.cantPuntos';
+$SIS_join  = 'LEFT JOIN `maquinas_listado_matriz` ON maquinas_listado_matriz.idMatriz = analisis_listado.idMatriz';
+$SIS_where = 'analisis_listado.idAnalisis ='.$X_Puntero;
+$rowpre = db_select_data (false, $SIS_query, 'analisis_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowpre');
 	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowpre = mysqli_fetch_assoc ($resultado);
 /**********************************************************************/	
 //Costruyo cadena con los datos a filtrar
 $consql = '';
@@ -68,8 +55,7 @@ for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
 }
 /**********************************************************************/
 // consulto los datos
-$query = "SELECT  
-
+$SIS_query = '
 maquinas_listado.Codigo AS MaquinaCodigo,
 maquinas_listado.Nombre AS MaquinaNombre,
 maquinas_listado.Modelo AS MaquinaModelo,
@@ -111,10 +97,8 @@ laboratorio_listado.email AS LaboratorioEmail,
 laboratorio_listado.PersonaContacto AS LaboratorioContacto,
 laboratorio_listado.Rut AS LaboratorioRut,
 
-maquinas_listado_matriz.Nombre  AS Analisis_Nombre
-".$consql."
-
-FROM `analisis_listado`
+maquinas_listado_matriz.Nombre  AS Analisis_Nombre'.$consql;
+$SIS_join  = '
 LEFT JOIN `maquinas_listado`                        ON maquinas_listado.idMaquina              = analisis_listado.idMaquina
 LEFT JOIN `ubicacion_listado`                       ON ubicacion_listado.idUbicacion           = maquinas_listado.idUbicacion
 LEFT JOIN `ubicacion_listado_level_1`               ON ubicacion_listado_level_1.idLevel_1     = maquinas_listado.idUbicacion_lvl_1
@@ -127,137 +111,83 @@ LEFT JOIN `core_analisis_estado`                    ON core_analisis_estado.idEs
 LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                 = analisis_listado.idSistema
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                  = core_sistemas.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                  = core_sistemas.idComuna
-
 LEFT JOIN `laboratorio_listado`                     ON laboratorio_listado.idLaboratorio       = analisis_listado.idLaboratorio
 LEFT JOIN `core_ubicacion_ciudad`   lab_ciudad      ON lab_ciudad.idCiudad                     = laboratorio_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`  lab_comuna      ON lab_comuna.idComuna                     = laboratorio_listado.idComuna
-
-WHERE analisis_listado.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);	
+LEFT JOIN `core_ubicacion_comunas`  lab_comuna      ON lab_comuna.idComuna                     = laboratorio_listado.idComuna';
+$SIS_where = 'analisis_listado.idAnalisis ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'analisis_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 /**********************************************************************/
 //Se traen todas las unidades de medida
+$SIS_query = 'idUml,Nombre,Abreviatura';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'idUml ASC';
 $arrUnimed = array();
-$query = "SELECT idUml,Nombre,Abreviatura
-FROM `sistema_analisis_uml`
-ORDER BY idUml ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrUnimed = db_select_array (false, $SIS_query, 'sistema_analisis_uml', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUnimed,$row );
-}
 /**********************************************************************/
 //Se consultan datos
+$SIS_query = 'idGrupo, Nombre';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'idGrupo ASC';
 $arrGrupo = array();
-$query = "SELECT idGrupo, Nombre
-FROM `maquinas_listado_matriz_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrGrupo = db_select_array (false, $SIS_query, 'maquinas_listado_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupo');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupo,$row );
-}
 /**********************************************************************/
 //Se traen todos los productos
+$SIS_query = 'idProducto, Nombre';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'Nombre ASC';
 $arrProducto = array();
-$query = "SELECT idProducto, Nombre
-FROM `productos_listado`
-ORDER BY Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrProducto = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProducto');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProducto,$row );
-}
 /**********************************************************************/
 //Se traen todos los productos
+$SIS_query = 'idDispersancia, Nombre';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'Nombre ASC';
 $arrDispersancia = array();
-$query = "SELECT idDispersancia, Nombre
-FROM `core_analisis_dispersancia`
-ORDER BY Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrDispersancia = db_select_array (false, $SIS_query, 'core_analisis_dispersancia', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDispersancia');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDispersancia,$row );
-}
 /**********************************************************************/
 //Se traen todos los productos
+$SIS_query = 'idFlashPoint, Nombre';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'Nombre ASC';
 $arrFlashpoint = array();
-$query = "SELECT idFlashPoint, Nombre
-FROM `core_analisis_flashpoint`
-ORDER BY Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrFlashpoint = db_select_array (false, $SIS_query, 'core_analisis_flashpoint', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFlashpoint');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
+/**********************************************************************/
+//variables
+$arrFinalUnimed       = array();
+$arrFinalGrupo        = array();
+$arrFinalProducto     = array();
+$arrFinalDispersancia = array();
+$arrFinalFlashpoint   = array();
+
+//Se recorren los datos
+foreach ($arrUnimed as $datos) { 	
+	$arrFinalUnimed[$datos['idUml']]['Nombre']      = $datos['Nombre'];
+	$arrFinalUnimed[$datos['idUml']]['Abreviatura'] = $datos['Abreviatura'];
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFlashpoint,$row );
+foreach ($arrGrupo as $datos) { 	
+	$arrFinalGrupo[$datos['idGrupo']]['Nombre'] = $datos['Nombre'];
 }
+foreach ($arrProducto as $datos) { 	
+	$arrFinalProducto[$datos['idProducto']]['Nombre'] = $datos['Nombre'];
+}
+foreach ($arrDispersancia as $datos) { 	
+	$arrFinalDispersancia[$datos['idDispersancia']]['Nombre'] = $datos['Nombre'];
+}
+foreach ($arrFlashpoint as $datos) { 	
+	$arrFinalFlashpoint[$datos['idFlashPoint']]['Nombre'] = $datos['Nombre'];
+}
+
 ?>
 
 
@@ -394,38 +324,17 @@ array_push( $arrFlashpoint,$row );
 					for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
 						if($grupo['idGrupo']==$row_data['PuntoidGrupo_'.$i]){
 							//obtengo la unidad de medida
-							$uniMed = '';
-							foreach ($arrUnimed as $med) { 
-								if($row_data['PuntoUniMed_'.$i]==$med['idUml']){
-									//Verifico la existencia de la abreviatura
-									if(isset($med['Abreviatura'])&&$med['Abreviatura']!=''){
-										$uniMed = $med['Abreviatura'];
-									}else{
-										$uniMed = $med['Nombre'];
-									}
-								}
+							//Verifico la existencia de la abreviatura
+							if(isset($arrFinalUnimed[$row_data['PuntoUniMed_'.$i]]['Abreviatura'])&&$arrFinalUnimed[$row_data['PuntoUniMed_'.$i]]['Abreviatura']!=''){
+								$uniMed = $arrFinalUnimed[$row_data['PuntoUniMed_'.$i]]['Abreviatura'];
+							}else{
+								$uniMed = $arrFinalUnimed[$row_data['PuntoUniMed_'.$i]]['Nombre'];
 							}
-							//obtengo el producto utilizado
-							$Producto = '';
-							foreach ($arrProducto as $prod) { 
-								if($row_data['Analisis_Medida_'.$i]==$prod['idProducto']){
-									$Producto = $prod['Nombre'];
-								}
-							}
-							//obtengo el producto utilizado
-							$Dispersancia = '';
-							foreach ($arrDispersancia as $prod) { 
-								if($row_data['Analisis_Medida_'.$i]==$prod['idDispersancia']){
-									$Dispersancia = $prod['Nombre'];
-								}
-							}
-							//obtengo el producto utilizado
-							$Flashpoint = '';
-							foreach ($arrFlashpoint as $prod) { 
-								if($row_data['Analisis_Medida_'.$i]==$prod['idFlashPoint']){
-									$Flashpoint = $prod['Nombre'];
-								}
-							}
+							//obtengo datos
+							$Producto     = $arrFinalProducto[$row_data['Analisis_Medida_'.$i]]['Nombre'];
+							$Dispersancia = $arrFinalDispersancia[$row_data['Analisis_Medida_'.$i]]['Nombre'];
+							$Flashpoint   = $arrFinalFlashpoint[$row_data['Analisis_Medida_'.$i]]['Nombre'];
+							
 							//comparo el tipo de dato a mostrar
 							switch ($row_data['PuntoidTipo_'.$i]) {
 								//Medidas

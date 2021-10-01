@@ -68,35 +68,15 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 
 }
 						
-$query = "SELECT Nombre, cantSensores,
-CrossCrane_tiempo_revision, CrossCrane_grupo_amperaje, 
-CrossCrane_grupo_motor_subida,CrossCrane_grupo_motor_bajada,
-CrossCrane_grupo_voltaje
-".$subquery.",
-(SELECT COUNT(idErrores) FROM `telemetria_listado_errores` 
-WHERE idTelemetria=".$X_Puntero." 
-AND idLeido=0  
-AND Fecha BETWEEN '".$Fecha_inicio."' AND '".$Fecha_fin."'
-AND idTipo!='999'
-AND Valor<'99900'
-AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."
-) AS Alertas
-	
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$SIS_query = '
+Nombre, cantSensores, CrossCrane_tiempo_revision, CrossCrane_grupo_amperaje, 
+CrossCrane_grupo_motor_subida,CrossCrane_grupo_motor_bajada, CrossCrane_grupo_voltaje,
+(SELECT COUNT(idErrores) FROM `telemetria_listado_errores` WHERE idTelemetria='.$X_Puntero.' AND idLeido=0 AND Fecha BETWEEN "'.$Fecha_inicio.'" AND "'.$Fecha_fin.'" AND idTipo!=999 AND Valor<99900 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].') AS Alertas
+'.$subquery;
+$SIS_join  = '';
+$SIS_where = 'idTelemetria ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-			
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 
 /********************************************************************************************/
 $F_inicio  = fecha_actual();
@@ -109,9 +89,9 @@ $H_termino = hora_actual();
 		
 //Variable de busqueda
 if($H_inicio>$H_termino){
-	$z = "WHERE telemetria_listado_tablarelacionada_".$X_Puntero.".TimeStamp BETWEEN '".$F_inicio2." ".$H_inicio."' AND '".$F_termino." ".$H_termino."'";
+	$SIS_where = "telemetria_listado_tablarelacionada_".$X_Puntero.".TimeStamp BETWEEN '".$F_inicio2." ".$H_inicio."' AND '".$F_termino." ".$H_termino."'";
 }else{
-	$z = "WHERE telemetria_listado_tablarelacionada_".$X_Puntero.".TimeStamp BETWEEN '".$F_inicio." ".$H_inicio."' AND '".$F_termino." ".$H_termino."'";
+	$SIS_where = "telemetria_listado_tablarelacionada_".$X_Puntero.".TimeStamp BETWEEN '".$F_inicio." ".$H_inicio."' AND '".$F_termino." ".$H_termino."'";
 }
 
 //numero sensores equipo
@@ -134,23 +114,9 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 
 /**********************************************************/
 //se consulta
-$query = "SELECT Fecha, Hora
-".$subquery."
-FROM `telemetria_listado_tablarelacionada_".$X_Puntero."`
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowResult = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Fecha, Hora'.$subquery;
+$SIS_join  = '';
+$rowResult = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$X_Puntero, $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowResult');
 
 /**********************************************************/
 //Se traen todas las unidades de medida
@@ -163,22 +129,12 @@ foreach ($arrUnimed as $sen) {
 }
 
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$query = "SELECT idOpcionesGen_6
-FROM core_sistemas
-WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$SIS_query = 'idOpcionesGen_6';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}	
-$n_permisos = mysqli_fetch_assoc($resultado);
+
 /********************************************************************************************/			
 if(isset($rowdata['CrossCrane_tiempo_revision'])&&$rowdata['CrossCrane_tiempo_revision']=='00:00:00'){
 	echo '<div class="col-xs-12" style="margin-top:15px;">';

@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //Obtengo los datos principales
-$query = "SELECT 
+$SIS_query = '
 ClienteNombre,ClienteDireccion,ClienteIdentificador,ClienteNombreComuna,ClienteFechaVencimiento,ClienteEstado,
 							
 DetalleCargoFijoValor,
@@ -118,7 +118,6 @@ sis_or_comuna.Nombre AS SistemaCiudad,
 core_sistemas.Contacto_Fono1 AS SistemaFono,
 aguas_datos_valores.NdiasPago,
 
-
 SII_idFacturable,
 NombreArchivo,
 aguas_clientes_facturable.Nombre AS DocFacturable,
@@ -135,11 +134,8 @@ aguas_clientes_listado.idRemarcadores AS ClienteRemarcador,
 
 usuarios_listado.Nombre AS PagoUsuario,
 idTipoPago,nDocPago,fechaPago,montoPago,idPago,
-aguas_facturacion_listado_detalle.idEstado
-
-
-FROM `aguas_facturacion_listado_detalle`
-
+aguas_facturacion_listado_detalle.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                   = aguas_facturacion_listado_detalle.idSistema
 LEFT JOIN `aguas_clientes_facturable`               ON aguas_clientes_facturable.idFacturable    = aguas_facturacion_listado_detalle.SII_idFacturable
 LEFT JOIN `aguas_clientes_listado`                  ON aguas_clientes_listado.idCliente          = aguas_facturacion_listado_detalle.idCliente
@@ -147,77 +143,34 @@ LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuari
 LEFT JOIN `core_ubicacion_comunas`                  ON core_ubicacion_comunas.idComuna           = aguas_clientes_listado.idComunaFact
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                    = core_sistemas.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                    = core_sistemas.idComuna
-LEFT JOIN `aguas_datos_valores`                     ON aguas_datos_valores.idSistema             = aguas_facturacion_listado_detalle.idSistema
+LEFT JOIN `aguas_datos_valores`                     ON aguas_datos_valores.idSistema             = aguas_facturacion_listado_detalle.idSistema';
+$SIS_where = 'aguas_facturacion_listado_detalle.idFacturacionDetalle ='.$X_Puntero;
+$rowDatos = db_select_data (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowDatos');
 
-WHERE aguas_facturacion_listado_detalle.idFacturacionDetalle = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowDatos = mysqli_fetch_assoc ($resultado);
-
-
-
-
-
-			
-// Se trae un listado con todos los elementos
+/**********************************************************/
+// consulto los datos
+$SIS_query = 'idTipoPago, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idTipoPago!=0';
+$SIS_order = 'Nombre ASC';
 $arrTipoPagos = array();
-$query = "SELECT idTipoPago, Nombre
-FROM `aguas_facturacion_listado_detalle_tipo_pago`";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrTipoPagos = db_select_array (false, $SIS_query, 'aguas_facturacion_listado_detalle_tipo_pago', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTipoPagos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipoPagos,$row );
-}
-
-// Se trae un listado con todos los elementos
-$arrPagosRel = array();
-$query = "SELECT 
+/**********************************************************/
+// consulto los datos
+$SIS_query = '
 aguas_facturacion_listado_detalle_tipo_pago.Nombre,
 aguas_clientes_pagos_relacionados.nDocPago,
 aguas_clientes_pagos_relacionados.fechaPago,
-aguas_clientes_pagos_relacionados.montoPago
+aguas_clientes_pagos_relacionados.montoPago';
+$SIS_join  = 'LEFT JOIN `aguas_facturacion_listado_detalle_tipo_pago` ON aguas_facturacion_listado_detalle_tipo_pago.idTipoPago = aguas_clientes_pagos_relacionados.idTipoPago';
+$SIS_where = 'aguas_clientes_pagos_relacionados.idFacturacionDetalle ='.$X_Puntero;
+$SIS_order = 'aguas_facturacion_listado_detalle_tipo_pago.Nombre ASC';
+$arrPagosRel = array();
+$arrPagosRel = db_select_array (false, $SIS_query, 'aguas_clientes_pagos_relacionados', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPagosRel');
 
-FROM `aguas_clientes_pagos_relacionados`
-LEFT JOIN `aguas_facturacion_listado_detalle_tipo_pago`    ON aguas_facturacion_listado_detalle_tipo_pago.idTipoPago    = aguas_clientes_pagos_relacionados.idTipoPago
-WHERE aguas_clientes_pagos_relacionados.idFacturacionDetalle = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPagosRel,$row );
-}?>
+?>
 
 <div class="col-sm-12 clearfix" style="margin-bottom:5px;">
 	<a target="new" href="<?php echo 'view_aguas_facturacion_to_pdf.php?view='.$_GET['view']; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>

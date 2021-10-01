@@ -35,80 +35,37 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 alumnos_cursos.Nombre AS CursoNombre,
 alumnos_cursos.Semanas AS CursoSemanas,
 alumnos_cursos.F_inicio AS CursoF_inicio,
 alumnos_cursos.F_termino AS CursoF_termino,
 core_estados.Nombre AS CursoEstado,
-core_sistemas.Nombre AS CursoSistema
+core_sistemas.Nombre AS CursoSistema';
+$SIS_join  = '
+LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = alumnos_cursos.idSistema
+LEFT JOIN `core_estados`   ON core_estados.idEstado    = alumnos_cursos.idEstado';
+$SIS_where = 'alumnos_cursos.idCurso ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-FROM `alumnos_cursos`
-LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema      = alumnos_cursos.idSistema
-LEFT JOIN `core_estados`        ON core_estados.idEstado        = alumnos_cursos.idEstado
-WHERE alumnos_cursos.idCurso = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-//Listado con los elearning
+/**********************************************************/
+// consulto los datos
+$SIS_query = 'alumnos_elearning_listado.Nombre AS NombreElearning';
+$SIS_join  = 'LEFT JOIN `alumnos_elearning_listado` ON alumnos_elearning_listado.idElearning = alumnos_cursos_elearning.idElearning';
+$SIS_where = 'alumnos_cursos_elearning.idCurso ='.$X_Puntero;
+$SIS_order = 'alumnos_elearning_listado.Nombre ASC';
 $arrElearnng = array();
-$query = "SELECT 
-alumnos_elearning_listado.Nombre AS NombreElearning
+$arrElearnng = db_select_array (false, $SIS_query, 'alumnos_cursos_elearning', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrElearnng');
 
-FROM `alumnos_cursos_elearning`
-LEFT JOIN `alumnos_elearning_listado`   ON alumnos_elearning_listado.idElearning     = alumnos_cursos_elearning.idElearning
-WHERE alumnos_cursos_elearning.idCurso = ".$X_Puntero."
-ORDER BY alumnos_elearning_listado.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrElearnng,$row );
-}
-
-// Se trae un listado con todos los elementos
+/**********************************************************/
+// consulto los datos
+$SIS_query = 'idDocumentacion, File, Semana';
+$SIS_join  = '';
+$SIS_where = 'idCurso ='.$X_Puntero;
+$SIS_order = 'Semana ASC';
 $arrArchivos = array();
-$query = "SELECT idDocumentacion, File, Semana
-FROM `alumnos_cursos_documentacion`
-WHERE idCurso = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrArchivos = db_select_array (false, $SIS_query, 'alumnos_cursos_documentacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
 
 ?>
 

@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 apoderados_listado.Direccion_img,
 apoderados_listado.Nombre,
 apoderados_listado.ApellidoPat,
@@ -54,63 +54,33 @@ core_estados.Nombre AS Estado,
 core_sistemas.Nombre AS Sistema,				
 apoderados_listado.F_Inicio_Contrato,
 apoderados_listado.F_Termino_Contrato,
-apoderados_listado.File_Contrato
+apoderados_listado.File_Contrato';
+$SIS_join  = '
+LEFT JOIN `core_estados`            ON core_estados.idEstado            = apoderados_listado.idEstado
+LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema          = apoderados_listado.idSistema
+LEFT JOIN `core_ubicacion_ciudad`   ON core_ubicacion_ciudad.idCiudad   = apoderados_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  ON core_ubicacion_comunas.idComuna  = apoderados_listado.idComuna';
+$SIS_where = 'apoderados_listado.idApoderado ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-
-FROM `apoderados_listado`
-LEFT JOIN `core_estados`                     ON core_estados.idEstado                         = apoderados_listado.idEstado
-LEFT JOIN `core_sistemas`                    ON core_sistemas.idSistema                       = apoderados_listado.idSistema
-LEFT JOIN `core_ubicacion_ciudad`            ON core_ubicacion_ciudad.idCiudad                = apoderados_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`           ON core_ubicacion_comunas.idComuna               = apoderados_listado.idComuna
-
-WHERE apoderados_listado.idApoderado = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-// Se trae un listado con todas las cargas familiares
-$arrCargas = array();
-$query = "SELECT  
+/**********************************************************************/
+//Se consultan datos
+$SIS_query = '
 apoderados_listado_hijos.Nombre, 
 apoderados_listado_hijos.ApellidoPat, 
 apoderados_listado_hijos.ApellidoMat,
 apoderados_listado_hijos.Direccion_img,
 core_sexo.Nombre AS Sexo,
 sistema_planes.Nombre AS PlanNombre,
-sistema_planes.Valor AS PlanValor
-
-FROM `apoderados_listado_hijos`
+sistema_planes.Valor AS PlanValor';
+$SIS_join  = '
 LEFT JOIN `core_sexo`       ON core_sexo.idSexo       = apoderados_listado_hijos.idSexo
-LEFT JOIN `sistema_planes`  ON sistema_planes.idPlan  = apoderados_listado_hijos.idPlan
-WHERE apoderados_listado_hijos.idApoderado = ".$X_Puntero."
-ORDER BY apoderados_listado_hijos.idHijos ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `sistema_planes`  ON sistema_planes.idPlan  = apoderados_listado_hijos.idPlan';
+$SIS_where = 'apoderados_listado_hijos.idApoderado ='.$X_Puntero;
+$SIS_order = 'apoderados_listado_hijos.idHijos ASC';
+$arrCargas = array();
+$arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrCargas');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCargas,$row );
-}
 ?>
 
 

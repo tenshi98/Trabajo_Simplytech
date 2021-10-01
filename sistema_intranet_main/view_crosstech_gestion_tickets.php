@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 crosstech_gestion_tickets.idTicket,
 crosstech_gestion_tickets.Titulo,
 crosstech_gestion_tickets.FechaCreacion,
@@ -51,33 +51,17 @@ core_tipo_ticket.Nombre AS TipoTicket,
 core_estado_ticket.Nombre AS EstadoTicket,
 core_ot_prioridad.Nombre AS PrioridadTicket,
 usuario_asignado.Nombre AS UsuarioAsignado,
-crosstech_gestion_tickets_area.Nombre AS AreaTicket
-
-FROM `crosstech_gestion_tickets`
+crosstech_gestion_tickets_area.Nombre AS AreaTicket';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                         ON core_sistemas.idSistema               = crosstech_gestion_tickets.idSistema
 LEFT JOIN `clientes_listado`                      ON clientes_listado.idCliente            = crosstech_gestion_tickets.idCliente
 LEFT JOIN `core_tipo_ticket`                      ON core_tipo_ticket.idTipoTicket         = crosstech_gestion_tickets.idTipoTicket
 LEFT JOIN `core_estado_ticket`                    ON core_estado_ticket.idEstado           = crosstech_gestion_tickets.idEstado
 LEFT JOIN `core_ot_prioridad`                     ON core_ot_prioridad.idPrioridad         = crosstech_gestion_tickets.idPrioridad
 LEFT JOIN `usuarios_listado`  usuario_asignado    ON usuario_asignado.idUsuario            = crosstech_gestion_tickets.idUsuarioAsignado
-LEFT JOIN `crosstech_gestion_tickets_area`                  ON crosstech_gestion_tickets_area.idArea           = crosstech_gestion_tickets.idArea
-
-WHERE crosstech_gestion_tickets.idTicket =  ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `crosstech_gestion_tickets_area`        ON crosstech_gestion_tickets_area.idArea = crosstech_gestion_tickets.idArea';
+$SIS_where = 'crosstech_gestion_tickets.idTicket ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

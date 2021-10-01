@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 aguas_analisis_aguas.f_muestra,
 aguas_analisis_aguas.f_recibida,
 aguas_analisis_aguas.codigoProceso,
@@ -59,32 +59,17 @@ aguas_analisis_aguas_signo.Nombre AS Signo,
 aguas_analisis_laboratorios.Nombre AS Laboratorio,
 
 core_sistemas.Nombre AS Sistema,
-aguas_analisis_sectores.Nombre AS Sector
-
-FROM `aguas_analisis_aguas`
+aguas_analisis_sectores.Nombre AS Sector';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                              ON core_sistemas.idSistema                                    = aguas_analisis_aguas.idSistema
 LEFT JOIN `aguas_analisis_sectores`                    ON aguas_analisis_sectores.idSector                           = aguas_analisis_aguas.idSector
 LEFT JOIN `aguas_analisis_aguas_tipo_punto_muestreo`   ON aguas_analisis_aguas_tipo_punto_muestreo.idPuntoMuestreo   = aguas_analisis_aguas.idPuntoMuestreo
 LEFT JOIN `aguas_analisis_aguas_tipo_muestra`          ON aguas_analisis_aguas_tipo_muestra.idTipoMuestra            = aguas_analisis_aguas.idTipoMuestra
 LEFT JOIN `aguas_analisis_parametros`                  ON aguas_analisis_parametros.idParametros                     = aguas_analisis_aguas.idParametros
 LEFT JOIN `aguas_analisis_aguas_signo`                 ON aguas_analisis_aguas_signo.idSigno                         = aguas_analisis_aguas.idSigno
-LEFT JOIN `aguas_analisis_laboratorios`                ON aguas_analisis_laboratorios.idLaboratorio                  = aguas_analisis_aguas.idLaboratorio
-
-WHERE aguas_analisis_aguas.idAnalisisAgua = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+LEFT JOIN `aguas_analisis_laboratorios`                ON aguas_analisis_laboratorios.idLaboratorio                  = aguas_analisis_aguas.idLaboratorio';
+$SIS_where = 'aguas_analisis_aguas.idAnalisisAgua ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 
 ?>
