@@ -206,16 +206,16 @@ $z4.=" GROUP BY bodegas_servicios_facturacion.idCliente";
 $SIS_query_1 = 'clientes_listado.idCliente AS ID, clientes_listado.Nombre AS Cliente, SUM(ValorTotal) AS Total';
 //Bodega de Arriendos
 $arrTemporal_b_1 = array();
-$arrTemporal_b_1 = db_select_array (false, 'bodegas_arriendos_facturacion.idTipo, '.$SIS_query_1, 'bodegas_arriendos_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_arriendos_facturacion.idCliente', $z1, 'Total DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
+$arrTemporal_b_1 = db_select_array (false, 'bodegas_arriendos_facturacion.idTipo, '.$SIS_query_1, 'bodegas_arriendos_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_arriendos_facturacion.idCliente', $z1, 'Total ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
 //Bodega de Insumos
 $arrTemporal_b_2 = array();
-$arrTemporal_b_2 = db_select_array (false, 'bodegas_insumos_facturacion.idTipo, '.$SIS_query_1, 'bodegas_insumos_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_insumos_facturacion.idCliente', $z2, 'Total DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
+$arrTemporal_b_2 = db_select_array (false, 'bodegas_insumos_facturacion.idTipo, '.$SIS_query_1, 'bodegas_insumos_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_insumos_facturacion.idCliente', $z2, 'Total ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
 //Bodega de Productos
 $arrTemporal_b_3 = array();
-$arrTemporal_b_3 = db_select_array (false, 'bodegas_productos_facturacion.idTipo, '.$SIS_query_1, 'bodegas_productos_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_productos_facturacion.idCliente', $z3, 'Total DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
+$arrTemporal_b_3 = db_select_array (false, 'bodegas_productos_facturacion.idTipo, '.$SIS_query_1, 'bodegas_productos_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_productos_facturacion.idCliente', $z3, 'Total ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
 //Bodega de Servicios
 $arrTemporal_b_4 = array();
-$arrTemporal_b_4 = db_select_array (false, 'bodegas_servicios_facturacion.idTipo, '.$SIS_query_1, 'bodegas_servicios_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_servicios_facturacion.idCliente', $z4, 'Total DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
+$arrTemporal_b_4 = db_select_array (false, 'bodegas_servicios_facturacion.idTipo, '.$SIS_query_1, 'bodegas_servicios_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_servicios_facturacion.idCliente', $z4, 'Total ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
 //etapas
 $arrEtapa = array();
 $arrEtapa = db_select_array (false, 'prospectos_etapa.Nombre AS Etapa,COUNT(prospectos_listado.idEtapa) AS Cuenta', 'prospectos_listado', 'LEFT JOIN prospectos_etapa ON prospectos_etapa.idEtapa = prospectos_listado.idEtapa', 'prospectos_listado.idProspecto!=0 GROUP BY prospectos_listado.idEtapa', 'Etapa ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
@@ -332,6 +332,8 @@ foreach ($arrTabs as $tab) {
 //variables
 $total_tab_cliente   = 0;
 $total_tab_prospecto = 0;
+$arrPorcClienT       = array();
+$arrPorcProsp        = array();
 foreach ($arrClientes as $data) {
 	if(isset($data['idTab_1'])&&$data['idTab_1']==2&&isset($arrTabsSorter[1]['Nombre'])){ $arrTabsSorter[1]['CuentaCliente']++; $total_tab_cliente++;}
 	if(isset($data['idTab_2'])&&$data['idTab_2']==2&&isset($arrTabsSorter[2]['Nombre'])){ $arrTabsSorter[2]['CuentaCliente']++; $total_tab_cliente++;}
@@ -356,44 +358,44 @@ foreach ($arrProspecto as $data) {
 		
 //calculo de porcentajes clientes
 if($total_tab_cliente!=0){
-	if(isset($arrTabsSorter[1]['Nombre'])&&$arrTabsSorter[1]['Nombre']!=''){ $porc_clien_1 = Cantidades(($arrTabsSorter[1]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[2]['Nombre'])&&$arrTabsSorter[2]['Nombre']!=''){ $porc_clien_2 = Cantidades(($arrTabsSorter[2]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[3]['Nombre'])&&$arrTabsSorter[3]['Nombre']!=''){ $porc_clien_3 = Cantidades(($arrTabsSorter[3]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[4]['Nombre'])&&$arrTabsSorter[4]['Nombre']!=''){ $porc_clien_4 = Cantidades(($arrTabsSorter[4]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[5]['Nombre'])&&$arrTabsSorter[5]['Nombre']!=''){ $porc_clien_5 = Cantidades(($arrTabsSorter[5]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[6]['Nombre'])&&$arrTabsSorter[6]['Nombre']!=''){ $porc_clien_6 = Cantidades(($arrTabsSorter[6]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[7]['Nombre'])&&$arrTabsSorter[7]['Nombre']!=''){ $porc_clien_7 = Cantidades(($arrTabsSorter[7]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[8]['Nombre'])&&$arrTabsSorter[8]['Nombre']!=''){ $porc_clien_8 = Cantidades(($arrTabsSorter[8]['CuentaCliente']/$total_tab_cliente)*100, 0);}
+	if(isset($arrTabsSorter[1]['Nombre'])&&$arrTabsSorter[1]['Nombre']!=''){ $arrPorcClienT[1] = Cantidades(($arrTabsSorter[1]['CuentaCliente']/$total_tab_cliente)*100, 0);}
+	if(isset($arrTabsSorter[2]['Nombre'])&&$arrTabsSorter[2]['Nombre']!=''){ $arrPorcClienT[2] = Cantidades(($arrTabsSorter[2]['CuentaCliente']/$total_tab_cliente)*100, 0);}
+	if(isset($arrTabsSorter[3]['Nombre'])&&$arrTabsSorter[3]['Nombre']!=''){ $arrPorcClienT[3] = Cantidades(($arrTabsSorter[3]['CuentaCliente']/$total_tab_cliente)*100, 0);}
+	if(isset($arrTabsSorter[4]['Nombre'])&&$arrTabsSorter[4]['Nombre']!=''){ $arrPorcClienT[4] = Cantidades(($arrTabsSorter[4]['CuentaCliente']/$total_tab_cliente)*100, 0);}
+	if(isset($arrTabsSorter[5]['Nombre'])&&$arrTabsSorter[5]['Nombre']!=''){ $arrPorcClienT[5] = Cantidades(($arrTabsSorter[5]['CuentaCliente']/$total_tab_cliente)*100, 0);}
+	if(isset($arrTabsSorter[6]['Nombre'])&&$arrTabsSorter[6]['Nombre']!=''){ $arrPorcClienT[6] = Cantidades(($arrTabsSorter[6]['CuentaCliente']/$total_tab_cliente)*100, 0);}
+	if(isset($arrTabsSorter[7]['Nombre'])&&$arrTabsSorter[7]['Nombre']!=''){ $arrPorcClienT[7] = Cantidades(($arrTabsSorter[7]['CuentaCliente']/$total_tab_cliente)*100, 0);}
+	if(isset($arrTabsSorter[8]['Nombre'])&&$arrTabsSorter[8]['Nombre']!=''){ $arrPorcClienT[8] = Cantidades(($arrTabsSorter[8]['CuentaCliente']/$total_tab_cliente)*100, 0);}
 }else{
-	$porc_clien_1 = 0;
-	$porc_clien_2 = 0;
-	$porc_clien_3 = 0;
-	$porc_clien_4 = 0;
-	$porc_clien_5 = 0;
-	$porc_clien_6 = 0;
-	$porc_clien_7 = 0;
-	$porc_clien_8 = 0;
+	$arrPorcClienT[1] = 0;
+	$arrPorcClienT[2] = 0;
+	$arrPorcClienT[3] = 0;
+	$arrPorcClienT[4] = 0;
+	$arrPorcClienT[5] = 0;
+	$arrPorcClienT[6] = 0;
+	$arrPorcClienT[7] = 0;
+	$arrPorcClienT[8] = 0;
 }
 															
 //calculo de porcentajes prospectos
 if($total_tab_prospecto!=0){
-	if(isset($arrTabsSorter[1]['Nombre'])&&$arrTabsSorter[1]['Nombre']!=''){ $porc_prosp_1 = Cantidades(($arrTabsSorter[1]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[2]['Nombre'])&&$arrTabsSorter[2]['Nombre']!=''){ $porc_prosp_2 = Cantidades(($arrTabsSorter[2]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[3]['Nombre'])&&$arrTabsSorter[3]['Nombre']!=''){ $porc_prosp_3 = Cantidades(($arrTabsSorter[3]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[4]['Nombre'])&&$arrTabsSorter[4]['Nombre']!=''){ $porc_prosp_4 = Cantidades(($arrTabsSorter[4]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[5]['Nombre'])&&$arrTabsSorter[5]['Nombre']!=''){ $porc_prosp_5 = Cantidades(($arrTabsSorter[5]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[6]['Nombre'])&&$arrTabsSorter[6]['Nombre']!=''){ $porc_prosp_6 = Cantidades(($arrTabsSorter[6]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[7]['Nombre'])&&$arrTabsSorter[7]['Nombre']!=''){ $porc_prosp_7 = Cantidades(($arrTabsSorter[7]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[8]['Nombre'])&&$arrTabsSorter[8]['Nombre']!=''){ $porc_prosp_8 = Cantidades(($arrTabsSorter[8]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
+	if(isset($arrTabsSorter[1]['Nombre'])&&$arrTabsSorter[1]['Nombre']!=''){ $arrPorcProsp[1] = Cantidades(($arrTabsSorter[1]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
+	if(isset($arrTabsSorter[2]['Nombre'])&&$arrTabsSorter[2]['Nombre']!=''){ $arrPorcProsp[2] = Cantidades(($arrTabsSorter[2]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
+	if(isset($arrTabsSorter[3]['Nombre'])&&$arrTabsSorter[3]['Nombre']!=''){ $arrPorcProsp[3] = Cantidades(($arrTabsSorter[3]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
+	if(isset($arrTabsSorter[4]['Nombre'])&&$arrTabsSorter[4]['Nombre']!=''){ $arrPorcProsp[4] = Cantidades(($arrTabsSorter[4]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
+	if(isset($arrTabsSorter[5]['Nombre'])&&$arrTabsSorter[5]['Nombre']!=''){ $arrPorcProsp[5] = Cantidades(($arrTabsSorter[5]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
+	if(isset($arrTabsSorter[6]['Nombre'])&&$arrTabsSorter[6]['Nombre']!=''){ $arrPorcProsp[6] = Cantidades(($arrTabsSorter[6]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
+	if(isset($arrTabsSorter[7]['Nombre'])&&$arrTabsSorter[7]['Nombre']!=''){ $arrPorcProsp[7] = Cantidades(($arrTabsSorter[7]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
+	if(isset($arrTabsSorter[8]['Nombre'])&&$arrTabsSorter[8]['Nombre']!=''){ $arrPorcProsp[8] = Cantidades(($arrTabsSorter[8]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
 }else{
-	$porc_prosp_1 = 0;
-	$porc_prosp_2 = 0;
-	$porc_prosp_3 = 0;
-	$porc_prosp_4 = 0;
-	$porc_prosp_5 = 0;
-	$porc_prosp_6 = 0;
-	$porc_prosp_7 = 0;
-	$porc_prosp_8 = 0;
+	$arrPorcProsp[1] = 0;
+	$arrPorcProsp[2] = 0;
+	$arrPorcProsp[3] = 0;
+	$arrPorcProsp[4] = 0;
+	$arrPorcProsp[5] = 0;
+	$arrPorcProsp[6] = 0;
+	$arrPorcProsp[7] = 0;
+	$arrPorcProsp[8] = 0;
 }
 
 //se recorre
@@ -598,47 +600,79 @@ $ing_mens_contrato = valores($ing_mens_contrato, 0);
 			echo widget_Ficha_1('bg-aqua', 'fa-usd', 100, 'Cuentas por cobrar', $totalFactVenta.' Pendientes', 'principal_facturas_alt.php?pagina=1&idTipo=2', 'Ver Pendientes', 1, 2);
 		echo '</div>';	
 
-		echo '<div class="">'; ?>
+		echo '<div class="">'; 
 		
-			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-			<script type="text/javascript">
-			  google.charts.load('current', {'packages':['corechart', 'bar']});
-			  google.charts.setOnLoadCallback(drawVisualization);
+		/***************************************************************/
+		//variables
+		$Temp_1  = "";
+		$arrData = array();
+		//recorro los meses
+		for ($i = 1; $i <= 12; $i++) {
+			//se establece la fecha
+			if($i<10){ $nmes = '0'.$i; }else{ $nmes = $i; }
+			$Temp_1 .= "'".ano_actual()."/".$nmes."',";
+			//se establecen los valores
+			if(isset($arrIngresos[$i])&&$arrIngresos[$i]!=''){$s_ing = $arrIngresos[$i]; }else{$s_ing = '0';}
+			if(isset($arrEgresos[$i])&&$arrEgresos[$i]!=''){  $s_eg = $arrEgresos[$i];   }else{$s_eg  = 0;}
+			if(isset($arrGastos[$i])&&$arrGastos[$i]!=''){    $s_gas = $arrGastos[$i];   }else{$s_gas = 0;}
+			$s_egre = $s_eg  + $s_gas;
+			if($s_egre==0){$s_egre = '0';}
+			
+			//verifico si existe
+			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){
+				$arrData[1]['Value'] .= ", ".$s_ing;
+			//si no lo crea
+			}else{
+				$arrData[1]['Value'] = $s_ing;
+			}
+			//verifico si existe
+			if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){
+				$arrData[2]['Value'] .= ", ".$s_egre;
+			//si no lo crea
+			}else{
+				$arrData[2]['Value'] = $s_egre;
+			}
+		}
+		$arrData[1]['Name'] = "'Ingresos'";
+		$arrData[2]['Name'] = "'Egresos'";
 
-			  function drawVisualization() {
-				// Some raw data (not necessarily accurate)
-				var data = google.visualization.arrayToDataTable([
-				  ['Meses', 'Ingresos', 'Egresos'],
-				  ['<?php echo ano_actual(); ?>/01',  <?php echo $arrIngresos[1]; ?>,   <?php echo ($arrEgresos[1]  + $arrGastos[1]); ?>],
-				  ['<?php echo ano_actual(); ?>/02',  <?php echo $arrIngresos[2]; ?>,   <?php echo ($arrEgresos[2]  + $arrGastos[2]); ?>],
-				  ['<?php echo ano_actual(); ?>/03',  <?php echo $arrIngresos[3]; ?>,   <?php echo ($arrEgresos[3]  + $arrGastos[3]); ?>],
-				  ['<?php echo ano_actual(); ?>/04',  <?php echo $arrIngresos[4]; ?>,   <?php echo ($arrEgresos[4]  + $arrGastos[4]); ?>],
-				  ['<?php echo ano_actual(); ?>/05',  <?php echo $arrIngresos[5]; ?>,   <?php echo ($arrEgresos[5]  + $arrGastos[5]); ?>],
-				  ['<?php echo ano_actual(); ?>/06',  <?php echo $arrIngresos[6]; ?>,   <?php echo ($arrEgresos[6]  + $arrGastos[6]); ?>],
-				  ['<?php echo ano_actual(); ?>/07',  <?php echo $arrIngresos[7]; ?>,   <?php echo ($arrEgresos[7]  + $arrGastos[7]); ?>],
-				  ['<?php echo ano_actual(); ?>/08',  <?php echo $arrIngresos[8]; ?>,   <?php echo ($arrEgresos[8]  + $arrGastos[8]); ?>],
-				  ['<?php echo ano_actual(); ?>/09',  <?php echo $arrIngresos[9]; ?>,   <?php echo ($arrEgresos[9]  + $arrGastos[9]); ?>],
-				  ['<?php echo ano_actual(); ?>/10',  <?php echo $arrIngresos[10]; ?>,  <?php echo ($arrEgresos[10] + $arrGastos[10]); ?>],
-				  ['<?php echo ano_actual(); ?>/11',  <?php echo $arrIngresos[11]; ?>,  <?php echo ($arrEgresos[11] + $arrGastos[11]); ?>],
-				  ['<?php echo ano_actual(); ?>/12',  <?php echo $arrIngresos[12]; ?>,  <?php echo ($arrEgresos[12] + $arrGastos[12]); ?>]
-				]);
 
-				var options = {
-				  title : 'Flujo Economico',
-				  vAxis: {title: 'Pesos'},
-				  hAxis: {title: 'Meses'},
-				  seriesType: 'bars',
-				  legend:'none'
-				};
-
-				var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
-				chart.draw(data, options);
-			  }
-			</script>
-
-			<div id="chart_div" style="width: 100%; height: 500px;"></div>
-
-		<?php echo '</div>';
+		
+		
+		/***************************************************************/
+		//se crean los datos
+		$Graphics_xData       = 'var xData = [';
+		$Graphics_yData       = 'var yData = [';
+		$Graphics_names       = 'var names = [';
+		$Graphics_info        = 'var grf_info = [';
+		$Graphics_markerColor = 'var markerColor = [';
+		$Graphics_markerLine  = 'var markerLine = [';
+		//Se crean los datos
+		for ($x = 1; $x <= 2; $x++) {
+			//las fechas
+			$Graphics_xData       .='['.$Temp_1.'],';
+			//los valores
+			$Graphics_yData       .='['.$arrData[$x]['Value'].'],';
+			//los nombres
+			$Graphics_names       .= $arrData[$x]['Name'].',';
+			//si se despliega la informacion
+			$Graphics_info        .= "'',";
+			//color de la barra
+			$Graphics_markerColor .= "'',";
+			//color del borde de la barra
+			$Graphics_markerLine  .= "'',";
+		}
+		$Graphics_xData       .= '];';
+		$Graphics_yData       .= '];';
+		$Graphics_names       .= '];';
+		$Graphics_info        .= '];';
+		$Graphics_markerColor .= '];';
+		$Graphics_markerLine  .= '];';
+			
+		echo GraphBarr_1('graphBarra_1', 'Flujo Economico', 'Meses', 'Pesos', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
+				
+		
+		echo '</div>';
 		
 		
 		/***************************************************************/
@@ -676,96 +710,128 @@ $ing_mens_contrato = valores($ing_mens_contrato, 0);
 		/*******************************************/
 												
 		?>
-
+		
 		<div class="row">
-			<script>
-				google.charts.setOnLoadCallback(drawChart_cliente);
-				google.charts.setOnLoadCallback(drawChart_prospecto);
-
-				function drawChart_cliente() {
-					var data = google.visualization.arrayToDataTable([
-						['Unidad Negocio', 'Cantidad'],
-						<?php 
-						if(isset($porc_clien_1)&&$porc_clien_1!=0){echo '["'.$arrTabsSorter[1]['Nombre'].'", '.$porc_clien_1.'],';}
-						if(isset($porc_clien_2)&&$porc_clien_2!=0){echo '["'.$arrTabsSorter[2]['Nombre'].'", '.$porc_clien_2.'],';}
-						if(isset($porc_clien_3)&&$porc_clien_3!=0){echo '["'.$arrTabsSorter[3]['Nombre'].'", '.$porc_clien_3.'],';}
-						if(isset($porc_clien_4)&&$porc_clien_4!=0){echo '["'.$arrTabsSorter[4]['Nombre'].'", '.$porc_clien_4.'],';}
-						if(isset($porc_clien_5)&&$porc_clien_5!=0){echo '["'.$arrTabsSorter[5]['Nombre'].'", '.$porc_clien_5.'],';}
-						if(isset($porc_clien_6)&&$porc_clien_6!=0){echo '["'.$arrTabsSorter[6]['Nombre'].'", '.$porc_clien_6.'],';}
-						if(isset($porc_clien_7)&&$porc_clien_7!=0){echo '["'.$arrTabsSorter[7]['Nombre'].'", '.$porc_clien_7.'],';}
-						if(isset($porc_clien_8)&&$porc_clien_8!=0){echo '["'.$arrTabsSorter[8]['Nombre'].'", '.$porc_clien_8.'],';}
-						?>
-					]);
-					var options = {
-						title: 'U.N. Clientes'
-					};
-					var chart = new google.visualization.PieChart(document.getElementById('piechart_clientes'));
-					chart.draw(data, options);
+			<div class="col-sm-6">
+				<?php
+				//se crean los datos
+				$Graphics_values = 'var allValues = [';
+				$Graphics_labels = 'var allLabels = [';
+				//Se crean los datos
+				for ($x = 1; $x <= 8; $x++) {
+					if(isset($arrPorcClienT[$x])&&$arrPorcClienT[$x]!=0){
+						//los valores
+						$Graphics_values .= $arrPorcClienT[$x].',';
+						//los nombres
+						$Graphics_labels .= '"'.$arrTabsSorter[$x]['Nombre'].'",';
+					}
 				}
+				$Graphics_values .= '];';
+				$Graphics_labels .= '];';
+				$Graphics_width  = 400;
+				$Graphics_height = 400;
 				
-				function drawChart_prospecto() {
-					var data = google.visualization.arrayToDataTable([
-						['Unidad Negocio', 'Cantidad'],
-						<?php 
-						if(isset($porc_prosp_1)&&$porc_prosp_1!=0){echo '["'.$arrTabsSorter[1]['Nombre'].'", '.$porc_prosp_1.'],';}
-						if(isset($porc_prosp_2)&&$porc_prosp_2!=0){echo '["'.$arrTabsSorter[2]['Nombre'].'", '.$porc_prosp_2.'],';}
-						if(isset($porc_prosp_3)&&$porc_prosp_3!=0){echo '["'.$arrTabsSorter[3]['Nombre'].'", '.$porc_prosp_3.'],';}
-						if(isset($porc_prosp_4)&&$porc_prosp_4!=0){echo '["'.$arrTabsSorter[4]['Nombre'].'", '.$porc_prosp_4.'],';}
-						if(isset($porc_prosp_5)&&$porc_prosp_5!=0){echo '["'.$arrTabsSorter[5]['Nombre'].'", '.$porc_prosp_5.'],';}
-						if(isset($porc_prosp_6)&&$porc_prosp_6!=0){echo '["'.$arrTabsSorter[6]['Nombre'].'", '.$porc_prosp_6.'],';}
-						if(isset($porc_prosp_7)&&$porc_prosp_7!=0){echo '["'.$arrTabsSorter[7]['Nombre'].'", '.$porc_prosp_7.'],';}
-						if(isset($porc_prosp_8)&&$porc_prosp_8!=0){echo '["'.$arrTabsSorter[8]['Nombre'].'", '.$porc_prosp_8.'],';}
-						?>
-					]);
-					var options = {
-						title: 'U.N. Prospectos'
-					};
-					var chart = new google.visualization.PieChart(document.getElementById('piechart_prospectos'));
-					chart.draw(data, options);
-				}
-			</script>
-			<div class="col-sm-6">
-				<div id="piechart_clientes"   style="width: 100%; height: 500px;"></div>
-			</div>
-			<div class="col-sm-6">
-				<div id="piechart_prospectos" style="width: 100%; height: 500px;"></div>
-			</div>
-			
-			
-			<script>
-				google.charts.setOnLoadCallback(drawBasic_ingresos);
-				function drawBasic_ingresos() {
-
-					var data = google.visualization.arrayToDataTable([
-						['Empresa', 'Valor', { role: 'annotation' },],
-						<?php
-						foreach ($arrTemp as $temp) {
-							echo '["'.$temp['Nombre'].'", '.$temp['Total'].', "'.$temp['Nombre'].'"],';
-						}
-						?>
-					]);
-					var options = {
-						title: 'Clientes/Ingresos (Anual)',
-						chartArea: {width: '90%'},
-						hAxis: {
-							title: 'Ingresos',
-							minValue: 0
-						},
-						vAxis: {
-							title: 'Clientes'
-						}
-					};
-					var chart = new google.visualization.BarChart(document.getElementById('piechart_ingresos'));
-					chart.draw(data, options);
-				}
-			</script>
-			
+				echo GraphPie_1('graphPie_1', 'Unidad Negocio Clientes', $Graphics_values,$Graphics_labels,$Graphics_width,$Graphics_height, 2,1);
 				
+				?>
+			</div>
 			<div class="col-sm-6">
-				<div id="piechart_ingresos"   style="width: 100%; height: 500px;"></div>
+				<?php
+				//se crean los datos
+				$Graphics_values = 'var allValues = [';
+				$Graphics_labels = 'var allLabels = [';
+				//Se crean los datos
+				for ($x = 1; $x <= 8; $x++) {
+					if(isset($arrPorcProsp[$x])&&$arrPorcProsp[$x]!=0){
+						//los valores
+						$Graphics_values .= $arrPorcProsp[$x].',';
+						//los nombres
+						$Graphics_labels .= '"'.$arrTabsSorter[$x]['Nombre'].'",';
+					}
+				}
+				$Graphics_values .= '];';
+				$Graphics_labels .= '];';
+				$Graphics_width  = 400;
+				$Graphics_height = 400;
+				
+				echo GraphPie_1('graphPie_2', 'Unidad Negocio Prospectos', $Graphics_values,$Graphics_labels,$Graphics_width,$Graphics_height, 2,1);
+				
+				?>
+			</div>
+			<div class="col-sm-12">
+				<?php
+				//se crean los datos
+				$Graphics_xData       = 'var xData = [[';
+				$Graphics_yData       = 'var yData = [[';
+				$Graphics_names       = 'var names = [';
+				$Graphics_info        = 'var grf_info = [';
+				$Graphics_markerColor = 'var markerColor = [';
+				$Graphics_markerLine  = 'var markerLine = [';
+				//Se crean los datos
+				foreach ($arrTemp as $temp) {
+					//verifico la existencia
+					if(isset($temp['Nombre'])&&$temp['Nombre']!=''){
+						$Nombre = $temp['Nombre'];
+					}else{
+						$Nombre = 'Sin Nombre';
+					}
+					//las fechas
+					$Graphics_xData       .= $temp['Total'].',';
+					//los valores
+					$Graphics_yData       .= '"'.$Nombre.'",';
+				}
+				//los nombres
+				$Graphics_names       .= '"Normal",';
+				//si se despliega la informacion
+				$Graphics_info        .= "'',";
+				//color de la barra
+				$Graphics_markerColor .= "'',";
+				//color del borde de la barra
+				$Graphics_markerLine  .= "'',";
+				$Graphics_xData       .= ']];';
+				$Graphics_yData       .= ']];';
+				$Graphics_names       .= '];';
+				$Graphics_info        .= '];';
+				$Graphics_markerColor .= '];';
+				$Graphics_markerLine  .= '];';
+				
+		
+				echo GraphBarrLat_1('graphBarraLat_1', 'Clientes/Ingresos(Anual)', 'Pesos', 'Clientes', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 6); 
+				
+				
+				?>
 			</div>
 			
+			<div class="col-sm-12">
+				<?php
+				//se crean los datos
+				$Graphics_xData       = 'var xData = [';
+				$Graphics_yData       = 'var yData = [';
+				//Se crean los datos
+				foreach ($arrEtapa as $temp) {
+					//verifico la existencia
+					if(isset($temp['Etapa'])&&$temp['Etapa']!=''){
+						$Nombre = $temp['Etapa'];
+					}else{
+						$Nombre = 'Sin Etapa';
+					}
+					//las fechas
+					$Graphics_xData       .= $temp['Cuenta'].',';
+					//los valores
+					$Graphics_yData       .= '"'.$Nombre.'",';
+				}
+				$Graphics_xData       .= '];';
+				$Graphics_yData       .= '];';
+				$Graphics_width  = 600;
+				$Graphics_height = 500;
+				
+				echo GraphEmbudo_1('graphEmbudo_1', 'Embudo de Ventas', $Graphics_xData, $Graphics_yData, $Graphics_width, $Graphics_height, 1);
+				
+				?>
+			</div>			
 
+			
+			
 			<script>
 				window.onload = function () {
 
