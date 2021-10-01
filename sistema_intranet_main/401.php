@@ -1,0 +1,57 @@
+<?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once 'core/Load.Utils.Error.php';
+/**********************************************************************************************************************************/
+/*                                         Se llaman a la cabecera del documento html                                             */
+/**********************************************************************************************************************************/
+header('HTTP/1.1 403 Forbidden');
+require_once 'core/Web.Header.Error.php';
+
+error_reporting(0); 
+$post_query = '';
+if(isset($_POST)){foreach($_POST as $key=>$value) $post_query .= $key."=".$value."&";}
+
+
+$errorlog =  'error_log.log';
+$fh = @fopen($errorlog, 'a');
+@fwrite($fh, "\r\n>>>>>>>>>>> ". date("F j, Y g:i a", time()) ." <<<<<<<<<<<\r\n");
+@fwrite($fh, 'REMOTE_ADDR: '.$_SERVER['REMOTE_ADDR']."\r\n");
+@fwrite($fh, 'HTTP_USER_AGENT: '.$_SERVER['HTTP_USER_AGENT']."\r\n");
+@fwrite($fh, 'HTTP_ACCEPT: '.$_SERVER['HTTP_ACCEPT']."\r\n");
+@fwrite($fh, 'HTTP_COOKIE: '.$_SERVER['HTTP_COOKIE']."\r\n");
+@fwrite($fh, 'REQUEST_URI: '.$_SERVER['REQUEST_URI']."\r\n");
+if($post_query){@fwrite($fh, 'POST_QUERY: '.$post_query."\r\n");}
+@fclose($fh);
+ 	
+?>
+
+
+<div class="container">
+	<div class="col-lg-8 col-lg-offset-2 text-center">
+		<div class="logo">
+			<h1>403</h1>
+		</div>
+		<p class="lead text-muted">Lo sentimos, usted no tiene permiso para acceder a este archivo</p>
+		<div class="clearfix"></div>
+		<br/>
+		<div class="col-lg-6 col-lg-offset-3">
+			<div class="btn-group btn-group-justified">
+				<a href="principal.php" class="btn btn-info">Volver a Principal</a>
+				<a href="index.php" class="btn btn-warning">Volver a Inicio</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php
+/**********************************************************************************************************************************/
+/*                                             Se llama al pie del documento html                                                 */
+/**********************************************************************************************************************************/
+require_once 'core/Web.Footer.Error.php';
+?>
