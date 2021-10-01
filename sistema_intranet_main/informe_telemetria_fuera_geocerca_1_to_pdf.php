@@ -70,34 +70,20 @@ $html .= '
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Nombre Equipo</th>
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Descripcion</th>
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>
-			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>
-            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion Actual</th>
-            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Min</th>
-            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Max</th>          
+			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>        
 		</tr>
 	</thead>
 	<tbody>';
 							
 		foreach ($arrErrores as $error) {
-			//Guardo la unidad de medida
-			$unimed = '';
-			foreach ($arrUnimed as $sen) {
-				if($error['SensoresUniMed_'.$error['Sensor']]==$sen['idUniMed']){
-					$unimed = ' '.$sen['Nombre'];	
-				}
-			}
-							
-				$html .='
-				<tr>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['NombreEquipo'].'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Descripcion'].'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($error['Fecha']).'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Hora'].'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor']).$unimed.'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor_min']).$unimed.'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor_max']).$unimed.'</td>
-				</tr>
-				';						
+			//Guardo la unidad de medida			
+			$html .='
+			<tr>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['NombreEquipo'].'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Descripcion'].'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($error['Fecha']).'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Hora'].'</td>
+			</tr>';						
 		}
 							
 $html .='</tbody>

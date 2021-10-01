@@ -78,32 +78,17 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Nombre Equipo')
             ->setCellValue('B1', 'Descripcion')
             ->setCellValue('C1', 'Fecha')
-            ->setCellValue('D1', 'Hora')
-            ->setCellValue('E1', 'Medicion Actual')
-            ->setCellValue('F1', 'Min')
-            ->setCellValue('G1', 'Max')
-            ->setCellValue('H1', 'Unidad Medida');       
+            ->setCellValue('D1', 'Hora');       
                                 
          
 $nn=2;
 foreach ($arrErrores as $error) { 
-	//Guardo la unidad de medida
-	$unimed = '';
-	foreach ($arrUnimed as $sen) {
-		if($error['SensoresUniMed_'.$error['Sensor']]==$sen['idUniMed']){
-			$unimed = ' '.$sen['Nombre'];	
-		}
-	}		
 				
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, $error['NombreEquipo'])
             ->setCellValue('B'.$nn, $error['Descripcion'])
             ->setCellValue('C'.$nn, $error['Fecha'])
-            ->setCellValue('D'.$nn, $error['Hora'])
-            ->setCellValue('E'.$nn, $error['Valor'])
-            ->setCellValue('F'.$nn, $error['Valor_min'])
-            ->setCellValue('G'.$nn, $error['Valor_max'])
-            ->setCellValue('H'.$nn, $unimed);
+            ->setCellValue('D'.$nn, $error['Hora']);
  $nn++;           
    
 } 
