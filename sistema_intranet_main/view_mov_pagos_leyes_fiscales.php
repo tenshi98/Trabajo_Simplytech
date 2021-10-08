@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 pagos_leyes_fiscales.fecha_auto,
 pagos_leyes_fiscales.Periodo_Ano,
 pagos_leyes_fiscales.Periodo_Mes,
@@ -88,9 +88,8 @@ IMPRENT_Centro_lv_1.Nombre AS IMPRENT_CC_Level_1,
 IMPRENT_Centro_lv_2.Nombre AS IMPRENT_CC_Level_2,
 IMPRENT_Centro_lv_3.Nombre AS IMPRENT_CC_Level_3,
 IMPRENT_Centro_lv_4.Nombre AS IMPRENT_CC_Level_4,
-IMPRENT_Centro_lv_5.Nombre AS IMPRENT_CC_Level_5
-
-FROM `pagos_leyes_fiscales`
+IMPRENT_Centro_lv_5.Nombre AS IMPRENT_CC_Level_5';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`                                    ON usuarios_listado.idUsuario        = pagos_leyes_fiscales.idUsuario
 LEFT JOIN `core_sistemas`                                       ON core_sistemas.idSistema           = pagos_leyes_fiscales.idSistema
 LEFT JOIN `core_ubicacion_ciudad`                               ON core_ubicacion_ciudad.idCiudad    = core_sistemas.idCiudad
@@ -119,24 +118,9 @@ LEFT JOIN `centrocosto_listado_level_1`  IMPRENT_Centro_lv_1    ON IMPRENT_Centr
 LEFT JOIN `centrocosto_listado_level_2`  IMPRENT_Centro_lv_2    ON IMPRENT_Centro_lv_2.idLevel_2     = pagos_leyes_fiscales.IMPRENT_idLevel_2
 LEFT JOIN `centrocosto_listado_level_3`  IMPRENT_Centro_lv_3    ON IMPRENT_Centro_lv_3.idLevel_3     = pagos_leyes_fiscales.IMPRENT_idLevel_3
 LEFT JOIN `centrocosto_listado_level_4`  IMPRENT_Centro_lv_4    ON IMPRENT_Centro_lv_4.idLevel_4     = pagos_leyes_fiscales.IMPRENT_idLevel_4
-LEFT JOIN `centrocosto_listado_level_5`  IMPRENT_Centro_lv_5    ON IMPRENT_Centro_lv_5.idLevel_5     = pagos_leyes_fiscales.IMPRENT_idLevel_5
-				
-WHERE pagos_leyes_fiscales.idFactFiscal = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `centrocosto_listado_level_5`  IMPRENT_Centro_lv_5    ON IMPRENT_Centro_lv_5.idLevel_5     = pagos_leyes_fiscales.IMPRENT_idLevel_5';
+$SIS_where = 'pagos_leyes_fiscales.idFactFiscal ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'pagos_leyes_fiscales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 $rowArriendo      = db_select_data (false, 'IVA_Compra,IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago,PPM_Diferencia', 'pagos_leyes_fiscales_pagos_arriendos', '', 'idFactFiscal='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowArriendo');
 $rowInsumo        = db_select_data (false, 'IVA_Compra,IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago,PPM_Diferencia', 'pagos_leyes_fiscales_pagos_insumos', '', 'idFactFiscal='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowInsumo');
@@ -153,8 +137,6 @@ $arrHistorial = db_select_array (false, 'pagos_leyes_fiscales_historial.Creacion
 
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, 'Nombre', 'pagos_leyes_fiscales_archivos', '', 'idFactFiscal='.$X_Puntero, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
-											
-
 
 if(isset($row_data['IVA_CC_Nombre'])&&$row_data['IVA_CC_Nombre']!=''){ 
 	$IVA_CC = $row_data['IVA_CC_Nombre'];
@@ -239,7 +221,6 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 			</address>
 		</div>
 	</div>
-	
 	
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
@@ -439,7 +420,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 						<td align="right"></td>
 						<td align="right"><?php echo valores($row_data['IVA_MontoPago'], 0);?></td>
 						<td align="left">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo $pago['DocPago'];
@@ -450,7 +431,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -459,7 +440,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -468,7 +449,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo $pago['Usuario'].'<br/>';
@@ -477,7 +458,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo valores($pago['Monto'], 0).'<br/>';
@@ -501,7 +482,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 						<td align="right"></td>
 						<td align="right"><?php echo valores($row_data['PPM_Pago'], 0);?></td>
 						<td align="left">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo $pago['DocPago'];
@@ -512,7 +493,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -521,7 +502,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -530,7 +511,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo $pago['Usuario'].'<br/>';
@@ -539,7 +520,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo valores($pago['Monto'], 0).'<br/>';
@@ -553,7 +534,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 						<td align="right"></td>
 						<td align="right"><?php echo valores($row_data['Retencion'], 0);?></td>
 						<td align="left">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo $pago['DocPago'];
@@ -564,7 +545,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -573,7 +554,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -582,7 +563,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo $pago['Usuario'].'<br/>';
@@ -591,7 +572,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo valores($pago['Monto'], 0).'<br/>';
@@ -605,7 +586,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 						<td align="right"></td>
 						<td align="right"><?php echo valores($row_data['ImpuestoRenta'], 0);?></td>
 						<td align="left">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 										echo $pago['DocPago'];
@@ -616,7 +597,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -625,7 +606,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -634,7 +615,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 										echo $pago['Usuario'].'<br/>';
@@ -643,7 +624,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 										echo valores($pago['Monto'], 0).'<br/>';
@@ -673,14 +654,12 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>
 	</div>
-	
-	
-      
+	 
 </section>
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial){ ?>
+	<?php if ($arrHistorial!=false){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -702,7 +681,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 		</table>
 	<?php } ?>
 
-	<?php if ($arrArchivo){ ?>
+	<?php if ($arrArchivo!=false){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se traen todos los datos de la detencion
-$query = "SELECT
+$SIS_query = '
 telemetria_listado_error_detenciones.idTelemetria,
 telemetria_listado_error_detenciones.Fecha, 
 telemetria_listado_error_detenciones.Hora, 
@@ -44,63 +44,31 @@ telemetria_listado_error_detenciones.GeoLatitud,
 telemetria_listado_error_detenciones.GeoLongitud, 
 telemetria_listado_error_detenciones.idTabla, 
 telemetria_listado.Nombre AS NombreEquipo,
-telemetria_listado.cantSensores
-
-FROM `telemetria_listado_error_detenciones`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria
-WHERE idDetencion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+telemetria_listado.cantSensores';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria';
+$SIS_where = 'telemetria_listado_error_detenciones.idDetencion ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_error_detenciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 //Se crea cadena dependiendo de la cantidad de sensores existentes
-$aa = '';
+$subquery = '';
 for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
-	$aa .= ',Sensor_'.$i;
-	$aa .= ',SensoresNombre_'.$i;
-	$aa .= ',SensoresUniMed_'.$i;
+	$subquery .= ',Sensor_'.$i;
+	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',SensoresUniMed_'.$i;
 }
 // Se traen todos los datos de las mediciones
-$query = "SELECT idTabla
-".$aa."
-
-FROM `telemetria_listado_tablarelacionada_".$rowdata['idTelemetria']."`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_".$rowdata['idTelemetria'].".idTelemetria
-WHERE telemetria_listado_tablarelacionada_".$rowdata['idTelemetria'].".idTabla = '".$rowdata['idTabla']."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowMedicion = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'idTabla'.$subquery;
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTelemetria';
+$SIS_where = 'telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTabla ='.$rowdata['idTabla'];
+$rowMedicion = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMedicion');
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
 
 $arrFinalUnimed = array();
-foreach ($arrUnimed as $sen) {
-	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
-}
+foreach ($arrUnimed as $sen) { $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre']; }
+
 ?>
 
 <div class="col-sm-12">

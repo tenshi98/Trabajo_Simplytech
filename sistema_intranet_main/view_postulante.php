@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 postulantes_listado.Direccion_img, 
 core_estados.Nombre AS Estado,
 core_sistemas.Nombre AS Sistema,
@@ -54,34 +54,17 @@ postulantes_listado.Direccion,
 postulantes_listado.Observaciones,
 postulantes_listado.SueldoLiquido,
 core_tipos_licencia_conducir.Nombre AS LicenciaTipo,
-postulantes_listado.File_Curriculum
-
-FROM `postulantes_listado`
+postulantes_listado.File_Curriculum';
+$SIS_join  = '
 LEFT JOIN `core_estados`                     ON core_estados.idEstado                         = postulantes_listado.idEstado
 LEFT JOIN `core_sistemas`                    ON core_sistemas.idSistema                       = postulantes_listado.idSistema
 LEFT JOIN `core_ubicacion_ciudad`            ON core_ubicacion_ciudad.idCiudad                = postulantes_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`           ON core_ubicacion_comunas.idComuna               = postulantes_listado.idComuna
 LEFT JOIN `core_tipos_licencia_conducir`     ON core_tipos_licencia_conducir.idTipoLicencia   = postulantes_listado.idTipoLicencia
 LEFT JOIN `core_sexo`                        ON core_sexo.idSexo                              = postulantes_listado.idSexo
-LEFT JOIN `core_estado_civil`                ON core_estado_civil.idEstadoCivil               = postulantes_listado.idEstadoCivil
-
-WHERE postulantes_listado.idPostulante = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
+LEFT JOIN `core_estado_civil`                ON core_estado_civil.idEstadoCivil               = postulantes_listado.idEstadoCivil';
+$SIS_where = 'postulantes_listado.idPostulante ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

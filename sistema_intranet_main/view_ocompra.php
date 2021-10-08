@@ -40,7 +40,7 @@ include '1include_ocompra.php'; ?>
 	if($row_data['idEstado']==2){
 								
 		$zz  = '?idSistema='.$row_data['idSistema'];
-		$zz .= '&view='.$X_Puntero;
+		$zz .= '&view='.$_GET['view'];
 		?>
 		
 			<div class="col-xs-12" style="margin-bottom:30px">

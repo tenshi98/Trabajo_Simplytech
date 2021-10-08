@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 seg_vecinal_eventos_listado.Direccion,
 seg_vecinal_eventos_listado.GeoLatitud,
 seg_vecinal_eventos_listado.GeoLongitud,
@@ -50,55 +50,28 @@ core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 seg_vecinal_clientes_listado.Nombre AS Vecino,
 seg_vecinal_eventos_listado.idValidado,
-core_seguridad_validacion.Nombre AS Validacion
-
-FROM `seg_vecinal_eventos_listado`
+core_seguridad_validacion.Nombre AS Validacion';
+$SIS_join  = '
 LEFT JOIN `seg_vecinal_eventos_tipos`     ON seg_vecinal_eventos_tipos.idTipo       = seg_vecinal_eventos_listado.idTipo
 LEFT JOIN `core_ubicacion_ciudad`         ON core_ubicacion_ciudad.idCiudad         = seg_vecinal_eventos_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`        ON core_ubicacion_comunas.idComuna        = seg_vecinal_eventos_listado.idComuna
 LEFT JOIN `seg_vecinal_clientes_listado`  ON seg_vecinal_clientes_listado.idCliente = seg_vecinal_eventos_listado.idCliente
-LEFT JOIN `core_seguridad_validacion`     ON core_seguridad_validacion.idValidado   = seg_vecinal_eventos_listado.idValidado
-
-WHERE seg_vecinal_eventos_listado.idEvento = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_seguridad_validacion`     ON core_seguridad_validacion.idValidado   = seg_vecinal_eventos_listado.idValidado';
+$SIS_where = 'seg_vecinal_eventos_listado.idEvento ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	
+/**************************************************************/
 //Se traen las rutas
+$SIS_query = 'idArchivo, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idEvento ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrArchivos = array();
-$query = "SELECT idArchivo, Nombre
-FROM `seg_vecinal_eventos_listado_archivos`
-WHERE idEvento = ".$X_Puntero."
-ORDER BY Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrArchivos = db_select_array (false, $SIS_query, 'seg_vecinal_eventos_listado_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
-
+/**************************************************************/
 // Se trae un listado con todos los comentarios
-$arrComentarios = array();
-$query = "SELECT 
+$SIS_query = '
 seg_vecinal_eventos_listado_comentarios.idComentario,
 seg_vecinal_eventos_listado_comentarios.idCliente,
 seg_vecinal_eventos_listado_comentarios.Fecha,
@@ -106,26 +79,13 @@ seg_vecinal_eventos_listado_comentarios.Hora,
 seg_vecinal_eventos_listado_comentarios.Comentario,
 
 seg_vecinal_clientes_listado.Nombre,
-seg_vecinal_clientes_listado.Direccion_img
+seg_vecinal_clientes_listado.Direccion_img';
+$SIS_join  = 'LEFT JOIN `seg_vecinal_clientes_listado` ON seg_vecinal_clientes_listado.idCliente = seg_vecinal_eventos_listado_comentarios.idCliente';
+$SIS_where = 'seg_vecinal_eventos_listado_comentarios.idEvento='.$X_Puntero;
+$SIS_order = 'seg_vecinal_eventos_listado_comentarios.Fecha ASC';
+$arrComentarios = array();
+$arrComentarios = db_select_array (false, $SIS_query, 'seg_vecinal_eventos_listado_comentarios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrComentarios');
 
-FROM `seg_vecinal_eventos_listado_comentarios`
-LEFT JOIN `seg_vecinal_clientes_listado` ON seg_vecinal_clientes_listado.idCliente = seg_vecinal_eventos_listado_comentarios.idCliente
-WHERE seg_vecinal_eventos_listado_comentarios.idEvento=".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrComentarios,$row );
-}
 /************************************************/
 //se cuentan los archivos
 $N_Archivos = 0;

@@ -202,7 +202,6 @@ $SIS_order = 'cross_checking_materiales_seguridad.Nombre ASC';
 $arrMateriales = array();
 $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_materiales', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMateriales');
 	
-
 ?>
 
 <section class="invoice">
@@ -218,67 +217,62 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 
 	<div class="row invoice-info">
 		
-		<?php echo '
-				<div class="col-sm-4 invoice-col">
-					<strong>Datos Empresa</strong>
-					<address>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Empresa: '.$row_data['SistemaOrigen'].'<br/>
-						Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						Direccion: '.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
-					</address>
-				</div>
-				<div class="col-sm-4 invoice-col">
-					<strong>Identificacion</strong>
-					<address>
-						Predio: '.$row_data['NombrePredio'].'<br/>
-						Estado: '.$row_data['Estado'].'<br/>
-						Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br/>
-						Estado Fenologico: '.$row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre'].'<br/>';
-						if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){        echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
-						if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){  echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>'; }else{echo 'Variedad: Todas las Variedades<br/>';}
-						echo '
-					</address>
-				</div>
-				<div class="col-sm-4 invoice-col">
-					<strong>Datos de Solicitud</strong>
-					<address>
-						Prioridad: '.$row_data['NombrePrioridad'].'<br/>
-						N° Solicitud: '.n_doc($row_data['NSolicitud'], 5).'<br/>
-						Fecha inicio requerido: '.fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg'].'<br/>
-						Fecha termino requerido: '.fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin'].'<br/>';
-						if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
-						if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
-						if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
-						if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){ echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
-						echo 'Agrónomo: '.$row_data['NombreUsuario'];
-						if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
-						
-						echo '
-					</address>
-				</div>
-				<div class="clearfix"></div>
-				<div class="col-sm-4 invoice-col">
-					<strong>Parámetros de Aplicación</strong>
-					<address>
-						Mojamiento: '.Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha<br/>
-						Velocidad Tractor: '.Cantidades_decimales_justos($row_data['VelTractor']).' Km/hr<br/>
-						Velocidad Viento: '.Cantidades_decimales_justos($row_data['VelViento']).' Km/hr<br/>
-						Temperatura Min: '.Cantidades_decimales_justos($row_data['TempMin']).' °<br/>
-						Temperatura Max: '.Cantidades_decimales_justos($row_data['TempMax']).' °<br/>
-						Humedad: '.Cantidades_decimales_justos($row_data['HumTempMax']).' %<br/>
-						
-					</address>
-				</div>';
-		?>
+		<div class="col-sm-4 invoice-col">
+			<strong>Datos Empresa</strong>
+			<address>
+				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
+				Empresa: <?php echo $row_data['SistemaOrigen']; ?><br/>
+				Ciudad-Comuna: <?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
+				Direccion: <?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
+				Fono: <?php echo $row_data['SistemaOrigenFono']; ?><br/>
+				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
+			</address>
+		</div>
+		<div class="col-sm-4 invoice-col">
+			<strong>Identificacion</strong>
+			<address>
+				Predio: <?php echo $row_data['NombrePredio']; ?><br/>
+				Estado: <?php echo $row_data['Estado']; ?><br/>
+				Temporada: <?php echo $row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre']; ?><br/>
+				Estado Fenologico: <?php echo $row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre']; ?><br/>
+				<?php
+					if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){        echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
+					if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){  echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>'; }else{echo 'Variedad: Todas las Variedades<br/>';}
+				?>	
+			</address>
+		</div>
+		<div class="col-sm-4 invoice-col">
+			<strong>Datos de Solicitud</strong>
+			<address>
+				Prioridad: <?php echo $row_data['NombrePrioridad']; ?><br/>
+				N° Solicitud: <?php echo n_doc($row_data['NSolicitud'], 5); ?><br/>
+				Fecha inicio requerido: <?php echo fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg']; ?><br/>
+				Fecha termino requerido: <?php echo fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin']; ?><br/>
+				<?php
+					if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
+					if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
+					if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
+					if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){ echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
+					echo 'Agrónomo: '.$row_data['NombreUsuario'];
+					if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
+				?>	
+			</address>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-sm-4 invoice-col">
+			<strong>Parámetros de Aplicación</strong>
+			<address>
+				Mojamiento: <?php echo Cantidades_decimales_justos($row_data['Mojamiento']); ?> L/ha<br/>
+				Velocidad Tractor: <?php echo Cantidades_decimales_justos($row_data['VelTractor']); ?> Km/hr<br/>
+				Velocidad Viento: <?php echo Cantidades_decimales_justos($row_data['VelViento']); ?> Km/hr<br/>
+				Temperatura Min: <?php echo Cantidades_decimales_justos($row_data['TempMin']); ?> °<br/>
+				Temperatura Max: <?php echo Cantidades_decimales_justos($row_data['TempMax']); ?> °<br/>
+				Humedad: <?php echo Cantidades_decimales_justos($row_data['HumTempMax']); ?> %<br/>
+			</address>
+		</div>
 
 	</div>
 	
-	
-
-
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -305,7 +299,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
                     $TotLitrosApliXhect     = 0;
                     
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrCuarteles) {
+					if ($arrCuarteles!=false) {
 						foreach ($arrCuarteles as $cuartel) { 
 							//Verifico el tipo de cierre
 							if(isset($cuartel['CuartelidEjecucion'])&&$cuartel['CuartelidEjecucion']==1){
@@ -355,7 +349,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 								<td><?php if($LitrosApliXhect!=0){echo porcentaje($LitrosApliXhect/$cuartel['Mojamiento']);}else{ echo '0 %';} ?></td>
 								<td>	
 									<?php 
-									if ($arrTracxCuartel) {
+									if ($arrTracxCuartel!=false) {
 										$zxc = 0;
 										foreach ($arrTracxCuartel as $tract) {
 											if($cuartel['idZona']==$tract['idZona']){
@@ -410,7 +404,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 					//Variable
 					$NProd = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrProductos) {
+					if ($arrProductos!=false) {
 						foreach ($arrProductos as $prod) {
 							$NProd++; ?>
 							
@@ -454,7 +448,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 					$Capacidad  = 0;
 					$NTract     = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrTractores) {
+					if ($arrTractores!=false) {
 						foreach ($arrTractores as $tract) { 
 							//Se suman cantidades
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
@@ -496,7 +490,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 					//Variable
 					$nmb = 0; 
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrProductos) {
+					if ($arrProductos!=false) {
 						foreach ($arrProductos as $prod) { 
 							$PromedioCapacidad = $Capacidad/$NTract;
 							
@@ -524,7 +518,6 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 		</div>
 	</div>
 	
-	
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -534,7 +527,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 					</tr>
 					<?php
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrMateriales) {
+					if ($arrMateriales!=false) {
 						foreach ($arrMateriales as $prod) {?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Codigo'].' - '.$prod['Nombre'];?></td>
@@ -550,11 +543,6 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 	</div>
 	    
 </section>
-
-
-
-<div class="col-xs-12" style="margin-bottom:15px;"></div>
-
 
 <?php
 /**********************************************************************************************************************************/

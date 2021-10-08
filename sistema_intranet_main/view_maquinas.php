@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //se traen los datos basicos de la licitacion
-$query = "SELECT 
+$SIS_query = '
 maquinas_listado.Codigo, 
 maquinas_listado.Nombre, 
 maquinas_listado.Modelo, 
@@ -59,9 +59,8 @@ ubicacion_listado_level_3.Nombre AS Ubicacion_lvl_3,
 ubicacion_listado_level_4.Nombre AS Ubicacion_lvl_4,
 ubicacion_listado_level_5.Nombre AS Ubicacion_lvl_5,
 
-clientes_listado.Nombre AS Cliente
-
-FROM `maquinas_listado`
+clientes_listado.Nombre AS Cliente';
+$SIS_join  = '
 LEFT JOIN `core_estados`                  ON core_estados.idEstado                 = maquinas_listado.idEstado
 LEFT JOIN `core_sistemas_opciones` ops1   ON ops1.idOpciones                       = maquinas_listado.idConfig_1
 LEFT JOIN `core_sistemas_opciones` ops2   ON ops2.idOpciones                       = maquinas_listado.idConfig_2
@@ -72,99 +71,50 @@ LEFT JOIN `ubicacion_listado_level_2`     ON ubicacion_listado_level_2.idLevel_2
 LEFT JOIN `ubicacion_listado_level_3`     ON ubicacion_listado_level_3.idLevel_3   = maquinas_listado.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`     ON ubicacion_listado_level_4.idLevel_4   = maquinas_listado.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`     ON ubicacion_listado_level_5.idLevel_5   = maquinas_listado.idUbicacion_lvl_5
-LEFT JOIN `clientes_listado`              ON clientes_listado.idCliente            = maquinas_listado.idCliente
+LEFT JOIN `clientes_listado`              ON clientes_listado.idCliente            = maquinas_listado.idCliente';
+$SIS_where = 'maquinas_listado.idMaquina='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-WHERE maquinas_listado.idMaquina=".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 
 if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	//Se crean las variables
 	$nmax = 15;
-	$z = '';
-	$leftjoin = '';
-	$orderby = '';
+	$SIS_query = 'maquinas_listado_level_1.idLevel_1 AS bla';
+	$SIS_join  = '';
+	$SIS_order = 'maquinas_listado_level_1.Codigo ASC';
 	for ($i = 1; $i <= $nmax; $i++) {
 		//consulta
-		$z .= ',maquinas_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
-		$z .= ',maquinas_listado_level_'.$i.'.Codigo AS LVL_'.$i.'_Codigo';
-		$z .= ',maquinas_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
-		$z .= ',maquinas_listado_level_'.$i.'.idUtilizable AS LVL_'.$i.'_idUtilizable';
-		$z .= ',maquinas_listado_level_'.$i.'.idLicitacion AS LVL_'.$i.'_idLicitacion';
-		$z .= ',maquinas_listado_level_'.$i.'.tabla AS LVL_'.$i.'_table';
-		$z .= ',maquinas_listado_level_'.$i.'.table_value AS LVL_'.$i.'_table_value';
-		$z .= ',maquinas_listado_level_'.$i.'.Direccion_img AS LVL_'.$i.'_imagen ';
+		$SIS_query .= ',maquinas_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
+		$SIS_query .= ',maquinas_listado_level_'.$i.'.Codigo AS LVL_'.$i.'_Codigo';
+		$SIS_query .= ',maquinas_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
+		$SIS_query .= ',maquinas_listado_level_'.$i.'.idUtilizable AS LVL_'.$i.'_idUtilizable';
+		$SIS_query .= ',maquinas_listado_level_'.$i.'.idLicitacion AS LVL_'.$i.'_idLicitacion';
+		$SIS_query .= ',maquinas_listado_level_'.$i.'.tabla AS LVL_'.$i.'_table';
+		$SIS_query .= ',maquinas_listado_level_'.$i.'.table_value AS LVL_'.$i.'_table_value';
+		$SIS_query .= ',maquinas_listado_level_'.$i.'.Direccion_img AS LVL_'.$i.'_imagen ';
 		//Joins
 		$xx = $i + 1;
 		if($xx<=$nmax){
-			$leftjoin .= ' LEFT JOIN `maquinas_listado_level_'.$xx.'`   ON maquinas_listado_level_'.$xx.'.idLevel_'.$i.'    = maquinas_listado_level_'.$i.'.idLevel_'.$i;
+			$SIS_join .= ' LEFT JOIN `maquinas_listado_level_'.$xx.'`   ON maquinas_listado_level_'.$xx.'.idLevel_'.$i.'    = maquinas_listado_level_'.$i.'.idLevel_'.$i;
 		}
 		//ORDER BY
-		$orderby .= ', maquinas_listado_level_'.$i.'.Codigo ASC';
+		$SIS_order .= ', maquinas_listado_level_'.$i.'.Codigo ASC';
 	}
 
 	//se hace la consulta
+	$SIS_where = 'maquinas_listado_level_1.idMaquina='.$X_Puntero;
 	$arrItemizado = array();
-	$query = "SELECT
-	maquinas_listado_level_1.idLevel_1 AS bla
-	".$z."
-	FROM `maquinas_listado_level_1`
-	".$leftjoin."
-	WHERE maquinas_listado_level_1.idMaquina=".$X_Puntero."
-	ORDER BY maquinas_listado_level_1.Codigo ASC ".$orderby."
-
-	";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrItemizado,$row );
-	}
+	$arrItemizado = db_select_array (false, $SIS_query, 'maquinas_listado_level_1', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrItemizado');
 
 	/*********************************************************************/
 	// Se trae un listado con todos los tipos de componentes
+	$SIS_query = 'idUtilizable, Nombre';
+	$SIS_join  = '';
+	$SIS_where = 'Nombre!=""';
+	$SIS_order = 'idUtilizable ASC';
 	$arrTipos = array();
-	$query = "SELECT idUtilizable, Nombre
-	FROM `core_maquinas_tipo_componente`
-	ORDER BY idUtilizable ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrTipos,$row );
-	}
+	$arrTipos = db_select_array (false, $SIS_query, 'core_maquinas_tipo_componente', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTipos');
+	
 	//Se crea el arreglo
 	$TipoMaq = array();
 	foreach($arrTipos as $tipo) {
@@ -172,33 +122,19 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 		$TipoMaq[$tipo['idUtilizable']]['Nombre']        = $tipo['Nombre'];
 	}
 	/*********************************************************************/
-	//Verifico el tipo de usuario que esta ingresando
-	$z="WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 	//Se crea el arreglo
 	$Trabajo = array();
+	//variables
+	$SIS_join  = '';
+	$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_order = 'Codigo ASC, Nombre ASC';
 	//Creo el arreglo para saber los datos de las licitaciones
 	for ($i = 1; $i <= $nmax; $i++) {
 		// Se trae un listado con todos los datos
+		$SIS_query = 'idLevel_'.$i.' AS lvl, idLicitacion, Nombre, Codigo';
 		$arrTrabajo = array();
-		$query = "SELECT idLevel_".$i." AS lvl, idLicitacion, Nombre, Codigo
-		FROM `licitacion_listado_level_".$i."` ".$z."
-		ORDER BY Codigo ASC, Nombre ASC";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			
-			//variables
-			$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-			//generar log
-			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		$arrTrabajo = db_select_array (false, $SIS_query, 'licitacion_listado_level_'.$i, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajo');
 		
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
-		array_push( $arrTrabajo,$row );
-		}
 		//se guardan los datos
 		foreach($arrTrabajo as $trab) {
 			$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Nombre']  = $trab['Nombre'];

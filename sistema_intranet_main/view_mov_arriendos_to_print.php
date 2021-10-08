@@ -31,7 +31,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 bodegas_arriendos_facturacion.idTipo,
 bodegas_arriendos_facturacion.idFacturacion,
 bodegas_arriendos_facturacion.Creacion_fecha,
@@ -110,9 +110,8 @@ centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
 centrocosto_listado_level_2.Nombre AS CentroCosto_Level_2,
 centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
 centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
-centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5
-
-FROM `bodegas_arriendos_facturacion`
+centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5';
+$SIS_join  = '
 LEFT JOIN `bodegas_arriendos_facturacion_tipo`      ON bodegas_arriendos_facturacion_tipo.idTipo    = bodegas_arriendos_facturacion.idTipo
 LEFT JOIN `core_documentos_mercantiles`             ON core_documentos_mercantiles.idDocumentos     = bodegas_arriendos_facturacion.idDocumentos
 LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                   = bodegas_arriendos_facturacion.idUsuario
@@ -135,147 +134,71 @@ LEFT JOIN `centrocosto_listado_level_1`             ON centrocosto_listado_level
 LEFT JOIN `centrocosto_listado_level_2`             ON centrocosto_listado_level_2.idLevel_2        = bodegas_arriendos_facturacion.idLevel_2
 LEFT JOIN `centrocosto_listado_level_3`             ON centrocosto_listado_level_3.idLevel_3        = bodegas_arriendos_facturacion.idLevel_3
 LEFT JOIN `centrocosto_listado_level_4`             ON centrocosto_listado_level_4.idLevel_4        = bodegas_arriendos_facturacion.idLevel_4
-LEFT JOIN `centrocosto_listado_level_5`             ON centrocosto_listado_level_5.idLevel_5        = bodegas_arriendos_facturacion.idLevel_5
+LEFT JOIN `centrocosto_listado_level_5`             ON centrocosto_listado_level_5.idLevel_5        = bodegas_arriendos_facturacion.idLevel_5';
+$SIS_where = 'bodegas_arriendos_facturacion.idFacturacion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'bodegas_arriendos_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
-
-				
+/*****************************************/				
 // Se trae un listado con todos los productos utilizados
-$arrArriendos = array();
-$query = "SELECT 
+$SIS_query = '
 equipos_arriendo_listado.Nombre,
 bodegas_arriendos_facturacion_existencias.Cantidad_ing,
 bodegas_arriendos_facturacion_existencias.Cantidad_eg,
 bodegas_arriendos_facturacion_existencias.Valor,
 bodegas_arriendos_facturacion_existencias.ValorTotal,
-core_tiempo_frecuencia.Nombre AS Frecuencia
-
-FROM `bodegas_arriendos_facturacion_existencias` 
+core_tiempo_frecuencia.Nombre AS Frecuencia';
+$SIS_join  = '
 LEFT JOIN `equipos_arriendo_listado`   ON equipos_arriendo_listado.idEquipo      = bodegas_arriendos_facturacion_existencias.idEquipo
-LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia    = bodegas_arriendos_facturacion_existencias.idFrecuencia
-WHERE bodegas_arriendos_facturacion_existencias.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArriendos,$row );
-}
+LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia    = bodegas_arriendos_facturacion_existencias.idFrecuencia';
+$SIS_where = 'bodegas_arriendos_facturacion_existencias.idFacturacion ='.$X_Puntero;
+$SIS_order = 'equipos_arriendo_listado.Nombre ASC';
+$arrArriendos = array();
+$arrArriendos = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArriendos');
 
 /*****************************************/		
 // Se trae un listado con todos los otros
+$SIS_query = 'Nombre, vTotal';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrOtros = array();
-$query = "SELECT Nombre, vTotal
-FROM `bodegas_arriendos_facturacion_otros` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrOtros = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion_otros', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOtros');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOtros,$row );
-}
-
+/*****************************************/	
 // Se trae un listado con todos los impuestos existentes
+$SIS_query = 'Nombre, vTotal';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrDescuentos = array();
-$query = "SELECT Nombre, vTotal
-FROM `bodegas_arriendos_facturacion_descuentos`
-WHERE idFacturacion = ".$X_Puntero." 
-ORDER BY Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrDescuentos = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion_descuentos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDescuentos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDescuentos,$row );
-}
-
+/*****************************************/	
 // Se trae un listado con todos los impuestos existentes
+$SIS_query = 'Nombre, Porcentaje';
+$SIS_join  = '';
+$SIS_where = 'Nombre!=""';
+$SIS_order = 'idImpuesto ASC';
 $arrImpuestos = array();
-$query = "SELECT Nombre, Porcentaje
-FROM `sistema_impuestos`
-ORDER BY idImpuesto ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrImpuestos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrImpuestos,$row );
-}
-
+/*****************************************/	
 // Se trae un listado con todas las guias relacionadas al documento
+$SIS_query = 'N_Doc, ValorNeto';
+$SIS_join  = '';
+$SIS_where = 'idDocumentos = 1 AND DocRel ='.$X_Puntero;
+$SIS_order = 'N_Doc ASC';
 $arrGuias = array();
-$query = "SELECT  N_Doc, ValorNeto
-FROM `bodegas_arriendos_facturacion`
-WHERE idDocumentos = 1 AND DocRel = ".$X_Puntero."
-ORDER BY N_Doc ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrGuias = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGuias');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
+/*****************************************/
+$nn = 0;
+$impuestos = array();
+foreach ($arrImpuestos as $impto) { 
+	$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
+	$nn++;
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGuias,$row );
-}
+					
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -478,9 +401,6 @@ $html = '
 			
 		}
 		
-		
-		
-    
 	$html .= '</div>
 	
 	
@@ -495,7 +415,7 @@ $html = '
 				</thead>
 				<tbody>';
 					//si existen productos
-					if ($arrArriendos) {
+					if ($arrArriendos!=false) {
 						$html .= '<tr class="active"><td colspan="5"><strong>Productos</strong></td></tr>';
 						foreach ($arrArriendos as $prod) { 
 							$html .= '<tr>
@@ -512,7 +432,7 @@ $html = '
 						}
 					}
 					//si existen guias
-					if ($arrGuias) {
+					if ($arrGuias!=false) {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Guias de Despacho</strong></td></tr>';
 						foreach ($arrGuias as $guia) {
 							$html .= '<tr>
@@ -521,10 +441,8 @@ $html = '
 							</tr>';
 						} 
 					}
-					
-					
 					//si existen guias
-					if ($arrOtros) {
+					if ($arrOtros!=false) {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Otros</strong></td></tr>';
 						foreach ($arrOtros as $otro) {
 							$html .= '<tr>
@@ -541,12 +459,6 @@ $html = '
 				<tbody>';	
 					
 					//Recorro y guard el nombre de los impuestos 
-					$nn = 0;
-					$impuestos = array();
-					foreach ($arrImpuestos as $impto) { 
-						$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
-						$nn++;
-					}
 					if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Subtotal</strong></td> 
@@ -637,7 +549,6 @@ $html = '
 			
 		</div>
 	</div>
-	
 	
 	<div class="row">
 		<div class="col-xs-12">

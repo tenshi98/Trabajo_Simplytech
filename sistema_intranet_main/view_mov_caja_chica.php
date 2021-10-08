@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 caja_chica_facturacion.idTipo,
 caja_chica_listado.Nombre AS CajaNombre,
 core_sistemas.Nombre AS CajaSistema,
@@ -74,9 +74,8 @@ trab_revi.Nombre AS RevisadoNombre,
 trab_revi.ApellidoPat AS RevisadoApellidoPat,
 
 trab_apro.Nombre AS AprobadoNombre,
-trab_apro.ApellidoPat AS AprobadoApellidoPat
-
-FROM `caja_chica_facturacion`
+trab_apro.ApellidoPat AS AprobadoApellidoPat';
+$SIS_join  = '
 LEFT JOIN `caja_chica_listado`                  ON caja_chica_listado.idCajaChica       = caja_chica_facturacion.idCajaChica
 LEFT JOIN `core_sistemas`                       ON core_sistemas.idSistema              = caja_chica_facturacion.idSistema
 LEFT JOIN `usuarios_listado`                    ON usuarios_listado.idUsuario           = caja_chica_facturacion.idUsuario
@@ -87,135 +86,58 @@ LEFT JOIN `caja_chica_facturacion`   fact_rel   ON fact_rel.idFacturacion       
 LEFT JOIN `trabajadores_listado`     trab_rel   ON trab_rel.idTrabajador                = fact_rel.idTrabajador
 LEFT JOIN `trabajadores_listado`     trab_soli  ON trab_soli.idTrabajador               = caja_chica_facturacion.idSolicitado
 LEFT JOIN `trabajadores_listado`     trab_revi  ON trab_revi.idTrabajador               = caja_chica_facturacion.idRevisado
-LEFT JOIN `trabajadores_listado`     trab_apro  ON trab_apro.idTrabajador               = caja_chica_facturacion.idAprobado
+LEFT JOIN `trabajadores_listado`     trab_apro  ON trab_apro.idTrabajador               = caja_chica_facturacion.idAprobado';
+$SIS_where = 'caja_chica_facturacion.idFacturacion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-WHERE caja_chica_facturacion.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-				
+/*****************************************/				
 // Se trae un listado con todos los productos utilizados
-$arrDocumentos = array();
-$query = "SELECT 
+$SIS_query = '
 sistema_documentos_pago.Nombre,
 caja_chica_facturacion_existencias.N_Doc,
-caja_chica_facturacion_existencias.Valor
+caja_chica_facturacion_existencias.Valor';
+$SIS_join  = 'LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = caja_chica_facturacion_existencias.idDocPago';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'sistema_documentos_pago.Nombre ASC';
+$arrDocumentos = array();
+$arrDocumentos = db_select_array (false, $SIS_query, 'caja_chica_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDocumentos');
 
-FROM `caja_chica_facturacion_existencias` 
-LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = caja_chica_facturacion_existencias.idDocPago
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDocumentos,$row );
-}
-
+/*****************************************/	
 // Se trae un listado con todos los productos utilizados
+$SIS_query = 'Item, Valor';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Item ASC';
 $arrRendiciones = array();
-$query = "SELECT Item, Valor
-
-FROM `caja_chica_facturacion_rendiciones` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRendiciones,$row );
-}
+$arrRendiciones = db_select_array (false, $SIS_query, 'caja_chica_facturacion_rendiciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRendiciones');
 
 /*****************************************/		
 // Se trae un listado con todos los archivos adjuntos
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrArchivo = array();
-$query = "SELECT Nombre
-FROM `caja_chica_facturacion_archivos` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivo,$row );
-}
+$arrArchivo = db_select_array (false, $SIS_query, 'caja_chica_facturacion_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
 /*****************************************/		
 // Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
+$SIS_query = '
 caja_chica_facturacion_historial.Creacion_fecha, 
 caja_chica_facturacion_historial.Observacion,
-
 core_historial_tipos.FonAwesome,
-usuarios_listado.Nombre AS Usuario
-
-FROM `caja_chica_facturacion_historial` 
-LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = caja_chica_facturacion_historial.idTipo
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = caja_chica_facturacion_historial.idUsuario
-WHERE caja_chica_facturacion_historial.idFacturacion = ".$X_Puntero." 
-ORDER BY caja_chica_facturacion_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
+usuarios_listado.Nombre AS Usuario';
+$SIS_join  = '
+LEFT JOIN `core_historial_tipos` ON core_historial_tipos.idTipo = caja_chica_facturacion_historial.idTipo
+LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario  = caja_chica_facturacion_historial.idUsuario';
+$SIS_where = 'caja_chica_facturacion_historial.idFacturacion ='.$X_Puntero;
+$SIS_order = 'caja_chica_facturacion_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
 ?>
 
-
-
 <section class="invoice">
-
 
 	<div class="row">
 		<div class="col-xs-12">
@@ -311,11 +233,7 @@ array_push( $arrHistorial,$row );
 				break;
 		}?>
 		
-		
-		
-    
 	</div>
-	
 	
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
@@ -328,7 +246,7 @@ array_push( $arrHistorial,$row );
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrRendiciones) { ?>
+					<?php if ($arrRendiciones!=false) { ?>
 						<tr class="active"><td colspan="3"><strong>Rendiciones</strong></td></tr>
 						<?php foreach ($arrRendiciones as $prod) { ?>
 							<tr>
@@ -345,7 +263,7 @@ array_push( $arrHistorial,$row );
 						<?php } ?>
 					<?php } ?>
 					
-					<?php if ($arrDocumentos) { ?>
+					<?php if ($arrDocumentos!=false) { ?>
 						<tr class="active"><td colspan="3"><strong>Montos</strong></td></tr>
 						<?php foreach ($arrDocumentos as $prod) { ?>
 							<tr>
@@ -369,7 +287,6 @@ array_push( $arrHistorial,$row );
 						<?php } ?>
 					<?php } ?>
 					
-					
 					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right"><strong>Total</strong></td> 
@@ -388,7 +305,6 @@ array_push( $arrHistorial,$row );
 
 		</div>
 	</div>
-	
 	
 	<div class="row">
 		<div class="col-xs-12">
@@ -415,8 +331,7 @@ array_push( $arrHistorial,$row );
 		</div>
 	<?php } ?>
 	
-
-<?php
+	<?php
 	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
 	?>
@@ -436,7 +351,7 @@ array_push( $arrHistorial,$row );
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial){ ?>
+	<?php if ($arrHistorial!=false){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -458,7 +373,7 @@ array_push( $arrHistorial,$row );
 		</table>
 	<?php } ?>
 	
-	<?php if ($arrArchivo){ ?>
+	<?php if ($arrArchivo!=false){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

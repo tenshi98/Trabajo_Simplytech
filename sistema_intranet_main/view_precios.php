@@ -43,149 +43,81 @@ switch ($X_type) {
     //Producto
     case 1:
         // Se trae un listado de los valores
-		$query = "SELECT
+		$SIS_query = '
 		bodegas_productos_facturacion_existencias.Valor AS Precio,
 		bodegas_productos_facturacion_existencias.Creacion_fecha,
 		productos_listado.Nombre AS Producto,
-		proveedor_listado.Nombre AS Proveedor
-
-		FROM `bodegas_productos_facturacion_existencias`
+		proveedor_listado.Nombre AS Proveedor';
+		$SIS_join  = '
 		LEFT JOIN bodegas_productos_facturacion    ON bodegas_productos_facturacion.idFacturacion    = bodegas_productos_facturacion_existencias.idFacturacion
 		LEFT JOIN productos_listado                ON productos_listado.idProducto                   = bodegas_productos_facturacion_existencias.idProducto
-		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_productos_facturacion_existencias.idProveedor
-
-		WHERE bodegas_productos_facturacion_existencias.idProducto=".$X_Puntero."
-		AND bodegas_productos_facturacion.idTipo = 1 
-		ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha DESC 
-		LIMIT 40";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			
-			//variables
-			$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-			//generar log
-			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_productos_facturacion_existencias.idProveedor';
+		$SIS_where = 'bodegas_productos_facturacion_existencias.idProducto='.$X_Puntero.' AND bodegas_productos_facturacion.idTipo = 1';
+		$SIS_order = 'bodegas_productos_facturacion_existencias.Creacion_fecha DESC LIMIT 40';
+		$arrProducto = array();
+		$arrProducto = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProducto');
 		
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
-		array_push( $arrProducto,$row );
-		}
     break;
     /********************************************************/
     //Insumo
     case 2:
         // Se trae un listado de los valores
-		$query = "SELECT
+		$SIS_query = '
 		bodegas_insumos_facturacion_existencias.Valor AS Precio,
 		bodegas_insumos_facturacion_existencias.Creacion_fecha,
 		insumos_listado.Nombre AS Producto,
-		proveedor_listado.Nombre AS Proveedor
-
-		FROM `bodegas_insumos_facturacion_existencias`
+		proveedor_listado.Nombre AS Proveedor';
+		$SIS_join  = '
 		LEFT JOIN bodegas_insumos_facturacion      ON bodegas_insumos_facturacion.idFacturacion      = bodegas_insumos_facturacion_existencias.idFacturacion
 		LEFT JOIN insumos_listado                  ON insumos_listado.idProducto                     = bodegas_insumos_facturacion_existencias.idProducto
-		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_insumos_facturacion_existencias.idProveedor
-
-		WHERE bodegas_insumos_facturacion_existencias.idProducto=".$X_Puntero."
-		AND bodegas_insumos_facturacion.idTipo = 1 
-		ORDER BY bodegas_insumos_facturacion_existencias.Creacion_fecha DESC 
-		LIMIT 40";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			
-			//variables
-			$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-			//generar log
-			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_insumos_facturacion_existencias.idProveedor';
+		$SIS_where = 'bodegas_insumos_facturacion_existencias.idProducto='.$X_Puntero.' AND bodegas_insumos_facturacion.idTipo = 1';
+		$SIS_order = 'bodegas_insumos_facturacion_existencias.Creacion_fecha DESC LIMIT 40';
+		$arrProducto = array();
+		$arrProducto = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProducto');
 		
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
-		array_push( $arrProducto,$row );
-		}
     break;
     /********************************************************/
     //Arriendo
     case 3:
         // Se trae un listado de los valores
-		$query = "SELECT
+		$SIS_query = '
 		bodegas_arriendos_facturacion_existencias.ValorTotal AS Precio,
 		bodegas_arriendos_facturacion_existencias.Creacion_fecha,
 		equipos_arriendo_listado.Nombre AS Producto,
-		proveedor_listado.Nombre AS Proveedor
-
-		FROM `bodegas_arriendos_facturacion_existencias`
+		proveedor_listado.Nombre AS Proveedor';
+		$SIS_join  = '
 		LEFT JOIN bodegas_arriendos_facturacion    ON bodegas_arriendos_facturacion.idFacturacion    = bodegas_arriendos_facturacion_existencias.idFacturacion
 		LEFT JOIN equipos_arriendo_listado         ON equipos_arriendo_listado.idEquipo              = bodegas_arriendos_facturacion_existencias.idEquipo
-		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_arriendos_facturacion_existencias.idProveedor
-
-		WHERE bodegas_arriendos_facturacion_existencias.idEquipo=".$X_Puntero."
-		AND bodegas_arriendos_facturacion.idTipo = 1 
-		ORDER BY bodegas_arriendos_facturacion_existencias.Creacion_fecha DESC 
-		LIMIT 40";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			
-			//variables
-			$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-			//generar log
-			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_arriendos_facturacion_existencias.idProveedor';
+		$SIS_where = 'bodegas_arriendos_facturacion_existencias.idEquipo='.$X_Puntero.' AND bodegas_arriendos_facturacion.idTipo = 1';
+		$SIS_order = 'bodegas_arriendos_facturacion_existencias.Creacion_fecha DESC LIMIT 40';
+		$arrProducto = array();
+		$arrProducto = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProducto');
 		
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
-		array_push( $arrProducto,$row );
-		}
     break;
     /********************************************************/
     //Servicios
     case 4:
         // Se trae un listado de los valores
-		$query = "SELECT
+		$SIS_query = '
 		bodegas_servicios_facturacion_existencias.ValorTotal AS Precio,
 		bodegas_servicios_facturacion_existencias.Creacion_fecha,
 		servicios_listado.Nombre AS Producto,
-		proveedor_listado.Nombre AS Proveedor
-
-		FROM `bodegas_servicios_facturacion_existencias`
+		proveedor_listado.Nombre AS Proveedor';
+		$SIS_join  = '
 		LEFT JOIN bodegas_servicios_facturacion    ON bodegas_servicios_facturacion.idFacturacion    = bodegas_servicios_facturacion_existencias.idFacturacion
 		LEFT JOIN servicios_listado                ON servicios_listado.idServicio                   = bodegas_servicios_facturacion_existencias.idServicio
-		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_servicios_facturacion_existencias.idProveedor
-
-		WHERE bodegas_servicios_facturacion_existencias.idServicio=".$X_Puntero."
-		AND bodegas_servicios_facturacion.idTipo = 1 
-		ORDER BY bodegas_servicios_facturacion_existencias.Creacion_fecha DESC 
-		LIMIT 40";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			
-			//variables
-			$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-			//generar log
-			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
+		LEFT JOIN proveedor_listado                ON proveedor_listado.idProveedor                  = bodegas_servicios_facturacion_existencias.idProveedor';
+		$SIS_where = 'bodegas_servicios_facturacion_existencias.idServicio='.$X_Puntero.' AND bodegas_servicios_facturacion.idTipo = 1';
+		$SIS_order = 'bodegas_servicios_facturacion_existencias.Creacion_fecha DESC LIMIT 40';
+		$arrProducto = array();
+		$arrProducto = db_select_array (false, $SIS_query, 'bodegas_servicios_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProducto');
 		
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
-		array_push( $arrProducto,$row );
-		}
     break;
 }
 ///////////////////////////////////////////////
-if(!empty($arrProducto)){?>
+if($arrProducto!=false){?>
 
 	<div class="col-sm-12">
 		<div class="box">

@@ -35,76 +35,34 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //se traen los datos basicos de la licitacion
-$query = "SELECT 
+$SIS_query = '
 ubicacion_listado.Nombre, 
-core_estados.Nombre AS Estado
-FROM `ubicacion_listado`
-LEFT JOIN `core_estados`    ON core_estados.idEstado    = ubicacion_listado.idEstado
-WHERE ubicacion_listado.idUbicacion=".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+core_estados.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = ubicacion_listado.idEstado';
+$SIS_where = 'ubicacion_listado.idUbicacion='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'ubicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 //Se crean las variables
 $nmax = 5;
-$z = '';
-$leftjoin = '';
-$orderby = '';
+$SIS_query = 'ubicacion_listado_level_1.idLevel_1 AS bla';
+$SIS_join  = '';
+$SIS_where = 'ubicacion_listado_level_1.idUbicacion='.$X_Puntero;
+$SIS_order = 'ubicacion_listado_level_1.Nombre ASC';
 for ($i = 1; $i <= $nmax; $i++) {
     //consulta
-    $z .= ',ubicacion_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
-    $z .= ',ubicacion_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
+    $SIS_query .= ',ubicacion_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
+    $SIS_query .= ',ubicacion_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
     //Joins
     $xx = $i + 1;
     if($xx<=$nmax){
-		$leftjoin .= ' LEFT JOIN `ubicacion_listado_level_'.$xx.'`   ON ubicacion_listado_level_'.$xx.'.idLevel_'.$i.'    = ubicacion_listado_level_'.$i.'.idLevel_'.$i;
+		$SIS_join .= ' LEFT JOIN `ubicacion_listado_level_'.$xx.'`   ON ubicacion_listado_level_'.$xx.'.idLevel_'.$i.'    = ubicacion_listado_level_'.$i.'.idLevel_'.$i;
     }
     //ORDER BY
-    $orderby .= ', ubicacion_listado_level_'.$i.'.Nombre ASC';
+    $SIS_order .= ', ubicacion_listado_level_'.$i.'.Nombre ASC';
 }
-
 //se hace la consulta
 $arrLicitacion = array();
-$query = "SELECT
-ubicacion_listado_level_1.idLevel_1 AS bla
-".$z."
-FROM `ubicacion_listado_level_1`
-".$leftjoin."
-WHERE ubicacion_listado_level_1.idUbicacion=".$X_Puntero."
-ORDER BY ubicacion_listado_level_1.Nombre ASC ".$orderby."
-
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrLicitacion,$row );
-}
-
-
-	
+$arrLicitacion = db_select_array (false, $SIS_query, 'ubicacion_listado_level_1', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrLicitacion');
 
 
 $array3d = array();
@@ -137,17 +95,9 @@ foreach($arrLicitacion as $key) {
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Nombre'] = $n['5'];
 	}
 	
-	
 }
 
-
-
-
-
-
-
-function arrayToUL(array $array, $lv, $nmax)
-{
+function arrayToUL(array $array, $lv, $nmax){
 	$lv++;
 	if($lv==1){
 		echo '<ul class="tree">';

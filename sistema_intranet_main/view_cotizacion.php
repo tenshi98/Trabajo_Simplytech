@@ -167,10 +167,17 @@ $SIS_order = 'idImpuesto ASC';
 $arrImpuestos = array();
 $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrImpuestos');
 
+/*****************************************/	
+//Recorro y guard el nombre de los impuestos 
+$nn = 0;
+$impuestos = array();
+foreach ($arrImpuestos as $impto) { 
+	$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
+	$nn++;
+}
 
 ?>
-
-		
+	
 <section class="invoice">
 	
 	<div class="row">
@@ -184,44 +191,39 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
 	
 	<div class="row invoice-info">
 		
-		<?php 
-		echo '
-				<div class="col-sm-4 invoice-col">
-					Empresa Emisora
-					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
-					</address>
-				</div>
+		<div class="col-sm-4 invoice-col">
+			Empresa Emisora
+			<address>
+				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
+				<?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
+				<?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
+				Fono: <?php echo $row_data['SistemaOrigenFono']; ?><br/>
+				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
+				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
+			</address>
+		</div>
 				
-				
-				<div class="col-sm-4 invoice-col">
-					Empresa Receptora
-					<address>
-						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
-						'.$row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor'].'<br/>
-						'.$row_data['DireccionProveedor'].'<br/>
-						Fono Fijo: '.$row_data['Fono1Proveedor'].'<br/>
-						Celular: '.$row_data['Fono2Proveedor'].'<br/>
-						Fax: '.$row_data['FaxProveedor'].'<br/>
-						Rut: '.$row_data['RutProveedor'].'<br/>
-						Email: '.$row_data['EmailProveedor'].'<br/>
-						Contacto: '.$row_data['PersonaContactoProveedor'].'<br/>
-						Giro de la Empresa: '.$row_data['GiroProveedor'].'
-					</address>
-				</div>
+		<div class="col-sm-4 invoice-col">
+			Empresa Receptora
+			<address>
+				<strong><?php echo $row_data['NombreProveedor']; ?></strong><br/>
+				<?php echo $row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor']; ?><br/>
+				<?php echo $row_data['DireccionProveedor']; ?><br/>
+				Fono Fijo: <?php echo $row_data['Fono1Proveedor']; ?><br/>
+				Celular: <?php echo $row_data['Fono2Proveedor']; ?><br/>
+				Fax: <?php echo $row_data['FaxProveedor']; ?><br/>
+				Rut: <?php echo $row_data['RutProveedor']; ?><br/>
+				Email: <?php echo $row_data['EmailProveedor']; ?><br/>
+				Contacto: <?php echo $row_data['PersonaContactoProveedor']; ?><br/>
+				Giro de la Empresa: <?php echo $row_data['GiroProveedor']; ?>
+			</address>
+		</div>
 			   
-				<div class="col-sm-4 invoice-col">
-					Vendedor: '.$row_data['NombreUsuario'].'<br/>
-				</div>';
-		?>
-
+		<div class="col-sm-4 invoice-col">
+			Vendedor: <?php echo $row_data['NombreUsuario']; ?><br/>
+		</div>
+		
 	</div>
-	
 	
 	<div class="row">
 		<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
@@ -235,7 +237,7 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrInsumos) { ?>
+					<?php if ($arrInsumos!=false) { ?>
 						<tr class="active"><td colspan="4"><strong>Insumos</strong></td></tr>
 						<?php foreach ($arrInsumos as $prod) { ?>
 							<tr>
@@ -246,7 +248,7 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrProductos) { ?>
+					<?php if ($arrProductos!=false) { ?>
 						<tr class="active"><td colspan="4"><strong>Productos</strong></td></tr>
 						<?php foreach ($arrProductos as $prod) { ?>
 							<tr>
@@ -257,7 +259,7 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrArriendos) { ?>
+					<?php if ($arrArriendos!=false) { ?>
 						<tr class="active"><td colspan="4"><strong>Arriendos</strong></td></tr>
 						<?php foreach ($arrArriendos as $prod) { ?>
 							<tr>
@@ -268,7 +270,7 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrServicios) { ?>
+					<?php if ($arrServicios!=false) { ?>
 						<tr class="active"><td colspan="4"><strong>Servicios</strong></td></tr>
 						<?php foreach ($arrServicios as $prod) { ?>
 							<tr>
@@ -283,35 +285,24 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
 			</table>
 			<table class="table">
 				<tbody>	
-					<?php
-					//Recorro y guard el nombre de los impuestos 
-					$nn = 0;
-					$impuestos = array();
-					foreach ($arrImpuestos as $impto) { 
-						$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
-						$nn++;
-					}?>
 					<?php if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Neto Imponible</strong></td> 
 							<td width="160" align="right"><?php echo Valores($row_data['ValorNetoImp'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					
 					<?php if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[0]['nimp']; ?></strong></td> 
 							<td align="right"><?php echo Valores($row_data['Impuesto_01'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					
 					<?php if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[1]['nimp']; ?></strong></td> 
 							<td align="right"><?php echo Valores($row_data['Impuesto_02'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					
 					<?php if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[2]['nimp']; ?></strong></td> 
@@ -372,7 +363,6 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
 		</div>
 	</div>
 	
-	
 	<div class="row">
 		<div class="col-xs-12">
 			<p class="lead"><a name="Ancla_obs"></a>Condiciones Comerciales:</p>
@@ -380,18 +370,15 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
 		</div>
 	</div>
 	
-	
-      
 </section>
 
 <div class="col-xs-12" style="margin-bottom:15px;">
-	
 	
     <table id="items">
         <tbody>
 			<tr><th colspan="6">Archivos Adjuntos</th></tr>		  
 			<?php 
-			if (isset($arrArchivo)){
+			if ($arrArchivo!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrArchivo as $producto){?>
 					<tr class="item-row">
@@ -403,7 +390,6 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
 							</div>
 						</td>
 					</tr>
-					 
 				 <?php 	
 				}
 			}?>
@@ -411,17 +397,11 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_jo
     </table>
 </div>
 
-
-
-
-		
-	<div class="col-xs-12" style="margin-bottom:30px">
-		<a target="new" href="view_cotizacion_to_print.php?view=<?php echo $_GET['view'] ?>" class="btn btn-default pull-right" style="margin-right: 5px;">
-			<i class="fa fa-print" aria-hidden="true"></i> Imprimir
-		</a>
-	</div>
-	
-
+<div class="col-xs-12" style="margin-bottom:30px">
+	<a target="new" href="view_cotizacion_to_print.php?view=<?php echo $_GET['view'] ?>" class="btn btn-default pull-right" style="margin-right: 5px;">
+		<i class="fa fa-print" aria-hidden="true"></i> Imprimir
+	</a>
+</div>
 
 <?php 
 //si se entrega la opcion de mostrar boton volver

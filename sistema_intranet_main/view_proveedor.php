@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se traen todos los datos del proveedor
-$query = "SELECT  
+$SIS_query = '
 proveedor_listado.email, 
 proveedor_listado.Nombre, 
 proveedor_listado.Rut, 
@@ -60,157 +60,68 @@ core_sistemas.Nombre AS sistema,
 proveedor_tipos.Nombre AS tipoCliente,
 core_rubros.Nombre AS Rubro,
 core_paises.Nombre AS Pais,
-core_paises.Flag AS Flag
-
-FROM `proveedor_listado`
+core_paises.Flag AS Flag';
+$SIS_join  = '
 LEFT JOIN `core_estados`               ON core_estados.idEstado               = proveedor_listado.idEstado
 LEFT JOIN `core_ubicacion_ciudad`      ON core_ubicacion_ciudad.idCiudad      = proveedor_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`     ON core_ubicacion_comunas.idComuna     = proveedor_listado.idComuna
 LEFT JOIN `core_sistemas`              ON core_sistemas.idSistema             = proveedor_listado.idSistema
 LEFT JOIN `proveedor_tipos`            ON proveedor_tipos.idTipo              = proveedor_listado.idTipo
 LEFT JOIN `core_rubros`                ON core_rubros.idRubro                 = proveedor_listado.idRubro
-LEFT JOIN `core_paises`                ON core_paises.idPais                  = proveedor_listado.idPais
-WHERE proveedor_listado.idProveedor = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_paises`                ON core_paises.idPais                  = proveedor_listado.idPais';
+$SIS_where = 'proveedor_listado.idProveedor ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'proveedor_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-
+/**********************************************/
 // consulto los datos
-$arrObservaciones = array();
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.Nombre AS nombre_usuario,
 proveedor_observaciones.Fecha,
-proveedor_observaciones.Observacion
-FROM `proveedor_observaciones`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = proveedor_observaciones.idUsuario
-WHERE proveedor_observaciones.idProveedor = ".$X_Puntero."
-ORDER BY proveedor_observaciones.idObservacion ASC 
-LIMIT 15 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+proveedor_observaciones.Observacion';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = proveedor_observaciones.idUsuario';
+$SIS_where = 'proveedor_observaciones.idProveedor ='.$X_Puntero;
+$SIS_order = 'proveedor_observaciones.idObservacion ASC LIMIT 15';
+$arrObservaciones = array();
+$arrObservaciones = db_select_array (false, $SIS_query, 'proveedor_observaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrObservaciones');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrObservaciones,$row );
-}
-
-
-
-
-//verifico que sea un administrador
-$z1 = "bodegas_productos_facturacion.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-$z2 = "bodegas_insumos_facturacion.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-$z3 = "bodegas_servicios_facturacion.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-
-// Se trae un listado con las compras de Productos
-$arrProductos = array();
-$query = "SELECT 
+/**********************************************/
+// consulto los datos
+$SIS_query = '
 bodegas_productos_facturacion.idFacturacion,
 core_documentos_mercantiles.Nombre AS Documento,
 bodegas_productos_facturacion.N_Doc,
-bodegas_productos_facturacion.Creacion_fecha
+bodegas_productos_facturacion.Creacion_fecha';
+$SIS_join  = 'LEFT JOIN `core_documentos_mercantiles` ON core_documentos_mercantiles.idDocumentos = bodegas_productos_facturacion.idDocumentos';
+$SIS_where = 'bodegas_productos_facturacion.idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'].' AND bodegas_productos_facturacion.idProveedor ='.$X_Puntero;
+$SIS_order = 'bodegas_productos_facturacion.idFacturacion DESC LIMIT 15';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-FROM `bodegas_productos_facturacion`
-LEFT JOIN `core_documentos_mercantiles`   ON core_documentos_mercantiles.idDocumentos     = bodegas_productos_facturacion.idDocumentos
-WHERE ".$z1." AND bodegas_productos_facturacion.idProveedor = ".$X_Puntero."
-ORDER BY bodegas_productos_facturacion.idFacturacion DESC
-LIMIT 15 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
-
-// Se trae un listado con las compras de activos
-$arrInsumos = array();
-$query = "SELECT 
+/**********************************************/
+// consulto los datos
+$SIS_query = '
 bodegas_insumos_facturacion.idFacturacion,
 core_documentos_mercantiles.Nombre AS Documento,
 bodegas_insumos_facturacion.N_Doc,
-bodegas_insumos_facturacion.Creacion_fecha
+bodegas_insumos_facturacion.Creacion_fecha';
+$SIS_join  = 'LEFT JOIN `core_documentos_mercantiles` ON core_documentos_mercantiles.idDocumentos = bodegas_insumos_facturacion.idDocumentos';
+$SIS_where = 'bodegas_insumos_facturacion.idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'].' AND bodegas_insumos_facturacion.idProveedor ='.$X_Puntero;
+$SIS_order = 'bodegas_insumos_facturacion.idFacturacion DESC LIMIT 15';
+$arrInsumos = array();
+$arrInsumos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
 
-FROM `bodegas_insumos_facturacion`
-LEFT JOIN `core_documentos_mercantiles`   ON core_documentos_mercantiles.idDocumentos     = bodegas_insumos_facturacion.idDocumentos
-WHERE ".$z2." AND bodegas_insumos_facturacion.idProveedor = ".$X_Puntero."
-ORDER BY bodegas_insumos_facturacion.idFacturacion DESC
-LIMIT 15 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrInsumos,$row );
-}
-
-// Se trae un listado con las compras de activos
-$arrServicios = array();
-$query = "SELECT 
+/**********************************************/
+// consulto los datos
+$SIS_query = '
 bodegas_servicios_facturacion.idFacturacion,
 core_documentos_mercantiles.Nombre AS Documento,
 bodegas_servicios_facturacion.N_Doc,
-bodegas_servicios_facturacion.Creacion_fecha
-
-FROM `bodegas_servicios_facturacion`
-LEFT JOIN `core_documentos_mercantiles`   ON core_documentos_mercantiles.idDocumentos     = bodegas_servicios_facturacion.idDocumentos
-WHERE ".$z3." AND bodegas_servicios_facturacion.idProveedor = ".$X_Puntero."
-ORDER BY bodegas_servicios_facturacion.idFacturacion DESC
-LIMIT 15 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrServicios,$row );
-}
+bodegas_servicios_facturacion.Creacion_fecha';
+$SIS_join  = 'LEFT JOIN `core_documentos_mercantiles` ON core_documentos_mercantiles.idDocumentos = bodegas_servicios_facturacion.idDocumentos';
+$SIS_where = 'bodegas_servicios_facturacion.idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'].' AND bodegas_servicios_facturacion.idProveedor ='.$X_Puntero;
+$SIS_order = 'bodegas_servicios_facturacion.idFacturacion DESC LIMIT 15';
+$arrServicios = array();
+$arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrServicios');
 
 ?>
 

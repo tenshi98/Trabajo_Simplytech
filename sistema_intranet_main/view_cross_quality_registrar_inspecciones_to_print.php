@@ -178,7 +178,6 @@ $html .= '
 			</div>
 		</div>
 	
-	
 		<div class="">
 			<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 				<table class="table">
@@ -188,7 +187,7 @@ $html .= '
 						</tr>
 					</thead>
 					<tbody>';
-						if ($arrTrabajadores) {
+						if ($arrTrabajadores!=false) {
 							$html .= '<tr class="active"><td colspan="6"><strong>Trabajadores Encargados</strong></td></tr>';
 							foreach ($arrTrabajadores as $trab) {
 								$html .= '
@@ -199,7 +198,7 @@ $html .= '
 								</tr>';
 							} 
 						}
-						if ($arrMaquinas) {
+						if ($arrMaquinas!=false) {
 							$html .= '<tr class="active"><td colspan="6"><strong>Maquinas a Utilizar</strong></td></tr>';
 							foreach ($arrMaquinas as $maq) {
 								$html .= '
@@ -208,7 +207,7 @@ $html .= '
 								</tr>';
 							}
 						}
-						if ($arrMuestras) {
+						if ($arrMuestras!=false) {
 							$html .= '
 							<tr class="active"><td colspan="6"><strong>Muestras</strong></td></tr>
 							<tr class="active">
@@ -231,7 +230,6 @@ $html .= '
 				
 			</div>
 		</div>
-		
 		
 		<div class="row">
 			<div class="col-xs-12">

@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 prospectos_listado.email, 
 prospectos_listado.Nombre, 
 prospectos_listado.Rut, 
@@ -68,9 +68,8 @@ prospectos_listado.idTab_4,
 prospectos_listado.idTab_5,
 prospectos_listado.idTab_6,
 prospectos_listado.idTab_7,
-prospectos_listado.idTab_8
-
-FROM `prospectos_listado`
+prospectos_listado.idTab_8';
+$SIS_join  = '
 LEFT JOIN `core_estados`                      ON core_estados.idEstado                                = prospectos_listado.idEstado
 LEFT JOIN `core_ubicacion_ciudad`             ON core_ubicacion_ciudad.idCiudad                       = prospectos_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`            ON core_ubicacion_comunas.idComuna                      = prospectos_listado.idComuna
@@ -79,23 +78,9 @@ LEFT JOIN `prospectos_tipos`                  ON prospectos_tipos.idTipo        
 LEFT JOIN `core_rubros`                       ON core_rubros.idRubro                                  = prospectos_listado.idRubro
 LEFT JOIN `usuarios_listado`                  ON usuarios_listado.idUsuario                           = prospectos_listado.idUsuario
 LEFT JOIN `prospectos_estado_fidelizacion`    ON prospectos_estado_fidelizacion.idEstadoFidelizacion  = prospectos_listado.idEstadoFidelizacion
-LEFT JOIN `prospectos_etapa`                  ON prospectos_etapa.idEtapa                             = prospectos_listado.idEtapa
-
-WHERE prospectos_listado.idProspecto = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+LEFT JOIN `prospectos_etapa`                  ON prospectos_etapa.idEtapa                             = prospectos_listado.idEtapa';
+$SIS_where = 'prospectos_listado.idProspecto ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /*******************************************/
 //Listado con los tabs
@@ -110,70 +95,32 @@ foreach ($arrTabs as $tab) {
 
 /**********************************************************/
 // Se trae un listado con todas las observaciones el Prospecto
-$arrObservaciones = array();
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.Nombre AS nombre_usuario,
 prospectos_observaciones.Fecha,
-prospectos_observaciones.Observacion
-FROM `prospectos_observaciones`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = prospectos_observaciones.idUsuario
-WHERE prospectos_observaciones.idProspecto = ".$X_Puntero."
-ORDER BY prospectos_observaciones.idObservacion ASC 
-LIMIT 15 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+prospectos_observaciones.Observacion';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = prospectos_observaciones.idUsuario';
+$SIS_where = 'prospectos_observaciones.idProspecto ='.$X_Puntero;
+$SIS_order = 'prospectos_observaciones.idObservacion ASC LIMIT 15';
+$arrObservaciones = array();
+$arrObservaciones = db_select_array (false, $SIS_query, 'prospectos_observaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrObservaciones');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrObservaciones,$row );
-}
-
+/**********************************************************/
 // Se trae un listado con todas las etapa el Prospecto
-$arrEtapa = array();
-$query = "SELECT 
+$SIS_query = '
 prospectos_etapa_fidelizacion.idEtapaFide,
 usuarios_listado.Nombre AS nombre_usuario,
 prospectos_etapa_fidelizacion.Fecha,
-prospectos_etapa.Nombre AS Etapa
-
-FROM `prospectos_etapa_fidelizacion`
-LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario         = prospectos_etapa_fidelizacion.idUsuario
-LEFT JOIN `prospectos_etapa`     ON prospectos_etapa.idEtapa           = prospectos_etapa_fidelizacion.idEtapa
-
-WHERE prospectos_etapa_fidelizacion.idProspecto = ".$X_Puntero."
-ORDER BY prospectos_etapa.Nombre DESC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEtapa,$row );
-}
-
-
-
+prospectos_etapa.Nombre AS Etapa';
+$SIS_join  = '
+LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = prospectos_etapa_fidelizacion.idUsuario
+LEFT JOIN `prospectos_etapa` ON prospectos_etapa.idEtapa   = prospectos_etapa_fidelizacion.idEtapa';
+$SIS_where = 'prospectos_etapa_fidelizacion.idProspecto ='.$X_Puntero;
+$SIS_order = 'prospectos_etapa.Nombre DESC';
+$arrEtapa = array();
+$arrEtapa = db_select_array (false, $SIS_query, 'prospectos_etapa_fidelizacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEtapa');
 
 ?>
-
-
-
 
 <div class="col-sm-12">
 	<div class="box">
@@ -182,10 +129,10 @@ array_push( $arrEtapa,$row );
 			<h5>Datos del Prospecto</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if(!empty($arrObservaciones)){ ?>
+				<?php if($arrObservaciones!=false){ ?>
 					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
-				<?php if(!empty($arrEtapa)){ ?>
+				<?php if($arrEtapa!=false){ ?>
 					<li class=""><a href="#etapas" data-toggle="tab"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i> Etapas</a></li>
 				<?php } ?>
 			</ul>	
@@ -281,7 +228,7 @@ array_push( $arrEtapa,$row );
 				
 			</div>
 			
-			<?php if(!empty($arrObservaciones)){ ?>
+			<?php if($arrObservaciones!=false){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -308,7 +255,7 @@ array_push( $arrEtapa,$row );
 				</div>
 			<?php } ?>
 			
-			<?php if(!empty($arrEtapa)){ ?>
+			<?php if($arrEtapa!=false){ ?>
 				<div class="tab-pane fade" id="etapas">
 					<div class="wmd-panel">
 						<div class="table-responsive">

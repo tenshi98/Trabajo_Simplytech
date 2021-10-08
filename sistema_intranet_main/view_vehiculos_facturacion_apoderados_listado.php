@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //Se traen todos los datos
-$query = "SELECT
+$SIS_query = '
 vehiculos_facturacion_apoderados_listado.idFacturacion,
 vehiculos_facturacion_apoderados_listado.Fecha,
 vehiculos_facturacion_apoderados_listado.Observaciones,
@@ -51,34 +51,17 @@ core_sistemas.Direccion AS SistemaDireccion,
 siscom.Nombre AS SistemaComuna,
 sisciu.Nombre AS SistemaCiudad,
 core_sistemas.Contacto_Fono1 AS SistemaFono1,
-core_sistemas.Contacto_Fono2 AS SistemaFono2
-
-
-FROM `vehiculos_facturacion_apoderados_listado`
+core_sistemas.Contacto_Fono2 AS SistemaFono2';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                       ON core_sistemas.idSistema              = vehiculos_facturacion_apoderados_listado.idSistema
 LEFT JOIN `core_ubicacion_comunas`   siscom     ON siscom.idComuna                      = core_sistemas.idComuna
 LEFT JOIN `core_ubicacion_ciudad`    sisciu     ON sisciu.idCiudad                      = core_sistemas.idCiudad
-LEFT JOIN `usuarios_listado`                    ON usuarios_listado.idUsuario           = vehiculos_facturacion_apoderados_listado.idUsuario
-
-WHERE vehiculos_facturacion_apoderados_listado.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowDatos = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `usuarios_listado`                    ON usuarios_listado.idUsuario           = vehiculos_facturacion_apoderados_listado.idUsuario';
+$SIS_where = 'vehiculos_facturacion_apoderados_listado.idFacturacion ='.$X_Puntero;
+$rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowDatos');
 
 // Se trae un listado con todos los elementos
-$arrDetalle = array();
-$query = "SELECT 
+$SIS_query = '
 apoderados_listado.Nombre AS ApoderadoNombre,
 apoderados_listado.ApellidoPat AS ApoderadoApellidoPat,
 apoderados_listado.ApellidoMat AS ApoderadoApellidoMat,
@@ -88,36 +71,21 @@ vehiculos_facturacion_apoderados_listado_detalle.idEstadoPago,
 core_estado_facturacion.Nombre AS EstadoPago,
 sistema_documentos_pago.Nombre AS DocumentoPago,
 vehiculos_facturacion_apoderados_listado_detalle.nDocPago AS DocumentoNumero,
-vehiculos_facturacion_apoderados_listado_detalle.Pagofecha AS DocumentoFecha
-
-FROM `vehiculos_facturacion_apoderados_listado_detalle`
+vehiculos_facturacion_apoderados_listado_detalle.Pagofecha AS DocumentoFecha';
+$SIS_join  = '
 LEFT JOIN `apoderados_listado`         ON apoderados_listado.idApoderado      = vehiculos_facturacion_apoderados_listado_detalle.idApoderado
 LEFT JOIN `sistema_planes_transporte`  ON sistema_planes_transporte.idPlan    = vehiculos_facturacion_apoderados_listado_detalle.idPlan
 LEFT JOIN `core_estado_facturacion`    ON core_estado_facturacion.idEstado    = vehiculos_facturacion_apoderados_listado_detalle.idEstadoPago
-LEFT JOIN `sistema_documentos_pago`    ON sistema_documentos_pago.idDocPago   = vehiculos_facturacion_apoderados_listado_detalle.idDocPago
-WHERE vehiculos_facturacion_apoderados_listado_detalle.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDetalle,$row );
-}
-
+LEFT JOIN `sistema_documentos_pago`    ON sistema_documentos_pago.idDocPago   = vehiculos_facturacion_apoderados_listado_detalle.idDocPago';
+$SIS_where = 'vehiculos_facturacion_apoderados_listado_detalle.idFacturacion ='.$X_Puntero;
+$SIS_order = 'apoderados_listado.ApellidoPat ASC';
+$arrDetalle = array();
+$arrDetalle = db_select_array (false, $SIS_query, 'vehiculos_facturacion_apoderados_listado_detalle', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDetalle');
 
 ?>
 
 <div class="col-xs-12">
 	
-
 	<div class="row">
 		<div class="invoice">
 			<div class="row">

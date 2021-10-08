@@ -307,7 +307,7 @@ $html .= '
                     $TotLitrosApliXhect     = 0;
                     
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrCuarteles) {
+					if ($arrCuarteles!=false) {
 						foreach ($arrCuarteles as $cuartel) { 
 							//Verifico el tipo de cierre
 							if(isset($cuartel['CuartelidEjecucion'])&&$cuartel['CuartelidEjecucion']==1){
@@ -358,7 +358,7 @@ $html .= '
 								$html .= '<td>'.Cantidades($LitrosApliXhect,1).'</td>';  
 								$html .= '<td>'.$ndatax1.'</td>'; 
 								$html .= '<td>';
-									if ($arrTracxCuartel) {
+									if ($arrTracxCuartel!=false) {
 										foreach ($arrTracxCuartel as $tract) {
 											if($cuartel['idZona']==$tract['idZona']){
 												$html .= '<i class="fa fa-truck" aria-hidden="true"></i> '.$tract['VehiculoNombre'].' '.$tract['TelemetriaNombre'].'<br/>';
@@ -412,7 +412,7 @@ $html .= '
 					//Variable
 					$NProd = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrProductos) {
+					if ($arrProductos!=false) {
 						foreach ($arrProductos as $prod) { 
 							$NProd++;
 							$html .= '
@@ -437,7 +437,6 @@ $html .= '
 				<br/>
 				<br/>
 				
-				
 				<table class="zebra tableline" style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0" >
 					<thead>
 						<tr style="background-color: #f9f9f9;">
@@ -456,7 +455,7 @@ $html .= '
 					$Capacidad  = 0;
 					$NTract     = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrTractores) {
+					if ($arrTractores!=false) {
 						foreach ($arrTractores as $tract) { 
 							//Se suman cantidades
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
@@ -482,7 +481,6 @@ $html .= '
 				<br/>
 				<br/>
 				
-				
 				<table class="zebra tableline" style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0" >
 					<thead>
 						<tr style="background-color: #f9f9f9;">
@@ -497,7 +495,7 @@ $html .= '
 					//Variable
 					$nmb = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrProductos) {
+					if ($arrProductos!=false) {
 						foreach ($arrProductos as $prod) { 
 							$PromedioCapacidad = $Capacidad/$NTract;
 							if($PromedioCapacidad!=0){$s_valor = Cantidades(($row_data['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{$s_valor = 0;}
@@ -524,7 +522,6 @@ $html .= '
 				<br/>
 				<br/>
 				
-				
 				<table class="zebra tableline" style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0" >
 					<thead>
 						<tr style="background-color: #f9f9f9;">
@@ -533,7 +530,7 @@ $html .= '
 					</thead>
 					<tbody>';
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrMateriales) {
+					if ($arrMateriales!=false) {
 						foreach ($arrMateriales as $prod) { 
 							$html .= '
 							<tr>
@@ -549,19 +546,11 @@ $html .= '
 				<br/>
 				<br/>';
 				
-				
-				
-				
-				
-				
-
 			$html .= '</td>
 		</tr>
 	</tbody>
 </table>';
  
-
-
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/

@@ -35,19 +35,18 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //Variable de busqueda
-$z = "WHERE cross_solicitud_aplicacion_listado.idSolicitud!=0";
-$z .= " AND cross_solicitud_aplicacion_listado.idEstado=3";//solo terminadas
+$SIS_where = "cross_solicitud_aplicacion_listado.idSolicitud!=0";
+$SIS_where .= " AND cross_solicitud_aplicacion_listado.idEstado=3";//solo terminadas
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){ $z .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".simpleDecode($_GET['idSolicitud'], fecha_actual());}
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){       $z .= " AND cross_solicitud_aplicacion_listado.idPredio=".simpleDecode($_GET['idPredio'], fecha_actual());}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){           $z .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".simpleDecode($_GET['idZona'], fecha_actual());}
+if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){ $SIS_where .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".simpleDecode($_GET['idSolicitud'], fecha_actual());}
+if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){       $SIS_where .= " AND cross_solicitud_aplicacion_listado.idPredio=".simpleDecode($_GET['idPredio'], fecha_actual());}
+if(isset($_GET['idZona']) && $_GET['idZona'] != ''){           $SIS_where .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".simpleDecode($_GET['idZona'], fecha_actual());}
 /**********************************************************/
 // Se trae un listado con todos los datos separados por tractores
-$arrOTS = array();
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,
 cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
@@ -78,38 +77,18 @@ cross_solicitud_aplicacion_listado_tractores.GeoDistance_out,
 cross_solicitud_aplicacion_listado_tractores.Sensor_out_1_Sum,
 cross_solicitud_aplicacion_listado_tractores.Sensor_out_2_Sum,
 
-cross_solicitud_aplicacion_listado_cuarteles.VelTractor
-
-
-FROM `cross_solicitud_aplicacion_listado`
+cross_solicitud_aplicacion_listado_cuarteles.VelTractor';
+$SIS_join  = '
 LEFT JOIN `cross_predios_listado`                          ON cross_predios_listado.idPredio                             = cross_solicitud_aplicacion_listado.idPredio
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
 LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `sistema_variedades_categorias`                  ON sistema_variedades_categorias.idCategoria                  = cross_solicitud_aplicacion_listado.idCategoria
-LEFT JOIN `variedades_listado`                             ON variedades_listado.idProducto                              = cross_solicitud_aplicacion_listado.idProducto
-
-".$z."
-ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC,
-cross_predios_listado_zonas.Nombre ASC
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOTS,$row );
-}
+LEFT JOIN `variedades_listado`                             ON variedades_listado.idProducto                              = cross_solicitud_aplicacion_listado.idProducto';
+$SIS_order = 'cross_solicitud_aplicacion_listado.idSolicitud DESC, cross_predios_listado_zonas.Nombre ASC';
+$arrOTS = array();
+$arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOTS');
 
 filtrar($arrOTS, 'idTelemetria');
 

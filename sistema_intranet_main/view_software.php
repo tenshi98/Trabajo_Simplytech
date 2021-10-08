@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 soporte_software_listado.Nombre, 
 soporte_software_listado.Descripcion,
 
@@ -43,31 +43,15 @@ soporte_software_listado.SitioWeb,
 soporte_software_listado.SitioDescarga,
 
 soporte_software_listado_licencias.Nombre AS Licencia,
-soporte_software_listado_categorias.Nombre AS Categoria
-
-FROM `soporte_software_listado`
+soporte_software_listado_categorias.Nombre AS Categoria';
+$SIS_join  = '
 LEFT JOIN `soporte_software_listado_licencias`   ON soporte_software_listado_licencias.idLicencia     = soporte_software_listado.idLicencia
-LEFT JOIN `soporte_software_listado_categorias`  ON soporte_software_listado_categorias.idCategoria   = soporte_software_listado.idCategoria
-
-WHERE soporte_software_listado.idSoftware = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
+LEFT JOIN `soporte_software_listado_categorias`  ON soporte_software_listado_categorias.idCategoria   = soporte_software_listado.idCategoria';
+$SIS_where = 'soporte_software_listado.idSoftware ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
+
 <div class="col-md-12" style="margin-top:50px;">
 	<div class="row">
 		<div class="col-md-12">

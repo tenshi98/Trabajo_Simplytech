@@ -146,7 +146,7 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 									//solo sensores activos
 									if(isset($rowSensores['SensoresActivo_'.$i])&&$rowSensores['SensoresActivo_'.$i]==1){
 										//se verifica que el grupo exista
-										if($arrGrupos){
+										if(isset($arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]])&&$arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]]!=''){
 											//Se trae el grupo
 											$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
 											//Se marca como seleccionado
@@ -254,7 +254,7 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 									//solo sensores activos
 									if(isset($rowSensores['SensoresActivo_'.$i])&&$rowSensores['SensoresActivo_'.$i]==1){
 										//se verifica que el grupo exista
-										if($arrGrupos){
+										if(isset($arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]])&&$arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]]!=''){
 											//Se trae el grupo
 											$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
 											//se imprime

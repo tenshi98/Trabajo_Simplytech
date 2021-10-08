@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 core_sistemas.Nombre AS sistema,
 usuarios_listado.Nombre AS Usuario,
 trabajadores_listado.Nombre AS TrabajadorNombre,
@@ -45,31 +45,15 @@ gestion_quejas.NombreQueja,
 usuario_queja.Nombre AS UsuarioQueja,
 core_tipo_queja_general.Nombre AS TipoQueja,
 gestion_quejas.FechaQueja,
-gestion_quejas.Observaciones
-
-FROM `gestion_quejas`
+gestion_quejas.Observaciones';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                   ON core_sistemas.idSistema              = gestion_quejas.idSistema
 LEFT JOIN `usuarios_listado`                ON usuarios_listado.idUsuario           = gestion_quejas.idUsuario
 LEFT JOIN `trabajadores_listado`            ON trabajadores_listado.idTrabajador    = gestion_quejas.idTrabajadorQueja
 LEFT JOIN `usuarios_listado` usuario_queja  ON usuario_queja.idUsuario              = gestion_quejas.idUsuarioQueja
-LEFT JOIN `core_tipo_queja_general`         ON core_tipo_queja_general.idTipoQueja  = gestion_quejas.idTipoQueja
-
-WHERE gestion_quejas.idQueja =  ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_tipo_queja_general`         ON core_tipo_queja_general.idTipoQueja  = gestion_quejas.idTipoQueja';
+$SIS_where = 'gestion_quejas.idQueja ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'gestion_quejas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

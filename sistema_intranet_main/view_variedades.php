@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 variedades_listado.Nombre,
 variedades_listado.Descripcion,
 variedades_listado.Codigo,
@@ -45,35 +45,16 @@ sistema_variedades_categorias.Nombre AS Categoria,
 sistema_variedades_tipo.Nombre AS Tipo,
 variedades_listado.FichaTecnica,
 variedades_listado.HDS,
-core_estados.Nombre AS Estado
-
-FROM `variedades_listado`
-LEFT JOIN `sistema_variedades_tipo`          ON sistema_variedades_tipo.idTipo                   = variedades_listado.idTipo
-LEFT JOIN `sistema_variedades_categorias`    ON sistema_variedades_categorias.idCategoria        = variedades_listado.idCategoria
-LEFT JOIN `core_estados`                     ON core_estados.idEstado                            = variedades_listado.idEstado
-
-WHERE variedades_listado.idProducto = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
-
-
-
+core_estados.Nombre AS Estado';
+$SIS_join  = '
+LEFT JOIN `sistema_variedades_tipo`       ON sistema_variedades_tipo.idTipo             = variedades_listado.idTipo
+LEFT JOIN `sistema_variedades_categorias` ON sistema_variedades_categorias.idCategoria  = variedades_listado.idCategoria
+LEFT JOIN `core_estados`                  ON core_estados.idEstado                      = variedades_listado.idEstado';
+$SIS_where = 'variedades_listado.idProducto ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
+
 <div class="col-sm-12">
 	<div class="box">
 		<header>

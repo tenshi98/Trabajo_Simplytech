@@ -75,24 +75,14 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 if ( ! empty($_GET['modBase']) ) {
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
 //consulta
-$query = "SELECT Fecha, Observaciones
-FROM `aguas_mediciones_datos`
-WHERE idDatos = ".$_GET['modBase'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 ?>
+$SIS_query = 'Fecha, Observaciones';
+$SIS_join  = '';
+$SIS_where = 'idDatos ='.$_GET['modBase'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -134,24 +124,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);	 ?>
 }elseif ( ! empty($_GET['edit']) ) {
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
 //consulto
-$query = "SELECT Consumo
-FROM `aguas_mediciones_datos_detalle`
-WHERE idDatosDetalle = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 ?>
+$SIS_query = 'Consumo';
+$SIS_join  = '';
+$SIS_where = 'idDatosDetalle ='.$_GET['edit'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 
 <div class="col-sm-8 fcenter">
@@ -189,71 +169,41 @@ $rowdata = mysqli_fetch_assoc ($resultado);	 ?>
 }elseif ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
 // Se traen todos los datos de la subida
-$query = "SELECT 
+$SIS_query = '
 aguas_mediciones_datos.idDatos,
 aguas_mediciones_datos.fCreacion,
 aguas_mediciones_datos.Fecha,
 aguas_mediciones_datos.Nombre AS NombreArchivo,
 aguas_mediciones_datos.Observaciones,
 usuarios_listado.Nombre AS NombreUsuario,
-core_sistemas.Nombre AS Sistema
-
-FROM `aguas_mediciones_datos`
+core_sistemas.Nombre AS Sistema';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`     ON core_sistemas.idSistema      = aguas_mediciones_datos.idSistema
-LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario   = aguas_mediciones_datos.idUsuario
-WHERE aguas_mediciones_datos.idDatos = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario   = aguas_mediciones_datos.idUsuario';
+$SIS_where = 'aguas_mediciones_datos.idDatos ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 // Se trae un listado con todos los datos subidos correctamente
-$arrDatosCorrectos = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_mediciones_datos_detalle.idDatosDetalle,
 aguas_clientes_listado.Nombre,
 aguas_clientes_listado.Direccion,
 aguas_clientes_listado.Identificador,
 aguas_clientes_listado.UnidadHabitacional,
 aguas_mediciones_datos_detalle.Consumo,
-
 aguas_marcadores_listado.Nombre AS Marcadores,
-aguas_marcadores_remarcadores.Nombre AS Remarcadores
-
-FROM `aguas_mediciones_datos_detalle` 
-
+aguas_marcadores_remarcadores.Nombre AS Remarcadores';
+$SIS_join  = '
 LEFT JOIN `aguas_clientes_listado`         ON aguas_clientes_listado.idCliente               = aguas_mediciones_datos_detalle.idCliente
 LEFT JOIN `aguas_marcadores_listado`       ON aguas_marcadores_listado.idMarcadores          = aguas_mediciones_datos_detalle.idMarcadores
-LEFT JOIN `aguas_marcadores_remarcadores`  ON aguas_marcadores_remarcadores.idRemarcadores   = aguas_mediciones_datos_detalle.idRemarcadores
+LEFT JOIN `aguas_marcadores_remarcadores`  ON aguas_marcadores_remarcadores.idRemarcadores   = aguas_mediciones_datos_detalle.idRemarcadores';
+$SIS_where = 'aguas_mediciones_datos_detalle.idDatos ='.$_GET['id'];
+$SIS_order = 'aguas_clientes_listado.Nombre ASC';
+$arrDatosCorrectos = array();
+$arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos_detalle', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDatosCorrectos');
 
-WHERE aguas_mediciones_datos_detalle.idDatos = ".$_GET['id'];
-//consulto
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDatosCorrectos,$row );
-}
 ?>
  
 
@@ -299,7 +249,7 @@ array_push( $arrDatosCorrectos,$row );
 			<tbody>
 				<tr><th colspan="8">Detalle</th></tr>		  
 				
-				<?php if($arrDatosCorrectos) { ?>
+				<?php if($arrDatosCorrectos!=false) { ?>
 					<tr class="item-row fact_tittle"><td colspan="8"><strong>Datos Ingresados Correctamente</strong></td></tr>
 					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 						<td class="item-name"><strong>Identificador</strong></td>
@@ -350,10 +300,6 @@ array_push( $arrDatosCorrectos,$row );
     	<div class="clearfix"></div>
     </div>
 </div>
-	
-	
-
-
 
 <div class="clearfix"></div>
 <div class="col-lg-12 fcenter" style="margin-bottom:30px; margin-top:30px">
@@ -398,7 +344,6 @@ alert_post_data(2,1,2, $Alert_Text);
 				
 				?>
 				
-				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -433,89 +378,59 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'ingreso_asc':          $order_by = 'ORDER BY aguas_mediciones_datos.idDatos ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ingreso Ascendente'; break;
-		case 'ingreso_desc':         $order_by = 'ORDER BY aguas_mediciones_datos.idDatos DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ingreso Descendente';break;
-		case 'fechacreacion_asc':    $order_by = 'ORDER BY aguas_mediciones_datos.fCreacion ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente'; break;
-		case 'fechacreacion_desc':   $order_by = 'ORDER BY aguas_mediciones_datos.fCreacion DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Creacion Descendente';break;
-		case 'fechaingreso_asc':     $order_by = 'ORDER BY aguas_mediciones_datos.Fecha ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ingreso Ascendente'; break;
-		case 'fechaingreso_desc':    $order_by = 'ORDER BY aguas_mediciones_datos.Fecha DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';break;
-		case 'creador_asc':          $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente'; break;
-		case 'creador_desc':         $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
-		case 'nombre_asc':           $order_by = 'ORDER BY aguas_mediciones_datos.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':          $order_by = 'ORDER BY aguas_mediciones_datos.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'ingreso_asc':          $order_by = 'aguas_mediciones_datos.idDatos ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ingreso Ascendente'; break;
+		case 'ingreso_desc':         $order_by = 'aguas_mediciones_datos.idDatos DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ingreso Descendente';break;
+		case 'fechacreacion_asc':    $order_by = 'aguas_mediciones_datos.fCreacion ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente'; break;
+		case 'fechacreacion_desc':   $order_by = 'aguas_mediciones_datos.fCreacion DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Creacion Descendente';break;
+		case 'fechaingreso_asc':     $order_by = 'aguas_mediciones_datos.Fecha ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ingreso Ascendente'; break;
+		case 'fechaingreso_desc':    $order_by = 'aguas_mediciones_datos.Fecha DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';break;
+		case 'creador_asc':          $order_by = 'usuarios_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente'; break;
+		case 'creador_desc':         $order_by = 'usuarios_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+		case 'nombre_asc':           $order_by = 'aguas_mediciones_datos.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':          $order_by = 'aguas_mediciones_datos.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		
-		default: $order_by = 'ORDER BY aguas_mediciones_datos.idDatos DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ingreso Descendente';
+		default: $order_by = 'aguas_mediciones_datos.idDatos DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ingreso Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY aguas_mediciones_datos.idDatos DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ingreso Descendente';
+	$order_by = 'aguas_mediciones_datos.idDatos DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ingreso Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE aguas_mediciones_datos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_mediciones_datos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //se filtran para mostrar solo los ingresos de los medidores
-$z.= " AND aguas_mediciones_datos.idTipo=1";
+$SIS_where.= " AND aguas_mediciones_datos.idTipo=1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){              $z .= " AND aguas_mediciones_datos.Ano='".$_GET['Ano']."'";}
-if(isset($_GET['idMes']) && $_GET['idMes'] != ''){          $z .= " AND aguas_mediciones_datos.idMes='".$_GET['idMes']."'";}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $z .= " AND aguas_mediciones_datos.idUsuario='".$_GET['idUsuario']."'";}
+if(isset($_GET['Ano']) && $_GET['Ano'] != ''){              $SIS_where .= " AND aguas_mediciones_datos.Ano='".$_GET['Ano']."'";}
+if(isset($_GET['idMes']) && $_GET['idMes'] != ''){          $SIS_where .= " AND aguas_mediciones_datos.idMes='".$_GET['idMes']."'";}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $SIS_where .= " AND aguas_mediciones_datos.idUsuario='".$_GET['idUsuario']."'";}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idDatos FROM `aguas_mediciones_datos` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idDatos', 'aguas_mediciones_datos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_mediciones_datos.idDatos,
 aguas_mediciones_datos.fCreacion,
 aguas_mediciones_datos.Fecha,
 aguas_mediciones_datos.Nombre AS NombreArchivo,
 usuarios_listado.Nombre AS NombreUsuario,
-core_sistemas.Nombre AS sistema
-
-FROM `aguas_mediciones_datos`
+core_sistemas.Nombre AS sistema';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`     ON core_sistemas.idSistema      = aguas_mediciones_datos.idSistema
-LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario   = aguas_mediciones_datos.idUsuario
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}
+LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario   = aguas_mediciones_datos.idUsuario';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-}?>
+}
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 
@@ -618,27 +533,27 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					</tr>
 				</thead>		  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrTipo as $tipo) { ?>
-					<tr class="odd">
-						<td><?php echo n_doc($tipo['idDatos'], 7); ?></td>
-						<td><?php echo fecha_estandar($tipo['fCreacion']); ?></td>
-						<td><?php echo fecha_estandar($tipo['Fecha']); ?></td>
-						<td><?php echo $tipo['NombreUsuario']; ?></td>
-						<td><?php echo $tipo['NombreArchivo']; ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['sistema']; ?></td><?php } ?>			
-						<td>
-							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_aguas_mediciones_datos.php?view='.simpleEncode($tipo['idDatos'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idDatos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.simpleEncode($tipo['idDatos'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la medicion '.n_doc($tipo['idDatos'], 7).'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
-							</div>
-						</td>
-					</tr>
-				<?php } ?>                    
+					<?php foreach ($arrTipo as $tipo) { ?>
+						<tr class="odd">
+							<td><?php echo n_doc($tipo['idDatos'], 7); ?></td>
+							<td><?php echo fecha_estandar($tipo['fCreacion']); ?></td>
+							<td><?php echo fecha_estandar($tipo['Fecha']); ?></td>
+							<td><?php echo $tipo['NombreUsuario']; ?></td>
+							<td><?php echo $tipo['NombreArchivo']; ?></td>
+							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['sistema']; ?></td><?php } ?>			
+							<td>
+								<div class="btn-group" style="width: 105px;" >
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_aguas_mediciones_datos.php?view='.simpleEncode($tipo['idDatos'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idDatos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $location.'&del='.simpleEncode($tipo['idDatos'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar la medicion '.n_doc($tipo['idDatos'], 7).'?';?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>								
+								</div>
+							</td>
+						</tr>
+					<?php } ?>                    
 				</tbody>
 			</table>
 		</div>

@@ -279,8 +279,6 @@ $html .= '
 								//Boleta Clientes
 								
 							}
-						
-						
 						$html .= '</tr>
 					</tbody>
 				</table>
@@ -297,9 +295,8 @@ $html .= '
 					</thead>
 					<tbody>';
 					
-					
 					//si existen guias
-					if ($arrOtros) {
+					if ($arrOtros!=false) {
 						foreach ($arrOtros as $otro) {
 							$html .= '<tr>
 								<td style="vertical-align: top;">'.$otro['Nombre'].'</td>
@@ -307,26 +304,24 @@ $html .= '
 							</tr>';
 						} 
 					}
-					
-						if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td align="right"><strong>Total Honorarios</strong></td> 
-								<td align="right">'.Valores($row_data['ValorNeto'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td align="right"><strong>'.$row_data['Porcentaje_Ret_Boletas'].'% Impuesto Retenido</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto'], 0).'</td>
-							</tr>';
-						} 
-						if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td align="right"><strong>Total</strong></td> 
-								<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
-							</tr>';
-						}
-						
+					if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td align="right"><strong>Total Honorarios</strong></td> 
+							<td align="right">'.Valores($row_data['ValorNeto'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td align="right"><strong>'.$row_data['Porcentaje_Ret_Boletas'].'% Impuesto Retenido</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto'], 0).'</td>
+						</tr>';
+					} 
+					if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td align="right"><strong>Total</strong></td> 
+							<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
+						</tr>';
+					}
 				$html .= '
 					</tbody>
 				</table>
@@ -345,13 +340,6 @@ $html .= '
 					</tbody>
 				</table>';
 				
-				
-				
-				
-				
-				
-				
-
 			$html .= '</td>
 		</tr>
 	</tbody>

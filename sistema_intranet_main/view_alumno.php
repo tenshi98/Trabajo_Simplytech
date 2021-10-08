@@ -77,11 +77,7 @@ $SIS_order = 'alumnos_observaciones.idObservacion ASC  LIMIT 15';
 $arrObservaciones = array();
 $arrObservaciones = db_select_array (false, $SIS_query, 'alumnos_observaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrObservaciones');
 
-
 ?>
-
-
-
 
 <div class="col-sm-12">
 	<div class="box">
@@ -90,7 +86,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'alumnos_observaciones',
 			<h5>Datos del Cliente</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if(!empty($arrObservaciones)){ ?>
+				<?php if($arrObservaciones!=false){ ?>
 					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
 			</ul>	
@@ -120,7 +116,6 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'alumnos_observaciones',
 							<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 						</p>
-									
 										
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 						<p class="text-muted">
@@ -144,7 +139,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'alumnos_observaciones',
 				</div>
 			</div>
 			
-			<?php if(!empty($arrObservaciones)){ ?>
+			<?php if($arrObservaciones!=false){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -171,11 +166,9 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'alumnos_observaciones',
 				</div>
 			<?php } ?>
 			
-			
         </div>	
 	</div>
 </div>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver

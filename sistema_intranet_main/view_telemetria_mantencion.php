@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 core_sistemas.Nombre AS SistemaOrigen,
 sis_or_ciudad.Nombre AS SistemaOrigenCiudad,
 sis_or_comuna.Nombre AS SistemaOrigenComuna,
@@ -44,9 +44,7 @@ core_sistemas.Contacto_Fono1 AS SistemaOrigenFono,
 core_sistemas.email_principal AS SistemaOrigenEmail,
 core_sistemas.Rut AS SistemaOrigenRut,
 core_sistemas.Contacto_Nombre AS SistemaContacto,
-
 usuarios_listado.Nombre AS NombreEncargado,
-
 telemetria_historial_mantencion.Fecha, 
 telemetria_historial_mantencion.h_Inicio, 
 telemetria_historial_mantencion.h_Termino, 
@@ -60,107 +58,49 @@ telemetria_historial_mantencion.Recepcion_Nombre,
 telemetria_historial_mantencion.Recepcion_Rut, 
 telemetria_historial_mantencion.Recepcion_Email,
 telemetria_historial_mantencion.Path_Firma,
-
-core_telemetria_servicio_tecnico.Nombre AS Servicio
-
-FROM `telemetria_historial_mantencion`
+core_telemetria_servicio_tecnico.Nombre AS Servicio';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                   = telemetria_historial_mantencion.idUsuario
 LEFT JOIN `core_telemetria_servicio_tecnico`        ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio
 LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                      = telemetria_historial_mantencion.idSistema
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                       = core_sistemas.idCiudad
-LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = core_sistemas.idComuna
+LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = core_sistemas.idComuna';
+$SIS_where = 'telemetria_historial_mantencion.idMantencion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-WHERE telemetria_historial_mantencion.idMantencion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado); 
 
 /**********************************/				
 $arrOpciones = array();
-$query = "SELECT idOpciones, Nombre
-FROM `core_telemetria_servicio_tecnico_opciones`
-ORDER BY Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrOpciones = db_select_array (false, 'idOpciones, Nombre', 'core_telemetria_servicio_tecnico_opciones', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOpciones');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOpciones,$row );
-}
 /**********************************/
 $arrOpcionesDisplay = array();
 foreach ($arrOpciones as $mant) {
 	$arrOpcionesDisplay[$mant['idOpciones']]['Nombre'] = $mant['Nombre'];
 }
+
 /*************************************************************************/
 //Se buscan todos los archivos relacionados
-$arrEquipos = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado.Identificador AS Identificador,
-telemetria_listado.Nombre AS Equipo
+telemetria_listado.Nombre AS Equipo';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_historial_mantencion_equipos.idTelemetria';
+$SIS_where = 'telemetria_historial_mantencion_equipos.idMantencion ='.$X_Puntero;
+$SIS_order = 'telemetria_listado.Nombre ASC';
+$arrEquipos = array();
+$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_historial_mantencion_equipos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
 
-FROM `telemetria_historial_mantencion_equipos`
-LEFT JOIN `telemetria_listado`  ON telemetria_listado.idTelemetria  = telemetria_historial_mantencion_equipos.idTelemetria
-WHERE telemetria_historial_mantencion_equipos.idMantencion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEquipos,$row );
-}
 /*************************************************************************/
 //Se buscan todos los archivos relacionados
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idMantencion ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrArchivos = array();
-$query = "SELECT Nombre
-FROM `telemetria_historial_mantencion_archivos`
-WHERE idMantencion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
+$arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantencion_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
 
 ?>
+
 <div class="col-xs-12" style="margin-top:15px;">
 	<a target="new" href="view_telemetria_mantencion_to_pdf.php?view=<?php echo $_GET['view'].'&idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual()) ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
 		<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF

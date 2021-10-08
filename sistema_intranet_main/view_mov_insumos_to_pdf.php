@@ -37,7 +37,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSist
 }
 /********************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 bodegas_insumos_facturacion.idTipo,
 bodegas_insumos_facturacion.idFacturacion,
 bodegas_insumos_facturacion.Creacion_fecha,
@@ -105,7 +105,6 @@ proveedor_listado.Fax AS FaxProveedor,
 proveedor_listado.PersonaContacto AS PersonaContactoProveedor,
 proveedor_listado.Giro AS GiroProveedor,
 
-
 clientes_listado.Nombre AS NombreCliente,
 clientes_listado.email AS EmailCliente,
 clientes_listado.Rut AS RutCliente,
@@ -129,9 +128,8 @@ centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
 centrocosto_listado_level_2.Nombre AS CentroCosto_Level_2,
 centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
 centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
-centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5
-
-FROM `bodegas_insumos_facturacion`
+centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5';
+$SIS_join  = '
 LEFT JOIN `bodegas_insumos_listado`       bodega1   ON bodega1.idBodega                             = bodegas_insumos_facturacion.idBodegaOrigen
 LEFT JOIN `bodegas_insumos_listado`       bodega2   ON bodega2.idBodega                             = bodegas_insumos_facturacion.idBodegaDestino
 LEFT JOIN `bodegas_insumos_facturacion_tipo`        ON bodegas_insumos_facturacion_tipo.idTipo      = bodegas_insumos_facturacion.idTipo
@@ -158,27 +156,13 @@ LEFT JOIN `centrocosto_listado_level_1`             ON centrocosto_listado_level
 LEFT JOIN `centrocosto_listado_level_2`             ON centrocosto_listado_level_2.idLevel_2        = bodegas_insumos_facturacion.idLevel_2
 LEFT JOIN `centrocosto_listado_level_3`             ON centrocosto_listado_level_3.idLevel_3        = bodegas_insumos_facturacion.idLevel_3
 LEFT JOIN `centrocosto_listado_level_4`             ON centrocosto_listado_level_4.idLevel_4        = bodegas_insumos_facturacion.idLevel_4
-LEFT JOIN `centrocosto_listado_level_5`             ON centrocosto_listado_level_5.idLevel_5        = bodegas_insumos_facturacion.idLevel_5
+LEFT JOIN `centrocosto_listado_level_5`             ON centrocosto_listado_level_5.idLevel_5        = bodegas_insumos_facturacion.idLevel_5';
+$SIS_where = 'bodegas_insumos_facturacion.idFacturacion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-				
+/*****************************************/				
 // Se trae un listado con todos los productos utilizados
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 insumos_listado.Nombre,
 sistema_productos_uml.Nombre AS Unimed,
 sistema_productos_uml.Abreviatura AS UnimedAbrev,
@@ -187,120 +171,60 @@ bodegas_insumos_facturacion_existencias.Cantidad_eg,
 bodegas_insumos_facturacion_existencias.Valor,
 bodegas_insumos_facturacion_existencias.ValorTotal,
 insumos_listado.ValorIngreso AS  ValorTraspaso,
-bodegas_insumos_listado.Nombre AS NombreBodega
-FROM `bodegas_insumos_facturacion_existencias` 
+bodegas_insumos_listado.Nombre AS NombreBodega';
+$SIS_join  = '
 LEFT JOIN `insumos_listado`            ON insumos_listado.idProducto             = bodegas_insumos_facturacion_existencias.idProducto
 LEFT JOIN `sistema_productos_uml`      ON sistema_productos_uml.idUml            = insumos_listado.idUml
-LEFT JOIN `bodegas_insumos_listado`    ON bodegas_insumos_listado.idBodega       = bodegas_insumos_facturacion_existencias.idBodega
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
+LEFT JOIN `bodegas_insumos_listado`    ON bodegas_insumos_listado.idBodega       = bodegas_insumos_facturacion_existencias.idBodega';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'insumos_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
 /*****************************************/		
 // Se trae un listado con todos los otros
+$SIS_query = 'Nombre, vTotal';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrOtros = array();
-$query = "SELECT Nombre, vTotal
-FROM `bodegas_insumos_facturacion_otros` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrOtros = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_otros', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOtros');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOtros,$row );
-}
-
+/*****************************************/	
 // Se trae un listado con todos los impuestos existentes
+$SIS_query = 'Nombre, vTotal';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrDescuentos = array();
-$query = "SELECT Nombre, vTotal
-FROM `bodegas_insumos_facturacion_descuentos`
-WHERE idFacturacion = ".$X_Puntero." 
-ORDER BY Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrDescuentos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_descuentos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDescuentos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDescuentos,$row );
-}
-
-
+/*****************************************/	
 // Se trae un listado con todos los impuestos existentes
+$SIS_query = 'Nombre, Porcentaje';
+$SIS_join  = '';
+$SIS_where = 'Nombre!=""';
+$SIS_order = 'idImpuesto ASC';
 $arrImpuestos = array();
-$query = "SELECT Nombre, Porcentaje
-FROM `sistema_impuestos`
-ORDER BY idImpuesto ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrImpuestos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrImpuestos,$row );
-}
-
+/*****************************************/	
 // Se trae un listado con todas las guias relacionadas al documento
+$SIS_query = 'N_Doc, ValorNeto';
+$SIS_join  = '';
+$SIS_where = 'idDocumentos = 1 AND DocRel ='.$X_Puntero;
+$SIS_order = 'N_Doc ASC';
 $arrGuias = array();
-$query = "SELECT  N_Doc, ValorNeto
-FROM `bodegas_insumos_facturacion`
-WHERE idDocumentos = 1 AND DocRel = ".$X_Puntero."
-ORDER BY N_Doc ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrGuias = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGuias');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
+/*****************************************/	
+$nn = 0;
+$impuestos = array();
+foreach ($arrImpuestos as $impto) { 
+	$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
+	$nn++;
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGuias,$row );
-} 
+											
 /********************************************************************/
 //Se define el contenido del PDF
 $html = '
@@ -729,7 +653,6 @@ $html .= '
 									break;
 							}
 						
-						
 						$html .= '</tr>
 					</tbody>
 				</table>
@@ -749,12 +672,11 @@ $html .= '
 					</thead>
 					<tbody>';
 					//si existen productos
-					if ($arrProductos) {
+					if ($arrProductos!=false) {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Productos</strong></td></tr>';
 						foreach ($arrProductos as $prod) {
 							$html .= '<tr>
 								<td style="vertical-align: top;"><strong>'.$prod['NombreBodega'].'</strong> - '.$prod['Nombre'].'</td>';
-								
 								//Verifico la existencia de la abreviatura de la unidad de medida
 								if(isset($prod['UnimedAbrev'])&&$prod['UnimedAbrev']!=''){
 									$prodUnimed = $prod['UnimedAbrev'];
@@ -776,7 +698,7 @@ $html .= '
 						} 
 					}
 					//si existen guias
-					if ($arrGuias) {
+					if ($arrGuias!=false) {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Guias de Despacho</strong></td></tr>';
 						foreach ($arrGuias as $guia) {
 							$html .= '<tr>
@@ -787,7 +709,7 @@ $html .= '
 					}
 					
 					//si existen guias
-					if ($arrOtros) {
+					if ($arrOtros!=false) {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Otros</strong></td></tr>';
 						foreach ($arrOtros as $otro) {
 							$html .= '<tr>
@@ -798,96 +720,90 @@ $html .= '
 					}
 					
 					//Recorro y guard el nombre de los impuestos 
-						$nn = 0;
-						$impuestos = array();
-						foreach ($arrImpuestos as $impto) { 
-							$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
-							$nn++;
-						}
-						if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4" align="right"><strong>Subtotal</strong></td> 
-								<td align="right">'.Valores($row_data['ValorNeto'], 0).'</td>
-							</tr>';
-						}
-						foreach ($arrDescuentos as $descuentos) {
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4" align="right"><strong>Descuento: '.$descuentos['Nombre'].'</strong></td> 
-								<td align="right">'.Valores($descuentos['vTotal'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4" align="right"><strong>Neto Imponible</strong></td> 
-								<td align="right">'.Valores($row_data['ValorNetoImp'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[0]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_01'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[1]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_02'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[2]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_03'], 0).'</td>
-							</tr>';
-						} 
-						if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[3]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_04'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[4]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_05'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[5]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_06'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[6]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_07'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[7]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_08'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[8]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_09'], 0).'</td>
-							</tr>';
-						}
-						if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>'.$impuestos[9]['nimp'].'</strong></td> 
-								<td align="right">'.Valores($row_data['Impuesto_10'], 0).'</td>
-							</tr>';
-						} 
-						if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){
-							$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="4"  align="right"><strong>Total</strong></td> 
-								<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
-							</tr>';
-						} 
+					if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong>Subtotal</strong></td> 
+							<td align="right">'.Valores($row_data['ValorNeto'], 0).'</td>
+						</tr>';
+					}
+					foreach ($arrDescuentos as $descuentos) {
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong>Descuento: '.$descuentos['Nombre'].'</strong></td> 
+							<td align="right">'.Valores($descuentos['vTotal'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4" align="right"><strong>Neto Imponible</strong></td> 
+							<td align="right">'.Valores($row_data['ValorNetoImp'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[0]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_01'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[1]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_02'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[2]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_03'], 0).'</td>
+						</tr>';
+					} 
+					if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[3]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_04'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[4]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_05'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[5]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_06'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[6]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_07'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[7]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_08'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[8]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_09'], 0).'</td>
+						</tr>';
+					}
+					if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>'.$impuestos[9]['nimp'].'</strong></td> 
+							<td align="right">'.Valores($row_data['Impuesto_10'], 0).'</td>
+						</tr>';
+					} 
+					if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){
+						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
+							<td colspan="4"  align="right"><strong>Total</strong></td> 
+							<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
+						</tr>';
+					} 
 				$html .= '
 					</tbody>
 				</table>
@@ -906,7 +822,6 @@ $html .= '
 					</tbody>
 				</table>';
 				
-				
 				if($row_data['idTipo']==6){
 					$html .= '
 					<br/>
@@ -916,7 +831,6 @@ $html .= '
 					<br/>
 					<br/>
 					<br/>
-
 					
 					<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
 						<tbody>
@@ -936,7 +850,6 @@ $html .= '
 					<br/>
 					<br/>
 					<br/>
-
 					
 					<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
 						<tbody>
@@ -948,17 +861,12 @@ $html .= '
 					</table>';
 				}
 				
-				
-				
-				
 
 			$html .= '</td>
 		</tr>
 	</tbody>
 </table>';
  
-
-
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/

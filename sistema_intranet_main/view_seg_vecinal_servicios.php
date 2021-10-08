@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 seg_vecinal_servicios_listado.Nombre,
 seg_vecinal_servicios_listado.Fono1,
 seg_vecinal_servicios_listado.Fono2,
@@ -48,28 +48,13 @@ seg_vecinal_servicios_listado.HoraTermino,
 
 seg_vecinal_clientes_tipos.Nombre AS Tipo,
 core_ubicacion_ciudad.Nombre AS Ciudad,
-core_ubicacion_comunas.Nombre AS Comuna
-
-FROM `seg_vecinal_servicios_listado`
-LEFT JOIN `seg_vecinal_clientes_tipos`   ON seg_vecinal_clientes_tipos.idTipo        = seg_vecinal_servicios_listado.idTipo
-LEFT JOIN `core_ubicacion_ciudad`        ON core_ubicacion_ciudad.idCiudad           = seg_vecinal_servicios_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`       ON core_ubicacion_comunas.idComuna          = seg_vecinal_servicios_listado.idComuna
-
-WHERE seg_vecinal_servicios_listado.idServicio = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+core_ubicacion_comunas.Nombre AS Comuna';
+$SIS_join  = '
+LEFT JOIN `seg_vecinal_clientes_tipos`   ON seg_vecinal_clientes_tipos.idTipo  = seg_vecinal_servicios_listado.idTipo
+LEFT JOIN `core_ubicacion_ciudad`        ON core_ubicacion_ciudad.idCiudad     = seg_vecinal_servicios_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`       ON core_ubicacion_comunas.idComuna    = seg_vecinal_servicios_listado.idComuna';
+$SIS_where = 'seg_vecinal_servicios_listado.idServicio ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 
@@ -80,7 +65,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Datos del Vecino</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if(!empty($arrObservaciones)){ ?>
+				<?php if($arrObservaciones!=false){ ?>
 					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
 			</ul>	
@@ -139,7 +124,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 			</div>
 			
-			<?php if(!empty($arrObservaciones)){ ?>
+			<?php if($arrObservaciones!=false){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -165,7 +150,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					</div>
 				</div>
 			<?php } ?>
-			
 			
         </div>	
 	</div>

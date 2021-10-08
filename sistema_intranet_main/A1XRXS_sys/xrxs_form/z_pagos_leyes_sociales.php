@@ -327,7 +327,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************/
 				//recorro los boletas de honorarios
-				if($arrTemporal){
+				if($arrTemporal!=false){
 					$_SESSION['pagos_leyes_sociales_trabajadores'] = $arrTemporal;
 				}
 				

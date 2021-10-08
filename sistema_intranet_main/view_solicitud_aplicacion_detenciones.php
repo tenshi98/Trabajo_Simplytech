@@ -35,41 +35,23 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //Inicia variable
-$z="WHERE telemetria_listado_error_detenciones.idDetencion>0";
+$SIS_where = "telemetria_listado_error_detenciones.idDetencion>0";
 //verifico si se selecciono un equipo
-if(isset($_GET['idSolicitud'])&&$_GET['idSolicitud']!=''){    $z.=" AND telemetria_listado_error_detenciones.idSolicitud='".simpleDecode($_GET['idSolicitud'], fecha_actual())."'";}
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  $z.=" AND telemetria_listado_error_detenciones.idTelemetria='".simpleDecode($_GET['idTelemetria'], fecha_actual())."'";}
-if(isset($_GET['idZona'])&&$_GET['idZona']!=''){              $z.=" AND telemetria_listado_error_detenciones.idZona='".simpleDecode($_GET['idZona'], fecha_actual())."'";}
+if(isset($_GET['idSolicitud'])&&$_GET['idSolicitud']!=''){    $SIS_where.=" AND telemetria_listado_error_detenciones.idSolicitud='".simpleDecode($_GET['idSolicitud'], fecha_actual())."'";}
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  $SIS_where.=" AND telemetria_listado_error_detenciones.idTelemetria='".simpleDecode($_GET['idTelemetria'], fecha_actual())."'";}
+if(isset($_GET['idZona'])&&$_GET['idZona']!=''){              $SIS_where.=" AND telemetria_listado_error_detenciones.idZona='".simpleDecode($_GET['idZona'], fecha_actual())."'";}
 
 // Se trae un listado con todos los elementos
-$arrErrores = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado_error_detenciones.idDetencion,
 telemetria_listado_error_detenciones.Fecha, 
 telemetria_listado_error_detenciones.Hora, 
 telemetria_listado_error_detenciones.Tiempo,
-telemetria_listado.Nombre AS NombreEquipo
-
-FROM `telemetria_listado_error_detenciones`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria
-".$z."
-ORDER BY idDetencion DESC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrErrores,$row );
-}
+telemetria_listado.Nombre AS NombreEquipo';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria';
+$SIS_order = 'idDetencion DESC';
+$arrErrores = array();
+$arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_detenciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
 ?>	
 

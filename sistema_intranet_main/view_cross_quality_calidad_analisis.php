@@ -138,72 +138,69 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 				<div class="col-xs-4">
 					<p class="lead">'.$grupo['Nombre'].'</p>
 					<p class="text-muted well well-sm no-shadow" >';
-				
-						
-				
 					
-				for ($i = 1; $i <= $X_cantPuntos; $i++) {
-					if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
-						//sumo subtotales
-						$subto = $subto + $rowMuestras['Medida_'.$i];
-						//verifico unidad de medida
-						$xuni = '';
-						foreach ($arrUnidadMedida as $uml) {
-							if($rowdata['PuntoUniMed_'.$i]==$uml['idUml']){
-								$xuni = ' '.$uml['Nombre'];
+					for ($i = 1; $i <= $X_cantPuntos; $i++) {
+						if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+							//sumo subtotales
+							$subto = $subto + $rowMuestras['Medida_'.$i];
+							//verifico unidad de medida
+							$xuni = '';
+							foreach ($arrUnidadMedida as $uml) {
+								if($rowdata['PuntoUniMed_'.$i]==$uml['idUml']){
+									$xuni = ' '.$uml['Nombre'];
+								}
+							}
+									
+							//Verifico el tipo de dato
+							switch ($rowdata['PuntoidTipo_'.$i]) {
+								//Medicion (Decimal) con parametros limitantes
+								case 1:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
+									break;
+								//Medicion (Decimal) sin parametros limitantes
+								case 2:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
+									break;
+								//Medicion (Enteros) con parametros limitantes
+								case 3:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
+									break;
+								//Medicion (Enteros) sin parametros limitantes
+								case 4:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
+									break;
+								//Fecha
+								case 5:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.fecha_estandar($rowMuestras['Medida_'.$i]).'<br/>';
+									break;
+								//Hora
+								case 6:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].' hrs.<br/>';
+									break;
+								//Texto Libre
+								case 7:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
+									break;
+								//Seleccion 1 a 3
+								case 8:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
+									break;
+								//Seleccion 1 a 5
+								case 9:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
+									break;
+								//Seleccion 1 a 10
+								case 10:
+									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
+									break;
+									
 							}
 						}
-								
-						//Verifico el tipo de dato
-						switch ($rowdata['PuntoidTipo_'.$i]) {
-							//Medicion (Decimal) con parametros limitantes
-							case 1:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
-								break;
-							//Medicion (Decimal) sin parametros limitantes
-							case 2:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
-								break;
-							//Medicion (Enteros) con parametros limitantes
-							case 3:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
-								break;
-							//Medicion (Enteros) sin parametros limitantes
-							case 4:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
-								break;
-							//Fecha
-							case 5:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.fecha_estandar($rowMuestras['Medida_'.$i]).'<br/>';
-								break;
-							//Hora
-							case 6:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].' hrs.<br/>';
-								break;
-							//Texto Libre
-							case 7:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
-								break;
-							//Seleccion 1 a 3
-							case 8:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
-								break;
-							//Seleccion 1 a 5
-							case 9:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
-								break;
-							//Seleccion 1 a 10
-							case 10:
-								echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
-								break;
-								
-						}
 					}
-				}
-				//Se muestran los subtotales
-				if(isset($grupo['Totales'])&&$grupo['Totales']==1){
-					echo '<br/><strong>Total: </strong>'.$subto.$xuni.'<br/>';
-				}
+					//Se muestran los subtotales
+					if(isset($grupo['Totales'])&&$grupo['Totales']==1){
+						echo '<br/><strong>Total: </strong>'.$subto.$xuni.'<br/>';
+					}
 				echo '</p>
 				</div>';
 			}	
@@ -259,12 +256,11 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se traen todos los datos del analisis
- $query = "SELECT 
+$SIS_query = '
 cross_quality_analisis_calidad.fecha_auto,
 cross_quality_analisis_calidad.Creacion_fecha,
 cross_quality_analisis_calidad.Temporada,
 cross_quality_analisis_calidad.Observaciones,
-
 core_sistemas.Nombre AS Sistema,
 usuarios_listado.Nombre AS Usuario,
 core_cross_quality_analisis_calidad.Nombre AS TipoAnalisis,
@@ -277,9 +273,8 @@ ubicacion_listado_level_1.Nombre AS UbicacionNombre_lvl_1,
 ubicacion_listado_level_2.Nombre AS UbicacionNombre_lvl_2,
 ubicacion_listado_level_3.Nombre AS UbicacionNombre_lvl_3,
 ubicacion_listado_level_4.Nombre AS UbicacionNombre_lvl_4,
-ubicacion_listado_level_5.Nombre AS UbicacionNombre_lvl_5
-
-FROM `cross_quality_analisis_calidad`
+ubicacion_listado_level_5.Nombre AS UbicacionNombre_lvl_5';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                          ON core_sistemas.idSistema                      = cross_quality_analisis_calidad.idSistema
 LEFT JOIN `usuarios_listado`                       ON usuarios_listado.idUsuario                   = cross_quality_analisis_calidad.idUsuario
 LEFT JOIN `core_cross_quality_analisis_calidad`    ON core_cross_quality_analisis_calidad.idTipo   = cross_quality_analisis_calidad.idTipo
@@ -291,133 +286,56 @@ LEFT JOIN `ubicacion_listado_level_2`              ON ubicacion_listado_level_2.
 LEFT JOIN `ubicacion_listado_level_3`              ON ubicacion_listado_level_3.idLevel_3          = cross_quality_analisis_calidad.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`              ON ubicacion_listado_level_4.idLevel_4          = cross_quality_analisis_calidad.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.idLevel_5          = cross_quality_analisis_calidad.idUbicacion_lvl_5
-LEFT JOIN `cross_quality_calidad_matriz`           ON cross_quality_calidad_matriz.idMatriz        = productos_listado.idCalidad
-WHERE cross_quality_analisis_calidad.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `cross_quality_calidad_matriz`           ON cross_quality_calidad_matriz.idMatriz        = productos_listado.idCalidad';
+$SIS_where = 'cross_quality_analisis_calidad.idAnalisis ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 /***************************************************/				
 // Se trae un listado con todos los trabajadores
-$arrTrabajadores = array();
- $query = "SELECT 
+$SIS_query = '
 trabajadores_listado.Nombre, 
 trabajadores_listado.ApellidoPat, 
 trabajadores_listado.ApellidoMat, 
 trabajadores_listado.Cargo, 
-trabajadores_listado.Rut
+trabajadores_listado.Rut';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador = cross_quality_analisis_calidad_trabajador.idTrabajador';
+$SIS_where = 'cross_quality_analisis_calidad_trabajador.idAnalisis ='.$X_Puntero;
+$SIS_order = 'trabajadores_listado.ApellidoPat ASC';
+$arrTrabajadores = array();
+$arrTrabajadores = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad_trabajador', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajadores');
 
-FROM `cross_quality_analisis_calidad_trabajador` 
-LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = cross_quality_analisis_calidad_trabajador.idTrabajador
-WHERE cross_quality_analisis_calidad_trabajador.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTrabajadores,$row );
-}
 /***************************************************/				
 // Se trae un listado con todas las maquinas
+$SIS_query = 'maquinas_listado.Nombre';
+$SIS_join  = 'LEFT JOIN `maquinas_listado` ON maquinas_listado.idMaquina = cross_quality_analisis_calidad_maquina.idMaquina';
+$SIS_where = 'cross_quality_analisis_calidad_maquina.idAnalisis ='.$X_Puntero;
+$SIS_order = 'maquinas_listado.Nombre ASC';
 $arrMaquinas = array();
- $query = "SELECT 
-maquinas_listado.Nombre
+$arrMaquinas = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad_maquina', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMaquinas');
 
-FROM `cross_quality_analisis_calidad_maquina` 
-LEFT JOIN `maquinas_listado`  ON maquinas_listado.idMaquina   = cross_quality_analisis_calidad_maquina.idMaquina
-WHERE cross_quality_analisis_calidad_maquina.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMaquinas,$row );
-}
 /***************************************************/				
 // Se trae un listado con todas las muestras
-$arrMuestras = array();
- $query = "SELECT 
+$SIS_query = '
 cross_quality_analisis_calidad_muestras.idMuestras, 
 cross_quality_analisis_calidad_muestras.n_folio_pallet,
 cross_quality_analisis_calidad_muestras.lote,
-productores_listado.Nombre AS ClienteNombre
+productores_listado.Nombre AS ClienteNombre';
+$SIS_join  = 'LEFT JOIN `productores_listado` ON productores_listado.idProductor = cross_quality_analisis_calidad_muestras.idProductor';
+$SIS_where = 'cross_quality_analisis_calidad_muestras.idAnalisis ='.$X_Puntero;
+$SIS_order = 'cross_quality_analisis_calidad_muestras.idMuestras ASC';
+$arrMuestras = array();
+$arrMuestras = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad_muestras', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMuestras');
 
-FROM `cross_quality_analisis_calidad_muestras` 
-LEFT JOIN `productores_listado`  ON productores_listado.idProductor   = cross_quality_analisis_calidad_muestras.idProductor
-WHERE cross_quality_analisis_calidad_muestras.idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMuestras,$row );
-}
 /***************************************************/				
 // Se trae un listado con todos los archivos
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrArchivos = array();
- $query = "SELECT Nombre
-
-FROM `cross_quality_analisis_calidad_archivo` 
-WHERE idAnalisis = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
-
+$arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad_archivo', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
 
 ?>
-
-
 
 <section class="invoice">
 	
@@ -432,43 +350,40 @@ array_push( $arrArchivos,$row );
 	
 	<div class="row invoice-info">
 		
-		<?php
-		echo '
-			<div class="col-sm-4 invoice-col">
-				Datos Basicos
-				<address>
-					<strong>Producto</strong><br/>
-					'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>
-					Ubicacion: '.$row_data['UbicacionNombre'];
+		<div class="col-sm-4 invoice-col">
+			Datos Basicos
+			<address>
+				<strong>Producto</strong><br/>
+				<?php echo $row_data['ProductoCategoria'].', '.$row_data['ProductoNombre']; ?><br/>
+				Ubicacion: <?php echo $row_data['UbicacionNombre']; ?>
+				<?php
 					if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}
 					if(isset($row_data['UbicacionNombre_lvl_2'])&&$row_data['UbicacionNombre_lvl_2']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_2'];}
 					if(isset($row_data['UbicacionNombre_lvl_3'])&&$row_data['UbicacionNombre_lvl_3']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_3'];}
 					if(isset($row_data['UbicacionNombre_lvl_4'])&&$row_data['UbicacionNombre_lvl_4']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_4'];}
 					if(isset($row_data['UbicacionNombre_lvl_5'])&&$row_data['UbicacionNombre_lvl_5']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_5'];}
-						
-					echo '<br/>
-				</address>
-			</div>
+				?>		
+				<br/>
+			</address>
+		</div>
 				
-			<div class="col-sm-4 invoice-col">
-				Fecha Creacion
-				<address>
-					Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
-					Temporada: '.$row_data['Temporada'].'<br/>
-				</address>
-			</div>
+		<div class="col-sm-4 invoice-col">
+			Fecha Creacion
+			<address>
+				Fecha Ingreso: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?><br/>
+				Temporada: <?php echo $row_data['Temporada']; ?><br/>
+			</address>
+		</div>
 			   
-			<div class="col-sm-4 invoice-col">
-				Datos Creacion
-				<address>
-					Sistema: '.$row_data['Sistema'].'<br/>
-					Usuario: '.$row_data['Usuario'].'<br/>
-				</address>	
-					
-			</div>'; ?>
+		<div class="col-sm-4 invoice-col">
+			Datos Creacion
+			<address>
+				Sistema: <?php echo $row_data['Sistema']; ?><br/>
+				Usuario: <?php echo $row_data['Usuario']; ?><br/>
+			</address>
+		</div>
     
 	</div>
-	
 	
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
@@ -479,7 +394,7 @@ array_push( $arrArchivos,$row );
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrTrabajadores) { ?>
+					<?php if ($arrTrabajadores!=false) { ?>
 						<tr class="active"><td colspan="6"><strong>Trabajadores Encargados</strong></td></tr>
 						<?php foreach ($arrTrabajadores as $trab) { ?>
 							<tr>
@@ -489,7 +404,7 @@ array_push( $arrArchivos,$row );
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrMaquinas) { ?>
+					<?php if ($arrMaquinas!=false) { ?>
 						<tr class="active"><td colspan="6"><strong>Maquinas a Utilizar</strong></td></tr>
 						<?php foreach ($arrMaquinas as $maq) { ?>
 							<tr>
@@ -497,7 +412,7 @@ array_push( $arrArchivos,$row );
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrMuestras) { ?>
+					<?php if ($arrMuestras!=false) { ?>
 						<tr class="active"><td colspan="6"><strong>Muestras</strong></td></tr>
 						<tr class="active">
 							<td colspan="2"><strong>Productor</strong></td>
@@ -520,10 +435,8 @@ array_push( $arrArchivos,$row );
 					<?php } ?>
 				</tbody>
 			</table>
-			
 		</div>
 	</div>
-	
 	
 	<div class="row">
 		<div class="col-xs-12">
@@ -532,30 +445,11 @@ array_push( $arrArchivos,$row );
 		</div>
 	</div>
 	
-	
-
-
-<?php
-	$zz  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-	$zz .= '&view='.$X_Puntero;
-	?>
-	<div class="row no-print">
-		<div class="col-xs-12">
-			<a target="new" href="" class="btn btn-default">
-				<i class="fa fa-print" aria-hidden="true"></i> Imprimir
-			</a>
-
-			<a target="new" href="" class="btn btn-primary pull-right" style="margin-right: 5px;">
-				<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF
-			</a>
-		</div>
-	</div>
-      
 </section>
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 
-	<?php if ($arrArchivos){ ?>
+	<?php if ($arrArchivos!=false){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

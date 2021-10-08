@@ -64,9 +64,10 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['id']) ) {
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 2, $dbConn); 
+validaPermisoUser($rowlevel['level'], 2, $dbConn);
+/*******************************************/ 
 //se traen los datos basicos de la licitacion
-$query = "SELECT 
+$SIS_query = '
 licitacion_listado.Codigo, 
 licitacion_listado.Nombre, 
 licitacion_listado.FechaInicio, 
@@ -83,9 +84,8 @@ bodegas_insumos_listado.Nombre AS BodegaInsumos,
 clientes_listado.Nombre AS Cliente,
 core_sistemas.Nombre AS Sistema,
 core_licitacion_tipos.Nombre AS TipoLicitacion,
-core_sistemas_opciones.Nombre AS OpcionItem
-
-FROM `licitacion_listado`
+core_sistemas_opciones.Nombre AS OpcionItem';
+$SIS_join  = '
 LEFT JOIN `core_estado_aprobacion`       ON core_estado_aprobacion.idEstado          = licitacion_listado.idAprobado
 LEFT JOIN `core_estados`                 ON core_estados.idEstado                    = licitacion_listado.idEstado
 LEFT JOIN `bodegas_productos_listado`    ON bodegas_productos_listado.idBodega       = licitacion_listado.idBodegaProd
@@ -93,106 +93,54 @@ LEFT JOIN `bodegas_insumos_listado`      ON bodegas_insumos_listado.idBodega    
 LEFT JOIN `clientes_listado`             ON clientes_listado.idCliente               = licitacion_listado.idCliente
 LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema                  = licitacion_listado.idSistema
 LEFT JOIN `core_licitacion_tipos`        ON core_licitacion_tipos.idTipoLicitacion   = licitacion_listado.idTipoLicitacion
-LEFT JOIN `core_sistemas_opciones`       ON core_sistemas_opciones.idOpciones        = licitacion_listado.idOpcionItem
-
-WHERE licitacion_listado.idLicitacion=".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_sistemas_opciones`       ON core_sistemas_opciones.idOpciones        = licitacion_listado.idOpcionItem';
+$SIS_where = 'licitacion_listado.idLicitacion='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /*****************************************/		
 // Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
+$SIS_query = '
 licitacion_listado_historial.Creacion_fecha, 
 licitacion_listado_historial.Observacion,
 core_historial_tipos.Nombre,
 core_historial_tipos.FonAwesome,
-usuarios_listado.Nombre AS Usuario
-
-FROM `licitacion_listado_historial` 
+usuarios_listado.Nombre AS Usuario';
+$SIS_join  = '
 LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = licitacion_listado_historial.idTipo
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = licitacion_listado_historial.idUsuario
-WHERE licitacion_listado_historial.idLicitacion = ".$_GET['id']." 
-ORDER BY licitacion_listado_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
+LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = licitacion_listado_historial.idUsuario';
+$SIS_where = 'licitacion_listado_historial.idLicitacion ='.$_GET['id'];
+$SIS_order = 'licitacion_listado_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'licitacion_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
+
 
 /***********************************************************************************/
 //Se verifica que se utilice el itemizado
 if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	//Se crean las variables
 	$nmax = 15;
-	$z = '';
-	$leftjoin = '';
-	$orderby = '';
+	$SIS_query = 'licitacion_listado_level_1.idLevel_1 AS bla';
+	$SIS_join  = '';
+	$SIS_order = 'licitacion_listado_level_1.Codigo ASC';
 	for ($i = 1; $i <= $nmax; $i++) {
 		//consulta
-		$z .= ',licitacion_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
-		$z .= ',licitacion_listado_level_'.$i.'.Codigo AS LVL_'.$i.'_Codigo';
-		$z .= ',licitacion_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
+		$SIS_query .= ',licitacion_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
+		$SIS_query .= ',licitacion_listado_level_'.$i.'.Codigo AS LVL_'.$i.'_Codigo';
+		$SIS_query .= ',licitacion_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
 		//Joins
 		$xx = $i + 1;
 		if($xx<=$nmax){
-			$leftjoin .= ' LEFT JOIN `licitacion_listado_level_'.$xx.'`   ON licitacion_listado_level_'.$xx.'.idLevel_'.$i.'    = licitacion_listado_level_'.$i.'.idLevel_'.$i;
+			$SIS_join .= ' LEFT JOIN `licitacion_listado_level_'.$xx.'`   ON licitacion_listado_level_'.$xx.'.idLevel_'.$i.'    = licitacion_listado_level_'.$i.'.idLevel_'.$i;
 		}
 		//ORDER BY
-		$orderby .= ', licitacion_listado_level_'.$i.'.Codigo ASC';
+		$SIS_order .= ', licitacion_listado_level_'.$i.'.Codigo ASC';
 	}
 
 	//se hace la consulta
+	$SIS_where = 'licitacion_listado_level_1.idLicitacion='.$_GET['id'];
 	$arrLicitacion = array();
-	$query = "SELECT
-	licitacion_listado_level_1.idLevel_1 AS bla
-	".$z."
-	FROM `licitacion_listado_level_1`
-	".$leftjoin."
-	WHERE licitacion_listado_level_1.idLicitacion=".$_GET['id']."
-	ORDER BY licitacion_listado_level_1.Codigo ASC ".$orderby."
+	$arrLicitacion = db_select_array (false, $SIS_query, 'licitacion_listado_level_1', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrLicitacion');
 
-	";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrLicitacion,$row );
-	}
 
 	$array3d = array();
 	foreach($arrLicitacion as $key) {
@@ -495,7 +443,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	</div>
 </div>	
 	
-<?php if ($arrHistorial){ ?>
+<?php if ($arrHistorial!=false){ ?>
 	<div class="col-xs-12" style="margin-bottom:15px;">
 		<table id="items">
 			<tbody>
@@ -642,60 +590,44 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'cliente_asc':   $order_by = 'ORDER BY clientes_listado.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente'; break;
-		case 'cliente_desc':  $order_by = 'ORDER BY clientes_listado.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
-		case 'codigo_asc':    $order_by = 'ORDER BY licitacion_listado.Codigo ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
-		case 'codigo_desc':   $order_by = 'ORDER BY licitacion_listado.Codigo DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
-		case 'nombre_asc':    $order_by = 'ORDER BY licitacion_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':   $order_by = 'ORDER BY licitacion_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'aprobado_asc':  $order_by = 'ORDER BY core_estado_aprobacion.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Aprobacion Ascendente';break;
-		case 'aprobado_desc': $order_by = 'ORDER BY core_estado_aprobacion.Nombre DESC ';$bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Aprobacion Descendente';break;
+		case 'cliente_asc':   $order_by = 'clientes_listado.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente'; break;
+		case 'cliente_desc':  $order_by = 'clientes_listado.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
+		case 'codigo_asc':    $order_by = 'licitacion_listado.Codigo ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
+		case 'codigo_desc':   $order_by = 'licitacion_listado.Codigo DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
+		case 'nombre_asc':    $order_by = 'licitacion_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':   $order_by = 'licitacion_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'aprobado_asc':  $order_by = 'core_estado_aprobacion.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Aprobacion Ascendente';break;
+		case 'aprobado_desc': $order_by = 'core_estado_aprobacion.Nombre DESC ';$bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Aprobacion Descendente';break;
 		
-		default: $order_by = 'ORDER BY clientes_listado.Nombre ASC, licitacion_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente, Contrato Ascendente';
+		default: $order_by = 'clientes_listado.Nombre ASC, licitacion_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente, Contrato Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY clientes_listado.Nombre ASC, licitacion_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente, Contrato Ascendente';
+	$order_by = 'clientes_listado.Nombre ASC, licitacion_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente, Contrato Ascendente';
 }
 /**********************************************************/ 
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$z = "WHERE licitacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "licitacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){       $z .= " AND licitacion_listado.idCliente=".$_GET['idCliente'];}
-if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){             $z .= " AND licitacion_listado.Codigo LIKE '%".$_GET['Codigo']."%'";}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $z .= " AND licitacion_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['FechaInicio']) && $_GET['FechaInicio'] != ''){   $z .= " AND licitacion_listado.FechaInicio='".$_GET['FechaInicio']."'";}
-if(isset($_GET['FechaTermino']) && $_GET['FechaTermino'] != ''){ $z .= " AND licitacion_listado.FechaTermino='".$_GET['FechaTermino']."'";}
-if(isset($_GET['Presupuesto']) && $_GET['Presupuesto'] != ''){   $z .= " AND licitacion_listado.Presupuesto LIKE '%".$_GET['Presupuesto']."%'";}
-if(isset($_GET['idBodegaProd']) && $_GET['idBodegaProd'] != ''){ $z .= " AND licitacion_listado.idBodegaProd=".$_GET['idBodegaProd'];}
-if(isset($_GET['idBodegaIns']) && $_GET['idBodegaIns'] != ''){   $z .= " AND licitacion_listado.idBodegaIns=".$_GET['idBodegaIns'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){         $z .= " AND licitacion_listado.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['idAprobado']) && $_GET['idAprobado'] != ''){     $z .= " AND licitacion_listado.idAprobado=".$_GET['idAprobado'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){       $SIS_where .= " AND licitacion_listado.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){             $SIS_where .= " AND licitacion_listado.Codigo LIKE '%".$_GET['Codigo']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $SIS_where .= " AND licitacion_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['FechaInicio']) && $_GET['FechaInicio'] != ''){   $SIS_where .= " AND licitacion_listado.FechaInicio='".$_GET['FechaInicio']."'";}
+if(isset($_GET['FechaTermino']) && $_GET['FechaTermino'] != ''){ $SIS_where .= " AND licitacion_listado.FechaTermino='".$_GET['FechaTermino']."'";}
+if(isset($_GET['Presupuesto']) && $_GET['Presupuesto'] != ''){   $SIS_where .= " AND licitacion_listado.Presupuesto LIKE '%".$_GET['Presupuesto']."%'";}
+if(isset($_GET['idBodegaProd']) && $_GET['idBodegaProd'] != ''){ $SIS_where .= " AND licitacion_listado.idBodegaProd=".$_GET['idBodegaProd'];}
+if(isset($_GET['idBodegaIns']) && $_GET['idBodegaIns'] != ''){   $SIS_where .= " AND licitacion_listado.idBodegaIns=".$_GET['idBodegaIns'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){         $SIS_where .= " AND licitacion_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idAprobado']) && $_GET['idAprobado'] != ''){     $SIS_where .= " AND licitacion_listado.idAprobado=".$_GET['idAprobado'];}
 /**********************************************************/				
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idLicitacion FROM `licitacion_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idLicitacion', 'licitacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrArea = array();
-$query = "SELECT 
+$SIS_query = '
 licitacion_listado.idLicitacion,
 licitacion_listado.Codigo,
 licitacion_listado.Nombre,
@@ -704,32 +636,19 @@ licitacion_listado.idSistema,
 core_estados.Nombre AS Estado,
 core_estado_aprobacion.Nombre AS EstadoAprobacion,
 clientes_listado.Nombre AS Cliente,
-licitacion_listado.idEstado
-
-FROM `licitacion_listado`
+licitacion_listado.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema          = licitacion_listado.idSistema
 LEFT JOIN `clientes_listado`        ON clientes_listado.idCliente       = licitacion_listado.idCliente
 LEFT JOIN `core_estados`            ON core_estados.idEstado            = licitacion_listado.idEstado
-LEFT JOIN `core_estado_aprobacion`  ON core_estado_aprobacion.idEstado  = licitacion_listado.idAprobado
-".$z."
-".$order_by;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArea,$row );
-}
+LEFT JOIN `core_estado_aprobacion`  ON core_estado_aprobacion.idEstado  = licitacion_listado.idAprobado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrArea = array();
+$arrArea = db_select_array (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArea');
 
+/**********************************************************/ 
+//Verifico el tipo de usuario que esta ingresando
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 ?>
 <div class="col-sm-12 breadcrumb-bar">

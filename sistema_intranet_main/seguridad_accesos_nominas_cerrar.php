@@ -56,24 +56,11 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['editPersona']) ) {  
 // consulto los datos
-$query = "SELECT Fecha, HoraEntrada, HoraSalida, idEstado, Nombre
-FROM `seguridad_accesos_nominas_listado`
-WHERE idNomina = ".$_GET['editPersona'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
+$SIS_query = 'Fecha, HoraEntrada, HoraSalida, idEstado, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idNomina ='.$_GET['editPersona'];
+$row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);	
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -117,24 +104,10 @@ $row_data = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
 // consulto los datos
-$query = "SELECT idEstado
-FROM `seguridad_accesos_nominas`
-WHERE idAcceso = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);	 
+$SIS_query = 'idEstado';
+$SIS_join  = '';
+$SIS_where = 'idAcceso ='.$_GET['id'];
+$row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 	 
 ?>
 
@@ -173,7 +146,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn); 
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 seguridad_accesos_nominas.FechaProgramada,
 seguridad_accesos_nominas.HoraInicioProgramada,
 seguridad_accesos_nominas.HoraTerminoProgramada,
@@ -186,9 +159,8 @@ ubicacion_listado_level_3.Nombre AS UbicacionLVL_3,
 ubicacion_listado_level_4.Nombre AS UbicacionLVL_4,
 ubicacion_listado_level_5.Nombre AS UbicacionLVL_5,
 seguridad_accesos_nominas.PersonaReunion,
-core_estado_caja.Nombre AS Estado
-
-FROM `seguridad_accesos_nominas`
+core_estado_caja.Nombre AS Estado';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`            ON usuarios_listado.idUsuario            = seguridad_accesos_nominas.idUsuario
 LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema               = seguridad_accesos_nominas.idSistema
 LEFT JOIN `ubicacion_listado`           ON ubicacion_listado.idUbicacion         = seguridad_accesos_nominas.idUbicacion
@@ -197,30 +169,13 @@ LEFT JOIN `ubicacion_listado_level_2`   ON ubicacion_listado_level_2.idLevel_2  
 LEFT JOIN `ubicacion_listado_level_3`   ON ubicacion_listado_level_3.idLevel_3   = seguridad_accesos_nominas.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4   = seguridad_accesos_nominas.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = seguridad_accesos_nominas.idUbicacion_lvl_5
-LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado
-
-WHERE seguridad_accesos_nominas.idAcceso = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado';
+$SIS_where = 'seguridad_accesos_nominas.idAcceso ='.$_GET['id'];
+$row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
 /*****************************************/		
 // Se trae un listado con todos los otros
-$arrPersonas = array();
-$query = "SELECT 
+$SIS_query = '
 seguridad_accesos_nominas_listado.idNomina,
 seguridad_accesos_nominas_listado.Fecha, 
 seguridad_accesos_nominas_listado.HoraEntrada, 
@@ -228,57 +183,23 @@ seguridad_accesos_nominas_listado.HoraSalida,
 seguridad_accesos_nominas_listado.Nombre, 
 seguridad_accesos_nominas_listado.Rut, 
 seguridad_accesos_nominas_listado.NDocCedula,
-core_estado_nomina_asistencia.Nombre AS Estado
-
-FROM `seguridad_accesos_nominas_listado` 
-LEFT JOIN `core_estado_nomina_asistencia`   ON core_estado_nomina_asistencia.idEstado  = seguridad_accesos_nominas_listado.idEstado
-WHERE seguridad_accesos_nominas_listado.idAcceso = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPersonas,$row );
-}
+core_estado_nomina_asistencia.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estado_nomina_asistencia` ON core_estado_nomina_asistencia.idEstado = seguridad_accesos_nominas_listado.idEstado';
+$SIS_where = 'seguridad_accesos_nominas_listado.idAcceso ='.$_GET['id'];
+$SIS_order = 'seguridad_accesos_nominas_listado.Fecha ASC';
+$arrPersonas = array();
+$arrPersonas = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPersonas');
 
 /*****************************************/		
 // Se trae un listado con todos los archivos adjuntos
+$SIS_query = 'idFile, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idAcceso ='.$_GET['id'];
+$SIS_order = 'Nombre ASC';
 $arrArchivo = array();
-$query = "SELECT idFile, Nombre
-FROM `seguridad_accesos_nominas_archivos` 
-WHERE idAcceso = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivo,$row );
-}	 
-	 
-?>
-
+$arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivo');
  
-
+?>
 
 <div class="col-sm-12">
 
@@ -357,7 +278,7 @@ array_push( $arrArchivo,$row );
 				</tr>
 				<?php
 				//listado de servicios
-				if ($arrPersonas) {
+				if ($arrPersonas!=false) {
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($arrPersonas as $persona) { ?>
 						<tr class="item-row linea_punteada">
@@ -387,7 +308,7 @@ array_push( $arrArchivo,$row );
             </tr>		  
             
 			<?php 
-			if ($arrArchivo){
+			if ($arrArchivo!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
 				foreach ($arrArchivo as $producto){ ?>
@@ -436,31 +357,31 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'usuario_asc':           $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
-		case 'usuario_desc':          $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'fecha_asc':             $order_by = 'ORDER BY seguridad_accesos_nominas.FechaProgramada ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Programada Ascendente'; break;
-		case 'fecha_desc':            $order_by = 'ORDER BY seguridad_accesos_nominas.FechaProgramada DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Programada Descendente';break;
-		case 'hora_entrada_asc':      $order_by = 'ORDER BY seguridad_accesos_nominas.HoraInicioProgramada ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Inicio Programada Ascendente'; break;
-		case 'hora_entrada_desc':     $order_by = 'ORDER BY seguridad_accesos_nominas.HoraInicioProgramada DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Inicio Programada Descendente';break;
-		case 'hora_salida_asc':       $order_by = 'ORDER BY seguridad_accesos_nominas.HoraTerminoProgramada ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Termino Programada Ascendente'; break;
-		case 'hora_salida_desc':      $order_by = 'ORDER BY seguridad_accesos_nominas.HoraTerminoProgramada DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Termino Programada Descendente';break;
-		case 'destino_asc':           $order_by = 'ORDER BY ubicacion_listado.Nombre ASC ';                               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Destino Ascendente'; break;
-		case 'destino_desc':          $order_by = 'ORDER BY ubicacion_listado.Nombre DESC ';                              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Destino Descendente';break;
-		case 'persona_asc':           $order_by = 'ORDER BY seguridad_accesos_nominas.PersonaReunion ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Persona de Reunion Ascendente'; break;
-		case 'persona_desc':          $order_by = 'ORDER BY seguridad_accesos_nominas.PersonaReunion DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Persona de Reunion Descendente';break;
-		case 'estado_asc':            $order_by = 'ORDER BY core_estado_caja.Nombre ASC ';                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
-		case 'estado_desc':           $order_by = 'ORDER BY core_estado_caja.Nombre DESC ';                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'usuario_asc':           $order_by = 'usuarios_listado.Nombre ASC ';                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
+		case 'usuario_desc':          $order_by = 'usuarios_listado.Nombre DESC ';                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'fecha_asc':             $order_by = 'seguridad_accesos_nominas.FechaProgramada ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Programada Ascendente'; break;
+		case 'fecha_desc':            $order_by = 'seguridad_accesos_nominas.FechaProgramada DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Programada Descendente';break;
+		case 'hora_entrada_asc':      $order_by = 'seguridad_accesos_nominas.HoraInicioProgramada ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Inicio Programada Ascendente'; break;
+		case 'hora_entrada_desc':     $order_by = 'seguridad_accesos_nominas.HoraInicioProgramada DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Inicio Programada Descendente';break;
+		case 'hora_salida_asc':       $order_by = 'seguridad_accesos_nominas.HoraTerminoProgramada ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Termino Programada Ascendente'; break;
+		case 'hora_salida_desc':      $order_by = 'seguridad_accesos_nominas.HoraTerminoProgramada DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Termino Programada Descendente';break;
+		case 'destino_asc':           $order_by = 'ubicacion_listado.Nombre ASC ';                               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Destino Ascendente'; break;
+		case 'destino_desc':          $order_by = 'ubicacion_listado.Nombre DESC ';                              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Destino Descendente';break;
+		case 'persona_asc':           $order_by = 'seguridad_accesos_nominas.PersonaReunion ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Persona de Reunion Ascendente'; break;
+		case 'persona_desc':          $order_by = 'seguridad_accesos_nominas.PersonaReunion DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Persona de Reunion Descendente';break;
+		case 'estado_asc':            $order_by = 'core_estado_caja.Nombre ASC ';                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':           $order_by = 'core_estado_caja.Nombre DESC ';                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY seguridad_accesos_nominas.FechaProgramada DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> FechaProgramada Descendente';
+		default: $order_by = 'seguridad_accesos_nominas.FechaProgramada DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> FechaProgramada Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY seguridad_accesos_nominas.FechaProgramada DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> FechaProgramada Descendente';
+	$order_by = 'seguridad_accesos_nominas.FechaProgramada DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> FechaProgramada Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE seguridad_accesos_nominas.idAcceso!=0";
+$SIS_where = "seguridad_accesos_nominas.idAcceso!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND seguridad_accesos_nominas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.=" AND seguridad_accesos_nominas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 //Verifico el tipo de usuario que esta ingresando
@@ -470,48 +391,33 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
-	$z .= " AND seguridad_accesos_nominas.idUsuario = '".$_GET['idUsuario']."'" ;
+	$SIS_where .= " AND seguridad_accesos_nominas.idUsuario = '".$_GET['idUsuario']."'" ;
 }
 if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
-	$z .= " AND seguridad_accesos_nominas.HoraInicioProgramada BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
+	$SIS_where .= " AND seguridad_accesos_nominas.HoraInicioProgramada BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
 }
 if(isset($_GET['h_salida_inicio']) && $_GET['h_salida_inicio'] != ''&&isset($_GET['h_salida_termino']) && $_GET['h_salida_termino'] != ''){ 
-	$z .= " AND seguridad_accesos_nominas.HoraTerminoProgramada BETWEEN '".$_GET['h_salida_inicio']."' AND '".$_GET['h_salida_termino']."'" ;
+	$SIS_where .= " AND seguridad_accesos_nominas.HoraTerminoProgramada BETWEEN '".$_GET['h_salida_inicio']."' AND '".$_GET['h_salida_termino']."'" ;
 }
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z .= " AND seguridad_accesos_nominas.FechaProgramada BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'" ;
+	$SIS_where .= " AND seguridad_accesos_nominas.FechaProgramada BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'" ;
 }
-if(isset($_GET['idUbicacion']) && $_GET['idUbicacion'] != ''){               $z .= " AND seguridad_accesos_nominas.idUbicacion='".$_GET['idUbicacion']."'";}
-if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1'] != ''){   $z .= " AND seguridad_accesos_nominas.idUbicacion_lvl_1='".$_GET['idUbicacion_lvl_1']."'";}
-if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2'] != ''){   $z .= " AND seguridad_accesos_nominas.idUbicacion_lvl_2='".$_GET['idUbicacion_lvl_2']."'";}
-if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3'] != ''){   $z .= " AND seguridad_accesos_nominas.idUbicacion_lvl_3='".$_GET['idUbicacion_lvl_3']."'";}
-if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4'] != ''){   $z .= " AND seguridad_accesos_nominas.idUbicacion_lvl_4='".$_GET['idUbicacion_lvl_4']."'";}
-if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5'] != ''){   $z .= " AND seguridad_accesos_nominas.idUbicacion_lvl_5='".$_GET['idUbicacion_lvl_5']."'";}
-if(isset($_GET['PersonaReunion']) && $_GET['PersonaReunion'] != ''){         $z .= " AND seguridad_accesos_nominas.PersonaReunion LIKE '%".$_GET['PersonaReunion']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                     $z .= " AND seguridad_accesos_nominas.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['idUbicacion']) && $_GET['idUbicacion'] != ''){               $SIS_where .= " AND seguridad_accesos_nominas.idUbicacion='".$_GET['idUbicacion']."'";}
+if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1'] != ''){   $SIS_where .= " AND seguridad_accesos_nominas.idUbicacion_lvl_1='".$_GET['idUbicacion_lvl_1']."'";}
+if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2'] != ''){   $SIS_where .= " AND seguridad_accesos_nominas.idUbicacion_lvl_2='".$_GET['idUbicacion_lvl_2']."'";}
+if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3'] != ''){   $SIS_where .= " AND seguridad_accesos_nominas.idUbicacion_lvl_3='".$_GET['idUbicacion_lvl_3']."'";}
+if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4'] != ''){   $SIS_where .= " AND seguridad_accesos_nominas.idUbicacion_lvl_4='".$_GET['idUbicacion_lvl_4']."'";}
+if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5'] != ''){   $SIS_where .= " AND seguridad_accesos_nominas.idUbicacion_lvl_5='".$_GET['idUbicacion_lvl_5']."'";}
+if(isset($_GET['PersonaReunion']) && $_GET['PersonaReunion'] != ''){         $SIS_where .= " AND seguridad_accesos_nominas.PersonaReunion LIKE '%".$_GET['PersonaReunion']."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                     $SIS_where .= " AND seguridad_accesos_nominas.idEstado='".$_GET['idEstado']."'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idAcceso FROM `seguridad_accesos_nominas` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idAcceso', 'seguridad_accesos_nominas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 seguridad_accesos_nominas.idAcceso,
 seguridad_accesos_nominas.FechaProgramada,
 seguridad_accesos_nominas.HoraInicioProgramada,
@@ -526,9 +432,8 @@ ubicacion_listado_level_4.Nombre AS UbicacionLVL_4,
 ubicacion_listado_level_5.Nombre AS UbicacionLVL_5,
 seguridad_accesos_nominas.PersonaReunion,
 core_estado_caja.Nombre AS Estado,
-seguridad_accesos_nominas.idEstado
-
-FROM `seguridad_accesos_nominas`
+seguridad_accesos_nominas.idEstado';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`            ON usuarios_listado.idUsuario            = seguridad_accesos_nominas.idUsuario
 LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema               = seguridad_accesos_nominas.idSistema
 LEFT JOIN `ubicacion_listado`           ON ubicacion_listado.idUbicacion         = seguridad_accesos_nominas.idUbicacion
@@ -537,27 +442,12 @@ LEFT JOIN `ubicacion_listado_level_2`   ON ubicacion_listado_level_2.idLevel_2  
 LEFT JOIN `ubicacion_listado_level_3`   ON ubicacion_listado_level_3.idLevel_3   = seguridad_accesos_nominas.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4   = seguridad_accesos_nominas.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = seguridad_accesos_nominas.idUbicacion_lvl_5
-LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado
+LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}?>
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

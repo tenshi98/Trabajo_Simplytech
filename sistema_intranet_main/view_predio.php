@@ -35,67 +35,38 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 cross_predios_listado.Nombre,
 cross_predios_listado.Direccion,
 core_ubicacion_ciudad.Nombre AS Ciudad,
-core_ubicacion_comunas.Nombre AS Comuna
+core_ubicacion_comunas.Nombre AS Comuna';
+$SIS_join  = '
+LEFT JOIN `core_ubicacion_ciudad`   ON core_ubicacion_ciudad.idCiudad   = cross_predios_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  ON core_ubicacion_comunas.idComuna  = cross_predios_listado.idComuna';
+$SIS_where = 'cross_predios_listado.idPredio ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-FROM `cross_predios_listado`
-LEFT JOIN `core_ubicacion_ciudad`                    ON core_ubicacion_ciudad.idCiudad                  = cross_predios_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna
-WHERE cross_predios_listado.idPredio = ".$X_Puntero;
-
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+/**************************************************************/
 //Se traen las rutas
-$arrZonas = array();
-$query = "SELECT 
+$SIS_query = '
 cross_predios_listado_zonas.idZona,
 cross_predios_listado_zonas.Nombre,
 cross_predios_listado_zonas_ubicaciones.Latitud,
 cross_predios_listado_zonas_ubicaciones.Longitud,
 cross_predios_listado.Direccion,
 core_ubicacion_ciudad.Nombre AS Ciudad,
-core_ubicacion_comunas.Nombre AS Comuna
-
-FROM `cross_predios_listado_zonas`
+core_ubicacion_comunas.Nombre AS Comuna';
+$SIS_join  = '
 LEFT JOIN `cross_predios_listado_zonas_ubicaciones`  ON cross_predios_listado_zonas_ubicaciones.idZona  = cross_predios_listado_zonas.idZona
 LEFT JOIN `cross_predios_listado`                    ON cross_predios_listado.idPredio                  = cross_predios_listado_zonas.idPredio
 LEFT JOIN `core_ubicacion_ciudad`                    ON core_ubicacion_ciudad.idCiudad                  = cross_predios_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna
+LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna';
+$SIS_where = 'cross_predios_listado_zonas.idPredio ='.$X_Puntero;
+$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
+$arrZonas = array();
+$arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
 
-WHERE cross_predios_listado_zonas.idPredio = ".$X_Puntero."
-ORDER BY cross_predios_listado_zonas.idZona ASC, 
-cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrZonas,$row );
-}
-
+/**************************************************************/
 //Se obtiene la ubicacion
 $Ubicacion = "";
 if(isset($arrZonas[0]['Direccion'])&&$arrZonas[0]['Direccion']!=''){ $Ubicacion.=' '.$arrZonas[0]['Direccion'];}

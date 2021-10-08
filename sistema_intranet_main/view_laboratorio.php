@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se traen todos los datos del Laboratorio
-$query = "SELECT  
+$SIS_query = '
 laboratorio_listado.email, 
 laboratorio_listado.Nombre, 
 laboratorio_listado.Rut, 
@@ -53,60 +53,27 @@ core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema,
 laboratorio_tipos.Nombre AS tipoCliente,
 core_paises.Nombre AS Pais,
-core_paises.Flag AS Flag
-FROM `laboratorio_listado`
+core_paises.Flag AS Flag';
+$SIS_join  = '
 LEFT JOIN `core_estados`               ON core_estados.idEstado               = laboratorio_listado.idEstado
 LEFT JOIN `core_ubicacion_ciudad`      ON core_ubicacion_ciudad.idCiudad      = laboratorio_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`     ON core_ubicacion_comunas.idComuna     = laboratorio_listado.idComuna
 LEFT JOIN `core_sistemas`              ON core_sistemas.idSistema             = laboratorio_listado.idSistema
 LEFT JOIN `laboratorio_tipos`          ON laboratorio_tipos.idTipo            = laboratorio_listado.idTipo
-LEFT JOIN `core_paises`                ON core_paises.idPais                  = laboratorio_listado.idPais
-WHERE laboratorio_listado.idLaboratorio = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+LEFT JOIN `core_paises`                ON core_paises.idPais                  = laboratorio_listado.idPais';
+$SIS_where = 'laboratorio_listado.idLaboratorio ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'laboratorio_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 // consulto los datos
-$arrObservaciones = array();
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.Nombre AS nombre_usuario,
 laboratorio_observaciones.Fecha,
-laboratorio_observaciones.Observacion
-FROM `laboratorio_observaciones`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = laboratorio_observaciones.idUsuario
-WHERE laboratorio_observaciones.idLaboratorio = ".$X_Puntero."
-ORDER BY laboratorio_observaciones.idObservacion ASC 
-LIMIT 15 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrObservaciones,$row );
-}
-
-
-
+laboratorio_observaciones.Observacion';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = laboratorio_observaciones.idUsuario';
+$SIS_where = 'laboratorio_observaciones.idLaboratorio ='.$X_Puntero;
+$SIS_order = 'laboratorio_observaciones.idObservacion ASC LIMIT 15';
+$arrObservaciones = array();
+$arrObservaciones = db_select_array (false, $SIS_query, 'laboratorio_observaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrObservaciones');
 
 ?>
 

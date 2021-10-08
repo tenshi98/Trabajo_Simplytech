@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 equipos_arriendo_listado.Nombre,
 equipos_arriendo_listado.Descripcion,
 equipos_arriendo_listado.Marca,
@@ -43,30 +43,13 @@ equipos_arriendo_listado.Codigo,
 equipos_arriendo_listado.Direccion_img,
 equipos_arriendo_listado.FichaTecnica,
 equipos_arriendo_listado.HDS,
-core_estados.Nombre AS Estado
-
-FROM `equipos_arriendo_listado`
-LEFT JOIN `core_estados`    ON core_estados.idEstado   = equipos_arriendo_listado.idEstado
-
-WHERE equipos_arriendo_listado.idEquipo =  ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
+core_estados.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = equipos_arriendo_listado.idEstado';
+$SIS_where = 'equipos_arriendo_listado.idEquipo ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'equipos_arriendo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
+
 <div class="col-sm-12">
 	<div class="box">
 		<header>

@@ -54,31 +54,16 @@ require_once 'core/Web.Header.Views.php';
 
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 principal_notificaciones_listado.Titulo,
 principal_notificaciones_listado.Notificacion,
 principal_notificaciones_listado.Fecha,
 principal_notificaciones_listado.NoMolestar,
 usuarios_listado.Nombre,
-usuarios_listado.Direccion_img
-
-FROM `principal_notificaciones_listado` 
-LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = principal_notificaciones_listado.idUsuario
-WHERE idNotificaciones = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+usuarios_listado.Direccion_img';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = principal_notificaciones_listado.idUsuario';
+$SIS_where = 'principal_notificaciones_listado.idNotificaciones ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 ?>
 

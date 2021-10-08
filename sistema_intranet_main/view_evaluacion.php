@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 alumnos_evaluaciones_asignadas.idAsignadas,
 alumnos_evaluaciones_asignadas.Programada_fecha,
 alumnos_evaluaciones_asignadas.N_preguntas,
@@ -45,60 +45,28 @@ alumnos_evaluaciones_asignadas.N_Alumnos_Rep,
 alumnos_evaluaciones_asignar.Nombre AS Asignar,
 cursos_listado.Nombre AS Curso,
 quiz_listado.Nombre AS Quiz,
-core_sistemas.Nombre AS Sistema
-
-FROM `alumnos_evaluaciones_asignadas`
+core_sistemas.Nombre AS Sistema';
+$SIS_join  = '
 LEFT JOIN `alumnos_evaluaciones_asignar`   ON alumnos_evaluaciones_asignar.idAsignar   = alumnos_evaluaciones_asignadas.idAsignar
 LEFT JOIN `cursos_listado`                 ON cursos_listado.idCurso                   = alumnos_evaluaciones_asignadas.idCurso
 LEFT JOIN `quiz_listado`                   ON quiz_listado.idQuiz                      = alumnos_evaluaciones_asignadas.idQuiz
-LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema                  = alumnos_evaluaciones_asignadas.idSistema
-WHERE alumnos_evaluaciones_asignadas.idAsignadas=".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema                  = alumnos_evaluaciones_asignadas.idSistema';
+$SIS_where = 'alumnos_evaluaciones_asignadas.idAsignadas='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_evaluaciones_asignadas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /**********************************************************/
 // consulto los datos
-$arrAlumnos = array();
-$query = "SELECT 
+$SIS_query = '
 alumnos_listado.Nombre AS AlumnoNombre,
 alumnos_listado.ApellidoPat AS AlumnoApellidoPat,
 alumnos_listado.ApellidoMat AS AlumnoApellidoMat,
 alumnos_evaluaciones_asignadas_alumnos.idTipo,
-alumnos_evaluaciones_asignadas_alumnos.Programada_fecha
-
-FROM `alumnos_evaluaciones_asignadas_alumnos`
-LEFT JOIN `alumnos_listado`   ON alumnos_listado.idAlumno     = alumnos_evaluaciones_asignadas_alumnos.idAlumno
-WHERE alumnos_evaluaciones_asignadas_alumnos.idAsignadas = ".$X_Puntero."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAlumnos,$row );
-}
-
+alumnos_evaluaciones_asignadas_alumnos.Programada_fecha';
+$SIS_join  = 'LEFT JOIN `alumnos_listado`   ON alumnos_listado.idAlumno     = alumnos_evaluaciones_asignadas_alumnos.idAlumno';
+$SIS_where = 'alumnos_evaluaciones_asignadas_alumnos.idAsignadas ='.$X_Puntero;
+$SIS_order = 'alumnos_listado.ApellidoPat AS AlumnoApellidoPat ASC, alumnos_listado.ApellidoMat AS AlumnoApellidoMat ASC, alumnos_listado.Nombre AS AlumnoNombre ASC';
+$arrAlumnos = array();
+$arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignadas_alumnos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrAlumnos');
 
 ?>
 

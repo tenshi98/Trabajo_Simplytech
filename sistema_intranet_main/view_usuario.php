@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.usuario, 
 usuarios_tipos.Nombre AS tipo,
 usuarios_listado.email, 
@@ -48,261 +48,104 @@ core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 usuarios_listado.Ultimo_acceso,
 usuarios_listado.Direccion_img,
-core_estados.Nombre AS estado
-
-FROM `usuarios_listado`
+core_estados.Nombre AS estado';
+$SIS_join  = '
 LEFT JOIN `core_estados`             ON core_estados.idEstado             = usuarios_listado.idEstado
 LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = usuarios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usuarios_listado.idComuna
-LEFT JOIN `usuarios_tipos`           ON usuarios_tipos.idTipoUsuario      = usuarios_listado.idTipoUsuario
-WHERE idUsuario = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `usuarios_tipos`           ON usuarios_tipos.idTipoUsuario      = usuarios_listado.idTipoUsuario';
+$SIS_where = 'idUsuario ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 //Traigo un listado con todos sus accesos de sistema	
+$SIS_query = 'Fecha, Hora';
+$SIS_join  = '';
+$SIS_where = 'idUsuario ='.$X_Puntero;
+$SIS_order = 'idAcceso DESC LIMIT 13';
 $arrAccess = array();
-$query = "SELECT  Fecha, Hora
-FROM `usuarios_accesos`
-WHERE idUsuario = ".$X_Puntero."
-ORDER BY idAcceso DESC
-LIMIT 13 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrAccess = db_select_array (false, $SIS_query, 'usuarios_accesos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrAccess');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAccess,$row );
-}
 // consulto los datos
-$arrObservaciones = array();
-$query = "SELECT 
+$SIS_query = '
 usuario_evaluador.Nombre AS nombre_usuario,
 usuarios_observaciones.Fecha,
-usuarios_observaciones.Observacion
-FROM `usuarios_observaciones`
-LEFT JOIN `usuarios_listado` usuario_evaluador  ON usuario_evaluador.idUsuario     = usuarios_observaciones.idUsuario
-WHERE usuarios_observaciones.idUsuario_observado = ".$X_Puntero."
-ORDER BY usuarios_observaciones.idObservacion ASC
-LIMIT 13 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrObservaciones,$row );
-}
+usuarios_observaciones.Observacion';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` usuario_evaluador  ON usuario_evaluador.idUsuario = usuarios_observaciones.idUsuario';
+$SIS_where = 'usuarios_observaciones.idUsuario_observado ='.$X_Puntero;
+$SIS_order = 'usuarios_observaciones.idObservacion ASC LIMIT 13';
+$arrObservaciones = array();
+$arrObservaciones = db_select_array (false, $SIS_query, 'usuarios_observaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrObservaciones');
 
 /**********************************/
 //Permisos asignados
-$arrMenu = array();
-$query = "SELECT 
+$SIS_query = '
 core_permisos_categorias.Nombre AS CategoriaNombre, 
 core_font_awesome.Codigo AS CategoriaIcono,
 core_permisos_listado.Direccionbase AS TransaccionURLBase,
 core_permisos_listado.Direccionweb AS TransaccionURL, 
-core_permisos_listado.Nombre AS TransaccionNombre,
-							
-usuarios_permisos.level
-							
-							
-FROM usuarios_permisos 
+core_permisos_listado.Nombre AS TransaccionNombre,						
+usuarios_permisos.level';
+$SIS_join  = '
 INNER JOIN core_permisos_listado      ON core_permisos_listado.idAdmpm        = usuarios_permisos.idAdmpm
 INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat 
-LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont             = core_permisos_categorias.idFont
-WHERE usuarios_permisos.idUsuario = ".$X_Puntero."
-ORDER BY CategoriaNombre, TransaccionNombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont             = core_permisos_categorias.idFont';
+$SIS_where = 'usuarios_permisos.idUsuario ='.$X_Puntero;
+$SIS_order = 'CategoriaNombre ASC, TransaccionNombre ASC';
+$arrMenu = array();
+$arrMenu = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMenu');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMenu,$row );
-}
 /**********************************/
 //Permisos a sistemas
+$SIS_query = 'core_sistemas.Nombre AS Sistema	';
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = usuarios_sistemas.idSistema';
+$SIS_where = 'usuarios_sistemas.idUsuario ='.$X_Puntero;
+$SIS_order = 'core_sistemas.Nombre ASC';
 $arrSistemas = array();
-$query = "SELECT 
-core_sistemas.Nombre AS Sistema						
-FROM usuarios_sistemas
-LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema
-WHERE usuarios_sistemas.idUsuario = ".$X_Puntero."
-ORDER BY core_sistemas.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSistemas');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrSistemas,$row );
-}
 /**********************************/
 //Permisos a bodegas
+$SIS_query = 'bodegas_arriendos_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `bodegas_arriendos_listado` ON bodegas_arriendos_listado.idBodega = usuarios_bodegas_arriendos.idBodega';
+$SIS_where = 'usuarios_bodegas_arriendos.idUsuario ='.$X_Puntero;
+$SIS_order = 'bodegas_arriendos_listado.Nombre ASC';
 $arrBodega1 = array();
-$query = "SELECT 
-bodegas_arriendos_listado.Nombre AS Bodega						
-FROM usuarios_bodegas_arriendos
-LEFT JOIN `bodegas_arriendos_listado`  ON bodegas_arriendos_listado.idBodega  = usuarios_bodegas_arriendos.idBodega
-WHERE usuarios_bodegas_arriendos.idUsuario = ".$X_Puntero."
-ORDER BY bodegas_arriendos_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrBodega1 = db_select_array (false, $SIS_query, 'usuarios_bodegas_arriendos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrBodega1');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBodega1,$row );
-}
+$SIS_query = 'bodegas_insumos_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `bodegas_insumos_listado` ON bodegas_insumos_listado.idBodega = usuarios_bodegas_insumos.idBodega';
+$SIS_where = 'usuarios_bodegas_insumos.idUsuario ='.$X_Puntero;
+$SIS_order = 'bodegas_insumos_listado.Nombre ASC';
 $arrBodega2 = array();
-$query = "SELECT 
-bodegas_insumos_listado.Nombre AS Bodega						
-FROM usuarios_bodegas_insumos
-LEFT JOIN `bodegas_insumos_listado`  ON bodegas_insumos_listado.idBodega  = usuarios_bodegas_insumos.idBodega
-WHERE usuarios_bodegas_insumos.idUsuario = ".$X_Puntero."
-ORDER BY bodegas_insumos_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrBodega2 = db_select_array (false, $SIS_query, 'usuarios_bodegas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrBodega2');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBodega2,$row );
-}
+$SIS_query = 'bodegas_productos_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `bodegas_productos_listado` ON bodegas_productos_listado.idBodega = usuarios_bodegas_productos.idBodega';
+$SIS_where = 'usuarios_bodegas_productos.idUsuario ='.$X_Puntero;
+$SIS_order = 'bodegas_productos_listado.Nombre ASC';
 $arrBodega3 = array();
-$query = "SELECT 
-bodegas_productos_listado.Nombre AS Bodega						
-FROM usuarios_bodegas_productos
-LEFT JOIN `bodegas_productos_listado`  ON bodegas_productos_listado.idBodega  = usuarios_bodegas_productos.idBodega
-WHERE usuarios_bodegas_productos.idUsuario = ".$X_Puntero."
-ORDER BY bodegas_productos_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrBodega3 = db_select_array (false, $SIS_query, 'usuarios_bodegas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrBodega3');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBodega3,$row );
-}
 /**********************************/
 //Permisos a equipos telemetria
+$SIS_query = 'telemetria_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = usuarios_equipos_telemetria.idTelemetria';
+$SIS_where = 'usuarios_equipos_telemetria.idUsuario ='.$X_Puntero;
+$SIS_order = 'telemetria_listado.Nombre ASC';
 $arrTelemetria = array();
-$query = "SELECT 
-telemetria_listado.Nombre AS Bodega						
-FROM usuarios_equipos_telemetria
-LEFT JOIN `telemetria_listado`  ON telemetria_listado.idTelemetria  = usuarios_equipos_telemetria.idTelemetria
-WHERE usuarios_equipos_telemetria.idUsuario = ".$X_Puntero."
-ORDER BY telemetria_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrTelemetria = db_select_array (false, $SIS_query, 'usuarios_equipos_telemetria', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTelemetria');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTelemetria,$row );
-}
 /**********************************/
 //Permisos de vista de los documentos
+$SIS_query = 'sistema_documentos_pago.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = usuarios_documentos_pago.idDocPago';
+$SIS_where = 'usuarios_documentos_pago.idUsuario ='.$X_Puntero;
+$SIS_order = 'sistema_documentos_pago.Nombre ASC';
 $arrDocumento = array();
-$query = "SELECT 
-sistema_documentos_pago.Nombre AS Bodega						
-FROM usuarios_documentos_pago
-LEFT JOIN `sistema_documentos_pago`  ON sistema_documentos_pago.idDocPago  = usuarios_documentos_pago.idDocPago
-WHERE usuarios_documentos_pago.idUsuario = ".$X_Puntero."
-ORDER BY sistema_documentos_pago.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDocumento,$row );
-}
+$arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDocumento');
 
 ?>
+
 <div class="col-sm-12">
 	<div class="box">
 		<header>
@@ -354,7 +197,7 @@ array_push( $arrDocumento,$row );
 							<?php } ?>
 						</p>
 					</div>	
-					<?php if(!empty($arrMenu)){ ?>
+					<?php if($arrMenu!=false){ ?>
 						<div class="col-sm-6">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
 							
@@ -450,7 +293,7 @@ array_push( $arrDocumento,$row );
 							echo '</ul>';
 						
 						/***************************************************************/
-						if(!empty($arrTelemetria)){
+						if($arrTelemetria!=false){
 							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Equipos Telemetria</h2>';
 							echo '<ul class="tree">';
 							/*******************************/
@@ -475,7 +318,7 @@ array_push( $arrDocumento,$row );
 							echo '</ul>';
 						}
 						/***************************************************************/
-						if(!empty($arrDocumento)){
+						if($arrDocumento!=false){
 							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Documentos a ver</h2>';
 							echo '<ul class="tree">';
 							/*******************************/
@@ -498,11 +341,7 @@ array_push( $arrDocumento,$row );
 							}
 							echo '</ul></li>';
 							echo '</ul>';
-						}
-						
-						
-						
-						?>
+						} ?>
 					</div>
 			
 				</div>
@@ -555,7 +394,6 @@ array_push( $arrDocumento,$row );
 					</div>
 				</div>
 			</div>
-			
 			
         </div>	
 	</div>

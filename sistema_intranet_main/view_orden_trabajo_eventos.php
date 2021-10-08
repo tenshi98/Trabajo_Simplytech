@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_eventos_listado.Fecha,
 orden_trabajo_eventos_listado.Hora,
 orden_trabajo_eventos_listado.Observacion,
@@ -45,52 +45,25 @@ trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
 trabajadores_listado.Nombre AS TrabNombre,
 maquinas_listado.Nombre AS NombreMaquina,
-clientes_listado.Nombre AS NombreCliente
-
-FROM `orden_trabajo_eventos_listado`
+clientes_listado.Nombre AS NombreCliente';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario         = orden_trabajo_eventos_listado.idUsuario
 LEFT JOIN `core_sistemas`         ON core_sistemas.idSistema            = orden_trabajo_eventos_listado.idSistema
 LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador  = orden_trabajo_eventos_listado.idTrabajador
 LEFT JOIN `maquinas_listado`      ON maquinas_listado.idMaquina         = orden_trabajo_eventos_listado.idMaquina
-LEFT JOIN `clientes_listado`      ON clientes_listado.idCliente         = orden_trabajo_eventos_listado.idCliente
+LEFT JOIN `clientes_listado`      ON clientes_listado.idCliente         = orden_trabajo_eventos_listado.idCliente';
+$SIS_where = 'orden_trabajo_eventos_listado.idEvento ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-WHERE orden_trabajo_eventos_listado.idEvento = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-
+/***************************************************/
 //Listado de archivos
+$SIS_query = 'idArchivo, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idEvento ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrArchivos = array();
-$query = "SELECT idArchivo, Nombre 
-FROM `orden_trabajo_eventos_listado_archivos`
-WHERE idEvento = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
+$arrArchivos = db_select_array (false, $SIS_query, 'orden_trabajo_eventos_listado_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
+
 ?>
 
 <div class="col-sm-12">

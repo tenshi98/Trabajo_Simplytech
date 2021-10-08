@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 pagos_leyes_sociales.fecha_auto,
 pagos_leyes_sociales.Periodo_Ano,
 pagos_leyes_sociales.Periodo_Mes,
@@ -85,9 +85,8 @@ SEGURIDAD_Centro_lv_1.Nombre AS SEGURIDAD_CC_Level_1,
 SEGURIDAD_Centro_lv_2.Nombre AS SEGURIDAD_CC_Level_2,
 SEGURIDAD_Centro_lv_3.Nombre AS SEGURIDAD_CC_Level_3,
 SEGURIDAD_Centro_lv_4.Nombre AS SEGURIDAD_CC_Level_4,
-SEGURIDAD_Centro_lv_5.Nombre AS SEGURIDAD_CC_Level_5
-
-FROM `pagos_leyes_sociales`
+SEGURIDAD_Centro_lv_5.Nombre AS SEGURIDAD_CC_Level_5';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`                                      ON usuarios_listado.idUsuario          = pagos_leyes_sociales.idUsuario
 LEFT JOIN `core_sistemas`                                         ON core_sistemas.idSistema             = pagos_leyes_sociales.idSistema
 LEFT JOIN `core_ubicacion_ciudad`                                 ON core_ubicacion_ciudad.idCiudad      = core_sistemas.idCiudad
@@ -110,24 +109,9 @@ LEFT JOIN `centrocosto_listado_level_1`  SEGURIDAD_Centro_lv_1    ON SEGURIDAD_C
 LEFT JOIN `centrocosto_listado_level_2`  SEGURIDAD_Centro_lv_2    ON SEGURIDAD_Centro_lv_2.idLevel_2     = pagos_leyes_sociales.SEGURIDAD_idLevel_2
 LEFT JOIN `centrocosto_listado_level_3`  SEGURIDAD_Centro_lv_3    ON SEGURIDAD_Centro_lv_3.idLevel_3     = pagos_leyes_sociales.SEGURIDAD_idLevel_3
 LEFT JOIN `centrocosto_listado_level_4`  SEGURIDAD_Centro_lv_4    ON SEGURIDAD_Centro_lv_4.idLevel_4     = pagos_leyes_sociales.SEGURIDAD_idLevel_4
-LEFT JOIN `centrocosto_listado_level_5`  SEGURIDAD_Centro_lv_5    ON SEGURIDAD_Centro_lv_5.idLevel_5     = pagos_leyes_sociales.SEGURIDAD_idLevel_5
-				
-WHERE pagos_leyes_sociales.idFactSocial = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `centrocosto_listado_level_5`  SEGURIDAD_Centro_lv_5    ON SEGURIDAD_Centro_lv_5.idLevel_5     = pagos_leyes_sociales.SEGURIDAD_idLevel_5';
+$SIS_where = 'pagos_leyes_sociales.idFactSocial ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'pagos_leyes_sociales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 $arrTrabajo = array();
 $arrTrabajo = db_select_array (false, 'idFactTrab,TrabajadorNombre,TrabajadorRut,Sueldo,AFP_Nombre,AFP_Porcentaje,AFP_Cotizacion,AFP_SeguroInvalidez,AFP_APV,AFP_Cuenta2,AFP_TrabajoPesado,AFC_Empleador,AFC_Trabajador,Salud_Nombre,Salud_Porcentaje,Salud_Cotizacion,Salud_Extra_Salud_id,Salud_Extra_Porcentaje,Salud_Extra_Valor,MutualNombre,MutualPorcentaje,MutualValor,Total_AFP,Total_SALUD,Total_SEGURIDAD','pagos_leyes_sociales_trabajadores', '', 'pagos_leyes_sociales_trabajadores.idFactSocial ='.$X_Puntero, 'pagos_leyes_sociales_trabajadores.TrabajadorNombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajo');
@@ -140,8 +124,6 @@ $arrHistorial = db_select_array (false, 'pagos_leyes_sociales_historial.Creacion
 
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, 'Nombre', 'pagos_leyes_sociales_archivos', '', 'idFactSocial='.$X_Puntero, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
-											
-
 
 if(isset($row_data['AFP_CC_Nombre'])&&$row_data['AFP_CC_Nombre']!=''){ 
 	$AFP_CC = $row_data['AFP_CC_Nombre'];
@@ -177,7 +159,6 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 ?>
 
 <section class="invoice" id="content">
-
 
 	<div class="row">
 		<div class="col-xs-12">
@@ -215,7 +196,6 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 			</address>
 		</div>
 	</div>
-	
 	
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
@@ -381,7 +361,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 						<td class="meta-head">Administradora Fondos de Pensiones</td>
 						<td align="right"><?php echo valores($row_data['AFP_MontoPago'], 0);?></td>
 						<td align="left">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo $pago['DocPago'];
@@ -392,7 +372,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -401,7 +381,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -410,7 +390,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo $pago['Usuario'].'<br/>';
@@ -419,7 +399,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 										echo valores($pago['Monto'], 0).'<br/>';
@@ -432,7 +412,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 						<td class="meta-head">Salud</td>
 						<td align="right"><?php echo valores($row_data['SALUD_MontoPago'], 0);?></td>
 						<td align="left">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo $pago['DocPago'];
@@ -443,7 +423,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -452,7 +432,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -461,7 +441,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo $pago['Usuario'].'<br/>';
@@ -470,7 +450,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 										echo valores($pago['Monto'], 0).'<br/>';
@@ -483,7 +463,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 						<td class="meta-head">Seguridad</td>
 						<td align="right"><?php echo valores($row_data['SEGURIDAD_MontoPago'], 0);?></td>
 						<td align="left">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo $pago['DocPago'];
@@ -494,7 +474,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -503,7 +483,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -512,7 +492,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo $pago['Usuario'].'<br/>';
@@ -521,7 +501,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							}?>
 						</td>
 						<td align="right">
-							<?php if($arrFormaPago){
+							<?php if($arrFormaPago!=false){
 								foreach ($arrFormaPago as $pago) {
 									if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 										echo valores($pago['Monto'], 0).'<br/>';
@@ -552,13 +532,11 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 		</div>
 	</div>
 	
-	
-      
 </section>
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial){ ?>
+	<?php if ($arrHistorial!=false){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -580,7 +558,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 		</table>
 	<?php } ?>
 
-	<?php if ($arrArchivo){ ?>
+	<?php if ($arrArchivo!=false){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

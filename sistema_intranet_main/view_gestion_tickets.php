@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 gestion_tickets.idTicket,
 gestion_tickets.Titulo,
 gestion_tickets.FechaCreacion,
@@ -51,33 +51,17 @@ core_tipo_ticket.Nombre AS TipoTicket,
 core_estado_ticket.Nombre AS EstadoTicket,
 core_ot_prioridad.Nombre AS PrioridadTicket,
 usuario_asignado.Nombre AS UsuarioAsignado,
-gestion_tickets_area.Nombre AS AreaTicket
-
-FROM `gestion_tickets`
+gestion_tickets_area.Nombre AS AreaTicket';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                         ON core_sistemas.idSistema               = gestion_tickets.idSistema
 LEFT JOIN `usuarios_listado`                      ON usuarios_listado.idUsuario            = gestion_tickets.idUsuario
 LEFT JOIN `core_tipo_ticket`                      ON core_tipo_ticket.idTipoTicket         = gestion_tickets.idTipoTicket
 LEFT JOIN `core_estado_ticket`                    ON core_estado_ticket.idEstado           = gestion_tickets.idEstado
 LEFT JOIN `core_ot_prioridad`                     ON core_ot_prioridad.idPrioridad         = gestion_tickets.idPrioridad
 LEFT JOIN `usuarios_listado`  usuario_asignado    ON usuario_asignado.idUsuario            = gestion_tickets.idUsuarioAsignado
-LEFT JOIN `gestion_tickets_area`                  ON gestion_tickets_area.idArea           = gestion_tickets.idArea
-
-WHERE gestion_tickets.idTicket =  ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `gestion_tickets_area`                  ON gestion_tickets_area.idArea           = gestion_tickets.idArea';
+$SIS_where = 'gestion_tickets.idTicket ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

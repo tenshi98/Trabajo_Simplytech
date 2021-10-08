@@ -148,9 +148,6 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 
 ?>
 
-
-
-
 <div class="col-sm-12">
 	<div class="box">
 		<header>
@@ -158,13 +155,13 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 			<h5>Datos del Cliente</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if(!empty($arrObservaciones)){ ?>
+				<?php if($arrObservaciones!=false){ ?>
 					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
-				<?php if(!empty($arrVentas)){ ?>
+				<?php if($arrVentas!=false){ ?>
 					<li class=""><a href="#ventas" data-toggle="tab"><i class="fa fa-usd" aria-hidden="true"></i> Ventas realizadas</a></li>
 				<?php } ?>
-				<?php if(!empty($arrCotizaciones)){ ?>
+				<?php if($arrCotizaciones!=false){ ?>
 					<li class=""><a href="#cotizaciones" data-toggle="tab"><i class="fa fa-search" aria-hidden="true"></i> Cotizaciones realizadas</a></li>
 				<?php } ?>
 			</ul>	
@@ -288,7 +285,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 				
 			</div>
 			
-			<?php if(!empty($arrObservaciones)){ ?>
+			<?php if($arrObservaciones!=false){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -315,8 +312,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 				</div>
 			<?php } ?>
 			
-			
-			<?php if(!empty($arrVentas)){ ?>
+			<?php if($arrVentas!=false){ ?>
 				<div class="tab-pane fade" id="ventas">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -346,8 +342,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 				</div>
 			<?php } ?>
 			
-			
-			<?php if(!empty($arrCotizaciones)){ ?>
+			<?php if($arrCotizaciones!=false){ ?>
 				<div class="tab-pane fade" id="cotizaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">

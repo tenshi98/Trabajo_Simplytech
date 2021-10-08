@@ -257,7 +257,7 @@ input[type="date"].form-control{
 							<td class="meta-head">IVA a Pagar</td>
 							<td align="right"><?php echo valores($row_data['IVA_MontoPago'], 0);?></td>
 							<td align="left">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo $pago['DocPago'];
@@ -268,7 +268,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -277,7 +277,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -286,7 +286,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo $pago['Usuario'].'<br/>';
@@ -295,7 +295,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo valores($pago['Monto'], 0).'<br/>';
@@ -308,7 +308,7 @@ input[type="date"].form-control{
 							<td class="meta-head">PPM a Pagar</td>
 							<td align="right"><?php echo valores($row_data['PPM_Pago'], 0);?></td>
 							<td align="left">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo $pago['DocPago'];
@@ -319,7 +319,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -328,7 +328,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -337,7 +337,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo $pago['Usuario'].'<br/>';
@@ -346,7 +346,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo valores($pago['Monto'], 0).'<br/>';
@@ -359,7 +359,7 @@ input[type="date"].form-control{
 							<td class="meta-head">Retencion a Pagar</td>
 							<td align="right"><?php echo valores($row_data['Retencion'], 0);?></td>
 							<td align="left">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo $pago['DocPago'];
@@ -370,7 +370,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -379,7 +379,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -388,7 +388,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo $pago['Usuario'].'<br/>';
@@ -397,7 +397,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo valores($pago['Monto'], 0).'<br/>';
@@ -410,7 +410,7 @@ input[type="date"].form-control{
 							<td class="meta-head">Impuesto a la renta a Pagar</td>
 							<td align="right"><?php echo valores($row_data['ImpuestoRenta'], 0);?></td>
 							<td align="left">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 											echo $pago['DocPago'];
@@ -421,7 +421,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 											echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -430,7 +430,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 											echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -439,7 +439,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 											echo $pago['Usuario'].'<br/>';
@@ -448,7 +448,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago){
+								<?php if($arrFormaPago!=false){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==4){
 											echo valores($pago['Monto'], 0).'<br/>';
@@ -754,7 +754,6 @@ input[type="date"].form-control{
 	</div>
 </div>
 <div class="clearfix"></div>
-
 
 <div style="display: none;"> 
 	
@@ -1195,7 +1194,6 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 $Form_Inputs = new Inputs();
 ?>
 
-
 <div class="col-sm-12" style="margin-bottom:30px">
 
 	<?php 		
@@ -1218,8 +1216,6 @@ $Form_Inputs = new Inputs();
 	<div id="page-wrap">
 		<div id="header"> Formulario de Pago</div>
 	   
-
-		
 		<div id="customer">
 			
 			<table id="meta" class="fleft otdata">
@@ -1356,9 +1352,6 @@ $Form_Inputs = new Inputs();
 				</tr>
 			</tbody>
 		</table>
-		
-		
-		
 		
 		<table id="items">
 			<tbody>
@@ -1660,12 +1653,8 @@ $Form_Inputs = new Inputs();
 				</tr>
 			</tbody>
 		</table>
-		
-		
-		
+
     </div>
-    
-   
     
     <div class="row">
 		<div class="col-xs-12">
@@ -1786,56 +1775,40 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'periodo_ano_asc':    $order_by = 'ORDER BY pagos_leyes_fiscales.Periodo_Ano ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año Ascendente';break;
-		case 'periodo_ano_desc':   $order_by = 'ORDER BY pagos_leyes_fiscales.Periodo_Ano DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Año Descendente';break;
-		case 'periodo_mes_asc':    $order_by = 'ORDER BY pagos_leyes_fiscales.Periodo_Mes ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mes Ascendente';break;
-		case 'periodo_mes_desc':   $order_by = 'ORDER BY pagos_leyes_fiscales.Periodo_Mes DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mes Descendente';break;
-		case 'fecha_pago_asc':     $order_by = 'ORDER BY pagos_leyes_fiscales.Pago_fecha ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha de Pago Ascendente';break;
-		case 'fecha_pago_desc':    $order_by = 'ORDER BY pagos_leyes_fiscales.Pago_fecha DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha de Pago Descendente';break;
-		case 'usuario_asc':        $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
-		case 'usuario_desc':       $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'estado_asc':         $order_by = 'ORDER BY core_estado_facturacion.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado de Pago Ascendente';break;
-		case 'estado_desc':        $order_by = 'ORDER BY core_estado_facturacion.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado de Pago Descendente';break;
+		case 'periodo_ano_asc':    $order_by = 'pagos_leyes_fiscales.Periodo_Ano ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año Ascendente';break;
+		case 'periodo_ano_desc':   $order_by = 'pagos_leyes_fiscales.Periodo_Ano DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Año Descendente';break;
+		case 'periodo_mes_asc':    $order_by = 'pagos_leyes_fiscales.Periodo_Mes ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mes Ascendente';break;
+		case 'periodo_mes_desc':   $order_by = 'pagos_leyes_fiscales.Periodo_Mes DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mes Descendente';break;
+		case 'fecha_pago_asc':     $order_by = 'pagos_leyes_fiscales.Pago_fecha ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha de Pago Ascendente';break;
+		case 'fecha_pago_desc':    $order_by = 'pagos_leyes_fiscales.Pago_fecha DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha de Pago Descendente';break;
+		case 'usuario_asc':        $order_by = 'usuarios_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
+		case 'usuario_desc':       $order_by = 'usuarios_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'estado_asc':         $order_by = 'core_estado_facturacion.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado de Pago Ascendente';break;
+		case 'estado_desc':        $order_by = 'core_estado_facturacion.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado de Pago Descendente';break;
 		
-		default: $order_by = 'ORDER BY pagos_leyes_fiscales.idEstadoPago ASC, pagos_leyes_fiscales.Pago_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado de Pago Ascendente, Fecha de Pago Descendente';
+		default: $order_by = 'pagos_leyes_fiscales.idEstadoPago ASC, pagos_leyes_fiscales.Pago_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado de Pago Ascendente, Fecha de Pago Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY pagos_leyes_fiscales.idEstadoPago ASC, pagos_leyes_fiscales.Pago_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado de Pago Ascendente, Fecha de Pago Descendente';
+	$order_by = 'pagos_leyes_fiscales.idEstadoPago ASC, pagos_leyes_fiscales.Pago_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado de Pago Ascendente, Fecha de Pago Descendente';
 }
 /**********************************************************/
 //Variable con la ubicacion
-$z="WHERE pagos_leyes_fiscales.idFactFiscal!=0";
+$SIS_where = "pagos_leyes_fiscales.idFactFiscal!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND pagos_leyes_fiscales.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-
+$SIS_where.= " AND pagos_leyes_fiscales.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Periodo_Ano']) && $_GET['Periodo_Ano'] != ''){  $z .= " AND pagos_leyes_fiscales.Periodo_Ano='".$_GET['Periodo_Ano']."'";}
-if(isset($_GET['Pago_fecha']) && $_GET['Periodo_Mes'] != ''){   $z .= " AND pagos_leyes_fiscales.Periodo_Mes='".$_GET['Periodo_Mes']."'";}
-if(isset($_GET['Pago_fecha']) && $_GET['Pago_fecha'] != ''){    $z .= " AND pagos_leyes_fiscales.Pago_fecha='".$_GET['Pago_fecha']."'";}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){      $z .= " AND pagos_leyes_fiscales.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['Periodo_Ano']) && $_GET['Periodo_Ano'] != ''){  $SIS_where .= " AND pagos_leyes_fiscales.Periodo_Ano='".$_GET['Periodo_Ano']."'";}
+if(isset($_GET['Pago_fecha']) && $_GET['Periodo_Mes'] != ''){   $SIS_where .= " AND pagos_leyes_fiscales.Periodo_Mes='".$_GET['Periodo_Mes']."'";}
+if(isset($_GET['Pago_fecha']) && $_GET['Pago_fecha'] != ''){    $SIS_where .= " AND pagos_leyes_fiscales.Pago_fecha='".$_GET['Pago_fecha']."'";}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){      $SIS_where .= " AND pagos_leyes_fiscales.idUsuario=".$_GET['idUsuario'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idFactFiscal FROM `pagos_leyes_fiscales` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idFactFiscal', 'pagos_leyes_fiscales', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 pagos_leyes_fiscales.idFactFiscal,
 pagos_leyes_fiscales.Periodo_Ano,
 pagos_leyes_fiscales.Periodo_Mes,
@@ -1843,31 +1816,14 @@ pagos_leyes_fiscales.Pago_fecha,
 pagos_leyes_fiscales.idEstadoPago,
 core_sistemas.Nombre AS Sistema,
 usuarios_listado.Nombre AS UsuarioNombre,
-core_estado_facturacion.Nombre AS EstadoPago
-
-FROM `pagos_leyes_fiscales`
+core_estado_facturacion.Nombre AS EstadoPago';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`            ON core_sistemas.idSistema           = pagos_leyes_fiscales.idSistema
 LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario        = pagos_leyes_fiscales.idUsuario
-LEFT JOIN `core_estado_facturacion`  ON core_estado_facturacion.idEstado  = pagos_leyes_fiscales.idEstadoPago
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}
+LEFT JOIN `core_estado_facturacion`  ON core_estado_facturacion.idEstado  = pagos_leyes_fiscales.idEstadoPago';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'pagos_leyes_fiscales', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
@@ -1876,7 +1832,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 ?>
-
 
 <div class="col-sm-12 breadcrumb-bar">
 
@@ -1926,8 +1881,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 <div class="clearfix"></div> 
-
-                                 
+                            
 <div class="col-sm-12">
 	<div class="box">
 		<header>

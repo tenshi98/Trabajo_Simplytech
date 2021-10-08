@@ -35,70 +35,29 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT Nombre, idRuta
-FROM `vehiculos_ruta_alternativa`
-WHERE idRutaAlt = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre, idRuta';
+$SIS_join  = '';
+$SIS_where = 'idRutaAlt ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'vehiculos_ruta_alternativa', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 //Se traen las rutas
+$SIS_query = 'idUbicaciones, Latitud, Longitud, direccion';
+$SIS_join  = '';
+$SIS_where = 'idRuta ='.$rowdata['idRuta'];
+$SIS_order = 'idUbicaciones ASC';
 $arrRutas = array();
-$query = "SELECT idUbicaciones, Latitud, Longitud, direccion
-FROM `vehiculos_rutas_ubicaciones`
-WHERE idRuta = {$rowdata['idRuta']}
-ORDER BY idUbicaciones ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRutas,$row );
-}
+$arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRutas');
 
 //Se traen las rutas
+$SIS_query = 'idUbicaciones, Latitud, Longitud, direccion';
+$SIS_join  = '';
+$SIS_where = 'idRutaAlt ='.$X_Puntero;
+$SIS_order = 'idUbicaciones ASC';
 $arrRutasAlt = array();
-$query = "SELECT idUbicaciones, Latitud, Longitud, direccion
-FROM `vehiculos_ruta_alternativa_ubicaciones`
-WHERE idRutaAlt = ".$X_Puntero."
-ORDER BY idUbicaciones ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrRutasAlt = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa_ubicaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRutasAlt');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRutasAlt,$row );
-}
 ?>
+
 <div class="col-sm-12">
 	<div class="box">
 		<header>

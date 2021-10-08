@@ -131,23 +131,11 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['editCuestionario']) ) {	
 // consulto los datos
-$query = "SELECT idQuiz
-FROM `alumnos_elearning_listado_unidades_cuestionarios`
-WHERE idCuestionario = ".$_GET['editCuestionario'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$SIS_query = 'idQuiz';
+$SIS_join  = '';
+$SIS_where = 'idCuestionario ='.$_GET['editCuestionario'];
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidades_cuestionarios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+ 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
@@ -226,23 +214,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['modBase']) ) { 	
 // consulto los datos
-$query = "SELECT Nombre, Resumen, Objetivos,Requisitos,Descripcion, idSistema, idEstado
-FROM `alumnos_elearning_listado`
-WHERE idElearning = ".$_GET['id_curso'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$SIS_query = 'Nombre, Resumen, Objetivos,Requisitos,Descripcion, idSistema, idEstado';
+$SIS_join  = '';
+$SIS_where = 'idElearning ='.$_GET['id_curso'];
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
  <div class="col-sm-8 fcenter">
@@ -360,23 +336,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  }elseif ( ! empty($_GET['editUnidad']) ) { 
-$query = "SELECT N_Unidad, Nombre, Duracion
-FROM `alumnos_elearning_listado_unidades`
-WHERE idUnidad = ".$_GET['editUnidad'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);		 
+//Se consulta
+$SIS_query = 'N_Unidad, Nombre, Duracion';
+$SIS_join  = '';
+$SIS_where = 'idUnidad ='.$_GET['editUnidad'];
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidades', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	 
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -454,23 +419,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  }elseif ( ! empty($_GET['editContenido']) ) { 
-$query = "SELECT idUnidad, Nombre, Contenido
-FROM `alumnos_elearning_listado_unidades_contenido`
-WHERE idContenido = ".$_GET['editContenido'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);		 
+//se consulta
+$SIS_query = 'idUnidad, Nombre, Contenido';
+$SIS_join  = '';
+$SIS_where = 'idContenido ='.$_GET['editContenido'];
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidades_contenido', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+ 
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -510,7 +464,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  }elseif ( ! empty($_GET['id_curso']) ) { 
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 alumnos_elearning_listado.Nombre, 
 alumnos_elearning_listado.Resumen, 
 alumnos_elearning_listado.Imagen,
@@ -518,112 +472,49 @@ alumnos_elearning_listado.LastUpdate,
 alumnos_elearning_listado.Objetivos,
 alumnos_elearning_listado.Requisitos,
 alumnos_elearning_listado.Descripcion,
-core_estados.Nombre AS Estado
-
-FROM `alumnos_elearning_listado`
-LEFT JOIN `core_estados`    ON core_estados.idEstado    = alumnos_elearning_listado.idEstado
-WHERE alumnos_elearning_listado.idElearning = ".$_GET['id_curso'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+core_estados.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = alumnos_elearning_listado.idEstado';
+$SIS_where = 'alumnos_elearning_listado.idElearning ='.$_GET['id_curso'];
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /*****************************************************/
 // Se trae un listado con todos los elementos
-$arrContenidos = array();
-$query = "SELECT
+$SIS_query = '
 alumnos_elearning_listado_unidades.idUnidad AS Unidad_ID, 
 alumnos_elearning_listado_unidades.N_Unidad AS Unidad_Numero, 
 alumnos_elearning_listado_unidades.Nombre AS Unidad_Nombre,
 alumnos_elearning_listado_unidades.Duracion AS Unidad_Duracion,
 alumnos_elearning_listado_unidades_contenido.idContenido AS Contenido_ID,
-alumnos_elearning_listado_unidades_contenido.Nombre AS Contenido_Nombre
-
-FROM `alumnos_elearning_listado_unidades`
-LEFT JOIN `alumnos_elearning_listado_unidades_contenido` ON alumnos_elearning_listado_unidades_contenido.idUnidad = alumnos_elearning_listado_unidades.idUnidad
-WHERE alumnos_elearning_listado_unidades.idElearning = ".$_GET['id_curso']."
-ORDER BY alumnos_elearning_listado_unidades.N_Unidad ASC, alumnos_elearning_listado_unidades_contenido.Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrContenidos,$row );
-}
+alumnos_elearning_listado_unidades_contenido.Nombre AS Contenido_Nombre';
+$SIS_join  = 'LEFT JOIN `alumnos_elearning_listado_unidades_contenido` ON alumnos_elearning_listado_unidades_contenido.idUnidad = alumnos_elearning_listado_unidades.idUnidad';
+$SIS_where = 'alumnos_elearning_listado_unidades.idElearning ='.$_GET['id_curso'];
+$SIS_order = 'alumnos_elearning_listado_unidades.N_Unidad ASC, alumnos_elearning_listado_unidades_contenido.Nombre ASC';
+$arrContenidos = array();
+$arrContenidos = db_select_array (false, $SIS_query, 'alumnos_elearning_listado_unidades', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrContenidos');
 
 /*****************************************************/
 // Se trae un listado con todos los elementos
+$SIS_query = 'idDocumentacion, idUnidad, idElearning, idContenido, File';
+$SIS_join  = '';
+$SIS_where = 'idElearning ='.$_GET['id_curso'];
+$SIS_order = 'File ASC';
 $arrFiles = array();
-$query = "SELECT idDocumentacion, idUnidad, idElearning, idContenido, File
-FROM `alumnos_elearning_listado_unidades_documentacion`
-WHERE idElearning = ".$_GET['id_curso']."
-ORDER BY File ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFiles,$row );
-}
+$arrFiles = db_select_array (false, $SIS_query, 'alumnos_elearning_listado_unidades_documentacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrFiles');
 
 /*****************************************************/
 // Se trae un listado con todos los elementos
-$arrCuestionarios = array();
-$query = "SELECT 
+$SIS_query = '
 alumnos_elearning_listado_unidades_cuestionarios.idCuestionario, 
 alumnos_elearning_listado_unidades_cuestionarios.idUnidad, 
 alumnos_elearning_listado_unidades_cuestionarios.idElearning, 
 alumnos_elearning_listado_unidades_cuestionarios.idContenido,  
 alumnos_elearning_listado_unidades_cuestionarios.idQuiz,
-quiz_listado.Nombre AS Cuestionario
-FROM `alumnos_elearning_listado_unidades_cuestionarios`
-LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = alumnos_elearning_listado_unidades_cuestionarios.idQuiz
-WHERE alumnos_elearning_listado_unidades_cuestionarios.idElearning = ".$_GET['id_curso']."
-ORDER BY quiz_listado.Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCuestionarios,$row );
-}
+quiz_listado.Nombre AS Cuestionario';
+$SIS_join  = 'LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = alumnos_elearning_listado_unidades_cuestionarios.idQuiz';
+$SIS_where = 'alumnos_elearning_listado_unidades_cuestionarios.idElearning ='.$_GET['id_curso'];
+$SIS_order = 'quiz_listado.Nombre ASC';
+$arrCuestionarios = array();
+$arrCuestionarios = db_select_array (false, $SIS_query, 'alumnos_elearning_listado_unidades_cuestionarios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCuestionarios');
 
 /*****************************************************/
 //calculo de los dias de duracion
@@ -632,8 +523,6 @@ filtrar($arrContenidos, 'Unidad_Numero');
 foreach($arrContenidos as $categoria=>$permisos){
 	$Dias_Duracion = $Dias_Duracion + $permisos[0]['Unidad_Duracion'];
 }
-
-								
 								
 ?>
  
@@ -687,8 +576,6 @@ foreach($arrContenidos as $categoria=>$permisos){
 		</div>
 	</div>
 </div>
-	
-	
 
 <div class="row">
 	<div class="col-sm-12">
@@ -724,7 +611,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 									<tr class="item-row linea_punteada">
 										<td class="item-name">
 											<span style="word-wrap: break-word;white-space: initial;"><?php echo $preg['Contenido_Nombre']; ?></span>	
-											<?php if($arrFiles){ 
+											<?php if($arrFiles!=false){ 
 												//verifico que existan archivos en esta unidad
 												$x_n_arch = 0;
 												foreach ($arrFiles as $file) {
@@ -762,7 +649,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 													<?php } ?>
 												<?php } ?>
 											<?php } ?>
-											<?php if($arrCuestionarios){ 
+											<?php if($arrCuestionarios!=false){ 
 												//verifico que existan archivos en esta unidad
 												$x_n_Cuest = 0;
 												foreach ($arrCuestionarios as $file) {
@@ -796,7 +683,6 @@ foreach($arrContenidos as $categoria=>$permisos){
 													<?php } ?>
 												<?php } ?>
 											<?php } ?>
-										
 										</td>			
 										<td width="10" >
 											<div class="btn-group" style="width: 140px;" >
@@ -825,12 +711,6 @@ foreach($arrContenidos as $categoria=>$permisos){
 
 <?php widget_modal(80, 95); ?> 
  
- 
- 
- 
- 
-
-
 <div class="clearfix"></div>
 <div class="col-sm-12" style="margin-bottom:30px">
 <a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -877,7 +757,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	</div>
 </div>
 
- 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } else  { 
 /**********************************************************/
@@ -900,74 +779,43 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY alumnos_elearning_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY alumnos_elearning_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'nombre_asc':    $order_by = 'alumnos_elearning_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'alumnos_elearning_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY alumnos_elearning_listado.idEstado ASC, alumnos_elearning_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'alumnos_elearning_listado.idEstado ASC, alumnos_elearning_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY alumnos_elearning_listado.idEstado ASC, alumnos_elearning_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'alumnos_elearning_listado.idEstado ASC, alumnos_elearning_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE alumnos_elearning_listado.idElearning!=0";
+$SIS_where = "alumnos_elearning_listado.idElearning!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $z .= " AND alumnos_elearning_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $z .= " AND alumnos_elearning_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $SIS_where .= " AND alumnos_elearning_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $SIS_where .= " AND alumnos_elearning_listado.idEstado=".$_GET['idEstado'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idElearning FROM `alumnos_elearning_listado` 
-LEFT JOIN `core_estados`    ON core_estados.idEstado    = alumnos_elearning_listado.idEstado
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idElearning', 'alumnos_elearning_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCurso = array();
-$query = "SELECT 
+$SIS_query = '
 alumnos_elearning_listado.idElearning,
 alumnos_elearning_listado.Nombre,
 core_sistemas.Nombre AS sistema,
 core_estados.Nombre AS Estado,
-alumnos_elearning_listado.idEstado
-FROM `alumnos_elearning_listado`
+alumnos_elearning_listado.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema  = alumnos_elearning_listado.idSistema
-LEFT JOIN `core_estados`    ON core_estados.idEstado    = alumnos_elearning_listado.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCurso,$row );
-}?>
+LEFT JOIN `core_estados`    ON core_estados.idEstado    = alumnos_elearning_listado.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCurso = array();
+$arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCurso');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 
@@ -1011,8 +859,7 @@ array_push( $arrCurso,$row );
 	</div>
 </div>
 <div class="clearfix"></div> 
-                       
-                                 
+                                                       
 <div class="col-sm-12">
 	<div class="box">
 		<header>

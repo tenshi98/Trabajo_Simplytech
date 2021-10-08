@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 insumos_listado.Nombre,
 insumos_listado.Descripcion,
 insumos_listado.Marca,
@@ -50,38 +50,17 @@ sistema_productos_uml.Nombre AS Unidad,
 insumos_listado.FichaTecnica,
 insumos_listado.HDS,
 core_estados.Nombre AS Estado,
-proveedor_listado.Nombre AS ProveedorFijo
-
-FROM `insumos_listado`
+proveedor_listado.Nombre AS ProveedorFijo';
+$SIS_join  = '
 LEFT JOIN `sistema_productos_categorias`     ON sistema_productos_categorias.idCategoria         = insumos_listado.idCategoria
 LEFT JOIN `sistema_productos_uml`            ON sistema_productos_uml.idUml                      = insumos_listado.idUml
 LEFT JOIN `core_estados`                     ON core_estados.idEstado                            = insumos_listado.idEstado
-LEFT JOIN `proveedor_listado`                ON proveedor_listado.idProveedor                    = insumos_listado.idProveedorFijo
-
-WHERE insumos_listado.idProducto =  ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
-//verifico que sea un administrador
-$z=" AND bodegas_insumos_facturacion_existencias.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-
+LEFT JOIN `proveedor_listado`                ON proveedor_listado.idProveedor                    = insumos_listado.idProveedorFijo';
+$SIS_where = 'insumos_listado.idProducto ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 // Se trae un listado con todos los elementos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 bodegas_insumos_facturacion_existencias.Creacion_fecha,
 bodegas_insumos_facturacion_existencias.Cantidad_ing,
 bodegas_insumos_facturacion_existencias.Cantidad_eg,
@@ -89,69 +68,27 @@ bodegas_insumos_facturacion_existencias.idFacturacion,
 bodegas_insumos_facturacion_tipo.Nombre AS TipoMovimiento,
 insumos_listado.Nombre AS NombreProducto,
 sistema_productos_uml.Nombre AS UnidadMedida,
-bodegas_insumos_listado.Nombre AS NombreBodega
-
-FROM `bodegas_insumos_facturacion_existencias`
+bodegas_insumos_listado.Nombre AS NombreBodega';
+$SIS_join  = '
 LEFT JOIN `bodegas_insumos_facturacion_tipo`    ON bodegas_insumos_facturacion_tipo.idTipo   = bodegas_insumos_facturacion_existencias.idTipo
 LEFT JOIN `insumos_listado`                     ON insumos_listado.idProducto                = bodegas_insumos_facturacion_existencias.idProducto
 LEFT JOIN `sistema_productos_uml`               ON sistema_productos_uml.idUml               = insumos_listado.idUml
-LEFT JOIN `bodegas_insumos_listado`             ON bodegas_insumos_listado.idBodega          = bodegas_insumos_facturacion_existencias.idBodega
-
-WHERE bodegas_insumos_facturacion_existencias.idProducto=".$X_Puntero."
-".$z."
-ORDER BY bodegas_insumos_facturacion_existencias.Creacion_fecha DESC 
-LIMIT 20";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-} 
-
-//Agrego filtro limitador de fecha
-$z.=" AND bodegas_insumos_facturacion_existencias.Creacion_fecha>'".restarDias(fecha_actual(),360)."'";	
-$z.=" AND bodegas_insumos_facturacion.idTipo = 1"; //Filtrar compras	
-$z.=" OR bodegas_insumos_facturacion.idTipo = 2";	//Filtrar ventas	
+LEFT JOIN `bodegas_insumos_listado`             ON bodegas_insumos_listado.idBodega          = bodegas_insumos_facturacion_existencias.idBodega';
+$SIS_where = 'bodegas_insumos_facturacion_existencias.idProducto='.$X_Puntero.' AND bodegas_insumos_facturacion_existencias.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'bodegas_insumos_facturacion_existencias.Creacion_fecha DESC LIMIT 20';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
 // Se trae un listado de los valores
-$arrPromedioProd = array();
-$query = "SELECT
+$SIS_query = '
 bodegas_insumos_facturacion.idTipo,
 AVG(NULLIF(IF(bodegas_insumos_facturacion_existencias.Valor!=0,bodegas_insumos_facturacion_existencias.Valor,0),0)) AS Precio,
-bodegas_insumos_facturacion_existencias.Creacion_mes
-
-FROM `bodegas_insumos_facturacion_existencias`
-LEFT JOIN bodegas_insumos_facturacion on bodegas_insumos_facturacion.idFacturacion = bodegas_insumos_facturacion_existencias.idFacturacion
-WHERE bodegas_insumos_facturacion_existencias.idProducto=".$X_Puntero."
-".$z."
-GROUP BY bodegas_insumos_facturacion.idTipo, bodegas_insumos_facturacion_existencias.Creacion_mes
-ORDER BY bodegas_insumos_facturacion_existencias.Creacion_fecha ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPromedioProd,$row );
-} 
+bodegas_insumos_facturacion_existencias.Creacion_mes';
+$SIS_join  = 'LEFT JOIN bodegas_insumos_facturacion on bodegas_insumos_facturacion.idFacturacion = bodegas_insumos_facturacion_existencias.idFacturacion';
+$SIS_where = 'bodegas_insumos_facturacion_existencias.idProducto='.$X_Puntero.' AND bodegas_insumos_facturacion_existencias.Creacion_fecha>"'.restarDias(fecha_actual(),360).'" AND (bodegas_insumos_facturacion.idTipo = 1 OR bodegas_insumos_facturacion.idTipo = 2) GROUP BY bodegas_insumos_facturacion.idTipo, bodegas_insumos_facturacion_existencias.Creacion_mes';
+$SIS_order = 'bodegas_insumos_facturacion_existencias.Creacion_fecha ASC';
+$arrPromedioProd = array();
+$arrPromedioProd = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPromedioProd');
 
 //Se crea el arreglo
 $arreglo = array();
@@ -227,13 +164,9 @@ foreach ($arrPromedioProd as $productos) {
 								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
 							}
 							?>
-						
 						</p>
-						
-						
 					</div>	
 					<div class="clearfix"></div>
-			
 				</div>
 			</div>
 			

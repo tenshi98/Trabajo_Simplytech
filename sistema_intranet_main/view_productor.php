@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 productores_listado.email, 
 productores_listado.Nombre, 
 productores_listado.Codigo,
@@ -57,64 +57,30 @@ core_ubicacion_comunas.Nombre AS nombre_comuna,
 core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema,
 productores_tipos.Nombre AS tipoCliente,
-core_rubros.Nombre AS Rubro
-
-FROM `productores_listado`
-LEFT JOIN `core_estados`              ON core_estados.idEstado                    = productores_listado.idEstado
-LEFT JOIN `core_ubicacion_ciudad`     ON core_ubicacion_ciudad.idCiudad           = productores_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna          = productores_listado.idComuna
-LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                  = productores_listado.idSistema
-LEFT JOIN `productores_tipos`            ON productores_tipos.idTipo                    = productores_listado.idTipo
-LEFT JOIN `core_rubros`               ON core_rubros.idRubro                      = productores_listado.idRubro
-WHERE productores_listado.idProductor = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+core_rubros.Nombre AS Rubro';
+$SIS_join  = '
+LEFT JOIN `core_estados`              ON core_estados.idEstado             = productores_listado.idEstado
+LEFT JOIN `core_ubicacion_ciudad`     ON core_ubicacion_ciudad.idCiudad    = productores_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna   = productores_listado.idComuna
+LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema           = productores_listado.idSistema
+LEFT JOIN `productores_tipos`         ON productores_tipos.idTipo          = productores_listado.idTipo
+LEFT JOIN `core_rubros`               ON core_rubros.idRubro               = productores_listado.idRubro';
+$SIS_where = 'productores_listado.idProductor ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'productores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /**********************************************************/
 // consulto los datos
-$arrObservaciones = array();
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.Nombre AS nombre_usuario,
 productores_observaciones.Fecha,
-productores_observaciones.Observacion
-FROM `productores_observaciones`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = productores_observaciones.idUsuario
-WHERE productores_observaciones.idProductor = ".$X_Puntero."
-ORDER BY productores_observaciones.idObservacion ASC 
-LIMIT 15 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrObservaciones,$row );
-}
+productores_observaciones.Observacion';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = productores_observaciones.idUsuario';
+$SIS_where = 'productores_observaciones.idProductor ='.$X_Puntero;
+$SIS_order = 'productores_observaciones.idObservacion ASC LIMIT 15';
+$arrObservaciones = array();
+$arrObservaciones = db_select_array (false, $SIS_query, 'productores_observaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrObservaciones');
 
 ?>
-
-
-
 
 <div class="col-sm-12">
 	<div class="box">
@@ -123,7 +89,7 @@ array_push( $arrObservaciones,$row );
 			<h5>Datos del Productor</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if(!empty($arrObservaciones)){ ?>
+				<?php if($arrObservaciones!=false){ ?>
 					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
 			</ul>	
@@ -196,7 +162,7 @@ array_push( $arrObservaciones,$row );
 				
 			</div>
 			
-			<?php if(!empty($arrObservaciones)){ ?>
+			<?php if($arrObservaciones!=false){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -222,9 +188,6 @@ array_push( $arrObservaciones,$row );
 					</div>
 				</div>
 			<?php } ?>
-			
-			
-			
 			
         </div>	
 	</div>

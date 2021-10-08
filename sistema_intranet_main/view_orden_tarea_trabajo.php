@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se trae un listado con todos los elementos
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado.idOT,
 orden_trabajo_tareas_listado.f_creacion,
 orden_trabajo_tareas_listado.f_programacion,
@@ -57,10 +57,8 @@ ubicacion_listado_level_5.Nombre AS UbicacionLVL_5,
 
 usuarios_listado.Nombre AS CancelUsuario,
 orden_trabajo_tareas_listado.f_cancel AS CancelFecha,
-orden_trabajo_tareas_listado.ObservacionesCancel AS CancelObservacion
-
-
-FROM `orden_trabajo_tareas_listado`
+orden_trabajo_tareas_listado.ObservacionesCancel AS CancelObservacion';
+$SIS_join  = '
 LEFT JOIN `core_estado_ot_motivos`     ON core_estado_ot_motivos.idEstado       = orden_trabajo_tareas_listado.idEstado
 LEFT JOIN `core_ot_prioridad`          ON core_ot_prioridad.idPrioridad         = orden_trabajo_tareas_listado.idPrioridad
 LEFT JOIN `core_ot_motivos_tipos`      ON core_ot_motivos_tipos.idTipo          = orden_trabajo_tareas_listado.idTipo
@@ -70,116 +68,55 @@ LEFT JOIN `ubicacion_listado_level_2`  ON ubicacion_listado_level_2.idLevel_2   
 LEFT JOIN `ubicacion_listado_level_3`  ON ubicacion_listado_level_3.idLevel_3   = orden_trabajo_tareas_listado.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`  ON ubicacion_listado_level_4.idLevel_4   = orden_trabajo_tareas_listado.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`  ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5
-LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario            = orden_trabajo_tareas_listado.idUsuarioCancel
+LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario            = orden_trabajo_tareas_listado.idUsuarioCancel';
+$SIS_where = 'orden_trabajo_tareas_listado.idOT ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-WHERE orden_trabajo_tareas_listado.idOT = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+/***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
-$arrTrabajadores = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_listado.Nombre,
 trabajadores_listado.ApellidoPat,
 trabajadores_listado.ApellidoMat,
 trabajadores_listado.Cargo, 
-trabajadores_listado.Rut
+trabajadores_listado.Rut';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador = orden_trabajo_tareas_listado_responsable.idTrabajador';
+$SIS_where = 'orden_trabajo_tareas_listado_responsable.idOT ='.$X_Puntero;
+$SIS_order = 'trabajadores_listado.ApellidoPat ASC';
+$arrTrabajadores = array();
+$arrTrabajadores = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_responsable', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajadores');
 
-FROM `orden_trabajo_tareas_listado_responsable`
-LEFT JOIN `trabajadores_listado`   ON trabajadores_listado.idTrabajador     = orden_trabajo_tareas_listado_responsable.idTrabajador
-WHERE orden_trabajo_tareas_listado_responsable.idOT = ".$X_Puntero."
-ORDER BY trabajadores_listado.ApellidoPat ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTrabajadores,$row );
-}
-
-
+/***************************************************/
 // Se trae un listado con todos los insumos utilizados
-$arrInsumos = array();
-$query = "SELECT 
+$SIS_query = '
 insumos_listado.Nombre AS NombreProducto,
 sistema_productos_uml.Nombre AS UnidadMedida,
-orden_trabajo_tareas_listado_insumos.Cantidad
-
-FROM `orden_trabajo_tareas_listado_insumos`
+orden_trabajo_tareas_listado_insumos.Cantidad';
+$SIS_join  = '
 LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto    = orden_trabajo_tareas_listado_insumos.idProducto
-LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = insumos_listado.idUml
-WHERE orden_trabajo_tareas_listado_insumos.idOT = ".$X_Puntero."
-ORDER BY insumos_listado.Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-		
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-			
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrInsumos,$row );
-}
+LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = insumos_listado.idUml';
+$SIS_where = 'orden_trabajo_tareas_listado_insumos.idOT ='.$X_Puntero;
+$SIS_order = 'insumos_listado.Nombre ASC';
+$arrInsumos = array();
+$arrInsumos = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
 	
+/***************************************************/
 // Se trae un listado con todos los productos utilizados
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 productos_listado.Nombre AS NombreProducto,
 sistema_productos_uml.Nombre AS UnidadMedida,
-orden_trabajo_tareas_listado_productos.Cantidad AS Cantidad
-
-FROM `orden_trabajo_tareas_listado_productos`
+orden_trabajo_tareas_listado_productos.Cantidad AS Cantidad';
+$SIS_join  = '
 LEFT JOIN `productos_listado`       ON productos_listado.idProducto    = orden_trabajo_tareas_listado_productos.idProducto
-LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml     = productos_listado.idUml
-WHERE orden_trabajo_tareas_listado_productos.idOT = ".$X_Puntero."
-ORDER BY productos_listado.Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-		
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml     = productos_listado.idUml';
+$SIS_where = 'orden_trabajo_tareas_listado_productos.idOT ='.$X_Puntero;
+$SIS_order = 'productos_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-			
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-} 
-
+/***************************************************/
 // Se trae un listado con todos los trabajos relacionados a la orden
-$arrTarea = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado_tareas.idTrabajoOT,
 orden_trabajo_tareas_listado_tareas.Observacion,
 core_estado_ot_motivos_tareas.Nombre AS EstadoTarea,
@@ -208,10 +145,8 @@ licitacion_listado_level_21.Nombre AS LicitacionLVL_21,
 licitacion_listado_level_22.Nombre AS LicitacionLVL_22,
 licitacion_listado_level_23.Nombre AS LicitacionLVL_23,
 licitacion_listado_level_24.Nombre AS LicitacionLVL_24,
-licitacion_listado_level_25.Nombre AS LicitacionLVL_25
-
-
-FROM `orden_trabajo_tareas_listado_tareas`
+licitacion_listado_level_25.Nombre AS LicitacionLVL_25';
+$SIS_join  = '
 LEFT JOIN `core_estado_ot_motivos_tareas`  ON core_estado_ot_motivos_tareas.idEstadoTarea   = orden_trabajo_tareas_listado_tareas.idEstadoTarea
 LEFT JOIN `licitacion_listado`             ON licitacion_listado.idLicitacion               = orden_trabajo_tareas_listado_tareas.idLicitacion
 LEFT JOIN `licitacion_listado_level_1`     ON licitacion_listado_level_1.idLevel_1          = orden_trabajo_tareas_listado_tareas.idLevel_1
@@ -238,141 +173,72 @@ LEFT JOIN `licitacion_listado_level_21`    ON licitacion_listado_level_21.idLeve
 LEFT JOIN `licitacion_listado_level_22`    ON licitacion_listado_level_22.idLevel_22        = orden_trabajo_tareas_listado_tareas.idLevel_22
 LEFT JOIN `licitacion_listado_level_23`    ON licitacion_listado_level_23.idLevel_23        = orden_trabajo_tareas_listado_tareas.idLevel_23
 LEFT JOIN `licitacion_listado_level_24`    ON licitacion_listado_level_24.idLevel_24        = orden_trabajo_tareas_listado_tareas.idLevel_24
-LEFT JOIN `licitacion_listado_level_25`    ON licitacion_listado_level_25.idLevel_25        = orden_trabajo_tareas_listado_tareas.idLevel_25
+LEFT JOIN `licitacion_listado_level_25`    ON licitacion_listado_level_25.idLevel_25        = orden_trabajo_tareas_listado_tareas.idLevel_25';
+$SIS_where = 'orden_trabajo_tareas_listado_tareas.idOT ='.$X_Puntero;
+$SIS_order = 'licitacion_listado.Nombre ASC';
+$arrTarea = array();
+$arrTarea = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTarea');
 
-WHERE orden_trabajo_tareas_listado_tareas.idOT = ".$X_Puntero."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTarea,$row );
-}
-
-
+/***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
+$SIS_query = 'idTrabajoOT, NombreArchivo';
+$SIS_join  = '';
+$SIS_where = 'idOT ='.$X_Puntero;
+$SIS_order = 'NombreArchivo ASC';
 $arrArchivos = array();
-$query = "SELECT idTrabajoOT, NombreArchivo
-FROM `orden_trabajo_tareas_listado_tareas_adjuntos`
-WHERE idOT = ".$X_Puntero."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrArchivos = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas_adjuntos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
-
-
-/*****************************************/		
+/***************************************************/	
 // Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado_historial.Creacion_fecha, 
 orden_trabajo_tareas_listado_historial.Observacion,
 core_historial_tipos.Nombre,
 core_historial_tipos.FonAwesome,
-usuarios_listado.Nombre AS Usuario
-
-FROM `orden_trabajo_tareas_listado_historial` 
+usuarios_listado.Nombre AS Usuario';
+$SIS_join  = '
 LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = orden_trabajo_tareas_listado_historial.idTipo
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = orden_trabajo_tareas_listado_historial.idUsuario
-WHERE orden_trabajo_tareas_listado_historial.idOT = ".$X_Puntero." 
-ORDER BY orden_trabajo_tareas_listado_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = orden_trabajo_tareas_listado_historial.idUsuario';
+$SIS_where = 'orden_trabajo_tareas_listado_historial.idOT ='.$X_Puntero;
+$SIS_order = 'orden_trabajo_tareas_listado_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
-
+/***************************************************/
 // Se trae un listado con todos los elementos
-$arrQuejas = array();
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.Nombre AS Usuario,
 usuario_queja.Nombre AS UsuarioQueja,
 core_tipo_queja.Nombre AS TipoQueja,
 orden_trabajo_tareas_quejas.FechaQueja,
-orden_trabajo_tareas_quejas.Observaciones
-
-FROM `orden_trabajo_tareas_quejas`
+orden_trabajo_tareas_quejas.Observaciones';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`                ON usuarios_listado.idUsuario      = orden_trabajo_tareas_quejas.idUsuario
 LEFT JOIN `usuarios_listado` usuario_queja  ON usuario_queja.idUsuario         = orden_trabajo_tareas_quejas.idUsuarioQueja
-LEFT JOIN `core_tipo_queja`                 ON core_tipo_queja.idTipoQueja     = orden_trabajo_tareas_quejas.idTipoQueja
-WHERE orden_trabajo_tareas_quejas.idOT = ".$X_Puntero." 
-ORDER BY orden_trabajo_tareas_quejas.idQueja DESC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_tipo_queja`                 ON core_tipo_queja.idTipoQueja     = orden_trabajo_tareas_quejas.idTipoQueja';
+$SIS_where = 'orden_trabajo_tareas_quejas.idOT ='.$X_Puntero;
+$SIS_order = 'orden_trabajo_tareas_quejas.idQueja DESC';
+$arrQuejas = array();
+$arrQuejas = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrQuejas');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrQuejas,$row );
-}	
-?>
+if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 
-
-
-	<?php if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
-
-		<style>
-		.bs-callout-danger {
-			border-left-color:#ce4844;
-		}
-		.bs-callout-danger h4 {
-			color:#ce4844;
-		}
-		</style>
-		<div class="col-sm-12">
-			<div class="bs-callout bs-callout-danger" >
-				<h4>Orden de Trabajo <?php echo n_doc($X_Puntero, 8); ?> cancelada</h4>
-				<p>
-					Usuario Cancelacion: <?php echo $rowdata['CancelUsuario']; ?><br/>
-					Fecha Cancelacion: <?php echo fecha_estandar($rowdata['CancelFecha']); ?><br/>
-					Motivo Cancelacion: <?php echo $rowdata['CancelObservacion']; ?>
-				</p>
-			</div>
+	<style>
+		.bs-callout-danger {border-left-color:#ce4844;}
+		.bs-callout-danger h4 {color:#ce4844;}
+	</style>
+	<div class="col-sm-12">
+		<div class="bs-callout bs-callout-danger" >
+			<h4>Orden de Trabajo <?php echo n_doc($X_Puntero, 8); ?> cancelada</h4>
+			<p>
+				Usuario Cancelacion: <?php echo $rowdata['CancelUsuario']; ?><br/>
+				Fecha Cancelacion: <?php echo fecha_estandar($rowdata['CancelFecha']); ?><br/>
+				Motivo Cancelacion: <?php echo $rowdata['CancelObservacion']; ?>
+			</p>
 		</div>
+	</div>
 
-	<?php } ?>
+<?php } ?>
 	
 <div class="col-xs-12">
 	<div class="col-sm-11 fcenter table-responsive">
@@ -454,9 +320,9 @@ array_push( $arrQuejas,$row );
 					
 					<tr><th colspan="6">Detalle</th></tr>		  
 					
-
-					<?php /**********************************************************************************/ 
-					if(!empty($arrTrabajadores)) { ?>
+					<?php 
+					/**********************************************************************************/ 
+					if($arrTrabajadores!=false) { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajadores</td></tr>
 						<?php foreach ($arrTrabajadores as $trab) {  ?>
 							<tr class="item-row linea_punteada">
@@ -468,7 +334,7 @@ array_push( $arrQuejas,$row );
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/ 
-					if(!empty($arrInsumos)) { ?>
+					if($arrInsumos!=false) { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
 						<?php foreach ($arrInsumos as $insumos) {
 							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
@@ -482,7 +348,7 @@ array_push( $arrQuejas,$row );
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/ 
-					if(!empty($arrProductos)) { ?>
+					if($arrProductos!=false) { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
 						<?php foreach ($arrProductos as $prod) { 
 							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
@@ -496,7 +362,7 @@ array_push( $arrQuejas,$row );
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/ 
-					if(!empty($arrTarea)) { ?>
+					if($arrTarea!=false) { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td></tr>
 						<?php foreach ($arrTarea as $tarea) {  
 							$s_tarea = $tarea['LicitacionLVL_1'];
@@ -536,7 +402,7 @@ array_push( $arrQuejas,$row );
 								</td>
 							</tr> 
 							
-							<?php if($arrArchivos){ 
+							<?php if($arrArchivos!=false){ 
 								$zxcv = 0;
 								foreach ($arrArchivos as $key => $arch) {
 									if(isset($arch['idTrabajoOT'])&&$arch['idTrabajoOT']==$tarea['idTrabajoOT']){
@@ -580,7 +446,7 @@ array_push( $arrQuejas,$row );
 </div>
 
 <div class="col-xs-12" style="margin-bottom:15px;">
-	<?php if ($arrHistorial){ ?>
+	<?php if ($arrHistorial!=false){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -601,7 +467,7 @@ array_push( $arrQuejas,$row );
 			</tbody>
 		</table>
 	<?php } ?>
-	<?php if ($arrQuejas){ ?>
+	<?php if ($arrQuejas!=false){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -628,10 +494,6 @@ array_push( $arrQuejas,$row );
 			</tbody>
 		</table>
 	<?php } ?>
-	
-	
-
-
 
 </div>
 

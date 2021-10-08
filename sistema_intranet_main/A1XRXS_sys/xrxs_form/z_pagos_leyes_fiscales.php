@@ -494,7 +494,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************/
 				//recorro los arriendos
-				if($arrTemporal_1){
+				if($arrTemporal_1!=false){
 					foreach ($arrTemporal_1 as $trab) {
 						//se busca el tipo
 						switch ($trab['idTipo']) {
@@ -513,7 +513,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************/
 				//recorro los insumos
-				if($arrTemporal_2){
+				if($arrTemporal_2!=false){
 					foreach ($arrTemporal_2 as $trab) {
 						//se busca el tipo
 						switch ($trab['idTipo']) {
@@ -532,7 +532,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************/
 				//recorro los productos
-				if($arrTemporal_3){
+				if($arrTemporal_3!=false){
 					foreach ($arrTemporal_3 as $trab) {
 						//se busca el tipo
 						switch ($trab['idTipo']) {
@@ -551,7 +551,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************/
 				//recorro los servicios
-				if($arrTemporal_4){
+				if($arrTemporal_4!=false){
 					foreach ($arrTemporal_4 as $trab) {
 						//se busca el tipo
 						switch ($trab['idTipo']) {
@@ -570,13 +570,13 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************/
 				//recorro los boletas de honorarios
-				if($arrTemporal_5){
+				if($arrTemporal_5!=false){
 					foreach ($arrTemporal_5 as $trab) {
 						$_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion'] = $_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion'] + $trab['Retencion'];
 					}	
 				}
 				//recorro los boletas de honorarios
-				if($arrTemporal_6){
+				if($arrTemporal_6!=false){
 					foreach ($arrTemporal_6 as $trab) {
 						$_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta'] = $_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta'] + $trab['ImpuestoRenta'];
 					}	
@@ -1072,7 +1072,7 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************/
 				//recorro los arriendos
-				if($arrTemporal_1){
+				if($arrTemporal_1!=false){
 					foreach ($arrTemporal_1 as $trab) {
 						//se busca el tipo
 						switch ($trab['idTipo']) {
@@ -1091,7 +1091,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************/
 				//recorro los insumos
-				if($arrTemporal_2){
+				if($arrTemporal_2!=false){
 					foreach ($arrTemporal_2 as $trab) {
 						//se busca el tipo
 						switch ($trab['idTipo']) {
@@ -1110,7 +1110,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************/
 				//recorro los productos
-				if($arrTemporal_3){
+				if($arrTemporal_3!=false){
 					foreach ($arrTemporal_3 as $trab) {
 						//se busca el tipo
 						switch ($trab['idTipo']) {
@@ -1129,7 +1129,7 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************/
 				//recorro los servicios
-				if($arrTemporal_4){
+				if($arrTemporal_4!=false){
 					foreach ($arrTemporal_4 as $trab) {
 						//se busca el tipo
 						switch ($trab['idTipo']) {
@@ -1148,13 +1148,13 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************/
 				//recorro los boletas de honorarios
-				if($arrTemporal_5){
+				if($arrTemporal_5!=false){
 					foreach ($arrTemporal_5 as $trab) {
 						$_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion'] = $_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion'] + $trab['Retencion'];
 					}	
 				}
 				//recorro los boletas de honorarios
-				if($arrTemporal_6){
+				if($arrTemporal_6!=false){
 					foreach ($arrTemporal_6 as $trab) {
 						$_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta'] = $_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta'] + $trab['ImpuestoRenta'];
 					}	

@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //se traen los datos basicos de la licitacion
-$query = "SELECT 
+$SIS_query = '
 licitacion_listado.Codigo, 
 licitacion_listado.Nombre, 
 licitacion_listado.FechaInicio, 
@@ -52,9 +52,8 @@ bodegas_insumos_listado.Nombre AS BodegaInsumos,
 clientes_listado.Nombre AS Cliente,
 core_sistemas.Nombre AS Sistema,
 core_licitacion_tipos.Nombre AS TipoLicitacion,
-core_sistemas_opciones.Nombre AS OpcionItem
-
-FROM `licitacion_listado`
+core_sistemas_opciones.Nombre AS OpcionItem';
+$SIS_join  = '
 LEFT JOIN `core_estado_aprobacion`       ON core_estado_aprobacion.idEstado          = licitacion_listado.idAprobado
 LEFT JOIN `core_estados`                 ON core_estados.idEstado                    = licitacion_listado.idEstado
 LEFT JOIN `bodegas_productos_listado`    ON bodegas_productos_listado.idBodega       = licitacion_listado.idBodegaProd
@@ -62,108 +61,53 @@ LEFT JOIN `bodegas_insumos_listado`      ON bodegas_insumos_listado.idBodega    
 LEFT JOIN `clientes_listado`             ON clientes_listado.idCliente               = licitacion_listado.idCliente
 LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema                  = licitacion_listado.idSistema
 LEFT JOIN `core_licitacion_tipos`        ON core_licitacion_tipos.idTipoLicitacion   = licitacion_listado.idTipoLicitacion
-LEFT JOIN `core_sistemas_opciones`       ON core_sistemas_opciones.idOpciones        = licitacion_listado.idOpcionItem
-
-WHERE licitacion_listado.idLicitacion=".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `core_sistemas_opciones`       ON core_sistemas_opciones.idOpciones        = licitacion_listado.idOpcionItem';
+$SIS_where = 'licitacion_listado.idLicitacion='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /*****************************************/		
 // Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
+$SIS_query = '
 licitacion_listado_historial.Creacion_fecha, 
 licitacion_listado_historial.Observacion,
 core_historial_tipos.Nombre,
 core_historial_tipos.FonAwesome,
-usuarios_listado.Nombre AS Usuario
-
-FROM `licitacion_listado_historial` 
+usuarios_listado.Nombre AS Usuario';
+$SIS_join  = '
 LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = licitacion_listado_historial.idTipo
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = licitacion_listado_historial.idUsuario
-WHERE licitacion_listado_historial.idLicitacion = ".$X_Puntero." 
-ORDER BY licitacion_listado_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
-
-
-	
+LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = licitacion_listado_historial.idUsuario';
+$SIS_where = 'licitacion_listado_historial.idLicitacion ='.$X_Puntero;
+$SIS_order = 'licitacion_listado_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'licitacion_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
 /***********************************************************************************/
 //Se verifica que se utilice el itemizado
 if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	//Se crean las variables
-	$nmax = 15;
-	$z = '';
-	$leftjoin = '';
-	$orderby = '';
+	$nmax      = 15;
+	$SIS_query = 'licitacion_listado_level_1.idLevel_1 AS bla';
+	$SIS_join  = '';
+	$SIS_order = 'licitacion_listado_level_1.Codigo ASC';
 	for ($i = 1; $i <= $nmax; $i++) {
 		//consulta
-		$z .= ',licitacion_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
-		$z .= ',licitacion_listado_level_'.$i.'.Codigo AS LVL_'.$i.'_Codigo';
-		$z .= ',licitacion_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
+		$SIS_query .= ',licitacion_listado_level_'.$i.'.idLevel_'.$i.' AS LVL_'.$i.'_id';
+		$SIS_query .= ',licitacion_listado_level_'.$i.'.Codigo AS LVL_'.$i.'_Codigo';
+		$SIS_query .= ',licitacion_listado_level_'.$i.'.Nombre AS LVL_'.$i.'_Nombre';
 		//Joins
 		$xx = $i + 1;
 		if($xx<=$nmax){
-			$leftjoin .= ' LEFT JOIN `licitacion_listado_level_'.$xx.'`   ON licitacion_listado_level_'.$xx.'.idLevel_'.$i.'    = licitacion_listado_level_'.$i.'.idLevel_'.$i;
+			$SIS_join .= ' LEFT JOIN `licitacion_listado_level_'.$xx.'`   ON licitacion_listado_level_'.$xx.'.idLevel_'.$i.'    = licitacion_listado_level_'.$i.'.idLevel_'.$i;
 		}
 		//ORDER BY
-		$orderby .= ', licitacion_listado_level_'.$i.'.Codigo ASC';
+		$SIS_order .= ', licitacion_listado_level_'.$i.'.Codigo ASC';
 	}
 
 	//se hace la consulta
+	$SIS_where = 'licitacion_listado_level_1.idLicitacion='.$X_Puntero;
 	$arrLicitacion = array();
-	$query = "SELECT
-	licitacion_listado_level_1.idLevel_1 AS bla
-	".$z."
-	FROM `licitacion_listado_level_1`
-	".$leftjoin."
-	WHERE licitacion_listado_level_1.idLicitacion=".$X_Puntero."
-	ORDER BY licitacion_listado_level_1.Codigo ASC ".$orderby."
+	$arrLicitacion = db_select_array (false, $SIS_query, 'licitacion_listado_level_1', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrLicitacion');
 
-	";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrLicitacion,$row );
-	}
 	$array3d = array();
 	foreach($arrLicitacion as $key) {
 		
@@ -300,35 +244,21 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Nombre'] = $n['25'];
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Codigo'] = $c['25'];
 		}*/
-		
-		
-		
+
 	}
 
-
-
-
-
-
-
-	function arrayToUL(array $array, $lv, $nmax)
-	{
+	function arrayToUL(array $array, $lv, $nmax){
 		$lv++;
 		if($lv==1){
 			echo '<ul class="tree">';
 		}else{
 			echo '<ul style="padding-left: 20px;">';
 		}
-		
 		foreach ($array as $key => $value){
-			
 			
 			if (isset($value['Nombre'])) {
 				echo '<li><div class="blum">';
 				echo '<div class="pull-left">'.$value['Codigo'].' - '.$value['Nombre'].'</div>';
-							
-
-								
 				echo '<div class="clearfix"></div>';
 				echo '</div>';
 			}
@@ -340,13 +270,8 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 		}
 		echo '</ul>';
 	}
-
 }
 ?>
-
-
-
-
 
 <div class="col-sm-12">
 	<div class="box">
@@ -374,15 +299,12 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 								<td>Sistema</td>
 								<td><?php echo $rowdata['Sistema'];?></td>
 							</tr>
-							
 							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
 								<tr class="odd">
 									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente'];?></td>
 								</tr>
 							<?php } ?>
-							
-							
 							<tr class="odd">
 								<td>Duracion</td>
 								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']);?></td>
@@ -426,11 +348,9 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 								<tr>
 									<td colspan="2">
 										<div class="clearfix"></div>  	
-
 										<?php //Se imprime el arbol
 										echo arrayToUL($array3d, 0, $nmax);
 										?>
-									
 									</td>
 								</tr>
 							<?php } ?>
@@ -443,10 +363,6 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 								</tr>
 							<?php } ?>
 				   
-							
-				   
-				   
-				   
 						</tbody>
 					</table>
 				</div>
@@ -455,9 +371,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	</div>
 </div>	
 
-
-
-<?php if ($arrHistorial){ ?>
+<?php if ($arrHistorial!=false){ ?>
 	<div class="col-xs-12" style="margin-bottom:15px;">
 		<table id="items">
 			<tbody>

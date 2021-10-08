@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 transportes_listado.email, 
 transportes_listado.Nombre, 
 transportes_listado.Rut, 
@@ -56,30 +56,16 @@ core_ubicacion_comunas.Nombre AS nombre_comuna,
 core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema,
 transportes_tipos.Nombre AS tipoTransporte,
-core_rubros.Nombre AS Rubro
-
-FROM `transportes_listado`
-LEFT JOIN `core_estados`              ON core_estados.idEstado                    = transportes_listado.idEstado
-LEFT JOIN `core_ubicacion_ciudad`     ON core_ubicacion_ciudad.idCiudad           = transportes_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna          = transportes_listado.idComuna
-LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                  = transportes_listado.idSistema
-LEFT JOIN `transportes_tipos`         ON transportes_tipos.idTipo                 = transportes_listado.idTipo
-LEFT JOIN `core_rubros`               ON core_rubros.idRubro                      = transportes_listado.idRubro
-WHERE transportes_listado.idTransporte = ".$X_Puntero;
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-
+core_rubros.Nombre AS Rubro';
+$SIS_join  = '
+LEFT JOIN `core_estados`           ON core_estados.idEstado           = transportes_listado.idEstado
+LEFT JOIN `core_ubicacion_ciudad`  ON core_ubicacion_ciudad.idCiudad  = transportes_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas` ON core_ubicacion_comunas.idComuna = transportes_listado.idComuna
+LEFT JOIN `core_sistemas`          ON core_sistemas.idSistema         = transportes_listado.idSistema
+LEFT JOIN `transportes_tipos`      ON transportes_tipos.idTipo        = transportes_listado.idTipo
+LEFT JOIN `core_rubros`            ON core_rubros.idRubro             = transportes_listado.idRubro';
+$SIS_where = 'transportes_listado.idTransporte ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'transportes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

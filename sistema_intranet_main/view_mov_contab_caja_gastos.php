@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 core_sistemas.Nombre AS CajaSistema,
 usuarios_listado.Nombre AS Usuario,
 contab_caja_gastos.fecha_auto,
@@ -47,119 +47,55 @@ trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabajadorApellidoMat,
 trabajadores_listado.Cargo AS TrabajadorCargo,
 trabajadores_listado.Fono AS TrabajadorFono,
-trabajadores_listado.Rut AS TrabajadorRut
+trabajadores_listado.Rut AS TrabajadorRut';
+$SIS_join  = '
+LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema              = contab_caja_gastos.idSistema
+LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario           = contab_caja_gastos.idUsuario
+LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador    = contab_caja_gastos.idTrabajador';
+$SIS_where = 'contab_caja_gastos.idFacturacion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'contab_caja_gastos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-FROM `contab_caja_gastos`
-LEFT JOIN `core_sistemas`                       ON core_sistemas.idSistema              = contab_caja_gastos.idSistema
-LEFT JOIN `usuarios_listado`                    ON usuarios_listado.idUsuario           = contab_caja_gastos.idUsuario
-LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabajador    = contab_caja_gastos.idTrabajador
-
-WHERE contab_caja_gastos.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-				
+/*****************************************/					
 // Se trae un listado con todos los productos utilizados
-$arrDocumentos = array();
-$query = "SELECT 
+$SIS_query = '
 sistema_documentos_pago.Nombre,
 contab_caja_gastos_existencias.Descripcion,
 contab_caja_gastos_existencias.N_Doc,
 contab_caja_gastos_existencias.Valor,
-contab_caja_gastos_existencias.CentroCosto
-
-FROM `contab_caja_gastos_existencias` 
-LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = contab_caja_gastos_existencias.idDocPago
-WHERE contab_caja_gastos_existencias.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDocumentos,$row );
-}
+contab_caja_gastos_existencias.CentroCosto';
+$SIS_join  = 'LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = contab_caja_gastos_existencias.idDocPago';
+$SIS_where = 'contab_caja_gastos_existencias.idFacturacion ='.$X_Puntero;
+$SIS_order = 'sistema_documentos_pago.Nombre ASC';
+$arrDocumentos = array();
+$arrDocumentos = db_select_array (false, $SIS_query, 'contab_caja_gastos_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDocumentos');
 
 /*****************************************/		
 // Se trae un listado con todos los archivos adjuntos
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrArchivo = array();
-$query = "SELECT Nombre
-FROM `contab_caja_gastos_archivos` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivo,$row );
-}
+$arrArchivo = db_select_array (false, $SIS_query, 'contab_caja_gastos_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
 /*****************************************/		
 // Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
+$SIS_query = '
 contab_caja_gastos_historial.Creacion_fecha, 
 contab_caja_gastos_historial.Observacion,
-
 core_historial_tipos.FonAwesome,
-usuarios_listado.Nombre AS Usuario
-
-FROM `contab_caja_gastos_historial` 
-LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = contab_caja_gastos_historial.idTipo
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = contab_caja_gastos_historial.idUsuario
-WHERE contab_caja_gastos_historial.idFacturacion = ".$X_Puntero." 
-ORDER BY contab_caja_gastos_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
+usuarios_listado.Nombre AS Usuario';
+$SIS_join  = '
+LEFT JOIN `core_historial_tipos` ON core_historial_tipos.idTipo  = contab_caja_gastos_historial.idTipo
+LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario   = contab_caja_gastos_historial.idUsuario';
+$SIS_where = 'contab_caja_gastos_historial.idFacturacion ='.$X_Puntero;
+$SIS_order = 'contab_caja_gastos_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
 ?>
 
-
-
 <section class="invoice">
-
 
 	<div class="row">
 		<div class="col-xs-12">
@@ -193,7 +129,6 @@ array_push( $arrHistorial,$row );
 		</div>
 	</div>
 	
-	
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">
@@ -203,7 +138,7 @@ array_push( $arrHistorial,$row );
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrDocumentos) {
+					<?php if ($arrDocumentos!=false) {
 						foreach ($arrDocumentos as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Descripcion']; ?></td>
@@ -221,7 +156,6 @@ array_push( $arrHistorial,$row );
 						<?php } ?>
 					<?php } ?>
 					
-					
 					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right" colspan="3"><strong>Total</strong></td> 
@@ -234,7 +168,6 @@ array_push( $arrHistorial,$row );
 		</div>
 	</div>
 	
-	
 	<div class="row">
 		<div class="col-xs-12">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
@@ -242,10 +175,7 @@ array_push( $arrHistorial,$row );
 		</div>
 	</div>
 	
-	
-	
-
-<?php
+	<?php
 	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
 	?>
@@ -265,7 +195,7 @@ array_push( $arrHistorial,$row );
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial){ ?>
+	<?php if ($arrHistorial!=false){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -287,7 +217,7 @@ array_push( $arrHistorial,$row );
 		</table>
 	<?php } ?>
 	
-	<?php if ($arrArchivo){ ?>
+	<?php if ($arrArchivo!=false){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

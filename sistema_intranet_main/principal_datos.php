@@ -30,9 +30,8 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Perfil borrado corr
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.usuario, 
 usuarios_tipos.Nombre AS Usuario_Tipo,
 usuarios_listado.email, 
@@ -43,208 +42,85 @@ usuarios_listado.Direccion,
 usuarios_listado.Fono, 
 core_ubicacion_ciudad.Nombre AS Ciudad, 
 core_ubicacion_comunas.Nombre AS Comuna,
-usuarios_listado.Direccion_img
-FROM `usuarios_listado`
+usuarios_listado.Direccion_img';
+$SIS_join  = '
 LEFT JOIN `usuarios_tipos`           ON usuarios_tipos.idTipoUsuario      = usuarios_listado.idTipoUsuario
 LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = usuarios_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usuarios_listado.idComuna
-WHERE idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usuarios_listado.idComuna';
+$SIS_where = 'usuarios_listado.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
+$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 
 /**********************************/
 //Permisos asignados
-$arrMenu = array();
-$query = "SELECT 
+$SIS_query = '
 core_permisos_categorias.Nombre AS CategoriaNombre, 
 core_font_awesome.Codigo AS CategoriaIcono,
 core_permisos_listado.Direccionbase AS TransaccionURLBase,
 core_permisos_listado.Direccionweb AS TransaccionURL, 
-core_permisos_listado.Nombre AS TransaccionNombre,
-							
-usuarios_permisos.level
-							
-							
-FROM usuarios_permisos 
+core_permisos_listado.Nombre AS TransaccionNombre,					
+usuarios_permisos.level';
+$SIS_join  = '
 INNER JOIN core_permisos_listado      ON core_permisos_listado.idAdmpm        = usuarios_permisos.idAdmpm
 INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat 
-LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont             = core_permisos_categorias.idFont
-WHERE usuarios_permisos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']."
-ORDER BY CategoriaNombre, TransaccionNombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMenu,$row );
-}
+LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont             = core_permisos_categorias.idFont';
+$SIS_where = 'usuarios_permisos.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_order = 'CategoriaNombre ASC, TransaccionNombre ASC';
+$arrMenu = array();
+$arrMenu = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMenu');
+
 /**********************************/
 //Permisos a sistemas
+$SIS_query = 'core_sistemas.Nombre AS Sistema';
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = usuarios_sistemas.idSistema';
+$SIS_where = 'usuarios_sistemas.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_order = 'core_sistemas.Nombre ASC';
 $arrSistemas = array();
-$query = "SELECT 
-core_sistemas.Nombre AS Sistema						
-FROM usuarios_sistemas
-LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema
-WHERE usuarios_sistemas.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']."
-ORDER BY core_sistemas.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrSistemas,$row );
-}
+$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
+
 /**********************************/
 //Permisos a bodegas
+$SIS_query = 'bodegas_arriendos_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `bodegas_arriendos_listado` ON bodegas_arriendos_listado.idBodega = usuarios_bodegas_arriendos.idBodega';
+$SIS_where = 'usuarios_bodegas_arriendos.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_order = 'bodegas_arriendos_listado.Nombre ASC';
 $arrBodega1 = array();
-$query = "SELECT 
-bodegas_arriendos_listado.Nombre AS Bodega						
-FROM usuarios_bodegas_arriendos
-LEFT JOIN `bodegas_arriendos_listado`  ON bodegas_arriendos_listado.idBodega  = usuarios_bodegas_arriendos.idBodega
-WHERE usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']."
-ORDER BY bodegas_arriendos_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBodega1,$row );
-}
+$arrBodega1 = db_select_array (false, $SIS_query, 'usuarios_bodegas_arriendos',  $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBodega1');
+
+/**********************************/
+$SIS_query = 'bodegas_insumos_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `bodegas_insumos_listado` ON bodegas_insumos_listado.idBodega = usuarios_bodegas_insumos.idBodega';
+$SIS_where = 'usuarios_bodegas_insumos.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_order = 'bodegas_insumos_listado.Nombre ASC';
 $arrBodega2 = array();
-$query = "SELECT 
-bodegas_insumos_listado.Nombre AS Bodega						
-FROM usuarios_bodegas_insumos
-LEFT JOIN `bodegas_insumos_listado`  ON bodegas_insumos_listado.idBodega  = usuarios_bodegas_insumos.idBodega
-WHERE usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']."
-ORDER BY bodegas_insumos_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBodega2,$row );
-}
+$arrBodega2 = db_select_array (false, $SIS_query, 'usuarios_bodegas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBodega2');
+
+/**********************************/
+$SIS_query = 'bodegas_productos_listado.Nombre AS Bodega	';
+$SIS_join  = 'LEFT JOIN `bodegas_productos_listado` ON bodegas_productos_listado.idBodega = usuarios_bodegas_productos.idBodega';
+$SIS_where = 'usuarios_bodegas_productos.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_order = 'bodegas_productos_listado.Nombre ASC';
 $arrBodega3 = array();
-$query = "SELECT 
-bodegas_productos_listado.Nombre AS Bodega						
-FROM usuarios_bodegas_productos
-LEFT JOIN `bodegas_productos_listado`  ON bodegas_productos_listado.idBodega  = usuarios_bodegas_productos.idBodega
-WHERE usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']."
-ORDER BY bodegas_productos_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBodega3,$row );
-}
+$arrBodega3 = db_select_array (false, $SIS_query, 'usuarios_bodegas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBodega3');
+
 /**********************************/
 //Permisos a equipos telemetria
+$SIS_query = 'telemetria_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = usuarios_equipos_telemetria.idTelemetria';
+$SIS_where = 'usuarios_equipos_telemetria.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_order = 'telemetria_listado.Nombre ASC';
 $arrTelemetria = array();
-$query = "SELECT 
-telemetria_listado.Nombre AS Bodega						
-FROM usuarios_equipos_telemetria
-LEFT JOIN `telemetria_listado`  ON telemetria_listado.idTelemetria  = usuarios_equipos_telemetria.idTelemetria
-WHERE usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']."
-ORDER BY telemetria_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTelemetria,$row );
-}
+$arrTelemetria = db_select_array (false, $SIS_query, 'usuarios_equipos_telemetria', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTelemetria');
+
 /**********************************/
 //Permisos de vista de los documentos
+$SIS_query = 'sistema_documentos_pago.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = usuarios_documentos_pago.idDocPago';
+$SIS_where = 'usuarios_documentos_pago.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_order = 'sistema_documentos_pago.Nombre ASC';
 $arrDocumento = array();
-$query = "SELECT 
-sistema_documentos_pago.Nombre AS Bodega						
-FROM usuarios_documentos_pago
-LEFT JOIN `sistema_documentos_pago`  ON sistema_documentos_pago.idDocPago  = usuarios_documentos_pago.idDocPago
-WHERE usuarios_documentos_pago.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']."
-ORDER BY sistema_documentos_pago.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDocumento,$row );
-}
+$arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDocumento');
+
 /*************************************************/
 //permisos a las transacciones
 $trans[1] = "pago_masivo_cliente.php";           //Pagos clientes
@@ -337,162 +213,154 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 					</p>
 				</div>	
 				
-				
-				<?php if(!empty($arrMenu)){ ?>
-						<div class="col-sm-6">
-							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
+				<?php if($arrMenu!=false){ ?>
+					<div class="col-sm-6">
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
 							
-							<ul class="tree">
-								<?php
-								filtrar($arrMenu, 'CategoriaNombre');
-								foreach($arrMenu as $menu=>$productos) {
+						<ul class="tree">
+							<?php
+							filtrar($arrMenu, 'CategoriaNombre');
+							foreach($arrMenu as $menu=>$productos) {
+								echo '
+									<li>
+										<div class="blum">
+											<div class="pull-left"><i class="'.$productos[0]['CategoriaIcono'].'"></i> '.TituloMenu($menu).'</div>
+											<div class="clearfix"></div>
+										</div>
+										<ul style="padding-left: 20px;">';
+								foreach($productos as $producto) {
 									echo '
 										<li>
 											<div class="blum">
-												<div class="pull-left"><i class="'.$productos[0]['CategoriaIcono'].'"></i> '.TituloMenu($menu).'</div>
+												<div class="pull-left"><i class="'.$producto['CategoriaIcono'].'"></i> '.TituloMenu($producto['TransaccionNombre']).'</div>
 												<div class="clearfix"></div>
 											</div>
-											<ul style="padding-left: 20px;">';
-									foreach($productos as $producto) {
-										echo '
-											<li>
-												<div class="blum">
-													<div class="pull-left"><i class="'.$producto['CategoriaIcono'].'"></i> '.TituloMenu($producto['TransaccionNombre']).'</div>
-													<div class="clearfix"></div>
-												</div>
-											</li>';
-									}
-									echo '</ul>
-									</li>';
+										</li>';
 								}
-								?>				
-							</ul>
-						</div>
-					<?php } ?>
+								echo '</ul>
+								</li>';
+							}
+							?>				
+						</ul>
+					</div>
+				<?php } ?>
 					
-					<div class="col-sm-6">
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Bodegas</h2>
-						<?php
+				<div class="col-sm-6">
+					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Bodegas</h2>
+					<?php
+					echo '<ul class="tree">';
+					/*******************************/
+					echo '
+						<li>
+							<div class="blum">
+								<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> Bodegas de Arriendo</div>
+								<div class="clearfix"></div>
+							</div>
+							<ul style="padding-left: 20px;">';
+											
+					foreach($arrBodega1 as $bod) {
+						echo '
+						<li>
+							<div class="blum">
+								<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
+								<div class="clearfix"></div>
+							</div>
+						</li>';
+					}
+					echo '</ul></li>';
+					/*******************************/
+					echo '
+						<li>
+							<div class="blum">
+								<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> Bodegas de Insumos</div>
+								<div class="clearfix"></div>
+							</div>
+							<ul style="padding-left: 20px;">';
+					foreach($arrBodega2 as $bod) {
+						echo '
+						<li>
+							<div class="blum">
+								<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
+								<div class="clearfix"></div>
+							</div>
+						</li>';
+					}
+					echo '</ul></li>';
+					/*******************************/
+					echo '
+						<li>
+							<div class="blum">
+								<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> Bodegas de Productos</div>
+								<div class="clearfix"></div>
+							</div>
+							<ul style="padding-left: 20px;">';
+					foreach($arrBodega3 as $bod) {
+						echo '
+						<li>
+							<div class="blum">
+								<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
+								<div class="clearfix"></div>
+							</div>
+						</li>';
+					}
+					echo '</ul></li>';
+					echo '</ul>';
+					/***************************************************************/
+					if($arrTelemetria!=false){
+						echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Equipos Telemetria</h2>';
 						echo '<ul class="tree">';
 						/*******************************/
 						echo '
 							<li>
 								<div class="blum">
-									<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> Bodegas de Arriendo</div>
+									<div class="pull-left"><i class="fa fa-bullseye" aria-hidden="true"></i> Equipos</div>
 									<div class="clearfix"></div>
 								</div>
 								<ul style="padding-left: 20px;">';
-											
-						foreach($arrBodega1 as $bod) {
+												
+						foreach($arrTelemetria as $bod) {
 							echo '
 							<li>
 								<div class="blum">
-									<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
-									<div class="clearfix"></div>
-								</div>
-							</li>';
-						}
-						echo '</ul></li>';
-						/*******************************/
-						echo '
-							<li>
-								<div class="blum">
-									<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> Bodegas de Insumos</div>
-									<div class="clearfix"></div>
-								</div>
-								<ul style="padding-left: 20px;">';
-						foreach($arrBodega2 as $bod) {
-							echo '
-							<li>
-								<div class="blum">
-									<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
-									<div class="clearfix"></div>
-								</div>
-							</li>';
-						}
-						echo '</ul></li>';
-						/*******************************/
-						echo '
-							<li>
-								<div class="blum">
-									<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> Bodegas de Productos</div>
-									<div class="clearfix"></div>
-								</div>
-								<ul style="padding-left: 20px;">';
-						foreach($arrBodega3 as $bod) {
-							echo '
-							<li>
-								<div class="blum">
-									<div class="pull-left"><i class="fa fa-cubes" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
+									<div class="pull-left"><i class="fa fa-bullseye" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
 									<div class="clearfix"></div>
 								</div>
 							</li>';
 						}
 						echo '</ul></li>';
 						echo '</ul>';
-						/***************************************************************/
-						if(!empty($arrTelemetria)){
-							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Equipos Telemetria</h2>';
-							echo '<ul class="tree">';
-							/*******************************/
-							echo '
-								<li>
-									<div class="blum">
-										<div class="pull-left"><i class="fa fa-bullseye" aria-hidden="true"></i> Equipos</div>
-										<div class="clearfix"></div>
-									</div>
-									<ul style="padding-left: 20px;">';
+					}
+					/***************************************************************/
+					if($arrDocumento!=false){
+						echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Documentos a ver</h2>';
+						echo '<ul class="tree">';
+						/*******************************/
+						echo '
+							<li>
+								<div class="blum">
+									<div class="pull-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Documentos seleccionados</div>
+									<div class="clearfix"></div>
+								</div>
+								<ul style="padding-left: 20px;">';
 												
-							foreach($arrTelemetria as $bod) {
-								echo '
-								<li>
-									<div class="blum">
-										<div class="pull-left"><i class="fa fa-bullseye" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
-										<div class="clearfix"></div>
-									</div>
-								</li>';
-							}
-							echo '</ul></li>';
-							echo '</ul>';
-						}
-						/***************************************************************/
-						if(!empty($arrDocumento)){
-							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Documentos a ver</h2>';
-							echo '<ul class="tree">';
-							/*******************************/
+						foreach($arrDocumento as $bod) {
 							echo '
-								<li>
-									<div class="blum">
-										<div class="pull-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Documentos seleccionados</div>
-										<div class="clearfix"></div>
-									</div>
-									<ul style="padding-left: 20px;">';
-												
-							foreach($arrDocumento as $bod) {
-								echo '
-								<li>
-									<div class="blum">
-										<div class="pull-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
-										<div class="clearfix"></div>
-									</div>
-								</li>';
-							}
-							echo '</ul></li>';
-							echo '</ul>';
+							<li>
+								<div class="blum">
+									<div class="pull-left"><i class="fa fa-shopping-cart" aria-hidden="true"></i> '.$bod['Bodega'].'</div>
+									<div class="clearfix"></div>
+								</div>
+							</li>';
 						}
-						
-						
-						
-						?>
-					</div>
-				
+						echo '</ul></li>';
+						echo '</ul>';
+					}?>
+				</div>
 				
 			</div>
         </div>	
 	</div>
 </div>
-
-
 
 <?php
 /**********************************************************************************************************************************/

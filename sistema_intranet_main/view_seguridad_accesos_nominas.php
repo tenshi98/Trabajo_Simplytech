@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 seguridad_accesos_nominas.FechaProgramada,
 seguridad_accesos_nominas.HoraInicioProgramada,
 seguridad_accesos_nominas.HoraTerminoProgramada,
@@ -48,9 +48,8 @@ ubicacion_listado_level_3.Nombre AS UbicacionLVL_3,
 ubicacion_listado_level_4.Nombre AS UbicacionLVL_4,
 ubicacion_listado_level_5.Nombre AS UbicacionLVL_5,
 seguridad_accesos_nominas.PersonaReunion,
-core_estado_caja.Nombre AS Estado
-
-FROM `seguridad_accesos_nominas`
+core_estado_caja.Nombre AS Estado';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`            ON usuarios_listado.idUsuario            = seguridad_accesos_nominas.idUsuario
 LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema               = seguridad_accesos_nominas.idSistema
 LEFT JOIN `ubicacion_listado`           ON ubicacion_listado.idUbicacion         = seguridad_accesos_nominas.idUbicacion
@@ -59,84 +58,37 @@ LEFT JOIN `ubicacion_listado_level_2`   ON ubicacion_listado_level_2.idLevel_2  
 LEFT JOIN `ubicacion_listado_level_3`   ON ubicacion_listado_level_3.idLevel_3   = seguridad_accesos_nominas.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4   = seguridad_accesos_nominas.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = seguridad_accesos_nominas.idUbicacion_lvl_5
-LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado
-
-WHERE seguridad_accesos_nominas.idAcceso = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado';
+$SIS_where = 'seguridad_accesos_nominas.idAcceso ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 /*****************************************/		
 // Se trae un listado con todos los otros
-$arrPersonas = array();
-$query = "SELECT 
+$SIS_query = '
 seguridad_accesos_nominas_listado.Fecha, 
 seguridad_accesos_nominas_listado.HoraEntrada, 
 seguridad_accesos_nominas_listado.HoraSalida, 
 seguridad_accesos_nominas_listado.Nombre, 
 seguridad_accesos_nominas_listado.Rut, 
 seguridad_accesos_nominas_listado.NDocCedula,
-core_estado_nomina_asistencia.Nombre AS Estado
-
-FROM `seguridad_accesos_nominas_listado` 
-LEFT JOIN `core_estado_nomina_asistencia`   ON core_estado_nomina_asistencia.idEstado  = seguridad_accesos_nominas_listado.idEstado
-WHERE seguridad_accesos_nominas_listado.idAcceso = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPersonas,$row );
-}
+core_estado_nomina_asistencia.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estado_nomina_asistencia` ON core_estado_nomina_asistencia.idEstado = seguridad_accesos_nominas_listado.idEstado';
+$SIS_where = 'seguridad_accesos_nominas_listado.idAcceso ='.$X_Puntero;
+$SIS_order = 'seguridad_accesos_nominas_listado.Fecha ASC';
+$arrPersonas = array();
+$arrPersonas = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPersonas');
 
 /*****************************************/		
 // Se trae un listado con todos los archivos adjuntos
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idAcceso ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrArchivo = array();
-$query = "SELECT Nombre
-FROM `seguridad_accesos_nominas_archivos` 
-WHERE idAcceso = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivo,$row );
-}
 ?>
 	
-
-
-
 <section class="invoice">
 	
 	<div class="row">
@@ -150,38 +102,35 @@ array_push( $arrArchivo,$row );
 	
 	<div class="row invoice-info">
 		
-		<?php
-		echo '
 		<div class="col-sm-6 invoice-col">
 			Datos Basicos
 			<address>
-				<strong>Usuario:</strong> '.$row_data['Usuario'].'<br/>
-				<strong>Sistema:</strong> '.$row_data['Sistema'].'<br/>
-				<strong>Ubicacion:</strong> ';
-				echo $row_data['Ubicacion'];
+				<strong>Usuario:</strong> <?php echo $row_data['Usuario']; ?><br/>
+				<strong>Sistema:</strong> <?php echo $row_data['Sistema']; ?><br/>
+				<strong>Ubicacion:</strong> <?php echo $row_data['Ubicacion'];
 				if(isset($row_data['UbicacionLVL_1'])&&$row_data['UbicacionLVL_1']!=''){echo ' - '.$row_data['UbicacionLVL_1'];}
 				if(isset($row_data['UbicacionLVL_2'])&&$row_data['UbicacionLVL_2']!=''){echo ' - '.$row_data['UbicacionLVL_2'];}
 				if(isset($row_data['UbicacionLVL_3'])&&$row_data['UbicacionLVL_3']!=''){echo ' - '.$row_data['UbicacionLVL_3'];}
 				if(isset($row_data['UbicacionLVL_4'])&&$row_data['UbicacionLVL_4']!=''){echo ' - '.$row_data['UbicacionLVL_4'];}
 				if(isset($row_data['UbicacionLVL_5'])&&$row_data['UbicacionLVL_5']!=''){echo ' - '.$row_data['UbicacionLVL_5'];}
-				echo '<br/>
-				<strong>Persona Reunion:</strong> '.$row_data['PersonaReunion'].'<br/>
-				<strong>Estado:</strong> '.$row_data['Estado'].'<br/>
+				?>
+				
+				<br/>
+				<strong>Persona Reunion:</strong> <?php echo $row_data['PersonaReunion']; ?><br/>
+				<strong>Estado:</strong> <?php echo $row_data['Estado']; ?><br/>
 			</address>
 		</div>
 				
 		<div class="col-sm-6 invoice-col">
 			Programacion
 			<address>
-				<strong>Fecha:</strong> '.Fecha_estandar($row_data['FechaProgramada']).'<br/>
-				<strong>Hora Inicio:</strong> '.$row_data['HoraInicioProgramada'].'<br/>
-				<strong>Hora Termino:</strong> '.$row_data['HoraTerminoProgramada'].'<br/>
+				<strong>Fecha:</strong> <?php echo Fecha_estandar($row_data['FechaProgramada']); ?><br/>
+				<strong>Hora Inicio:</strong> <?php echo $row_data['HoraInicioProgramada']; ?><br/>
+				<strong>Hora Termino:</strong> <?php echo $row_data['HoraTerminoProgramada']; ?><br/>
 			</address>
-		</div>';
-		?>
+		</div>
 		
 	</div>
-	
 	
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
@@ -192,7 +141,7 @@ array_push( $arrArchivo,$row );
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrPersonas) { ?>
+					<?php if ($arrPersonas!=false) { ?>
 						<?php foreach ($arrPersonas as $otro) { ?>
 							<tr>
 								<td><?php echo $otro['Nombre'];?></td>
@@ -209,10 +158,6 @@ array_push( $arrArchivo,$row );
 		</div>
 	</div>
 	
-	
-
-
-
 	<?php
 	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
@@ -232,10 +177,9 @@ array_push( $arrArchivo,$row );
       
 </section>
 
-
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrArchivo){ ?>
+	<?php if ($arrArchivo!=false){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>
@@ -257,7 +201,6 @@ array_push( $arrArchivo,$row );
     <?php } ?>
     
 </div>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver

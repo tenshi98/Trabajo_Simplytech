@@ -173,9 +173,6 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 
 ?>
 
-
-
-
 <div class="col-sm-12">
 	<div class="box">
 		<header>
@@ -183,22 +180,22 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 			<h5>Datos del Cliente</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if(!empty($arrObservaciones)){ ?>
+				<?php if($arrObservaciones!=false){ ?>
 					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
-				<?php if(!empty($arrConsumos)){ ?>
+				<?php if($arrConsumos!=false){ ?>
 					<li class=""><a href="#Consumos" data-toggle="tab"><i class="fa fa-share-alt" aria-hidden="true"></i> Consumos</a></li>
 				<?php } ?>
-				<?php if(!empty($arrPagos)){ ?>
+				<?php if($arrPagos!=false){ ?>
 					<li class=""><a href="#Pagos" data-toggle="tab"><i class="fa fa-usd" aria-hidden="true"></i> Pagos</a></li>
 				<?php } ?>
-				<?php if(!empty($arrFacturaciones)){ ?>
+				<?php if($arrFacturaciones!=false){ ?>
 					<li class=""><a href="#Facturaciones" data-toggle="tab"><i class="fa fa-folder-open" aria-hidden="true"></i> Facturaciones</a></li>
 				<?php } ?>
-				<?php if(!empty($arrEventos)){ ?>
+				<?php if($arrEventos!=false){ ?>
 					<li class=""><a href="#Eventos" data-toggle="tab"><i class="fa fa-flag" aria-hidden="true"></i> Eventos</a></li>
 				<?php } ?>
-				<?php if(!empty($arrOtrosCobros)){ ?>
+				<?php if($arrOtrosCobros!=false){ ?>
 					<li class=""><a href="#OtrosCobros" data-toggle="tab"><i class="fa fa-usd" aria-hidden="true"></i> Otros Cobros</a></li>
 				<?php } ?>
 			</ul>	
@@ -280,7 +277,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				
 			</div>
 			
-			<?php if(!empty($arrObservaciones)){ ?>
+			<?php if($arrObservaciones!=false){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -307,7 +304,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 			
-			<?php if(!empty($arrConsumos)){ ?>
+			<?php if($arrConsumos!=false){ ?>
 				<div class="tab-pane fade" id="Consumos">
 					<div class="wmd-panel">
 					
@@ -351,13 +348,12 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 							}
 						</script>
 						<div id="chart_div" style="height: 500px;"></div>
-							
-					
+						
 					</div>
 				</div>
 			<?php } ?>
 			
-			<?php if(!empty($arrPagos)){ ?>
+			<?php if($arrPagos!=false){ ?>
 				<div class="tab-pane fade" id="Pagos">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -386,7 +382,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 			
-			<?php if(!empty($arrFacturaciones)){ ?>
+			<?php if($arrFacturaciones!=false){ ?>
 				<div class="tab-pane fade" id="Facturaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -426,7 +422,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 			
-			<?php if(!empty($arrEventos)){ ?>
+			<?php if($arrEventos!=false){ ?>
 				<div class="tab-pane fade" id="Eventos">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -455,7 +451,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 			
-			<?php if(!empty($arrOtrosCobros)){ ?>
+			<?php if($arrOtrosCobros!=false){ ?>
 				<div class="tab-pane fade" id="OtrosCobros">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -482,14 +478,9 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 		
-	
-				
-			
-			
         </div>	
 	</div>
 </div>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver

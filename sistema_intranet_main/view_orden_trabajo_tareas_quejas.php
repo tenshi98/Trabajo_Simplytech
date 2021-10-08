@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_quejas.idOT,
 core_sistemas.Nombre AS sistema,
 usuarios_listado.Nombre AS Usuario,
@@ -46,31 +46,15 @@ orden_trabajo_tareas_quejas.NombreQueja,
 usuario_queja.Nombre AS UsuarioQueja,
 core_tipo_queja.Nombre AS TipoQueja,
 orden_trabajo_tareas_quejas.FechaQueja,
-orden_trabajo_tareas_quejas.Observaciones
-
-FROM `orden_trabajo_tareas_quejas`
+orden_trabajo_tareas_quejas.Observaciones';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                   ON core_sistemas.idSistema              = orden_trabajo_tareas_quejas.idSistema
 LEFT JOIN `usuarios_listado`                ON usuarios_listado.idUsuario           = orden_trabajo_tareas_quejas.idUsuario
 LEFT JOIN `trabajadores_listado`            ON trabajadores_listado.idTrabajador    = orden_trabajo_tareas_quejas.idTrabajadorQueja
 LEFT JOIN `usuarios_listado` usuario_queja  ON usuario_queja.idUsuario              = orden_trabajo_tareas_quejas.idUsuarioQueja
-LEFT JOIN `core_tipo_queja`                 ON core_tipo_queja.idTipoQueja          = orden_trabajo_tareas_quejas.idTipoQueja
-
-WHERE orden_trabajo_tareas_quejas.idQueja =  ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_tipo_queja`                 ON core_tipo_queja.idTipoQueja          = orden_trabajo_tareas_quejas.idTipoQueja';
+$SIS_where = 'orden_trabajo_tareas_quejas.idQueja ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

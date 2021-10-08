@@ -35,73 +35,39 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.Nombre AS Usuario,
 core_sistemas.Nombre AS SistemaOrigen,
 trabajadores_horas_extras_facturacion.fecha_auto,
 trabajadores_horas_extras_facturacion.Creacion_fecha,
 trabajadores_horas_extras_facturacion.Fecha_desde,
 trabajadores_horas_extras_facturacion.Fecha_hasta,
-trabajadores_horas_extras_facturacion.Observaciones
-
-FROM `trabajadores_horas_extras_facturacion`
+trabajadores_horas_extras_facturacion.Observaciones';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema         = trabajadores_horas_extras_facturacion.idSistema
-LEFT JOIN `usuarios_listado`        ON usuarios_listado.idUsuario      = trabajadores_horas_extras_facturacion.idUsuario
-
-WHERE trabajadores_horas_extras_facturacion.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `usuarios_listado`        ON usuarios_listado.idUsuario      = trabajadores_horas_extras_facturacion.idUsuario';
+$SIS_where = 'trabajadores_horas_extras_facturacion.idFacturacion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'trabajadores_horas_extras_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 /*****************************************/		
 // Se trae un listado con todos los otros
-$arrHoras = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_horas_extras_facturacion_horas.idTrabajador,
 trabajadores_listado.Nombre,
 trabajadores_listado.ApellidoPat,
 trabajadores_listado.ApellidoMat,
 trabajadores_listado.Rut,
-
 trabajadores_horas_extras_facturacion_horas.nSem, 
 trabajadores_horas_extras_facturacion_horas.Fecha, 
 trabajadores_horas_extras_facturacion_horas.N_Horas, 
-
-core_horas_extras_porcentajes.Porcentaje
-
-FROM `trabajadores_horas_extras_facturacion_horas` 
+core_horas_extras_porcentajes.Porcentaje';
+$SIS_join  = '
 LEFT JOIN `trabajadores_listado`           ON trabajadores_listado.idTrabajador            = trabajadores_horas_extras_facturacion_horas.idTrabajador
-LEFT JOIN `core_horas_extras_porcentajes`  ON core_horas_extras_porcentajes.idPorcentaje   = trabajadores_horas_extras_facturacion_horas.idPorcentaje
-
-WHERE trabajadores_horas_extras_facturacion_horas.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHoras,$row );
-}
+LEFT JOIN `core_horas_extras_porcentajes`  ON core_horas_extras_porcentajes.idPorcentaje   = trabajadores_horas_extras_facturacion_horas.idPorcentaje';
+$SIS_where = 'trabajadores_horas_extras_facturacion_horas.idFacturacion ='.$X_Puntero;
+$SIS_order = 'trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC';
+$arrHoras = array();
+$arrHoras = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_facturacion_horas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHoras');
 
 $arrHorasExtras = array();
 foreach ($arrHoras as $prod){
@@ -115,33 +81,17 @@ foreach ($arrHoras as $prod){
 }
 /*****************************************/		
 // Se trae un listado con todos los otros
-$arrTurnos = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_horas_extras_facturacion_turnos.idTurnos,
 trabajadores_horas_extras_facturacion_turnos.idTrabajador,
 trabajadores_horas_extras_facturacion_turnos.nSem, 
-core_horas_extras_turnos.Nombre AS Turno
+core_horas_extras_turnos.Nombre AS Turno';
+$SIS_join  = 'LEFT JOIN `core_horas_extras_turnos` ON core_horas_extras_turnos.idTurnos = trabajadores_horas_extras_facturacion_turnos.idTurnos';
+$SIS_where = 'trabajadores_horas_extras_facturacion_turnos.idFacturacion ='.$X_Puntero;
+$SIS_order = 'trabajadores_horas_extras_facturacion_turnos.nSem ASC';
+$arrTurnos = array();
+$arrTurnos = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_facturacion_turnos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTurnos');
 
-FROM `trabajadores_horas_extras_facturacion_turnos` 
-LEFT JOIN `core_horas_extras_turnos`   ON core_horas_extras_turnos.idTurnos   = trabajadores_horas_extras_facturacion_turnos.idTurnos
-
-WHERE trabajadores_horas_extras_facturacion_turnos.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTurnos,$row );
-}
 foreach ($arrTurnos as $prod){
 	$arrHorasExtras[$prod['idTrabajador']][$prod['nSem']]['Turno']      = $prod['Turno'];
 	$arrHorasExtras[$prod['idTrabajador']][$prod['nSem']]['idTurnos']   = $prod['idTurnos'];	
@@ -149,57 +99,24 @@ foreach ($arrTurnos as $prod){
 
 /*****************************************/		
 // Se trae un listado con todos los archivos adjuntos
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 0;
 $arrArchivo = array();
-$query = "SELECT Nombre
-FROM `trabajadores_horas_extras_facturacion_archivos` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_facturacion_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivo,$row );
-}
 /*****************************************/		
 // Se trae un listado con todos los otros
-$arrHorasTotal = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_horas_extras_facturacion_horas.idPorcentaje,
 SUM(trabajadores_horas_extras_facturacion_horas.N_Horas) AS Total, 
-core_horas_extras_porcentajes.Porcentaje
-
-FROM `trabajadores_horas_extras_facturacion_horas` 
-LEFT JOIN `core_horas_extras_porcentajes`  ON core_horas_extras_porcentajes.idPorcentaje   = trabajadores_horas_extras_facturacion_horas.idPorcentaje
-
-WHERE trabajadores_horas_extras_facturacion_horas.idFacturacion = ".$X_Puntero." 
-GROUP BY trabajadores_horas_extras_facturacion_horas.idPorcentaje
-ORDER BY trabajadores_horas_extras_facturacion_horas.idPorcentaje ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHorasTotal,$row );
-}
-
+core_horas_extras_porcentajes.Porcentaje';
+$SIS_join  = 'LEFT JOIN `core_horas_extras_porcentajes` ON core_horas_extras_porcentajes.idPorcentaje = trabajadores_horas_extras_facturacion_horas.idPorcentaje';
+$SIS_where = 'trabajadores_horas_extras_facturacion_horas.idFacturacion ='.$X_Puntero.' GROUP BY trabajadores_horas_extras_facturacion_horas.idPorcentaje';
+$SIS_order = 'trabajadores_horas_extras_facturacion_horas.idPorcentaje ASC';
+$arrHorasTotal = array();
+$arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_facturacion_horas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHorasTotal');
 
 ?>
 
@@ -207,7 +124,6 @@ array_push( $arrHorasTotal,$row );
 
 	<div id="page-wrap">
 		<div id="header"> Horas Extras</div>
-
 		
 		<div id="customer">
 			
@@ -247,16 +163,12 @@ array_push( $arrHorasTotal,$row );
 					</tr>
 				</tbody>
 			</table>
-
-				
 		</div>
 		<table id="items">
 			<tbody>
-				
 				<tr>
 					<th colspan="10">Detalle</th>
-				</tr>		  
-				
+				</tr>
 				<tr class="item-row fact_tittle">
 					<td>Trabajador</td>
 					<td>N° Semana</td>
@@ -307,15 +219,12 @@ array_push( $arrHorasTotal,$row );
 						}else{
 							echo '<td></td>';
 						}
-				
 					}
 					echo '<td></td>';
 					echo '</tr>';
 					/***************************************************/
-					if (isset($arrHorasExtras)){
+					if ($arrHorasExtras!=false){
 						//imprimo la primera celda y el numero de semana actual
-								
-						
 						foreach ($arrHorasExtras as $key => $producto){
 							//Subcadena con el trabajador
 							if(isset($producto[$nSem]['idTrabajador'])&&$producto[$nSem]['idTrabajador']){
@@ -323,8 +232,6 @@ array_push( $arrHorasTotal,$row );
 							}else{
 								$subcadena = '';
 							}
-							
-							
 							if(isset($producto[$nSem]['nSem'])){
 								echo '<tr>';
 								echo '<td colspan="2">'.$producto[$nSem]['TrabajadorRut'].' '.$producto[$nSem]['TrabajadorNombre'].'</td>';
@@ -348,41 +255,26 @@ array_push( $arrHorasTotal,$row );
 								}
 								echo '<td>'.$producto[$nSem]['Turno'].'</td>';
 								echo '</tr>';
-								
 							}
-							
 						}
 					}
-				
-				
 				}
 				
-
 				echo '<tr id="hiderow"><td colspan="10"><a name="Ancla_obs"></a></td></tr>';?>
 				
-				
-		
+				<tr class="invoice-total" bgcolor="#f1f1f1">
+					<td colspan="9" align="right"><strong>Total Horas extras</strong></td> 
+					<td align="right"></td>
+				</tr>
+					
+				<?php
+				foreach ($arrHorasTotal as $prod) {
+					echo '
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td colspan="9" align="right"><strong>Total Horas extras</strong></td> 
-						<td align="right"></td>
-					</tr>
-					
-					<?php
-					foreach ($arrHorasTotal as $prod) {
-						echo '
-						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="9" align="right">Horas extras al '.$prod['Porcentaje'].'%</td> 
-							<td align="right">'.$prod['Total'].' Horas</td>
-						</tr>
-						';
-					}
-					
-
-
-
-					?>
-				
-				
+						<td colspan="9" align="right">Horas extras al '.$prod['Porcentaje'].'%</td> 
+						<td align="right">'.$prod['Total'].' Horas</td>
+					</tr>';
+				}?>
 				
 				<tr>
 					<td colspan="10" class="blank word_break"> 
@@ -393,15 +285,11 @@ array_push( $arrHorasTotal,$row );
 					<td colspan="10" class="blank"><p>Observaciones</p></td> 
 				</tr>
 				
-				
-							
-							
-				
 			</tbody>
 		</table>
     </div>
     
-    <?php if ($arrArchivo){ ?>
+    <?php if ($arrArchivo!=false){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>
@@ -422,9 +310,7 @@ array_push( $arrHorasTotal,$row );
 		</table>
     <?php } ?>
 
-
 </div>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver

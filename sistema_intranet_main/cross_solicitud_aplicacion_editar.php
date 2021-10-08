@@ -251,51 +251,22 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['edit_prod']) ) { 
 // consulto los datos
-$query = "SELECT idProducto, DosisAplicar, Objetivo
-FROM `cross_solicitud_aplicacion_listado_productos`
-WHERE idProdQuim = ".$_GET['edit_prod'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'idProducto, DosisAplicar, Objetivo';
+$SIS_join  = '';
+$SIS_where = 'idProdQuim ='.$_GET['edit_prod'];
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
-//Imprimo las variables
-$arrTipo = array();
-$query = "SELECT 
+// consulto los datos
+$SIS_query = '
 productos_listado.idProducto, 
 productos_listado.DosisRecomendada,
-sistema_productos_uml.Nombre AS Unimed
-FROM `productos_listado`
-LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-WHERE idEstado=1
-ORDER BY idProducto ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-									
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}		
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idEstado=1';
+$SIS_order = 'idProducto ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+	
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -368,32 +339,17 @@ array_push( $arrTipo,$row );
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['add_prod']) ) { 
-//Imprimo las variables
-$arrTipo = array();
-$query = "SELECT 
+// consulto los datos
+$SIS_query = '
 productos_listado.idProducto, 
 productos_listado.DosisRecomendada,
-sistema_productos_uml.Nombre AS Unimed
-FROM `productos_listado`
-LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-WHERE idEstado=1
-ORDER BY idProducto ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-									
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}		
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idEstado=1';
+$SIS_order = 'idProducto ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+	
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -464,7 +420,14 @@ array_push( $arrTipo,$row );
 	</div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_trac']) ) { 
+ } elseif ( ! empty($_GET['edit_trac']) ) {
+// consulto los datos
+$SIS_query = 'idVehiculo, idTelemetria, idTrabajador';
+$SIS_join  = '';
+$SIS_where = 'idTractores ='.$_GET['edit_trac'];
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
+/***************************************************/
 $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	 
@@ -475,27 +438,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$w .= " AND telemetria_listado.idTab=1";//CrossChecking					
-}
-
-// consulto los datos
-$query = "SELECT idVehiculo, idTelemetria, idTrabajador
-FROM `cross_solicitud_aplicacion_listado_tractores`
-WHERE idTractores = ".$_GET['edit_trac'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);				
+}				
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -602,52 +545,27 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['edit_Cuarteles']) ) {
+/***************************************************/
 // consulto los datos
-$query = "SELECT idPredio, idCategoria, idProducto
-FROM `cross_solicitud_aplicacion_listado`
-WHERE idSolicitud = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data_ini = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'idPredio, idCategoria, idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSolicitud ='.$_GET['view'];
+$row_data_ini = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data_ini');
 
+/***************************************************/	
+// consulto los datos
+$SIS_query = 'idZona,Mojamiento,VelTractor,VelViento,TempMin,TempMax,HumTempMax';
+$SIS_join  = '';
+$SIS_where = 'idCuarteles ='.$_GET['cuartel_id'];
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
+/***************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $z ="idPredio=".$row_data_ini['idPredio'];
 $z.=" AND idEstado=1 ";
 if(isset($row_data_ini['idCategoria'])&&$row_data_ini['idCategoria']!=0){ $z.= " AND idCategoria=".$row_data_ini['idCategoria'];}
 if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){   $z.= " AND idProducto=".$row_data_ini['idProducto'];}
-
-/***************************************************/	
-// consulto los datos
-$query = "SELECT idZona,Mojamiento,VelTractor,VelViento,TempMin,TempMax,HumTempMax
-FROM `cross_solicitud_aplicacion_listado_cuarteles`
-WHERE idCuarteles = ".$_GET['cuartel_id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);		
+		
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -700,27 +618,24 @@ $row_data = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addCuartel']) ) { 
 // consulto los datos
-$query = "SELECT idPredio, idCategoria, idProducto,
-Mojamiento, VelTractor, VelViento, TempMin, TempMax,
-HumTempMax
-FROM `cross_solicitud_aplicacion_listado`
-WHERE idSolicitud = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'idPredio, idCategoria, idProducto, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax';
+$SIS_join  = '';
+$SIS_where = 'idSolicitud ='.$_GET['view'];
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
+/**********************************************/
+//Imprimo las variables
+$SIS_query = '
+productos_listado.idProducto, 
+productos_listado.DosisRecomendada,
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idEstado=1';
+$SIS_order = 'idProducto ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
+/**********************************************/
 //Verifico el tipo de usuario que esta ingresando
 $z = "idPredio=".$row_data['idPredio'];
 $z.= " AND idEstado=1 ";
@@ -738,32 +653,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$w .= " AND telemetria_listado.idTab=1";//CrossChecking					
 }
-//Imprimo las variables
-$arrTipo = array();
-$query = "SELECT 
-productos_listado.idProducto, 
-productos_listado.DosisRecomendada,
-sistema_productos_uml.Nombre AS Unimed
-FROM `productos_listado`
-LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-WHERE ".$x."
-ORDER BY idProducto ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-									
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}			
+		
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -900,34 +790,16 @@ array_push( $arrTipo,$row );
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
+// consulto los datos
+$SIS_query = 'idPredio, idTemporada, idEstadoFen, idCategoria, idProducto, f_programacion, horaProg, idSistema, idEstado, f_ejecucion, f_termino, horaEjecucion, horaTermino, Mojamiento, VelTractor, VelViento, TempMin, TempMax, idPrioridad, f_programacion_fin, horaProg_fin, f_ejecucion_fin, horaEjecucion_fin, f_termino_fin, horaTermino_fin, idDosificador, HumTempMax, NSolicitud';
+$SIS_join  = '';
+$SIS_where = 'idSolicitud ='.$_GET['view'];
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	 	 
 //Verifico el tipo de usuario que esta ingresando
 $y = "idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
-
-// consulto los datos
-$query = "SELECT idPredio, idTemporada, idEstadoFen, idCategoria, idProducto, f_programacion, 
-horaProg, idSistema, idEstado, f_ejecucion, f_termino, horaEjecucion, horaTermino,
-Mojamiento, VelTractor, VelViento, TempMin, TempMax, idPrioridad, f_programacion_fin, 
-horaProg_fin, f_ejecucion_fin, horaEjecucion_fin, f_termino_fin, horaTermino_fin,
-idDosificador, HumTempMax, NSolicitud
-FROM `cross_solicitud_aplicacion_listado`
-WHERE idSolicitud = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
 
 ?>
 
@@ -1041,7 +913,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
  } else { 
 /**********************************************/
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 cross_solicitud_aplicacion_listado.idEstado,
 cross_solicitud_aplicacion_listado.idSolicitud, 
 cross_solicitud_aplicacion_listado.NSolicitud,
@@ -1087,9 +959,8 @@ core_cross_prioridad.Nombre AS NombrePrioridad,
 cross_solicitud_aplicacion_listado.idDosificador,
 trabajadores_listado.Rut AS TrabajadorRut,
 trabajadores_listado.Nombre AS TrabajadorNombre,
-trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat
-
-FROM `cross_solicitud_aplicacion_listado`
+trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                     = cross_solicitud_aplicacion_listado.idUsuario
 LEFT JOIN `core_sistemas`   sistema_origen          ON sistema_origen.idSistema                       = cross_solicitud_aplicacion_listado.idSistema
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                         = sistema_origen.idCiudad
@@ -1101,29 +972,13 @@ LEFT JOIN `cross_checking_estado_fenologico`        ON cross_checking_estado_fen
 LEFT JOIN `sistema_variedades_categorias`           ON sistema_variedades_categorias.idCategoria      = cross_solicitud_aplicacion_listado.idCategoria
 LEFT JOIN `variedades_listado`                      ON variedades_listado.idProducto                  = cross_solicitud_aplicacion_listado.idProducto
 LEFT JOIN `core_cross_prioridad`                    ON core_cross_prioridad.idPrioridad               = cross_solicitud_aplicacion_listado.idPrioridad
-LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador              = cross_solicitud_aplicacion_listado.idDosificador
-
-WHERE cross_solicitud_aplicacion_listado.idSolicitud = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador              = cross_solicitud_aplicacion_listado.idDosificador';
+$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$_GET['view'];
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
 /*****************************************/				
 //Cuarteles
-$arrCuarteles = array();
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado_cuarteles.idCuarteles,
 cross_solicitud_aplicacion_listado_cuarteles.Mojamiento,
 cross_solicitud_aplicacion_listado_cuarteles.VelTractor,
@@ -1137,64 +992,81 @@ cross_predios_listado_zonas.Nombre AS CuartelNombre,
 cross_predios_listado_zonas.Plantas AS CuartelNPlantas,
 cross_predios_listado_zonas.DistanciaPlant AS CuartelDistanciaPlant,
 sistema_variedades_categorias.Nombre AS CuartelEspecie,
-variedades_listado.Nombre AS CuartelVariedad
-
-FROM `cross_solicitud_aplicacion_listado_cuarteles` 
+variedades_listado.Nombre AS CuartelVariedad';
+$SIS_join  = '
 LEFT JOIN `cross_predios_listado_zonas`    ON cross_predios_listado_zonas.idZona         = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `sistema_variedades_categorias`  ON sistema_variedades_categorias.idCategoria  = cross_solicitud_aplicacion_listado_cuarteles.idCategoria
-LEFT JOIN `variedades_listado`             ON variedades_listado.idProducto              = cross_solicitud_aplicacion_listado_cuarteles.idProducto
-WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCuarteles,$row );
-}
+LEFT JOIN `variedades_listado`             ON variedades_listado.idProducto              = cross_solicitud_aplicacion_listado_cuarteles.idProducto';
+$SIS_where = 'cross_solicitud_aplicacion_listado_cuarteles.idSolicitud ='.$_GET['view'];
+$SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
+$arrCuarteles = array();
+$arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCuarteles');
 
+/*****************************************/	
 //Se trae un listado con los Tractores	
-$arrTractores = array();
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado_tractores.idTractores,
 cross_solicitud_aplicacion_listado_tractores.idCuarteles,
 telemetria_listado.Nombre AS TeleNombre,
 vehiculos_listado.Nombre AS VehiculoNombre,
 trabajadores_listado.Rut,
 trabajadores_listado.Nombre,
-trabajadores_listado.ApellidoPat
-
-FROM `cross_solicitud_aplicacion_listado_tractores`
+trabajadores_listado.ApellidoPat';
+$SIS_join  = '
 LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria      = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `vehiculos_listado`     ON vehiculos_listado.idVehiculo         = cross_solicitud_aplicacion_listado_tractores.idVehiculo
-LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador    = cross_solicitud_aplicacion_listado_tractores.idTrabajador
-WHERE cross_solicitud_aplicacion_listado_tractores.idSolicitud = ".$_GET['view']." 
-ORDER BY telemetria_listado.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTractores,$row );
-}
+LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador    = cross_solicitud_aplicacion_listado_tractores.idTrabajador';
+$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud ='.$_GET['view'];
+$SIS_order = 'telemetria_listado.Nombre ASC';
+$arrTractores = array();
+$arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTractores');
+
+/*****************************************/	
+//Se trae un listado con los productos	
+$SIS_query = '
+cross_solicitud_aplicacion_listado_productos.idProdQuim,
+cross_solicitud_aplicacion_listado_productos.idCuarteles,
+cross_solicitud_aplicacion_listado_productos.DosisRecomendada,
+cross_solicitud_aplicacion_listado_productos.DosisAplicar,
+cross_solicitud_aplicacion_listado_productos.Objetivo,
+productos_listado.Nombre AS Producto,
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = '
+LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = cross_solicitud_aplicacion_listado_productos.idProducto
+LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = cross_solicitud_aplicacion_listado_productos.idUml';
+$SIS_where = 'cross_solicitud_aplicacion_listado_productos.idSolicitud ='.$_GET['view'];
+$SIS_order = 'productos_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
+
+/*****************************************/		
+// Se trae un listado con el historial
+$SIS_query = '
+cross_solicitud_aplicacion_listado_historial.Creacion_fecha, 
+cross_solicitud_aplicacion_listado_historial.Observacion,
+usuarios_listado.Nombre AS Usuario,
+core_estado_solicitud.Nombre AS Estado';
+$SIS_join  = '
+LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario      = cross_solicitud_aplicacion_listado_historial.idUsuario
+LEFT JOIN `core_estado_solicitud`    ON core_estado_solicitud.idEstado  = cross_solicitud_aplicacion_listado_historial.idEstado';
+$SIS_where = 'cross_solicitud_aplicacion_listado_historial.idSolicitud ='.$_GET['view'];
+$SIS_order = 'cross_solicitud_aplicacion_listado_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
+
+/*****************************************/	
+//Se trae un listado con los productos	
+$SIS_query = '
+cross_solicitud_aplicacion_listado_materiales.idMatSeg,
+cross_checking_materiales_seguridad.Nombre,
+cross_checking_materiales_seguridad.Codigo';
+$SIS_join  = 'LEFT JOIN `cross_checking_materiales_seguridad` ON cross_checking_materiales_seguridad.idMatSeguridad = cross_solicitud_aplicacion_listado_materiales.idMatSeguridad';
+$SIS_where = 'cross_solicitud_aplicacion_listado_materiales.idSolicitud ='.$_GET['view'];
+$SIS_order = 'cross_checking_materiales_seguridad.Nombre ASC';
+$arrMateriales = array();
+$arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_materiales', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMateriales');
+
+/*****************************************/	
 $arrTrac = array();
 foreach ($arrTractores as $prod) {
 	$arrTrac[$prod['idCuarteles']][$prod['idTractores']]['idTractores']     = $prod['idTractores'];
@@ -1203,39 +1075,7 @@ foreach ($arrTractores as $prod) {
 	$arrTrac[$prod['idCuarteles']][$prod['idTractores']]['Trabajador']      = $prod['Rut'].' - '.$prod['Nombre'].' '.$prod['ApellidoPat'];
 }
 
-
-//Se trae un listado con los productos	
-$arrProductos = array();
-$query = "SELECT 
-cross_solicitud_aplicacion_listado_productos.idProdQuim,
-cross_solicitud_aplicacion_listado_productos.idCuarteles,
-cross_solicitud_aplicacion_listado_productos.DosisRecomendada,
-cross_solicitud_aplicacion_listado_productos.DosisAplicar,
-cross_solicitud_aplicacion_listado_productos.Objetivo,
-productos_listado.Nombre AS Producto,
-sistema_productos_uml.Nombre AS Unimed
-
-FROM `cross_solicitud_aplicacion_listado_productos`
-LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = cross_solicitud_aplicacion_listado_productos.idProducto
-LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = cross_solicitud_aplicacion_listado_productos.idUml
-WHERE cross_solicitud_aplicacion_listado_productos.idSolicitud = ".$_GET['view']." 
-ORDER BY productos_listado.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
+/*****************************************/	
 $arrProd = array();
 foreach ($arrProductos as $prod) {
 	$arrProd[$prod['idCuarteles']][$prod['idProdQuim']]['idProdQuim']       = $prod['idProdQuim'];
@@ -1246,63 +1086,7 @@ foreach ($arrProductos as $prod) {
 	$arrProd[$prod['idCuarteles']][$prod['idProdQuim']]['Unimed']           = $prod['Unimed'];
 }
 
-/*****************************************/		
-// Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
-cross_solicitud_aplicacion_listado_historial.Creacion_fecha, 
-cross_solicitud_aplicacion_listado_historial.Observacion,
-usuarios_listado.Nombre AS Usuario,
-core_estado_solicitud.Nombre AS Estado
-
-FROM `cross_solicitud_aplicacion_listado_historial` 
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario      = cross_solicitud_aplicacion_listado_historial.idUsuario
-LEFT JOIN `core_estado_solicitud`    ON core_estado_solicitud.idEstado  = cross_solicitud_aplicacion_listado_historial.idEstado
-WHERE cross_solicitud_aplicacion_listado_historial.idSolicitud = ".$_GET['view']." 
-ORDER BY cross_solicitud_aplicacion_listado_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;				
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}	
-
-
-//Se trae un listado con los productos	
-$arrMateriales = array();
-$query = "SELECT 
-cross_solicitud_aplicacion_listado_materiales.idMatSeg,
-cross_checking_materiales_seguridad.Nombre,
-cross_checking_materiales_seguridad.Codigo
-FROM `cross_solicitud_aplicacion_listado_materiales`
-LEFT JOIN `cross_checking_materiales_seguridad`   ON cross_checking_materiales_seguridad.idMatSeguridad   = cross_solicitud_aplicacion_listado_materiales.idMatSeguridad
-WHERE cross_solicitud_aplicacion_listado_materiales.idSolicitud = ".$_GET['view']." 
-ORDER BY cross_checking_materiales_seguridad.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMateriales,$row );
-}
- ?>
+?>
  
 <div class="col-sm-11 fcenter table-responsive" style="margin-bottom:30px">
 
@@ -1425,7 +1209,6 @@ array_push( $arrMateriales,$row );
 						</tr>
 					<?php } ?>
 					
-
 				</tbody>
 			</table>
 		</div>
@@ -1436,8 +1219,7 @@ array_push( $arrMateriales,$row );
 					<th colspan="8">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
-						  
+					  
 				<?php /**********************************************************************************/ ?> 
 				<tr class="item-row fact_tittle">
 					<td colspan="6"><strong>Materiales de Seguridad</strong></td>
@@ -1448,7 +1230,7 @@ array_push( $arrMateriales,$row );
 				</tr>
 				<?php 
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrMateriales) {
+					if ($arrMateriales!=false) {
 						foreach ($arrMateriales as $prod) { ?>
 						
 							<tr class="item-row linea_punteada">
@@ -1468,7 +1250,6 @@ array_push( $arrMateriales,$row );
 					<?php } ?>	
 				<?php } ?>
 
-				
 				<?php /**********************************************************************************/ ?> 
 				<tr class="item-row fact_tittle">
 					<td><strong>Cuarteles</strong></td>
@@ -1481,14 +1262,12 @@ array_push( $arrMateriales,$row );
 					<td><strong>Hum Temp Max</strong></td>
 					<td>
 						<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3){ ?><a href="<?php echo $location.'&addCuartel=true' ?>" title="Agregar Cuartel" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuartel</a><?php } ?>
-					</td>
-										
+					</td>				
 				</tr>
 				<?php 
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrCuarteles) {
+					if ($arrCuarteles!=false) {
 						foreach ($arrCuarteles as $cuartel) { ?>
-						
 							<tr class="item-row linea_punteada" style="background: #eee;">
 								<td class="item-name"><?php echo $cuartel['CuartelNombre'];if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ echo '(Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';} ?></td>
 								<td class="item-name"><?php echo $cuartel['CuartelEspecie'].' '.$cuartel['CuartelVariedad'];?></td>
@@ -1576,7 +1355,6 @@ array_push( $arrMateriales,$row );
 						echo '<tr class="item-row linea_punteada"><td colspan="9">No hay cuarteles asignados</td></tr>';
 					} ?>
 					
-				
 			</tbody>
 		</table>
 		<div class="clearfix"></div>
@@ -1613,11 +1391,8 @@ array_push( $arrMateriales,$row );
 
 </div>
 
-
-
 <?php } ?>
-
-         
+      
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

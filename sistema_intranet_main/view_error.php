@@ -35,33 +35,17 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.Nombre AS Usuario,
 error_log.idErrorLog,
 error_log.Fecha,
 error_log.Mensaje,
-error_log.Consulta
-							
-FROM `error_log`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario  = error_log.idUsuario
-WHERE error_log.idErrorLog = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-			
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+error_log.Consulta';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = error_log.idUsuario';
+$SIS_where = 'error_log.idErrorLog ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'error_log', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
-
 
 <div class="col-sm-12">
 	<div class="box">

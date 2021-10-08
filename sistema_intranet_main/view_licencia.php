@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
 trabajadores_listado.Nombre AS TrabNombre,
@@ -47,35 +47,15 @@ trabajadores_licencias.N_Dias,
 trabajadores_licencias.File_Licencia,
 trabajadores_licencias.Observacion,
 core_sistemas.Nombre AS Sistema,
-trabajadores_licencias.idUso
-
-FROM `trabajadores_licencias`
+trabajadores_licencias.idUso';
+$SIS_join  = '
 LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador  = trabajadores_licencias.idTrabajador
 LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario         = trabajadores_licencias.idUsuario
-LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema            = trabajadores_licencias.idSistema
-WHERE trabajadores_licencias.idLicencia = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-
-
-
+LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema            = trabajadores_licencias.idSistema';
+$SIS_where = 'trabajadores_licencias.idLicencia ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
-
-
-
 
 <div class="col-sm-12">
 	<div class="box">

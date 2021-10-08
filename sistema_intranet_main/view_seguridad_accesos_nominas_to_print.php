@@ -31,7 +31,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 seguridad_accesos_nominas.FechaProgramada,
 seguridad_accesos_nominas.HoraInicioProgramada,
 seguridad_accesos_nominas.HoraTerminoProgramada,
@@ -44,9 +44,8 @@ ubicacion_listado_level_3.Nombre AS UbicacionLVL_3,
 ubicacion_listado_level_4.Nombre AS UbicacionLVL_4,
 ubicacion_listado_level_5.Nombre AS UbicacionLVL_5,
 seguridad_accesos_nominas.PersonaReunion,
-core_estado_caja.Nombre AS Estado
-
-FROM `seguridad_accesos_nominas`
+core_estado_caja.Nombre AS Estado';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`            ON usuarios_listado.idUsuario            = seguridad_accesos_nominas.idUsuario
 LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema               = seguridad_accesos_nominas.idSistema
 LEFT JOIN `ubicacion_listado`           ON ubicacion_listado.idUbicacion         = seguridad_accesos_nominas.idUbicacion
@@ -55,56 +54,26 @@ LEFT JOIN `ubicacion_listado_level_2`   ON ubicacion_listado_level_2.idLevel_2  
 LEFT JOIN `ubicacion_listado_level_3`   ON ubicacion_listado_level_3.idLevel_3   = seguridad_accesos_nominas.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4   = seguridad_accesos_nominas.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = seguridad_accesos_nominas.idUbicacion_lvl_5
-LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado
-
-WHERE seguridad_accesos_nominas.idAcceso = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado';
+$SIS_where = 'seguridad_accesos_nominas.idAcceso ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 /*****************************************/		
 // Se trae un listado con todos los otros
-$arrPersonas = array();
-$query = "SELECT 
+$SIS_query = '
 seguridad_accesos_nominas_listado.Fecha, 
 seguridad_accesos_nominas_listado.HoraEntrada, 
 seguridad_accesos_nominas_listado.HoraSalida, 
 seguridad_accesos_nominas_listado.Nombre, 
 seguridad_accesos_nominas_listado.Rut, 
 seguridad_accesos_nominas_listado.NDocCedula,
-core_estado_nomina_asistencia.Nombre AS Estado
+core_estado_nomina_asistencia.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estado_nomina_asistencia` ON core_estado_nomina_asistencia.idEstado = seguridad_accesos_nominas_listado.idEstado';
+$SIS_where = 'seguridad_accesos_nominas_listado.idAcceso ='.$X_Puntero;
+$SIS_order = 'seguridad_accesos_nominas_listado.Fecha ASC';
+$arrPersonas = array();
+$arrPersonas = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPersonas');
 
-FROM `seguridad_accesos_nominas_listado` 
-LEFT JOIN `core_estado_nomina_asistencia`   ON core_estado_nomina_asistencia.idEstado  = seguridad_accesos_nominas_listado.idEstado
-WHERE seguridad_accesos_nominas_listado.idAcceso = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPersonas,$row );
-}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -152,7 +121,6 @@ $html ='
 		</div>
 	</div>
 	
-	
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">
@@ -163,7 +131,7 @@ $html ='
 				</thead>
 				<tbody>';
 					//si existen guias
-					if ($arrPersonas) {
+					if ($arrPersonas!=false) {
 						foreach ($arrPersonas as $otro) {
 							$html .= '<tr>
 								<td style="vertical-align: top;">'.$otro['Nombre'].'</td>
@@ -178,7 +146,6 @@ $html ='
 					
 				$html .= '</tbody>
 			</table>
-			
 			
 		</div>
 	</div>

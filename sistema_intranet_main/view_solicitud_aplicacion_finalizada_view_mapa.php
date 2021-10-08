@@ -38,60 +38,30 @@ $X_idSolicitud  = simpleDecode($_GET['idSolicitud'], fecha_actual());
 /**************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 vehiculos_listado.Nombre AS VehiculoNombreBack,
 telemetria_listado.Nombre AS VehiculoNombre,
-telemetria_listado.cantSensores
-			
-FROM `cross_solicitud_aplicacion_listado_tractores`
+telemetria_listado.cantSensores';
+$SIS_join  = '
 LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria    = cross_solicitud_aplicacion_listado_tractores.idTelemetria
-LEFT JOIN `vehiculos_listado`    ON vehiculos_listado.idVehiculo       = cross_solicitud_aplicacion_listado_tractores.idVehiculo
-WHERE cross_solicitud_aplicacion_listado_tractores.idTelemetria = ".$X_idTelemetria;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `vehiculos_listado`    ON vehiculos_listado.idVehiculo       = cross_solicitud_aplicacion_listado_tractores.idVehiculo';
+$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idTelemetria ='.$X_idTelemetria;
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
-
+/*****************************************/
 //Se traen las rutas
-$arrZonas = array();
-$query = "SELECT 
+$SIS_query = '
 cross_predios_listado_zonas.idZona,
 cross_predios_listado_zonas.Nombre,
 cross_predios_listado_zonas_ubicaciones.Latitud,
-cross_predios_listado_zonas_ubicaciones.Longitud
-
-FROM `cross_solicitud_aplicacion_listado`
+cross_predios_listado_zonas_ubicaciones.Longitud';
+$SIS_join  = '
 LEFT JOIN `cross_predios_listado_zonas`               ON cross_predios_listado_zonas.idPredio             = cross_solicitud_aplicacion_listado.idPredio
-LEFT JOIN `cross_predios_listado_zonas_ubicaciones`   ON cross_predios_listado_zonas_ubicaciones.idZona   = cross_predios_listado_zonas.idZona
-WHERE cross_solicitud_aplicacion_listado.idSolicitud = ".$X_idSolicitud." 
-ORDER BY cross_predios_listado_zonas.idZona ASC, 
-cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-			
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrZonas,$row );
-}
+LEFT JOIN `cross_predios_listado_zonas_ubicaciones`   ON cross_predios_listado_zonas_ubicaciones.idZona   = cross_predios_listado_zonas.idZona';
+$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$X_idSolicitud;
+$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
+$arrZonas = array();
+$arrZonas = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
 	
 /*****************************************/	
 //Variable para almacenar los recorridos
@@ -109,29 +79,14 @@ $aa .= ',GeoVelocidad';
 for ($i = 1; $i <= 4; $i++) { 
 	$aa .= ',Sensor_'.$i;
 }
+/*****************************************/
+$SIS_query = 'idTabla, idTelemetria';
+$SIS_join  = '';
+$SIS_where = 'idSolicitud ='.$X_idSolicitud.' AND idZona!=0';
+$SIS_order = 'FechaSistema ASC, HoraSistema ASC';
 $arrMediciones = array();
-$query = "SELECT idTabla, idTelemetria
-".$aa."					
-FROM `telemetria_listado_tablarelacionada_".$X_idTelemetria."`
-WHERE idSolicitud = ".$X_idSolicitud." AND idZona!=0 
-ORDER BY FechaSistema ASC, HoraSistema ASC ";
-					
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-			
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$X_idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-			
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMediciones,$row );
-}
 //recorro los resultados
 foreach ($arrMediciones as $med) {
 	$pres = 0;

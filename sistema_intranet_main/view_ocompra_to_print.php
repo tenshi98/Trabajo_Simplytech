@@ -17,8 +17,21 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
+//Version antigua de view
+//se verifica si es un numero lo que se recibe
+if (validarNumero($_GET['view'])){ 
+	//Verifica si el numero recibido es un entero
+	if (validaEntero($_GET['view'])){ 
+		$X_Puntero = $_GET['view'];
+	} else { 
+		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+	}
+} else { 
+	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
+}
+/**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado.Creacion_fecha,
 ocompra_listado.Observaciones,
 
@@ -49,9 +62,8 @@ proveedor_listado.FormaPago AS FormaPagoProveedor ,
 
 core_oc_estado.Nombre AS Estado,
 ocompra_listado.idEstado,
-ocompra_listado.idSistema
-
-FROM `ocompra_listado`
+ocompra_listado.idSistema';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario       = ocompra_listado.idUsuario
 LEFT JOIN `core_sistemas`   sistema_origen          ON sistema_origen.idSistema         = ocompra_listado.idSistema
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad           = sistema_origen.idCiudad
@@ -59,225 +71,112 @@ LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna   
 LEFT JOIN `proveedor_listado`                       ON proveedor_listado.idProveedor    = ocompra_listado.idProveedor
 LEFT JOIN `core_ubicacion_ciudad`    provciudad     ON provciudad.idCiudad              = proveedor_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   provcomuna     ON provcomuna.idComuna              = proveedor_listado.idComuna
-LEFT JOIN `core_oc_estado`                          ON core_oc_estado.idEstado          = ocompra_listado.idEstado
-
-WHERE ocompra_listado.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_oc_estado`                          ON core_oc_estado.idEstado          = ocompra_listado.idEstado';
+$SIS_where = 'ocompra_listado.idOcompra ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+ 
 /*****************************************/				
 //Insumos
-$arrInsumos = array();
-$query = "SELECT 
+$SIS_query = '
 insumos_listado.Nombre,
 ocompra_listado_existencias_insumos.Cantidad,
 ocompra_listado_existencias_insumos.vUnitario,
 ocompra_listado_existencias_insumos.vTotal,
-sistema_productos_uml.Nombre AS Unidad
-
-FROM `ocompra_listado_existencias_insumos` 
+sistema_productos_uml.Nombre AS Unidad';
+$SIS_join  = '
 LEFT JOIN `insumos_listado`          ON insumos_listado.idProducto    = ocompra_listado_existencias_insumos.idProducto
-LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml   = insumos_listado.idUml
-WHERE ocompra_listado_existencias_insumos.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml   = insumos_listado.idUml';
+$SIS_where = 'ocompra_listado_existencias_insumos.idOcompra ='.$X_Puntero;
+$SIS_order = 'insumos_listado.Nombre ASC';
+$arrInsumos = array();
+$arrInsumos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrInsumos,$row );
-}
 /*****************************************/				
 //Productos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 productos_listado.Nombre,
 ocompra_listado_existencias_productos.Cantidad,
 ocompra_listado_existencias_productos.vUnitario,
 ocompra_listado_existencias_productos.vTotal,
-sistema_productos_uml.Nombre AS Unidad
-
-FROM `ocompra_listado_existencias_productos` 
+sistema_productos_uml.Nombre AS Unidad';
+$SIS_join  = '
 LEFT JOIN `productos_listado`          ON productos_listado.idProducto    = ocompra_listado_existencias_productos.idProducto
-LEFT JOIN `sistema_productos_uml`      ON sistema_productos_uml.idUml     = productos_listado.idUml
-WHERE ocompra_listado_existencias_productos.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `sistema_productos_uml`      ON sistema_productos_uml.idUml     = productos_listado.idUml';
+$SIS_where = 'ocompra_listado_existencias_productos.idOcompra ='.$X_Puntero;
+$SIS_order = 'productos_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
 /*****************************************/				
 //Arriendos
-$arrArriendos = array();
-$query = "SELECT 
+$SIS_query = '
 equipos_arriendo_listado.Nombre,
 ocompra_listado_existencias_arriendos.Cantidad,
 ocompra_listado_existencias_arriendos.vUnitario,
 ocompra_listado_existencias_arriendos.vTotal,
-core_tiempo_frecuencia.Nombre AS Frecuencia
-
-FROM `ocompra_listado_existencias_arriendos` 
+core_tiempo_frecuencia.Nombre AS Frecuencia';
+$SIS_join  = '
 LEFT JOIN `equipos_arriendo_listado`    ON equipos_arriendo_listado.idEquipo     = ocompra_listado_existencias_arriendos.idEquipo
-LEFT JOIN `core_tiempo_frecuencia`      ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_arriendos.idFrecuencia
-WHERE ocompra_listado_existencias_arriendos.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_tiempo_frecuencia`      ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_arriendos.idFrecuencia';
+$SIS_where = 'ocompra_listado_existencias_arriendos.idOcompra ='.$X_Puntero;
+$SIS_order = 'equipos_arriendo_listado.Nombre ASC';
+$arrArriendos = array();
+$arrArriendos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_arriendos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArriendos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArriendos,$row );
-}
 /*****************************************/				
 //Servicios
-$arrServicios = array();
-$query = "SELECT 
+$SIS_query = '
 servicios_listado.Nombre,
 ocompra_listado_existencias_servicios.Cantidad,
 ocompra_listado_existencias_servicios.vUnitario,
 ocompra_listado_existencias_servicios.vTotal,
-core_tiempo_frecuencia.Nombre AS Frecuencia
-
-FROM `ocompra_listado_existencias_servicios` 
+core_tiempo_frecuencia.Nombre AS Frecuencia';
+$SIS_join  = '
 LEFT JOIN `servicios_listado`       ON servicios_listado.idServicio          = ocompra_listado_existencias_servicios.idServicio
-LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_servicios.idFrecuencia
-WHERE ocompra_listado_existencias_servicios.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_servicios.idFrecuencia';
+$SIS_where = 'ocompra_listado_existencias_servicios.idOcompra ='.$X_Puntero;
+$SIS_order = 'servicios_listado.Nombre ASC';
+$arrServicios = array();
+$arrServicios = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_servicios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrServicios');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrServicios,$row );
-}
 /*****************************************/				
 //Otros
-$arrOtros = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_otros.Nombre,
 ocompra_listado_existencias_otros.Cantidad,
 ocompra_listado_existencias_otros.vUnitario,
 ocompra_listado_existencias_otros.vTotal,
-core_tiempo_frecuencia.Nombre AS Frecuencia
+core_tiempo_frecuencia.Nombre AS Frecuencia';
+$SIS_join  = 'LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_otros.idFrecuencia';
+$SIS_where = 'ocompra_listado_existencias_otros.idOcompra ='.$X_Puntero;
+$SIS_order = 'ocompra_listado_existencias_otros.Nombre ASC';
+$arrOtros = array();
+$arrOtros = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_otros', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOtros');
 
-FROM `ocompra_listado_existencias_otros` 
-LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_otros.idFrecuencia
-WHERE ocompra_listado_existencias_otros.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOtros,$row );
-}
 /*****************************************/				
 //Boletas Trabajadores
-$arrBoletas = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_boletas.N_Doc,
 ocompra_listado_existencias_boletas.Descripcion,
 ocompra_listado_existencias_boletas.Valor,
-
 trabajadores_listado.Rut AS TrabRut,
 trabajadores_listado.Nombre AS TrabNombre,
-trabajadores_listado.ApellidoPat AS TrabApellidoPat
+trabajadores_listado.ApellidoPat AS TrabApellidoPat';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador = ocompra_listado_existencias_boletas.idTrabajador';
+$SIS_where = 'ocompra_listado_existencias_boletas.idOcompra ='.$X_Puntero;
+$SIS_order = 'ocompra_listado_existencias_boletas.N_Doc ASC';
+$arrBoletas = array();
+$arrBoletas = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_boletas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrBoletas');
 
-FROM `ocompra_listado_existencias_boletas` 
-LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador
-WHERE ocompra_listado_existencias_boletas.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBoletas,$row );
-}
 /*****************************************/				
 //Boletas Empresas
+$SIS_query = 'idExistencia, Descripcion, Valor';
+$SIS_join  = '';
+$SIS_where = 'idOcompra ='.$X_Puntero;
+$SIS_order = 'idExistencia ASC';
 $arrBoletasEmp = array();
-$query = "SELECT  idExistencia, Descripcion, Valor
-FROM `ocompra_listado_existencias_boletas_empresas` 
-WHERE idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrBoletasEmp = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_boletas_empresas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrBoletasEmp');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBoletasEmp,$row );
-}	
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/

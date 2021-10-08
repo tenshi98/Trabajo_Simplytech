@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se traen todos los datos de la pregunta
-$query = "SELECT
+$SIS_query = '
 quiz_listado.Nombre,
 quiz_listado.Header_texto,
 quiz_listado.Header_fecha,
@@ -50,35 +50,20 @@ quiz_tipo_evaluacion.Nombre AS TipoEvaluacion,
 quiz_tipo_quiz.Nombre AS TipoQuiz,
 quiz_listado.idTipoEvaluacion,
 quiz_listado.idTipoQuiz,
-quiz_listado.idLimiteTiempo
-
-FROM `quiz_listado`
+quiz_listado.idLimiteTiempo';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema                   = quiz_listado.idSistema
 LEFT JOIN `core_estados`            ON core_estados.idEstado                     = quiz_listado.idEstado
 LEFT JOIN `quiz_escala`  esc_1      ON esc_1.idEscala                            = quiz_listado.idEscala
 LEFT JOIN `quiz_escala`  esc_2      ON esc_2.idEscala                            = quiz_listado.Porcentaje_apro
 LEFT JOIN `quiz_tipo_evaluacion`    ON quiz_tipo_evaluacion.idTipoEvaluacion     = quiz_listado.idTipoEvaluacion
-LEFT JOIN `quiz_tipo_quiz`          ON quiz_tipo_quiz.idTipoQuiz                 = quiz_listado.idTipoQuiz
-
-WHERE quiz_listado.idQuiz = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);		 
-
+LEFT JOIN `quiz_tipo_quiz`          ON quiz_tipo_quiz.idTipoQuiz                 = quiz_listado.idTipoQuiz';
+$SIS_where = 'quiz_listado.idQuiz ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'quiz_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	 
+/***************************************************/
 // Se trae un listado con todas las preguntas
-$arrPreguntas = array();
-$query = "SELECT
+$SIS_query = '
 quiz_listado_preguntas.idPregunta, 
 quiz_listado_preguntas.Nombre AS Pregunta,
 quiz_tipo.Nombre AS Tipo,
@@ -90,30 +75,14 @@ quiz_listado_preguntas.Opcion_5,
 quiz_listado_preguntas.Opcion_6,
 quiz_listado_preguntas.OpcionCorrecta,
 quiz_listado_preguntas.idCategoria,
-quiz_categorias.Nombre AS Categoria
-
-FROM `quiz_listado_preguntas`
+quiz_categorias.Nombre AS Categoria';
+$SIS_join  = '
 LEFT JOIN `quiz_tipo`        ON quiz_tipo.idTipo              = quiz_listado_preguntas.idTipo
-LEFT JOIN `quiz_categorias`  ON quiz_categorias.idCategoria   = quiz_listado_preguntas.idCategoria
-WHERE quiz_listado_preguntas.idQuiz = ".$X_Puntero."
-ORDER BY quiz_listado_preguntas.idCategoria ASC
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPreguntas,$row );
-}
+LEFT JOIN `quiz_categorias`  ON quiz_categorias.idCategoria   = quiz_listado_preguntas.idCategoria';
+$SIS_where = 'quiz_listado_preguntas.idQuiz ='.$X_Puntero;
+$SIS_order = 'quiz_listado_preguntas.idCategoria ASC';
+$arrPreguntas = array();
+$arrPreguntas = db_select_array (false, $SIS_query, 'quiz_listado_preguntas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPreguntas');
 
 
 //cuento las preguntas

@@ -165,29 +165,14 @@ if ( ! empty($_GET['addDetalle']) ) {?>
  } else { 
 /**********************************************/
 // consulto los datos
-$query = "SELECT idEstado, f_ejecucion, f_ejecucion_fin
-FROM `cross_solicitud_aplicacion_listado`
-WHERE idSolicitud = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'idEstado, f_ejecucion, f_ejecucion_fin';
+$SIS_join  = '';
+$SIS_where = 'idSolicitud = '.$_GET['view'];
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
 /*****************************************/				
 //Cuarteles
-$arrCuarteles = array();
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado_cuarteles.idCuarteles,
 cross_solicitud_aplicacion_listado_cuarteles.Mojamiento,
 cross_solicitud_aplicacion_listado_cuarteles.VelTractor,
@@ -201,64 +186,32 @@ cross_predios_listado_zonas.Nombre AS CuartelNombre,
 cross_predios_listado_zonas.Plantas AS CuartelNPlantas,
 cross_predios_listado_zonas.DistanciaPlant AS CuartelDistanciaPlant,
 sistema_variedades_categorias.Nombre AS CuartelEspecie,
-variedades_listado.Nombre AS CuartelVariedad
-
-FROM `cross_solicitud_aplicacion_listado_cuarteles` 
+variedades_listado.Nombre AS CuartelVariedad';
+$SIS_join  = '
 LEFT JOIN `cross_predios_listado_zonas`    ON cross_predios_listado_zonas.idZona         = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `sistema_variedades_categorias`  ON sistema_variedades_categorias.idCategoria  = cross_solicitud_aplicacion_listado_cuarteles.idCategoria
-LEFT JOIN `variedades_listado`             ON variedades_listado.idProducto              = cross_solicitud_aplicacion_listado_cuarteles.idProducto
-WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCuarteles,$row );
-}
-
+LEFT JOIN `variedades_listado`             ON variedades_listado.idProducto              = cross_solicitud_aplicacion_listado_cuarteles.idProducto';
+$SIS_where = 'cross_solicitud_aplicacion_listado_cuarteles.idSolicitud ='.$_GET['view'];
+$SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
+$arrCuarteles = array();
+$arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCuarteles');
 
 /*****************************************/		
 // Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado_historial.Creacion_fecha, 
 cross_solicitud_aplicacion_listado_historial.Observacion,
 usuarios_listado.Nombre AS Usuario,
-core_estado_solicitud.Nombre AS Estado
-
-FROM `cross_solicitud_aplicacion_listado_historial` 
+core_estado_solicitud.Nombre AS Estado';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario      = cross_solicitud_aplicacion_listado_historial.idUsuario
-LEFT JOIN `core_estado_solicitud`    ON core_estado_solicitud.idEstado  = cross_solicitud_aplicacion_listado_historial.idEstado
-WHERE cross_solicitud_aplicacion_listado_historial.idSolicitud = ".$_GET['view']." 
-ORDER BY cross_solicitud_aplicacion_listado_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;				
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}	
+LEFT JOIN `core_estado_solicitud`    ON core_estado_solicitud.idEstado  = cross_solicitud_aplicacion_listado_historial.idEstado';
+$SIS_where = 'cross_solicitud_aplicacion_listado_historial.idSolicitud ='.$_GET['view'];
+$SIS_order = 'cross_solicitud_aplicacion_listado_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
 
-
- ?>
+?>
  
 <div class="col-sm-11 fcenter table-responsive" style="margin-bottom:30px">
 
@@ -272,10 +225,6 @@ array_push( $arrHistorial,$row );
 					<th colspan="8">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
-						  
-				
-
 				
 				<?php /**********************************************************************************/ ?> 
 				<tr class="item-row fact_tittle">
@@ -292,7 +241,7 @@ array_push( $arrHistorial,$row );
 				</tr>
 				<?php 
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrCuarteles) {
+					if ($arrCuarteles!=false) {
 						foreach ($arrCuarteles as $cuartel) { ?>
 						
 							<tr class="item-row linea_punteada" style="background: #eee;">

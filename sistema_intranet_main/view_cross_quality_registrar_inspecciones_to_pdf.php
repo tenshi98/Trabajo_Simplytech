@@ -191,7 +191,7 @@ $html .= '
 					</thead>
 					<tbody>';
 					
-					if ($arrTrabajadores) {
+					if ($arrTrabajadores!=false) {
 						$html .= '<tr class="active"><td colspan="6"><strong>Trabajadores Encargados</strong></td></tr>';
 						foreach ($arrTrabajadores as $trab) {
 							$html .= '
@@ -202,7 +202,7 @@ $html .= '
 							</tr>';
 						} 
 					}
-					if ($arrMaquinas) {
+					if ($arrMaquinas!=false) {
 						$html .= '<tr class="active"><td colspan="6"><strong>Maquinas a Utilizar</strong></td></tr>';
 						foreach ($arrMaquinas as $maq) {
 							$html .= '
@@ -211,7 +211,7 @@ $html .= '
 							</tr>';
 						}
 					}
-					if ($arrMuestras) {
+					if ($arrMuestras!=false) {
 						$html .= '
 							<tr>
 								<td colspan="3" style="vertical-align: top;"><strong>Muestras</strong></td>
@@ -249,20 +249,11 @@ $html .= '
 					</tbody>
 				</table>';
 				
-				
-				
-				
-				
-				
-				
-
 			$html .= '</td>
 		</tr>
 	</tbody>
 </table>';
  
-
-
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/

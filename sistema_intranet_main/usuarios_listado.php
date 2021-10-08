@@ -110,8 +110,9 @@ if ( ! empty($_GET['clone_idUsuario']) ) {
 }elseif ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.usuario, 
 usuarios_tipos.Nombre AS tipo,
 usuarios_listado.email, 
@@ -124,236 +125,96 @@ core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 usuarios_listado.Ultimo_acceso,
 usuarios_listado.Direccion_img,
-core_estados.Nombre AS estado
-
-FROM `usuarios_listado`
+core_estados.Nombre AS estado';
+$SIS_join  = '
 LEFT JOIN `core_estados`             ON core_estados.idEstado             = usuarios_listado.idEstado
 LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = usuarios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usuarios_listado.idComuna
-LEFT JOIN `usuarios_tipos`           ON usuarios_tipos.idTipoUsuario      = usuarios_listado.idTipoUsuario
-WHERE idUsuario = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `usuarios_tipos`           ON usuarios_tipos.idTipoUsuario      = usuarios_listado.idTipoUsuario';
+$SIS_where = 'idUsuario ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /**********************************/
 //Permisos asignados
-$arrMenu = array();
-$query = "SELECT 
+$SIS_query = '
 core_permisos_categorias.Nombre AS CategoriaNombre, 
 core_font_awesome.Codigo AS CategoriaIcono,
 core_permisos_listado.Direccionbase AS TransaccionURLBase,
 core_permisos_listado.Direccionweb AS TransaccionURL, 
-core_permisos_listado.Nombre AS TransaccionNombre,
-							
-usuarios_permisos.level
-							
-							
-FROM usuarios_permisos 
+core_permisos_listado.Nombre AS TransaccionNombre,							
+usuarios_permisos.level';
+$SIS_join  = '
 INNER JOIN core_permisos_listado      ON core_permisos_listado.idAdmpm        = usuarios_permisos.idAdmpm
 INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat 
-LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont             = core_permisos_categorias.idFont
-WHERE usuarios_permisos.idUsuario = ".$_GET['id']."
-ORDER BY CategoriaNombre, TransaccionNombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMenu,$row );
-}
+LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont             = core_permisos_categorias.idFont';
+$SIS_where = 'usuarios_permisos.idUsuario ='.$_GET['id'];
+$SIS_order = 'CategoriaNombre, TransaccionNombre ASC';
+$arrMenu = array();
+$arrMenu = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMenu');
+
 /**********************************/
 //Permisos a sistemas
+$SIS_query = 'core_sistemas.Nombre AS Sistema	';
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = usuarios_sistemas.idSistema';
+$SIS_where = 'usuarios_sistemas.idUsuario ='.$_GET['id'];
+$SIS_order = 'core_sistemas.Nombre ASC';
 $arrSistemas = array();
-$query = "SELECT 
-core_sistemas.Nombre AS Sistema						
-FROM usuarios_sistemas
-LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema
-WHERE usuarios_sistemas.idUsuario = ".$_GET['id']."
-ORDER BY core_sistemas.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrSistemas,$row );
-}
+$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
+
 /**********************************/
 //Permisos a bodegas
+$SIS_query = 'bodegas_arriendos_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `bodegas_arriendos_listado` ON bodegas_arriendos_listado.idBodega = usuarios_bodegas_arriendos.idBodega';
+$SIS_where = 'usuarios_bodegas_arriendos.idUsuario ='.$_GET['id'];
+$SIS_order = 'bodegas_arriendos_listado.Nombre ASC';
 $arrBodega1 = array();
-$query = "SELECT 
-bodegas_arriendos_listado.Nombre AS Bodega						
-FROM usuarios_bodegas_arriendos
-LEFT JOIN `bodegas_arriendos_listado`  ON bodegas_arriendos_listado.idBodega  = usuarios_bodegas_arriendos.idBodega
-WHERE usuarios_bodegas_arriendos.idUsuario = ".$_GET['id']."
-ORDER BY bodegas_arriendos_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBodega1,$row );
-}
+$arrBodega1 = db_select_array (false, $SIS_query, 'usuarios_bodegas_arriendos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBodega1');
+
+/**********************************/
+$SIS_query = 'bodegas_insumos_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `bodegas_insumos_listado` ON bodegas_insumos_listado.idBodega = usuarios_bodegas_insumos.idBodega';
+$SIS_where = 'usuarios_bodegas_insumos.idUsuario ='.$_GET['id'];
+$SIS_order = 'bodegas_insumos_listado.Nombre ASC';
 $arrBodega2 = array();
-$query = "SELECT 
-bodegas_insumos_listado.Nombre AS Bodega						
-FROM usuarios_bodegas_insumos
-LEFT JOIN `bodegas_insumos_listado`  ON bodegas_insumos_listado.idBodega  = usuarios_bodegas_insumos.idBodega
-WHERE usuarios_bodegas_insumos.idUsuario = ".$_GET['id']."
-ORDER BY bodegas_insumos_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBodega2,$row );
-}
+$arrBodega2 = db_select_array (false, $SIS_query, 'usuarios_bodegas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBodega2');
+
+/**********************************/
+$SIS_query = 'bodegas_productos_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `bodegas_productos_listado` ON bodegas_productos_listado.idBodega = usuarios_bodegas_productos.idBodega';
+$SIS_where = 'usuarios_bodegas_productos.idUsuario ='.$_GET['id'];
+$SIS_order = 'bodegas_productos_listado.Nombre ASC';
 $arrBodega3 = array();
-$query = "SELECT 
-bodegas_productos_listado.Nombre AS Bodega						
-FROM usuarios_bodegas_productos
-LEFT JOIN `bodegas_productos_listado`  ON bodegas_productos_listado.idBodega  = usuarios_bodegas_productos.idBodega
-WHERE usuarios_bodegas_productos.idUsuario = ".$_GET['id']."
-ORDER BY bodegas_productos_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBodega3,$row );
-}
+$arrBodega3 = db_select_array (false, $SIS_query, 'usuarios_bodegas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBodega3');
+
 /**********************************/
 //Permisos a equipos telemetria
+$SIS_query = 'telemetria_listado.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = usuarios_equipos_telemetria.idTelemetria';
+$SIS_where = 'usuarios_equipos_telemetria.idUsuario ='.$_GET['id'];
+$SIS_order = 'telemetria_listado.Nombre ASC';
 $arrTelemetria = array();
-$query = "SELECT 
-telemetria_listado.Nombre AS Bodega						
-FROM usuarios_equipos_telemetria
-LEFT JOIN `telemetria_listado`  ON telemetria_listado.idTelemetria  = usuarios_equipos_telemetria.idTelemetria
-WHERE usuarios_equipos_telemetria.idUsuario = ".$_GET['id']."
-ORDER BY telemetria_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTelemetria,$row );
-}
+$arrTelemetria = db_select_array (false, $SIS_query, 'usuarios_equipos_telemetria', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTelemetria');
+
 /**********************************/
 //Permisos de vista de los documentos
+$SIS_query = 'sistema_documentos_pago.Nombre AS Bodega';
+$SIS_join  = 'LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = usuarios_documentos_pago.idDocPago';
+$SIS_where = 'usuarios_documentos_pago.idUsuario ='.$_GET['id'];
+$SIS_order = 'sistema_documentos_pago.Nombre ASC';
 $arrDocumento = array();
-$query = "SELECT 
-sistema_documentos_pago.Nombre AS Bodega						
-FROM usuarios_documentos_pago
-LEFT JOIN `sistema_documentos_pago`  ON sistema_documentos_pago.idDocPago  = usuarios_documentos_pago.idDocPago
-WHERE usuarios_documentos_pago.idUsuario = ".$_GET['id']."
-ORDER BY sistema_documentos_pago.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDocumento,$row );
-}
+$arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDocumento');
+
 
 /********************************************************************************/
 /********************************************************************************/
 //Se verifican los permisos que tiene el usuario seleccionado
+$SIS_query = 'core_permisos_listado.Direccionbase';
+$SIS_join  = 'INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm';
+$SIS_where = 'usuarios_permisos.idUsuario='.$_GET['id'];
+$SIS_order = 'core_permisos_listado.Direccionbase ASC';
 $arrPermiso = array();
-$query = "SELECT 
-core_permisos_listado.Direccionbase
-FROM `usuarios_permisos`
-INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm
-WHERE usuarios_permisos.idUsuario='".$_GET['id']."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-						
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermiso,$row );
-}
+$arrPermiso = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermiso');
+
 $arrPer = array();
 foreach ($arrPermiso as $ins) {
 	$arrPer[$ins['Direccionbase']] = 1;
@@ -561,7 +422,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 						</p>
 					</div>	
 					
-					<?php if(!empty($arrMenu)){ ?>
+					<?php if($arrMenu!=false){ ?>
 						<div class="col-sm-6">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
 							
@@ -660,7 +521,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 						
 						
 						/***************************************************************/
-						if(!empty($arrTelemetria)){
+						if($arrTelemetria!=false){
 							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Equipos Telemetria</h2>';
 							echo '<ul class="tree">';
 							/*******************************/
@@ -685,7 +546,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							echo '</ul>';
 						}
 						/***************************************************************/
-						if(!empty($arrDocumento)){
+						if($arrDocumento!=false){
 							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Documentos a ver</h2>';
 							echo '<ul class="tree">';
 							/*******************************/
@@ -817,109 +678,63 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'usuario_asc':    $order_by = 'ORDER BY usuarios_listado.usuario ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
-		case 'usuario_desc':   $order_by = 'ORDER BY usuarios_listado.usuario DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'nombre_asc':     $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':    $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'tipo_asc':       $order_by = 'ORDER BY usuarios_tipos.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
-		case 'tipo_desc':      $order_by = 'ORDER BY usuarios_tipos.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
-		case 'estado_asc':     $order_by = 'ORDER BY core_estados.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':    $order_by = 'ORDER BY core_estados.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'usuario_asc':    $order_by = 'usuarios_listado.usuario ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
+		case 'usuario_desc':   $order_by = 'usuarios_listado.usuario DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'nombre_asc':     $order_by = 'usuarios_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':    $order_by = 'usuarios_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'tipo_asc':       $order_by = 'usuarios_tipos.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
+		case 'tipo_desc':      $order_by = 'usuarios_tipos.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+		case 'estado_asc':     $order_by = 'core_estados.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':    $order_by = 'core_estados.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY suarios_listado.idEstado ASC, usuarios_tipos.Nombre ASC, usuarios_listado.usuario ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Usuario Ascendente';
+		default: $order_by = 'usuarios_listado.idEstado ASC, usuarios_tipos.Nombre ASC, usuarios_listado.usuario ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Usuario Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY usuarios_listado.idEstado ASC, usuarios_tipos.Nombre ASC, usuarios_listado.usuario ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Usuario Ascendente';
+	$order_by = 'usuarios_listado.idEstado ASC, usuarios_tipos.Nombre ASC, usuarios_listado.usuario ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Usuario Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE usuarios_listado.idTipoUsuario!=1";
+$SIS_where = "usuarios_listado.idTipoUsuario!=1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['usuario']) && $_GET['usuario'] != ''){              $z .= " AND usuarios_listado.usuario LIKE '%".$_GET['usuario']."%'";}
-if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){  $z .= " AND usuarios_listado.idTipoUsuario=".$_GET['idTipoUsuario'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $z .= " AND usuarios_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Fono']) && $_GET['Fono'] != ''){                    $z .= " AND usuarios_listado.Fono LIKE '%".$_GET['Fono']."%'";}
-if(isset($_GET['email']) && $_GET['email'] != ''){                  $z .= " AND usuarios_listado.email LIKE '%".$_GET['email']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                      $z .= " AND usuarios_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){      $z .= " AND usuarios_listado.fNacimiento='".$_GET['fNacimiento']."'";}
+if(isset($_GET['usuario']) && $_GET['usuario'] != ''){              $SIS_where .= " AND usuarios_listado.usuario LIKE '%".$_GET['usuario']."%'";}
+if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){  $SIS_where .= " AND usuarios_listado.idTipoUsuario=".$_GET['idTipoUsuario'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $SIS_where .= " AND usuarios_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Fono']) && $_GET['Fono'] != ''){                    $SIS_where .= " AND usuarios_listado.Fono LIKE '%".$_GET['Fono']."%'";}
+if(isset($_GET['email']) && $_GET['email'] != ''){                  $SIS_where .= " AND usuarios_listado.email LIKE '%".$_GET['email']."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                      $SIS_where .= " AND usuarios_listado.Rut LIKE '%".$_GET['Rut']."%'";}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){      $SIS_where .= " AND usuarios_listado.fNacimiento='".$_GET['fNacimiento']."'";}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT usuarios_listado.idUsuario FROM `usuarios_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'usuarios_listado.idUsuario', 'usuarios_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.idUsuario,
 usuarios_listado.usuario,
 usuarios_tipos.Nombre AS tipo, 
 usuarios_listado.Nombre,
 core_estados.Nombre AS estado,
-usuarios_listado.idEstado
+usuarios_listado.idEstado';
+$SIS_join  = '
+LEFT JOIN `core_estados`    ON core_estados.idEstado        = usuarios_listado.idEstado
+LEFT JOIN `usuarios_tipos`  ON usuarios_tipos.idTipoUsuario = usuarios_listado.idTipoUsuario';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 
-FROM `usuarios_listado`
-LEFT JOIN `core_estados`      ON core_estados.idEstado          = usuarios_listado.idEstado
-LEFT JOIN `usuarios_tipos`    ON usuarios_tipos.idTipoUsuario   = usuarios_listado.idTipoUsuario
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
 // Se trae un listado con todos los elementos
-$arrSistemas = array();
-$query = "SELECT 
+$SIS_query = '
 usuarios_sistemas.idUsuario,
 usuarios_sistemas.idSistema,
-core_sistemas.Nombre AS Sistema
+core_sistemas.Nombre AS Sistema';
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = usuarios_sistemas.idSistema';
+$SIS_where = '';
+$SIS_order = 'core_sistemas.Nombre ASC';
+$arrSistemas = array();
+$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
 
-FROM `usuarios_sistemas`
-LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrSistemas,$row );
-}
 
 $arrSystem = array();
 foreach ($arrSistemas as $sis) {

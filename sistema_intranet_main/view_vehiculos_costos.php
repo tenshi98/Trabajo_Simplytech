@@ -35,32 +35,18 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 vehiculos_costos_tipo.Nombre AS Tipo,
 vehiculos_listado.Nombre AS VehiculoNombre,
 vehiculos_listado.Patente AS VehiculoPatente,
 vehiculos_costos.Creacion_fecha,
 vehiculos_costos.Valor,
-vehiculos_costos.Observaciones
-
-FROM `vehiculos_costos`
+vehiculos_costos.Observaciones';
+$SIS_join  = '
 LEFT JOIN `vehiculos_costos_tipo`   ON vehiculos_costos_tipo.idTipo   = vehiculos_costos.idTipo
-LEFT JOIN `vehiculos_listado`       ON vehiculos_listado.idVehiculo   = vehiculos_costos.idVehiculo
-WHERE vehiculos_costos.idCosto = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `vehiculos_listado`       ON vehiculos_listado.idVehiculo   = vehiculos_costos.idVehiculo';
+$SIS_where = 'vehiculos_costos.idCosto ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 ?>
 

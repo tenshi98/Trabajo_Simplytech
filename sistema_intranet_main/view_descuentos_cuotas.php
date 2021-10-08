@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.Nombre AS Usuario,
 trabajadores_descuentos_cuotas_tipos.Nombre AS Documento,
 trabajadores_descuentos_cuotas.fecha_auto,
@@ -58,80 +58,34 @@ trabajadores_listado.ApellidoMat AS ApellidoMat_trab,
 trabajadores_listado.Cargo AS Cargo_trab,
 trabajadores_listado.Fono AS Fono_trab,
 trabajadores_listado.Rut AS Rut_trab,
-trabajadores_listado_tipos.Nombre AS Tipo_trab
-
-FROM `trabajadores_descuentos_cuotas`
+trabajadores_listado_tipos.Nombre AS Tipo_trab';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`   sistema_origen          ON sistema_origen.idSistema                     = trabajadores_descuentos_cuotas.idSistema
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                       = sistema_origen.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = sistema_origen.idComuna
 LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                   = trabajadores_descuentos_cuotas.idUsuario
 LEFT JOIN `trabajadores_descuentos_cuotas_tipos`    ON trabajadores_descuentos_cuotas_tipos.idTipo  = trabajadores_descuentos_cuotas.idTipo
 LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador            = trabajadores_descuentos_cuotas.idTrabajador
-LEFT JOIN `trabajadores_listado_tipos`              ON trabajadores_listado_tipos.idTipo            = trabajadores_listado.idTipo
-
-WHERE trabajadores_descuentos_cuotas.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
-				
-// Se trae un listado con todos los productos utilizados
+LEFT JOIN `trabajadores_listado_tipos`              ON trabajadores_listado_tipos.idTipo            = trabajadores_listado.idTipo';
+$SIS_where = 'trabajadores_descuentos_cuotas.idFacturacion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'trabajadores_descuentos_cuotas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+			
+// Se trae un listado de datos
+$SIS_query = 'Fecha, nCuota, TotalCuotas, monto_cuotas';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'nCuota ASC';
 $arrCuotas = array();
-$query = "SELECT Fecha, nCuota, TotalCuotas, monto_cuotas
-FROM `trabajadores_descuentos_cuotas_listado` 
-WHERE idFacturacion = ".$X_Puntero." 
-ORDER BY nCuota ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCuotas,$row );
-}
-
+$arrCuotas = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuotas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrCuotas');
 
 /*****************************************/		
 // Se trae un listado con todos los archivos adjuntos
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Nombre ASC';
 $arrArchivo = array();
-$query = "SELECT Nombre
-FROM `trabajadores_descuentos_cuotas_archivos` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivo,$row );
-}
+$arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuotas_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
 ?>
 
@@ -148,52 +102,48 @@ array_push( $arrArchivo,$row );
 	
 	<div class="row invoice-info">
 		
-		<?php
-			echo '
-				<div class="col-sm-4 invoice-col">
-					Datos del Trabajador
-					<address>
-						<strong>'.$row_data['Nombre_trab'].' '.$row_data['ApellidoPat_trab'].' '.$row_data['ApellidoMat_trab'].'</strong><br/>
-						Rut: '.$row_data['Rut_trab'].'<br/>
-						Fono: '.$row_data['Fono_trab'].'<br/>
-						Cargo: '.$row_data['Cargo_trab'].'<br/>
-						Tipo Cargo: '.$row_data['Tipo_trab'].'
-					</address>
-				</div>
+		<div class="col-sm-4 invoice-col">
+			Datos del Trabajador
+			<address>
+				<strong><?php echo $row_data['Nombre_trab'].' '.$row_data['ApellidoPat_trab'].' '.$row_data['ApellidoMat_trab']; ?></strong><br/>
+				Rut: <?php echo $row_data['Rut_trab']; ?><br/>
+				Fono: <?php echo $row_data['Fono_trab']; ?><br/>
+				Cargo: <?php echo $row_data['Cargo_trab']; ?><br/>
+				Tipo Cargo: <?php echo $row_data['Tipo_trab']; ?>
+			</address>
+		</div>
 				
-				<div class="col-sm-4 invoice-col">
-					Empresa
-					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
-					</address>
-				</div>
+		<div class="col-sm-4 invoice-col">
+			Empresa
+			<address>
+				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
+				<?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
+				<?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
+				Fono: <?php echo $row_data['SistemaOrigenFono']; ?><br/>
+				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
+				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
+			</address>
+		</div>
 				
-				<div class="col-sm-4 invoice-col">';
-					
-					if(isset($row_data['Usuario'])&&$row_data['Usuario']!=''){ 
-						echo '<strong>Usuario creador: </strong>'.$row_data['Usuario'].'<br/>';
-					}
-					if(isset($row_data['fecha_auto'])&&$row_data['fecha_auto']!=''&&$row_data['fecha_auto']!='0000-00-00'){ 
-						echo '<strong>Fecha Ingreso : </strong>'.Fecha_estandar($row_data['fecha_auto']).'<br/>';
-					}
-					if(isset($row_data['Monto'])&&$row_data['Monto']!=''){ 
-						echo '<strong>Monto Cuotas : </strong>'.valores($row_data['Monto'],0).'<br/>';
-					}
-					if(isset($row_data['N_Cuotas'])&&$row_data['N_Cuotas']!=''&&$row_data['N_Cuotas']!='0'){ 
-						echo '<strong>N° Cuotas: </strong>'.$row_data['N_Cuotas'].'<br/>';
-					}
-					
-				echo '</div>';
-				?>
+		<div class="col-sm-4 invoice-col">';
+			<?php 		
+			if(isset($row_data['Usuario'])&&$row_data['Usuario']!=''){ 
+				echo '<strong>Usuario creador: </strong>'.$row_data['Usuario'].'<br/>';
+			}
+			if(isset($row_data['fecha_auto'])&&$row_data['fecha_auto']!=''&&$row_data['fecha_auto']!='0000-00-00'){ 
+				echo '<strong>Fecha Ingreso : </strong>'.Fecha_estandar($row_data['fecha_auto']).'<br/>';
+			}
+			if(isset($row_data['Monto'])&&$row_data['Monto']!=''){ 
+				echo '<strong>Monto Cuotas : </strong>'.valores($row_data['Monto'],0).'<br/>';
+			}
+			if(isset($row_data['N_Cuotas'])&&$row_data['N_Cuotas']!=''&&$row_data['N_Cuotas']!='0'){ 
+				echo '<strong>N° Cuotas: </strong>'.$row_data['N_Cuotas'].'<br/>';
+			}
+			?>		
+		</div>
 		
 	</div>
-	
-	
+
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">
@@ -205,7 +155,7 @@ array_push( $arrArchivo,$row );
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrCuotas) { ?>
+					<?php if ($arrCuotas!=false) { ?>
 						<?php foreach ($arrCuotas as $prod) { ?>
 							<tr>
 								<td><?php echo fecha_estandar($prod['Fecha']);?></td>
@@ -218,13 +168,10 @@ array_push( $arrArchivo,$row );
 						<td colspan="2" align="right"><strong>Total Cuotas</strong></td> 
 						<td width="160" align="right"><?php echo Valores($row_data['Monto'], 0); ?></td>
 					</tr>
-					
 				</tbody>
 			</table>
-			
 		</div>
 	</div>
-	
 	
 	<div class="row">
 		<div class="col-xs-12">
@@ -233,14 +180,11 @@ array_push( $arrArchivo,$row );
 		</div>
 	</div>
 	
-
-      
 </section>
-
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrArchivo){ ?>
+	<?php if ($arrArchivo!=false){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

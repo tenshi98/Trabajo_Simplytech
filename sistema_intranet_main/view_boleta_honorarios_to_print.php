@@ -135,7 +135,6 @@ $html .= '<div class="row">
 	
 	<div class="row invoice-info">';
 		
-		
 		//se verifica el tipo de movimiento
 		switch ($row_data['idTipo']) {
 			//Boleta Trabajadores
@@ -178,7 +177,6 @@ $html .= '<div class="row">
 					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
 						$html .= '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
 					}
-					
 					
 				$html .= '</div>';
 
@@ -231,7 +229,6 @@ $html .= '<div class="row">
 				$html .= '
 				</div>';
 				
-		
 				break;
 			//Boleta Empresas
 			case 3:
@@ -278,17 +275,13 @@ $html .= '<div class="row">
 						$html .= '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
 					}
 					
-					
 				$html .= '</div>';
 
 				break;
 		}
 		
-		
-		
     
 	$html .= '</div>
-	
 	
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
@@ -301,7 +294,7 @@ $html .= '<div class="row">
 				</thead>
 				<tbody>';
 					//si existen guias
-					if ($arrOtros) {
+					if ($arrOtros!=false) {
 						foreach ($arrOtros as $otro) {
 							$html .= '<tr>
 								<td style="vertical-align: top;">'.$otro['Nombre'].'</td>
@@ -309,8 +302,6 @@ $html .= '<div class="row">
 							</tr>';
 						} 
 					}
-					
-					
 				$html .= '</tbody>
 			</table>
 			
@@ -339,7 +330,6 @@ $html .= '<div class="row">
 			</table>
 		</div>
 	</div>
-	
 	
 	<div class="row">
 		<div class="col-xs-12">

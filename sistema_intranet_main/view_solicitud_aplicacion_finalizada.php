@@ -36,40 +36,21 @@ if (validarNumero($_GET['view'])){
 $X_idZona = simpleDecode($_GET['idZona'], fecha_actual());
 /**************************************************************/
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.idSolicitud,
 cross_solicitud_aplicacion_listado.Mojamiento,
-cross_predios_listado.Nombre AS PredioNombre
-
-FROM `cross_solicitud_aplicacion_listado`
-LEFT JOIN `cross_predios_listado`    ON cross_predios_listado.idPredio      = cross_solicitud_aplicacion_listado.idPredio
-WHERE cross_solicitud_aplicacion_listado.idSolicitud = ".$X_Puntero." 
-AND cross_solicitud_aplicacion_listado.idSistema =".$_SESSION['usuario']['basic_data']['idSistema']." 
-
-GROUP BY idSolicitud";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
+cross_predios_listado.Nombre AS PredioNombre';
+$SIS_join  = 'LEFT JOIN `cross_predios_listado` ON cross_predios_listado.idPredio = cross_solicitud_aplicacion_listado.idPredio';
+$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$X_Puntero.' AND cross_solicitud_aplicacion_listado.idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'].' GROUP BY idSolicitud';
+$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 //Verifico si existe
 if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
+	
 	/*****************************************/				
-
 	// Se trae un listado con todos los elementos
-	$query = "SELECT 
+	$SIS_query = '
 	cross_solicitud_aplicacion_listado.idSolicitud,
 	cross_solicitud_aplicacion_listado_cuarteles.idZona,
 	cross_solicitud_aplicacion_listado.NSolicitud,
@@ -79,77 +60,43 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	(SELECT SUM(cross_predios_listado_zonas.Hectareas) 
 	FROM `cross_solicitud_aplicacion_listado_cuarteles` 
 	LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona   = cross_solicitud_aplicacion_listado_cuarteles.idZona
-	WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD AND cross_solicitud_aplicacion_listado_cuarteles.idZona = ".$X_idZona." ) AS CuartelHectareas,
+	WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona.' ) AS CuartelHectareas,
 
 	(SELECT SUM(cross_predios_listado_zonas.Plantas) 
 	FROM `cross_solicitud_aplicacion_listado_cuarteles` 
 	LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona   = cross_solicitud_aplicacion_listado_cuarteles.idZona
-	WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD AND cross_solicitud_aplicacion_listado_cuarteles.idZona = ".$X_idZona." ) AS CuartelCantPlantas,
+	WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona.' ) AS CuartelCantPlantas,
 
 	(SELECT AVG(cross_predios_listado_zonas.DistanciaPlant) 
 	FROM `cross_solicitud_aplicacion_listado_cuarteles` 
 	LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona   = cross_solicitud_aplicacion_listado_cuarteles.idZona
-	WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD AND cross_solicitud_aplicacion_listado_cuarteles.idZona = ".$X_idZona." ) AS CuartelDistanciaPlant,
+	WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud=IDD AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona.' ) AS CuartelDistanciaPlant,
 
 	AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm!=0,cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm,0),0)) AS GeoVelocidadProm,
 	SUM(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.GeoDistance!=0,cross_solicitud_aplicacion_listado_tractores.GeoDistance,0),0)) AS GeoDistance,
 	SUM(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.Diferencia!=0,cross_solicitud_aplicacion_listado_tractores.Diferencia,0),0)) AS Litros,
 	AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.Sensor_1_Prom!=0,cross_solicitud_aplicacion_listado_tractores.Sensor_1_Prom,0),0)) AS Sensor_1_Prom,
-	AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom!=0,cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom,0),0)) AS Sensor_2_Prom
-								
-	FROM `cross_solicitud_aplicacion_listado`
+	AVG(NULLIF(IF(cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom!=0,cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom,0),0)) AS Sensor_2_Prom';
+	$SIS_join  = '
 	LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
-	LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
-
-	WHERE cross_solicitud_aplicacion_listado.idSolicitud = ".$row_data['idSolicitud']." 
-	AND cross_solicitud_aplicacion_listado_cuarteles.idZona = ".$X_idZona." 
-	GROUP BY cross_solicitud_aplicacion_listado.idSolicitud
-	ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-	}
-	$rowSolicitud = mysqli_fetch_assoc ($resultado);
-
+	LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles';
+	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$row_data['idSolicitud'].' AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona.' GROUP BY cross_solicitud_aplicacion_listado.idSolicitud ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC';
+	$rowSolicitud = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSolicitud');
+		
+	/*****************************************/				
 	// consulto los datos
-	$arrTractores = array();
-	$query = "SELECT 
+	$SIS_query = '
 	cross_solicitud_aplicacion_listado_tractores.idTelemetria,
 	vehiculos_listado.Nombre AS VehiculoNombreBack,
 	telemetria_listado.Nombre AS VehiculoNombre,
-	telemetria_listado.cantSensores
-			
-	FROM `cross_solicitud_aplicacion_listado_tractores`
+	telemetria_listado.cantSensores';
+	$SIS_join  = '
 	LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria    = cross_solicitud_aplicacion_listado_tractores.idTelemetria
-	LEFT JOIN `vehiculos_listado`    ON vehiculos_listado.idVehiculo       = cross_solicitud_aplicacion_listado_tractores.idVehiculo
-	
-	WHERE cross_solicitud_aplicacion_listado_tractores.idSolicitud = ".$row_data['idSolicitud']." 
-	GROUP BY cross_solicitud_aplicacion_listado_tractores.idTelemetria
-	ORDER BY  telemetria_listado.Nombre ASC ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrTractores,$row );
-	}
+	LEFT JOIN `vehiculos_listado`    ON vehiculos_listado.idVehiculo       = cross_solicitud_aplicacion_listado_tractores.idVehiculo';
+	$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud = '.$row_data['idSolicitud'].' GROUP BY cross_solicitud_aplicacion_listado_tractores.idTelemetria';
+	$SIS_order = 'telemetria_listado.Nombre ASC';
+	$arrTractores = array();
+	$arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTractores');
 
 						
 	/*****************************************/	
@@ -167,41 +114,25 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		$arrMedTractores[$trac['idTelemetria']]['heatMapData']  = '';
 		
 		/***************************************/
-		$aa = '';
-		$aa .= ',FechaSistema';
-		$aa .= ',HoraSistema';
-		$aa .= ',GeoLatitud';
-		$aa .= ',GeoLongitud';
-		$aa .= ',GeoMovimiento';
-		$aa .= ',GeoVelocidad';
+		$subquery  = '';
+		$subquery .= ',FechaSistema';
+		$subquery .= ',HoraSistema';
+		$subquery .= ',GeoLatitud';
+		$subquery .= ',GeoLongitud';
+		$subquery .= ',GeoMovimiento';
+		$subquery .= ',GeoVelocidad';
 		//se recorre deacuerdo a la cantidad de sensores
 		for ($i = 1; $i <= $trac['cantSensores']; $i++) { 
-			$aa .= ',Sensor_'.$i;
+			$subquery .= ',Sensor_'.$i;
 		}
+		//consulta
+		$SIS_query = 'idTabla, idTelemetria'.$subquery;
+		$SIS_join  = '';
+		$SIS_where = 'idSolicitud = '.$row_data['idSolicitud'].' AND idZona = '.$X_idZona;
+		$SIS_order = 'FechaSistema ASC, HoraSistema ASC';
 		$arrMediciones = array();
-		$query = "SELECT idTabla, idTelemetria
-		".$aa."					
-		FROM `telemetria_listado_tablarelacionada_".$trac['idTelemetria']."`
-		WHERE idSolicitud = ".$row_data['idSolicitud']." 
-		AND idZona = ".$X_idZona." 
-		ORDER BY FechaSistema ASC, HoraSistema ASC ";
-									
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			
-			//variables
-			$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-			$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+		$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
 
-			//generar log
-			php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
-		array_push( $arrMediciones,$row );
-		}
 		//recorro los resultados
 		foreach ($arrMediciones as $med) {
 			$pres = 0;
@@ -248,80 +179,42 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		}
 	}
 
-					
-	//Se traen las rutas
-	$arrZonas = array();
-	$query = "SELECT 
+	/**************************************/				
+	// consulto los datos
+	$SIS_query = '
 	cross_predios_listado_zonas.idZona,
 	cross_predios_listado_zonas.Nombre,
 	cross_predios_listado_zonas_ubicaciones.Latitud,
-	cross_predios_listado_zonas_ubicaciones.Longitud
-
-	FROM `cross_solicitud_aplicacion_listado`
+	cross_predios_listado_zonas_ubicaciones.Longitud';
+	$SIS_join  = '
 	LEFT JOIN `cross_predios_listado_zonas`               ON cross_predios_listado_zonas.idPredio             = cross_solicitud_aplicacion_listado.idPredio
-	LEFT JOIN `cross_predios_listado_zonas_ubicaciones`   ON cross_predios_listado_zonas_ubicaciones.idZona   = cross_predios_listado_zonas.idZona
-	WHERE cross_solicitud_aplicacion_listado.idSolicitud = ".$row_data['idSolicitud']." 
-	AND cross_predios_listado_zonas.idZona = ".$X_idZona." 
-	ORDER BY cross_predios_listado_zonas.idZona ASC, 
-	cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrZonas,$row );
-	}
+	LEFT JOIN `cross_predios_listado_zonas_ubicaciones`   ON cross_predios_listado_zonas_ubicaciones.idZona   = cross_predios_listado_zonas.idZona';
+	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$row_data['idSolicitud'].' AND cross_predios_listado_zonas.idZona = '.$X_idZona;
+	$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
+	$arrZonas = array();
+	$arrZonas = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
 	
+	/**************************************/				
 	// consulto los datos
-	$arrTractoresData = array();
-	$query = "SELECT 
+	$SIS_query = '
 	cross_solicitud_aplicacion_listado_tractores.idTelemetria,
 	cross_solicitud_aplicacion_listado_cuarteles.idZona,
-
 	cross_predios_listado_zonas.Nombre AS CuartelNombre,
-	
 	cross_solicitud_aplicacion_listado_tractores.GeoVelocidadMin AS VelocidadMin,
 	cross_solicitud_aplicacion_listado_tractores.GeoVelocidadMax AS VelocidadMax,
 	cross_solicitud_aplicacion_listado_tractores.GeoVelocidadProm AS VelocidadProm,
 	cross_solicitud_aplicacion_listado_cuarteles.VelTractor AS VelocidadProg,
-	
 	cross_solicitud_aplicacion_listado_tractores.Sensor_1_Prom AS PromCaudalIzq,
 	cross_solicitud_aplicacion_listado_tractores.Sensor_2_Prom AS PromCaudalDer,
-	
 	cross_solicitud_aplicacion_listado_tractores.Diferencia AS LitrosAplicados,
-	cross_solicitud_aplicacion_listado_tractores.T_Aplicacion AS TiempoAplicacion
-
-			
-	FROM `cross_solicitud_aplicacion_listado_tractores`
+	cross_solicitud_aplicacion_listado_tractores.T_Aplicacion AS TiempoAplicacion';
+	$SIS_join  = '
 	LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles   = cross_solicitud_aplicacion_listado_tractores.idCuarteles
-	LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
-
-	WHERE cross_solicitud_aplicacion_listado_tractores.idSolicitud = ".$row_data['idSolicitud']."
-	AND cross_solicitud_aplicacion_listado_cuarteles.idZona = ".$X_idZona;
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrTractoresData,$row );
-	}
+	LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona';
+	$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud = '.$row_data['idSolicitud'].' AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona;
+	$SIS_order = 'cross_predios_listado_zonas.Nombre asc';
+	$arrTractoresData = array();
+	$arrTractoresData = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTractoresData');
 
 	//Se obtiene la ubicacion
 	$Ubicacion = "";
@@ -412,10 +305,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		$Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 		
 		?>
-													
-
 		
-
 		<div class="col-sm-12">
 			<div class="box noborderbox">
 				<header class="header">
@@ -427,7 +317,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						<?php
 						$xcounter = 1;
 						foreach($arrTractores as $trac) {	
-							if ($arrTractoresData) {
+							if ($arrTractoresData!=false) {
 								$sum_LitrosAplicados    = 0;
 								foreach ($arrTractoresData as $tractda) { 
 									if(isset($trac['idTelemetria'])&&isset($tractda['idTelemetria'])&&$trac['idTelemetria']==$tractda['idTelemetria']){
@@ -1031,9 +921,6 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						</div>
 					</div>
 					
-					
-					
-						
 					<?php foreach($arrTractores as $trac) { ?>			  
 						<div role="tabpanel" class="tab-pane fade" id="equipo_<?php echo $trac['idTelemetria']; ?>">
 							
@@ -1067,7 +954,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 											</tr>
 											<?php 
 											//recorro el lsiatdo entregado por la base de datos
-											if ($arrTractoresData) {
+											if ($arrTractoresData!=false) {
 												//variables en 0
 												$xcounter               = 0;
 												$sum_VelocidadProg      = 0;
@@ -1258,14 +1145,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 			</div>	
 		</div>
 
-
-
-		
-		
-		
-		
 	</div>
-
 
 <?php }else{ ?>
 	<div class="col-sm-12" style="margin-top:20px;">
@@ -1275,7 +1155,6 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		?>
 	</div>	
 <?php } ?>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver

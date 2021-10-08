@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // Se traen todos los datos de la pregunta
-$query = "SELECT
+$SIS_query = '
 rrhh_quiz_listado.Nombre,
 rrhh_quiz_listado.Header_texto,
 rrhh_quiz_listado.Header_fecha,
@@ -48,35 +48,20 @@ esc_2.Nombre AS Aprobado,
 rrhh_quiz_tipo_evaluacion.Nombre AS TipoEvaluacion,
 rrhh_quiz_tipo_quiz.Nombre AS TipoQuiz,
 rrhh_quiz_listado.idTipoEvaluacion,
-rrhh_quiz_listado.idTipoQuiz
-
-FROM `rrhh_quiz_listado`
+rrhh_quiz_listado.idTipoQuiz';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema                        = rrhh_quiz_listado.idSistema
 LEFT JOIN `core_estados`                 ON core_estados.idEstado                          = rrhh_quiz_listado.idEstado
 LEFT JOIN `rrhh_quiz_escala`  esc_1      ON esc_1.idEscala                                 = rrhh_quiz_listado.idEscala
 LEFT JOIN `rrhh_quiz_escala`  esc_2      ON esc_2.idEscala                                 = rrhh_quiz_listado.Porcentaje_apro
 LEFT JOIN `rrhh_quiz_tipo_evaluacion`    ON rrhh_quiz_tipo_evaluacion.idTipoEvaluacion     = rrhh_quiz_listado.idTipoEvaluacion
-LEFT JOIN `rrhh_quiz_tipo_quiz`          ON rrhh_quiz_tipo_quiz.idTipoQuiz                 = rrhh_quiz_listado.idTipoQuiz
-
-WHERE rrhh_quiz_listado.idQuiz = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);		 
-
+LEFT JOIN `rrhh_quiz_tipo_quiz`          ON rrhh_quiz_tipo_quiz.idTipoQuiz                 = rrhh_quiz_listado.idTipoQuiz';
+$SIS_where = 'rrhh_quiz_listado.idQuiz ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	 
+/**************************************************/
 // Se trae un listado con todas las preguntas
-$arrPreguntas = array();
-$query = "SELECT
+$SIS_query = '
 rrhh_quiz_listado_preguntas.idPregunta, 
 rrhh_quiz_listado_preguntas.Nombre AS Pregunta,
 rrhh_quiz_tipo.Nombre AS Tipo,
@@ -88,30 +73,14 @@ rrhh_quiz_listado_preguntas.Opcion_5,
 rrhh_quiz_listado_preguntas.Opcion_6,
 rrhh_quiz_listado_preguntas.OpcionCorrecta,
 rrhh_quiz_listado_preguntas.idCategoria,
-rrhh_quiz_categorias.Nombre AS Categoria
-
-FROM `rrhh_quiz_listado_preguntas`
+rrhh_quiz_categorias.Nombre AS Categoria';
+$SIS_join  = '
 LEFT JOIN `rrhh_quiz_tipo`        ON rrhh_quiz_tipo.idTipo              = rrhh_quiz_listado_preguntas.idTipo
-LEFT JOIN `rrhh_quiz_categorias`  ON rrhh_quiz_categorias.idCategoria   = rrhh_quiz_listado_preguntas.idCategoria
-WHERE rrhh_quiz_listado_preguntas.idQuiz = ".$X_Puntero."
-ORDER BY rrhh_quiz_listado_preguntas.idCategoria ASC
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPreguntas,$row );
-}
+LEFT JOIN `rrhh_quiz_categorias`  ON rrhh_quiz_categorias.idCategoria   = rrhh_quiz_listado_preguntas.idCategoria';
+$SIS_where = 'rrhh_quiz_listado_preguntas.idQuiz ='.$X_Puntero;
+$SIS_order = 'rrhh_quiz_listado_preguntas.idCategoria ASC';
+$arrPreguntas = array();
+$arrPreguntas = db_select_array (false, $SIS_query, 'rrhh_quiz_listado_preguntas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPreguntas');
 
 
 //cuento las preguntas

@@ -31,7 +31,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 core_sistemas.Nombre AS CajaSistema,
 usuarios_listado.Nombre AS Usuario,
 contab_caja_gastos.fecha_auto,
@@ -43,59 +43,27 @@ trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabajadorApellidoMat,
 trabajadores_listado.Cargo AS TrabajadorCargo,
 trabajadores_listado.Fono AS TrabajadorFono,
-trabajadores_listado.Rut AS TrabajadorRut
+trabajadores_listado.Rut AS TrabajadorRut';
+$SIS_join  = '
+LEFT JOIN `core_sistemas`         ON core_sistemas.idSistema              = contab_caja_gastos.idSistema
+LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario           = contab_caja_gastos.idUsuario
+LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador    = contab_caja_gastos.idTrabajador';
+$SIS_where = 'contab_caja_gastos.idFacturacion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'contab_caja_gastos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-FROM `contab_caja_gastos`
-LEFT JOIN `core_sistemas`                       ON core_sistemas.idSistema              = contab_caja_gastos.idSistema
-LEFT JOIN `usuarios_listado`                    ON usuarios_listado.idUsuario           = contab_caja_gastos.idUsuario
-LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabajador    = contab_caja_gastos.idTrabajador
-
-WHERE contab_caja_gastos.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-
-
-				
+/*****************************************/				
 // Se trae un listado con todos los productos utilizados
-$arrDocumentos = array();
-$query = "SELECT 
+$SIS_query = '
 sistema_documentos_pago.Nombre,
 contab_caja_gastos_existencias.Descripcion,
 contab_caja_gastos_existencias.N_Doc,
 contab_caja_gastos_existencias.Valor,
-contab_caja_gastos_existencias.CentroCosto
-
-FROM `contab_caja_gastos_existencias` 
-LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = contab_caja_gastos_existencias.idDocPago
-WHERE contab_caja_gastos_existencias.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDocumentos,$row );
-}
+contab_caja_gastos_existencias.CentroCosto';
+$SIS_join  = 'LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = contab_caja_gastos_existencias.idDocPago';
+$SIS_where = 'contab_caja_gastos_existencias.idFacturacion ='.$X_Puntero;
+$SIS_order = 'sistema_documentos_pago.Nombre ASC';
+$arrDocumentos = array();
+$arrDocumentos = db_select_array (false, $SIS_query, 'contab_caja_gastos_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDocumentos');
 
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -135,7 +103,6 @@ $html = '
 		</div>
 	</div>
 	
-	
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">
@@ -146,7 +113,7 @@ $html = '
 				</thead>
 				<tbody>';
 					//si existen productos
-					if ($arrDocumentos) {
+					if ($arrDocumentos!=false) {
 						foreach ($arrDocumentos as $prod) { 
 							$html .= '<tr>';
 								$html .= '<td align="left">'.$prod['Descripcion'].'</td>';
@@ -162,7 +129,6 @@ $html = '
 						}
 					}
 					
-					
 					if(isset($row_data['Valor'])&&$row_data['Valor']!=0){
 						$html .= '
 						<tr class="invoice-total" bgcolor="#f1f1f1">
@@ -176,16 +142,14 @@ $html = '
 		</div>
 	</div>
 	
-	
 	<div class="row">
 		<div class="col-xs-12">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
 			<p class="text-muted well well-sm no-shadow" >'.$row_data['Observaciones'].'</p>
 		</div>
-	</div>';
-	
-	
-$html .= '</section>';
+	</div>
+</section>';
+
 echo $html;
 
 /**********************************************************************************************************************************/

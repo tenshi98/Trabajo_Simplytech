@@ -328,23 +328,10 @@ if ( ! empty($_GET['addFile']) ) { ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editDoc']) ) {  
 //Traigo los datos del producto previamente seleccionado
-$query = "SELECT idDocPago, NDocPago, Fpago, vTotal, idSistema
-FROM `ocompra_listado_documentos`
-WHERE idDocumento = ".$_GET['editDoc'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$SIS_query = 'idDocPago, NDocPago, Fpago, vTotal, idSistema';
+$SIS_join  = '';
+$SIS_where = 'idDocumento ='.$_GET['editDoc'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -447,23 +434,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editBoletaEmp']) ) {
 //se consiltan los datos
-$query = "SELECT Descripcion, Valor
-FROM `ocompra_listado_existencias_boletas_empresas`
-WHERE idExistencia = ".$_GET['editBoletaEmp'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$SIS_query = 'Descripcion, Valor';
+$SIS_join  = '';
+$SIS_where = 'idExistencia ='.$_GET['editBoletaEmp'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_boletas_empresas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -541,27 +516,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['editBoleta']) ) {  
-//Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+}elseif ( ! empty($_GET['editBoleta']) ) {	
 //se consiltan los datos
-$query = "SELECT idTrabajador, N_Doc, Descripcion, Valor
-FROM `ocompra_listado_existencias_boletas`
-WHERE idExistencia = ".$_GET['editBoleta'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$SIS_query = 'idTrabajador, N_Doc, Descripcion, Valor';
+$SIS_join  = '';
+$SIS_where = 'idExistencia ='.$_GET['editBoleta'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_boletas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+//Verifico el tipo de usuario que esta ingresando
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -651,23 +615,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editOtros']) ) {  
-$query = "SELECT Nombre, Cantidad, vUnitario, idSistema, vTotal, idFrecuencia
-FROM `ocompra_listado_existencias_otros`
-WHERE idExistencia = ".$_GET['editOtros'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+// Se consulta
+$SIS_query = 'Nombre, Cantidad, vUnitario, idSistema, vTotal, idFrecuencia';
+$SIS_join  = '';
+$SIS_where = 'idExistencia ='.$_GET['editOtros'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -805,7 +758,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editServicios']) ) {  
 //Traigo los datos del producto previamente seleccionado
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_servicios.idServicio, 
 ocompra_listado_existencias_servicios.Cantidad, 
 ocompra_listado_existencias_servicios.vUnitario, 
@@ -813,27 +766,14 @@ ocompra_listado_existencias_servicios.idSistema,
 ocompra_listado_existencias_servicios.vTotal,
 ocompra_listado_existencias_servicios.idFrecuencia,
 core_tiempo_frecuencia.Nombre AS Unimed,
-proveedor_listado.Nombre AS Proveedor
-
-FROM `ocompra_listado_existencias_servicios`
+proveedor_listado.Nombre AS Proveedor';
+$SIS_join  = '
 LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia    = ocompra_listado_existencias_servicios.idFrecuencia
 LEFT JOIN `servicios_listado`          ON servicios_listado.idServicio           = ocompra_listado_existencias_servicios.idServicio
-LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor          = servicios_listado.idProveedor
-WHERE ocompra_listado_existencias_servicios.idExistencia = ".$_GET['editServicios'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor          = servicios_listado.idProveedor';
+$SIS_where = 'ocompra_listado_existencias_servicios.idExistencia ='.$_GET['editServicios'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servicios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -970,7 +910,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editArriendo']) ) {  
 //Traigo los datos del producto previamente seleccionado
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_arriendos.idEquipo, 
 ocompra_listado_existencias_arriendos.Cantidad, 
 ocompra_listado_existencias_arriendos.vUnitario, 
@@ -978,28 +918,14 @@ ocompra_listado_existencias_arriendos.idSistema,
 ocompra_listado_existencias_arriendos.vTotal,
 ocompra_listado_existencias_arriendos.idFrecuencia,
 core_tiempo_frecuencia.Nombre AS Unimed,
-proveedor_listado.Nombre AS Proveedor
-
-FROM `ocompra_listado_existencias_arriendos`
+proveedor_listado.Nombre AS Proveedor';
+$SIS_join  = '
 LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia    = ocompra_listado_existencias_arriendos.idFrecuencia
 LEFT JOIN `equipos_arriendo_listado`   ON equipos_arriendo_listado.idEquipo      = ocompra_listado_existencias_arriendos.idEquipo
-LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor          = equipos_arriendo_listado.idProveedor
-WHERE ocompra_listado_existencias_arriendos.idExistencia = ".$_GET['editArriendo'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-	
+LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor          = equipos_arriendo_listado.idProveedor';
+$SIS_where = 'ocompra_listado_existencias_arriendos.idExistencia ='.$_GET['editArriendo'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arriendos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -1135,62 +1061,37 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editIns']) ) {  
 //Traigo los datos del producto previamente seleccionado	
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_insumos.idProducto, 
 ocompra_listado_existencias_insumos.Cantidad, 
 ocompra_listado_existencias_insumos.vUnitario, 
 ocompra_listado_existencias_insumos.idSistema, 
 ocompra_listado_existencias_insumos.vTotal,
 sistema_productos_uml.Nombre AS Unimed,
-proveedor_listado.Nombre AS Proveedor
-
-FROM `ocompra_listado_existencias_insumos`
+proveedor_listado.Nombre AS Proveedor';
+$SIS_join  = '
 LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto       = ocompra_listado_existencias_insumos.idProducto
 LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = insumos_listado.idUml
-LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = insumos_listado.idProveedor
-WHERE ocompra_listado_existencias_insumos.idExistencia = ".$_GET['editIns'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = insumos_listado.idProveedor';
+$SIS_where = 'ocompra_listado_existencias_insumos.idExistencia ='.$_GET['editIns'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_insumos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+/*************************************/
+//Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
+$arrPermisos = array();
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+/*************************************/
 //filtro
 $zx2 = "idProducto=0";
-//Se revisan los permisos a los productos
-$arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_insumos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
 foreach ($arrPermisos as $prod) {
 	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
 
- 
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -1268,29 +1169,17 @@ foreach ($arrPermisos as $prod) {
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addIns']) ) {  
+//Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
+$arrPermisos = array();
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+/*************************************/
 //filtro
 $zx2 = "idProducto=0";
-//Se revisan los permisos a los productos
-$arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_insumos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
 foreach ($arrPermisos as $prod) {
 	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
@@ -1352,58 +1241,33 @@ foreach ($arrPermisos as $prod) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['editProd']) ) {  
 //Traigo los datos del producto previamente seleccionado
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_productos.idProducto, 
 ocompra_listado_existencias_productos.Cantidad, 
 ocompra_listado_existencias_productos.vUnitario, 
 ocompra_listado_existencias_productos.idSistema, 
 ocompra_listado_existencias_productos.vTotal,
 sistema_productos_uml.Nombre AS Unimed,
-proveedor_listado.Nombre AS Proveedor
-
-FROM `ocompra_listado_existencias_productos`
+proveedor_listado.Nombre AS Proveedor';
+$SIS_join  = '
 LEFT JOIN `productos_listado`       ON productos_listado.idProducto     = ocompra_listado_existencias_productos.idProducto
 LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = productos_listado.idUml
-LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = productos_listado.idProveedor
-WHERE ocompra_listado_existencias_productos.idExistencia = ".$_GET['editProd'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = productos_listado.idProveedor';
+$SIS_where = 'ocompra_listado_existencias_productos.idExistencia ='.$_GET['editProd'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
+/*************************************/
+//Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
+$arrPermisos = array();
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos',  $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+/*************************************/
 //filtro
 $zx1 = "idProducto=0";
-//Se revisan los permisos a los productos
-$arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 } 
@@ -1483,29 +1347,17 @@ foreach ($arrPermisos as $prod) {
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addProd']) ) { 
+//Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
+$arrPermisos = array();
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+/*************************************/
 //filtro
 $zx1 = "idProducto=0";
-//Se revisan los permisos a los productos
-$arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }	 
@@ -1567,26 +1419,16 @@ foreach ($arrPermisos as $prod) {
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
+//se traen los datos
+$SIS_query = 'idProveedor, Creacion_fecha, Observaciones, idSistema';
+$SIS_join  = '';
+$SIS_where = 'idOcompra ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+/*************************************/
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-//se traen los datos
-$query = "SELECT idProveedor, Creacion_fecha, Observaciones, idSistema
-FROM `ocompra_listado`
-WHERE idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
+
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -1630,389 +1472,217 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) { 
-$query = "SELECT 
+//Se consulta
+$SIS_query = '
 usuarios_listado.Nombre AS Usuario,
 core_oc_estado.Nombre AS Estado,
 proveedor_listado.Nombre AS Proveedor,
 ocompra_listado.Creacion_fecha,
 ocompra_listado.Observaciones,
 ocompra_listado.idProveedor,
-ocompra_listado.idEstado
-
-FROM `ocompra_listado`
-LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario            = ocompra_listado.idUsuario
-LEFT JOIN `core_oc_estado`             ON core_oc_estado.idEstado               = ocompra_listado.idEstado
-LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor         = ocompra_listado.idProveedor
-
-WHERE ocompra_listado.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+ocompra_listado.idEstado';
+$SIS_join  = '
+LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario      = ocompra_listado.idUsuario
+LEFT JOIN `core_oc_estado`     ON core_oc_estado.idEstado         = ocompra_listado.idEstado
+LEFT JOIN `proveedor_listado`  ON proveedor_listado.idProveedor   = ocompra_listado.idProveedor';
+$SIS_where = 'ocompra_listado.idOcompra ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /*****************************************/				
 //Insumos
-$arrInsumos = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_insumos.idProducto,
 ocompra_listado_existencias_insumos.idExistencia,
 insumos_listado.Nombre,
 ocompra_listado_existencias_insumos.Cantidad,
 ocompra_listado_existencias_insumos.vUnitario,
 ocompra_listado_existencias_insumos.vTotal,
-sistema_productos_uml.Nombre AS Unidad
-
-FROM `ocompra_listado_existencias_insumos` 
+sistema_productos_uml.Nombre AS Unidad';
+$SIS_join  = '
 LEFT JOIN `insumos_listado`          ON insumos_listado.idProducto    = ocompra_listado_existencias_insumos.idProducto
-LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml   = insumos_listado.idUml
-WHERE ocompra_listado_existencias_insumos.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrInsumos,$row );
-}
+LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml   = insumos_listado.idUml';
+$SIS_where = 'ocompra_listado_existencias_insumos.idOcompra ='.$_GET['view'];
+$SIS_order = 'insumos_listado.Nombre ASC';
+$arrInsumos = array();
+$arrInsumos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrInsumos');
+
 /*****************************************/				
 //Productos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_productos.idProducto,
 ocompra_listado_existencias_productos.idExistencia,
 productos_listado.Nombre,
 ocompra_listado_existencias_productos.Cantidad,
 ocompra_listado_existencias_productos.vUnitario,
 ocompra_listado_existencias_productos.vTotal,
-sistema_productos_uml.Nombre AS Unidad
-
-FROM `ocompra_listado_existencias_productos` 
+sistema_productos_uml.Nombre AS Unidad';
+$SIS_join  = '
 LEFT JOIN `productos_listado`          ON productos_listado.idProducto    = ocompra_listado_existencias_productos.idProducto
-LEFT JOIN `sistema_productos_uml`      ON sistema_productos_uml.idUml     = productos_listado.idUml
-WHERE ocompra_listado_existencias_productos.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
+LEFT JOIN `sistema_productos_uml`      ON sistema_productos_uml.idUml     = productos_listado.idUml';
+$SIS_where = 'ocompra_listado_existencias_productos.idOcompra ='.$_GET['view'];
+$SIS_order = 'productos_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
+
 /*****************************************/				
 //Arriendos
-$arrArriendos = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_arriendos.idEquipo,
 ocompra_listado_existencias_arriendos.idExistencia,
 equipos_arriendo_listado.Nombre,
 ocompra_listado_existencias_arriendos.Cantidad,
 ocompra_listado_existencias_arriendos.vUnitario,
 ocompra_listado_existencias_arriendos.vTotal,
-core_tiempo_frecuencia.Nombre AS Frecuencia
-
-FROM `ocompra_listado_existencias_arriendos` 
+core_tiempo_frecuencia.Nombre AS Frecuencia';
+$SIS_join  = '
 LEFT JOIN `equipos_arriendo_listado`    ON equipos_arriendo_listado.idEquipo     = ocompra_listado_existencias_arriendos.idEquipo
-LEFT JOIN `core_tiempo_frecuencia`      ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_arriendos.idFrecuencia
-WHERE ocompra_listado_existencias_arriendos.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArriendos,$row );
-}
+LEFT JOIN `core_tiempo_frecuencia`      ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_arriendos.idFrecuencia';
+$SIS_where = 'ocompra_listado_existencias_arriendos.idOcompra ='.$_GET['view'];
+$SIS_order = 'equipos_arriendo_listado.Nombre ASC';
+$arrArriendos = array();
+$arrArriendos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_arriendos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArriendos');
+
 /*****************************************/				
 //Servicios
-$arrServicios = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_servicios.idServicio,
 ocompra_listado_existencias_servicios.idExistencia,
 servicios_listado.Nombre,
 ocompra_listado_existencias_servicios.Cantidad,
 ocompra_listado_existencias_servicios.vUnitario,
 ocompra_listado_existencias_servicios.vTotal,
-core_tiempo_frecuencia.Nombre AS Frecuencia
-
-FROM `ocompra_listado_existencias_servicios` 
+core_tiempo_frecuencia.Nombre AS Frecuencia';
+$SIS_join  = '
 LEFT JOIN `servicios_listado`       ON servicios_listado.idServicio          = ocompra_listado_existencias_servicios.idServicio
-LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_servicios.idFrecuencia
-WHERE ocompra_listado_existencias_servicios.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrServicios,$row );
-}
+LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_servicios.idFrecuencia';
+$SIS_where = 'ocompra_listado_existencias_servicios.idOcompra ='.$_GET['view'];
+$SIS_order = 'servicios_listado.Nombre ASC';
+$arrServicios = array();
+$arrServicios = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_servicios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrServicios');
+
 /*****************************************/				
 //Otros
-$arrOtros = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_otros.idExistencia,
 ocompra_listado_existencias_otros.Nombre,
 ocompra_listado_existencias_otros.Cantidad,
 ocompra_listado_existencias_otros.vUnitario,
 ocompra_listado_existencias_otros.vTotal,
-core_tiempo_frecuencia.Nombre AS Frecuencia
+core_tiempo_frecuencia.Nombre AS Frecuencia';
+$SIS_join  = 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_otros.idFrecuencia';
+$SIS_where = 'ocompra_listado_existencias_otros.idOcompra ='.$_GET['view'];
+$SIS_order = 'ocompra_listado_existencias_otros.Nombre ASC';
+$arrOtros = array();
+$arrOtros = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_otros', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOtros');
 
-FROM `ocompra_listado_existencias_otros` 
-LEFT JOIN `core_tiempo_frecuencia`  ON core_tiempo_frecuencia.idFrecuencia   = ocompra_listado_existencias_otros.idFrecuencia
-WHERE ocompra_listado_existencias_otros.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOtros,$row );
-}
 /*****************************************/				
 //Boletas Trabajadores
-$arrBoletas = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_existencias_boletas.idExistencia,
 ocompra_listado_existencias_boletas.N_Doc,
 ocompra_listado_existencias_boletas.Descripcion,
 ocompra_listado_existencias_boletas.Valor,
-
 trabajadores_listado.Rut AS TrabRut,
 trabajadores_listado.Nombre AS TrabNombre,
-trabajadores_listado.ApellidoPat AS TrabApellidoPat
+trabajadores_listado.ApellidoPat AS TrabApellidoPat';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador = ocompra_listado_existencias_boletas.idTrabajador';
+$SIS_where = 'ocompra_listado_existencias_boletas.idOcompra ='.$_GET['view'];
+$SIS_order = 'ocompra_listado_existencias_boletas.N_Doc ASC';
+$arrBoletas = array();
+$arrBoletas = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_boletas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBoletas');
 
-FROM `ocompra_listado_existencias_boletas` 
-LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador
-WHERE ocompra_listado_existencias_boletas.idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBoletas,$row );
-}
 /*****************************************/				
 //Boletas Empresas
+$SIS_query = 'idExistencia, Descripcion, Valor';
+$SIS_join  = '';
+$SIS_where = 'idOcompra ='.$_GET['view'];
+$SIS_order = 'Descripcion ASC';
 $arrBoletasEmp = array();
-$query = "SELECT  idExistencia, Descripcion, Valor
-FROM `ocompra_listado_existencias_boletas_empresas` 
-WHERE idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBoletasEmp,$row );
-}	
+$arrBoletasEmp = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_boletas_empresas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBoletasEmp');
+	
 /*****************************************/		
 // Se trae un listado con todos los documentos acompañantes
-$arrDocumentos = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_documentos.idDocumento,
 ocompra_listado_documentos.NDocPago,
 ocompra_listado_documentos.Fpago,
 ocompra_listado_documentos.vTotal,
-sistema_documentos_pago.Nombre AS Documento
+sistema_documentos_pago.Nombre AS Documento';
+$SIS_join  = 'LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = ocompra_listado_documentos.idDocPago';
+$SIS_where = 'ocompra_listado_documentos.idOcompra ='.$_GET['view'];
+$SIS_order = 'ocompra_listado_documentos.Fpago ASC';
+$arrDocumentos = array();
+$arrDocumentos = db_select_array (false, $SIS_query, 'ocompra_listado_documentos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDocumentos');
 
-FROM `ocompra_listado_documentos` 
-LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = ocompra_listado_documentos.idDocPago
-WHERE ocompra_listado_documentos.idOcompra = ".$_GET['view']." 
-ORDER BY ocompra_listado_documentos.Fpago ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDocumentos,$row );
-}
 /*****************************************/		
 // Se trae un listado con todos los archivos adjuntos
+$SIS_query = 'idFile, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idOcompra ='.$_GET['view'];
+$SIS_order = 'Nombre ASC';
 $arrArchivo = array();
-$query = "SELECT idFile, Nombre
-FROM `ocompra_listado_archivos` 
-WHERE idOcompra = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivo,$row );
-}
+$arrArchivo = db_select_array (false, $SIS_query, 'ocompra_listado_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivo');
+
 /*****************************************/		
 // Se trae un con los Productos de las solicitudes
-$arrSolMat = array();
-$query = "SELECT 
+$SIS_query = '
 ocompra_listado_sol_rel.idSolRel,
 ocompra_listado_sol_rel.Type,
 ocompra_listado_sol_rel.idExistencia,
-
 solicitud_listado_existencias_productos.idSolicitud AS Prod_idSolicitud,
 solicitud_listado_existencias_productos.Cantidad  AS Prod_Cantidad,
 productos_sis.Nombre AS Prod_Sistema,
 productos_listado.Nombre AS Prod_Nombre,
 productos_med.Nombre AS Prod_Medida,
 solicitud_listado_existencias_productos.idProducto AS Prod_Soli,
-
 solicitud_listado_existencias_insumos.idSolicitud AS Ins_idSolicitud,
 solicitud_listado_existencias_insumos.Cantidad  AS Ins_Cantidad,
 insumos_sis.Nombre AS Ins_Sistema,
 insumos_listado.Nombre AS Ins_Nombre,
 insumos_med.Nombre AS Ins_Medida,
 solicitud_listado_existencias_insumos.idProducto AS Ins_Soli,
-
 solicitud_listado_existencias_arriendos.idSolicitud AS Arri_idSolicitud,
 solicitud_listado_existencias_arriendos.Cantidad  AS Arri_Cantidad,
 arriendo_sis.Nombre AS Arri_Sistema,
 equipos_arriendo_listado.Nombre AS Arri_Nombre,
 arriendo_med.Nombre AS Arri_Medida,
 solicitud_listado_existencias_arriendos.idEquipo AS Arri_Soli,
-
 solicitud_listado_existencias_servicios.idSolicitud AS Serv_idSolicitud,
 solicitud_listado_existencias_servicios.Cantidad  AS Serv_Cantidad,
 servicio_sis.Nombre AS Serv_Sistema,
 servicios_listado.Nombre AS Serv_Nombre,
 servicio_med.Nombre AS Serv_Medida,
 solicitud_listado_existencias_servicios.idServicio AS Serv_Soli,
-
 solicitud_listado_existencias_otros.idSolicitud AS Otro_idSolicitud,
 solicitud_listado_existencias_otros.Cantidad  AS Otro_Cantidad,
 otros_sis.Nombre AS Otro_Sistema,
 solicitud_listado_existencias_otros.Nombre AS Otro_Nombre,
 otros_med.Nombre AS Otro_Medida,
-solicitud_listado_existencias_otros.Nombre AS Otro_Soli
-
-FROM `ocompra_listado_sol_rel` 
-
+solicitud_listado_existencias_otros.Nombre AS Otro_Soli';
+$SIS_join  = '
 LEFT JOIN `solicitud_listado_existencias_productos`    ON solicitud_listado_existencias_productos.idExistencia    = ocompra_listado_sol_rel.idExistencia
 LEFT JOIN `productos_listado`                          ON productos_listado.idProducto                            = solicitud_listado_existencias_productos.idProducto
 LEFT JOIN `core_sistemas`             productos_sis    ON productos_sis.idSistema                                 = solicitud_listado_existencias_productos.idSistema
 LEFT JOIN `sistema_productos_uml`     productos_med    ON productos_med.idUml                                     = productos_listado.idUml
-
 LEFT JOIN `solicitud_listado_existencias_insumos`      ON solicitud_listado_existencias_insumos.idExistencia      = ocompra_listado_sol_rel.idExistencia
 LEFT JOIN `insumos_listado`                            ON insumos_listado.idProducto                              = solicitud_listado_existencias_insumos.idProducto
 LEFT JOIN `core_sistemas`             insumos_sis      ON insumos_sis.idSistema                                   = solicitud_listado_existencias_insumos.idSistema
 LEFT JOIN `sistema_productos_uml`     insumos_med      ON insumos_med.idUml                                       = insumos_listado.idUml
-
 LEFT JOIN `solicitud_listado_existencias_arriendos`    ON solicitud_listado_existencias_arriendos.idExistencia    = ocompra_listado_sol_rel.idExistencia
 LEFT JOIN `equipos_arriendo_listado`                   ON equipos_arriendo_listado.idEquipo                       = solicitud_listado_existencias_arriendos.idEquipo
 LEFT JOIN `core_sistemas`             arriendo_sis     ON arriendo_sis.idSistema                                  = solicitud_listado_existencias_arriendos.idSistema
 LEFT JOIN `core_tiempo_frecuencia`    arriendo_med     ON arriendo_med.idFrecuencia                               = solicitud_listado_existencias_arriendos.idFrecuencia
-
 LEFT JOIN `solicitud_listado_existencias_servicios`    ON solicitud_listado_existencias_servicios.idExistencia    = ocompra_listado_sol_rel.idExistencia
 LEFT JOIN `servicios_listado`                          ON servicios_listado.idServicio                            = solicitud_listado_existencias_servicios.idServicio
 LEFT JOIN `core_sistemas`             servicio_sis     ON servicio_sis.idSistema                                  = solicitud_listado_existencias_servicios.idSistema
 LEFT JOIN `core_tiempo_frecuencia`    servicio_med     ON servicio_med.idFrecuencia                               = solicitud_listado_existencias_servicios.idFrecuencia
-
 LEFT JOIN `solicitud_listado_existencias_otros`        ON solicitud_listado_existencias_otros.idExistencia        = ocompra_listado_sol_rel.idExistencia
 LEFT JOIN `core_sistemas`             otros_sis        ON otros_sis.idSistema                                     = solicitud_listado_existencias_otros.idSistema
-LEFT JOIN `core_tiempo_frecuencia`    otros_med        ON otros_med.idFrecuencia                                  = solicitud_listado_existencias_otros.idFrecuencia
-
-
-WHERE ocompra_listado_sol_rel.idOcompra = ".$_GET['view']." 
-ORDER BY ocompra_listado_sol_rel.Type ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrSolMat,$row );
-}
-
+LEFT JOIN `core_tiempo_frecuencia`    otros_med        ON otros_med.idFrecuencia                                  = solicitud_listado_existencias_otros.idFrecuencia';
+$SIS_where = 'ocompra_listado_sol_rel.idOcompra ='.$_GET['view'];
+$SIS_order = 'ocompra_listado_sol_rel.Type ASC';
+$arrSolMat = array();
+$arrSolMat = db_select_array (false, $SIS_query, 'ocompra_listado_sol_rel', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSolMat');
 
 //Variable para sacar el total
 $total = 0;		
@@ -2066,12 +1736,12 @@ $total = 0;
     </div>
     
 
-<?php
-//Se envia proveedor por referencia
-$new_location.='&idEstado='.$rowdata['idEstado'];
-$new_location.='&idProveedor='.$rowdata['idProveedor'];
+	<?php
+	//Se envia proveedor por referencia
+	$new_location.='&idEstado='.$rowdata['idEstado'];
+	$new_location.='&idProveedor='.$rowdata['idProveedor'];
 
-?>
+	?>
 
     <table id="items">
         <tbody>
@@ -2081,8 +1751,6 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
                 <th width="160">Acciones</th>
             </tr>		  
             
-
-			
             <tr class="item-row fact_tittle">
 				<td colspan="5">Productos a Solicitar</td>
 				<td>
@@ -2092,7 +1760,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				</td>
 			</tr>
 			<?php 
-			if (isset($arrProductos)){
+			if ($arrProductos!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrProductos as $prod) { ?>
 					<tr class="item-row linea_punteada">
@@ -2124,8 +1792,6 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 			<?php }
 			}?>
 			
-			
-			
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Insumos a Solicitar</td>
 				<td>
@@ -2135,7 +1801,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				</td>
 			</tr>
 			<?php 
-			if (isset($arrInsumos)){
+			if ($arrInsumos!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrInsumos as $prod) { ?>
 					<tr class="item-row linea_punteada">
@@ -2167,7 +1833,6 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 			<?php }
 			}?>
 			
-			
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Arriendo de equipos a Solicitar</td>
 				<td>
@@ -2177,7 +1842,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				</td>
 			</tr>
 			<?php 
-			if (isset($arrArriendos)){
+			if ($arrArriendos!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrArriendos as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -2220,7 +1885,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				</td>
 			</tr>
 			<?php 
-			if (isset($arrServicios)){
+			if ($arrServicios!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrServicios as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -2253,7 +1918,6 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				}
 			}?>
 			
-			
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Otros a Solicitar</td>
 				<td>
@@ -2263,7 +1927,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				</td>
 			</tr>
 			<?php 
-			if (isset($arrOtros)){
+			if ($arrOtros!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrOtros as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -2294,8 +1958,6 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				}
 			}?>
 			
-			
-			
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Boletas de Honorarios Trabajadores</td>
 				<td>
@@ -2305,7 +1967,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				</td>
 			</tr>
 			<?php 
-			if (isset($arrBoletas)){
+			if ($arrBoletas!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrBoletas as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -2329,7 +1991,6 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				}
 			}?>
 			
-			
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Boletas de Honorarios Empresas</td>
 				<td>
@@ -2339,7 +2000,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				</td>
 			</tr>
 			<?php 
-			if (isset($arrBoletasEmp)){
+			if ($arrBoletasEmp!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrBoletasEmp as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -2361,9 +2022,6 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 				}
 			}?>
 			
-			
-			
-			
 			<tr id="hiderow">
                 <td colspan="6"><a name="Ancla_obs"></a></td>
             </tr>
@@ -2380,7 +2038,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
         </tbody>
     </table>
     
-   	<?php if ($arrSolMat) { ?>
+   	<?php if ($arrSolMat!=false) { ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -2548,7 +2206,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
             </tr>		  
             
 			<?php 
-			if (isset($arrDocumentos)){
+			if ($arrDocumentos!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
 				foreach ($arrDocumentos as $prod){ ?>
@@ -2582,7 +2240,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
             </tr>		  
             
 			<?php 
-			if (isset($arrArchivo)){
+			if ($arrArchivo!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
 				foreach ($arrArchivo as $producto){?>
@@ -2607,9 +2265,7 @@ $new_location.='&idProveedor='.$rowdata['idProveedor'];
 
 		</tbody>
     </table>	
-			
-			
-
+		
 </div>
 
 <?php widget_modal(80, 95); ?>

@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 productos_listado.Nombre,
 productos_listado.Descripcion,
 productos_listado.Marca,
@@ -65,73 +65,41 @@ core_maquinas_tipo.Nombre AS Tarea,
 proveedor_listado.Nombre AS ProveedorFijo,
 cross_quality_calidad_matriz.Nombre AS MatrizCalidad,
 ops1.Nombre AS SistemaMantenlubric,
-ops2.Nombre AS SistemaCROSS
+ops2.Nombre AS SistemaCROSS';
+$SIS_join  = '
+LEFT JOIN `sistema_productos_tipo`           ON sistema_productos_tipo.idTipo              = productos_listado.idTipo
+LEFT JOIN `sistema_productos_categorias`     ON sistema_productos_categorias.idCategoria   = productos_listado.idCategoria
+LEFT JOIN `sistema_productos_uml`            ON sistema_productos_uml.idUml                = productos_listado.idUml
+LEFT JOIN `core_tipo_producto`               ON core_tipo_producto.idTipoProducto          = productos_listado.idTipoProducto
+LEFT JOIN `core_estados`                     ON core_estados.idEstado                      = productos_listado.idEstado
+LEFT JOIN `core_maquinas_tipo`               ON core_maquinas_tipo.idSubTipo               = productos_listado.idSubTipo
+LEFT JOIN `proveedor_listado`                ON proveedor_listado.idProveedor              = productos_listado.idProveedorFijo
+LEFT JOIN `cross_quality_calidad_matriz`     ON cross_quality_calidad_matriz.idMatriz      = productos_listado.idCalidad
+LEFT JOIN `core_sistemas_opciones` ops1      ON ops1.idOpciones                            = productos_listado.idOpciones_1
+LEFT JOIN `core_sistemas_opciones` ops2      ON ops2.idOpciones                            = productos_listado.idOpciones_2';
+$SIS_where = 'productos_listado.idProducto ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-FROM `productos_listado`
-LEFT JOIN `sistema_productos_tipo`           ON sistema_productos_tipo.idTipo                    = productos_listado.idTipo
-LEFT JOIN `sistema_productos_categorias`     ON sistema_productos_categorias.idCategoria         = productos_listado.idCategoria
-LEFT JOIN `sistema_productos_uml`            ON sistema_productos_uml.idUml                      = productos_listado.idUml
-LEFT JOIN `core_tipo_producto`               ON core_tipo_producto.idTipoProducto                = productos_listado.idTipoProducto
-LEFT JOIN `core_estados`                     ON core_estados.idEstado                            = productos_listado.idEstado
-LEFT JOIN `core_maquinas_tipo`               ON core_maquinas_tipo.idSubTipo                     = productos_listado.idSubTipo
-LEFT JOIN `proveedor_listado`                ON proveedor_listado.idProveedor                    = productos_listado.idProveedorFijo
-LEFT JOIN `cross_quality_calidad_matriz`     ON cross_quality_calidad_matriz.idMatriz            = productos_listado.idCalidad
-LEFT JOIN `core_sistemas_opciones` ops1      ON ops1.idOpciones                                  = productos_listado.idOpciones_1
-LEFT JOIN `core_sistemas_opciones` ops2      ON ops2.idOpciones                                  = productos_listado.idOpciones_2
-
-WHERE productos_listado.idProducto = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+/*************************************************/
 //Se verifica el tipo de producto para traer su receta
 if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 	// Se trae un listado con productos de la receta
-	$arrRecetas = array();
-	$query = "SELECT 
+	$SIS_query = '
 	productos_listado.Nombre AS NombreProd,
 	productos_recetas.Cantidad,
-	sistema_productos_uml.Nombre AS UnidadMedida
-	FROM `productos_recetas`
+	sistema_productos_uml.Nombre AS UnidadMedida';
+	$SIS_join  = '
 	LEFT JOIN `productos_listado`        ON productos_listado.idProducto     = productos_recetas.idProductoRel
-	LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml
-	WHERE productos_recetas.idProducto = ".$X_Puntero;
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRecetas,$row );
-	}
+	LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml';
+	$SIS_where = 'productos_recetas.idProducto ='.$X_Puntero;
+	$SIS_order = 'productos_listado.Nombre ASC';
+	$arrRecetas = array();
+	$arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRecetas');
 }
 
-//verifico que sea un administrador
-$z=" AND bodegas_productos_facturacion_existencias.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-
-
+/*************************************************/
 // Se trae un listado con los ultimos 50 movimientos en bodegas
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 bodegas_productos_facturacion_existencias.Creacion_fecha,
 bodegas_productos_facturacion_existencias.Cantidad_ing,
 bodegas_productos_facturacion_existencias.Cantidad_eg,
@@ -139,69 +107,31 @@ bodegas_productos_facturacion_existencias.idFacturacion,
 bodegas_productos_facturacion_tipo.Nombre AS TipoMovimiento,
 productos_listado.Nombre AS NombreProducto,
 sistema_productos_uml.Nombre AS UnidadMedida,
-bodegas_productos_listado.Nombre AS NombreBodega
-
-FROM `bodegas_productos_facturacion_existencias`
+bodegas_productos_listado.Nombre AS NombreBodega';
+$SIS_join  = '
 LEFT JOIN `bodegas_productos_facturacion_tipo`    ON bodegas_productos_facturacion_tipo.idTipo   = bodegas_productos_facturacion_existencias.idTipo
 LEFT JOIN `productos_listado`                     ON productos_listado.idProducto                = bodegas_productos_facturacion_existencias.idProducto
 LEFT JOIN `sistema_productos_uml`                 ON sistema_productos_uml.idUml                 = productos_listado.idUml
-LEFT JOIN `bodegas_productos_listado`             ON bodegas_productos_listado.idBodega          = bodegas_productos_facturacion_existencias.idBodega
+LEFT JOIN `bodegas_productos_listado`             ON bodegas_productos_listado.idBodega          = bodegas_productos_facturacion_existencias.idBodega';
+$SIS_where = 'bodegas_productos_facturacion_existencias.idProducto='.$X_Puntero.' AND bodegas_productos_facturacion_existencias.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'bodegas_productos_facturacion_existencias.Creacion_fecha DESC LIMIT 50';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-WHERE bodegas_productos_facturacion_existencias.idProducto=".$X_Puntero."
-".$z."
-ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha DESC 
-LIMIT 50";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-} 
-
-//Agrego filtro limitador de fecha
-$z.=" AND bodegas_productos_facturacion_existencias.Creacion_fecha>'".restarDias(fecha_actual(),360)."'";	
-$z.=" AND bodegas_productos_facturacion.idTipo = 1"; //Filtrar compras	
-$z.=" OR bodegas_productos_facturacion.idTipo = 2";	//Filtrar ventas	
-
+/*************************************************/
 // Se trae un listado de los valores
-$arrPromedioProd = array();
-$query = "SELECT
+$SIS_query = '
 bodegas_productos_facturacion.idTipo,
 AVG(NULLIF(IF(bodegas_productos_facturacion_existencias.Valor!=0,bodegas_productos_facturacion_existencias.Valor,0),0)) AS Precio,
-bodegas_productos_facturacion_existencias.Creacion_mes
-
-FROM `bodegas_productos_facturacion_existencias`
-LEFT JOIN bodegas_productos_facturacion on bodegas_productos_facturacion.idFacturacion = bodegas_productos_facturacion_existencias.idFacturacion
-WHERE bodegas_productos_facturacion_existencias.idProducto=".$X_Puntero."
-".$z."
-GROUP BY bodegas_productos_facturacion.idTipo, bodegas_productos_facturacion_existencias.Creacion_mes
-ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPromedioProd,$row );
-} 
+bodegas_productos_facturacion_existencias.Creacion_mes';
+$SIS_join  = 'LEFT JOIN bodegas_productos_facturacion on bodegas_productos_facturacion.idFacturacion = bodegas_productos_facturacion_existencias.idFacturacion';
+$SIS_where = 'bodegas_productos_facturacion_existencias.idProducto='.$X_Puntero;
+$SIS_where.= ' AND bodegas_productos_facturacion_existencias.Creacion_fecha>"'.restarDias(fecha_actual(),360).'"';	
+$SIS_where.= ' AND (bodegas_productos_facturacion.idTipo = 1 OR bodegas_productos_facturacion.idTipo = 2)';
+$SIS_where.= ' GROUP BY bodegas_productos_facturacion.idTipo, bodegas_productos_facturacion_existencias.Creacion_mes';
+$SIS_order = 'ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha ASC';
+$arrPromedioProd = array();
+$arrPromedioProd = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPromedioProd');
 
 //Se crea el arreglo
 $arreglo = array();
@@ -428,28 +358,26 @@ foreach ($arrPromedioProd as $productos) {
 							</thead>
 		  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<?php foreach ($arrProductos as $productos) { ?>
-								
-								<tr class="odd">
-									<td>
-										<div class="btn-group" style="width: 35px;" >
-											<a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($productos['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-										</div>
-										<?php echo $productos['TipoMovimiento']; ?>
-									</td>
-									<td><?php echo $productos['NombreBodega']; ?></td>
-									<td><?php echo Fecha_estandar($productos['Creacion_fecha']); ?></td>
-									<td><?php echo Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'];?></td>
-									<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'];?></td>
-						
-								</tr>
-							<?php } ?>                     
+								<?php foreach ($arrProductos as $productos) { ?>
+									<tr class="odd">
+										<td>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($productos['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											</div>
+											<?php echo $productos['TipoMovimiento']; ?>
+										</td>
+										<td><?php echo $productos['NombreBodega']; ?></td>
+										<td><?php echo Fecha_estandar($productos['Creacion_fecha']); ?></td>
+										<td><?php echo Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'];?></td>
+										<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'];?></td>
+							
+									</tr>
+								<?php } ?>                     
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
-			
 			
         </div>	
 	</div>

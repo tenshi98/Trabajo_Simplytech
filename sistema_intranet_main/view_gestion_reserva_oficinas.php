@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 gestion_reserva_oficinas.idReserva,
 gestion_reserva_oficinas.Fecha,
 gestion_reserva_oficinas.Hora_Inicio,
@@ -49,31 +49,15 @@ usuarios_listado.Nombre AS Usuario,
 core_estados.Nombre AS estado,
 gestion_reserva_oficinas.idEstado,
 core_sistemas_opciones.Nombre AS Cafeteria,
-oficinas_listado.Nombre AS Oficina
-
-FROM `gestion_reserva_oficinas`
+oficinas_listado.Nombre AS Oficina';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`            ON core_sistemas.idSistema             = gestion_reserva_oficinas.idSistema
 LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario          = gestion_reserva_oficinas.idUsuario
 LEFT JOIN `core_estados`             ON core_estados.idEstado               = gestion_reserva_oficinas.idEstado
 LEFT JOIN `core_sistemas_opciones`   ON core_sistemas_opciones.idOpciones   = gestion_reserva_oficinas.idServicioCafeteria
-LEFT JOIN `oficinas_listado`         ON oficinas_listado.idOficina          = gestion_reserva_oficinas.idOficina
-
-WHERE gestion_reserva_oficinas.idReserva =  ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `oficinas_listado`         ON oficinas_listado.idOficina          = gestion_reserva_oficinas.idOficina';
+$SIS_where = 'gestion_reserva_oficinas.idReserva ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

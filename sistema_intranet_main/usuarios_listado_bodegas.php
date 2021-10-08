@@ -112,49 +112,21 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Permiso asignado co
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT Nombre
-FROM `usuarios_listado`
-WHERE idUsuario = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idUsuario ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /********************************************************************************/
 /********************************************************************************/
 //Se verifican los permisos que tiene el usuario seleccionado
+$SIS_query = 'core_permisos_listado.Direccionbase';
+$SIS_join  = 'INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm';
+$SIS_where = 'usuarios_permisos.idUsuario='.$_GET['id'];
+$SIS_order = 'core_permisos_listado.Direccionbase ASC';
 $arrPermiso = array();
-$query = "SELECT 
-core_permisos_listado.Direccionbase
-FROM `usuarios_permisos`
-INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm
-WHERE usuarios_permisos.idUsuario='".$_GET['id']."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-						
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermiso,$row );
-}
+$arrPermiso = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermiso');
+
 $arrPer = array();
 foreach ($arrPermiso as $ins) {
 	$arrPer[$ins['Direccionbase']] = 1;
@@ -248,8 +220,6 @@ $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_ejecutar.php";             
 $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_finalizadas.php";                 //65 - Orden de Trabajo - Finalizadas
 $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_terminar.php";                    //66 - Orden de Trabajo - Forzar Cierre
 
-
-
 /******************************************************/
 //Genero los permisos
 for ($i = 1; $i <= $x_nperm; $i++) {
@@ -260,8 +230,6 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 		$prm_x[$i] = 1;
 	}
 }
-
-
 
 /******************************************************/
 $arriendos    = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4] + $prm_x[5] + $prm_x[6] + $prm_x[7] + $prm_x[8];
@@ -275,97 +243,51 @@ $x_permisos_4 = $prm_x[54] + $prm_x[55] + $prm_x[56] + $prm_x[57] + $prm_x[58];
 $x_permisos_5 = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49] + $prm_x[50] + $prm_x[51] + $prm_x[52] + $prm_x[53];
 $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
-
 //Verifico que tenga permisos para ver la transaccion de bodega insumos
 if($insumos!=0){
-	$arrInsumos = array();
-	$query = "SELECT 
+	$SIS_query = '
 	bodegas_insumos_listado.idBodega,
 	bodegas_insumos_listado.Nombre,
 	core_sistemas.Nombre AS RazonSocial,
-	(SELECT COUNT(idBodegaPermiso) FROM usuarios_bodegas_insumos WHERE idBodega = bodegas_insumos_listado.idBodega AND idUsuario = ".$_GET['id']." LIMIT 1) AS contar,
-	(SELECT idBodegaPermiso FROM usuarios_bodegas_insumos WHERE idBodega = bodegas_insumos_listado.idBodega AND idUsuario = ".$_GET['id']." LIMIT 1) AS idpermiso
-	FROM `bodegas_insumos_listado`
-	LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema   = bodegas_insumos_listado.idSistema
-	WHERE bodegas_insumos_listado.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
-	ORDER BY bodegas_insumos_listado.idSistema ASC, bodegas_insumos_listado.Nombre ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrInsumos,$row );
-	}
+	(SELECT COUNT(idBodegaPermiso) FROM usuarios_bodegas_insumos WHERE idBodega = bodegas_insumos_listado.idBodega AND idUsuario = '.$_GET['id'].' LIMIT 1) AS contar,
+	(SELECT idBodegaPermiso FROM usuarios_bodegas_insumos WHERE idBodega = bodegas_insumos_listado.idBodega AND idUsuario = '.$_GET['id'].' LIMIT 1) AS idpermiso';
+	$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = bodegas_insumos_listado.idSistema';
+	$SIS_where = 'bodegas_insumos_listado.idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_order = 'bodegas_insumos_listado.idSistema ASC, bodegas_insumos_listado.Nombre ASC';
+	$arrInsumos = array();
+	$arrInsumos = db_select_array (false, $SIS_query, 'bodegas_insumos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrInsumos');
+
 }
 
 //Verifico que tenga permisos para ver la transaccion de bodega productos
 if($productos!=0){
-	$arrProductos = array();
-	$query = "SELECT 
+	$SIS_query = '
 	bodegas_productos_listado.idBodega,
 	bodegas_productos_listado.Nombre,
 	core_sistemas.Nombre AS RazonSocial,
-	(SELECT COUNT(idBodegaPermiso) FROM usuarios_bodegas_productos WHERE idBodega = bodegas_productos_listado.idBodega AND idUsuario = ".$_GET['id']." LIMIT 1) AS contar,
-	(SELECT idBodegaPermiso FROM usuarios_bodegas_productos WHERE idBodega = bodegas_productos_listado.idBodega AND idUsuario = ".$_GET['id']." LIMIT 1) AS idpermiso
-	FROM `bodegas_productos_listado`
-	LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema   = bodegas_productos_listado.idSistema
-	WHERE bodegas_productos_listado.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
-	ORDER BY bodegas_productos_listado.idSistema ASC, bodegas_productos_listado.Nombre ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrProductos,$row );
-	}
+	(SELECT COUNT(idBodegaPermiso) FROM usuarios_bodegas_productos WHERE idBodega = bodegas_productos_listado.idBodega AND idUsuario = '.$_GET['id'].' LIMIT 1) AS contar,
+	(SELECT idBodegaPermiso FROM usuarios_bodegas_productos WHERE idBodega = bodegas_productos_listado.idBodega AND idUsuario = '.$_GET['id'].' LIMIT 1) AS idpermiso';
+	$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = bodegas_productos_listado.idSistema';
+	$SIS_where = 'bodegas_productos_listado.idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_order = 'bodegas_productos_listado.idSistema ASC, bodegas_productos_listado.Nombre ASC';
+	$arrProductos = array();
+	$arrProductos = db_select_array (false, $SIS_query, 'bodegas_productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
+
 }
 //Verifico que tenga permisos para ver la transaccion de bodega productos
 if($arriendos!=0){
-	$arrArriendos = array();
-	$query = "SELECT 
+	$SIS_query = '
 	bodegas_arriendos_listado.idBodega,
 	bodegas_arriendos_listado.Nombre,
 	core_sistemas.Nombre AS RazonSocial,
-	(SELECT COUNT(idBodegaPermiso) FROM usuarios_bodegas_arriendos WHERE idBodega = bodegas_arriendos_listado.idBodega AND idUsuario = ".$_GET['id']." LIMIT 1) AS contar,
-	(SELECT idBodegaPermiso FROM usuarios_bodegas_arriendos WHERE idBodega = bodegas_arriendos_listado.idBodega AND idUsuario = ".$_GET['id']." LIMIT 1) AS idpermiso
-	FROM `bodegas_arriendos_listado`
-	LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema   = bodegas_arriendos_listado.idSistema
-	WHERE bodegas_arriendos_listado.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
-	ORDER BY bodegas_arriendos_listado.idSistema ASC, bodegas_arriendos_listado.Nombre ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrArriendos,$row );
-	}
+	(SELECT COUNT(idBodegaPermiso) FROM usuarios_bodegas_arriendos WHERE idBodega = bodegas_arriendos_listado.idBodega AND idUsuario = '.$_GET['id'].' LIMIT 1) AS contar,
+	(SELECT idBodegaPermiso FROM usuarios_bodegas_arriendos WHERE idBodega = bodegas_arriendos_listado.idBodega AND idUsuario = '.$_GET['id'].' LIMIT 1) AS idpermiso';
+	$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = bodegas_arriendos_listado.idSistema';
+	$SIS_where = 'bodegas_arriendos_listado.idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_order = 'bodegas_arriendos_listado.idSistema ASC, bodegas_arriendos_listado.Nombre ASC';
+	$arrArriendos = array();
+	$arrArriendos = db_select_array (false, $SIS_query, 'bodegas_arriendos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArriendos');
+
 }
 ?>
 
@@ -412,8 +334,6 @@ if($arriendos!=0){
 			</ul>	
 		</header>
         <div class="table-responsive">
-			
-			
 			
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
@@ -505,7 +425,6 @@ if($arriendos!=0){
 						echo '<tr class="odd"><td colspan="3">No tiene permisos relacionados a Bodega de Arriendos</td></tr>';
 					} ?>  
 					
-		             
 				</tbody>
 			</table>
 		

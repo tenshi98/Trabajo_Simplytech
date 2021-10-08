@@ -37,7 +37,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSist
 }
 /********************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 caja_chica_facturacion.idTipo,
 caja_chica_listado.Nombre AS CajaNombre,
 core_sistemas.Nombre AS CajaSistema,
@@ -61,10 +61,8 @@ trabajadores_listado.ApellidoMat AS TrabRelApellidoMat,
 trabajadores_listado.Cargo AS TrabRelCargo,
 trabajadores_listado.Fono AS TrabRelFono,
 trabajadores_listado.Rut AS TrabRelRut,
-fact_rel.Valor AS RelValor
-
-
-FROM `caja_chica_facturacion`
+fact_rel.Valor AS RelValor';
+$SIS_join  = '
 LEFT JOIN `caja_chica_listado`                  ON caja_chica_listado.idCajaChica       = caja_chica_facturacion.idCajaChica
 LEFT JOIN `core_sistemas`                       ON core_sistemas.idSistema              = caja_chica_facturacion.idSistema
 LEFT JOIN `usuarios_listado`                    ON usuarios_listado.idUsuario           = caja_chica_facturacion.idUsuario
@@ -72,73 +70,30 @@ LEFT JOIN `caja_chica_facturacion_tipo`         ON caja_chica_facturacion_tipo.i
 LEFT JOIN `core_estado_caja`                    ON core_estado_caja.idEstado            = caja_chica_facturacion.idEstado
 LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabajador    = caja_chica_facturacion.idTrabajador
 LEFT JOIN `caja_chica_facturacion`   fact_rel   ON fact_rel.idFacturacion               = caja_chica_facturacion.idFacturacionRelacionada
-LEFT JOIN `trabajadores_listado`     trab_rel   ON trab_rel.idTrabajador                = fact_rel.idTrabajador
+LEFT JOIN `trabajadores_listado`     trab_rel   ON trab_rel.idTrabajador                = fact_rel.idTrabajador';
+$SIS_where = 'caja_chica_facturacion.idFacturacion ='.$X_Puntero;
+$row_data = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-WHERE caja_chica_facturacion.idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$row_data = mysqli_fetch_assoc ($resultado);
-				
+/***********************************************/				
 // Se trae un listado con todos los productos utilizados
-$arrDocumentos = array();
-$query = "SELECT 
+$SIS_query = '
 sistema_documentos_pago.Nombre,
 caja_chica_facturacion_existencias.N_Doc,
-caja_chica_facturacion_existencias.Valor
+caja_chica_facturacion_existencias.Valor';
+$SIS_join  = 'LEFT JOIN `sistema_documentos_pago` ON sistema_documentos_pago.idDocPago = caja_chica_facturacion_existencias.idDocPago';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'sistema_documentos_pago.Nombre ASC';
+$arrDocumentos = array();
+$arrDocumentos = db_select_array (false, $SIS_query, 'caja_chica_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDocumentos');
 
-FROM `caja_chica_facturacion_existencias` 
-LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = caja_chica_facturacion_existencias.idDocPago
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDocumentos,$row );
-}
-
+/***********************************************/
 // Se trae un listado con todos los productos utilizados
+$SIS_query = 'Item, Valor';
+$SIS_join  = '';
+$SIS_where = 'idFacturacion ='.$X_Puntero;
+$SIS_order = 'Item ASC';
 $arrRendiciones = array();
-$query = "SELECT Item, Valor
-
-FROM `caja_chica_facturacion_rendiciones` 
-WHERE idFacturacion = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRendiciones,$row );
-}
+$arrRendiciones = db_select_array (false, $SIS_query, 'caja_chica_facturacion_rendiciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRendiciones');
  
 /********************************************************************/
 //Se define el contenido del PDF
@@ -212,8 +167,6 @@ $html .= '
 									break;
 								
 							}
-						
-						
 						$html .= '</tr>
 					</tbody>
 				</table>
@@ -231,7 +184,7 @@ $html .= '
 					</thead>
 					<tbody>';
 					//si existen productos
-					if ($arrRendiciones) {
+					if ($arrRendiciones!=false) {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="3"><strong>Rendiciones</strong></td></tr>';
 						foreach ($arrRendiciones as $prod) {
 							$html .= '<tr>
@@ -248,9 +201,8 @@ $html .= '
 						}
 					}
 					
-					
 					//si existen productos
-					if ($arrDocumentos) {
+					if ($arrDocumentos!=false) {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="3"><strong>Montos</strong></td></tr>';
 						foreach ($arrDocumentos as $prod) {
 							$html .= '<tr>
@@ -285,7 +237,6 @@ $html .= '
 							}
 						$html .= '</tr>';
 					}
-					
 						
 				$html .= '
 					</tbody>
@@ -313,7 +264,6 @@ $html .= '
 					<br/>
 					<br/>
 					<br/>
-
 					
 					<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
 						<tbody>
@@ -325,9 +275,6 @@ $html .= '
 					</table>';
 				}
 				
-				
-				
-
 			$html .= '</td>
 		</tr>
 	</tbody>

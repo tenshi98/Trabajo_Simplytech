@@ -388,8 +388,6 @@ if($row_data['MontoPagado']!=0){?>
 					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
 						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
 					}
-						
-					
 					
 				echo '</div>';
 				
@@ -444,9 +442,6 @@ if($row_data['MontoPagado']!=0){?>
 				break;
 		}?>
 		
-		
-		
-    
 	</div>
 	
 	
@@ -460,7 +455,7 @@ if($row_data['MontoPagado']!=0){?>
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrOtros) { ?>
+					<?php if ($arrOtros!=false) { ?>
 						<?php foreach ($arrOtros as $otro) { ?>
 							<tr>
 								<td><?php echo $otro['Nombre'];?></td>
@@ -490,7 +485,6 @@ if($row_data['MontoPagado']!=0){?>
 							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					
 				</tbody>
 			</table>
 		</div>
@@ -522,8 +516,7 @@ if($row_data['MontoPagado']!=0){?>
 		</div>
 	<?php } ?>
 
-
-<?php
+	<?php
 	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
 	?>
@@ -544,7 +537,7 @@ if($row_data['MontoPagado']!=0){?>
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial){ ?>
+	<?php if ($arrHistorial!=false){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -566,7 +559,7 @@ if($row_data['MontoPagado']!=0){?>
 		</table>
 	<?php } ?>
 
-	<?php if ($arrArchivo){ ?>
+	<?php if ($arrArchivo!=false){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

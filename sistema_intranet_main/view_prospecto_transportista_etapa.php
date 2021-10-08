@@ -35,36 +35,20 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 prospectos_transportistas_listado.Nombre AS nombre_prospecto,
 usuarios_listado.Nombre AS nombre_usuario,
 prospectos_transportistas_etapa_fidelizacion.Fecha,
 prospectos_transportistas_etapa_fidelizacion.Observacion,
-prospectos_transportistas_etapa.Nombre AS Etapa
-
-FROM `prospectos_transportistas_etapa_fidelizacion`
+prospectos_transportistas_etapa.Nombre AS Etapa';
+$SIS_join  = '
 LEFT JOIN `prospectos_transportistas_listado`   ON prospectos_transportistas_listado.idProspecto     = prospectos_transportistas_etapa_fidelizacion.idProspecto
-LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario         = prospectos_transportistas_etapa_fidelizacion.idUsuario
-LEFT JOIN `prospectos_transportistas_etapa`     ON prospectos_transportistas_etapa.idEtapa           = prospectos_transportistas_etapa_fidelizacion.idEtapa
-WHERE prospectos_transportistas_etapa_fidelizacion.idEtapaFide = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-
+LEFT JOIN `usuarios_listado`                    ON usuarios_listado.idUsuario                        = prospectos_transportistas_etapa_fidelizacion.idUsuario
+LEFT JOIN `prospectos_transportistas_etapa`     ON prospectos_transportistas_etapa.idEtapa           = prospectos_transportistas_etapa_fidelizacion.idEtapa';
+$SIS_where = 'prospectos_transportistas_etapa_fidelizacion.idEtapaFide ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'prospectos_transportistas_etapa_fidelizacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
-
 
 <div class="col-sm-12">
 	<div class="box">	

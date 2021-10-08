@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 seguridad_accesos.idAcceso,
 seguridad_accesos.Fecha,
 seguridad_accesos.Hora,
@@ -53,9 +53,8 @@ ubicacion_listado_level_4.Nombre AS UbicacionLVL_4,
 ubicacion_listado_level_5.Nombre AS UbicacionLVL_5,
 seguridad_accesos.PersonaReunion,
 seguridad_accesos.Direccion_img,
-core_estado_caja.Nombre AS Estado
-
-FROM `seguridad_accesos`
+core_estado_caja.Nombre AS Estado';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`            ON usuarios_listado.idUsuario            = seguridad_accesos.idUsuario
 LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema               = seguridad_accesos.idSistema
 LEFT JOIN `ubicacion_listado`           ON ubicacion_listado.idUbicacion         = seguridad_accesos.idUbicacion
@@ -64,24 +63,9 @@ LEFT JOIN `ubicacion_listado_level_2`   ON ubicacion_listado_level_2.idLevel_2  
 LEFT JOIN `ubicacion_listado_level_3`   ON ubicacion_listado_level_3.idLevel_3   = seguridad_accesos.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4   = seguridad_accesos.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = seguridad_accesos.idUbicacion_lvl_5
-LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos.idEstado
-
-WHERE seguridad_accesos.idAcceso =  ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos.idEstado';
+$SIS_where = 'seguridad_accesos.idAcceso ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 

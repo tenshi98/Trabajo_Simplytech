@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 vehiculos_listado.Direccion_img,
 
 vehiculos_listado.Nombre,
@@ -75,7 +75,6 @@ vehiculos_listado.doc_fecha_seguro_carga,
 vehiculos_listado.doc_fecha_soap,
 vehiculos_listado.doc_fecha_cert_trans_personas,
 
-
 core_sistemas.Nombre AS Sistema,
 core_estados.Nombre AS Estado,
 vehiculos_tipo.Nombre AS Tipo,
@@ -89,9 +88,8 @@ trabajadores_listado.ApellidoMat AS TrabajadorApellidoMat,
 core_estado_aprobacion_vehiculos.Nombre AS AprobacionEstado,
 vehiculos_listado.Motivo AS AprobacionMotivo,
 vehiculos_listado.idProceso,
-vehiculos_tipo_carga.Nombre AS VehiculoTipoCarga
-
-FROM `vehiculos_listado`
+vehiculos_tipo_carga.Nombre AS VehiculoTipoCarga';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                      ON core_sistemas.idSistema                     = vehiculos_listado.idSistema
 LEFT JOIN `core_estados`                       ON core_estados.idEstado                       = vehiculos_listado.idEstado
 LEFT JOIN `vehiculos_tipo`                     ON vehiculos_tipo.idTipo                       = vehiculos_listado.idTipo
@@ -101,113 +99,59 @@ LEFT JOIN `bodegas_productos_listado`          ON bodegas_productos_listado.idBo
 LEFT JOIN `vehiculos_rutas`                    ON vehiculos_rutas.idRuta                      = vehiculos_listado.idRuta
 LEFT JOIN `trabajadores_listado`               ON trabajadores_listado.idTrabajador           = vehiculos_listado.idTrabajador
 LEFT JOIN `core_estado_aprobacion_vehiculos`   ON core_estado_aprobacion_vehiculos.idProceso  = vehiculos_listado.idProceso
-LEFT JOIN `vehiculos_tipo_carga`               ON vehiculos_tipo_carga.idTipoCarga            = vehiculos_listado.idTipoCarga
+LEFT JOIN `vehiculos_tipo_carga`               ON vehiculos_tipo_carga.idTipoCarga            = vehiculos_listado.idTipoCarga';
+$SIS_where = 'vehiculos_listado.idVehiculo ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'vehiculos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-WHERE vehiculos_listado.idVehiculo = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 
 if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){ 
+	
 	// Se trae un listado con todos los pasajeros
-	$arrCargas = array();
-	$query = "SELECT  
+	$SIS_query = '
 	apoderados_listado_hijos.Nombre, 
 	apoderados_listado_hijos.ApellidoPat, 
 	apoderados_listado_hijos.ApellidoMat,
 	apoderados_listado_hijos.Direccion_img,
 	core_sexo.Nombre AS Sexo,
 	sistema_planes.Nombre AS PlanNombre,
-	sistema_planes.Valor AS PlanValor
-
-	FROM `apoderados_listado_hijos`
+	sistema_planes.Valor AS PlanValor';
+	$SIS_join  = '
 	LEFT JOIN `core_sexo`       ON core_sexo.idSexo       = apoderados_listado_hijos.idSexo
-	LEFT JOIN `sistema_planes`  ON sistema_planes.idPlan  = apoderados_listado_hijos.idPlan
-	WHERE apoderados_listado_hijos.idVehiculo = ".$X_Puntero."
-	ORDER BY apoderados_listado_hijos.idHijos ASC ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+	LEFT JOIN `sistema_planes`  ON sistema_planes.idPlan  = apoderados_listado_hijos.idPlan';
+	$SIS_where = 'apoderados_listado_hijos.idVehiculo ='.$X_Puntero;
+	$SIS_order = 'apoderados_listado_hijos.idHijos ASC';
+	$arrCargas = array();
+	$arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrCargas');
 
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrCargas,$row );
-	}
 }
 
 
 if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){
+	
 	// consulto los datos
-	$arrPeonetas = array();
-	$query = "SELECT idPeoneta, Nombre, ApellidoPat, ApellidoMat, Rut, Fecha
-	FROM `vehiculos_listado_peonetas`
-	WHERE idVehiculo = ".$X_Puntero."
-	ORDER BY ApellidoPat ASC, ApellidoMat ASC, Nombre ASC ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+	$SIS_query = 'idPeoneta, Nombre, ApellidoPat, ApellidoMat, Rut, Fecha';
+	$SIS_join  = '';
+	$SIS_where = 'idVehiculo ='.$X_Puntero;
+	$SIS_order = 'ApellidoPat ASC, ApellidoMat ASC, Nombre ASC';
+	$arrBorrame = array();
+	$arrBorrame = db_select_array (false, $SIS_query, 'vehiculos_listado_peonetas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'cron');
 
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrPeonetas,$row );
-	}
 }
 
 if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
-	// Se trae un listado con todos los colegios
-	$arrColegios = array();
-	$query = "SELECT 
-	colegios_listado.Nombre
 	
-	FROM `vehiculos_listado_colegios`
-	LEFT JOIN `colegios_listado` ON colegios_listado.idColegio = vehiculos_listado_colegios.idColegio
-	WHERE vehiculos_listado_colegios.idVehiculo = ".$X_Puntero."
-	ORDER BY colegios_listado.Nombre ASC ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+	// Se trae un listado con todos los colegios
+	$SIS_query = 'colegios_listado.Nombre';
+	$SIS_join  = 'LEFT JOIN `colegios_listado` ON colegios_listado.idColegio = vehiculos_listado_colegios.idColegio';
+	$SIS_where = 'vehiculos_listado_colegios.idVehiculo ='.$X_Puntero;
+	$SIS_order = 'colegios_listado.Nombre ASC';
+	$arrColegios = array();
+	$arrColegios = db_select_array (false, $SIS_query, 'vehiculos_listado_colegios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrColegios');
 
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrColegios,$row );
-	}
 }
+
 ?>
+
 <div class="col-sm-12">
 	<div class="box">
 		<header>

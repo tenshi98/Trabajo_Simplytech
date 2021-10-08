@@ -185,26 +185,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['addFile']) ) {
 //Se traen los datos de la ot
-$query = "SELECT idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
-idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, 
-idTipo, f_programacion
-FROM `orden_trabajo_tareas_listado`
-WHERE idOT = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
- ?>
+$SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
+$SIS_join  = '';
+$SIS_where = 'idOT ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 	
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -255,52 +241,25 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['addTarea']) ) { 
 //Se traen los datos de la ot
-$query = "SELECT idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
-idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, 
-idTipo, f_programacion
-FROM `orden_trabajo_tareas_listado`
-WHERE idOT = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
+$SIS_join  = '';
+$SIS_where = 'idOT ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 }else{
+	//Se revisan los permisos a los contratos
+	$SIS_query = 'idLicitacion';
+	$SIS_join  = '';
+	$SIS_where = 'idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_order = 'idLicitacion ASC';
+	$arrPermisos = array();
+	$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_contratos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+	
 	//filtro
 	$z = "idLicitacion=0";
-	//Se revisan los permisos a los contratos
-	$arrPermisos = array();
-	$query = "SELECT idLicitacion
-	FROM `usuarios_contratos`
-	WHERE idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrPermisos,$row );
-	}
 	foreach ($arrPermisos as $prod) {
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
 	}
@@ -407,50 +366,25 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['editTarea']) ) { 
 //Se traen los datos de la ot
-$query = "SELECT idEstadoTarea, Observacion
-FROM `orden_trabajo_tareas_listado_tareas`
-WHERE idTrabajoOT = ".$_GET['editTarea'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'idEstadoTarea, Observacion';
+$SIS_join  = '';
+$SIS_where = 'idTrabajoOT ='.$_GET['editTarea'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 }else{
+	//Se revisan los permisos a los contratos
+	$SIS_query = 'idLicitacion';
+	$SIS_join  = '';
+	$SIS_where = 'idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_order = 'idLicitacion ASC';
+	$arrPermisos = array();
+	$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_contratos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
 	//filtro
 	$z = "idLicitacion=0";
-	//Se revisan los permisos a los contratos
-	$arrPermisos = array();
-	$query = "SELECT idLicitacion
-	FROM `usuarios_contratos`
-	WHERE idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrPermisos,$row );
-	}
 	foreach ($arrPermisos as $prod) {
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
 	}
@@ -496,51 +430,34 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addProd']) ) { 
 //Se traen los datos de la ot
-$query = "SELECT idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
-idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, 
-idTipo, f_programacion
-FROM `orden_trabajo_tareas_listado`
-WHERE idOT = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-//filtro
-$zx1 = "idProducto=0";
+$SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
+$SIS_join  = '';
+$SIS_where = 'idOT ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 //Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
 $arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+//filtro
+$SIS_where = "idProducto=0";
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$SIS_where .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
+//Imprimo las variables
+$SIS_query = '
+productos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -559,7 +476,7 @@ foreach ($arrPermisos as $prod) {
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $SIS_where, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
@@ -583,32 +500,6 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
-					
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
-				productos_listado.idProducto,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE ".$zx1."
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrTipo,$row );
-				}
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
@@ -642,28 +533,15 @@ foreach ($arrPermisos as $prod) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['edit_prod']) ) { 
 //Se traen los datos de la ot
-$query = "SELECT 
+$SIS_query = '
 productos_listado.Nombre AS Producto, 
 orden_trabajo_tareas_listado_productos.Cantidad,
-sistema_productos_uml.Nombre AS Unidad
-FROM `orden_trabajo_tareas_listado_productos`
+sistema_productos_uml.Nombre AS Unidad';
+$SIS_join  = '
 LEFT JOIN `productos_listado`         ON productos_listado.idProducto  = orden_trabajo_tareas_listado_productos.idProducto
-LEFT JOIN `sistema_productos_uml`     ON sistema_productos_uml.idUml   = productos_listado.idUml
-WHERE idProductos = ".$_GET['edit_prod'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `sistema_productos_uml`     ON sistema_productos_uml.idUml   = productos_listado.idUml';
+$SIS_where = 'idProductos ='.$_GET['edit_prod'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -718,51 +596,33 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addIns']) ) { 
 //Se traen los datos de la ot
-$query = "SELECT idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
-idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, 
-idTipo, f_programacion
-FROM `orden_trabajo_tareas_listado`
-WHERE idOT = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-//filtro
-$zx2 = "idProducto=0";
+$SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
+$SIS_join  = '';
+$SIS_where = 'idOT ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 //Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
 $arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_insumos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+//filtro
+$SIS_where = "idProducto=0";
 foreach ($arrPermisos as $prod) {
-	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$SIS_where .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
+//Imprimo las variables
+$SIS_query = '
+insumos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 ?>
 
@@ -782,7 +642,7 @@ foreach ($arrPermisos as $prod) {
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $SIS_where, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
@@ -806,33 +666,6 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
-				
-					
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
-				insumos_listado.idProducto,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `insumos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-				WHERE ".$zx2."
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrTipo,$row );
-				}
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
@@ -866,28 +699,15 @@ foreach ($arrPermisos as $prod) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['edit_ins']) ) { 
 //Se traen los datos de la ot
-$query = "SELECT 
+$SIS_query = '
 insumos_listado.Nombre AS Producto, 
 orden_trabajo_tareas_listado_insumos.Cantidad,
-sistema_productos_uml.Nombre AS Unidad
-FROM `orden_trabajo_tareas_listado_insumos`
+sistema_productos_uml.Nombre AS Unidad';
+$SIS_join  = '
 LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto  = orden_trabajo_tareas_listado_insumos.idProducto
-LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml = insumos_listado.idUml
-WHERE idInsumos = ".$_GET['edit_ins'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml = insumos_listado.idUml';
+$SIS_where = 'idInsumos ='.$_GET['edit_ins'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insumos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -941,28 +761,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addTrab']) ) { 
+//Se traen los datos de la ot
+$SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
+$SIS_join  = '';
+$SIS_where = 'idOT ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
-//Se traen los datos de la ot
-$query = "SELECT idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
-idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, 
-idTipo, f_programacion
-FROM `orden_trabajo_tareas_listado`
-WHERE idOT = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -1011,27 +817,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_trab']) ) { 
-//Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+ } elseif ( ! empty($_GET['edit_trab']) ) { 	
 //Se traen los datos de la ot
-$query = "SELECT idTrabajador
-FROM `orden_trabajo_tareas_listado_responsable`
-WHERE idResponsable = ".$_GET['edit_trab'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'idTrabajador';
+$SIS_join  = '';
+$SIS_where = 'idResponsable ='.$_GET['edit_trab'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_responsable', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+//Verifico el tipo de usuario que esta ingresando
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -1068,23 +862,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['edit_obs']) ) { 
 //Se traen los datos de la ot
-$query = "SELECT Observaciones
-FROM `orden_trabajo_tareas_listado`
-WHERE idOT = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Observaciones';
+$SIS_join  = '';
+$SIS_where = 'idOT ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -1121,7 +903,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) { 
 // Se trae un listado con todos los elementos
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado.idOT,
 orden_trabajo_tareas_listado.f_creacion,
 orden_trabajo_tareas_listado.f_programacion,
@@ -1139,10 +921,8 @@ ubicacion_listado_level_1.Nombre AS UbicacionLVL_1,
 ubicacion_listado_level_2.Nombre AS UbicacionLVL_2,
 ubicacion_listado_level_3.Nombre AS UbicacionLVL_3,
 ubicacion_listado_level_4.Nombre AS UbicacionLVL_4,
-ubicacion_listado_level_5.Nombre AS UbicacionLVL_5
-
-
-FROM `orden_trabajo_tareas_listado`
+ubicacion_listado_level_5.Nombre AS UbicacionLVL_5';
+$SIS_join  = '
 LEFT JOIN `core_estado_ot_motivos`     ON core_estado_ot_motivos.idEstado       = orden_trabajo_tareas_listado.idEstado
 LEFT JOIN `core_ot_prioridad`          ON core_ot_prioridad.idPrioridad         = orden_trabajo_tareas_listado.idPrioridad
 LEFT JOIN `core_ot_motivos_tipos`      ON core_ot_motivos_tipos.idTipo          = orden_trabajo_tareas_listado.idTipo
@@ -1151,121 +931,58 @@ LEFT JOIN `ubicacion_listado_level_1`  ON ubicacion_listado_level_1.idLevel_1   
 LEFT JOIN `ubicacion_listado_level_2`  ON ubicacion_listado_level_2.idLevel_2   = orden_trabajo_tareas_listado.idUbicacion_lvl_2
 LEFT JOIN `ubicacion_listado_level_3`  ON ubicacion_listado_level_3.idLevel_3   = orden_trabajo_tareas_listado.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`  ON ubicacion_listado_level_4.idLevel_4   = orden_trabajo_tareas_listado.idUbicacion_lvl_4
-LEFT JOIN `ubicacion_listado_level_5`  ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5
+LEFT JOIN `ubicacion_listado_level_5`  ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5';
+$SIS_where = 'orden_trabajo_tareas_listado.idOT ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-WHERE orden_trabajo_tareas_listado.idOT = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+/************************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
-$arrTrabajadores = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado_responsable.idResponsable,
 trabajadores_listado.Nombre,
 trabajadores_listado.ApellidoPat,
 trabajadores_listado.ApellidoMat,
 trabajadores_listado.Cargo, 
-trabajadores_listado.Rut
+trabajadores_listado.Rut';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador = orden_trabajo_tareas_listado_responsable.idTrabajador';
+$SIS_where = 'orden_trabajo_tareas_listado_responsable.idOT ='.$_GET['view'];
+$SIS_order = 'trabajadores_listado.ApellidoPat ASC';
+$arrTrabajadores = array();
+$arrTrabajadores = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_responsable', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTrabajadores');
 
-FROM `orden_trabajo_tareas_listado_responsable`
-LEFT JOIN `trabajadores_listado`   ON trabajadores_listado.idTrabajador     = orden_trabajo_tareas_listado_responsable.idTrabajador
-WHERE orden_trabajo_tareas_listado_responsable.idOT = ".$_GET['view']."
-ORDER BY trabajadores_listado.ApellidoPat ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTrabajadores,$row );
-}
-
-
+/************************************************************/
 // Se trae un listado con todos los insumos utilizados
-$arrInsumos = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado_insumos.idInsumos AS idMain,
 insumos_listado.Nombre AS NombreProducto,
 sistema_productos_uml.Nombre AS UnidadMedida,
-orden_trabajo_tareas_listado_insumos.Cantidad
-
-FROM `orden_trabajo_tareas_listado_insumos`
+orden_trabajo_tareas_listado_insumos.Cantidad';
+$SIS_join  = '
 LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto    = orden_trabajo_tareas_listado_insumos.idProducto
-LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = insumos_listado.idUml
-WHERE orden_trabajo_tareas_listado_insumos.idOT = ".$_GET['view']."
-ORDER BY insumos_listado.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-						
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrInsumos,$row );
-}
-	
+LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = insumos_listado.idUml';
+$SIS_where = 'orden_trabajo_tareas_listado_insumos.idOT ='.$_GET['view'];
+$SIS_order = 'insumos_listado.Nombre ASC';
+$arrInsumos = array();
+$arrInsumos = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrInsumos');
+
+/************************************************************/
 // Se trae un listado con todos los productos utilizados
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado_productos.idProductos AS idMain,
 productos_listado.Nombre AS NombreProducto,
 sistema_productos_uml.Nombre AS UnidadMedida,
-orden_trabajo_tareas_listado_productos.Cantidad AS Cantidad
-
-FROM `orden_trabajo_tareas_listado_productos`
+orden_trabajo_tareas_listado_productos.Cantidad AS Cantidad';
+$SIS_join  = '
 LEFT JOIN `productos_listado`       ON productos_listado.idProducto    = orden_trabajo_tareas_listado_productos.idProducto
-LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml     = productos_listado.idUml
-WHERE orden_trabajo_tareas_listado_productos.idOT = ".$_GET['view']."
-ORDER BY productos_listado.Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-						
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-} 
+LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml     = productos_listado.idUml';
+$SIS_where = 'orden_trabajo_tareas_listado_productos.idOT ='.$_GET['view'];
+$SIS_order = 'productos_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
-
-
+/************************************************************/
 // Se trae un listado con todos los trabajos relacionados a la orden
-$arrTarea = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado_tareas.idTrabajoOT,
 orden_trabajo_tareas_listado_tareas.Observacion,
 orden_trabajo_tareas_listado_tareas.idEstadoTarea,
@@ -1295,10 +1012,8 @@ licitacion_listado_level_21.Nombre AS LicitacionLVL_21,
 licitacion_listado_level_22.Nombre AS LicitacionLVL_22,
 licitacion_listado_level_23.Nombre AS LicitacionLVL_23,
 licitacion_listado_level_24.Nombre AS LicitacionLVL_24,
-licitacion_listado_level_25.Nombre AS LicitacionLVL_25
-
-
-FROM `orden_trabajo_tareas_listado_tareas`
+licitacion_listado_level_25.Nombre AS LicitacionLVL_25';
+$SIS_join  = '
 LEFT JOIN `core_estado_ot_motivos_tareas`  ON core_estado_ot_motivos_tareas.idEstadoTarea   = orden_trabajo_tareas_listado_tareas.idEstadoTarea
 LEFT JOIN `licitacion_listado`             ON licitacion_listado.idLicitacion               = orden_trabajo_tareas_listado_tareas.idLicitacion
 LEFT JOIN `licitacion_listado_level_1`     ON licitacion_listado_level_1.idLevel_1          = orden_trabajo_tareas_listado_tareas.idLevel_1
@@ -1325,82 +1040,37 @@ LEFT JOIN `licitacion_listado_level_21`    ON licitacion_listado_level_21.idLeve
 LEFT JOIN `licitacion_listado_level_22`    ON licitacion_listado_level_22.idLevel_22        = orden_trabajo_tareas_listado_tareas.idLevel_22
 LEFT JOIN `licitacion_listado_level_23`    ON licitacion_listado_level_23.idLevel_23        = orden_trabajo_tareas_listado_tareas.idLevel_23
 LEFT JOIN `licitacion_listado_level_24`    ON licitacion_listado_level_24.idLevel_24        = orden_trabajo_tareas_listado_tareas.idLevel_24
-LEFT JOIN `licitacion_listado_level_25`    ON licitacion_listado_level_25.idLevel_25        = orden_trabajo_tareas_listado_tareas.idLevel_25
+LEFT JOIN `licitacion_listado_level_25`    ON licitacion_listado_level_25.idLevel_25        = orden_trabajo_tareas_listado_tareas.idLevel_25';
+$SIS_where = 'orden_trabajo_tareas_listado_tareas.idOT ='.$_GET['view'];
+$SIS_order = 'licitacion_listado.Nombre ASC';
+$arrTarea = array();
+$arrTarea = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTarea');
 
-WHERE orden_trabajo_tareas_listado_tareas.idOT = ".$_GET['view']."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTarea,$row );
-}
-
+/************************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
+$SIS_query = 'idAdjunto, idTrabajoOT, NombreArchivo';
+$SIS_join  = '';
+$SIS_where = 'idOT ='.$_GET['view'];
+$SIS_order = 'NombreArchivo ASC';
 $arrArchivos = array();
-$query = "SELECT idAdjunto, idTrabajoOT, NombreArchivo
-FROM `orden_trabajo_tareas_listado_tareas_adjuntos`
-WHERE idOT = ".$_GET['view']."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
+$arrArchivos = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas_adjuntos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivos');
 
-/*****************************************/		
+/************************************************************/	
 // Se trae un listado con el historial
-$arrHistorial = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado_historial.Creacion_fecha, 
 orden_trabajo_tareas_listado_historial.Observacion,
 core_historial_tipos.Nombre,
 core_historial_tipos.FonAwesome,
-usuarios_listado.Nombre AS Usuario
-
-FROM `orden_trabajo_tareas_listado_historial` 
+usuarios_listado.Nombre AS Usuario';
+$SIS_join  = '
 LEFT JOIN `core_historial_tipos`     ON core_historial_tipos.idTipo   = orden_trabajo_tareas_listado_historial.idTipo
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = orden_trabajo_tareas_listado_historial.idUsuario
-WHERE orden_trabajo_tareas_listado_historial.idOT = ".$_GET['view']." 
-ORDER BY orden_trabajo_tareas_listado_historial.idHistorial ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrHistorial,$row );
-}
+LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = orden_trabajo_tareas_listado_historial.idUsuario';
+$SIS_where = 'orden_trabajo_tareas_listado_historial.idOT ='.$_GET['view'];
+$SIS_order = 'orden_trabajo_tareas_listado_historial.idHistorial ASC';
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
+
 ?>
 <div class="col-sm-11 fcenter table-responsive">
 	<div id="page-wrap">
@@ -1490,7 +1160,6 @@ array_push( $arrHistorial,$row );
 					<th width="160">Acciones</th>
 				</tr>		  
 				
-
 				<?php /**********************************************************************************/ ?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Trabajadores  <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Encargados';}else{echo 'Utilizados';}?></td>
@@ -1713,7 +1382,7 @@ array_push( $arrHistorial,$row );
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	<div class="row">
-		<?php if ($arrHistorial){ ?>
+		<?php if ($arrHistorial!=false){ ?>
 			<div class="table-responsive">
 				<table id="items">
 					<tbody>
@@ -1750,48 +1419,47 @@ array_push( $arrHistorial,$row );
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'id_asc':             $order_by = 'ORDER BY orden_trabajo_tareas_listado.idOT ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> ID Ascendente'; break;
-		case 'id_desc':            $order_by = 'ORDER BY orden_trabajo_tareas_listado.idOT DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';break;
-		case 'fprog_asc':          $order_by = 'ORDER BY orden_trabajo_tareas_listado.f_programacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Programacion Ascendente';break;
-		case 'fprog_desc':         $order_by = 'ORDER BY orden_trabajo_tareas_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Programacion Descendente';break;
-		case 'ejecucion_asc':      $order_by = 'ORDER BY core_estado_ot_motivos.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ejecucion Ascendente';break;
-		case 'ejecucion_desc':     $order_by = 'ORDER BY core_estado_ot_motivos.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ejecucion Descendente';break;
-		case 'ubicacion_asc':      $order_by = 'ORDER BY ubicacion_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ubicacion Ascendente'; break;
-		case 'ubicacion_desc':     $order_by = 'ORDER BY ubicacion_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ubicacion Descendente';break;
-		case 'prioridad_asc':      $order_by = 'ORDER BY core_ot_prioridad.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente';break;
-		case 'prioridad_desc':     $order_by = 'ORDER BY core_ot_prioridad.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
-		case 'tipotrab_asc':       $order_by = 'ORDER BY core_ot_motivos_tipos.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente'; break;
-		case 'tipotrab_desc':      $order_by = 'ORDER BY core_ot_motivos_tipos.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Trabajo Descendente';break;
+		case 'id_asc':             $order_by = 'orden_trabajo_tareas_listado.idOT ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> ID Ascendente'; break;
+		case 'id_desc':            $order_by = 'orden_trabajo_tareas_listado.idOT DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';break;
+		case 'fprog_asc':          $order_by = 'orden_trabajo_tareas_listado.f_programacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Programacion Ascendente';break;
+		case 'fprog_desc':         $order_by = 'orden_trabajo_tareas_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Programacion Descendente';break;
+		case 'ejecucion_asc':      $order_by = 'core_estado_ot_motivos.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ejecucion Ascendente';break;
+		case 'ejecucion_desc':     $order_by = 'core_estado_ot_motivos.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ejecucion Descendente';break;
+		case 'ubicacion_asc':      $order_by = 'ubicacion_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ubicacion Ascendente'; break;
+		case 'ubicacion_desc':     $order_by = 'ubicacion_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ubicacion Descendente';break;
+		case 'prioridad_asc':      $order_by = 'core_ot_prioridad.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente';break;
+		case 'prioridad_desc':     $order_by = 'core_ot_prioridad.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
+		case 'tipotrab_asc':       $order_by = 'core_ot_motivos_tipos.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente'; break;
+		case 'tipotrab_desc':      $order_by = 'core_ot_motivos_tipos.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Trabajo Descendente';break;
 		
-		default: $order_by = 'ORDER BY orden_trabajo_tareas_listado.idEstado DESC, orden_trabajo_tareas_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ejecucion, Fecha Programacion Descendente';
+		default: $order_by = 'orden_trabajo_tareas_listado.idEstado DESC, orden_trabajo_tareas_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ejecucion, Fecha Programacion Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY orden_trabajo_tareas_listado.idEstado DESC, orden_trabajo_tareas_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ejecucion, Fecha Programacion Descendente';
+	$order_by = 'orden_trabajo_tareas_listado.idEstado DESC, orden_trabajo_tareas_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ejecucion, Fecha Programacion Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE orden_trabajo_tareas_listado.idOT!=0";
-$z .= " AND orden_trabajo_tareas_listado.idEstado < 3";//solo las Programada y En Ejecucion
+$SIS_where = "orden_trabajo_tareas_listado.idOT!=0";
+$SIS_where .= " AND orden_trabajo_tareas_listado.idEstado < 3";//solo las Programada y En Ejecucion
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND orden_trabajo_tareas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where .= " AND orden_trabajo_tareas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idOT']) && $_GET['idOT'] != ''){                            $z .= " AND orden_trabajo_tareas_listado.idOT=".$_GET['idOT'];}
-if(isset($_GET['f_programacion']) && $_GET['f_programacion'] != ''){        $z .= " AND orden_trabajo_tareas_listado.f_programacion='".$_GET['Nombre']."'";}
-if(isset($_GET['idUbicacion']) && $_GET['idUbicacion'] != ''){              $z .= " AND orden_trabajo_tareas_listado.idUbicacion=".$_GET['idUbicacion'];}
-if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1'] != ''){  $z .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
-if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2'] != ''){  $z .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
-if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3'] != ''){  $z .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}
-if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4'] != ''){  $z .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
-if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5'] != ''){  $z .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
-if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $z .= " AND orden_trabajo_tareas_listado.idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                        $z .= " AND orden_trabajo_tareas_listado.idTipo=".$_GET['Nombre'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                    $z .= " AND orden_trabajo_tareas_listado.idEstado=".$_GET['Nombre'];}
+if(isset($_GET['idOT']) && $_GET['idOT'] != ''){                            $SIS_where .= " AND orden_trabajo_tareas_listado.idOT=".$_GET['idOT'];}
+if(isset($_GET['f_programacion']) && $_GET['f_programacion'] != ''){        $SIS_where .= " AND orden_trabajo_tareas_listado.f_programacion='".$_GET['Nombre']."'";}
+if(isset($_GET['idUbicacion']) && $_GET['idUbicacion'] != ''){              $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion=".$_GET['idUbicacion'];}
+if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
+if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
+if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}
+if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
+if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
+if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $SIS_where .= " AND orden_trabajo_tareas_listado.idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                        $SIS_where .= " AND orden_trabajo_tareas_listado.idTipo=".$_GET['Nombre'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                    $SIS_where .= " AND orden_trabajo_tareas_listado.idEstado=".$_GET['Nombre'];}
 /**********************************************************/
 
 // Se trae un listado con todos los elementos
-$arrOTS = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_listado.idOT,
 orden_trabajo_tareas_listado.f_programacion,
 ubicacion_listado.Nombre AS Ubicacion,
@@ -1802,9 +1470,8 @@ ubicacion_listado_level_4.Nombre AS UbicacionLVL_4,
 ubicacion_listado_level_5.Nombre AS UbicacionLVL_5,
 core_ot_prioridad.Nombre AS NombrePrioridad,
 core_ot_motivos_tipos.Nombre AS NombreTipo,
-core_estado_ot_motivos.Nombre AS NombreEstado
-
-FROM `orden_trabajo_tareas_listado`
+core_estado_ot_motivos.Nombre AS NombreEstado';
+$SIS_join  = '
 LEFT JOIN `core_estado_ot_motivos`      ON core_estado_ot_motivos.idEstado       = orden_trabajo_tareas_listado.idEstado
 LEFT JOIN `core_ot_prioridad`           ON core_ot_prioridad.idPrioridad         = orden_trabajo_tareas_listado.idPrioridad
 LEFT JOIN `core_ot_motivos_tipos`       ON core_ot_motivos_tipos.idTipo          = orden_trabajo_tareas_listado.idTipo
@@ -1813,27 +1480,11 @@ LEFT JOIN `ubicacion_listado_level_1`   ON ubicacion_listado_level_1.idLevel_1  
 LEFT JOIN `ubicacion_listado_level_2`   ON ubicacion_listado_level_2.idLevel_2   = orden_trabajo_tareas_listado.idUbicacion_lvl_2
 LEFT JOIN `ubicacion_listado_level_3`   ON ubicacion_listado_level_3.idLevel_3   = orden_trabajo_tareas_listado.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4   = orden_trabajo_tareas_listado.idUbicacion_lvl_4
-LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5
+LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5';
+$SIS_order = $order_by;
+$arrOTS = array();
+$arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
 
-".$z."
-".$order_by."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOTS,$row );
-}
 ?>
 <div class="col-sm-12 breadcrumb-bar">
 

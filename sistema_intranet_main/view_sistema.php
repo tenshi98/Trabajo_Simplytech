@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 core_sistemas.Nombre,  
 core_sistemas.Rut, 
 core_ubicacion_ciudad.Nombre AS Ciudad, 
@@ -86,9 +86,8 @@ core_sistemas.Social_instagram,
 core_sistemas.Social_linkedin,
 core_sistemas.Social_rss,
 core_sistemas.Social_youtube,
-core_sistemas.Social_tumblr
-
-FROM `core_sistemas`
+core_sistemas.Social_tumblr';
+$SIS_join  = '
 LEFT JOIN `core_ubicacion_ciudad`              ON core_ubicacion_ciudad.idCiudad                   = core_sistemas.idCiudad
 LEFT JOIN `core_ubicacion_comunas`             ON core_ubicacion_comunas.idComuna                  = core_sistemas.idComuna
 LEFT JOIN `core_theme_colors`                  ON core_theme_colors.idTheme                        = core_sistemas.Config_idTheme
@@ -106,26 +105,11 @@ LEFT JOIN `bodegas_insumos_listado`            ON bodegas_insumos_listado.idBode
 LEFT JOIN `core_sistemas_opciones_telemetria`  ON core_sistemas_opciones_telemetria.idOpcionesTel  = core_sistemas.idOpcionesTel
 LEFT JOIN `core_config_ram`                    ON core_config_ram.idConfigRam                      = core_sistemas.idConfigRam
 LEFT JOIN `core_config_time`                   ON core_config_time.idConfigTime                    = core_sistemas.idConfigTime
-LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                             = core_sistemas.Social_idUso
-
-WHERE core_sistemas.idSistema = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                             = core_sistemas.Social_idUso';
+$SIS_where = 'core_sistemas.idSistema ='.$X_Puntero;
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
-
 
 <div class="col-sm-12">
 	<div class="box">

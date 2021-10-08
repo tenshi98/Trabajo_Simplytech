@@ -36,33 +36,19 @@ if (validarNumero($_GET['view'])){
 $X_cantSensores = simpleDecode($_GET['cantSensores'], fecha_actual());
 /**************************************************************/
 //Se consultan datos
+$SIS_query = 'idGrupo, Valor, idSupervisado';
+$SIS_join  = '';
+$SIS_where = 'idSupervisado=1';
+$SIS_order = 'idGrupo ASC';
 $arrGruposRev = array();
-$query = "SELECT idGrupo, Valor, idSupervisado
-FROM `telemetria_listado_grupos_uso`
-WHERE idSupervisado=1
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGruposRev,$row );
-}
+$arrGruposRev = db_select_array (false, $SIS_query, 'telemetria_listado_grupos_uso', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposRev');
 
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_listado_tablarelacionada_".$X_Puntero.".idTabla!=0";
+$SIS_where = "telemetria_listado_tablarelacionada_".$X_Puntero.".idTabla!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['dia']) && $_GET['dia'] != ''){    $z.=" AND telemetria_listado_tablarelacionada_".$X_Puntero.".FechaSistema ='".simpleDecode($_GET['dia'], fecha_actual())."'";}
+if(isset($_GET['dia']) && $_GET['dia'] != ''){    $SIS_where.=" AND telemetria_listado_tablarelacionada_".$X_Puntero.".FechaSistema ='".simpleDecode($_GET['dia'], fecha_actual())."'";}
 
 //Se arma la queri con los datos justos recibidos
 $subquery = '';
@@ -72,42 +58,17 @@ for ($i = 1; $i <= $X_cantSensores; $i++) {
 	$subquery .= ',telemetria_listado.SensoresRevisionGrupo_'.$i;
 	$subquery .= ',telemetria_listado.SensoresNombre_'.$i;
 	$subquery .= ',telemetria_listado_tablarelacionada_'.$X_Puntero.'.Sensor_'.$i;
-
 }
 
 //Se consulta en la bd y se traen sus datos
-$arrConsulta = array(); 
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado.Nombre AS EquipoNombre,
-telemetria_listado_tablarelacionada_".$X_Puntero.".FechaSistema AS EquipoFecha,
-telemetria_listado_tablarelacionada_".$X_Puntero.".HoraSistema AS EquipoHora
-	
-".$subquery."
-
-FROM `telemetria_listado_tablarelacionada_".$X_Puntero."`
-LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria  = telemetria_listado_tablarelacionada_".$X_Puntero.".idTelemetria
-".$z." 
-ORDER BY telemetria_listado_tablarelacionada_".$X_Puntero.".FechaSistema ASC, telemetria_listado_tablarelacionada_".$X_Puntero.".HoraSistema ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-
-
-
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-
-
-
-
+telemetria_listado_tablarelacionada_'.$X_Puntero.'.FechaSistema AS EquipoFecha,
+telemetria_listado_tablarelacionada_'.$X_Puntero.'.HoraSistema AS EquipoHora'.$subquery;
+$SIS_join  = '';
+$SIS_order = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_'.$X_Puntero.'.idTelemetria';
+$arrConsulta = array();
+$arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$X_Puntero, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrConsulta');
 
 //Arreglo temporal
 $arrTable = array(); 
@@ -154,8 +115,6 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 								$arrTable['termino']['EquipoHora']       = $con['EquipoHora'];
 								$arrTable['termino']['EquipoNombre']     = $con['EquipoNombre'];
 								
-						
-								
 							}						
 						}
 					}
@@ -173,13 +132,11 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 			$arrTable['inicio']['EquipoHora']   = $con['EquipoHora'];
 			$arrTable['inicio']['EquipoNombre'] = $con['EquipoNombre'];
 		}
-		
-		
 	}
 }
 
-
 ?>
+
 <div class="col-sm-12">
 	<div class="box">
 		<header>

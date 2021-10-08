@@ -130,7 +130,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['addFile']) ) { 
 // Se traen todos los datos del analisis
-$query = "SELECT 
+$SIS_query = '
 cross_quality_analisis_calidad.idAnalisis,
 cross_quality_analisis_calidad.Creacion_fecha,
 cross_quality_analisis_calidad.idTipo,
@@ -143,25 +143,12 @@ cross_quality_analisis_calidad.idUbicacion_lvl_2,
 cross_quality_analisis_calidad.idUbicacion_lvl_3,
 cross_quality_analisis_calidad.idUbicacion_lvl_4,
 cross_quality_analisis_calidad.idUbicacion_lvl_5,
-cross_quality_analisis_calidad.idSistema
+cross_quality_analisis_calidad.idSistema';
+$SIS_join  = '';
+$SIS_where = 'cross_quality_analisis_calidad.idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
-FROM `cross_quality_analisis_calidad`
-WHERE cross_quality_analisis_calidad.idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);?>
+?>
  
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -206,110 +193,50 @@ $row_data = mysqli_fetch_assoc ($resultado);?>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['cloneMuestra']) ) { 
+/***********************************************/
+//Armo cadena
+$SIS_query  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
+for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+	$SIS_query .= ',PuntoNombre_'.$i;
+	$SIS_query .= ',PuntoidTipo_'.$i;
+	$SIS_query .= ',PuntoidGrupo_'.$i;
+}
+
+// consulto los datos
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
+$rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+/***********************************************/
+// Se trae un listado con todos los grupos
+$SIS_query = 'idGrupo, Nombre';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'Nombre ASC';
+$arrGrupo = array();
+$arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
+
+/***********************************************/
+// consulto los datos
+$SIS_query = 'idMuestras,n_folio_pallet,lote,f_embalaje,f_cosecha,H_inspeccion,cantidad,peso,idProductor,idTipo';
+$SIS_join  = '';
+$SIS_where = 'idMuestras ='.$_GET['cloneMuestra'];
+$rowMuestras = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad_muestras', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMuestras');
+
+/*****************************************************/
+// Se traen todos los datos del analisis
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
+/*****************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
-//Armo cadena
-$cadena  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
-for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-	$cadena .= ',PuntoNombre_'.$i;
-	$cadena .= ',PuntoidTipo_'.$i;
-	$cadena .= ',PuntoidGrupo_'.$i;
-}
-
-// consulto los datos
-$query = "SELECT ".$cadena."
-FROM `cross_quality_calidad_matriz`
-WHERE idMatriz = ".$_GET['idCalidad'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
-
-// Se trae un listado con todos los grupos
-$arrGrupo = array();
-$query = "SELECT idGrupo, Nombre
-FROM `cross_quality_calidad_matriz_grupos` ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupo,$row );
-}
-
-/***********************************************/
-// consulto los datos
-$query = "SELECT 
-cross_quality_analisis_calidad_muestras.idMuestras,
-cross_quality_analisis_calidad_muestras.n_folio_pallet,
-cross_quality_analisis_calidad_muestras.lote,
-cross_quality_analisis_calidad_muestras.f_embalaje,
-cross_quality_analisis_calidad_muestras.f_cosecha,
-cross_quality_analisis_calidad_muestras.H_inspeccion,
-cross_quality_analisis_calidad_muestras.cantidad,
-cross_quality_analisis_calidad_muestras.peso,
-cross_quality_analisis_calidad_muestras.idProductor,
-cross_quality_analisis_calidad_muestras.idTipo
-
-FROM `cross_quality_analisis_calidad_muestras`
-
-WHERE cross_quality_analisis_calidad_muestras.idMuestras = ".$_GET['cloneMuestra'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowMuestras = mysqli_fetch_assoc ($resultado); 
-/*****************************************************/
-// Se traen todos los datos del analisis
-$query = "SELECT idProducto
-FROM `cross_quality_analisis_calidad`
-WHERE idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -442,120 +369,48 @@ $row_data = mysqli_fetch_assoc ($resultado);
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['editMuestra']) ) { 
+/*****************************************************/
+//Armo cadena
+$SIS_query  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
+for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+	$SIS_query .= ',PuntoNombre_'.$i;
+	$SIS_query .= ',PuntoidTipo_'.$i;
+	$SIS_query .= ',PuntoidGrupo_'.$i;
+}
+// consulto los datos
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
+$rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+/*****************************************************/
+// Se trae un listado con todos los grupos
+$arrGrupo = array();
+$arrGrupo = db_select_array (false, 'idGrupo, Nombre', 'cross_quality_calidad_matriz_grupos', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
+
+/***********************************************/
+//Armo cadena
+$subquery  = '';
+for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+	$subquery .= ',cross_quality_analisis_calidad_muestras.Medida_'.$i;
+}
+// consulto los datos
+$SIS_query = 'idMuestras,n_folio_pallet,lote,f_embalaje,f_cosecha,H_inspeccion,cantidad,peso,Resolucion_1,Resolucion_2,Resolucion_3,idProductor,idTipo'.$subquery;
+$SIS_join  = '';
+$SIS_where = 'idMuestras ='.$_GET['editMuestra'];
+$rowMuestras = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad_muestras', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMuestras');
+	
+/*****************************************************/
+// Se traen todos los datos del analisis
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	 
+/*****************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
-//Armo cadena
-$cadena  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
-for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-	$cadena .= ',PuntoNombre_'.$i;
-	$cadena .= ',PuntoidTipo_'.$i;
-	$cadena .= ',PuntoidGrupo_'.$i;
-}
-
-// consulto los datos
-$query = "SELECT ".$cadena."
-FROM `cross_quality_calidad_matriz`
-WHERE idMatriz = ".$_GET['idCalidad'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
-
-// Se trae un listado con todos los grupos
-$arrGrupo = array();
-$query = "SELECT idGrupo, Nombre
-FROM `cross_quality_calidad_matriz_grupos` ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupo,$row );
-}
-
-/***********************************************/
-//Armo cadena
-$cadena  = '';
-for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-	$cadena .= ',cross_quality_analisis_calidad_muestras.Medida_'.$i;
-}
-
-// consulto los datos
-$query = "SELECT 
-cross_quality_analisis_calidad_muestras.idMuestras,
-cross_quality_analisis_calidad_muestras.n_folio_pallet,
-cross_quality_analisis_calidad_muestras.lote,
-cross_quality_analisis_calidad_muestras.f_embalaje,
-cross_quality_analisis_calidad_muestras.f_cosecha,
-cross_quality_analisis_calidad_muestras.H_inspeccion,
-cross_quality_analisis_calidad_muestras.cantidad,
-cross_quality_analisis_calidad_muestras.peso,
-cross_quality_analisis_calidad_muestras.Resolucion_1,
-cross_quality_analisis_calidad_muestras.Resolucion_2,
-cross_quality_analisis_calidad_muestras.Resolucion_3,
-cross_quality_analisis_calidad_muestras.idProductor,
-cross_quality_analisis_calidad_muestras.idTipo
-
-
-".$cadena."
-FROM `cross_quality_analisis_calidad_muestras`
-
-WHERE cross_quality_analisis_calidad_muestras.idMuestras = ".$_GET['editMuestra'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowMuestras = mysqli_fetch_assoc ($resultado);
-/*****************************************************/
-// Se traen todos los datos del analisis
-$query = "SELECT idProducto
-FROM `cross_quality_analisis_calidad`
-WHERE idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado); 
 ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -656,7 +511,6 @@ $row_data = mysqli_fetch_assoc ($resultado);
 										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 10);
 										break;
 								
-									
 								}
 							}
 						}
@@ -679,8 +533,6 @@ $row_data = mysqli_fetch_assoc ($resultado);
 
 				?>
 				
-				
-				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_muestra">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -693,77 +545,35 @@ $row_data = mysqli_fetch_assoc ($resultado);
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addMuestra']) ) { 
+//Armo cadena
+$SIS_query  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
+for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+	$SIS_query .= ',PuntoNombre_'.$i;
+	$SIS_query .= ',PuntoidTipo_'.$i;
+	$SIS_query .= ',PuntoidGrupo_'.$i;
+}
+// consulto los datos
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
+$rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+/*****************************************************/
+// Se trae un listado con todos los grupos
+$arrGrupo = array();
+$arrGrupo = db_select_array (false, 'idGrupo, Nombre', 'cross_quality_calidad_matriz_grupos', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
+
+/*****************************************************/
+// Se traen todos los datos del analisis
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
+/*****************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
-//Armo cadena
-$cadena  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3';
-for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-	$cadena .= ',PuntoNombre_'.$i;
-	$cadena .= ',PuntoidTipo_'.$i;
-	$cadena .= ',PuntoidGrupo_'.$i;
-}
-
-// consulto los datos
-$query = "SELECT ".$cadena."
-FROM `cross_quality_calidad_matriz`
-WHERE idMatriz = ".$_GET['idCalidad'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
-
-// Se trae un listado con todos los grupos
-$arrGrupo = array();
-$query = "SELECT idGrupo, Nombre
-FROM `cross_quality_calidad_matriz_grupos` ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupo,$row );
-}
-/*****************************************************/
-// Se traen todos los datos del analisis
-$query = "SELECT idProducto
-FROM `cross_quality_analisis_calidad`
-WHERE idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
 ?>
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -883,8 +693,6 @@ $row_data = mysqli_fetch_assoc ($resultado);
 
 				?>
 				
-				
-				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_muestra">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -897,41 +705,16 @@ $row_data = mysqli_fetch_assoc ($resultado);
 </div>	
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addMaquina']) ) { 
+// Se traen todos los datos del analisis
+$SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
+/*************************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  
-// Se traen todos los datos del analisis
-$query = "SELECT 
-cross_quality_analisis_calidad.idAnalisis,
-cross_quality_analisis_calidad.Creacion_fecha,
-cross_quality_analisis_calidad.idTipo,
-cross_quality_analisis_calidad.Temporada,
-cross_quality_analisis_calidad.idCategoria,
-cross_quality_analisis_calidad.idProducto,
-cross_quality_analisis_calidad.idUbicacion,
-cross_quality_analisis_calidad.idUbicacion_lvl_1,
-cross_quality_analisis_calidad.idUbicacion_lvl_2,
-cross_quality_analisis_calidad.idUbicacion_lvl_3,
-cross_quality_analisis_calidad.idUbicacion_lvl_4,
-cross_quality_analisis_calidad.idUbicacion_lvl_5,
-cross_quality_analisis_calidad.idSistema
-
-FROM `cross_quality_analisis_calidad`
-WHERE cross_quality_analisis_calidad.idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -979,41 +762,16 @@ $row_data = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addTrab']) ) { 
-//Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	 
+ } elseif ( ! empty($_GET['addTrab']) ) { 	 
 // Se traen todos los datos del analisis
-$query = "SELECT 
-cross_quality_analisis_calidad.idAnalisis,
-cross_quality_analisis_calidad.Creacion_fecha,
-cross_quality_analisis_calidad.idTipo,
-cross_quality_analisis_calidad.Temporada,
-cross_quality_analisis_calidad.idCategoria,
-cross_quality_analisis_calidad.idProducto,
-cross_quality_analisis_calidad.idUbicacion,
-cross_quality_analisis_calidad.idUbicacion_lvl_1,
-cross_quality_analisis_calidad.idUbicacion_lvl_2,
-cross_quality_analisis_calidad.idUbicacion_lvl_3,
-cross_quality_analisis_calidad.idUbicacion_lvl_4,
-cross_quality_analisis_calidad.idUbicacion_lvl_5,
-cross_quality_analisis_calidad.idSistema
+$SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
-FROM `cross_quality_analisis_calidad`
-WHERE cross_quality_analisis_calidad.idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+/*************************************************************/
+//Verifico el tipo de usuario que esta ingresando
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -1064,37 +822,10 @@ $row_data = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
 // Se traen todos los datos del analisis
-$query = "SELECT 
-cross_quality_analisis_calidad.Creacion_fecha,
-cross_quality_analisis_calidad.idTipo,
-cross_quality_analisis_calidad.Temporada,
-cross_quality_analisis_calidad.idCategoria,
-cross_quality_analisis_calidad.idProducto,
-cross_quality_analisis_calidad.idUbicacion,
-cross_quality_analisis_calidad.idUbicacion_lvl_1,
-cross_quality_analisis_calidad.idUbicacion_lvl_2,
-cross_quality_analisis_calidad.idUbicacion_lvl_3,
-cross_quality_analisis_calidad.idUbicacion_lvl_4,
-cross_quality_analisis_calidad.idUbicacion_lvl_5,
-cross_quality_analisis_calidad.Observaciones,
-cross_quality_analisis_calidad.idSistema
-
-FROM `cross_quality_analisis_calidad`
-WHERE cross_quality_analisis_calidad.idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);	 
+$SIS_query = 'Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,Observaciones,idSistema';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 	 
 ?>
 
@@ -1161,7 +892,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['edit']) ) { 
 // Se traen todos los datos del analisis
-$query = "SELECT 
+$SIS_query = '
 cross_quality_analisis_calidad.fecha_auto,
 cross_quality_analisis_calidad.Creacion_fecha,
 cross_quality_analisis_calidad.Temporada,
@@ -1179,9 +910,8 @@ ubicacion_listado_level_1.Nombre AS UbicacionNombre_lvl_1,
 ubicacion_listado_level_2.Nombre AS UbicacionNombre_lvl_2,
 ubicacion_listado_level_3.Nombre AS UbicacionNombre_lvl_3,
 ubicacion_listado_level_4.Nombre AS UbicacionNombre_lvl_4,
-ubicacion_listado_level_5.Nombre AS UbicacionNombre_lvl_5
-
-FROM `cross_quality_analisis_calidad`
+ubicacion_listado_level_5.Nombre AS UbicacionNombre_lvl_5';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                          ON core_sistemas.idSistema                      = cross_quality_analisis_calidad.idSistema
 LEFT JOIN `usuarios_listado`                       ON usuarios_listado.idUsuario                   = cross_quality_analisis_calidad.idUsuario
 LEFT JOIN `core_cross_quality_analisis_calidad`    ON core_cross_quality_analisis_calidad.idTipo   = cross_quality_analisis_calidad.idTipo
@@ -1193,137 +923,60 @@ LEFT JOIN `ubicacion_listado_level_2`              ON ubicacion_listado_level_2.
 LEFT JOIN `ubicacion_listado_level_3`              ON ubicacion_listado_level_3.idLevel_3          = cross_quality_analisis_calidad.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`              ON ubicacion_listado_level_4.idLevel_4          = cross_quality_analisis_calidad.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.idLevel_5          = cross_quality_analisis_calidad.idUbicacion_lvl_5
-LEFT JOIN `cross_quality_calidad_matriz`           ON cross_quality_calidad_matriz.idMatriz        = productos_listado.idCalidad
-WHERE cross_quality_analisis_calidad.idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `cross_quality_calidad_matriz`           ON cross_quality_calidad_matriz.idMatriz        = productos_listado.idCalidad';
+$SIS_where = 'cross_quality_analisis_calidad.idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
 
 /***************************************************/				
 // Se trae un listado con todos los trabajadores
-$arrTrabajadores = array();
-$query = "SELECT 
+$SIS_query = '
 cross_quality_analisis_calidad_trabajador.idTrabajadores,
 trabajadores_listado.Nombre, 
 trabajadores_listado.ApellidoPat, 
 trabajadores_listado.ApellidoMat, 
 trabajadores_listado.Cargo, 
-trabajadores_listado.Rut
+trabajadores_listado.Rut';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador = cross_quality_analisis_calidad_trabajador.idTrabajador';
+$SIS_where = 'cross_quality_analisis_calidad_trabajador.idAnalisis = '.$_GET['edit'];
+$SIS_order = 'trabajadores_listado.ApellidoPat ASC';
+$arrTrabajadores = array();
+$arrTrabajadores = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad_trabajador', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTrabajadores');
 
-FROM `cross_quality_analisis_calidad_trabajador` 
-LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = cross_quality_analisis_calidad_trabajador.idTrabajador
-WHERE cross_quality_analisis_calidad_trabajador.idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTrabajadores,$row );
-}
 /***************************************************/				
 // Se trae un listado con todas las maquinas
-$arrMaquinas = array();
-$query = "SELECT 
+$SIS_query = '
 cross_quality_analisis_calidad_maquina.idMaquinas,
-maquinas_listado.Nombre
+maquinas_listado.Nombre';
+$SIS_join  = 'LEFT JOIN `maquinas_listado` ON maquinas_listado.idMaquina = cross_quality_analisis_calidad_maquina.idMaquina';
+$SIS_where = 'cross_quality_analisis_calidad_maquina.idAnalisis ='.$_GET['edit'];
+$SIS_order = 'maquinas_listado.Nombre ASC';
+$arrMaquinas = array();
+$arrMaquinas = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad_maquina', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMaquinas');
 
-FROM `cross_quality_analisis_calidad_maquina` 
-LEFT JOIN `maquinas_listado`  ON maquinas_listado.idMaquina   = cross_quality_analisis_calidad_maquina.idMaquina
-WHERE cross_quality_analisis_calidad_maquina.idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMaquinas,$row );
-}
 /***************************************************/				
 // Se trae un listado con todas las muestras
-$arrMuestras = array();
-$query = "SELECT 
+$SIS_query = '
 cross_quality_analisis_calidad_muestras.idMuestras, 
 cross_quality_analisis_calidad_muestras.n_folio_pallet,
 cross_quality_analisis_calidad_muestras.lote,
-productores_listado.Nombre AS ProductorNombre
+productores_listado.Nombre AS ProductorNombre';
+$SIS_join  = 'LEFT JOIN `productores_listado` ON productores_listado.idProductor = cross_quality_analisis_calidad_muestras.idProductor';
+$SIS_where = 'cross_quality_analisis_calidad_muestras.idAnalisis ='.$_GET['edit'];
+$SIS_order = 'cross_quality_analisis_calidad_muestras.idMuestras ASC';
+$arrMuestras = array();
+$arrMuestras = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad_muestras', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMuestras');
 
-FROM `cross_quality_analisis_calidad_muestras` 
-LEFT JOIN `productores_listado`  ON productores_listado.idProductor   = cross_quality_analisis_calidad_muestras.idProductor
-WHERE cross_quality_analisis_calidad_muestras.idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMuestras,$row );
-}
 /***************************************************/				
 // Se trae un listado con todos los archivos
+$SIS_query = 'idArchivo, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$_GET['edit'];
+$SIS_order = 'Nombre ASC';
 $arrArchivos = array();
-$query = "SELECT idArchivo, Nombre
-
-FROM `cross_quality_analisis_calidad_archivo` 
-WHERE idAnalisis = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
-				
+$arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad_archivo', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivos');
 						
 ?>
-
-
-
  
 <div class="col-sm-12">
 
@@ -1385,7 +1038,7 @@ array_push( $arrArchivos,$row );
 						<a href="<?php echo $new_location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajadores</a>
 					</td>
 				</tr>
-				<?php if ($arrTrabajadores) {
+				<?php if ($arrTrabajadores!=false) {
 					foreach ($arrTrabajadores as $trab) { ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $trab['Rut'];?></td>
@@ -1413,7 +1066,7 @@ array_push( $arrArchivos,$row );
 					</td>
 				</tr>
 				<?php 
-				if ($arrMaquinas) {
+				if ($arrMaquinas!=false) {
 					foreach ($arrMaquinas as $maq) { ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="5"><?php echo $maq['Nombre'];?></td>
@@ -1445,7 +1098,7 @@ array_push( $arrArchivos,$row );
 					<td></td>
 				</tr>
 				<?php 
-				if ($arrMuestras) {
+				if ($arrMuestras!=false) {
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($arrMuestras as $muestra) { ?>
 						<tr class="item-row linea_punteada">
@@ -1491,7 +1144,7 @@ array_push( $arrArchivos,$row );
             </tr>		  
             
 			<?php 
-			if ($arrArchivos){
+			if ($arrArchivos!=false){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
 				foreach ($arrArchivos as $producto){?>

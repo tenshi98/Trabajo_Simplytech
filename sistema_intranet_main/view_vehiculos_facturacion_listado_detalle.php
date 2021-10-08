@@ -35,7 +35,7 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 //Se traen todos los datos
-$query = "SELECT
+$SIS_query = '
 vehiculos_facturacion_listado_detalle.idFacturacionDetalle,
 
 hijo_1.Nombre AS Hijo_1_Nombre,
@@ -54,7 +54,6 @@ hijo_5.Nombre AS Hijo_5_Nombre,
 hijo_5.ApellidoPat AS Hijo_5_ApellidoPat,
 hijo_5.ApellidoMat AS Hijo_5_ApellidoMat,
 
-
 vehiculo_1.Nombre AS Vehiculo_1_Nombre,
 vehiculo_1.Patente AS Vehiculo_1_Patente,
 vehiculo_2.Nombre AS Vehiculo_2_Nombre,
@@ -65,7 +64,6 @@ vehiculo_4.Nombre AS Vehiculo_4_Nombre,
 vehiculo_4.Patente AS Vehiculo_4_Patente,
 vehiculo_5.Nombre AS Vehiculo_5_Nombre,
 vehiculo_5.Patente AS Vehiculo_5_Patente,
-
 
 core_sistemas.Nombre AS SistemaNombre,
 core_sistemas.Rut AS SistemaRut,
@@ -95,9 +93,8 @@ vehiculos_facturacion_listado_detalle.Monto_5,
 vehiculos_facturacion_listado_detalle.MontoSubTotal,
 vehiculos_facturacion_listado_detalle.MontoAtraso,
 vehiculos_facturacion_listado_detalle.MontoAdelanto,
-vehiculos_facturacion_listado_detalle.MontoTotal
-
-FROM `vehiculos_facturacion_listado_detalle`
+vehiculos_facturacion_listado_detalle.MontoTotal';
+$SIS_join  = '
 LEFT JOIN `apoderados_listado_hijos`  hijo_1    ON hijo_1.idHijos                       = vehiculos_facturacion_listado_detalle.idHijos_1
 LEFT JOIN `apoderados_listado_hijos`  hijo_2    ON hijo_2.idHijos                       = vehiculos_facturacion_listado_detalle.idHijos_2
 LEFT JOIN `apoderados_listado_hijos`  hijo_3    ON hijo_3.idHijos                       = vehiculos_facturacion_listado_detalle.idHijos_3
@@ -113,26 +110,9 @@ LEFT JOIN `core_sistemas`                       ON core_sistemas.idSistema      
 LEFT JOIN `core_ubicacion_comunas`   siscom     ON siscom.idComuna                      = core_sistemas.idComuna
 LEFT JOIN `core_ubicacion_ciudad`    sisciu     ON sisciu.idCiudad                      = core_sistemas.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   apocom     ON apocom.idComuna                      = apoderados_listado.idComuna
-LEFT JOIN `core_ubicacion_ciudad`    apociu     ON apociu.idCiudad                      = apoderados_listado.idCiudad
-
-WHERE vehiculos_facturacion_listado_detalle.idFacturacionDetalle = ".$X_Puntero;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowDatos = mysqli_fetch_assoc ($resultado);
-
-
- 
+LEFT JOIN `core_ubicacion_ciudad`    apociu     ON apociu.idCiudad                      = apoderados_listado.idCiudad';
+$SIS_where = 'vehiculos_facturacion_listado_detalle.idFacturacionDetalle ='.$X_Puntero;
+$rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowDatos');
 
 ?>
 
@@ -144,13 +124,6 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 
 		</div>
 	</div>
-
-
-
-
-
-
-
 
 	<div class="row">
 		<div class="invoice">
@@ -249,9 +222,6 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 							<td align="right"><?php echo Valores($rowDatos['Monto_5'], 0);?></td>
 						</tr>	
 					<?php }?>
-								
-
-					
 					
 					<tr>
 						<td colspan="2"><strong>Subtotal</strong></td>
@@ -270,12 +240,9 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 						<td align="right"><strong><?php echo Valores($rowDatos['MontoTotal'], 0); ?></strong></td>
 					</tr>
 					
-					
 				</tbody>
 			</table>
 		
-			
-			
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="col-sm-12 well well-sm no-shadow" style="background-color: #fff;">
@@ -285,7 +252,6 @@ $rowDatos = mysqli_fetch_assoc ($resultado);
 			</div>
 		</div>
 	</div>
-
 
 </div>
 

@@ -158,6 +158,15 @@ $SIS_order = 'idImpuesto ASC';
 $arrImpuestos = array();
 $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrImpuestos');
 
+/*****************************************/	
+//Recorro y guard el nombre de los impuestos 
+$nn = 0;
+$impuestos = array();
+foreach ($arrImpuestos as $impto) { 
+	$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
+	$nn++;
+}
+					
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -178,7 +187,6 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 
 <div class="row">
 	<div class="col-xs-12">
-			
 		
 		<table style="margin: 1%; width: 98%;"   cellpadding="10" cellspacing="0">
 			<tr>
@@ -255,55 +263,55 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						$total = 0;
 						//Listado de productos solicitados
 						foreach ($arrProductos as $prod) { 
-						$html .= '<tr>
-								<td>'.$nn.'</td>
-								<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
-								<td>'.$prod['Unidad'].'</td>
-								<td>'.$prod['Nombre'].'</td>
-								<td align="right">'.Valores($prod['vUnitario'], 0).'</td>
-								<td align="right">'.Valores($prod['vTotal'], 0).'</td>
-							</tr>';
-						$total = $total + $prod['vTotal'];
-						$nn++;
+							$html .= '<tr>
+									<td>'.$nn.'</td>
+									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
+									<td>'.$prod['Unidad'].'</td>
+									<td>'.$prod['Nombre'].'</td>
+									<td align="right">'.Valores($prod['vUnitario'], 0).'</td>
+									<td align="right">'.Valores($prod['vTotal'], 0).'</td>
+								</tr>';
+							$total = $total + $prod['vTotal'];
+							$nn++;
 						}
 						//listado de insumos solicitados
 						foreach ($arrInsumos as $prod) { 
-						$html .= '<tr>
-								<td>'.$nn.'</td>
-								<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
-								<td>'.$prod['Unidad'].'</td>
-								<td>'.$prod['Nombre'].'</td>
-								<td align="right">'.Valores($prod['vUnitario'], 0).'</td>
-								<td align="right">'.Valores($prod['vTotal'], 0).'</td>
-							</tr>';
-						$total = $total + $prod['vTotal'];
-						$nn++;
+							$html .= '<tr>
+									<td>'.$nn.'</td>
+									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
+									<td>'.$prod['Unidad'].'</td>
+									<td>'.$prod['Nombre'].'</td>
+									<td align="right">'.Valores($prod['vUnitario'], 0).'</td>
+									<td align="right">'.Valores($prod['vTotal'], 0).'</td>
+								</tr>';
+							$total = $total + $prod['vTotal'];
+							$nn++;
 						}
 						//listado de arriendos solicitados
 						foreach ($arrArriendos as $prod) { 
-						$html .= '<tr>
-								<td>'.$nn.'</td>
-								<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
-								<td>'.$prod['Frecuencia'].'</td>
-								<td>'.$prod['Nombre'].'</td>
-								<td align="right">'.Valores($prod['vUnitario'], 0).'</td>
-								<td align="right">'.Valores($prod['vTotal'], 0).'</td>
-							</tr>';
-						$total = $total + $prod['vTotal'];
-						$nn++;
+							$html .= '<tr>
+									<td>'.$nn.'</td>
+									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
+									<td>'.$prod['Frecuencia'].'</td>
+									<td>'.$prod['Nombre'].'</td>
+									<td align="right">'.Valores($prod['vUnitario'], 0).'</td>
+									<td align="right">'.Valores($prod['vTotal'], 0).'</td>
+								</tr>';
+							$total = $total + $prod['vTotal'];
+							$nn++;
 						}
 						//listado de servicios solicitados
 						foreach ($arrServicios as $prod) { 
-						$html .= '<tr>
-								<td>'.$nn.'</td>
-								<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
-								<td>'.$prod['Frecuencia'].'</td>
-								<td>'.$prod['Nombre'].'</td>
-								<td align="right">'.Valores($prod['vUnitario'], 0).'</td>
-								<td align="right">'.Valores($prod['vTotal'], 0).'</td>
-							</tr>';
-						$total = $total + $prod['vTotal'];
-						$nn++;
+							$html .= '<tr>
+									<td>'.$nn.'</td>
+									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
+									<td>'.$prod['Frecuencia'].'</td>
+									<td>'.$prod['Nombre'].'</td>
+									<td align="right">'.Valores($prod['vUnitario'], 0).'</td>
+									<td align="right">'.Valores($prod['vTotal'], 0).'</td>
+								</tr>';
+							$total = $total + $prod['vTotal'];
+							$nn++;
 						}
 						//se completan las lineas
 						for ($i = $nn; $i <= 18; $i++) {
@@ -319,14 +327,6 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						}
 
 					
-					
-					//Recorro y guard el nombre de los impuestos 
-					$nn = 0;
-					$impuestos = array();
-					foreach ($arrImpuestos as $impto) { 
-						$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
-						$nn++;
-					}
 					if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){
 						$html .= '
 						<tr>
@@ -412,14 +412,9 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						</tr>';
 					}
 				
-		
 					$html .= '
 			</table>
 
-			
-			  
-					
-			
 					<br/>
 					<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 						<tr>
@@ -434,8 +429,6 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 			</tr>
 		</table>
 		
-		
-			
 	</div>   
 </div>	
 ';
