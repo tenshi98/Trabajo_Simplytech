@@ -184,7 +184,7 @@ $html .= '
 					</thead>
 					<tbody>';
 					//si existen productos
-					if ($arrRendiciones!=false) {
+					if ($arrRendiciones!=false && !empty($arrRendiciones) && $arrRendiciones!='') {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="3"><strong>Rendiciones</strong></td></tr>';
 						foreach ($arrRendiciones as $prod) {
 							$html .= '<tr>
@@ -202,7 +202,7 @@ $html .= '
 					}
 					
 					//si existen productos
-					if ($arrDocumentos!=false) {
+					if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="3"><strong>Montos</strong></td></tr>';
 						foreach ($arrDocumentos as $prod) {
 							$html .= '<tr>

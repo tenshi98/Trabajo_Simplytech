@@ -596,7 +596,7 @@ if($row_data['MontoPagado']!=0){?>
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrServicios!=false) { ?>
+					<?php if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!='') { ?>
 						<tr class="active"><td colspan="5"><strong>Servicios</strong></td></tr>
 						<?php foreach ($arrServicios as $prod) { ?>
 							<tr>
@@ -611,7 +611,7 @@ if($row_data['MontoPagado']!=0){?>
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrGuias!=false) { ?>
+					<?php if ($arrGuias!=false && !empty($arrGuias) && $arrGuias!='') { ?>
 						<tr class="active"><td colspan="5"><strong>Guias de Despacho</strong></td></tr>
 						<?php foreach ($arrGuias as $guia) { ?>
 							<tr>
@@ -620,7 +620,7 @@ if($row_data['MontoPagado']!=0){?>
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrOtros!=false) { ?>
+					<?php if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') { ?>
 						<tr class="active"><td colspan="5"><strong>Otros</strong></td></tr>
 						<?php foreach ($arrOtros as $otro) { ?>
 							<tr>
@@ -762,7 +762,7 @@ if($row_data['MontoPagado']!=0){?>
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial!=false){ ?>
+	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -784,7 +784,7 @@ if($row_data['MontoPagado']!=0){?>
 		</table>
 	<?php } ?>
 
-	<?php if ($arrArchivo!=false){ ?>
+	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

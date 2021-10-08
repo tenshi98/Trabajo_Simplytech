@@ -1152,7 +1152,7 @@ $total_margen_total         = 0;
 $total_ing_total            = 0;
 
 /**********************************************************/					
-if($arrTemp[1]!=false){
+if($arrTemp[1]!=false && !empty($arrTemp[1]) && $arrTemp[1]!=''){
 	foreach ($arrTemp[1] as $trab) {
 		//calculos
 		$margen_tel   = $trab['Total_1']-$trab['Total_4'];
@@ -1206,7 +1206,7 @@ if($arrTemp[1]!=false){
 	}
 } 
 /**********************************************************/					
-if($arrTemp[2]!=false){
+if($arrTemp[2]!=false && !empty($arrTemp[2]) && $arrTemp[2]!=''){
 	foreach ($arrTemp[2] as $trab) {
 		//calculos
 		$margen_tel   = $trab['Total_1']-$trab['Total_4'];
@@ -1260,7 +1260,7 @@ if($arrTemp[2]!=false){
 	}
 }
 /**********************************************************/					
-if($arrTemp[3]!=false){
+if($arrTemp[3]!=false && !empty($arrTemp[3]) && $arrTemp[3]!=''){
 	foreach ($arrTemp[3] as $trab) {
 		//calculos
 		$margen_tel   = $trab['Total_1']-$trab['Total_4'];
@@ -1314,7 +1314,7 @@ if($arrTemp[3]!=false){
 	}
 }
 /**********************************************************/					
-if($arrTemp[4]!=false){
+if($arrTemp[4]!=false && !empty($arrTemp[4]) && $arrTemp[4]!=''){
 	foreach ($arrTemp[4] as $trab) {
 		//calculos
 		$margen_tel   = $trab['Total_1']-$trab['Total_4'];
@@ -1368,7 +1368,7 @@ if($arrTemp[4]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[5]!=false){
+if($arrTemp[5]!=false && !empty($arrTemp[5]) && $arrTemp[5]!=''){
 	foreach ($arrTemp[5] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
@@ -1407,7 +1407,7 @@ if($arrTemp[5]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[6]!=false){
+if($arrTemp[6]!=false && !empty($arrTemp[6]) && $arrTemp[6]!=''){
 	foreach ($arrTemp[6] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
@@ -1446,7 +1446,7 @@ if($arrTemp[6]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[7]!=false){
+if($arrTemp[7]!=false && !empty($arrTemp[7]) && $arrTemp[7]!=''){
 	foreach ($arrTemp[7] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
@@ -1485,7 +1485,7 @@ if($arrTemp[7]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[8]!=false){
+if($arrTemp[8]!=false && !empty($arrTemp[8]) && $arrTemp[8]!=''){
 	foreach ($arrTemp[8] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
@@ -1524,7 +1524,7 @@ if($arrTemp[8]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[9]!=false){
+if($arrTemp[9]!=false && !empty($arrTemp[9]) && $arrTemp[9]!=''){
 	foreach ($arrTemp[9] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
@@ -1563,7 +1563,7 @@ if($arrTemp[9]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[10]!=false){
+if($arrTemp[10]!=false && !empty($arrTemp[10]) && $arrTemp[10]!=''){
 	foreach ($arrTemp[10] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
@@ -1602,7 +1602,7 @@ if($arrTemp[10]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[11]!=false){
+if($arrTemp[11]!=false && !empty($arrTemp[11]) && $arrTemp[11]!=''){
 	foreach ($arrTemp[11] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
@@ -1641,7 +1641,7 @@ if($arrTemp[11]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[12]!=false){
+if($arrTemp[12]!=false && !empty($arrTemp[12]) && $arrTemp[12]!=''){
 	foreach ($arrTemp[12] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
@@ -1680,7 +1680,7 @@ if($arrTemp[12]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[13]!=false){
+if($arrTemp[13]!=false && !empty($arrTemp[13]) && $arrTemp[13]!=''){
 	foreach ($arrTemp[13] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
@@ -1719,7 +1719,7 @@ if($arrTemp[13]!=false){
 	}
 }
 /**********************************************************/
-if($arrTemp[14]!=false){
+if($arrTemp[14]!=false && !empty($arrTemp[14]) && $arrTemp[14]!=''){
 	foreach ($arrTemp[14] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;

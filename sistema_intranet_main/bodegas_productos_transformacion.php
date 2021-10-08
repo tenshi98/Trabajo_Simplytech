@@ -262,7 +262,7 @@ $max = 1000000 ;
                 <th width="90">Necesario</th>
                 <th width="90">En Bodega</th>
             </tr>
-            <?php if($arrRecetas!=false) { ?>	              
+            <?php if($arrRecetas!=false && !empty($arrRecetas) && $arrRecetas!='') { ?>	              
 				<?php 
 				//Se cuentan los productos inactivos
 				$inactivos = 0;

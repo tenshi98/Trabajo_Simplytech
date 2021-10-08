@@ -138,7 +138,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrDocumentos!=false) {
+					<?php if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') {
 						foreach ($arrDocumentos as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Descripcion']; ?></td>
@@ -195,7 +195,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial!=false){ ?>
+	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -217,7 +217,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 		</table>
 	<?php } ?>
 	
-	<?php if ($arrArchivo!=false){ ?>
+	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

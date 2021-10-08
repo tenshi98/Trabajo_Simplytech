@@ -445,7 +445,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 								<br/>
 								<strong class="color-red-dark">Contratos</strong><br/>
 								<strong>Utilizacion de Contratos : </strong><?php echo $rowdata['Contratos']; ?><br/>
-								<?php if($arrContratos!=false){ ?>
+								<?php if($arrContratos!=false && !empty($arrContratos) && $arrContratos!=''){ ?>
 									<table id="items" style="margin-bottom: 20px;">
 										<tbody>
 											<?php foreach ($arrContratos as $carga) { ?>

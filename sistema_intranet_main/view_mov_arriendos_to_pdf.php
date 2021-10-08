@@ -416,7 +416,7 @@ $html .= '
 					</thead>
 					<tbody>';
 					//si existen productos
-					if ($arrArriendos!=false) {
+					if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!='') {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Productos</strong></td></tr>';
 						foreach ($arrArriendos as $prod) {
 							$html .= '<tr>
@@ -433,7 +433,7 @@ $html .= '
 						}
 					}
 					//si existen guias
-					if ($arrGuias!=false) {
+					if ($arrGuias!=false && !empty($arrGuias) && $arrGuias!='') {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Guias de Despacho</strong></td></tr>';
 						foreach ($arrGuias as $guia) {
 							$html .= '<tr>
@@ -444,7 +444,7 @@ $html .= '
 					}
 					
 					//si existen guias
-					if ($arrOtros!=false) {
+					if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Otros</strong></td></tr>';
 						foreach ($arrOtros as $otro) {
 							$html .= '<tr>

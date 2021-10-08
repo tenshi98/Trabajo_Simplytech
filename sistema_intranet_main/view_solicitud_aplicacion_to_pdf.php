@@ -307,7 +307,7 @@ $html .= '
                     $TotLitrosApliXhect     = 0;
                     
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrCuarteles!=false) {
+					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
 						foreach ($arrCuarteles as $cuartel) { 
 							//Verifico el tipo de cierre
 							if(isset($cuartel['CuartelidEjecucion'])&&$cuartel['CuartelidEjecucion']==1){
@@ -358,7 +358,7 @@ $html .= '
 								$html .= '<td>'.Cantidades($LitrosApliXhect,1).'</td>';  
 								$html .= '<td>'.$ndatax1.'</td>'; 
 								$html .= '<td>';
-									if ($arrTracxCuartel!=false) {
+									if ($arrTracxCuartel!=false && !empty($arrTracxCuartel) && $arrTracxCuartel!='') {
 										foreach ($arrTracxCuartel as $tract) {
 											if($cuartel['idZona']==$tract['idZona']){
 												$html .= '<i class="fa fa-truck" aria-hidden="true"></i> '.$tract['VehiculoNombre'].' '.$tract['TelemetriaNombre'].'<br/>';
@@ -412,7 +412,7 @@ $html .= '
 					//Variable
 					$NProd = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrProductos!=false) {
+					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
 						foreach ($arrProductos as $prod) { 
 							$NProd++;
 							$html .= '
@@ -455,7 +455,7 @@ $html .= '
 					$Capacidad  = 0;
 					$NTract     = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrTractores!=false) {
+					if ($arrTractores!=false && !empty($arrTractores) && $arrTractores!='') {
 						foreach ($arrTractores as $tract) { 
 							//Se suman cantidades
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
@@ -495,7 +495,7 @@ $html .= '
 					//Variable
 					$nmb = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrProductos!=false) {
+					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
 						foreach ($arrProductos as $prod) { 
 							$PromedioCapacidad = $Capacidad/$NTract;
 							if($PromedioCapacidad!=0){$s_valor = Cantidades(($row_data['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{$s_valor = 0;}
@@ -530,7 +530,7 @@ $html .= '
 					</thead>
 					<tbody>';
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrMateriales!=false) {
+					if ($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!='') {
 						foreach ($arrMateriales as $prod) { 
 							$html .= '
 							<tr>

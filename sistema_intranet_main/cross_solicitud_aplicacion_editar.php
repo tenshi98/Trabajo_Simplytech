@@ -1230,7 +1230,7 @@ foreach ($arrProductos as $prod) {
 				</tr>
 				<?php 
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrMateriales!=false) {
+					if ($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!='') {
 						foreach ($arrMateriales as $prod) { ?>
 						
 							<tr class="item-row linea_punteada">
@@ -1266,7 +1266,7 @@ foreach ($arrProductos as $prod) {
 				</tr>
 				<?php 
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrCuarteles!=false) {
+					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
 						foreach ($arrCuarteles as $cuartel) { ?>
 							<tr class="item-row linea_punteada" style="background: #eee;">
 								<td class="item-name"><?php echo $cuartel['CuartelNombre'];if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ echo '(Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';} ?></td>

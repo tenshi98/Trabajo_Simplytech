@@ -166,7 +166,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 				$data_column = 2;
 				$arrColumnas = array();
 				//verifico si existen horas
-				if ($arrHorasExtras!=false){
+				if ($arrHorasExtras!=false && !empty($arrHorasExtras) && $arrHorasExtras!=''){
 					//recorro las horas
 					foreach ($arrHorasExtras as $key => $producto){
 						foreach ($producto as $prod) {
@@ -195,7 +195,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 				echo '</tr>';
 					
 				/***************************************************/
-				if ($arrHorasExtras!=false){
+				if ($arrHorasExtras!=false && !empty($arrHorasExtras) && $arrHorasExtras!=''){
 					//recorro las horas
 					foreach ($arrHorasExtras as $key => $producto){
 						//Variables
@@ -247,7 +247,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 		</table>
     </div>
     
-    <?php if ($arrArchivo!=false){ ?>
+    <?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

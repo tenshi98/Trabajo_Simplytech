@@ -611,7 +611,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 									<tr class="item-row linea_punteada">
 										<td class="item-name">
 											<span style="word-wrap: break-word;white-space: initial;"><?php echo $preg['Contenido_Nombre']; ?></span>	
-											<?php if($arrFiles!=false){ 
+											<?php if($arrFiles!=false && !empty($arrFiles) && $arrFiles!=''){ 
 												//verifico que existan archivos en esta unidad
 												$x_n_arch = 0;
 												foreach ($arrFiles as $file) {
@@ -649,7 +649,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 													<?php } ?>
 												<?php } ?>
 											<?php } ?>
-											<?php if($arrCuestionarios!=false){ 
+											<?php if($arrCuestionarios!=false && !empty($arrCuestionarios) && $arrCuestionarios!=''){ 
 												//verifico que existan archivos en esta unidad
 												$x_n_Cuest = 0;
 												foreach ($arrCuestionarios as $file) {

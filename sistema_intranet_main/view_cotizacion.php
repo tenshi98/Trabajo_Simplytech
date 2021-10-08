@@ -237,7 +237,7 @@ foreach ($arrImpuestos as $impto) {
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrInsumos!=false) { ?>
+					<?php if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Insumos</strong></td></tr>
 						<?php foreach ($arrInsumos as $prod) { ?>
 							<tr>
@@ -248,7 +248,7 @@ foreach ($arrImpuestos as $impto) {
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrProductos!=false) { ?>
+					<?php if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Productos</strong></td></tr>
 						<?php foreach ($arrProductos as $prod) { ?>
 							<tr>
@@ -259,7 +259,7 @@ foreach ($arrImpuestos as $impto) {
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrArriendos!=false) { ?>
+					<?php if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Arriendos</strong></td></tr>
 						<?php foreach ($arrArriendos as $prod) { ?>
 							<tr>
@@ -270,7 +270,7 @@ foreach ($arrImpuestos as $impto) {
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrServicios!=false) { ?>
+					<?php if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Servicios</strong></td></tr>
 						<?php foreach ($arrServicios as $prod) { ?>
 							<tr>
@@ -378,7 +378,7 @@ foreach ($arrImpuestos as $impto) {
         <tbody>
 			<tr><th colspan="6">Archivos Adjuntos</th></tr>		  
 			<?php 
-			if ($arrArchivo!=false){
+			if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrArchivo as $producto){?>
 					<tr class="item-row">

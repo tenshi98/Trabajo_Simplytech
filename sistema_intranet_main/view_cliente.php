@@ -155,13 +155,13 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 			<h5>Datos del Cliente</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if($arrObservaciones!=false){ ?>
+				<?php if($arrObservaciones!=false && !empty($arrObservaciones) && $arrObservaciones!=''){ ?>
 					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
-				<?php if($arrVentas!=false){ ?>
+				<?php if($arrVentas!=false && !empty($arrVentas) && $arrVentas!=''){ ?>
 					<li class=""><a href="#ventas" data-toggle="tab"><i class="fa fa-usd" aria-hidden="true"></i> Ventas realizadas</a></li>
 				<?php } ?>
-				<?php if($arrCotizaciones!=false){ ?>
+				<?php if($arrCotizaciones!=false && !empty($arrCotizaciones) && $arrCotizaciones!=''){ ?>
 					<li class=""><a href="#cotizaciones" data-toggle="tab"><i class="fa fa-search" aria-hidden="true"></i> Cotizaciones realizadas</a></li>
 				<?php } ?>
 			</ul>	
@@ -285,7 +285,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 				
 			</div>
 			
-			<?php if($arrObservaciones!=false){ ?>
+			<?php if($arrObservaciones!=false && !empty($arrObservaciones) && $arrObservaciones!=''){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -312,7 +312,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 				</div>
 			<?php } ?>
 			
-			<?php if($arrVentas!=false){ ?>
+			<?php if($arrVentas!=false && !empty($arrVentas) && $arrVentas!=''){ ?>
 				<div class="tab-pane fade" id="ventas">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -342,7 +342,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 				</div>
 			<?php } ?>
 			
-			<?php if($arrCotizaciones!=false){ ?>
+			<?php if($arrCotizaciones!=false && !empty($arrCotizaciones) && $arrCotizaciones!=''){ ?>
 				<div class="tab-pane fade" id="cotizaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">

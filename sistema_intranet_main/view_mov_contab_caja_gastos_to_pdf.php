@@ -123,7 +123,7 @@ $html .= '
 					</thead>
 					<tbody>';
 					//si existen productos
-					if ($arrDocumentos!=false) {
+					if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') {
 						foreach ($arrDocumentos as $prod) {
 							$html .= '<tr>';
 								$html .= '<td style="vertical-align: top;">'.$prod['Descripcion'].'</td>';

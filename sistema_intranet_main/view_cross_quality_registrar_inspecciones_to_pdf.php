@@ -191,7 +191,7 @@ $html .= '
 					</thead>
 					<tbody>';
 					
-					if ($arrTrabajadores!=false) {
+					if ($arrTrabajadores!=false && !empty($arrTrabajadores) && $arrTrabajadores!='') {
 						$html .= '<tr class="active"><td colspan="6"><strong>Trabajadores Encargados</strong></td></tr>';
 						foreach ($arrTrabajadores as $trab) {
 							$html .= '
@@ -202,7 +202,7 @@ $html .= '
 							</tr>';
 						} 
 					}
-					if ($arrMaquinas!=false) {
+					if ($arrMaquinas!=false && !empty($arrMaquinas) && $arrMaquinas!='') {
 						$html .= '<tr class="active"><td colspan="6"><strong>Maquinas a Utilizar</strong></td></tr>';
 						foreach ($arrMaquinas as $maq) {
 							$html .= '
@@ -211,7 +211,7 @@ $html .= '
 							</tr>';
 						}
 					}
-					if ($arrMuestras!=false) {
+					if ($arrMuestras!=false && !empty($arrMuestras) && $arrMuestras!='') {
 						$html .= '
 							<tr>
 								<td colspan="3" style="vertical-align: top;"><strong>Muestras</strong></td>

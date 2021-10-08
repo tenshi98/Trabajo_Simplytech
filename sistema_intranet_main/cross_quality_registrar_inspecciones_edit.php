@@ -1100,7 +1100,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 						<a href="<?php echo $new_location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajadores</a>
 					</td>
 				</tr>
-				<?php if ($arrTrabajadores!=false) {
+				<?php if ($arrTrabajadores!=false && !empty($arrTrabajadores) && $arrTrabajadores!='') {
 					foreach ($arrTrabajadores as $trab) { ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $trab['Rut'];?></td>
@@ -1128,7 +1128,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 					</td>
 				</tr>
 				<?php 
-				if ($arrMaquinas!=false) {
+				if ($arrMaquinas!=false && !empty($arrMaquinas) && $arrMaquinas!='') {
 					foreach ($arrMaquinas as $maq) { ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="5"><?php echo $maq['Codigo'].' - '.$maq['Nombre'];?></td>
@@ -1160,7 +1160,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 					<td></td>
 				</tr>
 				<?php 
-				if ($arrMuestras!=false) {
+				if ($arrMuestras!=false && !empty($arrMuestras) && $arrMuestras!='') {
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($arrMuestras as $muestra) { ?>
 						<tr class="item-row linea_punteada">
@@ -1206,7 +1206,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
             </tr>		  
             
 			<?php 
-			if ($arrArchivos!=false){
+			if ($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
 				foreach ($arrArchivos as $producto){?>

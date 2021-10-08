@@ -322,7 +322,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					
 					<?php 
 					/**********************************************************************************/ 
-					if($arrTrabajadores!=false) { ?>
+					if($arrTrabajadores!=false && !empty($arrTrabajadores) && $arrTrabajadores!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajadores</td></tr>
 						<?php foreach ($arrTrabajadores as $trab) {  ?>
 							<tr class="item-row linea_punteada">
@@ -334,7 +334,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/ 
-					if($arrInsumos!=false) { ?>
+					if($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
 						<?php foreach ($arrInsumos as $insumos) {
 							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
@@ -348,7 +348,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/ 
-					if($arrProductos!=false) { ?>
+					if($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
 						<?php foreach ($arrProductos as $prod) { 
 							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
@@ -362,7 +362,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/ 
-					if($arrTarea!=false) { ?>
+					if($arrTarea!=false && !empty($arrTarea) && $arrTarea!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td></tr>
 						<?php foreach ($arrTarea as $tarea) {  
 							$s_tarea = $tarea['LicitacionLVL_1'];
@@ -402,7 +402,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 								</td>
 							</tr> 
 							
-							<?php if($arrArchivos!=false){ 
+							<?php if($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){ 
 								$zxcv = 0;
 								foreach ($arrArchivos as $key => $arch) {
 									if(isset($arch['idTrabajoOT'])&&$arch['idTrabajoOT']==$tarea['idTrabajoOT']){
@@ -446,7 +446,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 </div>
 
 <div class="col-xs-12" style="margin-bottom:15px;">
-	<?php if ($arrHistorial!=false){ ?>
+	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -467,7 +467,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 			</tbody>
 		</table>
 	<?php } ?>
-	<?php if ($arrQuejas!=false){ ?>
+	<?php if ($arrQuejas!=false && !empty($arrQuejas) && $arrQuejas!=''){ ?>
 		<table id="items">
 			<tbody>
 				<tr>

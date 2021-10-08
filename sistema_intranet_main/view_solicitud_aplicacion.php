@@ -329,7 +329,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
                     $TotLitrosApliXhect     = 0;
                          
 					//recorro el listado entregado por la base de datos
-					if ($arrCuarteles!=false) {
+					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
                         //recorro
 						foreach ($arrCuarteles as $cuartel) { 
 							//Verifico el tipo de cierre
@@ -383,7 +383,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 								<td><?php if($LitrosApliXhect!=0){echo porcentaje($LitrosApliXhect/$cuartel['Mojamiento']);}else{ echo '0 %';} ?></td>
 								<td>	
 									<?php 
-									if ($arrTracxCuartel!=false) {
+									if ($arrTracxCuartel!=false && !empty($arrTracxCuartel) && $arrTracxCuartel!='') {
 										$zxc = 0;
 										foreach ($arrTracxCuartel as $tract) {
 											if($cuartel['idZona']==$tract['idZona']){
@@ -447,7 +447,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					//Variable
 					$NProd = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrProductos!=false) {
+					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
 						foreach ($arrProductos as $prod) {
 							$NProd++; ?>
 							
@@ -491,7 +491,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					$Capacidad  = 0;
 					$NTract     = 0;
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrTractores!=false) {
+					if ($arrTractores!=false && !empty($arrTractores) && $arrTractores!='') {
 						foreach ($arrTractores as $tract) { 
 							//Se suman cantidades
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
@@ -535,7 +535,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					//Variable
 					$nmb = 0; 
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrProductos!=false) {
+					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
 						foreach ($arrProductos as $prod) { 
 							$PromedioCapacidad = $Capacidad/$NTract; ?>
 							
@@ -571,7 +571,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					</tr>
 					<?php
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrMateriales!=false) {
+					if ($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!='') {
 						foreach ($arrMateriales as $prod) {?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Codigo'].' - '.$prod['Nombre'];?></td>
@@ -590,7 +590,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial!=false){ ?>
+	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
 				<tr>

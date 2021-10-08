@@ -213,7 +213,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 					</p>
 				</div>	
 				
-				<?php if($arrMenu!=false){ ?>
+				<?php if($arrMenu!=false && !empty($arrMenu) && $arrMenu!=''){ ?>
 					<div class="col-sm-6">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
 							
@@ -306,7 +306,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 					echo '</ul></li>';
 					echo '</ul>';
 					/***************************************************************/
-					if($arrTelemetria!=false){
+					if($arrTelemetria!=false && !empty($arrTelemetria) && $arrTelemetria!=''){
 						echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Equipos Telemetria</h2>';
 						echo '<ul class="tree">';
 						/*******************************/
@@ -331,7 +331,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 						echo '</ul>';
 					}
 					/***************************************************************/
-					if($arrDocumento!=false){
+					if($arrDocumento!=false && !empty($arrDocumento) && $arrDocumento!=''){
 						echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Documentos a ver</h2>';
 						echo '<ul class="tree">';
 						/*******************************/

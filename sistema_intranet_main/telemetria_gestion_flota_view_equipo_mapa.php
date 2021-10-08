@@ -96,10 +96,10 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 				<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
 					<li class=""><a href="#mediciones" data-toggle="tab"><i class="fa fa-wifi" aria-hidden="true"></i> Ultimas Mediciones</a></li>
 				<?php } ?>
-				<?php if($arrAlertas!=false){ ?>
+				<?php if($arrAlertas!=false && !empty($arrAlertas) && $arrAlertas!=''){ ?>
 					<li class=""><a href="#alertas" data-toggle="tab"><i class="fa fa-bullhorn"  aria-hidden="true"></i> Alertas</a></li>
 				<?php } ?>
-				<?php if($arrFlinea!=false){ ?>
+				<?php if($arrFlinea!=false && !empty($arrFlinea) && $arrFlinea!=''){ ?>
 					<li class=""><a href="#flinea" data-toggle="tab"><i class="fa fa-power-off" aria-hidden="true"></i> Fuera de Linea</a></li>
 				<?php } ?>
 			</ul>	
@@ -209,7 +209,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 				</div>
 			<?php } ?>
 			
-			<?php if($arrAlertas!=false){ ?>
+			<?php if($arrAlertas!=false && !empty($arrAlertas) && $arrAlertas!=''){ ?>
 				<div class="tab-pane fade" id="alertas">
 					<div class="wmd-panel">
 						
@@ -263,7 +263,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 				</div>
 			<?php } ?>
 			
-			<?php if($arrFlinea!=false){ ?>	
+			<?php if($arrFlinea!=false && !empty($arrFlinea) && $arrFlinea!=''){ ?>	
 				<div class="tab-pane fade" id="flinea">
 					<div class="wmd-panel">
 						

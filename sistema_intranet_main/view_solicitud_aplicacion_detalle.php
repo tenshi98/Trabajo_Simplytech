@@ -260,7 +260,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 						
 						<?php 
 						//recorro el lsiatdo entregado por la base de datos
-						if ($arrCuarteles!=false) {
+						if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
 							foreach ($arrCuarteles as $cuartel) { 
 								if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ $cierre = ' (Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';}else{$cierre = '';}
 								

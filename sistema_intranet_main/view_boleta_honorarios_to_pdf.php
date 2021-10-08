@@ -296,7 +296,7 @@ $html .= '
 					<tbody>';
 					
 					//si existen guias
-					if ($arrOtros!=false) {
+					if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') {
 						foreach ($arrOtros as $otro) {
 							$html .= '<tr>
 								<td style="vertical-align: top;">'.$otro['Nombre'].'</td>

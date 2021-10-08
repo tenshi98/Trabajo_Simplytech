@@ -131,7 +131,7 @@ $html ='
 				</thead>
 				<tbody>';
 					//si existen guias
-					if ($arrPersonas!=false) {
+					if ($arrPersonas!=false && !empty($arrPersonas) && $arrPersonas!='') {
 						foreach ($arrPersonas as $otro) {
 							$html .= '<tr>
 								<td style="vertical-align: top;">'.$otro['Nombre'].'</td>

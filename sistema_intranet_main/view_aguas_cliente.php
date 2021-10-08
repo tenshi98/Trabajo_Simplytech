@@ -180,22 +180,22 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 			<h5>Datos del Cliente</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if($arrObservaciones!=false){ ?>
+				<?php if($arrObservaciones!=false && !empty($arrObservaciones) && $arrObservaciones!=''){ ?>
 					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
-				<?php if($arrConsumos!=false){ ?>
+				<?php if($arrConsumos!=false && !empty($arrConsumos) && $arrConsumos!=''){ ?>
 					<li class=""><a href="#Consumos" data-toggle="tab"><i class="fa fa-share-alt" aria-hidden="true"></i> Consumos</a></li>
 				<?php } ?>
-				<?php if($arrPagos!=false){ ?>
+				<?php if($arrPagos!=false && !empty($arrPagos) && $arrPagos!=''){ ?>
 					<li class=""><a href="#Pagos" data-toggle="tab"><i class="fa fa-usd" aria-hidden="true"></i> Pagos</a></li>
 				<?php } ?>
-				<?php if($arrFacturaciones!=false){ ?>
+				<?php if($arrFacturaciones!=false && !empty($arrFacturaciones) && $arrFacturaciones!=''){ ?>
 					<li class=""><a href="#Facturaciones" data-toggle="tab"><i class="fa fa-folder-open" aria-hidden="true"></i> Facturaciones</a></li>
 				<?php } ?>
-				<?php if($arrEventos!=false){ ?>
+				<?php if($arrEventos!=false && !empty($arrEventos) && $arrEventos!=''){ ?>
 					<li class=""><a href="#Eventos" data-toggle="tab"><i class="fa fa-flag" aria-hidden="true"></i> Eventos</a></li>
 				<?php } ?>
-				<?php if($arrOtrosCobros!=false){ ?>
+				<?php if($arrOtrosCobros!=false && !empty($arrOtrosCobros) && $arrOtrosCobros!=''){ ?>
 					<li class=""><a href="#OtrosCobros" data-toggle="tab"><i class="fa fa-usd" aria-hidden="true"></i> Otros Cobros</a></li>
 				<?php } ?>
 			</ul>	
@@ -277,7 +277,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				
 			</div>
 			
-			<?php if($arrObservaciones!=false){ ?>
+			<?php if($arrObservaciones!=false && !empty($arrObservaciones) && $arrObservaciones!=''){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -304,7 +304,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 			
-			<?php if($arrConsumos!=false){ ?>
+			<?php if($arrConsumos!=false && !empty($arrConsumos) && $arrConsumos!=''){ ?>
 				<div class="tab-pane fade" id="Consumos">
 					<div class="wmd-panel">
 					
@@ -353,7 +353,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 			
-			<?php if($arrPagos!=false){ ?>
+			<?php if($arrPagos!=false && !empty($arrPagos) && $arrPagos!=''){ ?>
 				<div class="tab-pane fade" id="Pagos">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -382,7 +382,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 			
-			<?php if($arrFacturaciones!=false){ ?>
+			<?php if($arrFacturaciones!=false && !empty($arrFacturaciones) && $arrFacturaciones!=''){ ?>
 				<div class="tab-pane fade" id="Facturaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -422,7 +422,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 			
-			<?php if($arrEventos!=false){ ?>
+			<?php if($arrEventos!=false && !empty($arrEventos) && $arrEventos!=''){ ?>
 				<div class="tab-pane fade" id="Eventos">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -451,7 +451,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 			<?php } ?>
 			
-			<?php if($arrOtrosCobros!=false){ ?>
+			<?php if($arrOtrosCobros!=false && !empty($arrOtrosCobros) && $arrOtrosCobros!=''){ ?>
 				<div class="tab-pane fade" id="OtrosCobros">
 					<div class="wmd-panel">
 						<div class="table-responsive">

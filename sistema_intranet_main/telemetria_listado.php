@@ -361,7 +361,7 @@ $arrEXOpciones[0] = 'No Asignado';
 								<br/>
 								<strong class="color-red-dark">Contratos</strong><br/>
 								<strong>Utilizacion de Contratos : </strong><?php echo $rowdata['Contratos']; ?><br/>
-								<?php if($arrContratos!=false){ ?>
+								<?php if($arrContratos!=false && !empty($arrContratos) && $arrContratos!=''){ ?>
 									<table id="items" style="margin-bottom: 20px;">
 										<tbody>
 											<?php foreach ($arrContratos as $carga) { ?>

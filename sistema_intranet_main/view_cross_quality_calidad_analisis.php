@@ -394,7 +394,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrTrabajadores!=false) { ?>
+					<?php if ($arrTrabajadores!=false && !empty($arrTrabajadores) && $arrTrabajadores!='') { ?>
 						<tr class="active"><td colspan="6"><strong>Trabajadores Encargados</strong></td></tr>
 						<?php foreach ($arrTrabajadores as $trab) { ?>
 							<tr>
@@ -404,7 +404,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrMaquinas!=false) { ?>
+					<?php if ($arrMaquinas!=false && !empty($arrMaquinas) && $arrMaquinas!='') { ?>
 						<tr class="active"><td colspan="6"><strong>Maquinas a Utilizar</strong></td></tr>
 						<?php foreach ($arrMaquinas as $maq) { ?>
 							<tr>
@@ -412,7 +412,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrMuestras!=false) { ?>
+					<?php if ($arrMuestras!=false && !empty($arrMuestras) && $arrMuestras!='') { ?>
 						<tr class="active"><td colspan="6"><strong>Muestras</strong></td></tr>
 						<tr class="active">
 							<td colspan="2"><strong>Productor</strong></td>
@@ -449,7 +449,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 
-	<?php if ($arrArchivos!=false){ ?>
+	<?php if ($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

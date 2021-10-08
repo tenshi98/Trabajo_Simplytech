@@ -158,7 +158,7 @@ $arrData        = array();
 
 //se arman datos
 //Si existen
-if(isset($arrGraficos)&&$arrGraficos!=false){
+if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGraficos!=''){
 	//recorro
 	foreach ($arrGraficos as $data) {
 		

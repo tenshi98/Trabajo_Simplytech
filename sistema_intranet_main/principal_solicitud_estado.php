@@ -152,7 +152,7 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 								<td><?php if($litrosxhectarea!=0){echo porcentaje($litrosxhectarea/$temp['Mojamiento']);}else{ echo '0 %';} ?></td>
 								<td>	
 									<?php 
-									if ($arrTracxCuartel!=false) {
+									if ($arrTracxCuartel!=false && !empty($arrTracxCuartel) && $arrTracxCuartel!='') {
 										$zxc = 0;
 										foreach ($arrTracxCuartel as $tract) {
 											if($temp['idZona']==$tract['idZona']&&$temp['idSolicitud']==$tract['idSolicitud']){

@@ -333,7 +333,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						<?php
 						$xcounter = 1;
 						foreach($arrTractores as $trac) {
-							if ($arrTractoresData!=false) {
+							if ($arrTractoresData!=false && !empty($arrTractoresData) && $arrTractoresData!='') {
 								$sum_LitrosAplicados    = 0;
 								foreach ($arrTractoresData as $tractda) { 
 									if(isset($trac['idTelemetria'])&&isset($tractda['idTelemetria'])&&$trac['idTelemetria']==$tractda['idTelemetria']){
@@ -975,7 +975,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 											</tr>
 											<?php 
 											//recorro el lsiatdo entregado por la base de datos
-											if ($arrTractoresData!=false) {
+											if ($arrTractoresData!=false && !empty($arrTractoresData) && $arrTractoresData!='') {
 												//variables en 0
 												$xcounter               = 0;
 												$sum_VelocidadProg      = 0;

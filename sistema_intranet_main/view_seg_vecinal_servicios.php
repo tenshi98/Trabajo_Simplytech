@@ -65,7 +65,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 			<h5>Datos del Vecino</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if($arrObservaciones!=false){ ?>
+				<?php if($arrObservaciones!=false && !empty($arrObservaciones) && $arrObservaciones!=''){ ?>
 					<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<?php } ?>
 			</ul>	
@@ -124,7 +124,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 				
 			</div>
 			
-			<?php if($arrObservaciones!=false){ ?>
+			<?php if($arrObservaciones!=false && !empty($arrObservaciones) && $arrObservaciones!=''){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">

@@ -282,7 +282,7 @@ $zz .= '&view='.$_GET['view'];
 					
 					<?php 
 					/**********************************************************************************/ 
-					if($arrTrabajadores!=false) { ?>
+					if($arrTrabajadores!=false && !empty($arrTrabajadores) && $arrTrabajadores!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajadores</td></tr>
 						<?php foreach ($arrTrabajadores as $trab) {  ?>
 							<tr class="item-row linea_punteada">
@@ -294,7 +294,7 @@ $zz .= '&view='.$_GET['view'];
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/ 
-					if($arrInsumos!=false) { ?>
+					if($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
 						<?php foreach ($arrInsumos as $insumos) {
 							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
@@ -308,7 +308,7 @@ $zz .= '&view='.$_GET['view'];
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/ 
-					if($arrProductos!=false) { ?>
+					if($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
 						<?php foreach ($arrProductos as $prod) { 
 							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
@@ -322,7 +322,7 @@ $zz .= '&view='.$_GET['view'];
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/ 
-					if($arrTrabajo!=false) { ?>
+					if($arrTrabajo!=false && !empty($arrTrabajo) && $arrTrabajo!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td></tr>
 						<?php foreach ($arrTrabajo as $trab) {  ?>
 							<tr class="item-row linea_punteada">

@@ -246,7 +246,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrRendiciones!=false) { ?>
+					<?php if ($arrRendiciones!=false && !empty($arrRendiciones) && $arrRendiciones!='') { ?>
 						<tr class="active"><td colspan="3"><strong>Rendiciones</strong></td></tr>
 						<?php foreach ($arrRendiciones as $prod) { ?>
 							<tr>
@@ -263,7 +263,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						<?php } ?>
 					<?php } ?>
 					
-					<?php if ($arrDocumentos!=false) { ?>
+					<?php if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') { ?>
 						<tr class="active"><td colspan="3"><strong>Montos</strong></td></tr>
 						<?php foreach ($arrDocumentos as $prod) { ?>
 							<tr>
@@ -351,7 +351,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial!=false){ ?>
+	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -373,7 +373,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 		</table>
 	<?php } ?>
 	
-	<?php if ($arrArchivo!=false){ ?>
+	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

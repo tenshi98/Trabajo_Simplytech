@@ -197,7 +197,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							<?php } ?>
 						</p>
 					</div>	
-					<?php if($arrMenu!=false){ ?>
+					<?php if($arrMenu!=false && !empty($arrMenu) && $arrMenu!=''){ ?>
 						<div class="col-sm-6">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
 							
@@ -293,7 +293,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							echo '</ul>';
 						
 						/***************************************************************/
-						if($arrTelemetria!=false){
+						if($arrTelemetria!=false && !empty($arrTelemetria) && $arrTelemetria!=''){
 							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Equipos Telemetria</h2>';
 							echo '<ul class="tree">';
 							/*******************************/
@@ -318,7 +318,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							echo '</ul>';
 						}
 						/***************************************************************/
-						if($arrDocumento!=false){
+						if($arrDocumento!=false && !empty($arrDocumento) && $arrDocumento!=''){
 							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Documentos a ver</h2>';
 							echo '<ul class="tree">';
 							/*******************************/

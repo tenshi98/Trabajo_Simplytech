@@ -112,7 +112,7 @@ $SALUD_Pagado      = 0;
 $SEGURIDAD_Pagado  = 0;
 
 //recorro los pagos
-if($arrFormaPago!=false){
+if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 	foreach ($arrFormaPago as $pago) {
 		if(isset($pago['idTipo'])&&$pago['idTipo']!=''){ 
 			switch ($pago['idTipo']) {
@@ -229,7 +229,7 @@ input[type="date"].form-control{
 							<td class="meta-head">Administradora Fondos de Pensiones</td>
 							<td align="right"><?php echo valores($row_data['AFP_MontoPago'], 0);?></td>
 							<td align="left">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo $pago['DocPago'];
@@ -240,7 +240,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -249,7 +249,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -258,7 +258,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo $pago['Usuario'].'<br/>';
@@ -267,7 +267,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==1){
 											echo valores($pago['Monto'], 0).'<br/>';
@@ -280,7 +280,7 @@ input[type="date"].form-control{
 							<td class="meta-head">Salud</td>
 							<td align="right"><?php echo valores($row_data['SALUD_MontoPago'], 0);?></td>
 							<td align="left">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo $pago['DocPago'];
@@ -291,7 +291,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -300,7 +300,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -309,7 +309,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo $pago['Usuario'].'<br/>';
@@ -318,7 +318,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==2){
 											echo valores($pago['Monto'], 0).'<br/>';
@@ -331,7 +331,7 @@ input[type="date"].form-control{
 							<td class="meta-head">Seguridad</td>
 							<td align="right"><?php echo valores($row_data['SEGURIDAD_MontoPago'], 0);?></td>
 							<td align="left">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo $pago['DocPago'];
@@ -342,7 +342,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
@@ -351,7 +351,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo fecha_estandar($pago['F_Pago']).'<br/>';
@@ -360,7 +360,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo $pago['Usuario'].'<br/>';
@@ -369,7 +369,7 @@ input[type="date"].form-control{
 								}?>
 							</td>
 							<td align="right">
-								<?php if($arrFormaPago!=false){
+								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
 										if(isset($pago['idTipo'])&&$pago['idTipo']==3){
 											echo valores($pago['Monto'], 0).'<br/>';

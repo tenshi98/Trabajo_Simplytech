@@ -141,7 +141,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrPersonas!=false) { ?>
+					<?php if ($arrPersonas!=false && !empty($arrPersonas) && $arrPersonas!='') { ?>
 						<?php foreach ($arrPersonas as $otro) { ?>
 							<tr>
 								<td><?php echo $otro['Nombre'];?></td>
@@ -179,7 +179,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrArchivo!=false){ ?>
+	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

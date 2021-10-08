@@ -241,7 +241,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				</tr>
 				<?php 
 					//recorro el lsiatdo entregado por la base de datos
-					if ($arrCuarteles!=false) {
+					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
 						foreach ($arrCuarteles as $cuartel) { ?>
 						
 							<tr class="item-row linea_punteada" style="background: #eee;">

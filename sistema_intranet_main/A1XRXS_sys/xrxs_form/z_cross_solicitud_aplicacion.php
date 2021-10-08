@@ -3285,7 +3285,7 @@ require_once '0_validate_user_1.php';
 					
 						/*********************************************************************/		
 						//se guardan los materiales
-						if($arrMateriales!=false){
+						if($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!=''){
 							
 							/*******************************************/
 							//se recorren los materiales
@@ -3316,7 +3316,7 @@ require_once '0_validate_user_1.php';
 						
 						/*********************************************************************/		
 						//se guardan los cuarteles
-						if($arrCuarteles!=false){
+						if($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!=''){
 							
 							/*******************************************/
 							//se recorren los cuarteles
@@ -3357,7 +3357,7 @@ require_once '0_validate_user_1.php';
 						
 								/*******************************************/
 								//se recorren los tractores
-								if($arrTractores!=false){
+								if($arrTractores!=false && !empty($arrTractores) && $arrTractores!=''){
 									//Se recorren los tractores
 									foreach ($arrTractores as $tract){
 										//si pertenece al mismo cuartel
@@ -3391,7 +3391,7 @@ require_once '0_validate_user_1.php';
 								}
 								/*******************************************/
 								//se recorren los cuarteles
-								if($arrProductos!=false){
+								if($arrProductos!=false && !empty($arrProductos) && $arrProductos!=''){
 									//Se recorren los quimicos a utilizar
 									foreach ($arrProductos as $prod){
 										//si pertenece al mismo cuartel

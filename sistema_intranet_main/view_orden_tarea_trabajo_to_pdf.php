@@ -288,7 +288,7 @@ $html ='<style>
 			}
 			$html .='<tr id="hiderow"><td colspan="6"></td></tr>';
             /**********************************************************************************/
-            if($arrInsumos!=false) {
+            if($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') {
 				$html .='<tr class="item-row fact_tittle"><td colspan="6">';
 				if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){$html .='Insumos Programados';}else{$html .='Insumos Utilizados';}
 				$html .='</td></tr>';
@@ -305,7 +305,7 @@ $html ='<style>
 				$html .='<tr id="hiderow"><td colspan="6"></td></tr>';
 			}
             /**********************************************************************************/
-            if($arrProductos!=false) {
+            if($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
 				$html .='<tr class="item-row fact_tittle"><td colspan="6">';
 				if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){$html .='Productos Programados';}else{$html .='Productos Utilizados';}
 				$html .='</td></tr>';
@@ -322,7 +322,7 @@ $html ='<style>
 				$html .='<tr id="hiderow"><td colspan="6"></td></tr>';
 			}
 			/**********************************************************************************/ 
-			if($arrTrabajo!=false) { 
+			if($arrTrabajo!=false && !empty($arrTrabajo) && $arrTrabajo!='') { 
 				$html .='<tr class="item-row fact_tittle"><td colspan="6">';
 				if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){$html .='Trabajos Programados';}else{$html .='Trabajos Ejecutados';}
 				$html .='</td></tr>';

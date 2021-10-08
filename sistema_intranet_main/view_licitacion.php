@@ -371,7 +371,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	</div>
 </div>	
 
-<?php if ($arrHistorial!=false){ ?>
+<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 	<div class="col-xs-12" style="margin-bottom:15px;">
 		<table id="items">
 			<tbody>

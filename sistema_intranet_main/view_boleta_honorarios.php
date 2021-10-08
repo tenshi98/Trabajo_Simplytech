@@ -455,7 +455,7 @@ if($row_data['MontoPagado']!=0){?>
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrOtros!=false) { ?>
+					<?php if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') { ?>
 						<?php foreach ($arrOtros as $otro) { ?>
 							<tr>
 								<td><?php echo $otro['Nombre'];?></td>
@@ -537,7 +537,7 @@ if($row_data['MontoPagado']!=0){?>
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	
-	<?php if ($arrHistorial!=false){ ?>
+	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -559,7 +559,7 @@ if($row_data['MontoPagado']!=0){?>
 		</table>
 	<?php } ?>
 
-	<?php if ($arrArchivo!=false){ ?>
+	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

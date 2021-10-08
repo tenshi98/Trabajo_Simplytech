@@ -382,7 +382,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 				</tr>
 				<?php
 				//listado de servicios
-				if ($arrPersonas!=false) {
+				if ($arrPersonas!=false && !empty($arrPersonas) && $arrPersonas!='') {
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($arrPersonas as $persona) { ?>
 						<tr class="item-row linea_punteada">
@@ -416,7 +416,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
             </tr>		  
             
 			<?php 
-			if ($arrArchivo!=false){
+			if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
 				foreach ($arrArchivo as $producto){ ?>

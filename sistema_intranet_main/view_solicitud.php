@@ -161,7 +161,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 					</tr>
 				</thead>
 				<tbody>
-					<?php if ($arrInsumos!=false) { ?>
+					<?php if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Insumos</strong></td></tr>
 						<?php foreach ($arrInsumos as $prod) { ?>
 							<tr>
@@ -170,7 +170,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrProductos!=false) { ?>
+					<?php if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Productos</strong></td></tr>
 						<?php foreach ($arrProductos as $prod) { ?>
 							<tr>
@@ -179,7 +179,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrArriendos!=false) { ?>
+					<?php if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Arriendos</strong></td></tr>
 						<?php foreach ($arrArriendos as $prod) { ?>
 							<tr>
@@ -188,7 +188,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrServicios!=false) { ?>
+					<?php if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Servicios</strong></td></tr>
 						<?php foreach ($arrServicios as $prod) { ?>
 							<tr>
@@ -197,7 +197,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php if ($arrOtros!=false) { ?>
+					<?php if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Otros</strong></td></tr>
 						<?php foreach ($arrOtros as $prod) { ?>
 							<tr>

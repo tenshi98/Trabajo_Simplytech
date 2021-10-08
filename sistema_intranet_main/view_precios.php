@@ -117,7 +117,7 @@ switch ($X_type) {
     break;
 }
 ///////////////////////////////////////////////
-if($arrProducto!=false){?>
+if($arrProducto!=false && !empty($arrProducto) && $arrProducto!=''){?>
 
 	<div class="col-sm-12">
 		<div class="box">

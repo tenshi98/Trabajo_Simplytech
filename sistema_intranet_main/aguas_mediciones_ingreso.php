@@ -249,7 +249,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 			<tbody>
 				<tr><th colspan="8">Detalle</th></tr>		  
 				
-				<?php if($arrDatosCorrectos!=false) { ?>
+				<?php if($arrDatosCorrectos!=false && !empty($arrDatosCorrectos) && $arrDatosCorrectos!='') { ?>
 					<tr class="item-row fact_tittle"><td colspan="8"><strong>Datos Ingresados Correctamente</strong></td></tr>
 					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 						<td class="item-name"><strong>Identificador</strong></td>

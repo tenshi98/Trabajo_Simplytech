@@ -223,7 +223,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 					echo '<td></td>';
 					echo '</tr>';
 					/***************************************************/
-					if ($arrHorasExtras!=false){
+					if ($arrHorasExtras!=false && !empty($arrHorasExtras) && $arrHorasExtras!=''){
 						//imprimo la primera celda y el numero de semana actual
 						foreach ($arrHorasExtras as $key => $producto){
 							//Subcadena con el trabajador
@@ -289,7 +289,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 		</table>
     </div>
     
-    <?php if ($arrArchivo!=false){ ?>
+    <?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>

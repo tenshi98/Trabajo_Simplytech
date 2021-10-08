@@ -327,11 +327,9 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************/
 				//recorro los boletas de honorarios
-				if($arrTemporal!=false){
+				if($arrTemporal!=false && !empty($arrTemporal) && $arrTemporal!=''){
 					$_SESSION['pagos_leyes_sociales_trabajadores'] = $arrTemporal;
 				}
-				
-				
 					
 				//Redirijo	
 				header( 'Location: '.$location.'&view=true' );
@@ -339,8 +337,6 @@ require_once '0_validate_user_1.php';
 			
 			}
 		
-			
-	
 		break;
 /*******************************************************************************************************************/		
 		case 'clear_all_pago':

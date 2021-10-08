@@ -1401,7 +1401,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 
 <div class="col-xs-12" style="margin-bottom:15px;">
 	<div class="row">
-		<?php if ($arrHistorial!=false){ ?>
+		<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 			<div class="table-responsive">
 				<table id="items">
 					<tbody>

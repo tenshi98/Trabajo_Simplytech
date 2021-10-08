@@ -1760,7 +1760,7 @@ $total = 0;
 				</td>
 			</tr>
 			<?php 
-			if ($arrProductos!=false){
+			if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrProductos as $prod) { ?>
 					<tr class="item-row linea_punteada">
@@ -1801,7 +1801,7 @@ $total = 0;
 				</td>
 			</tr>
 			<?php 
-			if ($arrInsumos!=false){
+			if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrInsumos as $prod) { ?>
 					<tr class="item-row linea_punteada">
@@ -1842,7 +1842,7 @@ $total = 0;
 				</td>
 			</tr>
 			<?php 
-			if ($arrArriendos!=false){
+			if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrArriendos as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -1885,7 +1885,7 @@ $total = 0;
 				</td>
 			</tr>
 			<?php 
-			if ($arrServicios!=false){
+			if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrServicios as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -1927,7 +1927,7 @@ $total = 0;
 				</td>
 			</tr>
 			<?php 
-			if ($arrOtros!=false){
+			if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrOtros as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -1967,7 +1967,7 @@ $total = 0;
 				</td>
 			</tr>
 			<?php 
-			if ($arrBoletas!=false){
+			if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrBoletas as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -2000,7 +2000,7 @@ $total = 0;
 				</td>
 			</tr>
 			<?php 
-			if ($arrBoletasEmp!=false){
+			if ($arrBoletasEmp!=false && !empty($arrBoletasEmp) && $arrBoletasEmp!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrBoletasEmp as $prod){?>
 					<tr class="item-row linea_punteada">
@@ -2038,7 +2038,7 @@ $total = 0;
         </tbody>
     </table>
     
-   	<?php if ($arrSolMat!=false) { ?>
+   	<?php if ($arrSolMat!=false && !empty($arrSolMat) && $arrSolMat!='') { ?>
 		<table id="items">
 			<tbody>
 				<tr>
@@ -2206,7 +2206,7 @@ $total = 0;
             </tr>		  
             
 			<?php 
-			if ($arrDocumentos!=false){
+			if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
 				foreach ($arrDocumentos as $prod){ ?>
@@ -2240,7 +2240,7 @@ $total = 0;
             </tr>		  
             
 			<?php 
-			if ($arrArchivo!=false){
+			if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
 				foreach ($arrArchivo as $producto){?>
