@@ -24,7 +24,7 @@ $location .='?pagina='.$_GET['pagina'];
 if ( !empty($_POST['submit_edit']) )  { 
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
-	$form_trabajo= 'update';
+	$form_trabajo= 'updateCrossTech';
 	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 /**********************************************************************************************************************************/
@@ -35,22 +35,21 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['Cliente'] 	  = 'sucess/Sistema creado correctamente';}
-if (isset($_GET['edited']))  {$error['Cliente'] 	  = 'sucess/Sistema editado correctamente';}
-if (isset($_GET['deleted'])) {$error['Cliente'] 	  = 'sucess/Sistema borrado correctamente';}
+if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Sistema creado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Sistema editado correctamente';}
+if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$SIS_query = 'Nombre, Social_idUso, Social_facebook, Social_twitter, 
-Social_instagram, Social_linkedin, Social_rss, Social_youtube, Social_tumblr';
+$SIS_query = 'Nombre, CrossEnergy_PeriodoInicio, CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Sociales');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
@@ -73,57 +72,41 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 						<li class=""><a href="<?php echo 'core_sistemas_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_crosstech.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossTech</a></li>
-						<li class=""><a href="<?php echo 'core_sistemas_crossenergy.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossEnergy</a></li>
-						<li class="active"><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
+						<li class="active"><a href="<?php echo 'core_sistemas_crossenergy.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossEnergy</a></li>
+						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 						
 					</ul>
                 </li>           
 			</ul>	
 		</header>
         <div class="table-responsive">
-			<?php
-			echo '<br/>';
-			echo '<div class="col-sm-12">';
-				//facebook
-				$Alert_Text  = 'Obtener el ID de una página de Facebook';
-				$Alert_Text .= '<a target="_blank" rel="noopener noreferrer" href="https://www.bufa.es/id-pagina-facebook/" title="Obtener ID" class="btn btn-primary btn-sm pull-right margin_width" ><i class="fa fa-facebook" aria-hidden="true"></i> Obtener ID</a>';
-				alert_post_data(2,1,2, $Alert_Text);
-				//Linkedin
-				$Alert_Text  = 'Para obtener el <strong>Identificador</strong> de Linkedin, debes iniciar sesion, en el tab donde dice <strong>YO</strong> presionarlo y luego presionar el boton <strong> Ver Perfil</strong>, una vez dentro del perfil ver la barra de direcciones del navegador y copiar lo que viene despues de <strong>https://www.linkedin.com/in/</strong> sin copiar los <strong>/</strong>';
-				alert_post_data(2,1,2, $Alert_Text);
-			
-			echo '</div>';
-			?>
 			<div class="col-sm-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Social_idUso)) {         $x1 = $Social_idUso;         }else{$x1 = $rowdata['Social_idUso'];}
-					if(isset($Social_facebook)) {      $x2 = $Social_facebook;      }else{$x2 = $rowdata['Social_facebook'];}
-					if(isset($Social_twitter)) {       $x3 = $Social_twitter;       }else{$x3 = $rowdata['Social_twitter'];}
-					if(isset($Social_instagram)) {     $x4 = $Social_instagram;     }else{$x4 = $rowdata['Social_instagram'];}
-					if(isset($Social_linkedin)) {      $x5 = $Social_linkedin;      }else{$x5 = $rowdata['Social_linkedin'];}
-					if(isset($Social_rss)) {           $x6 = $Social_rss;           }else{$x6 = $rowdata['Social_rss'];}
-					if(isset($Social_youtube)) {       $x7 = $Social_youtube;       }else{$x7 = $rowdata['Social_youtube'];}
-					if(isset($Social_tumblr)) {        $x8 = $Social_tumblr;        }else{$x8 = $rowdata['Social_tumblr'];}
+					if(isset($CrossEnergy_PeriodoInicio)) {     $x1  = $CrossEnergy_PeriodoInicio;     }else{$x1  = $rowdata['CrossEnergy_PeriodoInicio'];}
+					if(isset($CrossEnergy_PeriodoTermino)) {    $x2  = $CrossEnergy_PeriodoTermino;    }else{$x2  = $rowdata['CrossEnergy_PeriodoTermino'];}
+					if(isset($CrossEnergy_HorarioInicio)) {     $x3  = $CrossEnergy_HorarioInicio;     }else{$x3  = $rowdata['CrossEnergy_HorarioInicio'];}
+					if(isset($CrossEnergy_HorarioTermino)) {    $x4  = $CrossEnergy_HorarioTermino;    }else{$x4  = $rowdata['CrossEnergy_HorarioTermino'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_select('Uso de widget Sociales','Social_idUso', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_input_icon('Facebook - ID de la pagina', 'Social_facebook', $x2, 1,'fa fa-facebook');
-					$Form_Inputs->form_input_icon('Twitter - Direccion Web', 'Social_twitter', $x3, 1,'fa fa-twitter');
-					//$Form_Inputs->form_input_icon('Instagram', 'Social_instagram', $x4, 1,'fa fa-instagram');
-					$Form_Inputs->form_input_icon('Linkedin - Identificador', 'Social_linkedin', $x5, 1,'fa fa-linkedin');
-					$Form_Inputs->form_input_icon('Rss - Direccion Feed', 'Social_rss', $x6, 1,'fa fa-rss');
-					//$Form_Inputs->form_input_icon('ApiKey (Youtube)', 'Social_youtube', $x7, 1,'fa fa-youtube');
-					//$Form_Inputs->form_input_icon('ApiKey (Tumblr)', 'Social_tumblr', $x8, 1,'fa fa-tumblr');
+					$Form_Inputs->form_tittle(3, 'Potencia hora punta');
+					$Form_Inputs->form_date('Periodo Inicio','CrossEnergy_PeriodoInicio', $x1, 2);
+					$Form_Inputs->form_date('Periodo Termino','CrossEnergy_PeriodoTermino', $x2, 2);
+					$Form_Inputs->form_time('Horario Inicio','CrossEnergy_HorarioInicio', $x3, 2, 1);
+					$Form_Inputs->form_time('Horario Termino','CrossEnergy_HorarioTermino', $x4, 2, 1);
+					
 					
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
-					
+					$Form_Inputs->form_input_hidden('CrossEnergy_PeriodoInicioOld', $rowdata['CrossEnergy_PeriodoInicio'], 2);
+					$Form_Inputs->form_input_hidden('CrossEnergy_PeriodoTerminoOld', $rowdata['CrossEnergy_PeriodoTermino'], 2);
+					$Form_Inputs->form_input_hidden('CrossEnergy_HorarioInicioOld', $rowdata['CrossEnergy_HorarioInicio'], 2);
+					$Form_Inputs->form_input_hidden('CrossEnergy_HorarioTerminoOld', $rowdata['CrossEnergy_HorarioTermino'], 2);
 					?>
-					
-					<div class="form-group">	
+
+					<div class="form-group">		
 						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
 					</div>
 				</form>
