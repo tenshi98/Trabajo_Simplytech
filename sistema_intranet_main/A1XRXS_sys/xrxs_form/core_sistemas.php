@@ -91,12 +91,20 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['Social_rss']) )                        $Social_rss                        = $_POST['Social_rss'];
 	if ( isset($_POST['Social_youtube']) )                    $Social_youtube                    = $_POST['Social_youtube'];
 	if ( isset($_POST['Social_tumblr']) )                     $Social_tumblr                     = $_POST['Social_tumblr'];
+	if ( isset($_POST['CrossEnergy_PeriodoInicio']) )         $CrossEnergy_PeriodoInicio         = $_POST['CrossEnergy_PeriodoInicio'];
+	if ( isset($_POST['CrossEnergy_PeriodoTermino']) )        $CrossEnergy_PeriodoTermino        = $_POST['CrossEnergy_PeriodoTermino'];
+	if ( isset($_POST['CrossEnergy_HorarioInicio']) )         $CrossEnergy_HorarioInicio         = $_POST['CrossEnergy_HorarioInicio'];
+	if ( isset($_POST['CrossEnergy_HorarioTermino']) )        $CrossEnergy_HorarioTermino        = $_POST['CrossEnergy_HorarioTermino'];
 	
 	
 	if ( !empty($_POST['CrossTech_FechaDiasTempMinOld']) )    $CrossTech_FechaDiasTempMinOld     = $_POST['CrossTech_FechaDiasTempMinOld'];
 	if ( !empty($_POST['CrossTech_FechaTempMinOld']) )        $CrossTech_FechaTempMinOld         = $_POST['CrossTech_FechaTempMinOld'];
 	if ( !empty($_POST['CrossTech_FechaTempMaxOld']) )        $CrossTech_FechaTempMaxOld         = $_POST['CrossTech_FechaTempMaxOld'];
 	if ( !empty($_POST['CrossTech_FechaUnidadFrioOld']) )     $CrossTech_FechaUnidadFrioOld      = $_POST['CrossTech_FechaUnidadFrioOld'];
+	if ( !empty($_POST['CrossEnergy_PeriodoInicioOld']) )     $CrossEnergy_PeriodoInicioOld      = $_POST['CrossEnergy_PeriodoInicioOld'];
+	if ( !empty($_POST['CrossEnergy_PeriodoTerminoOld']) )    $CrossEnergy_PeriodoTerminoOld     = $_POST['CrossEnergy_PeriodoTerminoOld'];
+	if ( !empty($_POST['CrossEnergy_HorarioInicioOld']) )     $CrossEnergy_HorarioInicioOld      = $_POST['CrossEnergy_HorarioInicioOld'];
+	if ( !empty($_POST['CrossEnergy_HorarioTerminoOld']) )    $CrossEnergy_HorarioTerminoOld     = $_POST['CrossEnergy_HorarioTerminoOld'];
 	
 	
 /*******************************************************************************************************************/
@@ -187,11 +195,19 @@ require_once '0_validate_user_1.php';
 			case 'Social_rss':                         if(!isset($Social_rss)){                         $error['Social_rss']                          = 'error/No ha ingresado los datos de rss';}break;
 			case 'Social_youtube':                     if(!isset($Social_youtube)){                     $error['Social_youtube']                      = 'error/No ha ingresado los datos de youtube';}break;
 			case 'Social_tumblr':                      if(!isset($Social_tumblr)){                      $error['Social_tumblr']                       = 'error/No ha ingresado los datos de tumblr';}break;
+			case 'CrossEnergy_PeriodoInicio':          if(empty($CrossEnergy_PeriodoInicio)){           $error['CrossEnergy_PeriodoInicio']           = 'error/No ha ingresado el Periodo Inicio';}break;
+			case 'CrossEnergy_PeriodoTermino':         if(empty($CrossEnergy_PeriodoTermino)){          $error['CrossEnergy_PeriodoTermino']          = 'error/No ha ingresado el Periodo Termino';}break;
+			case 'CrossEnergy_HorarioInicio':          if(empty($CrossEnergy_HorarioInicio)){           $error['CrossEnergy_HorarioInicio']           = 'error/No ha ingresado la Horario Inicio';}break;
+			case 'CrossEnergy_HorarioTermino':         if(empty($CrossEnergy_HorarioTermino)){          $error['CrossEnergy_HorarioTermino']          = 'error/No ha ingresado la Horario Termino';}break;
 			
 			case 'CrossTech_FechaDiasTempMinOld':      if(empty($CrossTech_FechaDiasTempMinOld)){       $error['CrossTech_FechaDiasTempMinOld']       = 'error/No ha ingresado la fecha de temperatura minima de los dias';}break;
 			case 'CrossTech_FechaTempMinOld':          if(empty($CrossTech_FechaTempMinOld)){           $error['CrossTech_FechaTempMinOld']           = 'error/No ha ingresado la fecha de temperatura minima';}break;
 			case 'CrossTech_FechaTempMaxOld':          if(empty($CrossTech_FechaTempMaxOld)){           $error['CrossTech_FechaTempMaxOld']           = 'error/No ha ingresado la fecha de temperatura maxima';}break;
-			case 'CrossTech_FechaUnidadFrioOld':       if(empty($CrossTech_FechaUnidadFrioOld)){        $error['CrossTech_FechaUnidadFrioOld']        = 'error/No ha ingresado la fecha de temperatura maxima';}break;
+			case 'CrossTech_FechaUnidadFrioOld':       if(empty($CrossTech_FechaUnidadFrioOld)){        $error['CrossTech_FechaUnidadFrioOld']        = 'error/No ha ingresado la fecha de la unidad de frio';}break;
+			case 'CrossEnergy_PeriodoInicioOld':       if(empty($CrossEnergy_PeriodoInicioOld)){        $error['CrossEnergy_PeriodoInicioOld']        = 'error/No ha ingresado el Periodo Inicio';}break;
+			case 'CrossEnergy_PeriodoTerminoOld':      if(empty($CrossEnergy_PeriodoTerminoOld)){       $error['CrossEnergy_PeriodoTerminoOld']       = 'error/No ha ingresado el Periodo Termino';}break;
+			case 'CrossEnergy_HorarioInicioOld':       if(empty($CrossEnergy_HorarioInicioOld)){        $error['CrossEnergy_HorarioInicioOld']        = 'error/No ha ingresado la Horario Inicio';}break;
+			case 'CrossEnergy_HorarioTerminoOld':      if(empty($CrossEnergy_HorarioTerminoOld)){       $error['CrossEnergy_HorarioTerminoOld']       = 'error/No ha ingresado la Horario Termino';}break;
 			
 		}
 	}
@@ -316,6 +332,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Social_rss) && $Social_rss != ''){                                       $a .= ",'".$Social_rss."'" ;                         }else{$a .= ",''";}
 				if(isset($Social_youtube) && $Social_youtube != ''){                               $a .= ",'".$Social_youtube."'" ;                     }else{$a .= ",''";}
 				if(isset($Social_tumblr) && $Social_tumblr != ''){                                 $a .= ",'".$Social_tumblr."'" ;                      }else{$a .= ",''";}
+				if(isset($CrossEnergy_PeriodoInicio) && $CrossEnergy_PeriodoInicio != ''){         $a .= ",'".$CrossEnergy_PeriodoInicio."'" ;          }else{$a .= ",''";}
+				if(isset($CrossEnergy_PeriodoTermino) && $CrossEnergy_PeriodoTermino != ''){       $a .= ",'".$CrossEnergy_PeriodoTermino."'" ;         }else{$a .= ",''";}
+				if(isset($CrossEnergy_HorarioInicio) && $CrossEnergy_HorarioInicio != ''){         $a .= ",'".$CrossEnergy_HorarioInicio."'" ;          }else{$a .= ",''";}
+				if(isset($CrossEnergy_HorarioTermino) && $CrossEnergy_HorarioTermino != ''){       $a .= ",'".$CrossEnergy_HorarioTermino."'" ;         }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `core_sistemas` (Nombre, email_principal, Rut, idCiudad,idComuna, Direccion,
@@ -331,7 +351,8 @@ require_once '0_validate_user_1.php';
 				CrossTech_FechaDiasTempMin, CrossTech_FechaTempMin, CrossTech_FechaTempMax, CrossTech_FechaUnidadFrio,
 				CrossTech_HoraPrevRev, CrossTech_HoraPrevision, CrossTech_HoraPrevCuenta, CrossTech_HeladaTemp,
 				CrossTech_HeladaMailHoraIni, CrossTech_HeladaMailHoraTerm, Social_idUso, Social_facebook, Social_twitter,
-				Social_instagram, Social_linkedin, Social_rss, Social_youtube, Social_tumblr) 
+				Social_instagram, Social_linkedin, Social_rss, Social_youtube, Social_tumblr, CrossEnergy_PeriodoInicio,
+				CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino) 
 				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -462,6 +483,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Social_rss) ){                                                           $a .= ",Social_rss='".$Social_rss."'" ;}
 				if(isset($Social_youtube) ){                                                       $a .= ",Social_youtube='".$Social_youtube."'" ;}
 				if(isset($Social_tumblr) ){                                                        $a .= ",Social_tumblr='".$Social_tumblr."'" ;}
+				if(isset($CrossEnergy_PeriodoInicio) && $CrossEnergy_PeriodoInicio != ''){         $a .= ",CrossEnergy_PeriodoInicio='".$CrossEnergy_PeriodoInicio."'" ;}
+				if(isset($CrossEnergy_PeriodoTermino) && $CrossEnergy_PeriodoTermino != ''){       $a .= ",CrossEnergy_PeriodoTermino='".$CrossEnergy_PeriodoTermino."'" ;}
+				if(isset($CrossEnergy_HorarioInicio) && $CrossEnergy_HorarioInicio != ''){         $a .= ",CrossEnergy_HorarioInicio='".$CrossEnergy_HorarioInicio."'" ;}
+				if(isset($CrossEnergy_HorarioTermino) && $CrossEnergy_HorarioTermino != ''){       $a .= ",CrossEnergy_HorarioTermino='".$CrossEnergy_HorarioTermino."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
