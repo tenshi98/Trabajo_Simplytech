@@ -218,7 +218,7 @@ $arrTemporal_b_4 = array();
 $arrTemporal_b_4 = db_select_array (false, 'bodegas_servicios_facturacion.idTipo, '.$SIS_query_1, 'bodegas_servicios_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_servicios_facturacion.idCliente', $z4, 'Total ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
 //etapas
 $arrEtapa = array();
-$arrEtapa = db_select_array (false, 'prospectos_etapa.Nombre AS Etapa,COUNT(prospectos_listado.idEtapa) AS Cuenta', 'prospectos_listado', 'LEFT JOIN prospectos_etapa ON prospectos_etapa.idEtapa = prospectos_listado.idEtapa', 'prospectos_listado.idProspecto!=0 GROUP BY prospectos_listado.idEtapa', 'Etapa ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
+$arrEtapa = db_select_array (false, 'prospectos_etapa.idEtapa,prospectos_etapa.Nombre AS Etapa,COUNT(prospectos_listado.idEtapa) AS Cuenta', 'prospectos_listado', 'LEFT JOIN prospectos_etapa ON prospectos_etapa.idEtapa = prospectos_listado.idEtapa', 'prospectos_listado.idProspecto!=0 GROUP BY prospectos_listado.idEtapa', 'Etapa ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
 														
 /*****************************************************************************************************************/
 /*                                                Modelado                                                       */
@@ -804,22 +804,36 @@ $ing_mens_contrato = valores($ing_mens_contrato, 0);
 			
 			<div class="col-sm-12">
 				<?php
+				//arreglo de la etapa
+				$arrFinalEtapa = array();
+				foreach ($arrEtapa as $temp) {
+					$arrFinalEtapa[$temp['idEtapa']]['Cuenta'] = $temp['Cuenta'];
+					$arrFinalEtapa[$temp['idEtapa']]['Nombre'] = $temp['Etapa'];
+				}
+				//valores
+				$nom_1 = $arrFinalEtapa[1]['Nombre'];
+				$nom_2 = $arrFinalEtapa[2]['Nombre'];
+				$nom_3 = $arrFinalEtapa[3]['Nombre'];
+				$nom_4 = $arrFinalEtapa[4]['Nombre'];
+				$nom_5 = $arrFinalEtapa[5]['Nombre'];
+				$nom_6 = $arrFinalEtapa[6]['Nombre'];
+				$nom_7 = $arrFinalEtapa[7]['Nombre'];
+				
+				$val_1 = $arrFinalEtapa[7]['Cuenta'] + $arrFinalEtapa[6]['Cuenta'] + $arrFinalEtapa[5]['Cuenta'] + $arrFinalEtapa[4]['Cuenta'] + $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
+				$val_2 = $arrFinalEtapa[6]['Cuenta'] + $arrFinalEtapa[5]['Cuenta'] + $arrFinalEtapa[4]['Cuenta'] + $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
+				$val_3 = $arrFinalEtapa[5]['Cuenta'] + $arrFinalEtapa[4]['Cuenta'] + $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
+				$val_4 = $arrFinalEtapa[4]['Cuenta'] + $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
+				$val_5 = $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
+				$val_6 = $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
+				$val_7 = $arrFinalEtapa[1]['Cuenta'];
+				
 				//se crean los datos
 				$Graphics_xData       = 'var xData = [';
 				$Graphics_yData       = 'var yData = [';
-				//Se crean los datos
-				foreach ($arrEtapa as $temp) {
-					//verifico la existencia
-					if(isset($temp['Etapa'])&&$temp['Etapa']!=''){
-						$Nombre = $temp['Etapa'];
-					}else{
-						$Nombre = 'Sin Etapa';
-					}
-					//las fechas
-					$Graphics_xData       .= $temp['Cuenta'].',';
-					//los valores
-					$Graphics_yData       .= '"'.$Nombre.'",';
-				}
+				//las fechas
+				$Graphics_xData       .= $val_1.','.$val_2.','.$val_3.','.$val_4.','.$val_5.','.$val_6.','.$val_7.',';
+				//los valores
+				$Graphics_yData       .= '"'.$nom_1.'","'.$nom_2.'","'.$nom_3.'","'.$nom_4.'","'.$nom_5.'","'.$nom_6.'","'.$nom_7.'",';
 				$Graphics_xData       .= '];';
 				$Graphics_yData       .= '];';
 				$Graphics_width  = 600;
@@ -831,56 +845,7 @@ $ing_mens_contrato = valores($ing_mens_contrato, 0);
 			</div>			
 
 			
-			
-			<script>
-				window.onload = function () {
-
-					var chart = new CanvasJS.Chart("piechart_embudo", {
-						animationEnabled: true,
-						theme: "light1", //"light1", "light2", "dark1", "dark2"
-						title:{
-							text: "Embudo de Ventas"
-						},
-						data: [{
-							type: "funnel",
-							indexLabelPlacement: "inside",
-							indexLabelFontColor: "white",
-							toolTipContent: "<b>{label}</b>: {y} <b>({percentage}%)</b>",
-							indexLabel: "{label} ({percentage}%)",
-							dataPoints: [
-								<?php
-								foreach ($arrEtapa as $temp) {
-									echo '{ y: '.$temp['Cuenta'].', label: "'.$temp['Etapa'].'" },';
-								}
-								?>
-							]
-						}]
-					});
-					calculatePercentage();
-					chart.render();
-
-					function calculatePercentage() {
-						var dataPoint = chart.options.data[0].dataPoints;
-						var total = dataPoint[0].y;
-						for(let i = 0; i < dataPoint.length; i++) {
-							if(i == 0) {
-								chart.options.data[0].dataPoints[i].percentage = 100;
-							} else {
-								chart.options.data[0].dataPoints[i].percentage = ((dataPoint[i].y / total) * 100).toFixed(2);
-							}
-						}
-					}
-
-				}
-			</script>
-
-			<div class="col-sm-6">
-				<div id="piechart_embudo" style="width: 100%; height: 500px;"></div>
-				<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-			</div>
-			
 		</div>
-		
 		
 	</div>
 </div>
