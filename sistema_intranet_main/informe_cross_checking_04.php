@@ -461,13 +461,14 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				if(isset($idEstadoFen)) {            $x5  = $idEstadoFen;            }else{$x5  = '';}
 				if(isset($idCategoria)) {            $x6  = $idCategoria;            }else{$x6  = '';}
 				if(isset($idProducto)) {             $x7  = $idProducto;             }else{$x7  = '';}
-				if(isset($f_programacion_desde)) {   $x8  = $f_programacion_desde;   }else{$x8  = '';}
-				if(isset($f_programacion_hasta)) {   $x9  = $f_programacion_hasta;   }else{$x9  = '';}
-				if(isset($f_ejecucion_desde)) {      $x10 = $f_ejecucion_desde;      }else{$x10 = '';}
-				if(isset($f_ejecucion_hasta)) {      $x11 = $f_ejecucion_hasta;      }else{$x11 = '';}
-				if(isset($f_termino_desde)) {        $x12 = $f_termino_desde;        }else{$x12 = '';}
-				if(isset($f_termino_hasta)) {        $x13 = $f_termino_hasta;        }else{$x13 = '';}
-				if(isset($idUsuario)) {              $x14 = $idUsuario;              }else{$x14 = '';}
+				if(isset($idEstado)) {               $x8  = $idEstado;               }else{$x8  = '';}
+				if(isset($f_programacion_desde)) {   $x9  = $f_programacion_desde;   }else{$x9  = '';}
+				if(isset($f_programacion_hasta)) {   $x10 = $f_programacion_hasta;   }else{$x10 = '';}
+				if(isset($f_ejecucion_desde)) {      $x11 = $f_ejecucion_desde;      }else{$x11 = '';}
+				if(isset($f_ejecucion_hasta)) {      $x12 = $f_ejecucion_hasta;      }else{$x12 = '';}
+				if(isset($f_termino_desde)) {        $x13 = $f_termino_desde;        }else{$x13 = '';}
+				if(isset($f_termino_hasta)) {        $x14 = $f_termino_hasta;        }else{$x14 = '';}
+				if(isset($idUsuario)) {              $x15 = $idUsuario;              }else{$x15 = '';}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -480,15 +481,100 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				$Form_Inputs->form_date('Fecha Programada Desde','f_programacion_desde', $x8, 1);
-				$Form_Inputs->form_date('Fecha Programada Hasta','f_programacion_hasta', $x9, 1);
-				$Form_Inputs->form_date('Fecha Ejecutada Desde','f_ejecucion_desde', $x10, 1);
-				$Form_Inputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x11, 1);
-				$Form_Inputs->form_date('Fecha Terminada Desde','f_termino_desde', $x12, 1);
-				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x13, 1);
-				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x14, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				
+				$Form_Inputs->form_select('Estado','idEstado', $x8, 2, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Programada Desde','f_programacion_desde', $x9, 1);
+				$Form_Inputs->form_date('Fecha Programada Hasta','f_programacion_hasta', $x10, 1);
+				$Form_Inputs->form_date('Fecha Ejecutada Desde','f_ejecucion_desde', $x11, 1);
+				$Form_Inputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x12, 1);
+				$Form_Inputs->form_date('Fecha Terminada Desde','f_termino_desde', $x13, 1);
+				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x14, 1);
+				
+				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x15, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 						
 				?> 
+				
+				
+				<script>
+					//oculto los div
+					document.getElementById('div_f_programacion_desde').style.display = 'none';
+					document.getElementById('div_f_programacion_hasta').style.display = 'none';
+					document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+					document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+					document.getElementById('div_f_termino_desde').style.display = 'none';
+					document.getElementById('div_f_termino_hasta').style.display = 'none';
+						
+					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
+						let idEstado = $(this).val(); //Asignamos el valor seleccionado
+						
+						//Solicitado
+						if(idEstado == 1){ 
+							document.getElementById('div_f_programacion_desde').style.display = 'block';
+							document.getElementById('div_f_programacion_hasta').style.display = 'block';
+							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+							document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+							document.getElementById('div_f_termino_desde').style.display = 'none';
+							document.getElementById('div_f_termino_hasta').style.display = 'none';
+							//Reseteo los valores a 0
+							//document.getElementById('f_programacion_desde').value = "";
+							//document.getElementById('f_programacion_hasta').value = "";
+							document.getElementById('f_ejecucion_desde').value = "";
+							document.getElementById('f_ejecucion_hasta').value = "";
+							document.getElementById('f_termino_desde').value = "";
+							document.getElementById('f_termino_hasta').value = "";				
+						
+						//Programado
+						}else if(idEstado == 2){ 
+							document.getElementById('div_f_programacion_desde').style.display = 'none';
+							document.getElementById('div_f_programacion_hasta').style.display = 'none';
+							document.getElementById('div_f_ejecucion_desde').style.display = 'block';
+							document.getElementById('div_f_ejecucion_hasta').style.display = 'block';
+							document.getElementById('div_f_termino_desde').style.display = 'none';
+							document.getElementById('div_f_termino_hasta').style.display = 'none';
+							//Reseteo los valores a 0
+							document.getElementById('f_programacion_desde').value = "";
+							document.getElementById('f_programacion_hasta').value = "";
+							//document.getElementById('f_ejecucion_desde').value = "";
+							//document.getElementById('f_ejecucion_hasta').value = "";
+							document.getElementById('f_termino_desde').value = "";
+							document.getElementById('f_termino_hasta').value = "";	
+						
+						//Ejecutado
+						}else if(idEstado == 3){ 
+							document.getElementById('div_f_programacion_desde').style.display = 'none';
+							document.getElementById('div_f_programacion_hasta').style.display = 'none';
+							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+							document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+							document.getElementById('div_f_termino_desde').style.display = 'block';
+							document.getElementById('div_f_termino_hasta').style.display = 'block';
+							//Reseteo los valores a 0
+							document.getElementById('f_programacion_desde').value = "";
+							document.getElementById('f_programacion_hasta').value = "";
+							document.getElementById('f_ejecucion_desde').value = "";
+							document.getElementById('f_ejecucion_hasta').value = "";
+							//document.getElementById('f_termino_desde').value = "";
+							//document.getElementById('f_termino_hasta').value = "";		
+						
+						//el resto
+						}else{ 
+							document.getElementById('div_f_programacion_desde').style.display = 'none';
+							document.getElementById('div_f_programacion_hasta').style.display = 'none';
+							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+							document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+							document.getElementById('div_f_termino_desde').style.display = 'none';
+							document.getElementById('div_f_termino_hasta').style.display = 'none';
+							//Reseteo los valores a 0
+							document.getElementById('f_programacion_desde').value = "";
+							document.getElementById('f_programacion_hasta').value = "";
+							document.getElementById('f_ejecucion_desde').value = "";
+							document.getElementById('f_ejecucion_hasta').value = "";
+							document.getElementById('f_termino_desde').value = "";
+							document.getElementById('f_termino_hasta').value = "";				
+								
+						}
+					});
+					
+				</script>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
