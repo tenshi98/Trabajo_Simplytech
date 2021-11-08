@@ -13,7 +13,7 @@ require_once 'core/Load.Utils.Web.php';
 //Cargamos la ubicacion 
 $original = "vehiculos_ruta_alternativa.php";
 $location = $original;
-$new_location = "vehiculos_ruta_alternativa_config.php";
+$new_location = "vehiculos_ruta_alternativa_configuracion.php";
 $new_location .='?pagina='.$_GET['pagina'];
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
@@ -464,7 +464,7 @@ array_push( $arrRutasAlt,$row );
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<li class="active"><a href="<?php echo 'vehiculos_ruta_alternativa_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
+				<li class="active"><a href="<?php echo 'vehiculos_ruta_alternativa_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
 			</ul>	
 		</header>
