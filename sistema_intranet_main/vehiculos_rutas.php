@@ -108,7 +108,7 @@ array_push( $arrRutas,$row );
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="<?php echo 'vehiculos_rutas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'vehiculos_rutas_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
+				<li class=""><a href="<?php echo 'vehiculos_rutas_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
 			</ul>	
 		</header>

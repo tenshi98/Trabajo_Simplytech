@@ -13,7 +13,7 @@ require_once 'core/Load.Utils.Web.php';
 //Cargamos la ubicacion 
 $original = "vehiculos_rutas.php";
 $location = $original;
-$new_location = "vehiculos_rutas_config.php";
+$new_location = "vehiculos_rutas_configuracion.php";
 $new_location .='?pagina='.$_GET['pagina'];
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
@@ -116,7 +116,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'vehiculos_rutas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<li class="active"><a href="<?php echo 'vehiculos_rutas_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
+				<li class="active"><a href="<?php echo 'vehiculos_rutas_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
 			</ul>	
 		</header>
@@ -288,7 +288,7 @@ array_push( $arrRutas,$row );
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'vehiculos_rutas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<li class="active"><a href="<?php echo 'vehiculos_rutas_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
+				<li class="active"><a href="<?php echo 'vehiculos_rutas_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
 			</ul>	
 		</header>
