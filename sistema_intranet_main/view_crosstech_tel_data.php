@@ -71,7 +71,7 @@ $rowTel = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $S
 //se traen todas las zonas
 $SIS_query = 'Helada, UnidadesFrio, CrossTech_FechaUnidadFrio, HorasSobreGrados, CrossTech_TempMax, CrossTech_FechaTempMax, Dias_acumulado, Dias_anterior, CrossTech_DiasTempMin, CrossTech_FechaDiasTempMin';
 $SIS_join  = '';
-$SIS_where = 'idTelemetria='.$idTelemetria.' ORDER BY idAuxiliar DESC LIMIT 1';
+$SIS_where = 'idTelemetria='.$idTelemetria.' ORDER BY idAuxiliar DESC';
 $rowAux = db_select_data (false, $SIS_query, 'telemetria_listado_aux_equipo', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowAux');
 				
 /*************************************************************/
