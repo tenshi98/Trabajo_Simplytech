@@ -314,7 +314,7 @@ foreach ($arrEquipo as $data) {
 		$link_Alertas .= '&idLeido=0';		
 		$link_Alertas .= '&submit_filter=+Filtrar';	
 		//boton
-		$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a target="_blank" rel="noopener noreferrer" href="'.$link_Alertas.'" title="Alertas Pendientes de ver" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
+		$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a target="_blank" rel="noopener noreferrer" href="'.$link_Alertas.'" title="'.$data['NAlertas'].' Alertas Pendientes de ver" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
 	}else{
 		$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '';
 	}
