@@ -13,7 +13,7 @@ require_once 'core/Load.Utils.Web.php';
 //Cargamos la ubicacion 
 $original = "seguridad_camaras_listado.php";
 $location = $original;
-$new_location = "seguridad_camaras_listado_config.php";
+$new_location = "seguridad_camaras_listado_configuracion.php";
 $new_location .='?pagina='.$_GET['pagina'];
 $new_location .='&id='.$_GET['id'];
 //Se agregan ubicaciones
@@ -306,7 +306,7 @@ foreach ($arrCamaras as $zona) {
 				<li class=""><a href="<?php echo 'seguridad_camaras_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'seguridad_camaras_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'seguridad_camaras_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-				<li class="active"><a href="<?php echo 'seguridad_camaras_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Editar Camaras</a></li>
+				<li class="active"><a href="<?php echo 'seguridad_camaras_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Editar Camaras</a></li>
 			</ul>	
 		</header>
         <div class="table-responsive">
