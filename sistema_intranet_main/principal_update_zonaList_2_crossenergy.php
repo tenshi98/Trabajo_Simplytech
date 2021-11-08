@@ -33,7 +33,10 @@ $Fecha_fin      = fecha_actual();
 $HoraSistema    = hora_actual(); 
 $arrGruas       = array();
 $nicon          = 0;
-
+//Grupo Sensores
+$idGrupoVmonofasico      = 87;
+$idGrupoVTrifasico       = 106;
+$idGrupoPotencia         = 99;
 		
 //condicionales
 if(isset($_GET['idZona'])&&$_GET['idZona']!=''){
@@ -56,6 +59,8 @@ $N_Maximo_Sensores = 20;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
+	$subquery .= ',SensoresActivo_'.$i;
+	$subquery .= ',SensoresGrupo_'.$i;
 }	
 //Listar los equipos
 $SIS_query = '
@@ -63,6 +68,7 @@ telemetria_listado.idTelemetria,
 telemetria_listado.Nombre, 
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
+telemetria_listado.cantSensores,
 telemetria_listado.GeoLatitud, 
 telemetria_listado.GeoLongitud, 
 telemetria_listado.TiempoFueraLinea,
@@ -153,10 +159,41 @@ foreach ($arrEquipo as $data) {
 	$arrGruas[$xdanger][$data['idTelemetria']]['eq_ok_icon']         = $eq_ok_icon;
 	$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']             = $data['Nombre'];
 	$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']         = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
-	$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']  = '<a href="view_crossenergy_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
-	$arrGruas[$xdanger][$data['idTelemetria']]['Vmonofasico']        = $data['SensoresMedActual_4'];
-	$arrGruas[$xdanger][$data['idTelemetria']]['VTrifasico']         = $data['SensoresMedActual_5'];
-	$arrGruas[$xdanger][$data['idTelemetria']]['Potencia']           = $data['SensoresMedActual_6'];
+	$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']  = '<a href="view_crossenergy_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-bolt" aria-hidden="true"></i></a>';
+	//$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_detalle'] = '<a href="view_crossenergy_detalle.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Detalle Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>';
+			
+	//Temporales
+	$TempValue_1 = 0;
+	$TempValue_2 = 0;
+	$TempValue_3 = 0;
+	$TempCount_1 = 0;
+	$TempCount_2 = 0;
+	$TempCount_3 = 0;
+	
+	//se recorre
+	for ($i = 1; $i <= $data['cantSensores']; $i++) {
+		//Si el sensor esta activo
+		if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+			//Si pertenece al grupo
+			if($data['SensoresGrupo_'.$i]==$idGrupoVmonofasico){
+				$TempValue_1 = $TempValue_1 + $data['SensoresMedActual_'.$i];
+				$TempCount_1++;
+			}
+			if($data['SensoresGrupo_'.$i]==$idGrupoVTrifasico){
+				$TempValue_2 = $TempValue_2 + $data['SensoresMedActual_'.$i];
+				$TempCount_2++;
+			}
+			if($data['SensoresGrupo_'.$i]==$idGrupoPotencia){
+				$TempValue_3 = $TempValue_3 + $data['SensoresMedActual_'.$i];
+				$TempCount_3++;
+			}
+		}
+	}
+	
+	//Saco promedios
+	if($TempCount_1!=0){$arrGruas[$xdanger][$data['idTelemetria']]['Vmonofasico']     = $TempValue_1/$TempCount_1;}else{$arrGruas[$xdanger][$data['idTelemetria']]['Vmonofasico']     = 0;}
+	if($TempCount_2!=0){$arrGruas[$xdanger][$data['idTelemetria']]['VTrifasico']      = $TempValue_2/$TempCount_2;}else{$arrGruas[$xdanger][$data['idTelemetria']]['VTrifasico']      = 0;}
+	if($TempCount_3!=0){$arrGruas[$xdanger][$data['idTelemetria']]['Potencia']        = $TempValue_3/$TempCount_3;}else{$arrGruas[$xdanger][$data['idTelemetria']]['Potencia']        = 0;}
 							
 	/****************************************************/
 	//el resto de los botones					
@@ -253,6 +290,7 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 						<?php
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
+						//echo $grua['crosscrane_detalle'];
 						echo $grua['CenterMap'];					
 						?>
 					</div>
@@ -279,6 +317,7 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 						<?php
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
+						//echo $grua['crosscrane_detalle'];
 						echo $grua['CenterMap'];							
 						?>
 					</div>
@@ -305,6 +344,7 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 						<?php
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
+						//echo $grua['crosscrane_detalle'];
 						echo $grua['CenterMap'];						
 						?>
 					</div>
