@@ -223,6 +223,7 @@ if($HoraTermino<$timeBack){
 	}
 	
 	//variables
+	$x_graph_count        = 0;
 	$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
 	$Graphics_names       = 'var names = [';
@@ -251,6 +252,8 @@ if($HoraTermino<$timeBack){
 				$Graphics_lineDash   .= "'',";
 				//los anchos de la linea
 				$Graphics_lineWidth  .= "'',";
+				//contador
+				$x_graph_count++;
 			}
 		}
 	} 
@@ -303,7 +306,7 @@ if($HoraTermino<$timeBack){
 						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountTActual']++;
 					}else{
 						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['TActual'] = $rowEquipo['SensoresMedActual_'.$i];
-						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountTActual'] = 0;
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountTActual'] = 1;
 					}
 				}
 				//promedio
@@ -499,11 +502,17 @@ $widget = '
 					</div>
 					<div class="col-sm-5">
 						<div class="row" id="update_graphics">';
-						
-							$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']];
-							$gr_unimed = '°C';
-							$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
-							
+							//si hay datos
+							if(isset($x_graph_count)&&$x_graph_count!=0){
+								$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']];
+								$gr_unimed = '°C';
+								$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
+							//si no hay datos	
+							}else{
+								$widget .= '<div class="col-sm-12"><br/>';
+								$widget .= '<div class="alert alert-danger alert-white rounded alert_box_correction" role="alert"><div class="icon"><i class="fa fa-info-circle faa-bounce animated" aria-hidden="true"></i></div><span id="alert_post_data">No hay datos para desplegar el grafico</span><div class="clearfix"></div></div>';
+								$widget .= '</div>';
+							}
 							$widget .= '  
 						</div>
 					</div>';
