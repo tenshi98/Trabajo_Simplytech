@@ -112,14 +112,24 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						$xcount++;
 						//verifico si existe
 						if(isset($arrData[$xcount]['Value'])&&$arrData[$xcount]['Value']!=''){
-							$arrData[$xcount]['Value'] .= ", ".$fac['SensorValue_'.$x];
+							$arrData[$xcount]['Value'] .= ", ".floatval(number_format($fac['SensorValue_'.$x], 2, '.', ''));
 						//si no lo crea
 						}else{
-							$arrData[$xcount]['Value'] = $fac['SensorValue_'.$x];
+							$arrData[$xcount]['Value'] = floatval(number_format($fac['SensorValue_'.$x], 2, '.', ''));
 						}
 						
 						//Tabla
-						$m_table .= '<td>'.cantidades($fac['SensorValue_'.$x], 2).'</td>';
+						$m_table .= '<td>';
+						$m_table .= cantidades($fac['SensorValue_'.$x], 2);
+						if(isset($_GET['inform_tittle'])&&$_GET['inform_tittle']!=''&&isset($_GET['inform_unimed'])&&$_GET['inform_unimed']!=''){
+							$tb_unimed = $_GET['inform_unimed'];
+						//sino, se usan los que ya existen
+						}else{
+							$tb_unimed = $arrUnimedX[$fac['SensoresUniMed_'.$x]];
+						}
+					
+						if(isset($tb_unimed)){$m_table .= ' '.$tb_unimed;}
+						$m_table .= '</td>';
 						
 						//si es el primer recorrido
 						if($count==0){
@@ -141,7 +151,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 	/******************************************/  
 	//variables
-	$Graphics_xData       = 'var xData = [';
+	/*$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
 	$Graphics_names       = 'var names = [';
 	$Graphics_types       = 'var types = [';
@@ -175,7 +185,28 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$Graphics_texts      .= '];';
 	$Graphics_lineColors .= '];';
 	$Graphics_lineDash   .= '];';
-	$Graphics_lineWidth  .= '];';
+	$Graphics_lineWidth  .= '];';*/
+	
+	$Graphics_xData       = 'var xData = [';
+	$Graphics_yData       = 'var yData = [';
+	$Graphics_names       = 'var names = [';
+	//Se crean los datos
+	for ($x = 1; $x <= $xcount; $x++) {
+		//las fechas
+		$Graphics_xData      .='['.$Temp_1.'],';
+		//los valores
+		$Graphics_yData      .='['.$arrData[$x]['Value'].'],';
+		//los nombres
+		$Graphics_names      .= $arrData[$x]['Name'].',';
+	}
+	$Graphics_xData      .= '];';
+	$Graphics_yData      .= '];';
+	$Graphics_names      .= '];';
+	$Graphics_info        = "var grf_info = [''];";
+	$Graphics_markerColor = "var markerColor = [''];";
+	$Graphics_markerLine  = "var markerLine = [''];";
+				
+				
 
 	//si hay mas de 9000 registros
 	if(isset($count)&&$count>9000){
@@ -246,8 +277,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						$gr_tittle = 'Grafico ('.$uni.')';
 						$gr_unimed = $uni;
 					}
-					echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); ?>
-										
+					//echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+					echo GraphBarr_1('graphBarra_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
+				
+					?>				
 				</div>
 			</div>
 		</div>
