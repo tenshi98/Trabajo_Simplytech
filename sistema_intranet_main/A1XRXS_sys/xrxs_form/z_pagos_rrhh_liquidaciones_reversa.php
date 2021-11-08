@@ -136,7 +136,7 @@ require_once '0_validate_user_1.php';
 					$arrReversa = db_select_array (false, 'idPago, idFactTrab, MontoPagado, montoPactado', 'pagos_rrhh_liquidaciones', '', $z, 'idPago ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//actualizo registro de la liquidacion
-					if(isset($arrReversa)){
+					if ($arrReversa!=false && !empty($arrReversa) && $arrReversa!='') {
 						foreach ($arrReversa as $tipo){
 							//sumo al total de la reversa
 							$Valor_Doc = $Valor_Doc + $tipo['MontoPagado'];

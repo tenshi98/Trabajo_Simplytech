@@ -159,7 +159,7 @@ require_once '0_validate_user_1.php';
 					$arrReversa = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/**********************************************************************/
-					if(isset($arrReversa)){
+					if ($arrReversa!=false && !empty($arrReversa) && $arrReversa!='') {
 						foreach ($arrReversa as $tipo){
 							
 							switch ($tipo['idTipo']) {
