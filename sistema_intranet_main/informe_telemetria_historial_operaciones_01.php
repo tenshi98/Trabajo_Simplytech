@@ -152,6 +152,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	.carga{left:50%;margin-left:115px;margin-top:270px;position:absolute;top:0%;z-index: 100;}
 	.carga_maxima{left:50%;margin-left:205px;margin-top:60px;position:absolute;top:0%;z-index: 100;}	
 	.partida{left:50%;margin-left:-105px;margin-top:140px;position:absolute;top:0%;z-index: 100;}	
+	.parada{left:50%;margin-left:-105px;margin-top:170px;position:absolute;top:0%;z-index: 100;}	
 	.voltaje{left:50%;margin-left:-105px;margin-top:360px;position:absolute;top:0%;z-index: 100;}	
 		
 		
@@ -194,7 +195,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						
 						<div class="partida btn-group-vertical btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="partida"   class="btn btn-default"><i class="fa fa-toggle-on" aria-hidden="true"></i></button>
+							<button type="button" id="parada"   class="btn btn-default"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></button>
 						</div>
+						
 						
 						<div class="voltaje btn-group-vertical btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="voltaje"   class="btn btn-default"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></button>
@@ -364,7 +367,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}
 		//Parada
 		if (typeof $(this).data('sensor_2') !== 'undefined') {
-			// your code here
+			document.getElementById('parada').style.backgroundColor  = '#ee465a';
+		}else{
+			document.getElementById('parada').style.backgroundColor  = '#ffffff';
 		}
 		/************************************************/
 		//Freno giro
