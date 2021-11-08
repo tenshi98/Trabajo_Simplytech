@@ -60,7 +60,7 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				$arrFacturaciones = array();
-				$arrFacturaciones = db_select_array (false, 'idFacturacionDetalle, DetalleTotalAPagar, DetalleTotalVenta, montoPago', 'aguas_facturacion_listado_detalle', 0, 'idCliente = '.$idCliente.'AND idEstado = 1', 'Ano ASC, idMes ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$arrFacturaciones = db_select_array (false, 'idFacturacionDetalle, DetalleTotalAPagar, DetalleTotalVenta, montoPago', 'aguas_facturacion_listado_detalle', 0, 'idCliente = '.$idCliente.' AND idEstado = 1', 'Ano ASC, idMes ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*********************************************************************************/
 				//Se crea el registro madre con el pago ingresado
