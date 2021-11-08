@@ -5237,17 +5237,11 @@ require_once '0_validate_user_1.php';
 					AND usuarios_sistemas.idSistema = "'.$_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino'].'"';
 					$SIS_order = 0;
 					$arrPermiso = array();
-					$arrPermiso = db_select_array (false, $SIS_query, 
-													'usuarios_permisos', 
-													$SIS_join, 
-													$SIS_where, 
-													$SIS_order, 
-													$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-												
-
+					$arrPermiso = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join,  $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					/*********************************************************************/
 					//Inserto el mensaje de entrega de materiales
-					if(isset($arrPermiso)){
+					if ($arrPermiso!=false && !empty($arrPermiso) && $arrPermiso!='') {
 						foreach($arrPermiso as $permiso) {
 							if(isset($_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']) && $_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino'] != ''){   $a  = "'".$_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']."'" ;   }else{$a  = "''";}
 							if(isset($permiso['idUsuario']) && $permiso['idUsuario'] != ''){                                                                                             $a .= ",'".$permiso['idUsuario']."'" ;                                               }else{$a .= ",''";}
