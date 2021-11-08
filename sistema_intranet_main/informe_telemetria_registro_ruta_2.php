@@ -48,14 +48,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 	//Se traen todos los registros
-	$SIS_query = 'idTabla, GeoLatitud, GeoLongitud, GeoVelocidad, HoraSistema, Sensor_1, Sensor_2, Sensor_3';
+	$SIS_query = 'idTabla, GeoLatitud, GeoLongitud, GeoVelocidad, FechaSistema, HoraSistema, Sensor_1, Sensor_2, Sensor_3';
 	$SIS_join  = '';
 	$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
 
 	/*****************************************/	
-	if(isset($arrEquipos)){ 
+	if ($arrEquipos!=false && !empty($arrEquipos) && $arrEquipos!='') {
 		/*****************************************/	
 		//Variable para almacenar los recorridos
 		$Temp_1   = '';
@@ -63,7 +63,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		//recorro los resultados
 		foreach ($arrEquipos as $med) {
 			//Se obtiene la fecha
-			$Temp_1 .= "'".$med['HoraSistema']."',";
+			$Temp_1 .= "'".Fecha_estandar($med['FechaSistema'])." ".$med['HoraSistema']."',";
 			
 			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$med['Sensor_1'];    }else{ $arrData[1]['Value'] = $med['Sensor_1']; }
 			if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$med['Sensor_2'];     }else{ $arrData[2]['Value'] = $med['Sensor_2']; }
