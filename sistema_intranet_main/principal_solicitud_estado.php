@@ -87,7 +87,7 @@ LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_ap
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles   = cross_solicitud_aplicacion_listado_tractores.idCuarteles';
-$SIS_where .= 'AND cross_solicitud_aplicacion_listado_tractores.Diferencia!=0 GROUP BY cross_solicitud_aplicacion_listado.idSolicitud, cross_solicitud_aplicacion_listado_cuarteles.idZona, cross_solicitud_aplicacion_listado_tractores.idTelemetria, cross_solicitud_aplicacion_listado_tractores.idVehiculo';
+$SIS_where.= ' AND cross_solicitud_aplicacion_listado_tractores.Diferencia!=0 GROUP BY cross_solicitud_aplicacion_listado.idSolicitud, cross_solicitud_aplicacion_listado_cuarteles.idZona, cross_solicitud_aplicacion_listado_tractores.idTelemetria, cross_solicitud_aplicacion_listado_tractores.idVehiculo';
 $SIS_order = 'cross_solicitud_aplicacion_listado_cuarteles.idZona ASC, telemetria_listado.Nombre ASC';
 $arrTracxCuartel = array();
 $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTracxCuartel');
