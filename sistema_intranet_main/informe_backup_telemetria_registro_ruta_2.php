@@ -55,7 +55,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$arrEquipos = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
 
 	/*****************************************/	
-	if(isset($arrEquipos)){ 
+	if ($arrEquipos!=false && !empty($arrEquipos) && $arrEquipos!='') {
 		/*****************************************/	
 		//Variable para almacenar los recorridos
 		$Temp_1   = '';
