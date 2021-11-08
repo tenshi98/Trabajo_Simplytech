@@ -107,7 +107,7 @@ array_push( $arrBoletas,$row );
 				</thead>			  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
-					if(isset($arrBoletas)){
+					if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!='') {
 						//llamamos a la función para filtrar los datos
 						filtrar($arrBoletas, 'DocumentoPagoNumero');
 						//recorremos el array para imprimirlo con formato HTML

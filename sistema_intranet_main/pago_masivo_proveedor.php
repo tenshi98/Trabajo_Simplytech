@@ -1312,7 +1312,7 @@ array_push( $arrTipo4,$row );
 						$MontoCancelado = 0;
 						$NCCancelado = 0;
 						//insumos
-						if(isset($arrTipo1)){  ?>
+						if ($arrTipo1!=false && !empty($arrTipo1) && $arrTipo1!='') {  ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="9"><strong>FACTURAS DE INSUMOS</strong></td>
 							</tr> 
@@ -1350,7 +1350,7 @@ array_push( $arrTipo4,$row );
 							}
 						} 
 						//productos
-						if(isset($arrTipo2)){  ?>
+						if ($arrTipo2!=false && !empty($arrTipo2) && $arrTipo2!='') {  ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="9"><strong>FACTURAS DE PRODUCTOS</strong></td>
 							</tr> 
@@ -1388,7 +1388,7 @@ array_push( $arrTipo4,$row );
 							}
 						} 
 						//arriendo
-						if(isset($arrTipo3)){  ?>
+						if ($arrTipo3!=false && !empty($arrTipo3) && $arrTipo3!='') {  ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="9"><strong>FACTURAS DE ARRIENDOS</strong></td>
 							</tr> 
@@ -1426,7 +1426,7 @@ array_push( $arrTipo4,$row );
 							}
 						} 
 						//servicio
-						if(isset($arrTipo4)){  ?>
+						if ($arrTipo4!=false && !empty($arrTipo4) && $arrTipo4!='') {  ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="9"><strong>FACTURAS DE SERVICIOS</strong></td>
 							</tr> 

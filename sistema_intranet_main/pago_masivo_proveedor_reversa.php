@@ -178,7 +178,7 @@ array_push( $arrReversa,$row );
 				</thead>			  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
-					if(isset($arrReversa)){
+					if ($arrReversa!=false && !empty($arrReversa) && $arrReversa!='') {
 						//llamamos a la función para filtrar los datos
 						filtrar($arrReversa, 'DocumentoPagoNumero');
 						//recorremos el array para imprimirlo con formato HTML
