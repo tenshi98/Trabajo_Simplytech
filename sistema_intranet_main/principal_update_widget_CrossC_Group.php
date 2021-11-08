@@ -189,6 +189,7 @@ foreach($arrMediciones as $cli) {
 }
 	
 //variables
+$x_graph_count        = 0;
 $Graphics_xData       = 'var xData = [';
 $Graphics_yData       = 'var yData = [';
 $Graphics_names       = 'var names = [';
@@ -217,6 +218,8 @@ foreach ($arrGruposUso as $gruUso) {
 			$Graphics_lineDash   .= "'',";
 			//los anchos de la linea
 			$Graphics_lineWidth  .= "'',";
+			//contador
+			$x_graph_count++;
 		}
 	}
 } 
@@ -234,10 +237,17 @@ $widget = '
 <script type="text/javascript" src="'.DB_SITE_REPO.'/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
 ';			
 
-$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$idGrupoUso];
-$gr_unimed = '°C';
-$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
-		
+//si hay datos
+if(isset($x_graph_count)&&$x_graph_count!=0){
+	$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$idGrupoUso];
+	$gr_unimed = '°C';
+	$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
+//si no hay datos	
+}else{
+	$widget .= '<div class="col-sm-12"><br/>';
+	$widget .= '<div class="alert alert-danger alert-white rounded alert_box_correction" role="alert"><div class="icon"><i class="fa fa-info-circle faa-bounce animated" aria-hidden="true"></i></div><span id="alert_post_data">No hay datos para desplegar el grafico</span><div class="clearfix"></div></div>';
+	$widget .= '</div>';
+}
 
 echo $widget;
 ?>
