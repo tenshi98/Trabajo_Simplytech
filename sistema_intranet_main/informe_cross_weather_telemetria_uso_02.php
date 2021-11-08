@@ -50,7 +50,7 @@ $rowdata = db_select_data (false, 'Nombre'.$subquery, 'telemetria_listado', '', 
 /**********************************************************/
 //Se crean las columnas
 $arrColumnas = array(); 
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 	if(isset($rowdata['SensoresRevisionGrupo_'.$i])&&$rowdata['SensoresRevisionGrupo_'.$i]!=0){
 		$arrColumnas[$rowdata['SensoresRevisionGrupo_'.$i]]['idGrupo'] = $rowdata['SensoresRevisionGrupo_'.$i];
 	}
@@ -67,7 +67,7 @@ $SIS_where = "telemetria_listado_historial_uso.idUso!=0";
 //Se aplican los filtros
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){       $SIS_where.= " AND telemetria_listado_historial_uso.idTelemetria =".$_GET['idTelemetria'];}
 if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''){ 
-	$SIS_where.= " AND telemetria_listado_historial_uso.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$SIS_where.= " AND telemetria_listado_historial_uso.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 /**********************************************************/
 
@@ -81,8 +81,6 @@ $arrConsulta = array();
 $arrConsulta = db_select_array (false, 'Fecha'.$subquery, 'telemetria_listado_historial_uso', '', $SIS_where, 'telemetria_listado_historial_uso.Fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
 
 ?>
-
-
 
 <div class="col-sm-12">
 	<div class="box">	
