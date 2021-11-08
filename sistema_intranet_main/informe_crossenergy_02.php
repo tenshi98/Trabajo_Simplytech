@@ -119,7 +119,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						}
 						
 						//Tabla
-						$m_table .= '<td>'.cantidades($fac['SensorValue_'.$x], 2).'</td>';
+						$m_table .= '<td>';
+						$m_table .= cantidades($fac['SensorValue_'.$x], 2);
+						if(isset($arrUnimedX[$fac['SensoresUniMed_'.$x]])){$m_table .= ' '.$arrUnimedX[$fac['SensoresUniMed_'.$x]];}
+						$m_table .= '</td>';
 						
 						//si es el primer recorrido
 						if($count==0){
