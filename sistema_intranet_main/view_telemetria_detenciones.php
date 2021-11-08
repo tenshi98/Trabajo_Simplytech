@@ -97,7 +97,7 @@ foreach ($arrUnimed as $sen) { $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'
 						$explanation .= '<br/>';
 					}
 				}		
-				echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
+				echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 2)?>
 					
 			</div>	
 		</div>
