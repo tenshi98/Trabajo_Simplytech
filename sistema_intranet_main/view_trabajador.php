@@ -488,7 +488,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 
 
 
-<?php if(isset($arrActivos)&&$arrActivos!=''){?>   
+<?php if ($arrActivos!=false && !empty($arrActivos) && $arrActivos!='') {?>   
 	<?php 
 	filtrar($arrActivos, 'Categoria');?>
 	<div class="col-sm-12">
