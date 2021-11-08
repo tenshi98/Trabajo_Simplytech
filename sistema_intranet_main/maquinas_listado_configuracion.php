@@ -13,7 +13,7 @@ require_once 'core/Load.Utils.Web.php';
 //Cargamos la ubicacion 
 $original = "maquinas_listado.php";
 $location = $original;
-$new_location = "maquinas_listado_config.php";
+$new_location = "maquinas_listado_configuracion.php";
 $new_location .='?pagina='.$_GET['pagina'];
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
@@ -70,7 +70,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'maquinas_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'maquinas_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<li class="active"><a href="<?php echo 'maquinas_listado_config.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
+				<li class="active"><a href="<?php echo 'maquinas_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
