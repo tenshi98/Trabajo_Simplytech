@@ -207,7 +207,7 @@ require_once '0_validate_user_1.php';
 
 						/*********************************************************************/
 						//Se envia mensaje a los usuarios relacionados al area
-						if(isset($arrUsuario)){	
+						if ($arrUsuario!=false && !empty($arrUsuario) && $arrUsuario!='') {
 							foreach($arrUsuario as $usuario) {
 								
 								/***********************************************/
@@ -431,7 +431,7 @@ require_once '0_validate_user_1.php';
 						
 						/*********************************************************************/
 						//Se envia mensaje a los usuarios relacionados al area
-						if(isset($arrUsuario)){	
+						if ($arrUsuario!=false && !empty($arrUsuario) && $arrUsuario!='') {
 							foreach($arrUsuario as $usuario) {
 								
 								/***********************************************/
