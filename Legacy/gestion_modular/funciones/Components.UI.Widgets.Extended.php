@@ -4890,12 +4890,30 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		$_SESSION['usuario']['zona']['idSistema']      = $idSistema;
 		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
 
+		/*************************************************************/
+		//Predios
+		$SIS_query = '
+		cross_predios_listado_zonas.idZona,
+		cross_predios_listado_zonas.Nombre,
+		cross_predios_listado_zonas_ubicaciones.Latitud,
+		cross_predios_listado_zonas_ubicaciones.Longitud';
+		$SIS_join  = '
+		LEFT JOIN `cross_predios_listado_zonas_ubicaciones`  ON cross_predios_listado_zonas_ubicaciones.idZona  = cross_predios_listado_zonas.idZona
+		LEFT JOIN `cross_predios_listado`                    ON cross_predios_listado.idPredio                  = cross_predios_listado_zonas.idPredio';
+		$SIS_where = 'cross_predios_listado.idSistema='.$idSistema;
+		$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
+		$arrPredios = array();
+		$arrPredios = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPredios');
 
 
 		
 		$GPS = '
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
-										
+		<style>
+			.my_marker {color: black;background-color:#1E90FF;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
+			.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
+		</style>
+														
 		<div class="row">		
 			<div class="col-sm-12">
 				<div class="box">	
@@ -5161,17 +5179,51 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
 
 				var myOptions = {
-					zoom: 12,
+					zoom: 14,
 					center: myLatlng,
 					mapTypeId: google.maps.MapTypeId.SATELLITE
 				};
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-				
-				//ubicacion inicial
-				setMarkers(map, locations, 1);
-				//actualizacion de posicion
-				transMarker(map, '.$SegActual.');
+				//dibuja zonas
+				map.setTilt(0); 
+				//dibuja zonas				
+				dibuja_zona();
 
+				
+			}
+			/* ************************************************************************** */
+			class MyMarker extends google.maps.OverlayView {
+				constructor(params) {
+					super();
+					this.position = params.position;
+
+					const content = document.createElement(\'div\');
+					content.classList.add(\'my_marker\');
+					content.textContent = params.label;
+					content.style.position = \'absolute\';
+					content.style.transform = \'translate(-50%, -100%)\';
+
+					const container = document.createElement(\'div\');
+					container.style.position = \'absolute\';
+					container.style.cursor = \'pointer\';
+					container.appendChild(content);
+
+					this.container = container;
+				}
+
+				onAdd() {
+					this.getPanes().floatPane.appendChild(this.container);
+				}
+
+				onRemove() {
+					this.container.remove();
+				}
+
+				draw() {
+					const pos = this.getProjection().fromLatLngToDivPixel(this.position);
+					this.container.style.left = pos.x + \'px\';
+					this.container.style.top = pos.y + \'px\';
+				}
 			}
 			/* ************************************************************************** */
 			function setMarkers(map, locations, optc) {
@@ -5195,7 +5247,8 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 					var marker = new google.maps.Marker({
 						map         : map, 
 						position    : latlngset,
-						icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png"
+						icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png",
+						zIndex:99999999
 					});
 					markers.push(marker);
 
@@ -5277,11 +5330,108 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 				clearMarkers();
 				markers = [];
 			}
+			/* ************************************************************************** */
+			function dibuja_zona() {
+								
+				var polygons = [];';
+							
+				//variables
+				$Latitud_z        = 0;
+				$Longitud_z       = 0;
+				$Latitud_z_prom   = 0;
+				$Longitud_z_prom  = 0;
+				$zcounter         = 0; 
+				$zcounter2        = 0;
+								
+				//Se filtra por zona
+				filtrar($arrPredios, 'idZona');
+				//se recorre
+				foreach ($arrPredios as $todaszonas=>$zonas) {
+					
+					$Latitud_z_2       = 0;
+					$Longitud_z_2      = 0;
+					$Latitud_z_prom_2  = 0;
+					$Longitud_z_prom_2 = 0;
+					$zcounter3         = 0;
+													
+					$GPS .= 'var path'.$todaszonas.' = [';
 
+					//Variables con la primera posicion
+					$Latitud_x = '';
+					$Longitud_x = '';
+									
+					foreach ($zonas as $puntos) {
+						if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
+							$GPS .= '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},';
+							if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){	
+								$Latitud_x  = $puntos['Latitud'];
+								$Longitud_x = $puntos['Longitud'];
+								//Calculos para centrar mapa
+								$Latitud_z    = $Latitud_z+$puntos['Latitud'];
+								$Longitud_z   = $Longitud_z+$puntos['Longitud'];
+								$Latitud_z_2  = $Latitud_z_2+$puntos['Latitud'];
+								$Longitud_z_2 = $Longitud_z_2+$puntos['Longitud'];
+								$zcounter++;
+								$zcounter3++;
+							}
+						}
+					}
+					//se cierra la figura
+					if(isset($Longitud_x)&&$Longitud_x!=''){
+						$GPS .= '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+					}
+					$GPS .= '];';
+									
+					$GPS .= '
+					polygons.push(new google.maps.Polygon({
+						paths: path'.$todaszonas.',
+						strokeColor: \'#FF0000\',
+						strokeOpacity: 0.8,
+						strokeWeight: 2,
+						fillColor: \'#FF0000\',
+						fillOpacity: 0.35
+					}));
+					polygons[polygons.length-1].setMap(map);';
+					
+					if($zcounter3!=0){
+						$Latitud_z_prom_2  = $Latitud_z_2/$zcounter3;
+						$Longitud_z_prom_2 = $Longitud_z_2/$zcounter3;
+					}
+					
+					$GPS .= '
+					myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
+									
+					var marker2 = new MyMarker({
+						position: myLatlng,
+						label: "'.$zonas[0]['Nombre'].'",
+						zIndex:9999
+					});
+					marker2.setMap(map);
+					
+					// When the mouse moves within the polygon, display the label and change the BG color.
+					google.maps.event.addListener(polygons['.$zcounter2.'], "mousemove", function(event) {
+						polygons['.$zcounter2.'].setOptions({
+							fillColor: "#00FF00"
+						});
+					});
 
-			
-			
-			
+					// WHen the mouse moves out of the polygon, hide the label and change the BG color.
+					google.maps.event.addListener(polygons['.$zcounter2.'], "mouseout", function(event) {
+						polygons['.$zcounter2.'].setOptions({
+							fillColor: "#FF0000"
+						});
+					});';
+									
+									
+				} 
+								 
+				$GPS .= '	
+				//ubicacion inicial
+				setMarkers(map, locations, 1);
+				//actualizacion de posicion
+				transMarker(map, '.$SegActual.');
+				
+			}
 			
 			
 			/* ************************************************************************** */
@@ -6503,7 +6653,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 				$link_Alertas .= '&idLeido=0';		
 				$link_Alertas .= '&submit_filter=+Filtrar';	
 				//boton
-				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a target="_blank" rel="noopener noreferrer" href="'.$link_Alertas.'" title="Alertas Pendientes de ver" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
+				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a target="_blank" rel="noopener noreferrer" href="'.$link_Alertas.'" title="'.$data['NAlertas'].' Alertas Pendientes de ver" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
 			}else{
 				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '';
 			}
@@ -7006,6 +7156,10 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 		$Fecha_inicio   = restarDias(fecha_actual(),1);
 		$Fecha_fin      = fecha_actual();
 		$google         = $IDGoogle;
+		//Grupo Sensores
+		$idGrupoVmonofasico      = 87;
+		$idGrupoVTrifasico       = 106;
+		$idGrupoPotencia         = 99;
 			
 		//enlace para redireccionar
 		$enlace  = "?dd=true";
@@ -7038,6 +7192,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 			$subquery .= ',SensoresMedActual_'.$i;
 			$subquery .= ',SensoresUniMed_'.$i;
 			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',SensoresGrupo_'.$i;
 		}	
 		
 		/*************************************************************/
@@ -7151,10 +7306,41 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 			$arrGruas[$xdanger][$data['idTelemetria']]['eq_ok_icon']         = $eq_ok_icon;
 			$arrGruas[$xdanger][$data['idTelemetria']]['Nombre']             = $data['Nombre'];
 			$arrGruas[$xdanger][$data['idTelemetria']]['LastUpdate']         = fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];
-			$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']  = '<a href="view_crossenergy_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
-			$arrGruas[$xdanger][$data['idTelemetria']]['Vmonofasico']        = $data['SensoresMedActual_4'];
-			$arrGruas[$xdanger][$data['idTelemetria']]['VTrifasico']         = $data['SensoresMedActual_5'];
-			$arrGruas[$xdanger][$data['idTelemetria']]['Potencia']           = $data['SensoresMedActual_6'];
+			$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']  = '<a href="view_crossenergy_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Consumo Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-bolt" aria-hidden="true"></i></a>';
+			//$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_detalle'] = '<a href="view_crossenergy_detalle.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Detalle Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>';
+			
+			//Temporales
+			$TempValue_1 = 0;
+			$TempValue_2 = 0;
+			$TempValue_3 = 0;
+			$TempCount_1 = 0;
+			$TempCount_2 = 0;
+			$TempCount_3 = 0;
+			
+			//se recorre
+			for ($i = 1; $i <= $data['cantSensores']; $i++) {
+				//Si el sensor esta activo
+				if(isset($data['SensoresActivo_'.$i])&&$data['SensoresActivo_'.$i]==1){
+					//Si pertenece al grupo
+					if($data['SensoresGrupo_'.$i]==$idGrupoVmonofasico){
+						$TempValue_1 = $TempValue_1 + $data['SensoresMedActual_'.$i];
+						$TempCount_1++;
+					}
+					if($data['SensoresGrupo_'.$i]==$idGrupoVTrifasico){
+						$TempValue_2 = $TempValue_2 + $data['SensoresMedActual_'.$i];
+						$TempCount_2++;
+					}
+					if($data['SensoresGrupo_'.$i]==$idGrupoPotencia){
+						$TempValue_3 = $TempValue_3 + $data['SensoresMedActual_'.$i];
+						$TempCount_3++;
+					}
+				}
+			}
+			
+			//Saco promedios
+			if($TempCount_1!=0){$arrGruas[$xdanger][$data['idTelemetria']]['Vmonofasico']     = $TempValue_1/$TempCount_1;}else{$arrGruas[$xdanger][$data['idTelemetria']]['Vmonofasico']     = 0;}
+			if($TempCount_2!=0){$arrGruas[$xdanger][$data['idTelemetria']]['VTrifasico']      = $TempValue_2/$TempCount_2;}else{$arrGruas[$xdanger][$data['idTelemetria']]['VTrifasico']      = 0;}
+			if($TempCount_3!=0){$arrGruas[$xdanger][$data['idTelemetria']]['Potencia']        = $TempValue_3/$TempCount_3;}else{$arrGruas[$xdanger][$data['idTelemetria']]['Potencia']        = 0;}
 			
 			/****************************************************/
 			//el resto de los botones
@@ -7262,6 +7448,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 													<div class="btn-group" style="width: 105px;" >';
 														$GPS .= $grua['NAlertas'];
 														$GPS .= $grua['crosscrane_estado'];
+														//$GPS .= $grua['crosscrane_detalle'];
 														$GPS .= $grua['CenterMap'];
 														$GPS .= '
 													</div>
@@ -7290,6 +7477,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 													<div class="btn-group" style="width: 105px;" >';
 														$GPS .= $grua['NAlertas'];
 														$GPS .= $grua['crosscrane_estado'];
+														//$GPS .= $grua['crosscrane_detalle'];
 														$GPS .= $grua['CenterMap'];
 														$GPS .= '
 													</div>
@@ -7318,6 +7506,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 													<div class="btn-group" style="width: 105px;" >';
 														$GPS .= $grua['NAlertas'];
 														$GPS .= $grua['crosscrane_estado'];
+														//$GPS .= $grua['crosscrane_detalle'];
 														$GPS .= $grua['CenterMap'];
 														$GPS .= '
 													</div>
@@ -8149,6 +8338,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 	}
 
 	//variables
+	$x_graph_count        = 0;
 	$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
 	$Graphics_names       = 'var names = [';
@@ -8177,6 +8367,8 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 				$Graphics_lineDash   .= "'',";
 				//los anchos de la linea
 				$Graphics_lineWidth  .= "'',";
+				//contador
+				$x_graph_count++;
 			}
 		}
 	} 
@@ -8452,11 +8644,17 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 					</div>
 					<div class="col-sm-5">
 						<div class="row" id="update_graphics">';
-						
-							$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']];
-							$gr_unimed = '°C';
-							$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
-							
+							//si hay datos
+							if(isset($x_graph_count)&&$x_graph_count!=0){
+								$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']];
+								$gr_unimed = '°C';
+								$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
+							//si no hay datos	
+							}else{
+								$widget .= '<div class="col-sm-12"><br/>';
+								$widget .= '<div class="alert alert-danger alert-white rounded alert_box_correction" role="alert"><div class="icon"><i class="fa fa-info-circle faa-bounce animated" aria-hidden="true"></i></div><span id="alert_post_data">No hay datos para desplegar el grafico</span><div class="clearfix"></div></div>';
+								$widget .= '</div>';
+							}
 							$widget .= '  
 						</div>
 					</div>
