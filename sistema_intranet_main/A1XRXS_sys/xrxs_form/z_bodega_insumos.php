@@ -3427,7 +3427,7 @@ require_once '0_validate_user_1.php';
 					
 					/*********************************************************************/
 					//Inserto el mensaje de entrega de materiales
-					if(isset($arrPermiso)){	
+					if ($arrPermiso!=false && !empty($arrPermiso) && $arrPermiso!='') {
 						foreach($arrPermiso as $permiso) {
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']) && $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino'] != ''){   $a  = "'".$_SESSION['insumos_egr_basicos']['idSistemaDestino']."'" ;   }else{$a  = "''";}
 							if(isset($permiso['idUsuario']) && $permiso['idUsuario'] != ''){                                                                                         $a .= ",'".$permiso['idUsuario']."'" ;                                 }else{$a .= ",''";}
