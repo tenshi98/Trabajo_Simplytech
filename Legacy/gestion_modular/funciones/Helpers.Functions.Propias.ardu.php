@@ -100,12 +100,9 @@ function inLocationPoint($arrZonas, $pointLocation, $GeoLatitud, $GeoLongitud){
 		$c_chek =  $pointLocation->pointInPolygon($GeoLatitud.' '.$GeoLongitud, $polygon);
 		//si esta dentro de la zona
 		if($c_chek=='inside'){
-			if($nx_UsoPredio==0){
+			if($nx==0){
 				$nx = $todaszonas;
 			}
-		//si esta fuera de la zona
-		}else{
-			$nx = 0;
 		}
 	}
 	//devuelvo
@@ -119,6 +116,8 @@ function LimpiarInput($Data){
 	$Data = str_replace(' ', '', $Data);
 	$Data = str_replace("'", '', $Data);
 	$Data = str_replace('"', '', $Data);
+	$Data = str_replace('[', '', $Data);
+	$Data = str_replace(']', '', $Data);
 	
 	return $Data;
 
