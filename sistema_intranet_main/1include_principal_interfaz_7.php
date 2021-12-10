@@ -174,7 +174,7 @@ $Prospec_cerrado = db_select_nrows (false, 'idProspecto', 'prospectos_listado', 
 
 //Listado con los clientes
 $arrClientes = array();
-$arrClientes = db_select_array (false, 'Contrato_Valor_Mensual,idTab_1, idTab_2, idTab_3, idTab_4, idTab_5, idTab_6, idTab_7, idTab_8', 'clientes_listado', '', 'idEstado=1 AND idSistema='.$idSistema, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrClientes');
+$arrClientes = db_select_array (false, 'Contrato_idPeriodo, Contrato_Fecha_Ini, Contrato_Fecha_Term, Contrato_Valor_Mensual,idTab_1, idTab_2, idTab_3, idTab_4, idTab_5, idTab_6, idTab_7, idTab_8', 'clientes_listado', '', 'idEstado=1 AND idSistema='.$idSistema, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrClientes');
 
 //Listado con los prospectos
 $arrProspecto = array();
@@ -553,8 +553,18 @@ if($Prospecto_total!=0){
 
 //se suma el ingreso
 $ing_mens_contrato = 0;
+$dia_actual        = fecha_actual();
 foreach ($arrClientes as $trab) {
-	$ing_mens_contrato = $ing_mens_contrato + $trab['Contrato_Valor_Mensual'];
+	//verifico que este dentro del periodo
+	if($trab['Contrato_Fecha_Ini']<$dia_actual){
+		//si es auto renobable
+		if($trab['Contrato_idPeriodo']==1){
+			$ing_mens_contrato = $ing_mens_contrato + $trab['Contrato_Valor_Mensual'];
+		//si no es auto renobable	
+		}elseif($trab['Contrato_idPeriodo']==2 && $trab['Contrato_Fecha_Term']>$dia_actual){
+			$ing_mens_contrato = $ing_mens_contrato + $trab['Contrato_Valor_Mensual'];
+		}
+	}
 }
 $ing_mens_contrato = valores($ing_mens_contrato, 0);
 		
