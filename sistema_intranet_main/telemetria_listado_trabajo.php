@@ -122,9 +122,6 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 					$Form_Inputs->form_tittle(3, 'Ignorar Microparadas');
 					$Form_Inputs->form_time('Tiempo','Microparada', $x5, 2, 1);
 					
-					
-					
-					
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>
 
