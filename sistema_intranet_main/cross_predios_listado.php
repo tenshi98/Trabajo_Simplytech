@@ -7,6 +7,8 @@ define('XMBCXRXSKGC', 1);
 /*                                          Se llaman a los archivos necesarios                                                   */
 /**********************************************************************************************************************************/
 require_once 'core/Load.Utils.Web.php';
+/** Include PHPExcel */
+require_once '../LIBS_php/PHPExcel/PHPExcel/IOFactory.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
@@ -36,6 +38,13 @@ if ( !empty($_POST['submit']) )  {
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/cross_predios_listado.php';
 }
+//formulario para crear
+if ( !empty($_POST['submit_plant']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'insert_plant';
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_predios_listado.php';
+}
+
 //se borra un dato
 if ( !empty($_GET['del']) )     {
 	//Llamamos al formulario
@@ -56,71 +65,84 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Predio borrado corr
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+if ( ! empty($_GET['new_plantilla']) ) {  
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//cuadro para descargar	 
+$Alert_Text  = 'Descargar Plantilla';
+$Alert_Text .= '<a href="1download.php?dir='.simpleEncode('templates', fecha_actual()).'&file='.simpleEncode('plantilla_predios.xlsx', fecha_actual()).'" title="Descargar Plantilla" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>';
+alert_post_data(2,1,2, $Alert_Text);		
+	
+?>
+ 
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Predio con Plantilla</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
+        	
+				<?php 
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','FilePredio', 1, '"xlsx"');
+				
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_plant">
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php widget_validator(); ?>        
+		</div>
+	</div>
+</div> 
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 cross_predios_listado.Nombre,
 cross_predios_listado.Direccion,
 core_ubicacion_ciudad.Nombre AS Ciudad,
-core_ubicacion_comunas.Nombre AS Comuna
+core_ubicacion_comunas.Nombre AS Comuna';
+$SIS_join  = '
+LEFT JOIN `core_ubicacion_ciudad`   ON core_ubicacion_ciudad.idCiudad   = cross_predios_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`  ON core_ubicacion_comunas.idComuna  = cross_predios_listado.idComuna';
+$SIS_where = 'cross_predios_listado.idPredio ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	
 
-FROM `cross_predios_listado`
-LEFT JOIN `core_ubicacion_ciudad`                    ON core_ubicacion_ciudad.idCiudad                  = cross_predios_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna
-WHERE cross_predios_listado.idPredio = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-//Se traen las rutas
-$arrZonas = array();
-$query = "SELECT 
+//Se traen las zonas
+$SIS_query = '
 cross_predios_listado_zonas.idZona,
 cross_predios_listado_zonas.Nombre,
 cross_predios_listado_zonas_ubicaciones.Latitud,
 cross_predios_listado_zonas_ubicaciones.Longitud,
 cross_predios_listado.Direccion,
 core_ubicacion_ciudad.Nombre AS Ciudad,
-core_ubicacion_comunas.Nombre AS Comuna
-
-FROM `cross_predios_listado_zonas`
+core_ubicacion_comunas.Nombre AS Comuna';
+$SIS_join  = '
 LEFT JOIN `cross_predios_listado_zonas_ubicaciones`  ON cross_predios_listado_zonas_ubicaciones.idZona  = cross_predios_listado_zonas.idZona
 LEFT JOIN `cross_predios_listado`                    ON cross_predios_listado.idPredio                  = cross_predios_listado_zonas.idPredio
 LEFT JOIN `core_ubicacion_ciudad`                    ON core_ubicacion_ciudad.idCiudad                  = cross_predios_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna
+LEFT JOIN `core_ubicacion_comunas`                   ON core_ubicacion_comunas.idComuna                 = cross_predios_listado.idComuna';
+$SIS_where = 'cross_predios_listado_zonas.idPredio ='.$_GET['id'];
+$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
+$arrZonas = array();
+$arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrZonas');
 
-WHERE cross_predios_listado_zonas.idPredio = ".$_GET['id']."
-ORDER BY cross_predios_listado_zonas.idZona ASC, 
-cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrZonas,$row );
-}
 
 //Se obtiene la ubicacion
 $Ubicacion = "";
@@ -540,6 +562,7 @@ array_push( $arrUsers,$row );
 	</ul>
 	
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Predio</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new_plantilla=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear con Plantilla</a><?php } ?>
 	
 </div>
 <div class="clearfix"></div> 
