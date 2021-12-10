@@ -22,6 +22,15 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
+//Si el estado esta distinto de vacio
+if ( !empty($_GET['alerta']) ) {
+	//Nueva ubicacion
+	$location = $new_location;
+	$location.='&id='.$_GET['id'];
+	//Llamamos al formulario
+	$form_trabajo= 'alerta';
+	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_listado.php';
+}
 //formulario para editar
 if ( !empty($_POST['submit_edit']) )  { 
 	//se agregan ubicaciones
@@ -47,30 +56,14 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['mod']) ) { 
 //Armo cadena
-$cadena  = 'Hor_idActivo_dia'.$_GET['mod'].' AS idActivo';
-$cadena .= ',Hor_Inicio_dia'.$_GET['mod'].' AS Inicio';
-$cadena .= ',Hor_Termino_dia'.$_GET['mod'].' AS Termino';
+$SIS_query  = 'Hor_idActivo_dia'.$_GET['mod'].' AS idActivo';
+$SIS_query .= ',Hor_Inicio_dia'.$_GET['mod'].' AS Inicio';
+$SIS_query .= ',Hor_Termino_dia'.$_GET['mod'].' AS Termino';
 
-// consulto los datos
-$query = "SELECT ".$cadena."
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 	 
-	 
-	 ?>
+// consulto los datos	 	 
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -104,50 +97,36 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 } else  {
-	// consulto los datos
-$query = "SELECT Nombre,id_Sensores, id_Geo,
-Hor_idActivo_dia1, Hor_idActivo_dia2, Hor_idActivo_dia3, Hor_idActivo_dia4, Hor_idActivo_dia5, Hor_idActivo_dia6, Hor_idActivo_dia7,
-Hor_Inicio_dia1, Hor_Inicio_dia2, Hor_Inicio_dia3, Hor_Inicio_dia4, Hor_Inicio_dia5, Hor_Inicio_dia6, Hor_Inicio_dia7,
-Hor_Termino_dia1, Hor_Termino_dia2, Hor_Termino_dia3, Hor_Termino_dia4, Hor_Termino_dia5, Hor_Termino_dia6, Hor_Termino_dia7, 
-idUsoContrato
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+//Variable
+$subqry = '';	
+for ($i = 1; $i <= 7; $i++) {
+	$subqry .= ',telemetria_listado.Hor_idActivo_dia'.$i;	
+	$subqry .= ',telemetria_listado.Hor_Inicio_dia'.$i;
+	$subqry .= ',telemetria_listado.Hor_Termino_dia'.$i;
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+// consulto los datos
+$SIS_query = '
+telemetria_listado.Nombre,
+telemetria_listado.id_Geo,
+telemetria_listado.id_Sensores,
+telemetria_listado.idAlarmaGeneral,
+telemetria_listado_alarma_general.Nombre AS Estado, 
+telemetria_listado.idUsoContrato'.$subqry;
+$SIS_join  = 'LEFT JOIN `telemetria_listado_alarma_general`   ON telemetria_listado_alarma_general.idAlarmaGeneral   = telemetria_listado.idAlarmaGeneral';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Se traen todas las activaciones
 $arrOpciones = array();
-$query = "SELECT idOpciones,Nombre
-FROM `core_sistemas_opciones`
-ORDER BY idOpciones ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+$arrOpciones = db_select_array (false, 'idOpciones,Nombre', 'core_sistemas_opciones', '', '', 'idOpciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOpciones');
+
+$arrOpcionesEx = array();
+foreach ($arrOpciones as $sen) { 
+	$arrOpcionesEx[$sen['idOpciones']] = $sen['Nombre'];
+	
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOpciones,$row );
-}
+	
+
 ?>
 
 <div class="col-sm-12">
@@ -169,7 +148,9 @@ array_push( $arrOpciones,$row );
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<li class=""><a href="<?php echo 'admin_telemetria_listado_alerta_general.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarma General</a></li>
+						<?php if($rowdata['id_Sensores']==1){ ?>
+							<li class=""><a href="<?php echo 'admin_telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
+						<?php } ?>
 						<?php if($rowdata['id_Geo']==2){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
 						<?php } ?>
@@ -190,42 +171,59 @@ array_push( $arrOpciones,$row );
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
-						<th>Dia</th>
-						<th>Enviar Notificaciones</th>
-						<th>Hora Inicio</th>
-						<th>Hora Termino</th>
+						<th>Estado</th>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-				<tbody role="alert" aria-live="polite" aria-relevant="all">	
-					<?php //bucle con la cantidad de sensores
-					for ($i = 1; $i <= 7; $i++) {
-						//Unidad medida
-						$bla = 'No Asignado';
-						foreach ($arrOpciones as $sen) { 
-							if($rowdata['Hor_idActivo_dia'.$i]==$sen['idOpciones']){
-								$bla = $sen['Nombre'];
-							}
-						}
-						?>
-						<tr class="odd">		
-							<td><?php echo numero_nombreDia($i); ?></td>	
-							<td><?php echo $bla; ?></td>
-							<td><?php echo $rowdata['Hor_Inicio_dia'.$i]; ?></td>	
-							<td><?php echo $rowdata['Hor_Termino_dia'.$i]; ?></td>	
-							
-							
-			
-							<td>
-								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								</div>
-							</td>
-						</tr>
-					<?php } ?>                    
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<tr class="odd">			
+						<td><?php echo 'Envio de Notificaciones se encuentra <strong>'.$rowdata['Estado'].'</strong>'; ?></td>		
+						<td>
+							<div class="btn-group" style="width: 100px;" id="toggle_event_editing"> 	 
+								<?php if ($rowlevel['level']>=2){?>    				  
+									<?php if ( $rowdata['idAlarmaGeneral']==1 ) {?>   
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$_GET['id'].'&alerta=2' ; ?>">OFF</a>
+										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
+									<?php } else {?>
+										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$_GET['id'].'&alerta=1' ; ?>">ON</a>
+									<?php }?>    
+								<?php }?>  
+							</div>     
+						</td>	
+					</tr>                  
 				</tbody>
 			</table>
 			
+			<?php if ( $rowdata['idAlarmaGeneral']==1 ) {?>
+				
+				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+					<thead>
+						<tr role="row">
+							<th>Dia</th>
+							<th>Enviar Notificaciones</th>
+							<th>Hora Inicio</th>
+							<th>Hora Termino</th>
+							<th width="10">Acciones</th>
+						</tr>
+					</thead>
+					<tbody role="alert" aria-live="polite" aria-relevant="all">	
+						<?php  for ($i = 1; $i <= 7; $i++) { ?>
+							<tr class="odd">		
+								<td><?php echo numero_nombreDia($i); ?></td>	
+								<td><?php echo $arrOpcionesEx[$rowdata['Hor_idActivo_dia'.$i]]; ?></td>
+								<td><?php echo $rowdata['Hor_Inicio_dia'.$i]; ?></td>	
+								<td><?php echo $rowdata['Hor_Termino_dia'.$i]; ?></td>
+								<td>
+									<div class="btn-group" style="width: 35px;" >
+										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									</div>
+								</td>
+							</tr>
+						<?php } ?>                     
+					</tbody>
+				</table>
+			<?php }?> 
 			
 		</div>	
 	</div>
