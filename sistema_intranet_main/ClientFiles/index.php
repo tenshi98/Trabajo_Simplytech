@@ -1,4 +1,16 @@
 <?php session_start();
+/**********************************************************************************************************************************/
+/*                                           Se define la variable de seguridad                                                   */
+/**********************************************************************************************************************************/
+define('XMBCXRXSKGC', 1);
+/**********************************************************************************************************************************/
+/*                                          Se llaman a los archivos necesarios                                                   */
+/**********************************************************************************************************************************/
+require_once '../A1XRXS_sys/xrxs_configuracion/config.php';  //Configuracion de la plataforma
+/**********************************************************************************************************************************/
+/*                                                        Codigo                                                                  */
+/**********************************************************************************************************************************/
+
 /******************************************/
 //obtengo la subcarpeta de navegacion
 if(isset($_GET['Rut'])&&$_GET['Rut']!=''){
@@ -518,7 +530,7 @@ if(($folder_list) || ($file_list) ) {
             }
 
             $table_body .= "<a href=\"" . htmlentities(rawurlencode($item['bname']), ENT_QUOTES, 'utf-8') . "/\" $tr_links><strong>" . utf8ify($item['bname']) . "</strong></a></td>" . PHP_EOL;
-            
+				
             if ($table_options['size']) {
                 $table_body .= "            <td";
                 if ($options['general']['enable_sort']) {
@@ -684,7 +696,26 @@ if(($folder_list) || ($file_list) ) {
                 $file_attr = null;
             }
 
-            $table_body .= "<a href=\"" . htmlentities(rawurlencode($item['bname']), ENT_QUOTES, 'utf-8') . "\"$file_attr$file_data$virtual_attr$size_attr>" . utf8ify($display_name) . "</a></td>" . PHP_EOL;
+            //$table_body .= "<a href=\"" . htmlentities(rawurlencode($item['bname']), ENT_QUOTES, 'utf-8') . "\"$file_attr$file_data$virtual_attr$size_attr>" . utf8ify($display_name) . "</a></td>" . PHP_EOL;
+			
+			//obtengo la extension del archivo
+			$extension = strtolower(pathinfo($item['bname'] ,PATHINFO_EXTENSION));
+			//si es dav
+			if($extension=='dav'){
+				//obtengo carpeta donde se esta
+				$Data = str_replace('/ClientFiles/', '', $_SERVER[REQUEST_URI]);
+				$Data = '?Ubication='.$options['general']['root_dir'].$Data.'&File='.$item['bname'];
+				$Data = str_replace('/&File=', '&File=', $Data);
+				//genero enlace
+				$tr_link    = DB_SITE_MAIN.'/ClientFiles/transform.php'.$Data;
+				$tr_new_tab = 'target="_blank" rel="noopener noreferrer"';
+			//si es otro
+			}else{
+				$tr_link    = htmlentities(rawurlencode($item['bname']), ENT_QUOTES, 'utf-8');
+				$tr_new_tab = '';
+			}
+			
+			$table_body .= "<a ".$tr_new_tab." href=\"" . $tr_link . "\"$file_attr$file_data$virtual_attr$size_attr>" . utf8ify($display_name) . "</a></td>" . PHP_EOL;
 
             // Size
             if ($table_options['size']) {
