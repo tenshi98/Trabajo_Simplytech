@@ -112,12 +112,17 @@ if($HoraTermino<$timeBack){
 	
 	/*************************************************************/
 	//Se consulta
+	$T_idGrupo    = 0;
 	$arrGruposUso = array();
 	$arrGruposUso = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', $SIS_whereSubgrupoUso, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposUso');
 	//se recorre
 	$arrGruposUsoTemp = array();
 	foreach ($arrGruposUso as $gruUso) {
 		$arrGruposUsoTemp[$gruUso['idGrupo']] = $gruUso['Nombre'];
+		//guardo el primer grupo
+		if($T_idGrupo==0){
+			$T_idGrupo = $gruUso['idGrupo'];
+		}
 	}
 
 	/*************************************************************/
@@ -176,7 +181,8 @@ if($HoraTermino<$timeBack){
 					/********************************/
 					//Grafico
 					//Si es temperatura
-					if($rowEquipo['SensoresUniMed_'.$i]==3&&$rowEquipo['SensoresRevisionGrupo_'.$i]==$arrGruposUso[0]['idGrupo']){
+					//if($rowEquipo['SensoresUniMed_'.$i]==3&&$rowEquipo['SensoresRevisionGrupo_'.$i]==$arrGruposUso[0]['idGrupo']){
+					if($rowEquipo['SensoresUniMed_'.$i]==3){	
 						//verifico si existe
 						if(isset($arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
 							$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
@@ -198,25 +204,28 @@ if($HoraTermino<$timeBack){
 		//Grafico
 		//recorro grupo de uso
 		foreach ($arrGruposUso as $gruUso) {
-			//recorro los grupos
-			foreach ($arrGrupos as $gru) {
-				
-				/***********************************************/
-				//realizo los calculos
-				//verifico si hay datos
-				if(isset($arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'])&&$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']!=0){  
-					$New_Dato = $arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Valor']/$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']; 
-				}else{
-					$New_Dato = 0;
-				}
-				/***********************************************/
-				//guardo dentro del grupo
-				//verifico si existe
-				if(isset($arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'])&&$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value']!=''){
-					$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'] .= ", ".$New_Dato;
-				//si no lo crea
-				}else{
-					$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'] = $New_Dato;
+			//verifico que sea el primer grupo
+			if($T_idGrupo==$gruUso['idGrupo']){
+				//recorro los grupos
+				foreach ($arrGrupos as $gru) {
+					
+					/***********************************************/
+					//realizo los calculos
+					//verifico si hay datos
+					if(isset($arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'])&&$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']!=0){  
+						$New_Dato = $arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Valor']/$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']; 
+					}else{
+						$New_Dato = 0;
+					}
+					/***********************************************/
+					//guardo dentro del grupo
+					//verifico si existe
+					if(isset($arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'])&&$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value']!=''){
+						$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'] .= ", ".$New_Dato;
+					//si no lo crea
+					}else{
+						$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'] = $New_Dato;
+					}
 				}
 			}
 		}	
@@ -265,6 +274,8 @@ if($HoraTermino<$timeBack){
 	$Graphics_lineColors .= '];';
 	$Graphics_lineDash   .= '];';
 	$Graphics_lineWidth  .= '];';
+	
+	
 	
 	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 		//Verifico si el sensor esta activo para guardar el dato
