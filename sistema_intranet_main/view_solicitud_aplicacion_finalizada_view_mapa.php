@@ -22,17 +22,6 @@ require_once 'core/Web.Header.Views.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Version antigua de view
-//se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
-	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
-		$X_Puntero = $_GET['view'];
-	} else { 
-		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
-	}
-} else { 
-	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
-}
 $X_idTelemetria = simpleDecode($_GET['idTelemetria'], fecha_actual());
 $X_idSolicitud  = simpleDecode($_GET['idSolicitud'], fecha_actual());
 /**************************************************************/
@@ -80,7 +69,7 @@ for ($i = 1; $i <= 4; $i++) {
 	$aa .= ',Sensor_'.$i;
 }
 /*****************************************/
-$SIS_query = 'idTabla, idTelemetria';
+$SIS_query = 'idTabla, idTelemetria'.$aa;
 $SIS_join  = '';
 $SIS_where = 'idSolicitud ='.$X_idSolicitud.' AND idZona!=0';
 $SIS_order = 'FechaSistema ASC, HoraSistema ASC';
@@ -120,7 +109,7 @@ foreach ($arrMediciones as $med) {
 				
 	}
 }	
-	
+
 
 //Variables
 $Cent_zonaLatitud   = $arrZonas[0]['Latitud'];
@@ -154,41 +143,6 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 				<div id="map_canvas_z" style="width: 100%; height: 550px;"></div>
 				<script>
 						
-					/* ************************************************************************** */
-					/*class MyMarker extends google.maps.OverlayView {
-						constructor(params) {
-							super();
-							this.position = params.position;
-
-							const content = document.createElement('div');
-							content.classList.add('my_marker');
-							content.textContent = params.label;
-							content.style.position = 'absolute';
-							content.style.transform = 'translate(-50%, -100%)';
-
-							const container = document.createElement('div');
-							container.style.position = 'absolute';
-							container.style.cursor = 'pointer';
-							container.appendChild(content);
-
-							this.container = container;
-						}
-
-						onAdd() {
-							this.getPanes().floatPane.appendChild(this.container);
-						}
-
-						onRemove() {
-							this.container.remove();
-						}
-
-						draw() {
-							const pos = this.getProjection().fromLatLngToDivPixel(this.position);
-							this.container.style.left = pos.x + 'px';
-							this.container.style.top = pos.y + 'px';
-						}
-					}
-  
 					/* ************************************************************************** */
 					var map_1, map_2;
 					var marker;
