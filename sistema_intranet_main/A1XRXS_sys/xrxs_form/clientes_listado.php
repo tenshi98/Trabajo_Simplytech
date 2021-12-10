@@ -347,6 +347,13 @@ require_once '0_validate_user_1.php';
 			
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
+				/*****************************************************/
+				// Se traen todos los datos de la licitacion
+				$rowdata = db_select_data (false, 'Contrato_Nombre,Contrato_Numero,Contrato_idPeriodo,Contrato_Fecha_Ini,Contrato_Fecha_Term,Contrato_N_Meses,Contrato_Representante_Legal, Contrato_Representante_Rut,Contrato_Representante_Fono,Contrato_Valor_Mensual, Contrato_Valor_Anual,Contrato_UF_Instalacion,Contrato_UF_Mensual, idTab_1,idTab_2,idTab_3,idTab_4,idTab_5,idTab_6,idTab_7,idTab_8,idTab_9, idTab_10,idTab_11,idTab_12,idTab_13,idTab_14,idTab_15', 'clientes_listado', '', 'idCliente = '.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Listado con los tabs
+				$arrTabs = array();
+				$arrTabs = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'idTab ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 				//Filtros
 				$a = "idCliente='".$idCliente."'" ;
 				if(isset($idSistema) && $idSistema != ''){                                         $a .= ",idSistema='".$idSistema."'" ;}
@@ -408,6 +415,85 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
+					/*****************************************************/
+					//variables
+					$FinContrato = array();
+					$FinContrato[1] = 'Finaliza con la fecha de termino contrato';
+					$FinContrato[2] = 'Renovacion Automatica';
+					
+					$NegocioAct = array();
+					$NegocioAct[0] = 'Quita';
+					$NegocioAct[1] = 'Agrega';
+					$NegocioAct[2] = 'Quita';
+					
+					//recorro
+					$arrTabsSorter = array();
+					foreach ($arrTabs as $tab) {
+						$arrTabsSorter[$tab['idTab']] = $tab['Nombre'];
+					}
+					
+					/*****************************************************/
+					//se guarda historial de cambios de contrato
+					$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
+					
+					if(isset($Contrato_Nombre) && $Contrato_Nombre != $rowdata['Contrato_Nombre']){                                           $hist_Observacion .= '-Se cambia el Nombre del Contrato (de '.$rowdata['Contrato_Nombre'].' a '.$Contrato_Nombre.')<br/>';}
+					if(isset($Contrato_Numero) && $Contrato_Numero != $rowdata['Contrato_Numero']){                                           $hist_Observacion .= '-Se cambia el Numero o Codigo del Contrato (de '.$rowdata['Contrato_Numero'].' a '.$Contrato_Numero.')<br/>';}
+					if(isset($Contrato_idPeriodo) && $Contrato_idPeriodo != $rowdata['Contrato_idPeriodo']){                                  $hist_Observacion .= '-Se cambia la Renovación/finalización a '.$FinContrato[$Contrato_idPeriodo].'<br/>';}
+					if(isset($Contrato_Fecha_Ini) && $Contrato_Fecha_Ini != $rowdata['Contrato_Fecha_Ini']){                                  $hist_Observacion .= '-Se cambia la Fecha inicio Contrato (de '.$rowdata['Contrato_Fecha_Ini'].' a '.$Contrato_Fecha_Ini.')<br/>';}
+					if(isset($Contrato_Fecha_Term) && $Contrato_Fecha_Term != $rowdata['Contrato_Fecha_Term']){                               $hist_Observacion .= '-Se cambia la Fecha termino Contrato (de '.$rowdata['Contrato_Fecha_Term'].' a '.$Contrato_Fecha_Term.')<br/>';}
+					if(isset($Contrato_N_Meses) && $Contrato_N_Meses != $rowdata['Contrato_N_Meses']){                                        $hist_Observacion .= '-Se cambia la Duracion Contrato(Meses) (de '.$rowdata['Contrato_N_Meses'].' a '.$Contrato_N_Meses.')<br/>';}
+					if(isset($Contrato_Representante_Legal) && $Contrato_Representante_Legal != $rowdata['Contrato_Representante_Legal']){    $hist_Observacion .= '-Se cambia el Nombre del Representante Legal (de '.$rowdata['Contrato_Representante_Legal'].' a '.$Contrato_Representante_Legal.')<br/>';}
+					if(isset($Contrato_Representante_Rut) && $Contrato_Representante_Rut != $rowdata['Contrato_Representante_Rut']){          $hist_Observacion .= '-Se cambia el Rut del Representante Legal (de '.$rowdata['Contrato_Representante_Rut'].' a '.$Contrato_Representante_Rut.')<br/>';}
+					if(isset($Contrato_Representante_Fono) && $Contrato_Representante_Fono != $rowdata['Contrato_Representante_Fono']){       $hist_Observacion .= '-Se cambia el Fono del Representante Legal (de '.$rowdata['Contrato_Representante_Fono'].' a '.$Contrato_Representante_Fono.')<br/>';}
+					if(isset($Contrato_Valor_Mensual) && $Contrato_Valor_Mensual != $rowdata['Contrato_Valor_Mensual']){                      $hist_Observacion .= '-Se cambia el Valor Mensual del Contrato (de '.$rowdata['Contrato_Valor_Mensual'].' a '.$Contrato_Valor_Mensual.')<br/>';}
+					if(isset($Contrato_Valor_Anual) && $Contrato_Valor_Anual != $rowdata['Contrato_Valor_Anual']){                            $hist_Observacion .= '-Se cambia el Valor Anual del Contrato (de '.$rowdata['Contrato_Valor_Anual'].' a '.$Contrato_Valor_Anual.')<br/>';}
+					if(isset($Contrato_UF_Instalacion) && $Contrato_UF_Instalacion != $rowdata['Contrato_UF_Instalacion']){                   $hist_Observacion .= '-Se cambia el Valor UF instalacion del Contrato (de '.$rowdata['Contrato_UF_Instalacion'].' a '.$Contrato_UF_Instalacion.')<br/>';}
+					if(isset($Contrato_UF_Mensual) && $Contrato_UF_Mensual != $rowdata['Contrato_UF_Mensual']){                               $hist_Observacion .= '-Se cambia el Valor UF servicio mensual del Contrato (de '.$rowdata['Contrato_UF_Mensual'].' a '.$Contrato_UF_Mensual.')<br/>';}
+					if(isset($idTab_1) && $idTab_1 != $rowdata['idTab_1']){                                                                   $hist_Observacion .= '-Se '.$NegocioAct[$idTab_1].' el negocio '.$arrTabsSorter[1].'<br/>';}
+					if(isset($idTab_2) && $idTab_2 != $rowdata['idTab_2']){                                                                   $hist_Observacion .= '-Se '.$NegocioAct[$idTab_2].' el negocio '.$arrTabsSorter[2].'<br/>';}
+					if(isset($idTab_3) && $idTab_3 != $rowdata['idTab_3']){                                                                   $hist_Observacion .= '-Se '.$NegocioAct[$idTab_3].' el negocio '.$arrTabsSorter[3].'<br/>';}
+					if(isset($idTab_4) && $idTab_4 != $rowdata['idTab_4']){                                                                   $hist_Observacion .= '-Se '.$NegocioAct[$idTab_4].' el negocio '.$arrTabsSorter[4].'<br/>';}
+					if(isset($idTab_5) && $idTab_5 != $rowdata['idTab_5']){                                                                   $hist_Observacion .= '-Se '.$NegocioAct[$idTab_5].' el negocio '.$arrTabsSorter[5].'<br/>';}
+					if(isset($idTab_6) && $idTab_6 != $rowdata['idTab_6']){                                                                   $hist_Observacion .= '-Se '.$NegocioAct[$idTab_6].' el negocio '.$arrTabsSorter[6].'<br/>';}
+					if(isset($idTab_7) && $idTab_7 != $rowdata['idTab_7']){                                                                   $hist_Observacion .= '-Se '.$NegocioAct[$idTab_7].' el negocio '.$arrTabsSorter[7].'<br/>';}
+					if(isset($idTab_8) && $idTab_8 != $rowdata['idTab_8']){                                                                   $hist_Observacion .= '-Se '.$NegocioAct[$idTab_8].' el negocio '.$arrTabsSorter[8].'<br/>';}
+					if(isset($idTab_9) && $idTab_9 != $rowdata['idTab_9']){                                                                   $hist_Observacion .= '-Se '.$NegocioAct[$idTab_9].' el negocio '.$arrTabsSorter[9].'<br/>';}
+					if(isset($idTab_10) && $idTab_10 != $rowdata['idTab_10']){                                                                $hist_Observacion .= '-Se '.$NegocioAct[$idTab_10].' el negocio '.$arrTabsSorter[10].'<br/>';}
+					if(isset($idTab_11) && $idTab_11 != $rowdata['idTab_11']){                                                                $hist_Observacion .= '-Se '.$NegocioAct[$idTab_11].' el negocio '.$arrTabsSorter[11].'<br/>';}
+					if(isset($idTab_12) && $idTab_12 != $rowdata['idTab_12']){                                                                $hist_Observacion .= '-Se '.$NegocioAct[$idTab_12].' el negocio '.$arrTabsSorter[12].'<br/>';}
+					if(isset($idTab_13) && $idTab_13 != $rowdata['idTab_13']){                                                                $hist_Observacion .= '-Se '.$NegocioAct[$idTab_13].' el negocio '.$arrTabsSorter[13].'<br/>';}
+					if(isset($idTab_14) && $idTab_14 != $rowdata['idTab_14']){                                                                $hist_Observacion .= '-Se '.$NegocioAct[$idTab_14].' el negocio '.$arrTabsSorter[14].'<br/>';}
+					if(isset($idTab_15) && $idTab_15 != $rowdata['idTab_15']){                                                                $hist_Observacion .= '-Se '.$NegocioAct[$idTab_15].' el negocio '.$arrTabsSorter[15].'<br/>';}
+					
+					/*****************************************************/
+					//se guarda el registro
+					if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
+						//Se guarda en historial la accion
+						$a  = "'".$idCliente."'";
+						$a .= ",'".fecha_actual()."'";
+						$a .= ",'".$hist_Observacion."'";                                //Observacion
+						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+						
+						// inserto los datos de registro en la db
+						$query  = "INSERT INTO `clientes_listado_historial_contratos` (idCliente, Creacion_fecha, Observacion, idUsuario) 
+						VALUES (".$a.")";
+						//Consulta
+						$resultado = mysqli_query ($dbConn, $query);
+						//Si ejecuto correctamente la consulta
+						if(!$resultado){
+							//Genero numero aleatorio
+							$vardata = genera_password(8,'alfanumerico');
+							
+							//Guardo el error en una variable temporal
+							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
+							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							
+						}
+					}
+					
+					
+					/*****************************************************/
 					//Se crea la carpeta del cliente
 					if(isset($new_folder)&&$new_folder!=''&&$new_folder==1){
 						//verifico que exista el rut
