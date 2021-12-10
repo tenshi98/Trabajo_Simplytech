@@ -394,7 +394,7 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 }elseif ( ! empty($_GET['editAlarma']) ) { 
 // consulto los datos
 $SIS_query = 'Nombre, idTipoAlerta, idUniMed, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
-NErroresMax, NErroresActual';
+NErroresMax, NErroresActual, idEstado';
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso', '', 'idAlarma ='.$_GET['editAlarma'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
@@ -421,6 +421,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				if(isset($valor_diferencia)) {  $x8  = $valor_diferencia;  }else{$x8  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
 				if(isset($Rango_ini)) {         $x9  = $Rango_ini;         }else{$x9  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
 				if(isset($Rango_fin)) {         $x10 = $Rango_fin;         }else{$x10 = Cantidades_decimales_justos($rowdata['Rango_fin']);}
+				if(isset($idEstado)) {          $x11 = $idEstado;          }else{$x11 = $rowdata['idEstado'];}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -442,6 +443,8 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
 				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
 				
+				$Form_Inputs->form_post_data(1, 'Al desactivarla, se elimina la opcion de que la plataforma registre esta alarma');
+				$Form_Inputs->form_select('Estado','idEstado', $x11, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				
 				
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
@@ -597,6 +600,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				
 				
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				
 					
 				?>
@@ -726,15 +730,18 @@ telemetria_listado_alarmas_perso_items.Rango_fin,
 telemetria_listado_alarmas_perso_items.valor_especifico,
 core_telemetria_tipo_alertas.Nombre AS Prioridad,
 telemetria_listado_unidad_medida.Nombre AS Unimed,
-telemetria_listado_alarmas_perso.idTipoAlerta'.$subsql;
+telemetria_listado_alarmas_perso.idTipoAlerta,
+core_estados.Nombre AS Estado,
+telemetria_listado_alarmas_perso.idEstado'.$subsql;
 $SIS_join  = '
 LEFT JOIN `telemetria_listado_alarmas_perso_tipos` ON telemetria_listado_alarmas_perso_tipos.idTipo    = telemetria_listado_alarmas_perso.idTipo
 LEFT JOIN `telemetria_listado_alarmas_perso_items` ON telemetria_listado_alarmas_perso_items.idAlarma  = telemetria_listado_alarmas_perso.idAlarma
 LEFT JOIN `telemetria_listado`                     ON telemetria_listado.idTelemetria                  = telemetria_listado_alarmas_perso.idTelemetria
 LEFT JOIN `core_telemetria_tipo_alertas`           ON core_telemetria_tipo_alertas.idTipoAlerta        = telemetria_listado_alarmas_perso.idTipoAlerta
-LEFT JOIN `telemetria_listado_unidad_medida`       ON telemetria_listado_unidad_medida.idUniMed        = telemetria_listado_alarmas_perso.idUniMed';
+LEFT JOIN `telemetria_listado_unidad_medida`       ON telemetria_listado_unidad_medida.idUniMed        = telemetria_listado_alarmas_perso.idUniMed
+LEFT JOIN `core_estados`                           ON core_estados.idEstado                            = telemetria_listado_alarmas_perso.idEstado';
 $SIS_where = 'telemetria_listado_alarmas_perso.idTelemetria ='.$_GET['id'];
-$SIS_order = 'telemetria_listado_alarmas_perso.idAlarma ASC';
+$SIS_order = 'telemetria_listado_alarmas_perso.idEstado ASC';
 $arrAlarmas = array();
 $arrAlarmas = db_select_array (false, $SIS_query, 'telemetria_listado_alarmas_perso', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlarmas');
 
@@ -811,16 +818,24 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 						<tr class="odd">		
 							<td>
 								<?php 
+								//Si esta activada
+								if(isset($alarmas[0]['idEstado'])&&$alarmas[0]['idEstado']==1){
+									$label_color_1 = 'label-success';
+								//si esta desactivada
+								}else{
+									$label_color_1 = 'label-danger';
+								}
 								//Si es normal
-								if(isset($equip['idTipoAlerta'])&&$equip['idTipoAlerta']==1){
-									$label_color = 'label-success';
+								if(isset($alarmas[0]['idTipoAlerta'])&&$alarmas[0]['idTipoAlerta']==1){
+									$label_color_2 = 'label-success';
 								//si es catastrofica 
 								}else{
-									$label_color = 'label-danger';
+									$label_color_2 = 'label-danger';
 								}
 								//imprimo
+								echo '<strong>Estado: </strong><label class="label '.$label_color_1.'">'.$alarmas[0]['Estado'].'</label><br/>'; 
 								echo '<strong>Tipo: </strong>'.$alarmas[0]['Tipo'].'<br/>'; 
-								echo '<strong>Prioridad Alarma: </strong><label class="label '.$label_color.'">'.$alarmas[0]['Prioridad'].'</label><br/>'; 
+								echo '<strong>Prioridad Alarma: </strong><label class="label '.$label_color_2.'">'.$alarmas[0]['Prioridad'].'</label><br/>'; 
 								echo '<strong>Unidad Medida: </strong>'.$alarmas[0]['Unimed'].'<br/>'; 
 								echo '<strong>N° Maximo Errores: </strong>'.$alarmas[0]['NErroresMax'].'<br/>';
 								echo '<strong>N° Actual Errores: </strong>'.$alarmas[0]['NErroresActual'].'<br/>';

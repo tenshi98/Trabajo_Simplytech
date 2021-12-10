@@ -26,6 +26,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Rango_fin']) )        $Rango_fin           = $_POST['Rango_fin'];
 	if ( !empty($_POST['NErroresMax']) )      $NErroresMax         = $_POST['NErroresMax'];
 	if ( !empty($_POST['NErroresActual']) )   $NErroresActual      = $_POST['NErroresActual'];
+	if ( !empty($_POST['idEstado']) )         $idEstado            = $_POST['idEstado'];
 	
 	
 /*******************************************************************************************************************/
@@ -51,6 +52,7 @@ require_once '0_validate_user_1.php';
 			case 'Rango_fin':         if(empty($Rango_fin)){           $error['Rango_fin']          = 'error/No ha ingresado el rango de termino';}break;
 			case 'NErroresMax':       if(empty($NErroresMax)){         $error['NErroresMax']        = 'error/No ha ingresado el numero maximo de errores';}break;
 			case 'NErroresActual':    if(empty($NErroresActual)){      $error['NErroresActual']     = 'error/No ha ingresado el numero actual de errores';}break;
+			case 'idEstado':          if(empty($idEstado)){            $error['idEstado']           = 'error/No ha seleccionado el estado';}break;
 			
 		}
 	}
@@ -74,8 +76,8 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($idTelemetria)){
-				$ndata_1 = db_select_nrows (false, 'Nombre', 'telemetria_listado_alarmas_perso', '', "Nombre='".$Nombre."' AND idTelemetria='".$idTelemetria."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			if(isset($Nombre)&&isset($idTelemetria)&&isset($idTipoAlerta)){
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'telemetria_listado_alarmas_perso', '', "Nombre='".$Nombre."' AND idTelemetria='".$idTelemetria."' AND idTipoAlerta='".$idTipoAlerta."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
@@ -96,11 +98,12 @@ require_once '0_validate_user_1.php';
 				if(isset($Rango_fin) && $Rango_fin != ''){                $a .= ",'".$Rango_fin."'" ;        }else{$a .=",''";}
 				if(isset($NErroresMax) && $NErroresMax != ''){            $a .= ",'".$NErroresMax."'" ;      }else{$a .=",''";}
 				if(isset($NErroresActual) && $NErroresActual != ''){      $a .= ",'".$NErroresActual."'" ;   }else{$a .=",''";}
+				if(isset($idEstado) && $idEstado != ''){                  $a .= ",'".$idEstado."'" ;         }else{$a .=",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `telemetria_listado_alarmas_perso` (idTelemetria, Nombre, 
 				idTipo, idTipoAlerta, idUniMed, valor_error, valor_diferencia, Rango_ini, 
-				Rango_fin, NErroresMax, NErroresActual) 
+				Rango_fin, NErroresMax, NErroresActual, idEstado) 
 				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -134,8 +137,8 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($idTelemetria)&&isset($idAlarma)){
-				$ndata_1 = db_select_nrows (false, 'Nombre', 'telemetria_listado_alarmas_perso', '', "Nombre='".$Nombre."' AND idTelemetria='".$idTelemetria."' AND idAlarma!='".$idAlarma."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			if(isset($Nombre)&&isset($idTelemetria)&&isset($idTipoAlerta)&&isset($idAlarma)){
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'telemetria_listado_alarmas_perso', '', "Nombre='".$Nombre."' AND idTelemetria='".$idTelemetria."' AND idTipoAlerta='".$idTipoAlerta."' AND idAlarma!='".$idAlarma."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
@@ -156,6 +159,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Rango_fin) && $Rango_fin != ''){                  $a .= ",Rango_fin='".$Rango_fin."'" ;}
 				if(isset($NErroresMax) && $NErroresMax != ''){              $a .= ",NErroresMax='".$NErroresMax."'" ;         }else{$a .= ",NErroresMax='0'" ;}
 				if(isset($NErroresActual) && $NErroresActual != ''){        $a .= ",NErroresActual='".$NErroresActual."'" ;   }else{$a .= ",NErroresActual='0'" ;}
+				if(isset($idEstado) && $idEstado != ''){                    $a .= ",idEstado='".$idEstado."'" ;   }
 				
 				/*******************************************************/
 				//se actualizan los datos
