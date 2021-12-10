@@ -15,7 +15,7 @@ if(isset($_SESSION['usuario']['basic_data']['idSistema'])){
 ?>
 
 
-<div class="topnav">
+<div class="topnav menutop2-toggle">
               
     <div class="btn-group grouphidden">
         <a id="toggleFullScreen" title="Pantalla Completa" class="btn btn-default btn-sm tooltip" >
@@ -48,10 +48,6 @@ if(isset($_SESSION['usuario']['basic_data']['idSistema'])){
             <i class="fa fa-calendar" aria-hidden="true"></i>
         </a> 
     </div>
-    
- 
-
- 
     
     <div class="btn-group">
 		<?php if((isset($_SESSION['usuario']['basic_data']['COunt'])&&$_SESSION['usuario']['basic_data']['COunt']>1) OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>

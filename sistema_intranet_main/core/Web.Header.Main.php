@@ -151,6 +151,46 @@
 							<a href="principal.php" class="navbar-brand">
 								<?php require_once 'Web.Body.Nav.Logo.php';?>
 							</a> 
+							
+							<div class="topnav menutop1-toggle">
+								<div class="btn-group">
+									<a href="principal_notificaciones.php?pagina=1" title="Notificaciones" class="btn btn-default btn-sm tooltip">
+										<i class="fa fa-commenting-o <?php if($nNoti!=0){ echo 'faa-horizontal animated'; } ?>" aria-hidden="true"></i>
+										<?php if(isset($nNoti)&&$nNoti!=0){echo '<span class="label label-danger">'.$nNoti.'</span>';}?>
+									</a> 
+									
+									<a href="principal_ayuda.php" title="Ayuda" class="btn btn-default btn-sm tooltip">
+										<i class="fa fa-question" aria-hidden="true"></i>
+									</a>
+									
+									<a href="principal_procedimientos.php" title="Procedimientos" class="btn btn-default btn-sm tooltip">
+										<i class="fa fa-file-word-o" aria-hidden="true"></i>
+									</a>
+									
+									<a href="principal_agenda_telefonica.php?pagina=1" title="Agenda" class="btn btn-default btn-sm tooltip">
+										<i class="fa fa-phone" aria-hidden="true"></i>
+									</a>
+									
+									<a href="principal_calendario.php?pagina=1" title="Calendario" data-toggle="modal" class="btn btn-default btn-sm tooltip" >
+										<i class="fa fa-calendar" aria-hidden="true"></i>
+									</a> 
+								</div>
+								
+								<div class="btn-group">
+									<?php if((isset($_SESSION['usuario']['basic_data']['COunt'])&&$_SESSION['usuario']['basic_data']['COunt']>1) OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
+										<a href="index_select.php?bla=true" title="Cambio Sistema" data-toggle="modal" class="btn btn-primary btn-sm tooltip" >
+											<i class="fa fa-exchange" aria-hidden="true"></i>
+										</a> 
+									<?php } ?>
+									<?php 
+									$ubicacion = $original.'?salir=true';
+									$dialogo   = '¿Realmente desea cerrar su sesion?';?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Cerrar sesion" class="btn btn-metis-1 btn-sm tooltip">
+										<i class="fa fa-power-off" aria-hidden="true"></i>
+									</a> 
+								</div>
+							</div>
+    
 						</header>
 						<?php require_once 'Web.Body.Nav.Actions.php';?>
 						<div class="collapse navbar-collapse navbar-ex1-collapse">

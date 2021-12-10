@@ -87,3 +87,12 @@ input:required:valid , select:valid, textarea:valid{background:url() no-repeat l
 #top .navbar-nav .dropdown-toggle {padding-top: 15px !important;}
 .alert_box_correction{white-space: normal!important;}
 blockquote {background: #fff;font-style: italic;border-left: 3px solid #f0715f;border-right: 1px dotted #f0715f;border-top: 1px dotted #f0715f;border-bottom: 1px dotted #f0715f;}
+.navbar-toggle { float: left !important; margin-left: 15px !important; }
+@media (min-width:768px){
+	.navbar-toggle {display: none;}
+	.menutop1-toggle {display: none;}
+}
+@media (max-width:768px){
+	.menutop1-toggle {float: right !important; margin-top: 15px !important;margin-right: 15px !important;}
+	.menutop2-toggle {display: none;}
+}
