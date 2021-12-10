@@ -117,7 +117,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_tittle(3, 'Agropraxis');
+					$Form_Inputs->form_tittle(3, 'Crosschecking');
 					$Form_Inputs->form_input_number('Capacidad Nebulizador','Capacidad', $x1, 1);
 					
 					$Form_Inputs->form_tittle(3, 'CrossCrane Gruas');
