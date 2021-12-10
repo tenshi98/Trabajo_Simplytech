@@ -22,6 +22,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Token']) )            $Token             = $_POST['Token'];
 	if ( !empty($_POST['InstanceId']) )       $InstanceId        = $_POST['InstanceId'];
 	if ( !empty($_POST['fono']) )             $fono              = $_POST['fono'];
+	if ( !empty($_POST['grupo']) )            $grupo             = $_POST['grupo'];
 	if ( !empty($_POST['mensaje']) )          $mensaje           = $_POST['mensaje'];
 	
 
@@ -44,6 +45,7 @@ require_once '0_validate_user_1.php';
 			case 'Token':            if(empty($Token)){             $error['Token']              = 'error/No ha ingresado el Token';}break;
 			case 'InstanceId':       if(empty($InstanceId)){        $error['InstanceId']         = 'error/No ha ingresado el InstanceId';}break;
 			case 'fono':             if(empty($fono)){              $error['fono']               = 'error/No ha ingresado el fono';}break;
+			case 'grupo':            if(empty($grupo)){             $error['grupo']              = 'error/No ha ingresado el grupo';}break;
 			case 'mensaje':          if(empty($mensaje)){           $error['mensaje']            = 'error/No ha ingresado el mensaje';}break;
 			
 		}
@@ -220,11 +222,23 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//envio mensaje
-				$resultado =  WhatsappSendMessage($Token, $InstanceId, $fono, $mensaje);
+				if(isset($fono)&&$fono!=''){
+					$resultado =  WhatsappSendMessage($Token, $InstanceId, $fono, $mensaje);
+					
+					echo '<pre>';
+						var_dump($resultado);
+					echo '</pre>';
+				}elseif(isset($grupo)&&$grupo!=''){
+					$resultado =  WhatsappGroupSendMessage($Token, $InstanceId, $grupo, $mensaje);
+					
+					echo '<pre>';
+						var_dump($resultado);
+					echo '</pre>';
+				}else{
+					echo '<pre>nada</pre>';
+				}
 				
-				echo '<pre>';
-				var_dump($resultado);
-				echo '</pre>';
+				
 	
 			}
 		
