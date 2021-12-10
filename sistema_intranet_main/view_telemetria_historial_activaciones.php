@@ -65,8 +65,8 @@ $SIS_query = '
 telemetria_listado.Nombre AS EquipoNombre,
 telemetria_listado_tablarelacionada_'.$X_Puntero.'.FechaSistema AS EquipoFecha,
 telemetria_listado_tablarelacionada_'.$X_Puntero.'.HoraSistema AS EquipoHora'.$subquery;
-$SIS_join  = '';
-$SIS_order = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_'.$X_Puntero.'.idTelemetria';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_'.$X_Puntero.'.idTelemetria';
+$SIS_order = 'telemetria_listado_tablarelacionada_'.$X_Puntero.'.HoraSistema ASC';
 $arrConsulta = array();
 $arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$X_Puntero, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrConsulta');
 
@@ -74,8 +74,9 @@ $arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_tablarela
 $arrTable = array(); 
 $arrTable['inicio']['EquipoFecha']   = '';
 $arrTable['termino']['EquipoFecha']  = '';
+
 //recorro los datos
-while ( $con = mysqli_fetch_assoc ($resultado) ) {
+foreach ($arrConsulta as $con) {
 
 	//Reseteo Variable
 	$rev_count = 0;
@@ -94,7 +95,11 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 						if($con['SensoresRevisionGrupo_'.$i]==$sen['idGrupo']){
 							
 							//verifico que el valor sea igual o superior al establecido
-							if(isset($_GET['Amp'])&&$_GET['Amp']!=''&&simpleDecode($_GET['Amp'], fecha_actual())!=0){$valor_amp=simpleDecode($_GET['Amp'], fecha_actual());}else{$valor_amp=$sen['Valor'];}
+							if(isset($_GET['Amp'])&&$_GET['Amp']!=''&&simpleDecode($_GET['Amp'], fecha_actual())!=0){
+								$valor_amp = simpleDecode($_GET['Amp'], fecha_actual());
+							}else{
+								$valor_amp = $sen['Valor'];
+							}
 							if($con['Sensor_'.$i]>=$valor_amp){
 								
 								//cuento los sensores dentro del grupo
@@ -134,6 +139,8 @@ while ( $con = mysqli_fetch_assoc ($resultado) ) {
 		}
 	}
 }
+
+
 
 ?>
 
