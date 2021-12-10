@@ -71,7 +71,7 @@ if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
 //Verifico el tipo de usuario que esta ingresando
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";	
+	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";	
 	$SIS_where.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Realizo una consulta para saber el total de elementos existentes
