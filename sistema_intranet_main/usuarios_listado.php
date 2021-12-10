@@ -79,19 +79,42 @@ if ( ! empty($_GET['clone_idUsuario']) ) {
 
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($usuario)) {    $x1  = $usuario;      }else{$x1  = '';}
-				if(isset($email)) {      $x2  = $email;        }else{$x2  = '';}
+				if(isset($usuario)) {        $x1  = $usuario;        }else{$x1  = '';}
+				if(isset($idTipoUsuario)) {  $x3  = $idTipoUsuario;  }else{$x3  = '';}
+				if(isset($Nombre)) {         $x4  = $Nombre;         }else{$x4  = '';}
+				if(isset($Fono)) {           $x5  = $Fono;           }else{$x5  = '';}
+				if(isset($email)) {          $x6  = $email;          }else{$x6  = '';}
+				if(isset($Rut)) {            $x7  = $Rut;            }else{$x7  = '';}
+				if(isset($fNacimiento)) {    $x8  = $fNacimiento;    }else{$x8  = '';}
+				if(isset($idCiudad)) {       $x9  = $idCiudad;       }else{$x9  = '';}
+				if(isset($idComuna)) {       $x10 = $idComuna;       }else{$x10 = '';}
+				if(isset($Direccion)) {      $x11 = $Direccion;      }else{$x11 = '';}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Usuario', 'usuario', $x1, 2);
-				$Form_Inputs->form_input_icon('Email', 'email', $x2, 2,'fa fa-envelope-o');
-
+				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
+				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados perteneceran al sistema <strong>'.$_SESSION['usuario']['basic_data']['RazonSocial'].'</strong> por defecto');
+				
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 2,'fa fa-user');
+				$Form_Inputs->form_select('Tipo de usuario','idTipoUsuario', $x3, 2, 'idTipoUsuario', 'Nombre', 'usuarios_tipos', 'idTipoUsuario!=1', '', $dbConn);
+				
+				$Form_Inputs->form_tittle(3, 'Datos Personales');
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x4, 2);
+				$Form_Inputs->form_input_phone('Fono', 'Fono', $x5, 1);
+				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
+				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
+				$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x8, 1);
+				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+										 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+										 $dbConn, 'form1');	
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_GET['clone_idUsuario'], 2);
+				
 				?>  
 	   
 				<div class="form-group">
