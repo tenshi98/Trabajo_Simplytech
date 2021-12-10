@@ -179,7 +179,7 @@ require_once '0_validate_user_1.php';
 						//Consulto el sistema que esta usando
 						$rowdata = db_select_data (false, 'idOpcionesGen_7', 'core_sistemas', '', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//si tiene la interfaz de crosstech
-						if(isset($rowdata['idOpcionesGen_7'])&&$rowdata['idOpcionesGen_7']==7){
+						if(isset($rowdata['idOpcionesGen_7'])&&$rowdata['idOpcionesGen_7']==6){
 							//logo de la compañia
 							$login_logo  = DB_SITE_MAIN.'/img/login_logo.png';
 							$file_logo   = 'img/login_logo.png';
@@ -220,8 +220,9 @@ require_once '0_validate_user_1.php';
 									
 								} catch (Exception $e) {
 									php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'error de registro:'.$e->getMessage(), '' );
-				
-								}	
+								}
+								
+									
 							}else{
 								php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'logo no existe ('.$login_logo.')', '' );
 							}
@@ -2018,15 +2019,17 @@ require_once '0_validate_user_1.php';
 				/*******************************************************************/
 				//Variables
 				$password        = 1234;
-				$idTipoUsuario   = $rowusr['idTipoUsuario'];
 				$idEstado        = 1;
-				$Nombre          = $rowusr['Nombre'];
-				$Rut             = $rowusr['Rut'];
-				$fNacimiento     = $rowusr['fNacimiento'];
-				$Fono            = $rowusr['Fono'];
-				$idCiudad        = $rowusr['idCiudad'];
-				$idComuna        = $rowusr['idComuna'];
-				$Direccion       = $rowusr['Direccion'];
+				
+				//si no existen se crean desde el usuario copiado
+				if(isset($idTipoUsuario)) {  $idTipoUsuario   = $rowusr['idTipoUsuario'];}
+				if(isset($Nombre)) {         $Nombre          = $rowusr['Nombre'];}
+				if(isset($Fono)) {           $Fono            = $rowusr['Fono'];}
+				if(isset($Rut)) {            $Rut             = $rowusr['Rut'];}
+				if(isset($fNacimiento)) {    $fNacimiento     = $rowusr['fNacimiento'];}
+				if(isset($idCiudad)) {       $idCiudad        = $rowusr['idCiudad'];}
+				if(isset($idComuna)) {       $idComuna        = $rowusr['idComuna'];}
+				if(isset($Direccion)) {      $Direccion       = $rowusr['Direccion'];}
 				
 				/*******************************************************************/
 				/*******************************************************************/
