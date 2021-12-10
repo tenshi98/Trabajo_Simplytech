@@ -509,7 +509,7 @@ foreach ($arrPermisos as $prod) {
 						});
 					}); 
 						
-					</script>
+				</script>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
