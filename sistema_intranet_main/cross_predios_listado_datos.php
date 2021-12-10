@@ -109,8 +109,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						
 						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
 									
-							let idSubconfiguracion = $("#idSubconfiguracion").val();
-							let idPais             = $("#idPais").val();
+							let idPais  = $("#idPais").val();
 							
 							//Si el pais es distinto de chile
 							if(idPais!=1){
