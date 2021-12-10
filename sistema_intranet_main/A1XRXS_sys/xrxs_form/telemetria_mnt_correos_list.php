@@ -19,6 +19,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idSistema']) )      $idSistema      = $_POST['idSistema'];
 	if ( !empty($_POST['idUsuario']) )      $idUsuario      = $_POST['idUsuario'];
 	if ( !empty($_POST['TimeStamp']) )      $TimeStamp      = $_POST['TimeStamp'];
+	if ( !empty($_POST['Chat_id']) )        $Chat_id        = $_POST['Chat_id'];
 	
 	
 /*******************************************************************************************************************/
@@ -37,6 +38,7 @@ require_once '0_validate_user_1.php';
 			case 'idSistema':     if(empty($idSistema)){      $error['idSistema']      = 'error/No ha seleccionado el Sistema';}break;
 			case 'idUsuario':     if(empty($idUsuario)){      $error['idUsuario']      = 'error/No ha seleccionado el Usuario';}break;
 			case 'TimeStamp':     if(empty($TimeStamp)){      $error['TimeStamp']      = 'error/No ha ingresado la fecha y hora';}break;
+			case 'Chat_id':       if(empty($Chat_id)){        $error['Chat_id']        = 'error/No ha ingresado el Chat id';}break;
 			
 		}
 	}
@@ -55,14 +57,23 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
+			$ndata_2 = 0;
+			$ndata_3 = 0;
 			//Se verifica si el dato existe
 			if(isset($idUsuario)&&isset($idCorreosCat)&&isset($idSistema)){
 				$ndata_1 = db_select_nrows (false, 'idUsuario', 'telemetria_mnt_correos_list', '', "idUsuario='".$idUsuario."' AND idCorreosCat='".$idCorreosCat."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
+			if(isset($Chat_id)&&isset($idCorreosCat)&&isset($idSistema)){
+				$ndata_2 = db_select_nrows (false, 'Chat_id', 'telemetria_mnt_correos_list', '', "Chat_id='".$Chat_id."' AND idCorreosCat='".$idCorreosCat."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			}
+			if(!isset($Chat_id)&&!isset($idUsuario)){
+				$ndata_3 = 1;
+			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Usuario ya existe';}
+			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El Chat id ya existe';}
+			if($ndata_3 > 0) {$error['ndata_3'] = 'error/No ha seleccionado un usuario ni ha ingresado el chat id';}
 			/*******************************************************************/
-			
 			
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
@@ -72,9 +83,10 @@ require_once '0_validate_user_1.php';
 				if(isset($idSistema) && $idSistema != ''){         $a .= ",'".$idSistema."'" ;     }else{$a .= ",''";}
 				if(isset($idUsuario) && $idUsuario != ''){         $a .= ",'".$idUsuario."'" ;     }else{$a .= ",''";}
 				if(isset($TimeStamp) && $TimeStamp != ''){         $a .= ",'".$TimeStamp."'" ;     }else{$a .= ",''";}
+				if(isset($Chat_id) && $Chat_id != ''){             $a .= ",'".$Chat_id."'" ;     }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_mnt_correos_list` (idCorreosCat, idSistema, idUsuario, TimeStamp) 
+				$query  = "INSERT INTO `telemetria_mnt_correos_list` (idCorreosCat, idSistema, idUsuario, TimeStamp, Chat_id) 
 				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -108,13 +120,25 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
+			$ndata_2 = 0;
+			$ndata_3 = 0;
 			//Se verifica si el dato existe
 			if(isset($idUsuario)&&isset($idCorreosCat)&&isset($idSistema)&&isset($idCorreos)){
 				$ndata_1 = db_select_nrows (false, 'idUsuario', 'telemetria_mnt_correos_list', '', "idUsuario='".$idUsuario."' AND idCorreosCat='".$idCorreosCat."' AND idSistema='".$idSistema."' AND idCorreos!='".$idCorreos."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
+			if(isset($Chat_id)&&isset($idCorreosCat)&&isset($idSistema)&&isset($idCorreos)){
+				$ndata_2 = db_select_nrows (false, 'Chat_id', 'telemetria_mnt_correos_list', '', "Chat_id='".$Chat_id."' AND idCorreosCat='".$idCorreosCat."' AND idSistema='".$idSistema."' AND idCorreos!='".$idCorreos."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			}
+			if(!isset($Chat_id)&&!isset($idUsuario)){
+				$ndata_3 = 1;
+			}
 			//generacion de errores
-			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El idUsuario de la comuna ya existe';}
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Usuario ya existe';}
+			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El Chat id ya existe';}
+			if($ndata_3 > 0) {$error['ndata_3'] = 'error/No ha seleccionado un usuario ni ha ingresado el chat id';}
 			/*******************************************************************/
+			
+			
 			
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
@@ -124,6 +148,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idSistema) && $idSistema != ''){          $a .= ",idSistema='".$idSistema."'" ;}
 				if(isset($idUsuario) && $idUsuario != ''){          $a .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($TimeStamp) && $TimeStamp != ''){          $a .= ",TimeStamp='".$TimeStamp."'" ;}
+				if(isset($Chat_id) && $Chat_id != ''){              $a .= ",Chat_id='".$Chat_id."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
