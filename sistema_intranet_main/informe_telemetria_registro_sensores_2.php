@@ -50,16 +50,17 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{			
 	//obtengo la cantidad real de sensores
-	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
-		
-	/****************************************/
-	//consulto
 	$SIS_query = '
 	telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
 	telemetria_listado.SensoresGrupo_'.$_GET['sensorn'].' AS SensorGrupo,
 	telemetria_listado.SensoresMedMin_'.$_GET['sensorn'].' AS SensorMinMed,
 	telemetria_listado.SensoresMedMax_'.$_GET['sensorn'].' AS SensorMaxMed,
-
+	telemetria_listado.Nombre AS NombreEquipo';
+	$rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
+		
+	/****************************************/
+	//consulto
+	$SIS_query = '
 	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla,
 	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
 	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema,
@@ -74,7 +75,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	/****************************************/
 	//Se trae grupo
-	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$arrEquipos[0]['SensorGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowGrupo');
+	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$rowEquipo['SensorGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowGrupo');
 
 	/****************************************************************/				
 	//Variables
@@ -230,12 +231,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>	
-					<h5>Graficos del Sensor N° <?php echo $_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' de '.$rowEquipo['NombreEquipo']; ?></h5>
+					<h5>Graficos del Sensor N° <?php echo $_GET['sensorn'].' '.$rowEquipo['SensorNombre'].' de '.$rowEquipo['NombreEquipo']; ?></h5>
 				</header>
 				<div class="table-responsive">
 					<?php
-					$gr_tittle = 'Informe Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'];
-					$gr_unimed = $arrEquipos[0]['Unimed'];
+					$gr_tittle = 'Informe Sensor N° '.$_GET['sensorn'].' '.$rowEquipo['SensorNombre'];
+					$gr_unimed = $rowEquipo['Unimed'];
 					echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0);
 					?>
 				</div>
@@ -303,7 +304,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-				<h5>Informe Sensor N° <?php echo $_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' de '.$rowEquipo['NombreEquipo']; ?></h5>
+				<h5>Informe Sensor N° <?php echo $_GET['sensorn'].' '.$rowEquipo['SensorNombre'].' de '.$rowEquipo['NombreEquipo']; ?></h5>
 			</header>
 			<div class="table-responsive"> 
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
