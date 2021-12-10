@@ -825,7 +825,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select_n_auto('Año plantación','AnoPlantacion', $x5, 2, 1975, ano_actual());
 				$Form_Inputs->form_input_number_spinner('N° Hectáreas','Hectareas', $x6, 0, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_number_spinner('N° Hileras','Hileras', $x7, 0, 2000, 1, 0, 2);
-				$Form_Inputs->form_input_number_spinner('N° Plantas','Plantas', $x8, 0, 20000, 1, 0, 2);
+				$Form_Inputs->form_input_number_spinner('N° Plantas','Plantas', $x8, 0, 200000, 1, 0, 2);
 				$Form_Inputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);	
 				$Form_Inputs->form_input_number_spinner('Distancia de plantación','DistanciaPlant', $x10, 0, 100, '0.1', 1, 2);
 				$Form_Inputs->form_input_number_spinner('Distancia Hileras','DistanciaHileras', $x11, 0, 100, '0.1', 1, 2);
