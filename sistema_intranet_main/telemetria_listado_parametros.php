@@ -138,7 +138,7 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listad
 	 
 ?>
 	 
-<div class="col-sm-8 fcenter">
+<div class="col-sm-8 fcenter" style="margin-bottom:350px;">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
@@ -159,9 +159,9 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listad
 				$Form_Inputs->form_input_number_spinner('Maximo Errores Permitidos','SensoresMedErrores_'.$_GET['mod'], $rowdata['Errores_1'], 0, 500, '1', 0, 1);
 				
 				$Form_Inputs->form_tittle(3, 'Configuracion');
-				$Form_Inputs->form_select('Tipo de Sensor','SensoresTipo_'.$_GET['mod'], $rowdata['Sensor'], 1, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Grupo','SensoresGrupo_'.$_GET['mod'], $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowdata['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Tipo de Sensor','SensoresTipo_'.$_GET['mod'], $rowdata['Sensor'], 1, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Grupo','SensoresGrupo_'.$_GET['mod'], $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowdata['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
 				$Form_Inputs->form_select('Estado Sensor','SensoresActivo_'.$_GET['mod'], $rowdata['Activo'], 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
 				
 				$Form_Inputs->form_tittle(3, 'Uso Sensor(Ciclos, Tiempo, Cumplimiento)');
@@ -175,7 +175,7 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listad
 				$Form_Inputs->form_tittle(3, 'Revision Trabajo');
 				$Form_Inputs->form_post_data(2, '<strong>Opcional:</strong> Utilizacion en los mantenimientos.' );
 				$Form_Inputs->form_select('Utilizar','SensoresRevision_'.$_GET['mod'], $rowdata['Revision'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Grupo','SensoresRevisionGrupo_'.$_GET['mod'], $rowdata['RevisionGrupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos_uso', 'idSupervisado=1', '', $dbConn);	
+				$Form_Inputs->form_select_filter('Grupo','SensoresRevisionGrupo_'.$_GET['mod'], $rowdata['RevisionGrupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos_uso', 'idSupervisado=1', '', $dbConn);	
 
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('SensoresFechaUso_Fake', $rowdata['FechaUso'], 2);
