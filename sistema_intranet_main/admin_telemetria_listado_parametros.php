@@ -48,30 +48,11 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
  if ( ! empty($_GET['modAct']) ) { 
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
-$qry = '';
-//Recorro la configuracion de los sensores
+$subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$qry .= ', SensoresNombre_'.$i;
-}
-// consulto los datos
-$query = "SELECT SensorActivacionID, SensorActivacionValor,cantSensores
-".$qry."
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+	$subquery .= ',SensoresNombre_'.$i;
+}	 
+$rowdata = db_select_data (false, 'Nombre AS Equipo,SensorActivacionID, SensorActivacionValor,cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 	 
 ?>
 	 
@@ -79,7 +60,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Parametros</h5>
+			<h5>Editar Sensor Activacion de <?php echo $rowdata['Equipo']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -125,10 +106,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['mod']) ) { 
 //Armo cadena
-$cadena  = 'SensoresMedMin_'.$_GET['mod'].' AS MedMin';
+$cadena  = ',SensoresNombre_'.$_GET['mod'].' AS Nombre';
+$cadena .= ',SensoresMedMin_'.$_GET['mod'].' AS MedMin';
 $cadena .= ',SensoresMedMax_'.$_GET['mod'].' AS MedMax';
 $cadena .= ',SensoresUniMed_'.$_GET['mod'].' AS UniMed';
-
 $cadena .= ',SensoresUso_'.$_GET['mod'].' AS Uso';
 $cadena .= ',SensoresFechaUso_'.$_GET['mod'].' AS FechaUso';
 $cadena .= ',SensoresAccionC_'.$_GET['mod'].' AS AccionC';
@@ -136,33 +117,15 @@ $cadena .= ',SensoresAccionT_'.$_GET['mod'].' AS AccionT';
 $cadena .= ',SensoresAccionAlerta_'.$_GET['mod'].' AS AccionAlerta';
 
 // consulto los datos
-$query = "SELECT ".$cadena."
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
-	 
-	 
-	 
-	 ?>
+$rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	
+?>
 	 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Parametros</h5>
+			<h5>Editar Parametros de <?php echo $rowdata['Equipo']; ?></h5>
 		</header>
 		<div id="div-1" class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -170,6 +133,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<?php 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Editar Sensor:'.$rowdata['Nombre']);
 				$Form_Inputs->form_tittle(3, 'Medicion');
 				$Form_Inputs->form_input_number('Minimo Medicion','SensoresMedMin_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['MedMin']), 1);
 				$Form_Inputs->form_input_number('Maximo Medicion','SensoresMedMax_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['MedMax']), 1);
@@ -187,6 +151,85 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				?>
+				
+				
+				<script>
+					//oculto los div
+					document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
+					document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
+					document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
+					document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
+						
+					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+									
+						let SensoresUso_<?php echo $_GET['mod']; ?>= $("#SensoresUso_<?php echo $_GET['mod']; ?>").val();
+							
+						//Si es si
+						if(SensoresUso_<?php echo $_GET['mod']; ?> == 1){ 
+							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
+								
+						//Si es no
+						}else if(SensoresUso_<?php echo $_GET['mod']; ?> == 2){ 
+							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
+								
+						//si no en ninguno
+						}else{ 
+							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
+								
+						}
+							
+								
+					}); 
+								
+					$("#SensoresUso_<?php echo $_GET['mod']; ?>").on("change", function(){ //se ejecuta al cambiar valor del select
+						let SensoresUso_<?php echo $_GET['mod']; ?>_sel = $(this).val(); //Asignamos el valor seleccionado
+							
+						//Si es si
+						if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 1){ 
+							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
+		
+						//Si es no
+						}else if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 2){ 
+							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
+							//Reseteo los valores a 0
+							document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";				
+							document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";				
+							document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";	
+							document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;			
+								
+							
+						//si no en ninguno
+						}else{ 
+							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							//Reseteo los valores a 0
+							document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";				
+							document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";				
+							document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";	
+							document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;			
+								
+						}
+					});
+					
+					
+				</script>
 	 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
@@ -255,7 +298,9 @@ $arrFinalUnimed[0]    = 'No configurado';
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<li class=""><a href="<?php echo 'admin_telemetria_listado_alerta_general.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarma General</a></li>
+						<?php if($rowdata['id_Sensores']==1){ ?>
+							<li class=""><a href="<?php echo 'admin_telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
+						<?php } ?>
 						<?php if($rowdata['id_Geo']==2){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
 						<?php } ?>
