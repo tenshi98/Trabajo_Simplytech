@@ -964,7 +964,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												$sum_total_caudal       = 0;
 												$sum_correccion_caudal  = 0;
 												$sum_LitrosAplicados    = 0;
-												$sum_TiempoAplicacion   = 0;
+												$sum_TiempoAplicacion   = '00:00:00';
 												
 												foreach ($arrTractoresData as $tractda) { 
 													if(isset($trac['idTelemetria'])&&isset($tractda['idTelemetria'])&&$trac['idTelemetria']==$tractda['idTelemetria']){
