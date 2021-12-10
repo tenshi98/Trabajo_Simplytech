@@ -65,7 +65,15 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado);
+
+/*******************************************/
+//Listado con los tabs
+$arrHistorial = array();
+$arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Creacion_fecha, clientes_listado_historial_contratos.Observacion, usuarios_listado.Nombre AS NombreUsuario', 'clientes_listado_historial_contratos', 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = clientes_listado_historial_contratos.idUsuario', 'clientes_listado_historial_contratos.idCliente='.$_GET['id'], 'clientes_listado_historial_contratos.Creacion_fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
+
+
+?>
 
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Editar Datos Contrato');?>
@@ -175,6 +183,32 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 			</div>
 		</div>	
 	</div>
+</div>
+
+<div class="col-xs-12" style="margin-bottom:15px;">
+	
+	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
+		<table id="items">
+			<tbody>
+				<tr>
+					<th colspan="3">Historial</th>
+				</tr>
+				<tr>
+					<th width="160">Fecha</th>
+					<th>Usuario</th>
+					<th>Observacion</th>
+				</tr>			  
+				<?php foreach ($arrHistorial as $doc){?>
+					<tr class="item-row">
+						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
+						<td><?php echo $doc['NombreUsuario']; ?></td>
+						<td><?php echo $doc['Observacion']; ?></td>
+					</tr> 
+				<?php } ?>
+			</tbody>
+		</table>
+	<?php } ?>
+
 </div>
 
 <div class="clearfix"></div>
