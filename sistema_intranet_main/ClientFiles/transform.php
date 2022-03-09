@@ -45,8 +45,18 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 					
 	//se transforma y se crea archivo
 	$cmd = 'ffmpeg -y -i '.$FileOriginal.' -vcodec libx264 -crf 24 '.$FileFinal;
+	
+	//error_log($cmd, 0);
+	
+	
 	shell_exec($cmd);
-					
+	
+	/*
+	 * sudo yum install epel-release
+	 * sudo yum localinstall --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm
+	 * sudo yum install ffmpeg ffmpeg-devel
+	 * ffmpeg -version
+	 * */				
 	//se elimina archivo
 	/*try {
 		if(!is_writable($FileOriginal)){
@@ -82,6 +92,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 		
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/main.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/theme_color_1.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/my_style.css">
@@ -116,11 +127,12 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 		
 	</head>
 
-	<body>
+	<body class="transform">
 		
 		<style>
-			.buttonDownload {display: inline-block;position: relative;padding: 10px 25px;background-color: #4CC713;color: white;font-family: sans-serif;text-decoration: none;font-size: 0.9em;text-align: center;text-indent: 15px;}
-			.buttonDownload:hover {background-color: #333;color: white;}
+			.transform {background-image: none !important;background-color: #1A1A1A !important;}
+			.buttonDownload {display: inline-block;position: relative;padding: 10px 25px;background-color: #8b00ff;color: white;font-family: sans-serif;text-decoration: none;font-size: 0.9em;text-align: center;text-indent: 15px;}
+			.buttonDownload:hover {background-color: #691CA9;color: white;}
 			.buttonDownload:before, .buttonDownload:after {content: ' ';display: block;position: absolute;left: 15px;top: 52%;}
 			.buttonDownload:before {width: 10px;height: 2px;border-style: solid;border-width: 0 2px 2px;}
 			.buttonDownload:after {width: 0;height: 0;margin-left: 3px;margin-top: -7px;border-style: solid;border-width: 4px 4px 0 4px;border-color: transparent;border-top-color: inherit;animation: downloadArrow 2s linear infinite;animation-play-state: paused;}
@@ -151,6 +163,14 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 			}
 
 		</style>
+		<br/>
+		
+		<div class="col-sm-12">
+			<?php 
+			$Alert_Text = 'Descargue el archivo en Formato MP4.';
+			alert_post_data(1,1,1, $Alert_Text);
+			?>
+		</div>
 		
 		<div class="text-center" style="padding:50px;">
 			<?php
@@ -158,10 +178,24 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 			$Directorio = 'ClientFiles/'.$_GET['Ubication'];	
 			$Archivo    = $fecha1.'_'.$hora1.'-'.$fecha2.'_'.$hora2.'.mp4';
 			?>
-			<a href="<?php echo DB_SITE_MAIN.'/1download.php?dir='.simpleEncode($Directorio, fecha_actual()).'&file='.simpleEncode($Archivo, fecha_actual()); ?>" title="Descargar Archivo" class="buttonDownload">Descargar Video</a>
-			
+			<a href="<?php echo DB_SITE_MAIN.'/1download.php?dir='.simpleEncode($Directorio, fecha_actual()).'&file='.simpleEncode($Archivo, fecha_actual()); ?>" title="Descargar Archivo MP4" class="buttonDownload">Descargar Archivo MP4</a>
 		</div>
 		
+		<div class="col-sm-12">
+			<?php 
+			$Alert_Text = 'En algunos casos el archivo transformado no reproduce sonido, puede descargar el archivo original y reproducirlo con VLC Player.';
+			alert_post_data(4,1,1, $Alert_Text);
+			?>
+		</div>
+		
+		<div class="text-center" style="padding:50px;">
+			<?php
+			//enlace
+			$Directorio = 'ClientFiles/'.$_GET['Ubication'];	
+			$Archivo    = $File;
+			?>
+			<a href="<?php echo DB_SITE_MAIN.'/1download.php?dir='.simpleEncode($Directorio, fecha_actual()).'&file='.simpleEncode($Archivo, fecha_actual()); ?>" title="Descargar Archivo Original" class="buttonDownload">Descargar Archivo Original</a>
+		</div>
 		
 		<!--Otros archivos javascript -->
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/js/bootstrap.min.js"></script>
