@@ -40,72 +40,40 @@ if (!$num_pag){
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
 //Inicia variable
-$z="WHERE vehiculos_listado_error_detenciones.idDetencion>0";
-$search  = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$search .='&submit_filter=Filtrar';
+$SIS_where = "vehiculos_listado_error_detenciones.idDetencion>0";
+$search    = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$search   .= '&submit_filter=Filtrar';
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
-	$z.=" AND vehiculos_listado_error_detenciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
-	$search .='&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
+	$SIS_where .= " AND vehiculos_listado_error_detenciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
+	$search    .= '&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 }
 //verifico si se selecciono un equipo
 if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
-	$z.=" AND vehiculos_listado_error_detenciones.idVehiculo='".$_GET['idVehiculo']."'";
-	$search .='&idVehiculo='.$_GET['idVehiculo'];
+	$SIS_where .= " AND vehiculos_listado_error_detenciones.idVehiculo='".$_GET['idVehiculo']."'";
+	$search    .= '&idVehiculo='.$_GET['idVehiculo'];
 }
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND vehiculos_listado_error_detenciones.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND vehiculos_listado_error_detenciones.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];					
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT vehiculos_listado_error_detenciones.idDetencion FROM `vehiculos_listado_error_detenciones`  LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_error_detenciones.idVehiculo ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idDetencion', 'vehiculos_listado_error_detenciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);
-
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrErrores = array();
-$query = "SELECT 
+$SIS_query = '
 vehiculos_listado_error_detenciones.idDetencion,
 vehiculos_listado_error_detenciones.Fecha, 
 vehiculos_listado_error_detenciones.Hora, 
 vehiculos_listado_error_detenciones.Tiempo,
-vehiculos_listado.Nombre AS NombreEquipo
+vehiculos_listado.Nombre AS NombreEquipo';
+$SIS_join  = 'LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_error_detenciones.idVehiculo';
+$SIS_order = 'idDetencion DESC LIMIT '.$comienzo.', '.$cant_reg;
+$arrErrores = array();
+$arrErrores = db_select_array (false, $SIS_query, 'vehiculos_listado_error_detenciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
-FROM `vehiculos_listado_error_detenciones`
-LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_error_detenciones.idVehiculo
-".$z."
-ORDER BY idDetencion DESC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrErrores,$row );
-}
+?>	
 
- ?>	
 <div class="col-sm-12 clearfix">
 	<?php
 	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
