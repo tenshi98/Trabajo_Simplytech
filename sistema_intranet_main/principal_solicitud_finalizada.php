@@ -89,7 +89,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						
 	/*****************************************/	
 	//Variable para almacenar los recorridos
-	$rec_x           = '';
+	//$rec_x           = '';
 	$marker_loc      = '';
 	$arrMedTractores = array();
 		
@@ -99,7 +99,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		$arrMedTractores[$trac['idTelemetria']]['caudales']     = '';
 		$arrMedTractores[$trac['idTelemetria']]['niveles']      = '';
 		$arrMedTractores[$trac['idTelemetria']]['velocidades']  = '';
-		$arrMedTractores[$trac['idTelemetria']]['heatMapData']  = '';
+		//$arrMedTractores[$trac['idTelemetria']]['heatMapData']  = '';
 		
 		/***************************************/
 		$subquery = '';
@@ -126,8 +126,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 			//if(isset($med['GeoLatitud'])&&$med['GeoLatitud']!=0&&isset($med['GeoLongitud'])&&$med['GeoLongitud']!=0&&($med['Sensor_1']>1 OR $med['Sensor_2']>1)){
 			if(isset($med['GeoLatitud'])&&$med['GeoLatitud']!=0&&isset($med['GeoLongitud'])&&$med['GeoLongitud']!=0){
 				$pres = $med['Sensor_1'] + $med['Sensor_2'];
-				$rec_x .= "{location: new google.maps.LatLng(".$med['GeoLatitud'].", ".$med['GeoLongitud']."), weight: ".$pres."},
-				";
+				//$rec_x .= "{location: new google.maps.LatLng(".$med['GeoLatitud'].", ".$med['GeoLongitud']."), weight: ".$pres."},";
 				//burbuja
 				$explanation  = '<div class="iw-subTitle">Caudales Equipo</div>';
 				$explanation .= '<p>';
@@ -145,9 +144,11 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				$marker_loc .= "[";
 					$marker_loc .= $med['GeoLatitud'];
 					$marker_loc .= ", ".$med['GeoLongitud'];
-					$marker_loc .= ", '".$explanation."'";
+					$marker_loc .= ", ".$med['Sensor_1'];
+					$marker_loc .= ", ".$med['Sensor_2'];
+					//$marker_loc .= ", '".$explanation."'";
 					//cambio de iconos
-					$marker_loc .= ", ".$med['idTelemetria'];
+					//$marker_loc .= ", ".$med['idTelemetria'];
 					/*if(($med['Sensor_1']+$med['Sensor_2'])<1){
 						$marker_loc .= ", 0";
 					}else{
@@ -155,7 +156,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 					}*/
 				$marker_loc .= "], ";
 						
-				$arrMedTractores[$trac['idTelemetria']]['heatMapData']  .= "{location: new google.maps.LatLng(".$med['GeoLatitud'].", ".$med['GeoLongitud']."), weight: ".$pres."},";
+				//$arrMedTractores[$trac['idTelemetria']]['heatMapData']  .= "{location: new google.maps.LatLng(".$med['GeoLatitud'].", ".$med['GeoLongitud']."), weight: ".$pres."},";
 				//$arrMedTractores[$trac['idTelemetria']]['MarkerData']  .= $marker_loc;
 				//Guardo los datos temporales
 				$arrMedTractores[$trac['idTelemetria']]['caudales']     .= '["'.$med['FechaSistema'].' '.$med['HoraSistema'].'",'.Cantidades_decimales_justos($med['Sensor_1']).','.Cantidades_decimales_justos($med['Sensor_2']).'],';
@@ -628,42 +629,8 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 									<script>
 										
 										/* ************************************************************************** */
-										/*class MyMarker extends google.maps.OverlayView {
-											constructor(params) {
-												super();
-												this.position = params.position;
-
-												const content = document.createElement('div');
-												content.classList.add('my_marker');
-												content.textContent = params.label;
-												content.style.position = 'absolute';
-												content.style.transform = 'translate(-50%, -100%)';
-
-												const container = document.createElement('div');
-												container.style.position = 'absolute';
-												container.style.cursor = 'pointer';
-												container.appendChild(content);
-
-												this.container = container;
-											}
-
-											onAdd() {
-												this.getPanes().floatPane.appendChild(this.container);
-											}
-
-											onRemove() {
-												this.container.remove();
-											}
-
-											draw() {
-												const pos = this.getProjection().fromLatLngToDivPixel(this.position);
-												this.container.style.left = pos.x + 'px';
-												this.container.style.top = pos.y + 'px';
-											}
-										}
-			  
 										/* ************************************************************************** */
-										var map_1,map_2;
+										var map_1;
 										var marker;
 										var markersCam = [];
 										/* ************************************************************************** */
@@ -675,31 +642,16 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												center: myLatlng,
 												mapTypeId: google.maps.MapTypeId.SATELLITE
 											};
-											/*var myOptions2 = {
-												zoom: 15,
-												center: myLatlng,
-												mapTypeId: google.maps.MapTypeId.SATELLITE
-											};*/
 											map_1 = new google.maps.Map(document.getElementById("map_canvas_x1"), myOptions1);
-											//map_2 = new google.maps.Map(document.getElementById("map_canvas_x2"), myOptions2);
 											
-											//Se dibujan los puntos en base a los niveles de riego
-											/* Data points defined as a mixture of WeightedLocation and LatLng objects */
-											/*var heatMapData = [<?php echo $rec_x; ?>];*/
-
-											/*var heatmap = new google.maps.visualization.HeatmapLayer({
-												data: heatMapData,
-												map: map_2
-											});
-											heatmap.setMap(map_2);*/
 											
 											//Ubicacion de los distintos dispositivos
 											var locations = [<?php echo $marker_loc; ?>];
 													
-											//marcadores
-											setMarkers(map_1, locations);
-			
+											//se dibujan las zonas
 											dibuja_zona();
+											//Se llama a la ruta
+											RutasRealizadas(map_1, locations);
 											
 
 										}
@@ -707,7 +659,6 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 										function dibuja_zona() {
 													
 											var polygons1 = [];
-											//var polygons2 = [];
 											<?php 
 											//variables
 											$Latitud_z        = 0;
@@ -766,32 +717,14 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 													fillColor: \'#FF0000\',
 													fillOpacity: 0.35
 												}));
-												/*polygons2.push(new google.maps.Polygon({
-													paths: path'.$todaszonas.',
-													strokeColor: \'#FF0000\',
-													strokeOpacity: 0.8,
-													strokeWeight: 2,
-													fillColor: \'#FF0000\',
-													fillOpacity: 0.35
-												}));*/
+												
 												polygons1[polygons1.length-1].setMap(map_1);
-												//polygons2[polygons2.length-1].setMap(map_2);
 												';
 												
 												
-												/*if($zcounter3!=0){
-													$Latitud_z_prom_2  = $Latitud_z_2/$zcounter3;
-													$Longitud_z_prom_2 = $Longitud_z_2/$zcounter3;
-												}*/
 												// The label that pops up when the mouse moves within each polygon.
 												echo '
-												/*myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
 												
-												var marker = new MyMarker({
-													position: myLatlng,
-													label: "'.$zonas[0]['Nombre'].'"
-												});
-												marker.setMap(map_1);*/
 			  
 												// When the mouse moves within the polygon, display the label and change the BG color.
 												google.maps.event.addListener(polygons1['.$zcounter2.'], "mousemove", function(event) {
@@ -846,7 +779,46 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 											});
 										}
 										/* ************************************************************************** */
-										function setMarkers(map_1, locations) {
+										function RutasRealizadas(map, locations) {
+										
+											var color    = '';
+											var color_1  = '#1E90FF'; //azul
+											var color_2  = '#FFE200'; //amarillo
+											var in_lat   = 0;
+											var in_long  = 0;
+											
+											for(var i in locations){
+												//toma desde la segunda medicion
+												if(in_lat!=0 && in_long!=0){
+													
+													//posicion anterior y actual
+													var pos1 = new google.maps.LatLng(in_lat, in_long);
+													var pos2 = new google.maps.LatLng(locations[i][0], locations[i][1]);
+													
+													//verifico que este regando
+													if(locations[i][2]!=0 || locations[i][3]!=0){
+														color = color_1;
+													}else{
+														color = color_2;
+													}
+													
+													var polyline = new google.maps.Polyline({
+														map: map,
+														path: [pos1, pos2],
+														strokeColor: color,
+														strokeOpacity: 1,
+														strokeWeight: 5
+													});
+												}
+												
+												//guardo la posicion actual
+												in_lat  = locations[i][0];
+												in_long = locations[i][1];
+											}
+										}
+										
+										
+										/*function setMarkers(map_1, locations) {
 
 											var marker, i, last_latitude, last_longitude;
 													
@@ -875,7 +847,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 													case 1: 
 														marcador = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/1_tractor_2.png";   	    
 														break;	
-												}*/
+												}
 												//se crea marcador
 												var marker = new google.maps.Marker({
 													map         : map_1, 
@@ -910,24 +882,24 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 										}
 										/* ************************************************************************** */
 										// Sets the map on all markers in the array.
-										function setMapOnAll(map_1) {
+										/*function setMapOnAll(map_1) {
 											for (let i = 0; i < markersCam.length; i++) {
 												markersCam[i].setMap(map_1);
 											}
 										}
 										/* ************************************************************************** */
 										// Removes the markers from the map, but keeps them in the array.
-										function clearMarkers() {
+										/*function clearMarkers() {
 											setMapOnAll(null);
 										}
 										/* ************************************************************************** */
 										// Shows any markers currently in the array.
-										function showMarkers() {
+										/*function showMarkers() {
 											setMapOnAll(map_1);
 										}
 										/* ************************************************************************** */
 										// Deletes all markers in the array by removing references to them.
-										function deleteMarkers() {
+										/*function deleteMarkers() {
 											clearMarkers();
 											markersCam = [];
 										}
@@ -985,7 +957,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												$sum_total_caudal       = 0;
 												$sum_correccion_caudal  = 0;
 												$sum_LitrosAplicados    = 0;
-												$sum_TiempoAplicacion   = 0;
+												$sum_TiempoAplicacion   = '00:00:00';
 												
 												foreach ($arrTractoresData as $tractda) { 
 													if(isset($trac['idTelemetria'])&&isset($tractda['idTelemetria'])&&$trac['idTelemetria']==$tractda['idTelemetria']){
