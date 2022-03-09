@@ -140,8 +140,8 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				if(isset($idTrabajador)) {         $x2 = $idTrabajador;        }else{$x2 = '';}
 				if(isset($f_creacion_inicio)) {    $x3 = $f_creacion_inicio;   }else{$x3 = '';}
 				if(isset($f_creacion_termino)) {   $x4 = $f_creacion_termino;  }else{$x4 = '';}
-				if(isset($Creacion_ano)) {                  $x5 = $Creacion_ano;                 }else{$x5 = '';}
-				if(isset($Creacion_mes)) {                $x6 = $Creacion_mes;               }else{$x6 = '';}
+				if(isset($Creacion_ano)) {         $x5 = $Creacion_ano;        }else{$x5 = '';}
+				if(isset($Creacion_mes)) {         $x6 = $Creacion_mes;        }else{$x6 = '';}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
