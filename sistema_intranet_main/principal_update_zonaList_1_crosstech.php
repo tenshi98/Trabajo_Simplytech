@@ -53,6 +53,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }		
 //Listar los equipos
 $SIS_query = '
+telemetria_listado.idTelemetria, 
 telemetria_listado.Nombre, 
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
@@ -227,7 +228,8 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 				<?php } ?>
 					
 				<td width="10">
-					<div class="btn-group" style="width: 35px;" >
+					<div class="btn-group" style="width: 70px;" >
+						<a href="view_telemetria_registro_ruta.php?view=<?php echo simpleEncode($data['idTelemetria'], fecha_actual());?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud'];?>', '<?php echo $data['GeoLongitud'];?>', '<?php echo $nicon;?>')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 					</div>
 				</td>
