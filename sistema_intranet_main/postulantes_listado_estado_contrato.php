@@ -13,7 +13,7 @@ require_once 'core/Load.Utils.Web.php';
 //Cargamos la ubicacion 
 $original = "postulantes_listado.php";
 $location = $original;
-$new_location = "postulantes_listado_otros.php";
+$new_location = "postulantes_listado_estado_contrato.php";
 $new_location .='?pagina='.$_GET['pagina'];
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
@@ -22,12 +22,13 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
-//formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
-	//se agregan ubicaciones
+//Si el estado esta distinto de vacio
+if ( !empty($_GET['estadoContrato']) ) {
+	//Nueva ubicacion
+	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
-	$form_trabajo= 'update';
+	$form_trabajo= 'estadoContrato';
 	require_once 'A1XRXS_sys/xrxs_form/postulantes_listado.php';
 }
 /**********************************************************************************************************************************/
@@ -38,34 +39,26 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Trabajador creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Trabajador editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado correctamente';}
+if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Estado cambiado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT Nombre,ApellidoPat,ApellidoMat,Observaciones
-FROM `postulantes_listado`
-WHERE idPostulante = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = '
+postulantes_listado.idPostulante,
+postulantes_listado.Nombre,
+postulantes_listado.ApellidoPat,
+postulantes_listado.ApellidoMat, 
+postulantes_listado.idEstadoContrato,
+core_estado_contrato.Nombre AS EstadoContrato';
+$SIS_join  = 'LEFT JOIN `core_estado_contrato`  ON core_estado_contrato.idEstadoContrato = postulantes_listado.idEstadoContrato';
+$SIS_where = 'idPostulante ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Otros Datos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Estado');?>
 </div>
 <div class="clearfix"></div>
 
@@ -83,34 +76,38 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'postulantes_listado_experiencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-industry" aria-hidden="true"></i>  Experiencia</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i>  Curriculum</a></li>
-						<li class="active"><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i>  Otros</a></li>
-						<li class=""><a href="<?php echo 'postulantes_listado_estado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-text-o" aria-hidden="true"></i>  Estado Contrato</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i>  Otros</a></li>
+						<li class="active"><a href="<?php echo 'postulantes_listado_estado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-text-o" aria-hidden="true"></i>  Estado Contrato</a></li>
 						
 					</ul>
                 </li>           
-			</ul>
+			</ul>	
 		</header>
-        <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
-			
-					<?php 
-					//Se verifican si existen los datos
-					if(isset($Observaciones)) {       $x9 = $Observaciones;        }else{$x9 = $rowdata['Observaciones'];}
-					
-					//se dibujan los inputs
-					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_ckeditor('Observaciones','Observaciones', $x9, 1, 2);
-					
-					$Form_Inputs->form_input_hidden('idPostulante', $_GET['id'], 2);
-					?>
-
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
-					</div>
-				</form>
-				<?php widget_validator(); ?>
-			</div>
+        <div class="table-responsive"> 
+			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+				<thead>
+					<tr role="row">
+						<th>Estado</th>
+						<th width="10">Acciones</th>
+					</tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<tr class="odd">			
+						<td><?php echo 'Postulante '.$rowdata['EstadoContrato']; ?></td>		
+						<td>
+							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">		 
+								<?php if ($rowlevel['level']>=2){?>    				
+									<?php if ( $rowdata['idEstadoContrato']==1 ) {   
+										$ubicacion = $new_location.'&id='.$rowdata['idPostulante'].'&estadoContrato='.simpleEncode(2, fecha_actual());
+										$dialogo   = 'Esta a punto de contratar al postulante '.$rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'].', una vez hecho se desactivara como postulante y sera registrado como trabajador activo';?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-success fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Contratar</a>
+									<?php }?>    
+								<?php }?>  
+							</div>     
+						</td>	
+					</tr>                  
+				</tbody>
+			</table>
 		</div>	
 	</div>
 </div>

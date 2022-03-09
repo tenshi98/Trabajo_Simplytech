@@ -44,34 +44,19 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Estado cambiado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 postulantes_listado.idPostulante,
 postulantes_listado.Nombre,
 postulantes_listado.ApellidoPat,
 postulantes_listado.ApellidoMat, 
-core_estados.Nombre AS Estado
-
-FROM `postulantes_listado`
-LEFT JOIN `core_estados`           ON core_estados.idEstado         = postulantes_listado.idEstado
-WHERE idPostulante = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
+postulantes_listado.idEstado,
+core_estados.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = postulantes_listado.idEstado';
+$SIS_where = 'idPostulante ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Estado');?>
 </div>
@@ -92,6 +77,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class="active"><a href="<?php echo 'postulantes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i>  Curriculum</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i>  Otros</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_estado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-text-o" aria-hidden="true"></i>  Estado Contrato</a></li>
 						
 					</ul>
                 </li>           
@@ -111,7 +97,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">		 
 								<?php if ($rowlevel['level']>=2){?>    				
-									<?php if ( $rowdata['Estado']=='Activo' ) {?>   
+									<?php if ( $rowdata['idEstado']==1 ) {?>   
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idPostulante'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else {?>

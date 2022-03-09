@@ -7,6 +7,8 @@ define('XMBCXRXSKGC', 1);
 /*                                          Se llaman a los archivos necesarios                                                   */
 /**********************************************************************************************************************************/
 require_once 'core/Load.Utils.Web.php';
+/** Include PHPExcel */
+require_once '../LIBS_php/PHPExcel/PHPExcel/IOFactory.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
@@ -34,6 +36,12 @@ if ( !empty($_POST['submit']) )  {
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/postulantes_listado.php';
 }
+//formulario para crear
+if ( !empty($_POST['submit_plant']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'insert_plant';
+	require_once 'A1XRXS_sys/xrxs_form/postulantes_listado.php';
+}
 //se borra un dato
 if ( !empty($_GET['del']) )     {
 	//Llamamos al formulario
@@ -54,7 +62,54 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Postulante borrado 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+if ( ! empty($_GET['new_plantilla']) ) {  
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//cuadro para descargar	 
+$Alert_Text  = 'Descargar Plantilla';
+$Alert_Text .= '<a href="1download.php?dir='.simpleEncode('templates', fecha_actual()).'&file='.simpleEncode('plantilla_trabajador_postulante.xlsx', fecha_actual()).'" title="Descargar Plantilla" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>';
+alert_post_data(2,1,2, $Alert_Text);		
+	
+?>
+ 
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Postulante con Plantilla</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
+        	
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idOpciones)) {  $x1 = $idOpciones;   }else{$x1 = '';}
+				
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','FilePostulante', 1, '"xlsx"');
+				$Form_Inputs->form_select('¿Envio de correos?','idOpciones', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idEstadoContrato', 1, 2);	 
+				
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_plant">
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php widget_validator(); ?>        
+		</div>
+	</div>
+</div> 
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -125,6 +180,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'postulantes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i>  Curriculum</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i>  Otros</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_estado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-text-o" aria-hidden="true"></i>  Estado Contrato</a></li>
 						
 					</ul>
                 </li>           
@@ -250,6 +306,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);	 
+				$Form_Inputs->form_input_hidden('idEstadoContrato', 1, 2);	 
 				?>
 				
 				<div class="form-group">
@@ -286,79 +343,51 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY postulantes_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY postulantes_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'nombre_asc':    $order_by = 'postulantes_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'postulantes_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY postulantes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'postulantes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY postulantes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'postulantes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE postulantes_listado.idPostulante!=0";
+$SIS_where = "postulantes_listado.idPostulante!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND postulantes_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND postulantes_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $z .= " AND postulantes_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat'] != ''){  $z .= " AND postulantes_listado.ApellidoPat LIKE '%".$_GET['ApellidoPat']."%'";}
-if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat'] != ''){  $z .= " AND postulantes_listado.ApellidoMat LIKE '%".$_GET['ApellidoMat']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                  $z .= " AND postulantes_listado.Rut LIKE '%".$_GET['Rut']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $SIS_where .= " AND postulantes_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat'] != ''){  $SIS_where .= " AND postulantes_listado.ApellidoPat LIKE '%".$_GET['ApellidoPat']."%'";}
+if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat'] != ''){  $SIS_where .= " AND postulantes_listado.ApellidoMat LIKE '%".$_GET['ApellidoMat']."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                  $SIS_where .= " AND postulantes_listado.Rut LIKE '%".$_GET['Rut']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idPostulante FROM `postulantes_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idPostulante', 'postulantes_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTrabajador = array();
-$query = "SELECT 
+$SIS_query = '
 postulantes_listado.idPostulante,
 postulantes_listado.Nombre, 
 postulantes_listado.ApellidoPat, 
 postulantes_listado.ApellidoMat,
 core_sistemas.Nombre AS RazonSocial,
 core_estados.Nombre AS Estado,
-postulantes_listado.idEstado
-
-FROM `postulantes_listado`
+postulantes_listado.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`    ON core_sistemas.idSistema      = postulantes_listado.idSistema
-LEFT JOIN `core_estados`     ON core_estados.idEstado        = postulantes_listado.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTrabajador,$row );
-}?>
+LEFT JOIN `core_estados`     ON core_estados.idEstado        = postulantes_listado.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTrabajador = array();
+$arrTrabajador = db_select_array (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTrabajador');
+
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -370,7 +399,8 @@ array_push( $arrTrabajador,$row );
 	</ul>
 	
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Postulante</a><?php } ?>
-
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new_plantilla=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear con Plantilla</a><?php } ?>
+	
 </div>
 <div class="clearfix"></div> 
 <div class="collapse col-sm-12" id="collapseExample">

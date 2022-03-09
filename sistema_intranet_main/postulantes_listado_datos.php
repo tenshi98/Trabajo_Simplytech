@@ -46,7 +46,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $query = "SELECT Nombre,ApellidoPat,ApellidoMat,Fono1,Fono2,Rut,idCiudad,idComuna,Direccion,idSistema,idSexo,FNacimiento,idEstadoCivil,
-idTipoLicencia, SueldoLiquido
+idTipoLicencia, SueldoLiquido, email
 FROM `postulantes_listado`
 WHERE idPostulante = ".$_GET['id'];
 //Consulta
@@ -85,6 +85,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'postulantes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i>  Curriculum</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i>  Otros</a></li>
+						<li class=""><a href="<?php echo 'postulantes_listado_estado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-text-o" aria-hidden="true"></i>  Estado Contrato</a></li>
 						
 					</ul>
                 </li>           
@@ -104,12 +105,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					if(isset($FNacimiento)) {         $x6  = $FNacimiento;          }else{$x6  = $rowdata['FNacimiento'];}
 					if(isset($Fono1)) {               $x7  = $Fono1;                }else{$x7  = $rowdata['Fono1'];}
 					if(isset($Fono2)) {               $x8  = $Fono2;                }else{$x8  = $rowdata['Fono2'];}
-					if(isset($idCiudad)) {            $x9  = $idCiudad;             }else{$x9  = $rowdata['idCiudad'];}
-					if(isset($idComuna)) {            $x10 = $idComuna;             }else{$x10 = $rowdata['idComuna'];}
-					if(isset($Direccion)) {           $x11 = $Direccion;            }else{$x11 = $rowdata['Direccion'];}
-					if(isset($idEstadoCivil)) {       $x12 = $idEstadoCivil;        }else{$x12 = $rowdata['idEstadoCivil'];}
-					if(isset($idTipoLicencia)) {      $x13 = $idTipoLicencia;       }else{$x13 = $rowdata['idTipoLicencia'];}
-					if(isset($SueldoLiquido)) {       $x14 = $SueldoLiquido;        }else{$x14 = $rowdata['SueldoLiquido'];}
+					if(isset($email)) {               $x9  = $email;                }else{$x9  = $rowdata['email'];}
+					if(isset($idCiudad)) {            $x10 = $idCiudad;             }else{$x10 = $rowdata['idCiudad'];}
+					if(isset($idComuna)) {            $x11 = $idComuna;             }else{$x11 = $rowdata['idComuna'];}
+					if(isset($Direccion)) {           $x12 = $Direccion;            }else{$x12 = $rowdata['Direccion'];}
+					if(isset($idEstadoCivil)) {       $x13 = $idEstadoCivil;        }else{$x13 = $rowdata['idEstadoCivil'];}
+					if(isset($idTipoLicencia)) {      $x14 = $idTipoLicencia;       }else{$x14 = $rowdata['idTipoLicencia'];}
+					if(isset($SueldoLiquido)) {       $x15 = $SueldoLiquido;        }else{$x15 = $rowdata['SueldoLiquido'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -118,16 +120,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 2);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
 					$Form_Inputs->form_select('Sexo','idSexo', $x5, 2, 'idSexo', 'Nombre', 'core_sexo', 0, '', $dbConn);
-					$Form_Inputs->form_date('FNacimiento','FNacimiento', $x6, 1);
+					$Form_Inputs->form_date('Fecha Nacimiento','FNacimiento', $x6, 1);
 					$Form_Inputs->form_input_phone('Fono1', 'Fono1', $x7, 1);
 					$Form_Inputs->form_input_phone('Fono2', 'Fono2', $x8, 1);
-					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-											'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+					$Form_Inputs->form_input_icon('Email', 'email', $x9, 1,'fa fa-envelope-o');
+					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+											'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
-					$Form_Inputs->form_select('Estado Civil','idEstadoCivil', $x12, 1, 'idEstadoCivil', 'Nombre', 'core_estado_civil', 0, '', $dbConn);
-					$Form_Inputs->form_select('Tipo Licencia','idTipoLicencia', $x13, 2, 'idTipoLicencia', 'Nombre', 'core_tipos_licencia_conducir', 0, '', $dbConn);
-					$Form_Inputs->form_values('Pretenciones','SueldoLiquido', $x14, 1);
+					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x12, 1,'fa fa-map');
+					$Form_Inputs->form_select('Estado Civil','idEstadoCivil', $x13, 1, 'idEstadoCivil', 'Nombre', 'core_estado_civil', 0, '', $dbConn);
+					$Form_Inputs->form_select('Tipo Licencia','idTipoLicencia', $x14, 2, 'idTipoLicencia', 'Nombre', 'core_tipos_licencia_conducir', 0, '', $dbConn);
+					$Form_Inputs->form_values('Pretenciones','SueldoLiquido', $x15, 1);
 					
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);

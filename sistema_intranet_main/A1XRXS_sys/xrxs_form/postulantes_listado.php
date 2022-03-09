@@ -32,7 +32,11 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Observaciones']) )               $Observaciones                = $_POST['Observaciones'];
 	if ( !empty($_POST['SueldoLiquido']) )               $SueldoLiquido                = $_POST['SueldoLiquido'];
 	if ( !empty($_POST['idTipoLicencia']) )              $idTipoLicencia               = $_POST['idTipoLicencia'];
-
+	if ( !empty($_POST['idEstadoContrato']) )            $idEstadoContrato             = $_POST['idEstadoContrato'];
+	if ( !empty($_POST['email']) )                       $email                        = $_POST['email'];
+	
+	if ( !empty($_POST['idOpciones']) )                  $idOpciones                   = $_POST['idOpciones'];
+	
 	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -63,6 +67,10 @@ require_once '0_validate_user_1.php';
 			case 'Observaciones':               if(empty($Observaciones)){                $error['Observaciones']                = 'error/No ha ingresado la observacion';}break;
 			case 'SueldoLiquido':               if(empty($SueldoLiquido)){                $error['SueldoLiquido']                = 'error/No ha ingresado el sueldo liquido a pago';}break;
 			case 'idTipoLicencia':              if(empty($idTipoLicencia)){               $error['idTipoLicencia']               = 'error/No ha Seleccionado el tipo de licencia';}break;
+			case 'idEstadoContrato':            if(empty($idEstadoContrato)){             $error['idEstadoContrato']             = 'error/No ha Seleccionado el estado del contrato';}break;
+			case 'email':                       if(empty($email)){                        $error['email']                        = 'error/No ha ingresado el email';}break;
+			
+			case 'idOpciones':                  if(empty($idOpciones)){                   $error['idOpciones']                   = 'error/No ha seleccionado el envio de correos';}break;
 			
 		}
 	}
@@ -79,6 +87,7 @@ require_once '0_validate_user_1.php';
 	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){      $error['ApellidoMat']   = 'error/Edita Apellido Mat, contiene palabras no permitidas'; }	
 	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){          $error['Direccion']     = 'error/Edita la Direccion, contiene palabras no permitidas'; }	
 	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	if(isset($email)&&!validarEmail($email)){                                  $error['email']         = 'error/El Email ingresado no es valido'; }	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -111,28 +120,31 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                                      $a  = "'".$idSistema."'" ;                     }else{$a  = "''";}
-				if(isset($idEstado) && $idEstado != ''){                                        $a .= ",'".$idEstado."'" ;                     }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                                            $a .= ",'".$Nombre."'" ;                       }else{$a .= ",''";}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){                                  $a .= ",'".$ApellidoPat."'" ;                  }else{$a .= ",''";}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){                                  $a .= ",'".$ApellidoMat."'" ;                  }else{$a .= ",''";}
-				if(isset($idSexo) && $idSexo != ''){                                            $a .= ",'".$idSexo."'" ;                       }else{$a .= ",''";}
-				if(isset($FNacimiento) && $FNacimiento != ''){                                  $a .= ",'".$FNacimiento."'" ;                  }else{$a .= ",''";}
-				if(isset($idEstadoCivil) && $idEstadoCivil != ''){                              $a .= ",'".$idEstadoCivil."'" ;                }else{$a .= ",''";}
-				if(isset($Fono1) && $Fono1 != ''){                                              $a .= ",'".$Fono1."'" ;                        }else{$a .= ",''";}
-				if(isset($Fono2) && $Fono2 != ''){                                              $a .= ",'".$Fono2."'" ;                        }else{$a .= ",''";}
-				if(isset($Rut) && $Rut != ''){                                                  $a .= ",'".$Rut."'" ;                          }else{$a .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){                                        $a .= ",'".$idCiudad."'" ;                     }else{$a .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){                                        $a .= ",'".$idComuna."'" ;                     }else{$a .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){                                      $a .= ",'".$Direccion."'" ;                    }else{$a .= ",''";}
-				if(isset($Observaciones) && $Observaciones != ''){                              $a .= ",'".$Observaciones."'" ;                }else{$a .= ",''";}
-				if(isset($SueldoLiquido) && $SueldoLiquido != ''){                              $a .= ",'".$SueldoLiquido."'" ;                }else{$a .= ",''";}
-				if(isset($idTipoLicencia) && $idTipoLicencia != ''){                            $a .= ",'".$idTipoLicencia."'" ;               }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){                  $a  = "'".$idSistema."'" ;                }else{$a  = "''";}
+				if(isset($idEstado) && $idEstado != ''){                    $a .= ",'".$idEstado."'" ;                }else{$a .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                        $a .= ",'".$Nombre."'" ;                  }else{$a .= ",''";}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){              $a .= ",'".$ApellidoPat."'" ;             }else{$a .= ",''";}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){              $a .= ",'".$ApellidoMat."'" ;             }else{$a .= ",''";}
+				if(isset($idSexo) && $idSexo != ''){                        $a .= ",'".$idSexo."'" ;                  }else{$a .= ",''";}
+				if(isset($FNacimiento) && $FNacimiento != ''){              $a .= ",'".$FNacimiento."'" ;             }else{$a .= ",''";}
+				if(isset($idEstadoCivil) && $idEstadoCivil != ''){          $a .= ",'".$idEstadoCivil."'" ;           }else{$a .= ",''";}
+				if(isset($Fono1) && $Fono1 != ''){                          $a .= ",'".$Fono1."'" ;                   }else{$a .= ",''";}
+				if(isset($Fono2) && $Fono2 != ''){                          $a .= ",'".$Fono2."'" ;                   }else{$a .= ",''";}
+				if(isset($Rut) && $Rut != ''){                              $a .= ",'".$Rut."'" ;                     }else{$a .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){                    $a .= ",'".$idCiudad."'" ;                }else{$a .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){                    $a .= ",'".$idComuna."'" ;                }else{$a .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){                  $a .= ",'".$Direccion."'" ;               }else{$a .= ",''";}
+				if(isset($Observaciones) && $Observaciones != ''){          $a .= ",'".$Observaciones."'" ;           }else{$a .= ",''";}
+				if(isset($SueldoLiquido) && $SueldoLiquido != ''){          $a .= ",'".$SueldoLiquido."'" ;           }else{$a .= ",''";}
+				if(isset($idTipoLicencia) && $idTipoLicencia != ''){        $a .= ",'".$idTipoLicencia."'" ;          }else{$a .= ",''";}
+				if(isset($idEstadoContrato) && $idEstadoContrato != ''){    $a .= ",'".$idEstadoContrato."'" ;        }else{$a .= ",''";}
+				if(isset($email) && $email != ''){                          $a .= ",'".$email."'" ;                   }else{$a .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$query  = "INSERT INTO `postulantes_listado` (idSistema, idEstado, Nombre, ApellidoPat, 
 				ApellidoMat,idSexo,FNacimiento, idEstadoCivil, Fono1, Fono2, Rut, idCiudad,
-				idComuna, Direccion, Observaciones, SueldoLiquido, idTipoLicencia) 
+				idComuna, Direccion, Observaciones, SueldoLiquido, idTipoLicencia, idEstadoContrato, 
+				email) 
 				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -186,23 +198,25 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				//Filtros
 				$a = "idPostulante='".$idPostulante."'" ;
-				if(isset($idSistema) && $idSistema != ''){                                      $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                                        $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                                            $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){                                  $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){                                  $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
-				if(isset($idSexo) && $idSexo != ''){                                            $a .= ",idSexo='".$idSexo."'" ;}
-				if(isset($FNacimiento) && $FNacimiento != ''){                                  $a .= ",FNacimiento='".$FNacimiento."'" ;}
-				if(isset($idEstadoCivil) && $idEstadoCivil != ''){                              $a .= ",idEstadoCivil='".$idEstadoCivil."'" ;}
-				if(isset($Fono1) && $Fono1 != ''){                                              $a .= ",Fono1='".$Fono1."'" ;}
-				if(isset($Fono2) && $Fono2 != ''){                                              $a .= ",Fono2='".$Fono2."'" ;}
-				if(isset($Rut) && $Rut != ''){                                                  $a .= ",Rut='".$Rut."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){                                        $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){                                        $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){                                      $a .= ",Direccion='".$Direccion."'" ;}
-				if(isset($Observaciones) && $Observaciones != ''){                              $a .= ",Observaciones='".$Observaciones."'" ;}
-				if(isset($SueldoLiquido) && $SueldoLiquido != ''){                              $a .= ",SueldoLiquido='".$SueldoLiquido."'" ;}
-				if(isset($idTipoLicencia) && $idTipoLicencia != ''){                            $a .= ",idTipoLicencia='".$idTipoLicencia."'" ;}
+				if(isset($idSistema) && $idSistema != ''){                  $a .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                    $a .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                        $a .= ",Nombre='".$Nombre."'" ;}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){              $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){              $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
+				if(isset($idSexo) && $idSexo != ''){                        $a .= ",idSexo='".$idSexo."'" ;}
+				if(isset($FNacimiento) && $FNacimiento != ''){              $a .= ",FNacimiento='".$FNacimiento."'" ;}
+				if(isset($idEstadoCivil) && $idEstadoCivil != ''){          $a .= ",idEstadoCivil='".$idEstadoCivil."'" ;}
+				if(isset($Fono1) && $Fono1 != ''){                          $a .= ",Fono1='".$Fono1."'" ;}
+				if(isset($Fono2) && $Fono2 != ''){                          $a .= ",Fono2='".$Fono2."'" ;}
+				if(isset($Rut) && $Rut != ''){                              $a .= ",Rut='".$Rut."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){                    $a .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){                    $a .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){                  $a .= ",Direccion='".$Direccion."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){          $a .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($SueldoLiquido) && $SueldoLiquido != ''){          $a .= ",SueldoLiquido='".$SueldoLiquido."'" ;}
+				if(isset($idTipoLicencia) && $idTipoLicencia != ''){        $a .= ",idTipoLicencia='".$idTipoLicencia."'" ;}
+				if(isset($idEstadoContrato) && $idEstadoContrato != ''){    $a .= ",idEstadoContrato='".$idEstadoContrato."'" ;}
+				if(isset($email) && $email != ''){                          $a .= ",email='".$email."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
@@ -416,7 +430,260 @@ require_once '0_validate_user_1.php';
 			
 			
 
-		break;	
+		break;		
+/*******************************************************************************************************************/
+		//Cambio el estado de activo a inactivo
+		case 'estadoContrato':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			$idPostulante  = $_GET['id'];
+			$idEstado      = simpleDecode($_GET['estadoContrato'], fecha_actual());
+			/*******************************************************/
+			//se actualizan los datos
+			$a = "idEstadoContrato='".$idEstado."'" ;
+			$resultado = db_update_data (false, $a, 'postulantes_listado', 'idPostulante = "'.$idPostulante.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			//Si ejecuto correctamente la consulta
+			if($resultado==true){
+				
+				header( 'Location: '.$location.'&edited=true' );
+				die;
+				
+			}
+			
+
+		break;		
+/*******************************************************************************************************************/
+		//Cambio el estado de activo a inactivo
+		case 'insert_plant':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				//se verifica si la imagen existe
+				if (!empty($_FILES['FilePostulante']['name'])){
+					
+					if ($_FILES['FilePostulante']["error"] > 0){ 
+						$error['FilePostulante'] = 'error/'.uploadPHPError($_FILES["FilePostulante"]["error"]); 
+						
+					} else {
+						
+						//Se verifican las extensiones de los archivos
+						$permitidos = array("application/msexcel",
+											"application/vnd.ms-excel",
+											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+										);
+						//Se verifica que el archivo subido no exceda los 100 kb
+						$limite_kb = 10000;
+									  
+						if (in_array($_FILES['FilePostulante']['type'], $permitidos) && $_FILES['FilePostulante']['size'] <= $limite_kb * 1024){
+							
+							
+							/*******************************************************************/
+							//variables
+							$ndata_1  = 0;
+							$ndata_2  = 0;
+							$ndata_3  = 0;
+							//Cargo la libreria de lectura de archivos excel
+							$objPHPExcel = PHPExcel_IOFactory::load($_FILES['FilePostulante']['tmp_name']);
+							//recorro la hoja excel
+							foreach ($objPHPExcel->getWorksheetIterator() as $worksheet){ 
+								$highestRow = $worksheet->getHighestRow(); 
+								$sheetname  = $worksheet->getTitle(); 
+								//solo reviso la pestaña predio
+								if ($sheetname == "Postulantes"){ 
+									for ($row=2; $row<=$highestRow; $row++){ 
+										
+										$Post_Nombre   = $worksheet->getCellByColumnAndRow(0,  $row)->getValue(); 							  
+										$Post_Rut      = $worksheet->getCellByColumnAndRow(3,  $row)->getValue(); 
+										$Post_Email    = $worksheet->getCellByColumnAndRow(10, $row)->getValue(); 
+											
+										//si existe nombre pero no existe rut	
+										if(isset($Post_Nombre)&&$Post_Nombre!=''&&(!isset($Post_Rut) OR $Post_Rut==''){
+											$ndata_1++;	
+										}	
+										//verifico si el rut ingresado en el excel existe
+										if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Rut)&&$Post_Rut!=''){
+											$SIS_query = 'Rut';
+											$SIS_join  = '';
+											$SIS_where = 'idSistema='.$idSistema.' AND Rut="'.$Post_Rut.'"';
+											$nRows = db_select_nrows (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'nRows');
+
+											//Si existe se marca error
+											if(isset($nRows)&&$nRows!=0){
+												$ndata_2++;	
+											}	
+										}
+										//Verifico la existencia de un email
+										if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Email)&&$Post_Email!=''){
+											if(isset($email)&&!validarEmail($email)){
+												$ndata_3++;	
+											}
+										}
+									}
+								}
+							}
+							/*******************************************************************/
+							//generacion de errores
+							if($ndata_1 > 0) {  $error['ndata_1']  = 'error/El postulante ingresado no tiene rut';}
+							if($ndata_2 > 0) {  $error['ndata_2']  = 'error/El postulante ingresado ya existe en el sistema';}
+							if($ndata_3 > 0) {  $error['ndata_3']  = 'error/El Email ingresado no es valido';}
+							
+							/*******************************************************************/
+							// si no hay errores ejecuto el codigo	
+							if ( empty($error) ) {
+								
+								/*******************************************************************/
+								//Cargo a todos los clientes del sistema
+								$arrSexo   = array();
+								$arrCiudad = array();
+								$arrComuna = array();
+									
+								$arrSexo   = db_select_array (false, 'idSexo,Nombre', 'core_sexo', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$arrCiudad = db_select_array (false, 'idCiudad,Nombre', 'core_ubicacion_ciudad', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$arrComuna = db_select_array (false, 'idComuna,Nombre', 'core_ubicacion_comunas', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
+								//recorro los datos
+								$arrSexoMod   = array();		
+								$arrCiudadMod = array();		
+								$arrComunaMod = array();			
+								foreach ($arrSexo as $data) {   $arrSexoMod[$data['Nombre']]['ID']   = $data['idSexo']; }
+								foreach ($arrCiudad as $data) { $arrCiudadMod[$data['Nombre']]['ID'] = $data['idCiudad']; }
+								foreach ($arrComuna as $data) { $arrComunaMod[$data['Nombre']]['ID'] = $data['idComuna']; }
+									
+								
+								/*******************************************************************/
+								//Cargo la libreria de lectura de archivos excel
+								$objPHPExcel = PHPExcel_IOFactory::load($_FILES['FilePostulante']['tmp_name']);
+								//recorro la hoja excel
+								foreach ($objPHPExcel->getWorksheetIterator() as $worksheet){ 
+									$highestRow = $worksheet->getHighestRow(); 
+									$sheetname  = $worksheet->getTitle(); 
+									//solo reviso la pestaña predio
+									if ($sheetname == "Postulantes"){ 
+										for ($row=2; $row<=$highestRow; $row++){ 
+																		  
+											$Post_Nombre     = $worksheet->getCellByColumnAndRow(0,  $row)->getValue(); 
+											$Post_Ape_Pat    = $worksheet->getCellByColumnAndRow(1,  $row)->getValue(); 
+											$Post_Ape_Mat    = $worksheet->getCellByColumnAndRow(2,  $row)->getValue(); 
+											$Post_Rut        = $worksheet->getCellByColumnAndRow(3,  $row)->getValue(); 
+											$Post_Sexo       = $worksheet->getCellByColumnAndRow(4,  $row)->getValue(); 
+											$Post_Fono1      = $worksheet->getCellByColumnAndRow(5,  $row)->getValue(); 
+											$Post_Fono2      = $worksheet->getCellByColumnAndRow(6,  $row)->getValue(); 
+											$Post_Ciudad     = $worksheet->getCellByColumnAndRow(7,  $row)->getValue(); 
+											$Post_Comuna     = $worksheet->getCellByColumnAndRow(8,  $row)->getValue(); 
+											$Post_Direccion  = $worksheet->getCellByColumnAndRow(9,  $row)->getValue(); 
+											$Post_Email      = $worksheet->getCellByColumnAndRow(10, $row)->getValue(); 
+											
+											//Mientras exista dato ejecuta
+											if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Rut)&&$Post_Rut!=''){
+												
+												//verifico si existen los datos
+												if(isset($Post_Sexo)&&isset($arrSexoMod[$Post_Sexo]['ID'])){        $ID_Sexo    = $arrSexoMod[$Especie]['ID'];}   
+												if(isset($Post_Ciudad)&&isset($arrCiudadMod[$Post_Ciudad]['ID'])){  $ID_Ciudad  = $arrCiudadMod[$Variedad]['ID'];}  
+												if(isset($Post_Comuna)&&isset($arrComunaMod[$Post_Comuna]['ID'])){  $ID_Comuna  = $arrComunaMod[$EstadoProductivo]['ID'];} 
+													
+												/****************************************************/
+												//filtros
+												if(isset($idSistema) && $idSistema != ''){                $a  = "'".$idSistema."'" ;          }else{$a  ="''";}
+												if(isset($idEstado) && $idEstado != ''){                  $a .= ",'".$idEstado."'" ;          }else{$a .=",''";}
+												if(isset($Post_Nombre) && $Post_Nombre != ''){            $a .= ",'".$Post_Nombre."'" ;       }else{$a .=",''";}
+												if(isset($Post_Ape_Pat) && $Post_Ape_Pat != ''){          $a .= ",'".$Post_Ape_Pat."'" ;      }else{$a .=",''";}
+												if(isset($Post_Ape_Mat) && $Post_Ape_Mat != ''){          $a .= ",'".$Post_Ape_Mat."'" ;      }else{$a .=",''";}
+												if(isset($Post_Rut) && $Post_Rut != ''){                  $a .= ",'".$Post_Rut."'" ;          }else{$a .=",''";}
+												if(isset($ID_Sexo) && $ID_Sexo != ''){                    $a .= ",'".$ID_Sexo."'" ;           }else{$a .=",''";}
+												if(isset($Post_Fono1) && $Post_Fono1 != ''){              $a .= ",'".$Post_Fono1."'" ;        }else{$a .=",''";}
+												if(isset($Post_Fono2) && $Post_Fono2 != ''){              $a .= ",'".$Post_Fono2."'" ;        }else{$a .=",''";}
+												if(isset($ID_Ciudad) && $ID_Ciudad != ''){                $a .= ",'".$ID_Ciudad."'" ;         }else{$a .=",''";}
+												if(isset($ID_Comuna) && $ID_Comuna != ''){                $a .= ",'".$ID_Comuna."'" ;         }else{$a .=",''";}
+												if(isset($Post_Direccion) && $Post_Direccion != ''){      $a .= ",'".$Post_Direccion."'" ;    }else{$a .=",''";}
+												if(isset($idEstadoContrato) && $idEstadoContrato != ''){  $a .= ",'".$idEstadoContrato."'" ;  }else{$a .=",''";}
+												if(isset($Post_Email) && $Post_Email != ''){              $a .= ",'".$Post_Email."'" ;        }else{$a .=",''";}
+													
+												// inserto los datos de registro en la db
+												$query  = "INSERT INTO `postulantes_listado` (idSistema,idEstado,Nombre,ApellidoPat,
+												ApellidoMat,Rut,idSexo,Fono1,Fono2,idCiudad,idComuna,Direccion,
+												idEstadoContrato,email) 
+												VALUES (".$a.")";
+												//Consulta
+												$resultado = mysqli_query ($dbConn, $query);
+												
+												/****************************************************/
+												//Verifico la existencia de un email y si se desea enviar correos
+												if(isset($Post_Email)&&$Post_Email!=''&&isset($idOpciones)&&$idOpciones==1){
+													
+													//variables
+													$login_logo  = DB_SITE_MAIN.'/img/login_logo.png';
+													$Link        = DB_SITE_MAIN;
+													$Nombre      = '';
+													if(isset($Post_Nombre) && $Post_Nombre != ''){    $Nombre .= $Post_Nombre;}
+													if(isset($Post_Ape_Pat) && $Post_Ape_Pat != ''){  $Nombre .= " ".$Post_Ape_Pat;}
+													if(isset($Post_Ape_Mat) && $Post_Ape_Mat != ''){  $Nombre .= " ".$Post_Ape_Mat;}
+													
+													//envio de correo
+													try {
+														
+														//se consulta el correo
+														$rowusr = db_select_data (false, 'Nombre, email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+															
+														//Se crea el cuerpo	
+														$BodyMail  = '<div style="background-color: #D9D9D9; padding: 10px;">';
+														$BodyMail .= '<img src="'.$login_logo.'" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
+														$BodyMail .= '<h3 style="text-align: center;font-size: 30px;">';
+														$BodyMail .= '¡Hola <strong>'.$Nombre.'</strong>!<br/>';
+														$BodyMail .= 'Bienvenido/a a <strong>'.$rowusr['Nombre'].'</strong>';
+														$BodyMail .= '</h3>';
+														$BodyMail .= '<p style="text-align: center;font-size: 20px;">';
+														$BodyMail .= '';
+														$BodyMail .= '</p>';
+														$BodyMail .= '<a href="'.$Link.'" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Empezar &#8594;</strong></a>';
+														$BodyMail .= '</div>';
+															
+														$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech', 
+																					 $Post_Email, $Nombre, 
+																					 '', '', 
+																					 'Registro de Usuario', 
+																					 $BodyMail,'', 
+																					 '', 
+																					 1, 
+																					 $rowusr['Gmail_Usuario'], 
+																					 $rowusr['Gmail_Password']);
+														//se guarda el log
+														log_response(1, $rmail, $email.' (Asunto:Registro de Usuario)');	
+														
+													} catch (Exception $e) {
+														php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'error de registro:'.$e->getMessage(), '' );
+													}
+												}
+											}
+										}
+									}
+								}
+								
+								//redirijo
+								header( 'Location: '.$location.'&created=true' );
+								die;
+								
+							}
+							
+						} else {
+							$error['FilePostulante']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+						}
+					}
+				}else{
+					//se devuelve error
+					$error['FilePostulante'] = 'error/No ha seleccionado un archivo';
+					
+				}
+				
+			}
+	
+		break;
+	
 		
 /*******************************************************************************************************************/
 	}
