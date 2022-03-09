@@ -40,7 +40,9 @@ $SIS_where = 'idTelemetria = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //muestro enlace
-alert_post_data(2,1,1, 'Se recomienda utilizar el reproductor VLC Player, se puede descargar desde <a target="_blank" rel="noopener noreferrer" href="https://www.videolan.org/vlc/index.es.html">Aqui</a>');
+echo '<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">';
+	alert_post_data(2,1,1, 'Se recomienda utilizar el reproductor VLC Player, se puede descargar desde <a target="_blank" rel="noopener noreferrer" href="https://www.videolan.org/vlc/index.es.html">Aqui</a>');
+echo '</div>';
 
 //verifico que exista el rut
 if(isset($rowdata["FTP_Carpeta"])&&$rowdata["FTP_Carpeta"]!=''){
