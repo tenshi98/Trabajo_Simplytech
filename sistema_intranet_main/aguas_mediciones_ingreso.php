@@ -452,7 +452,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				//Se verifican si existen los datos
 				if(isset($Ano)) {       $x1  = $Ano;       }else{$x1  = '';}
 				if(isset($idMes)) {     $x2  = $idMes;     }else{$x2  = '';}
 				if(isset($idUsuario)) { $x3  = $idUsuario; }else{$x3  = '';}
