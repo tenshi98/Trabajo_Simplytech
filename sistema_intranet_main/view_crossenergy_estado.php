@@ -52,10 +52,14 @@ $idGrupoConsumoMesHabil  = 99;
 $idGrupoConsumoMesCurso  = 99;
 
 //Para el mes Habil
-$Habil_FechaInicio    = restarDias(fecha_actual(),30);
-$Habil_HoraInicio     = hora_actual();
-$Habil_FechaTermino   = fecha_actual();
-$Habil_HoraTermino    = hora_actual();
+
+$s_mes = mes_actual()-1;
+$s_ano = ano_actual();
+if($s_mes==0){$s_mes = 12;$s_ano = ano_actual()-1;}
+$Habil_FechaInicio    = $s_ano.'-'.$s_mes.'-01';
+$Habil_HoraInicio     = '00:00:01';
+$Habil_FechaTermino   = Fecha_ultimo_dia_mes($Habil_FechaInicio);
+$Habil_HoraTermino    = '23:59:59';
 
 //Para el mes en curso
 $Curso_FechaInicio    = ano_actual().'-'.mes_actual().'-01';
