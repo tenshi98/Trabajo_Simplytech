@@ -87,8 +87,7 @@ require_once '0_validate_user_1.php';
 					} else {
 						
 						//Se verifican las extensiones de los archivos
-						$permitidos = array("text/csv",
-											"application/msexcel",
+						$permitidos = array("application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 										);
@@ -127,7 +126,10 @@ require_once '0_validate_user_1.php';
 										//Si existe se marca error
 										if(isset($nRows)&&$nRows!=0){
 											$ndata_2++;	
-										}	
+										}
+										
+										//conteo de predios
+										$nPredios++;	
 									}
 								}
 								
@@ -232,10 +234,10 @@ require_once '0_validate_user_1.php';
 													$ID_DistanciaHileras    = str_replace(',', '.', $DistanciaHileras);
 													
 													//verifico si existen los datos
-													if(isset($arrEspeciesMod[$Especie]['idCategoria'])){            $ID_idCategoria  = $arrEspeciesMod[$Especie]['idCategoria'];}   
-													if(isset($arrVariedadesMod[$Variedad]['idProducto'])){          $ID_idProducto   = $arrVariedadesMod[$Variedad]['idProducto'];}  
-													if(isset($arrEstadoProdMod[$EstadoProductivo]['idEstadoProd'])){$ID_idEstadoProd = $arrEstadoProdMod[$EstadoProductivo]['idEstadoProd'];} 
-													if(isset($arrEstadoMod[$Estado]['idEstado'])){                  $ID_idEstado     = $arrEstadoMod[$Estado]['idEstado'];}         
+													if(isset($Especie)&&isset($arrEspeciesMod[$Especie]['idCategoria'])){                       $ID_idCategoria  = $arrEspeciesMod[$Especie]['idCategoria'];}   
+													if(isset($Variedad)&&isset($arrVariedadesMod[$Variedad]['idProducto'])){                    $ID_idProducto   = $arrVariedadesMod[$Variedad]['idProducto'];}  
+													if(isset($EstadoProductivo)&&isset($arrEstadoProdMod[$EstadoProductivo]['idEstadoProd'])){  $ID_idEstadoProd = $arrEstadoProdMod[$EstadoProductivo]['idEstadoProd'];} 
+													if(isset($Estado)&&isset($arrEstadoMod[$Estado]['idEstado'])){                              $ID_idEstado     = $arrEstadoMod[$Estado]['idEstado'];}         
 													
 													//filtros
 													if(isset($ultimo_id) && $ultimo_id != ''){                            $a  = "'".$ultimo_id."'" ;                }else{$a  ="''";}
