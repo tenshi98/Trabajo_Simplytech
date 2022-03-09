@@ -118,9 +118,6 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo,SensorActivacionID, SensorAc
 }elseif ( ! empty($_GET['mod']) ) { 
 //Armo cadena
 $cadena  = ',SensoresNombre_'.$_GET['mod'].' AS Nombre';
-$cadena .= ',SensoresMedMin_'.$_GET['mod'].' AS MedMin';
-$cadena .= ',SensoresMedMax_'.$_GET['mod'].' AS MedMax';
-$cadena .= ',SensoresMedErrores_'.$_GET['mod'].' AS Errores_1';
 $cadena .= ',SensoresTipo_'.$_GET['mod'].' AS Sensor';
 $cadena .= ',SensoresGrupo_'.$_GET['mod'].' AS Grupo';
 $cadena .= ',SensoresUniMed_'.$_GET['mod'].' AS UniMed';
@@ -152,11 +149,6 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listad
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Basicos');
 				$Form_Inputs->form_input_text('Nombre', 'SensoresNombre_'.$_GET['mod'], $rowdata['Nombre'], 1);
-				
-				$Form_Inputs->form_tittle(3, 'Medicion');
-				$Form_Inputs->form_input_number('Minimo Medicion','SensoresMedMin_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['MedMin']), 1);
-				$Form_Inputs->form_input_number('Maximo Medicion','SensoresMedMax_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['MedMax']), 1);
-				$Form_Inputs->form_input_number_spinner('Maximo Errores Permitidos','SensoresMedErrores_'.$_GET['mod'], $rowdata['Errores_1'], 0, 500, '1', 0, 1);
 				
 				$Form_Inputs->form_tittle(3, 'Configuracion');
 				$Form_Inputs->form_select_filter('Tipo de Sensor','SensoresTipo_'.$_GET['mod'], $rowdata['Sensor'], 1, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);	
@@ -316,16 +308,13 @@ $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresNombre_'.$i;
 	$subquery .= ',SensoresTipo_'.$i;
-	$subquery .= ',SensoresMedMin_'.$i;
-	$subquery .= ',SensoresMedMax_'.$i;
-	$subquery .= ',SensoresMedErrores_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
 	$subquery .= ',SensoresRevisionGrupo_'.$i;
 }
 //Consultas
-$rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores,cantSensores,SensorActivacionID, SensorActivacionValor, idUsoContrato, idUsoGeocerca'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores,cantSensores,SensorActivacionID, SensorActivacionValor'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 $arrSensores = array();
 $arrSensores = db_select_array (false, 'idSensores,Nombre', 'telemetria_listado_sensores', '', '', 'idSensores ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
@@ -353,14 +342,12 @@ $arrFinalGruposRev = array();
 
 foreach ($arrSensores as $sen) {  $arrFinalSensores[$sen['idSensores']] = $sen['Nombre']; }
 foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre']; }
-foreach ($arrUnimed as $sen) {    $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre']; }
 foreach ($arrEstado as $sen) {    $arrFinalEstado[$sen['idEstado']] = $sen['Nombre']; }
 foreach ($arrGruposRev as $sen) { $arrFinalGruposRev[$sen['idGrupo']] = $sen['Nombre']; }
 
 //no configurado
 $arrFinalSensores[0]  = 'S/C';
 $arrFinalGrupos[0]    = 'S/C';
-$arrFinalUnimed[0]    = 'S/C';
 $arrFinalEstado[0]    = 'S/C';
 $arrFinalGruposRev[0] = 'S/C';
 
@@ -383,18 +370,12 @@ $arrFinalGruposRev[0] = 'S/C';
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if($rowdata['idUsoContrato']==1){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
-						<?php } ?>
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-							<?php if($rowdata['idUsoGeocerca']==1){ ?>
-								<li class=""><a href="<?php echo 'telemetria_listado_geocercas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> GeoCercas</a></li>
-							<?php } ?>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
 						<?php } ?>
@@ -403,7 +384,6 @@ $arrFinalGruposRev[0] = 'S/C';
 							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_horario.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Horario Envio Notificaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
@@ -460,9 +440,6 @@ $arrFinalGruposRev[0] = 'S/C';
 						<th>Grupo</th>
 						<th style="text-align: center;">Grupo<br/>Revision</th>
 						<th>Estado</th>
-						<th style="text-align: center;">Minimo<br/>Medicion</th>
-						<th style="text-align: center;">Maximo<br/>Medicion</th>
-						<th style="text-align: center;">Maximo Errores<br/>Permitidos</th>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
@@ -472,7 +449,6 @@ $arrFinalGruposRev[0] = 'S/C';
 						//Datos
 						if(isset($arrFinalSensores[$rowdata['SensoresTipo_'.$i]])){           $Sensores  = $arrFinalSensores[$rowdata['SensoresTipo_'.$i]];           }else{$Sensores   = '';}
 						if(isset($arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]])){            $Grupos    = $arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]];            }else{$Grupos     = '';}
-						if(isset($arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]])){           $Unimed    = $arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];           }else{$Unimed     = '';}
 						if(isset($arrFinalEstado[$rowdata['SensoresActivo_'.$i]])){           $Estado    = $arrFinalEstado[$rowdata['SensoresActivo_'.$i]];           }else{$Estado     = '';}
 						if(isset($arrFinalGruposRev[$rowdata['SensoresRevisionGrupo_'.$i]])){ $GruposRev = $arrFinalGruposRev[$rowdata['SensoresRevisionGrupo_'.$i]]; }else{$GruposRev  = '';}
 						if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==2){
@@ -490,9 +466,6 @@ $arrFinalGruposRev[0] = 'S/C';
 							<td><?php echo $Grupos; ?></td>
 							<td><?php echo $GruposRev; ?></td>
 							<td><?php echo '<span style="color:#'.$Color.'">'.$Estado.'</span>';?></td>
-							<td style="text-align: center;"><?php echo Cantidades_decimales_justos($rowdata['SensoresMedMin_'.$i]).' '.$Unimed; ?></td>		
-							<td style="text-align: center;"><?php echo Cantidades_decimales_justos($rowdata['SensoresMedMax_'.$i]).' '.$Unimed; ?></td>
-							<td style="text-align: center;"><?php echo $rowdata['SensoresMedErrores_'.$i]; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>

@@ -45,7 +45,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,IdentificadorEmpresa,Sim_Num_Tel,Sim_Num_Serie,Sim_Compania,Sim_marca,Sim_modelo,idSistema, id_Sensores, id_Geo, idUsoContrato, idUsoGeocerca', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, 'Nombre,NumSerie,IdentificadorEmpresa,Sim_Num_Tel,Sim_Num_Serie,Sim_Compania,Sim_marca,Sim_modelo,idSistema, id_Sensores, id_Geo', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -64,18 +64,12 @@ $rowdata = db_select_data (false, 'Nombre,IdentificadorEmpresa,Sim_Num_Tel,Sim_N
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if($rowdata['idUsoContrato']==1){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
-						<?php } ?>
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-							<?php if($rowdata['idUsoGeocerca']==1){ ?>
-								<li class=""><a href="<?php echo 'telemetria_listado_geocercas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> GeoCercas</a></li>
-							<?php } ?>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
 						<?php } ?>
@@ -84,7 +78,6 @@ $rowdata = db_select_data (false, 'Nombre,IdentificadorEmpresa,Sim_Num_Tel,Sim_N
 							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_horario.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Horario Envio Notificaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
@@ -101,25 +94,27 @@ $rowdata = db_select_data (false, 'Nombre,IdentificadorEmpresa,Sim_Num_Tel,Sim_N
 					<?php  
 					//Se verifican si existen los datos
 					if(isset($Nombre)) {                 $x1 = $Nombre;                  }else{$x1 = $rowdata['Nombre'];}
-					if(isset($IdentificadorEmpresa)) {   $x2 = $IdentificadorEmpresa;    }else{$x2 = $rowdata['IdentificadorEmpresa'];}
-					if(isset($Sim_Num_Tel)) {            $x3 = $Sim_Num_Tel;             }else{$x3 = $rowdata['Sim_Num_Tel'];}
-					if(isset($Sim_Num_Serie)) {          $x4 = $Sim_Num_Serie;           }else{$x4 = $rowdata['Sim_Num_Serie'];}
-					if(isset($Sim_Compania)) {           $x5 = $Sim_Compania;            }else{$x5 = $rowdata['Sim_Compania'];}
-					if(isset($Sim_marca)) {              $x6 = $Sim_marca;               }else{$x6 = $rowdata['Sim_marca'];}
-					if(isset($Sim_modelo)) {             $x7 = $Sim_modelo;              }else{$x7 = $rowdata['Sim_modelo'];}
+					if(isset($NumSerie)) {               $x2 = $NumSerie;                }else{$x2 = $rowdata['NumSerie'];}
+					if(isset($IdentificadorEmpresa)) {   $x3 = $IdentificadorEmpresa;    }else{$x3 = $rowdata['IdentificadorEmpresa'];}
+					if(isset($Sim_Num_Tel)) {            $x4 = $Sim_Num_Tel;             }else{$x4 = $rowdata['Sim_Num_Tel'];}
+					if(isset($Sim_Num_Serie)) {          $x5 = $Sim_Num_Serie;           }else{$x5 = $rowdata['Sim_Num_Serie'];}
+					if(isset($Sim_Compania)) {           $x6 = $Sim_Compania;            }else{$x6 = $rowdata['Sim_Compania'];}
+					if(isset($Sim_marca)) {              $x7 = $Sim_marca;               }else{$x7 = $rowdata['Sim_marca'];}
+					if(isset($Sim_modelo)) {             $x8 = $Sim_modelo;              }else{$x8 = $rowdata['Sim_modelo'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Equipo');
 					$Form_Inputs->form_input_text('Nombre del Equipo', 'Nombre', $x1, 2);
-					$Form_Inputs->form_input_icon('Identificador Empresa', 'IdentificadorEmpresa', $x2, 1,'fa fa-flag');
+					$Form_Inputs->form_input_icon('Numero de Serie', 'NumSerie', $x2, 1,'fa fa-barcode');
+					$Form_Inputs->form_input_icon('Identificador Empresa', 'IdentificadorEmpresa', $x3, 1,'fa fa-flag');
 					
 					$Form_Inputs->form_tittle(3, 'BAM');
-					$Form_Inputs->form_input_icon('SIM - Numero Telefonico', 'Sim_Num_Tel', $x3, 1,'fa fa-mobile');
-					$Form_Inputs->form_input_icon('SIM - Numero Serie', 'Sim_Num_Serie', $x4, 1,'fa fa-mobile');
-					$Form_Inputs->form_input_icon('SIM - Compañia', 'Sim_Compania', $x5, 1,'fa fa-mobile');
-					$Form_Inputs->form_input_icon('BAM - Marca', 'Sim_marca', $x6, 1,'fa fa-mobile');
-					$Form_Inputs->form_input_icon('BAM - Modelo', 'Sim_modelo', $x7, 1,'fa fa-mobile');
+					$Form_Inputs->form_input_icon('SIM - Numero Telefonico', 'Sim_Num_Tel', $x4, 1,'fa fa-mobile');
+					$Form_Inputs->form_input_icon('SIM - Numero Serie', 'Sim_Num_Serie', $x5, 1,'fa fa-mobile');
+					$Form_Inputs->form_input_icon('SIM - Compañia', 'Sim_Compania', $x6, 1,'fa fa-mobile');
+					$Form_Inputs->form_input_icon('BAM - Marca', 'Sim_marca', $x7, 1,'fa fa-mobile');
+					$Form_Inputs->form_input_icon('BAM - Modelo', 'Sim_modelo', $x8, 1,'fa fa-mobile');
 					
 					
 					

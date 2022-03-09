@@ -20,9 +20,10 @@ $location .='?pagina='.$_GET['pagina'];
 $search = '';
 if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){  $location .= "&Identificador=".$_GET['Identificador'];  $search .= "&Identificador=".$_GET['Identificador'];}
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $location .= "&Nombre=".$_GET['Nombre'];                $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['NumSerie']) && $_GET['NumSerie'] != ''){            $location .= "&NumSerie=".$_GET['NumSerie'];            $search .= "&NumSerie=".$_GET['NumSerie'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){            $location .= "&idEstado=".$_GET['idEstado'];            $search .= "&idEstado=".$_GET['idEstado'];}
 if(isset($_GET['id_Geo']) && $_GET['id_Geo'] != ''){                $location .= "&id_Geo=".$_GET['id_Geo'];                $search .= "&id_Geo=".$_GET['id_Geo'];}
-if(isset($_GET['idTab']) && $_GET['idTab'] != ''){                  $location .= "&idTab=".$_GET['idTab'];                $search .= "&id_Geo=".$_GET['id_Geo'];}
+if(isset($_GET['idTab']) && $_GET['idTab'] != ''){                  $location .= "&idTab=".$_GET['idTab'];                  $search .= "&idTab=".$_GET['idTab'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -108,6 +109,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = '
 telemetria_listado.Identificador,
 telemetria_listado.Nombre,
+telemetria_listado.NumSerie,
 telemetria_listado.IP_Client,
 telemetria_listado.Sim_Num_Tel,
 telemetria_listado.Sim_Num_Serie,
@@ -126,40 +128,15 @@ telemetria_listado.AnoFab,
 telemetria_listado.CapacidadPersonas,
 telemetria_listado.CapacidadKilos, 
 telemetria_listado.MCubicos,
-telemetria_listado.NErroresGeocercaMax,
 opc2.Nombre AS Geo,
 opc3.Nombre AS Sensores,
-opc4.Nombre AS Contratos,
 opc5.Nombre AS Predio,
-opc6.Nombre AS Geocerca,
 telemetria_listado.cantSensores,
 telemetria_listado.Direccion_img,
 core_sistemas.Nombre AS sistema,
 telemetria_listado.id_Geo,
 telemetria_listado.id_Sensores,
 telemetria_listado_dispositivos.Nombre AS Dispositivo,
-
-telemetria_listado.Hor_idActivo_dia1, 
-telemetria_listado.Hor_idActivo_dia2, 
-telemetria_listado.Hor_idActivo_dia3, 
-telemetria_listado.Hor_idActivo_dia4, 
-telemetria_listado.Hor_idActivo_dia5, 
-telemetria_listado.Hor_idActivo_dia6, 
-telemetria_listado.Hor_idActivo_dia7,
-telemetria_listado.Hor_Inicio_dia1, 
-telemetria_listado.Hor_Inicio_dia2, 
-telemetria_listado.Hor_Inicio_dia3, 
-telemetria_listado.Hor_Inicio_dia4, 
-telemetria_listado.Hor_Inicio_dia5, 
-telemetria_listado.Hor_Inicio_dia6, 
-telemetria_listado.Hor_Inicio_dia7,
-telemetria_listado.Hor_Termino_dia1, 
-telemetria_listado.Hor_Termino_dia2, 
-telemetria_listado.Hor_Termino_dia3, 
-telemetria_listado.Hor_Termino_dia4, 
-telemetria_listado.Hor_Termino_dia5, 
-telemetria_listado.Hor_Termino_dia6, 
-telemetria_listado.Hor_Termino_dia7,
 
 telemetria_listado.Jornada_inicio,
 telemetria_listado.Jornada_termino,
@@ -169,20 +146,19 @@ telemetria_listado.Microparada,
 
 core_estados.Nombre AS Estado,
 telemetria_listado_shield.Nombre AS Shield,
-telemetria_listado_alarma_general.Nombre AS AlarmaGeneral,
 telemetria_listado.LimiteVelocidad,
 core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 telemetria_listado.Direccion,
 telemetria_zonas.Nombre AS ZonaSinGPS, 
 vehiculos_zonas.Nombre AS ZonaConGPS,  
-telemetria_listado.idUsoContrato,
-telemetria_listado.idUsoGeocerca,
 vehiculos_tipo.Nombre AS TipoVehiculo,
 core_telemetria_tabs.Nombre AS Tab,
 opc7.Nombre AS Backup,
 telemetria_listado.NregBackup,
 opc8.Nombre AS Generador,
+generador.Nombre AS GeneradorNombre,
+telemetria_listado.FechaInsGen AS GeneradorFecha,
 opc9.Nombre AS AlertaTemprana,
 opc10.Nombre AS UsoFTP,
 telemetria_listado.idUsoFTP,
@@ -200,13 +176,10 @@ $SIS_join  = '
 LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                            = telemetria_listado.idSistema
 LEFT JOIN `core_sistemas_opciones`        opc2   ON opc2.idOpciones                                    = telemetria_listado.id_Geo
 LEFT JOIN `core_sistemas_opciones`        opc3   ON opc3.idOpciones                                    = telemetria_listado.id_Sensores
-LEFT JOIN `core_sistemas_opciones`        opc4   ON opc4.idOpciones                                    = telemetria_listado.idUsoContrato
 LEFT JOIN `core_sistemas_opciones`        opc5   ON opc5.idOpciones                                    = telemetria_listado.idUsoPredio
-LEFT JOIN `core_sistemas_opciones`        opc6   ON opc6.idOpciones                                    = telemetria_listado.idUsoGeocerca
 LEFT JOIN `telemetria_listado_dispositivos`      ON telemetria_listado_dispositivos.idDispositivo      = telemetria_listado.idDispositivo
 LEFT JOIN `core_estados`                         ON core_estados.idEstado                              = telemetria_listado.idEstado
 LEFT JOIN `telemetria_listado_shield`            ON telemetria_listado_shield.idShield                 = telemetria_listado.idShield
-LEFT JOIN `telemetria_listado_alarma_general`    ON telemetria_listado_alarma_general.idAlarmaGeneral  = telemetria_listado.idAlarmaGeneral
 LEFT JOIN `core_ubicacion_ciudad`                ON core_ubicacion_ciudad.idCiudad                     = telemetria_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`               ON core_ubicacion_comunas.idComuna                    = telemetria_listado.idComuna
 LEFT JOIN `telemetria_zonas`                     ON telemetria_zonas.idZona                            = telemetria_listado.idZona
@@ -215,6 +188,7 @@ LEFT JOIN `vehiculos_tipo`                       ON vehiculos_tipo.idTipo       
 LEFT JOIN `core_telemetria_tabs`                 ON core_telemetria_tabs.idTab                         = telemetria_listado.idTab
 LEFT JOIN `core_sistemas_opciones`        opc7   ON opc7.idOpciones                                    = telemetria_listado.idBackup
 LEFT JOIN `core_sistemas_opciones`        opc8   ON opc8.idOpciones                                    = telemetria_listado.idGenerador
+LEFT JOIN `telemetria_listado`       generador   ON generador.idTelemetria                             = telemetria_listado.idTelGenerador
 LEFT JOIN `core_sistemas_opciones`        opc9   ON opc9.idOpciones                                    = telemetria_listado.idAlertaTemprana
 LEFT JOIN `core_sistemas_opciones`       opc10   ON opc10.idOpciones                                   = telemetria_listado.idUsoFTP
 LEFT JOIN `telemetria_listado_grupos`  grupo_1   ON grupo_1.idGrupo                                    = telemetria_listado.CrossCrane_grupo_amperaje
@@ -226,9 +200,6 @@ LEFT JOIN `telemetria_listado_grupos`  grupo_6   ON grupo_6.idGrupo             
 LEFT JOIN `telemetria_listado_grupos`  grupo_7   ON grupo_7.idGrupo                                    = telemetria_listado.CrossCrane_grupo_motor_bajada';
 $SIS_where = 'telemetria_listado.idTelemetria = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
-
-$arrContratos = array();
-$arrContratos = db_select_array (false, 'Codigo, F_Inicio, F_Termino', 'telemetria_listado_contratos', '', 'idTelemetria ='.$_GET['id'], 'idContrato DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrContratos');
 											
 $arrOpciones = array();
 $arrOpciones = db_select_array (false, 'idOpciones,Nombre', 'core_sistemas_opciones', '', '', 'idOpciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOpciones');
@@ -257,18 +228,12 @@ $arrEXOpciones[0] = 'No Asignado';
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if($rowdata['idUsoContrato']==1){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
-						<?php } ?>
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-							<?php if($rowdata['idUsoGeocerca']==1){ ?>
-								<li class=""><a href="<?php echo 'telemetria_listado_geocercas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> GeoCercas</a></li>
-							<?php } ?>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
 						<?php } ?>
@@ -277,7 +242,6 @@ $arrEXOpciones[0] = 'No Asignado';
 							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
-						<li class=""><a href="<?php echo 'telemetria_listado_horario.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Horario Envio Notificaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
@@ -303,6 +267,7 @@ $arrEXOpciones[0] = 'No Asignado';
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
 						<p class="text-muted">
 							<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?>                              <strong>Nombre Equipo: </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['NumSerie'])&&$rowdata['NumSerie']!=''){ ?>                          <strong>Numero de Serie: </strong><?php echo $rowdata['NumSerie']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?>  <strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?>                    <strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?>                <strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
@@ -329,10 +294,8 @@ $arrEXOpciones[0] = 'No Asignado';
 							<?php if(isset($rowdata['Geo'])&&$rowdata['Geo']!=''){ ?>                        <strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Sensores'])&&$rowdata['Sensores']!=''){ ?>              <strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/><?php } ?>
 							<?php if(isset($rowdata['Predio'])&&$rowdata['Predio']!=''){ ?>                  <strong>Utilizacion de Predios : </strong><?php echo $rowdata['Predio'];?><br/><?php } ?>
-							<?php if(isset($rowdata['Geocerca'])&&$rowdata['Geocerca']!=''){ ?>              <strong>Utilizacion de Geocercas : </strong><?php echo $rowdata['Geocerca'].' ';if($rowdata['idUsoGeocerca']==1){echo '('.$rowdata['NErroresGeocercaMax'].' Errores Maximo)';} ?><br/><?php } ?>
-							<?php if(isset($rowdata['Backup'])&&$rowdata['Backup']!=''){ ?>                  <strong>Utilizacion de Backup : </strong><?php echo $rowdata['Backup'].' ';if(isset($rowdata['NregBackup'])&&$rowdata['NregBackup']!=''){echo '('.$rowdata['NregBackup'].' Registros)';} ?><br/><?php } ?>
-							<?php if(isset($rowdata['Generador'])&&$rowdata['Generador']!=''){ ?>            <strong>Generador Electrico : </strong><?php echo $rowdata['Generador']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['AlarmaGeneral'])&&$rowdata['AlarmaGeneral']!=''){ ?>    <strong>Alarma General : </strong><?php echo $rowdata['AlarmaGeneral']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Backup'])&&$rowdata['Backup']!=''){ ?>                  <strong>Utilizacion de Backup : </strong><?php echo $rowdata['Backup'].' ';if(isset($rowdata['NregBackup'])&&$rowdata['NregBackup']!=''&&$rowdata['NregBackup']!=0){echo '('.$rowdata['NregBackup'].' Registros)';} ?><br/><?php } ?>
+							<?php if(isset($rowdata['Generador'])&&$rowdata['Generador']!=''){ ?>            <strong>Generador Electrico : </strong><?php echo $rowdata['Generador'].' ';if(isset($rowdata['GeneradorNombre'])&&$rowdata['GeneradorNombre']!=''){echo'('.$rowdata['GeneradorNombre'].' instaladado el '.fecha_estandar($rowdata['GeneradorFecha']).')';} ?><br/><?php } ?>
 							<?php if(isset($rowdata['AlertaTemprana'])&&$rowdata['AlertaTemprana']!=''){ ?>  <strong>Alerta Temprana : </strong><?php echo $rowdata['AlertaTemprana']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['UsoFTP'])&&$rowdata['UsoFTP']!=''){ ?>                  <strong>Uso FTP : </strong><?php echo $rowdata['UsoFTP']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['idUsoFTP'])&&$rowdata['idUsoFTP']==1){ ?>               <strong>Carpeta FTP : </strong><?php echo $rowdata['FTP_Carpeta']; ?><br/><?php } ?>
@@ -353,27 +316,8 @@ $arrEXOpciones[0] = 'No Asignado';
 							<?php if($rowdata['id_Geo']==2){ ?>
 								<br/>
 								<strong class="color-red-dark">Ubicacion</strong><br/>
-								<strong>Zona de Trabajo : </strong><?php echo $rowdata['ZonaSinGPS']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/>
-							<?php } ?>
-							
-							<?php if(isset($rowdata['Contratos'])&&$rowdata['Contratos']!=''){ ?>         
-								<br/>
-								<strong class="color-red-dark">Contratos</strong><br/>
-								<strong>Utilizacion de Contratos : </strong><?php echo $rowdata['Contratos']; ?><br/>
-								<?php if($arrContratos!=false && !empty($arrContratos) && $arrContratos!=''){ ?>
-									<table id="items" style="margin-bottom: 20px;">
-										<tbody>
-											<?php foreach ($arrContratos as $carga) { ?>
-												<tr class="item-row">
-													<td><?php echo $carga['Codigo']; ?></td>		
-													<td><?php echo fecha_estandar($carga['F_Inicio']); ?></td>	
-													<td><?php echo fecha_estandar($carga['F_Termino']); ?></td>						
-												</tr>
-											<?php } ?>
-										</tbody>
-									</table>
-								<?php } ?>
+								<?php if(isset($rowdata['ZonaSinGPS'])&&$rowdata['ZonaSinGPS']!=''){ ?> <strong>Zona de Trabajo : </strong><?php echo $rowdata['ZonaSinGPS']; ?><br/><?php } ?>
+								<?php if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){ ?>   <strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/><?php } ?>
 							<?php } ?>
 							
 						</p>
@@ -403,15 +347,6 @@ $arrEXOpciones[0] = 'No Asignado';
 							</p>
 								
 						<?php } ?>
-							
-						
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Horario Notificaciones</h2>
-						<p class="text-muted">
-							<?php for ($i = 1; $i <= 7; $i++) { ?>
-								<strong><?php echo numero_nombreDia($i); ?> : </strong><?php echo $arrEXOpciones[$rowdata['Hor_idActivo_dia'.$i]].' / '.$rowdata['Hor_Inicio_dia'.$i].' - '.$rowdata['Hor_Termino_dia'.$i]; ?><br/>
-							<?php } ?>
-						</p>	
-						
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Jornada Laboral</h2>
 						<p class="text-muted">
@@ -467,32 +402,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_hidden('id_Geo', 2, 2);
 				$Form_Inputs->form_input_hidden('id_Sensores', 2, 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				$Form_Inputs->form_input_hidden('idAlarmaGeneral', 2, 2);
-				$Form_Inputs->form_input_hidden('idUsoContrato', 2, 2);
 				$Form_Inputs->form_input_hidden('idUsoPredio', 2, 2);
-				$Form_Inputs->form_input_hidden('idUsoGeocerca', 2, 2);
 				$Form_Inputs->form_input_hidden('idMantencion', 2, 2);
-				$Form_Inputs->form_input_hidden('Hor_idActivo_dia1', 1, 2);
-				$Form_Inputs->form_input_hidden('Hor_idActivo_dia2', 1, 2);
-				$Form_Inputs->form_input_hidden('Hor_idActivo_dia3', 1, 2);
-				$Form_Inputs->form_input_hidden('Hor_idActivo_dia4', 1, 2);
-				$Form_Inputs->form_input_hidden('Hor_idActivo_dia5', 1, 2);
-				$Form_Inputs->form_input_hidden('Hor_idActivo_dia6', 1, 2);
-				$Form_Inputs->form_input_hidden('Hor_idActivo_dia7', 1, 2);
-				$Form_Inputs->form_input_hidden('Hor_Inicio_dia1', '00:01:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Inicio_dia2', '00:01:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Inicio_dia3', '00:01:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Inicio_dia4', '00:01:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Inicio_dia5', '00:01:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Inicio_dia6', '00:01:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Inicio_dia7', '00:01:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Termino_dia1', '23:59:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Termino_dia2', '23:59:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Termino_dia3', '23:59:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Termino_dia4', '23:59:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Termino_dia5', '23:59:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Termino_dia6', '23:59:00', 2);
-				$Form_Inputs->form_input_hidden('Hor_Termino_dia7', '23:59:00', 2);
 				$Form_Inputs->form_input_hidden('idEstadoEncendido', 1, 2);
 				$Form_Inputs->form_input_hidden('idBackup', 2, 2);
 				$Form_Inputs->form_input_hidden('idGenerador', 2, 2);
@@ -534,6 +445,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'nombre_desc':          $order_by = 'telemetria_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		case 'identificador_asc':    $order_by = 'telemetria_listado.Identificador ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Identificador Ascendente';break;
 		case 'identificador_desc':   $order_by = 'telemetria_listado.Identificador DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Identificador Descendente';break;
+		case 'numserie_asc':         $order_by = 'telemetria_listado.NumSerie ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero de Serie Ascendente';break;
+		case 'numserie_desc':        $order_by = 'telemetria_listado.NumSerie DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero de Serie Descendente';break;
 		case 'estado_asc':           $order_by = 'telemetria_listado.idEstado ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':          $order_by = 'telemetria_listado.idEstado DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		case 'geo_asc':              $order_by = 'core_sistemas_opciones.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Geolocalizacion Ascendente';break;
@@ -553,6 +466,7 @@ $SIS_where = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data'][
 //Se aplican los filtros
 if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){  $SIS_where .= " AND telemetria_listado.Identificador LIKE '%".$_GET['Identificador']."%'";}
 if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $SIS_where .= " AND telemetria_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['NumSerie']) && $_GET['NumSerie'] != ''){            $SIS_where .= " AND telemetria_listado.NumSerie LIKE '%".$_GET['NumSerie']."%'";}
 if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){            $SIS_where .= " AND telemetria_listado.idEstado=".$_GET['idEstado'];}
 if(isset($_GET['id_Geo']) && $_GET['id_Geo'] != ''){                $SIS_where .= " AND telemetria_listado.id_Geo=".$_GET['id_Geo'];}
 if(isset($_GET['idTab']) && $_GET['idTab'] != ''){                  $SIS_where .= " AND telemetria_listado.idTab=".$_GET['idTab'];}
@@ -566,6 +480,7 @@ $SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.Identificador,
 telemetria_listado.Nombre,
+telemetria_listado.NumSerie,
 core_sistemas.Nombre AS sistema,
 core_estados.Nombre AS Estado,
 telemetria_listado.idEstado,
@@ -602,19 +517,21 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 				//Se verifican si existen los datos
 				if(isset($Identificador)) {   $x1  = $Identificador;    }else{$x1  = '';}
 				if(isset($Nombre)) {          $x2  = $Nombre;           }else{$x2  = '';}
-				if(isset($idEstado)) {        $x3  = $idEstado;         }else{$x3  = '';}
-				if(isset($id_Geo)) {          $x4  = $id_Geo;           }else{$x4  = '';}
-				if(isset($idTab)) {           $x5  = $idTab;            }else{$x5  = '';}
+				if(isset($NumSerie)) {        $x3  = $NumSerie;         }else{$x3  = '';}
+				if(isset($idEstado)) {        $x4  = $idEstado;         }else{$x4  = '';}
+				if(isset($id_Geo)) {          $x5  = $id_Geo;           }else{$x5  = '';}
+				if(isset($idTab)) {           $x6  = $idTab;            }else{$x6  = '';}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_icon('Identificador', 'Identificador', $x1, 1,'fa fa-flag');
 				$Form_Inputs->form_input_text('Nombre del Equipo', 'Nombre', $x2, 1);	
-				$Form_Inputs->form_select('Estado','idEstado', $x3, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				$Form_Inputs->form_select('Geolocalizacion','id_Geo', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_input_icon('Numero de Serie', 'NumSerie', $x3, 1,'fa fa-barcode');
+					$Form_Inputs->form_select('Estado','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+				$Form_Inputs->form_select('Geolocalizacion','id_Geo', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				//Solo para plataforma CrossTech
 				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-					$Form_Inputs->form_select('Tab','idTab', $x5, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Tab','idTab', $x6, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, '', $dbConn);	
 				}
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
@@ -665,6 +582,13 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 							</div>
 						</th>
 						<th>
+							<div class="pull-left">Numero de Serie</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=numserie_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=numserie_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<th>
 							<div class="pull-left">Estado</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
@@ -700,6 +624,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 					<tr class="odd">		
 						<td><?php echo $equip['Nombre']; ?></td>	
 						<td><?php echo $equip['Identificador']; ?></td>	
+						<td><?php echo $equip['NumSerie']; ?></td>	
 						<td><label class="label <?php if(isset($equip['idEstado'])&&$equip['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $equip['Estado']; ?></label></td>	
 						<td><?php echo $equip['Geo']; ?></td>	
 						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){?><td><?php echo $equip['Tab']; ?></td><?php } ?>	
