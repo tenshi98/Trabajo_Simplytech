@@ -497,9 +497,7 @@ echo '
 									!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\'https://weatherwidget.io/js/widget.min.js\';fjs.parentNode.insertBefore(js,fjs);}}(document,\'script\',\'weatherwidget-io-js\');
 									</script>';
 								}
-								/*************************************************************/
-								//Widget de la radio
-								echo widget_radio_player();	
+								
 								
 							echo '
 							</div>
@@ -530,9 +528,26 @@ echo '
 										echo '</div>';
 									echo '</div>';
 								}
+								
+								/*************************************************************/
+								//Widget de la radio
+								echo '<style>#main-wrapper {padding: 0!important;}</style>';
+								echo '<div class="col-sm-6">';
+									echo '<div class="box">';
+										echo '<header>';
+											echo '<div class="icons"><i class="fa fa-soundcloud" aria-hidden="true"></i></div><h5>Radio</h5>';
+										echo '</header>';
+										echo '<div class="">';
+											echo widget_radio_player();	
+										echo '</div> ';
+									echo '</div>';
+								echo '</div>';
+									
+								
 								/*************************************************************/
 								//Sismos
-								echo '<div class="col-sm-6">';
+								echo '<div class="clearfix" ></div>';
+								echo '<div class="col-sm-12">';
 								echo widget_sismologia();
 								echo '</div>';
 								/*************************************************************/
