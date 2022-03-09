@@ -56,29 +56,16 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 
 // consulto los datos
-$query = "SELECT Porcentaje_PPM,IVA_idCentroCosto,IVA_idLevel_1,
+$SIS_query = 'Porcentaje_PPM,IVA_idCentroCosto,IVA_idLevel_1,
 IVA_idLevel_2,IVA_idLevel_3,IVA_idLevel_4,IVA_idLevel_5,PPM_idCentroCosto,
 PPM_idLevel_1,PPM_idLevel_2,PPM_idLevel_3,PPM_idLevel_4,PPM_idLevel_5,
 RET_idCentroCosto,RET_idLevel_1,RET_idLevel_2,RET_idLevel_3,RET_idLevel_4,
 RET_idLevel_5,IMPRENT_idCentroCosto,IMPRENT_idLevel_1,IMPRENT_idLevel_2,
-IMPRENT_idLevel_3,IMPRENT_idLevel_4,IMPRENT_idLevel_5, Porcentaje_Ret_Boletas
+IMPRENT_idLevel_3,IMPRENT_idLevel_4,IMPRENT_idLevel_5, Porcentaje_Ret_Boletas';
+$SIS_join  = '';
+$SIS_where = 'idMantenedor ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'sistema_leyes_fiscales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-FROM `sistema_leyes_fiscales`
-WHERE idMantenedor = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
 //sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 ?>
